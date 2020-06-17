@@ -60,6 +60,12 @@
 				var obj3da6=new THREE.Object3D(); 
 				var obj3da7=new THREE.Object3D(); 
 
+				var pared1=new THREE.Object3D(); 
+				var pared2=new THREE.Object3D(); 
+
+				var mueble=new THREE.Object3D(); 
+				var luces=new THREE.Object3D(); 
+
 				var loader = new THREE.GLTFLoader();
 				loader.load( '/publico/modelos/Mesa.gltf', function ( gltf ) {
 
@@ -110,6 +116,16 @@
 					obj3da6.add( gltf.scene );	} );
 				loader.load( '/publico/modelos/silla.gltf', function ( gltf ) {	gltf.scene.traverse( function ( child ) {if ( child.isMesh ) {child.material.envMap = envMap;}	} );
 					obj3da7.add( gltf.scene );	} );
+
+				loader.load( '/publico/modelos/paredes_1.gltf', function ( gltf ) {	gltf.scene.traverse( function ( child ) {if ( child.isMesh ) {child.material.envMap = envMap;}	} );
+					pared1.add( gltf.scene );	} );
+				loader.load( '/publico/modelos/paredes_2.gltf', function ( gltf ) {	gltf.scene.traverse( function ( child ) {if ( child.isMesh ) {child.material.envMap = envMap;}	} );
+					pared2.add( gltf.scene );	} );
+				loader.load( '/publico/modelos/mueble_2.gltf', function ( gltf ) {	gltf.scene.traverse( function ( child ) {if ( child.isMesh ) {child.material.envMap = envMap;}	} );
+					mueble.add( gltf.scene );	} );
+				loader.load( '/publico/modelos/lights.gltf', function ( gltf ) {	gltf.scene.traverse( function ( child ) {if ( child.isMesh ) {child.material.envMap = envMap;}	} );
+					luces.add( gltf.scene );	} );
+
 				
 				
 				obj3d1.position.x= 1; 
@@ -139,6 +155,10 @@
 				scene.add(obj3da5 );
 				scene.add(obj3da6 );
 				scene.add(obj3da7 );
+				pared1.position.x= 1; 
+				pared2.position.y =6.3; pared2.position.x =1; 
+				mueble.position.z = 1.1; mueble.position.y = 0.2; mueble.position.x = -0.25; 
+				scene.add(pared1 );scene.add(pared2 );scene.add(mueble );scene.add(luces);
 
 
 				renderer = new THREE.WebGLRenderer( { antialias: true } );
