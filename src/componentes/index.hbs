@@ -17,7 +17,7 @@
 			var camera, scene, renderer, light;
 
 			init();
-			animate();
+			
 
 			function init() {
 
@@ -48,6 +48,18 @@
 				scene.add( light );
 
 				// model
+				var obj3d1 = new THREE.Object3D();
+				var obj3d2 = new THREE.Object3D();
+				var obj3d3 = new THREE.Object3D();
+				
+				var obj3da1=new THREE.Object3D(); 
+				var obj3da2=new THREE.Object3D(); 
+				var obj3da3=new THREE.Object3D(); 
+				var obj3da4=new THREE.Object3D(); 
+				var obj3da5=new THREE.Object3D(); 
+				var obj3da6=new THREE.Object3D(); 
+				var obj3da7=new THREE.Object3D(); 
+
 				var loader = new THREE.GLTFLoader();
 				loader.load( '/publico/modelos/Mesa.gltf', function ( gltf ) {
 
@@ -60,10 +72,74 @@
 						}
 
 					} );
-
-					scene.add( gltf.scene );
+					
+					obj3d1.add(gltf.scene)
+					
 
 				} );
+				
+				loader.load( '/publico/modelos/floor.gltf', function ( gltf ) {
+
+					gltf.scene.traverse( function ( child ) {
+
+						if ( child.isMesh ) {
+
+							child.material.envMap = envMap;
+
+						}
+
+					} );
+					obj3d2.add( gltf.scene );
+					
+
+				} );
+					
+				loader.load( '/publico/modelos/silla.gltf', function ( gltf ) {	gltf.scene.traverse( function ( child ) {if ( child.isMesh ) {child.material.envMap = envMap;}	} );
+					obj3d3.add( gltf.scene );	} );
+				loader.load( '/publico/modelos/silla.gltf', function ( gltf ) {	gltf.scene.traverse( function ( child ) {if ( child.isMesh ) {child.material.envMap = envMap;}	} );
+					obj3da1.add( gltf.scene );	} );
+				loader.load( '/publico/modelos/silla.gltf', function ( gltf ) {	gltf.scene.traverse( function ( child ) {if ( child.isMesh ) {child.material.envMap = envMap;}	} );
+					obj3da2.add( gltf.scene );	} );
+				loader.load( '/publico/modelos/silla.gltf', function ( gltf ) {	gltf.scene.traverse( function ( child ) {if ( child.isMesh ) {child.material.envMap = envMap;}	} );
+					obj3da3.add( gltf.scene );	} );
+				loader.load( '/publico/modelos/silla.gltf', function ( gltf ) {	gltf.scene.traverse( function ( child ) {if ( child.isMesh ) {child.material.envMap = envMap;}	} );
+					obj3da4.add( gltf.scene );	} );
+				loader.load( '/publico/modelos/silla.gltf', function ( gltf ) {	gltf.scene.traverse( function ( child ) {if ( child.isMesh ) {child.material.envMap = envMap;}	} );
+					obj3da5.add( gltf.scene );	} );
+				loader.load( '/publico/modelos/silla.gltf', function ( gltf ) {	gltf.scene.traverse( function ( child ) {if ( child.isMesh ) {child.material.envMap = envMap;}	} );
+					obj3da6.add( gltf.scene );	} );
+				loader.load( '/publico/modelos/silla.gltf', function ( gltf ) {	gltf.scene.traverse( function ( child ) {if ( child.isMesh ) {child.material.envMap = envMap;}	} );
+					obj3da7.add( gltf.scene );	} );
+				
+				
+				obj3d1.position.x= 1; 
+				obj3d2.position.x= -2.73;
+				obj3d3.position.x= 1.33;
+
+				obj3da1.position.x =2.27; obj3da1.position.z =3.5;obj3da1.rotation.y=-Math.PI/2;  
+				obj3da2.position.x =2.27; obj3da2.position.z =2.5;obj3da2.rotation.y=-Math.PI/2;  
+				
+				obj3da3.position.x =-2.27; obj3da1.position.z =3.5;    obj3da3.rotation.y=Math.PI/2;
+				obj3da4.position.x =-2.27; obj3da4.position.z =0.95;    obj3da4.rotation.y=Math.PI/2;
+				
+				obj3da5.position.x =-1.33;obj3da5.position.z =3.3;  obj3da5.rotation.y=-Math.PI; 
+				obj3da6.position.x =-1.6;obj3da6.position.z =3.3;  obj3da6.rotation.y=-Math.PI; 
+				obj3da7.position.x =-1;obj3da7.position.z =3.3;  obj3da7.rotation.y=-Math.PI; 
+				
+			
+				
+
+				scene.add(obj3d1);
+				scene.add(obj3d2 );
+				scene.add(obj3d3 );
+				scene.add(obj3da1 );
+				scene.add(obj3da2 );
+				scene.add(obj3da3 );
+				scene.add(obj3da4 );
+				scene.add(obj3da5 );
+				scene.add(obj3da6 );
+				scene.add(obj3da7 );
+
 
 				renderer = new THREE.WebGLRenderer( { antialias: true } );
 				renderer.setPixelRatio( window.devicePixelRatio );
@@ -76,7 +152,7 @@
 				// stats
 				stats = new Stats();
 				container.appendChild( stats.dom );
-
+			animate();
 			}
 
 			function onWindowResize() {
