@@ -15,5 +15,11 @@ controlador.interaccion = (req, res)=>{
 controlador.controles = (req, res)=>{
     res.render('controlCamara'); 
 }
+controlador.espejos = (req, res)=>{
+    res.render('espejos'); 
+}
+controlador.chat = (req, res)=>{
+    res.render('chat'); 
+}
 
 module.exports = controlador; 
