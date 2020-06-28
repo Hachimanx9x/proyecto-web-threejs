@@ -90,6 +90,13 @@
 				verticalMirror.position.z = - 0.047;
 				verticalMirror.rotation.x = -Math.PI/2; 
 				scene.add( verticalMirror );
+
+		var objectopasidad = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial( { color: 0x0000000, opacity: 0.5 , transparent: true } ) );
+		objectopasidad.position.y = verticalMirror.position.y+0.001; 
+		objectopasidad.position.x = verticalMirror.position.x ;
+		objectopasidad.position.z = verticalMirror.position.z;
+		objectopasidad.rotation.x = verticalMirror.rotation.x ;
+			scene.add(objectopasidad)
 		//-----------------------------------------------------------------------------------------
 
 				renderer = new THREE.WebGLRenderer( { antialias: true } );
