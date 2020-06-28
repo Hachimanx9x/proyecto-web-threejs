@@ -3,6 +3,10 @@
 
 			var container, stats, controls;
 			var camera, scene, renderer, light;
+			 // scene size
+			 var WIDTH = window.innerWidth;
+			 var HEIGHT = window.innerHeight;
+
 
 			init();
 			
@@ -72,7 +76,21 @@
            scene.add(sillas[i]); 
         }
         //----------------------------------------------------------------------------------------
-
+		//-----------------------------------------------------------------------------------------
+		var geometry = new THREE.PlaneBufferGeometry( 0.65, 1.93 );
+				var verticalMirror = new THREE.Reflector( geometry, {
+					clipBias: 0.0005,
+					textureWidth: WIDTH * window.devicePixelRatio,
+					textureHeight: HEIGHT * window.devicePixelRatio,
+					color: 0x889999,
+					recursion: 1
+				} );
+				verticalMirror.position.y = 0.177;
+				verticalMirror.position.x = 0.023;
+				verticalMirror.position.z = - 0.047;
+				verticalMirror.rotation.x = -Math.PI/2; 
+				scene.add( verticalMirror );
+		//-----------------------------------------------------------------------------------------
 
 				renderer = new THREE.WebGLRenderer( { antialias: true } );
 				renderer.setPixelRatio( window.devicePixelRatio );
