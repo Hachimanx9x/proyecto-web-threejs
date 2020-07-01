@@ -21,5 +21,14 @@ controlador.espejos = (req, res)=>{
 controlador.chat = (req, res)=>{
     res.render('chat'); 
 }
+controlador.camaraWeb = (req, res)=>{
+    res.render('camaraWeb'); 
+}
+controlador.video = (req, res)=>{
+    res.render('video'); 
+}
+controlador.streamVideo = (req, res)=>{
+    res.render('streamVideo'); 
+}
 
 module.exports = controlador; 

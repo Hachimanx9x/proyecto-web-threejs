@@ -10,6 +10,9 @@ module.exports =app=>{
     rutas.get('/controlCamara', controlGeneral.controles); 
     rutas.get('/espejos', controlGeneral.espejos); 
     rutas.get('/chat', controlGeneral.chat); 
+    rutas.get('/camaraWeb', controlGeneral.camaraWeb); 
+    rutas.get('/videos', controlGeneral.video);
+    rutas.get('/streamVideo', controlGeneral.streamVideo); 
 
     app.use(rutas); 
 }
