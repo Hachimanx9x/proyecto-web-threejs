@@ -103,7 +103,7 @@
 				// set canvas as material.map (this could be done to any map, bump, displacement etc.)
                
 				material.map = new THREE.CanvasTexture( drawingCanvas );
-                material.side = THREE.BackSide; 
+              //  material.side = THREE.BackSide; 
                 material.overdraw= 0.5; 
 
 
@@ -125,8 +125,8 @@
 
 				requestAnimationFrame( animate );
 
-				mesh.rotation.x += 0.01;
-				mesh.rotation.y += 0.01;
+			//	mesh.rotation.x += 0.01;
+			//	mesh.rotation.y += 0.01;
                 material.map.needsUpdate = true;
 				renderer.render( scene, camera );
 
