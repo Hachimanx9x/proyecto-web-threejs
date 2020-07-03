@@ -5,10 +5,10 @@
 
              <script src="/librerias/Chart/chart.js"></script>
             <script src="/librerias/Detector.js"></script>
-             <script src="/librerias/stats.min.js"></script>
+         
              <script>
 		if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
-            var canvas1 
+            var canvas1 ;
 			var camera, scene, renderer, mesh, material;
 			var drawStartPos = new THREE.Vector2();
 
@@ -18,6 +18,9 @@
 
 			function init() {
                 canvas1 = document.createElement( 'canvas' );
+                 canvas1.height=120;
+                  canvas1.width=120;
+                  canvas1.style.backgroundColor="#ffffff"; 
                 document.body.appendChild( canvas1 );
 
 				camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 2000 );
@@ -26,10 +29,14 @@
 				scene = new THREE.Scene();
 
 				material = new THREE.MeshBasicMaterial();
+              
+             //   material.map = new THREE.CanvasTexture(canvas1 );
 
 				mesh = new THREE.Mesh( new THREE.BoxBufferGeometry( 200, 200, 200 ), material );
 				scene.add( mesh );
 
+
+                
 				renderer = new THREE.WebGLRenderer( { antialias: true } );
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
@@ -46,7 +53,8 @@
 				// get canvas and context
 
 				var drawingCanvas = canvas1 ; 
-				var drawingContext = drawingCanvas.getContext( '2d' );
+			//	var drawingContext = drawingCanvas.getContext( '2d' );
+               
                 var marksData = {
                         labels: ["English", "Maths", "Physics", "Chemistry", "Biology", "History"],
                         datasets: [{
@@ -63,11 +71,12 @@
                          type: 'radar',
                          data: marksData
                         });
+                     
                 
 				// draw white background
 
-				drawingContext.fillStyle = '#FFFFFF';
-				drawingContext.fillRect( 0, 0, 128, 128 );
+			//	drawingContext.fillStyle = '#FFFFFF';
+			//	drawingContext.fillRect( 0, 0, 128, 128 );
                 
 				// set canvas as material.map (this could be done to any map, bump, displacement etc.)
 
