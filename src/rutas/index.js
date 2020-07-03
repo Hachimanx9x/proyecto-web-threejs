@@ -13,6 +13,7 @@ module.exports =app=>{
     rutas.get('/camaraWeb', controlGeneral.camaraWeb); 
     rutas.get('/videos', controlGeneral.video);
     rutas.get('/streamVideo', controlGeneral.streamVideo); 
+    rutas.get('/graficoRadar', controlGeneral.grafico); 
 
     app.use(rutas); 
 }

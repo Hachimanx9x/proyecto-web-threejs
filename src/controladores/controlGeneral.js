@@ -30,5 +30,8 @@ controlador.video = (req, res)=>{
 controlador.streamVideo = (req, res)=>{
     res.render('streamVideo'); 
 }
+controlador.grafico = (req, res)=>{
+    res.render('grafico'); 
+}
 
 module.exports = controlador; 

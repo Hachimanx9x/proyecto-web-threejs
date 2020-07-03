@@ -1,0 +1,101 @@
+<script src="/librerias/threejs/three.js"></script>
+
+	<script src="/librerias/Projector.js"></script>
+		<script src="/librerias/CanvasRenderer.js"></script>
+
+             <script src="/librerias/Chart/chart.js"></script>
+            <script src="/librerias/Detector.js"></script>
+             <script src="/librerias/stats.min.js"></script>
+             <script>
+		if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+            var canvas1 
+			var camera, scene, renderer, mesh, material;
+			var drawStartPos = new THREE.Vector2();
+
+			init();
+			setupCanvasDrawing();
+			animate();
+
+			function init() {
+                canvas1 = document.createElement( 'canvas' );
+                document.body.appendChild( canvas1 );
+
+				camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 2000 );
+				camera.position.z = 500;
+
+				scene = new THREE.Scene();
+
+				material = new THREE.MeshBasicMaterial();
+
+				mesh = new THREE.Mesh( new THREE.BoxBufferGeometry( 200, 200, 200 ), material );
+				scene.add( mesh );
+
+				renderer = new THREE.WebGLRenderer( { antialias: true } );
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				document.body.appendChild( renderer.domElement );
+
+				window.addEventListener( 'resize', onWindowResize, false );
+
+			}
+
+			// Sets up the drawing canvas and adds it as the material map
+
+			function setupCanvasDrawing() {
+
+				// get canvas and context
+
+				var drawingCanvas = canvas1 ; 
+				var drawingContext = drawingCanvas.getContext( '2d' );
+                var marksData = {
+                        labels: ["English", "Maths", "Physics", "Chemistry", "Biology", "History"],
+                        datasets: [{
+                            label: "Student A",
+                            backgroundColor: "rgba(200,0,0,0.2)",
+                            data: [65, 75, 70, 80, 60, 80]
+                        }, {
+                            label: "Student B",
+                            backgroundColor: "rgba(0,0,200,0.2)",
+                            data: [54, 65, 60, 70, 70, 75]
+                        }]
+                        };
+                        var radarChart = new Chart(drawingCanvas, {
+                         type: 'radar',
+                         data: marksData
+                        });
+                
+				// draw white background
+
+				drawingContext.fillStyle = '#FFFFFF';
+				drawingContext.fillRect( 0, 0, 128, 128 );
+                
+				// set canvas as material.map (this could be done to any map, bump, displacement etc.)
+
+				material.map = new THREE.CanvasTexture( drawingCanvas );
+
+
+
+			}
+
+		
+
+			function onWindowResize() {
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+			}
+
+			function animate() {
+
+				requestAnimationFrame( animate );
+
+				mesh.rotation.x += 0.01;
+				mesh.rotation.y += 0.01;
+                material.map.needsUpdate = true;
+				renderer.render( scene, camera );
+
+			}
+		</script>
