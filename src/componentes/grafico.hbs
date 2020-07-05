@@ -11,7 +11,7 @@
              <script>
 		if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
             var canvas1 ;
-			var camera, scene, renderer, mesh, material;
+			var camera, scene, renderer, mesh, mesh2,obj, material;
 			var drawStartPos = new THREE.Vector2();
 
 			init();
@@ -26,11 +26,12 @@
                 document.body.appendChild( canvas1 );
 
 				camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 2000 );
-				camera.position.z = 500;
+				camera.position.z = 250;
 
 				scene = new THREE.Scene();
 
 				material = new THREE.MeshBasicMaterial();
+				obj = new THREE.Object3D(); 
 
                 	// skybox
 				var path = '/publico/texturas/Bridge2/';
@@ -52,7 +53,9 @@
              //   material.map = new THREE.CanvasTexture(canvas1 );
 
 				mesh = new THREE.Mesh( new THREE.BoxBufferGeometry( 200, 200, 200 ), material );
-				scene.add( mesh );
+				mesh2 = new THREE.Mesh( new THREE.BoxBufferGeometry( 200, 200, 200 ),new THREE.MeshBasicMaterial( { color: 0xfffffff } ) );
+				obj.add(mesh); obj.add(mesh2); 
+				scene.add( obj );
 
 
                 
@@ -72,17 +75,13 @@
 				// get canvas and context
 
 				var drawingCanvas = canvas1 ; 
-                // draw white background
-                /*
-                var drawingContext = drawingCanvas.getContext( '2d' )
-				drawingContext.fillStyle = '#FFFFFF';
-				drawingContext.fillRect( 0, 0, 128, 128 );
-                var  textureReflection = new THREE.Texture(drawingContext );*/
+              
 
 				;
                
                 var marksData = {
                         labels: ["English", "Maths", "Physics", "Chemistry", "Biology", "History"],
+					
                         datasets: [{
                             label: "Student A",
                             backgroundColor: "rgba(200,0,0,0.2)",
@@ -93,18 +92,18 @@
                             data: [54, 65, 60, 70, 70, 75]
                         }]
                         };
-                        var radarChart = new Chart(drawingCanvas, {
-                         type: 'radar',
-                         data: marksData
-                        });
+			
+						
+                        var radarChart = new Chart(drawingCanvas, {           type: 'radar',                   data: marksData,               });
                      
-                
+               // drawingCanvas.style.backgroundColor="white"; 
 				
 				// set canvas as material.map (this could be done to any map, bump, displacement etc.)
                
 				material.map = new THREE.CanvasTexture( drawingCanvas );
               //  material.side = THREE.BackSide; 
                 material.overdraw= 0.5; 
+				material.transparent= true; 
 
 
 
@@ -125,8 +124,9 @@
 
 				requestAnimationFrame( animate );
 
-			//	mesh.rotation.x += 0.01;
-			//	mesh.rotation.y += 0.01;
+				obj.rotation.x += 0.01;
+				obj.rotation.y += 0.01;
+				//esto solo se debe ejecutar cuando se actualiza el canvas pero se deja aqui por razones de pereza
                 material.map.needsUpdate = true;
 				renderer.render( scene, camera );
 
