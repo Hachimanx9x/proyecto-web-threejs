@@ -14,6 +14,7 @@ module.exports =app=>{
     rutas.get('/videos', controlGeneral.video);
     rutas.get('/streamVideo', controlGeneral.streamVideo); 
     rutas.get('/graficoRadar', controlGeneral.grafico); 
+    rutas.get('/login', controlGeneral.login); 
 
     app.use(rutas); 
 }
