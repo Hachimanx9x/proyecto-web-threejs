@@ -465,7 +465,10 @@ m2=1
       <w>98</w>
       <h>49</h>
     </coordinates>
-    <panel_attributes>Se suben los entregables para que se puegan visualizar
+    <panel_attributes>Se suben los entregables
+para que se puegan 
+visualizar dentro del
+entorno
 bg=blue</panel_attributes>
     <additional_attributes/>
   </element>
