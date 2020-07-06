@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>550</x>
+      <y>490</y>
+      <w>210</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>Pagina
+--
+numero de usuarios: numero
+numero de proyectos:numero</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>270</x>
+      <y>640</y>
+      <w>210</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>Usuarios
+--
+id: cadena
+nombre:cadena
+descripcion:cadena
+otro: cadena
+pais: cadena
+edad: entero
+correo electronico: cadena
+url hoja de vida: cadena
+años de experiencia: entero
+idioma:llave foranea
+habilidad: llave foranea
+herramienta: llave foranea
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>600</x>
+      <y>640</y>
+      <w>210</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>Proyecto
+--
+id: cadena
+nombre:cadena
+descripcion:cadena
+estado: cadena
+url icono: cadena
+url baner: cadena
+integrante: llave foranea
+historial: llaveforanea
+practicas: llave foranea
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>930</x>
+      <y>280</y>
+      <w>210</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>practica
+--
+id: cadena
+nombre:cadena
+Descripcion:cadena
+alfa usada : llave foranea
+ruta: llave foranea
+rol: llave foranea
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>560</x>
+      <y>290</y>
+      <w>210</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>Metodologia
+--
+id: cadena
+nombre:cadena
+Descripcion:cadena
+Mensaje:cadena
+pratica:llave foranea
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>640</x>
+      <y>390</y>
+      <w>80</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1
+tiene &gt;</panel_attributes>
+    <additional_attributes>10.0;100.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>0</x>
+      <y>100</y>
+      <w>190</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0..n
+m2=0..1
+teaches to &gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;170.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>760</x>
+      <y>330</y>
+      <w>190</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1..n
+tiene &gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;170.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>930</x>
+      <y>490</y>
+      <w>210</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>alfa
+--
+id: cadena
+nombre:cadena
+Descripcion:cadena
+estado:cadena
+entregable: llave foranea
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1630</x>
+      <y>70</y>
+      <w>240</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>tecnica
+--
+id:cadena
+titulo:cadena
+Descripcion: cadena
+url documento explicacion: cadena
+bibliografia: cadena
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1590</x>
+      <y>500</y>
+      <w>250</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>Herramienta
+--
+id: cadena
+nombre:cadena
+Descripcion:cadena
+url documento explicacion: cadena
+bibliografia: cadena
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1270</x>
+      <y>480</y>
+      <w>210</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>Entregable
+--
+id: cadena
+titulo: cadena
+descripcion: cadena
+tipo archivo: cadena
+fecha de entrega: fecha
+numero de revisiones: entero
+herramienta: llave foranea</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1290</x>
+      <y>280</y>
+      <w>250</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>Rol
+--
+id: cadena
+titulo: cadena
+descripcion: cadena
+perfil recomendado: cadena
+habilidad recomendada: llave foranea
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1000</x>
+      <y>670</y>
+      <w>190</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0..n
+m2=0..1
+teaches to &gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;170.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1020</x>
+      <y>400</y>
+      <w>80</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1..n
+tiene &gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1130</x>
+      <y>530</y>
+      <w>160</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1..n
+tiene &gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;140.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1470</x>
+      <y>530</y>
+      <w>140</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1..n
+tiene &gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;120.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>940</x>
+      <y>70</y>
+      <w>210</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>ruta
+--
+id:cadena
+nombre: cadena
+Descripcion:cadena
+actividad: llave foranea
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1280</x>
+      <y>40</y>
+      <w>210</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>actividad
+--
+id: cadena
+titulo: cadena
+descripcion: cadena
+fecha de creacion: fecha
+fecha de entrega: fecha
+hora de entrega : hora
+numero de revisiones: numero
+tenica: llave foranea</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1020</x>
+      <y>160</y>
+      <w>80</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1..n
+tiene &gt;</panel_attributes>
+    <additional_attributes>10.0;120.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1130</x>
+      <y>320</y>
+      <w>180</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1..n
+tiene &gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;160.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1140</x>
+      <y>90</y>
+      <w>160</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1..n
+tiene &gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;140.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1480</x>
+      <y>110</y>
+      <w>170</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1..n
+tiene &gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;150.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>80</x>
+      <y>260</y>
+      <w>210</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>_object: Class_
+--
+id: Long="36548"
+[waiting for message]</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
