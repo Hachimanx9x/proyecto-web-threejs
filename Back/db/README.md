@@ -1,0 +1,18 @@
+## Descripcion 
+
+Para la descripcion inicial de la base de datos se tubo en cuenta la construccion de lso requermientos minimos necesarios del aplicativo, luego se construyo un modelos de entidad y relacion (M.E.R.) que posteriormente fue pasado a Maria db para su ejecucion.
+
+### Imagen del modelo entidad relacion
+
+<img
+src=“./DB_img.jpg”
+raw=true
+alt=“Modelo entidad realcion version 0.7”
+style=“margin-right: 10px;”
+/>
+
+----
+
+### Notas de la version 0.7
+
+En esta version por razones de tiempo y de funcionalidad se omitio la tabla de paginas, dado que no tiene un propisito claro para el sistema.
