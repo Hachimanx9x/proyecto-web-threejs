@@ -4,7 +4,7 @@ Para la descripcion inicial de la base de datos se tubo en cuenta la construccio
 
 ### Imagen del modelo entidad relacion
 
-<img width=“100%” src=“./DB_img.jpg” />
+<img width=“100%” src=“/DB_img.jpg” />
 
 ----
 
