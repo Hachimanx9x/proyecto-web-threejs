@@ -29,6 +29,7 @@ id: cadena
 correo electronico: cadena
 url hoja de vida: cadena
 años de experiencia: entero
+contraseña: cadena
 persona:llave foranea
 idioma:llave foranea
 contacto: llave foranea

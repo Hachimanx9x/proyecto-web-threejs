@@ -32,7 +32,9 @@ CREATE TABLE IF NOT EXISTS `actividades` (
   CONSTRAINT `actividades_ibfk_1` FOREIGN KEY (`tecnica`) REFERENCES `tecnicas` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- La exportación de datos fue deseleccionada.
+-- Volcando datos para la tabla proyectoweb.actividades: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `actividades` DISABLE KEYS */;
+/*!40000 ALTER TABLE `actividades` ENABLE KEYS */;
 
 -- Volcando estructura para tabla proyectoweb.alfas
 CREATE TABLE IF NOT EXISTS `alfas` (
@@ -46,7 +48,9 @@ CREATE TABLE IF NOT EXISTS `alfas` (
   CONSTRAINT `alfas_ibfk_1` FOREIGN KEY (`entregable`) REFERENCES `entregables` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- La exportación de datos fue deseleccionada.
+-- Volcando datos para la tabla proyectoweb.alfas: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `alfas` DISABLE KEYS */;
+/*!40000 ALTER TABLE `alfas` ENABLE KEYS */;
 
 -- Volcando estructura para tabla proyectoweb.anotaciones
 CREATE TABLE IF NOT EXISTS `anotaciones` (
@@ -56,7 +60,9 @@ CREATE TABLE IF NOT EXISTS `anotaciones` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- La exportación de datos fue deseleccionada.
+-- Volcando datos para la tabla proyectoweb.anotaciones: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `anotaciones` DISABLE KEYS */;
+/*!40000 ALTER TABLE `anotaciones` ENABLE KEYS */;
 
 -- Volcando estructura para tabla proyectoweb.chats
 CREATE TABLE IF NOT EXISTS `chats` (
@@ -66,7 +72,9 @@ CREATE TABLE IF NOT EXISTS `chats` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- La exportación de datos fue deseleccionada.
+-- Volcando datos para la tabla proyectoweb.chats: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `chats` DISABLE KEYS */;
+/*!40000 ALTER TABLE `chats` ENABLE KEYS */;
 
 -- Volcando estructura para tabla proyectoweb.contactos
 CREATE TABLE IF NOT EXISTS `contactos` (
@@ -76,9 +84,14 @@ CREATE TABLE IF NOT EXISTS `contactos` (
   PRIMARY KEY (`id`),
   KEY `personas` (`personas`),
   CONSTRAINT `contactos_ibfk_1` FOREIGN KEY (`personas`) REFERENCES `personas` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- La exportación de datos fue deseleccionada.
+-- Volcando datos para la tabla proyectoweb.contactos: ~2 rows (aproximadamente)
+/*!40000 ALTER TABLE `contactos` DISABLE KEYS */;
+INSERT INTO `contactos` (`id`, `personas`, `preferencias`) VALUES
+	(1, 1, 1),
+	(2, 2, 0);
+/*!40000 ALTER TABLE `contactos` ENABLE KEYS */;
 
 -- Volcando estructura para tabla proyectoweb.contenidos
 CREATE TABLE IF NOT EXISTS `contenidos` (
@@ -90,7 +103,9 @@ CREATE TABLE IF NOT EXISTS `contenidos` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- La exportación de datos fue deseleccionada.
+-- Volcando datos para la tabla proyectoweb.contenidos: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `contenidos` DISABLE KEYS */;
+/*!40000 ALTER TABLE `contenidos` ENABLE KEYS */;
 
 -- Volcando estructura para tabla proyectoweb.entregables
 CREATE TABLE IF NOT EXISTS `entregables` (
@@ -107,7 +122,9 @@ CREATE TABLE IF NOT EXISTS `entregables` (
   CONSTRAINT `entregables_ibfk_1` FOREIGN KEY (`contenido`) REFERENCES `contenidos` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- La exportación de datos fue deseleccionada.
+-- Volcando datos para la tabla proyectoweb.entregables: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `entregables` DISABLE KEYS */;
+/*!40000 ALTER TABLE `entregables` ENABLE KEYS */;
 
 -- Volcando estructura para tabla proyectoweb.entregas
 CREATE TABLE IF NOT EXISTS `entregas` (
@@ -126,7 +143,9 @@ CREATE TABLE IF NOT EXISTS `entregas` (
   CONSTRAINT `entregas_ibfk_2` FOREIGN KEY (`entregable`) REFERENCES `entregables` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- La exportación de datos fue deseleccionada.
+-- Volcando datos para la tabla proyectoweb.entregas: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `entregas` DISABLE KEYS */;
+/*!40000 ALTER TABLE `entregas` ENABLE KEYS */;
 
 -- Volcando estructura para tabla proyectoweb.eventos
 CREATE TABLE IF NOT EXISTS `eventos` (
@@ -141,7 +160,9 @@ CREATE TABLE IF NOT EXISTS `eventos` (
   CONSTRAINT `eventos_ibfk_2` FOREIGN KEY (`entregas`) REFERENCES `entregas` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- La exportación de datos fue deseleccionada.
+-- Volcando datos para la tabla proyectoweb.eventos: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `eventos` DISABLE KEYS */;
+/*!40000 ALTER TABLE `eventos` ENABLE KEYS */;
 
 -- Volcando estructura para tabla proyectoweb.habilidades
 CREATE TABLE IF NOT EXISTS `habilidades` (
@@ -153,9 +174,15 @@ CREATE TABLE IF NOT EXISTS `habilidades` (
   PRIMARY KEY (`id`),
   KEY `herramientaUsada` (`herramientaUsada`),
   CONSTRAINT `habilidades_ibfk_1` FOREIGN KEY (`herramientaUsada`) REFERENCES `herramientas` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- La exportación de datos fue deseleccionada.
+-- Volcando datos para la tabla proyectoweb.habilidades: ~3 rows (aproximadamente)
+/*!40000 ALTER TABLE `habilidades` DISABLE KEYS */;
+INSERT INTO `habilidades` (`id`, `tipo`, `descripcion`, `nivel`, `herramientaUsada`) VALUES
+	(1, 'diseño ui', 'Expecialista en diseño para la web', 'medio', 2),
+	(2, 'diseño software', 'Expecialista seguridad', 'alto', 1),
+	(3, 'programador', 'construcción de servidores', 'medio', 3);
+/*!40000 ALTER TABLE `habilidades` ENABLE KEYS */;
 
 -- Volcando estructura para tabla proyectoweb.herramientas
 CREATE TABLE IF NOT EXISTS `herramientas` (
@@ -165,9 +192,15 @@ CREATE TABLE IF NOT EXISTS `herramientas` (
   `descripcion` varchar(100) DEFAULT NULL,
   `url_icono` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- La exportación de datos fue deseleccionada.
+-- Volcando datos para la tabla proyectoweb.herramientas: ~3 rows (aproximadamente)
+/*!40000 ALTER TABLE `herramientas` DISABLE KEYS */;
+INSERT INTO `herramientas` (`id`, `nombre`, `tipo`, `descripcion`, `url_icono`) VALUES
+	(1, 'nodejs', 'Desarrollo software', 'Node.js es un entorno multiplataforma, basado en el lenguaje de programación JavaScript.', 'https://nodejs.org/static/images/logo.svg'),
+	(2, 'Bootstrap', 'Desarrollo web', 'Bootstrap es una biblioteca multiplataforma para el diseño de entornos web.', 'https://nodejs.org/static/images/logo.svg'),
+	(3, 'Go', 'Desarrollo software', 'Go es un lenguaje de programación concurrente y compilado inspirado en la sintaxis de C', 'https://nodejs.org/static/images/logo.svg');
+/*!40000 ALTER TABLE `herramientas` ENABLE KEYS */;
 
 -- Volcando estructura para tabla proyectoweb.historial
 CREATE TABLE IF NOT EXISTS `historial` (
@@ -185,7 +218,9 @@ CREATE TABLE IF NOT EXISTS `historial` (
   CONSTRAINT `historial_ibfk_3` FOREIGN KEY (`anotacion`) REFERENCES `anotaciones` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- La exportación de datos fue deseleccionada.
+-- Volcando datos para la tabla proyectoweb.historial: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `historial` DISABLE KEYS */;
+/*!40000 ALTER TABLE `historial` ENABLE KEYS */;
 
 -- Volcando estructura para tabla proyectoweb.idiomas
 CREATE TABLE IF NOT EXISTS `idiomas` (
@@ -193,9 +228,18 @@ CREATE TABLE IF NOT EXISTS `idiomas` (
   `nombre` varchar(20) DEFAULT NULL,
   `nivel` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
--- La exportación de datos fue deseleccionada.
+-- Volcando datos para la tabla proyectoweb.idiomas: ~6 rows (aproximadamente)
+/*!40000 ALTER TABLE `idiomas` DISABLE KEYS */;
+INSERT INTO `idiomas` (`id`, `nombre`, `nivel`) VALUES
+	(1, 'Ingles', 'A1 Beginner'),
+	(2, 'Ingles', 'A2 Elementary'),
+	(3, 'Ingles', 'B1 LowerIntermediate'),
+	(4, 'Ingles', 'B2 Intermediate'),
+	(5, 'Ingles', 'C1 Upperintermediate'),
+	(6, 'Ingles', 'C2 Advanced');
+/*!40000 ALTER TABLE `idiomas` ENABLE KEYS */;
 
 -- Volcando estructura para tabla proyectoweb.integrantes
 CREATE TABLE IF NOT EXISTS `integrantes` (
@@ -210,7 +254,9 @@ CREATE TABLE IF NOT EXISTS `integrantes` (
   CONSTRAINT `integrantes_ibfk_2` FOREIGN KEY (`actividad`) REFERENCES `actividades` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- La exportación de datos fue deseleccionada.
+-- Volcando datos para la tabla proyectoweb.integrantes: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `integrantes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `integrantes` ENABLE KEYS */;
 
 -- Volcando estructura para tabla proyectoweb.metodologias
 CREATE TABLE IF NOT EXISTS `metodologias` (
@@ -224,7 +270,9 @@ CREATE TABLE IF NOT EXISTS `metodologias` (
   CONSTRAINT `metodologias_ibfk_1` FOREIGN KEY (`practica`) REFERENCES `practicas` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- La exportación de datos fue deseleccionada.
+-- Volcando datos para la tabla proyectoweb.metodologias: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `metodologias` DISABLE KEYS */;
+/*!40000 ALTER TABLE `metodologias` ENABLE KEYS */;
 
 -- Volcando estructura para tabla proyectoweb.personas
 CREATE TABLE IF NOT EXISTS `personas` (
@@ -235,9 +283,14 @@ CREATE TABLE IF NOT EXISTS `personas` (
   `pais` varchar(20) DEFAULT NULL,
   `edad` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- La exportación de datos fue deseleccionada.
+-- Volcando datos para la tabla proyectoweb.personas: ~2 rows (aproximadamente)
+/*!40000 ALTER TABLE `personas` DISABLE KEYS */;
+INSERT INTO `personas` (`id`, `nombre`, `descripcion`, `otro`, `pais`, `edad`) VALUES
+	(1, 'nestor ivan martinez marulanda', 'Soy una persona que le gusta le modelo 3d la programacion y aprender cosas', 'https://github.com/Accelx9', 'Colombia', 20),
+	(2, 'diego fernando bolaños palma', 'Soy una persona que le gusta la programacion y aprender cosas', 'https://github.com/Hachimanx9x', 'Colombia', 25);
+/*!40000 ALTER TABLE `personas` ENABLE KEYS */;
 
 -- Volcando estructura para tabla proyectoweb.practicas
 CREATE TABLE IF NOT EXISTS `practicas` (
@@ -256,7 +309,9 @@ CREATE TABLE IF NOT EXISTS `practicas` (
   CONSTRAINT `practicas_ibfk_3` FOREIGN KEY (`rol`) REFERENCES `roles` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- La exportación de datos fue deseleccionada.
+-- Volcando datos para la tabla proyectoweb.practicas: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `practicas` DISABLE KEYS */;
+/*!40000 ALTER TABLE `practicas` ENABLE KEYS */;
 
 -- Volcando estructura para tabla proyectoweb.reuniones
 CREATE TABLE IF NOT EXISTS `reuniones` (
@@ -272,7 +327,9 @@ CREATE TABLE IF NOT EXISTS `reuniones` (
   CONSTRAINT `reuniones_ibfk_1` FOREIGN KEY (`integrantes`) REFERENCES `integrantes` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- La exportación de datos fue deseleccionada.
+-- Volcando datos para la tabla proyectoweb.reuniones: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `reuniones` DISABLE KEYS */;
+/*!40000 ALTER TABLE `reuniones` ENABLE KEYS */;
 
 -- Volcando estructura para tabla proyectoweb.roles
 CREATE TABLE IF NOT EXISTS `roles` (
@@ -286,7 +343,9 @@ CREATE TABLE IF NOT EXISTS `roles` (
   CONSTRAINT `roles_ibfk_1` FOREIGN KEY (`habilidadRecomendada`) REFERENCES `habilidades` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- La exportación de datos fue deseleccionada.
+-- Volcando datos para la tabla proyectoweb.roles: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `roles` DISABLE KEYS */;
+/*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 
 -- Volcando estructura para tabla proyectoweb.rutas
 CREATE TABLE IF NOT EXISTS `rutas` (
@@ -299,7 +358,9 @@ CREATE TABLE IF NOT EXISTS `rutas` (
   CONSTRAINT `rutas_ibfk_1` FOREIGN KEY (`actividad`) REFERENCES `actividades` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- La exportación de datos fue deseleccionada.
+-- Volcando datos para la tabla proyectoweb.rutas: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `rutas` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rutas` ENABLE KEYS */;
 
 -- Volcando estructura para tabla proyectoweb.tecnicas
 CREATE TABLE IF NOT EXISTS `tecnicas` (
@@ -311,29 +372,35 @@ CREATE TABLE IF NOT EXISTS `tecnicas` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- La exportación de datos fue deseleccionada.
+-- Volcando datos para la tabla proyectoweb.tecnicas: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `tecnicas` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tecnicas` ENABLE KEYS */;
 
 -- Volcando estructura para tabla proyectoweb.usuarios
 CREATE TABLE IF NOT EXISTS `usuarios` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(50) DEFAULT NULL,
-  `descripcion` varchar(150) DEFAULT NULL,
-  `otro` varchar(50) DEFAULT NULL,
-  `pais` varchar(20) DEFAULT NULL,
-  `edad` int(11) DEFAULT NULL,
   `correoElectronico` varchar(50) DEFAULT NULL,
   `urlHojaVida` varchar(50) DEFAULT NULL,
+  `contrasena` varchar(15) DEFAULT NULL,
   `experiencia` int(11) DEFAULT NULL,
   `contacto` int(11) DEFAULT NULL,
+  `persona` int(11) DEFAULT NULL,
   `habilidad` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `contacto` (`contacto`),
+  KEY `persona` (`persona`),
   KEY `habilidad` (`habilidad`),
   CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`contacto`) REFERENCES `contactos` (`id`),
-  CONSTRAINT `usuarios_ibfk_2` FOREIGN KEY (`habilidad`) REFERENCES `habilidades` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  CONSTRAINT `usuarios_ibfk_2` FOREIGN KEY (`persona`) REFERENCES `personas` (`id`),
+  CONSTRAINT `usuarios_ibfk_3` FOREIGN KEY (`habilidad`) REFERENCES `habilidades` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- La exportación de datos fue deseleccionada.
+-- Volcando datos para la tabla proyectoweb.usuarios: ~2 rows (aproximadamente)
+/*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
+INSERT INTO `usuarios` (`id`, `correoElectronico`, `urlHojaVida`, `contrasena`, `experiencia`, `contacto`, `persona`, `habilidad`) VALUES
+	(1, 'micorreo@uao.edu.co', 'link_de_la_hoja_de_vida', 'contraseña123', 3, 1, 2, 3),
+	(2, 'micorreo@uao.edu.co', 'link_de_la_hoja_de_vida', 'contraseña123', 2, 2, 1, 1);
+/*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;

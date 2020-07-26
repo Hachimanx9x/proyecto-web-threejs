@@ -21,7 +21,7 @@ CREATE TABLE RUTAS(id int PRIMARY KEY AUTO_INCREMENT, nombre varchar(20), descri
 
 CREATE TABLE ALFAS(id int PRIMARY KEY AUTO_INCREMENT, nombre varchar(50), descripcion varchar(100), estado varchar(20), entregable int, FOREIGN KEY(entregable) REFERENCES ENTREGABLES(id));
 
-CREATE TABLE USUARIOS(id int PRIMARY KEY AUTO_INCREMENT, nombre varchar(50), descripcion varchar(150), otro varchar(50), pais varchar(20), edad int, correoElectronico varchar(50), urlHojaVida varchar(50), experiencia int, contacto int, habilidad int, FOREIGN KEY(contacto) REFERENCES CONTACTOS(id),  FOREIGN KEY(habilidad) REFERENCES HABILIDADES(id));
+CREATE TABLE USUARIOS(id int PRIMARY KEY AUTO_INCREMENT, correoElectronico VARCHAR(50), urlHojaVida varchar(50), contrasena VARCHAR(15), experiencia int, contacto INT, persona INT , habilidad int, FOREIGN KEY(contacto) REFERENCES CONTACTOS(id),  FOREIGN KEY(persona) REFERENCES PERSONAS(id),  FOREIGN KEY(habilidad) REFERENCES HABILIDADES(id));
 
 CREATE TABLE INTEGRANTES(id int PRIMARY KEY AUTO_INCREMENT, usuario varchar(50), rol int, actividad int, FOREIGN KEY(rol) REFERENCES ROLES(id),  FOREIGN KEY(actividad) REFERENCES ACTIVIDADES(id));
 
