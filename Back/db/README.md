@@ -4,7 +4,7 @@ Para la descripcion inicial de la base de datos se tubo en cuenta la construccio
 
 ### Imagen del modelo entidad relacion
 
-<img src=“DB_img.jpg” />
+<img src=“https://raw.githubusercontent.com/Hachimanx9x/proyecto-web-threejs/master/Back/db/DB_img.jpg” />
 
 ----
 
