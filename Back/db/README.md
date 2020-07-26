@@ -4,12 +4,7 @@ Para la descripcion inicial de la base de datos se tubo en cuenta la construccio
 
 ### Imagen del modelo entidad relacion
 
-<img
-src=“./DB_img.jpg”
-raw=true
-alt=“Modelo entidad realcion version 0.7”
-style=“margin-right: 10px;”
-/>
+<img src=“DB_img.jpg” />
 
 ----
 
