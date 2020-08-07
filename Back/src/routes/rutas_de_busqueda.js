@@ -1,35 +1,13 @@
 const ex = require('express'); 
 const rutas= ex.Router();
-
+const jwt = require('jsonwebtoken'); 
 const mariaDB = require('../database'); 
 
-rutas.get ('/login/:correo/:password',(req,res)=>{
+rutas.post('/login/email=:correo&pass=:password',(req,res)=>{
     const {correo, password}= req.params; 
     console.log(`correo => ${correo} y la contraseña es => ${password}`);
     const query=`
-    SELECT * FROM usuarios 
-    WHERE 
-    correoElectronico = "${correo}" 
-    AND
-    contrasena = "${password}"
-    `;
-    mariaDB.query(query ,(err,rows , fields)=>{
-        if(!err){
-            res.json('usuario encontrado :D'); 
-            res.json(rows); 
-        }else{
-            res.json('usuario no encontrado'); 
-            console.log(err);
-        }
-    });
-}); 
-
-rutas.get ('/login/persona/:correo/:password',(req,res)=>{
-    const {correo, password}= req.params; 
-    console.log(`correo => ${correo} y la contraseña es => ${password}`);
-    const query=`
-    SELECT * FROM usuarios 
-    INNER JOIN personas ON usuarios.persona = personas.id 
+    SELECT * FROM usuarios     
     WHERE 
     correoElectronico = "${correo}" 
     AND
@@ -37,7 +15,10 @@ rutas.get ('/login/persona/:correo/:password',(req,res)=>{
     `; 
      mariaDB.query(query,(err,rows , fields)=>{
         if(!err){
-            res.json(rows); 
+          // res.json(rows); 
+            const token = jwt.sign({rows},'misecretos'); 
+            res.json({token});
+
         }else{
             res.json("Usuairo no encontrado"); 
             console.log(err);
@@ -46,6 +27,33 @@ rutas.get ('/login/persona/:correo/:password',(req,res)=>{
   //  console.log(`id : ${id} ,`)
 });
 
+
+rutas.get('/api/protegido',proToken, (req,res)=>{
+    jwt.verify(req.token,'misecretos',(err,data)=>{
+        if(err){
+            res.sendStatus(403)
+        }else{
+            res.json({ 
+                text:'protegido',
+                data
+            });
+        }
+    }); 
+    
+}); 
+
+function proToken(req,res,next){
+   const header = req.headers['authorization'];
+   console.log(header); 
+   if(typeof header !== 'undefined'){
+       const portador = header.split(" "); 
+       const portadorToken =portador[1]; 
+       req.token=portadorToken; 
+        next(); 
+   }else{
+       res.sendStatus(403); 
+   }
+}
 
 
 module.exports = rutas; 

@@ -6,6 +6,7 @@ const mariadbConection = mariadb.createConnection({
     password:'root',
     database:'proyectoweb'
 });
+
 mariadbConection.connect( function(error){
     if(error){
         console.log(error);
