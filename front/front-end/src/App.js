@@ -1,28 +1,19 @@
-//importaciones funcionales
-import React,{Component} from 'react';
-import {Switch, Route, Router} from 'react-router-dom'
-//paginas propias
-import {Login} from './Pages/login'; 
-import {NoEncontrado} from './Pages/noEncontrado';
-//estilos 
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
+import React from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import Login from "./Components/Login/Login";
+import SigIn from "./Components/Registro/SignIn";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-
-class App extends Component{
-  render(){
-    return(
-      <div className="App">
-        <Switch>
-            <Route exact path ='/login' component={Login} /> 
-            <Route component={ NoEncontrado } />          
-        </Switch>
-      </div>
-    ); 
-  }
-
+function App() {
+  return (
+    <Router>
+      <Switch>
+        <Route exact path="/" component={Login} />
+        <Route path="/SignIn" component={SigIn} />
+      </Switch>
+    </Router>
+  );
 }
-
-
 
 export default App;
