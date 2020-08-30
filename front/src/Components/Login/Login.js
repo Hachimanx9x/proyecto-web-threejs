@@ -4,8 +4,23 @@ import "./Login.css";
 class Login extends Component {
   constructor() {
     super();
-    this.state = { inputName: "" };
-    this.state = { inputPass: "" };
+    this.state = { mail: "", pass: "",login: false, store:null };
+  }
+  login() {
+    const { mail, pass } = this.state;
+    fetch(`localhost:3030/login/email=${mail}&pass=${pass}`,{
+      method='POST',
+      body:JSON.stringify(this.state)
+    }).then((response)=>{ 
+      response.json().then((result)=>{
+        console.warn("result",result);
+        localStorage.setItem('login',JSON.stringify({
+          login: true,
+          token: result.token
+        }))
+        this.setState({login:true});
+      })
+    });
   }
 
   render() {
@@ -29,6 +44,9 @@ class Login extends Component {
                   id="userName"
                   aria-label="Large"
                   placeholder="Correo"
+                  onChange={(event) => {
+                    this.setState({ mail: event.target.value });
+                  }}
                 />
               </div>
             </div>
@@ -43,6 +61,9 @@ class Login extends Component {
                   id="userPassword"
                   aria-label="Large"
                   placeholder="Contraseña"
+                  onChange={(event) => {
+                    this.setState({ pass: event.target.value });
+                  }}
                 />
               </div>
             </div>
@@ -63,7 +84,9 @@ class Login extends Component {
             <div className="o-buttons">
               <button
                 className="btn btn-primary mt-4 o-btn font-weight-bold btn-lg"
-                type="submit"
+                onClick={() => {
+                  this.login();
+                }}
               >
                 Ingresar
               </button>
