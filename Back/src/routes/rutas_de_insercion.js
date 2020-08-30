@@ -3,23 +3,74 @@ const rutas= ex.Router();
 
 const mariaDB = require('../database'); 
 
+const nodemailer = require("nodemailer"); 
 
-rutas.post('/',(req,res)=>{
-    const {id,name,contraseña} = req.body ; 
-    const query =`
 
-    CALL usuarioAgregarOEditar( ?, ?, ?); 
-    `;
-    mariaDB.query(query, [id,name,contraseña] ,(err,rows , fields)=>{
-        if(!err){
-            res.json({Status: 'usuario guardado'}); 
+rutas.post('/registro/n=:nombre&c=:correo&p=:password',(req,res)=>{
+    const {nombre,correo,password} = req.params ; 
+    const transporter = nodemailer.createTransport({
+        host: 'smtp.ethereal.email',
+        port: 587,
+        secure: false,
+        auth: {
+            user: 'walton64@ethereal.email',
+            pass: 'KH4CURQ3h5fWMaty6W'
+        }
+    }); 
+    const htmlc = `    
+    <div>
+    <h1> Bienvenido ${nombre} </h1>
+    <p>Te registraste con el correo ${correo}</p>
+    
+    </div>
+    `; 
+    const opcionescorreo ={
+        from: '"Remitente', // sender address
+        to: `"${correo}"`, // list of receivers
+        subject: "Hello ✔", // Subject line
+        text: "Hello world?", // plain text body
+        html:`"${ htmlc}"`, // html body
+    };
+
+
+    transporter.sendMail(opcionescorreo, (error,info)=>{
+        if(error){
+            res.status(500).send(error.message);
         }else{
-            console.log(err);
+            console.log("Email enviado");
+            res.status(200).jsonp(req.params); 
         }
     });
+  
+
 } ); 
 
 
 
 
 module.exports = rutas; 
+
+
+/*  const transportador = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'bolanosd38@gmail.com',
+      pass: 'Hachiman999' // naturally, replace both with your real credentials or an application-specific password
+    }
+   }); 
+
+   const mainoptions ={
+       from: "bolanosd38@gmail.com",
+       to: `"${correo}"`,
+       subject: "Enviado desde Nodemailer",
+       text : contenido(nombre,correo,"url")
+   };
+
+   transportador.sendMail(mainoptions, (error,info)=>{
+    if(error){
+        res.status(500).send(error.message); 
+    }else{
+        console.log("Email enviado"); 
+        res.status(200).jsonp(req.body); 
+    }
+   }); */

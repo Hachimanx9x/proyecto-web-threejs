@@ -3,6 +3,8 @@ const rutas= ex.Router();
 const jwt = require('jsonwebtoken'); 
 const mariaDB = require('../database'); 
 
+const LLAVE = 'misecretos'; 
+
 rutas.post('/login/email=:correo&pass=:password',(req,res)=>{
     const {correo, password}= req.params; 
     console.log(`correo => ${correo} y la contraseña es => ${password}`);
@@ -16,7 +18,7 @@ rutas.post('/login/email=:correo&pass=:password',(req,res)=>{
      mariaDB.query(query,(err,rows , fields)=>{
         if(!err){
           // res.json(rows); 
-            const token = jwt.sign({rows},'misecretos'); 
+            const token = jwt.sign({rows},LLAVE); 
             res.json({token});
 
         }else{
@@ -29,7 +31,7 @@ rutas.post('/login/email=:correo&pass=:password',(req,res)=>{
 
 
 rutas.get('/api/protegido',proToken, (req,res)=>{
-    jwt.verify(req.token,'misecretos',(err,data)=>{
+    jwt.verify(req.token,LLAVE,(err,data)=>{
         if(err){
             res.sendStatus(403)
         }else{
