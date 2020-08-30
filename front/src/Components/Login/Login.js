@@ -4,47 +4,39 @@ import "./Login.css";
 class Login extends Component {
   constructor() {
     super();
-    this.state = { mail: "", pass: "",login: false, store:null };
-  }
-  login() {
-    const { mail, pass } = this.state;
-    fetch(`localhost:3030/login/email=${mail}&pass=${pass}`,{
-      method:'POST',
-      body:JSON.stringify(this.state)
-    }).then((response)=>{ 
-      response.json().then((result)=>{
-        console.warn("result",result);
-        localStorage.setItem('login',JSON.stringify({
-          login: true,
-          token: result.token
-        }))
-        this.setState({login:true});
-      })
-    });
+    this.state = { correo: "", password: "",login: false, store:null };
     
   }
 
-  login() {
-    const { mail, pass } = this.state;
-    fetch(`localhost:3030/login/email=${mail}&pass=${pass}`,{
-      method='POST',
-      body:JSON.stringify(this.state)
-    }).then((response)=>{ 
-      response.json().then((result)=>{
-        console.warn("result",result);
-        localStorage.setItem('login',JSON.stringify({
-          login: true,
-          token: result.token
-        }))
-        this.setState({login:true});
-      })
-    });
+  loginfun = () => {
+    const { correo, password } = this.state;
+    console.log(`El correo es ${correo} y la contraseña es ${password }`) ;
+    const url = `http://localhost:3030/login`; 
+    console.log("hol1"); 
+
+     fetch(url,{
+       method:"POST",
+       body: JSON.stringify(this.state),
+       headers:{
+        'Content-Type': 'application/json'
+      }
+     })
+     .then((response)=>{
+       response.json().then(result=>{
+         console.log(result.token); 
+         localStorage.setItem('login',JSON.stringify({
+           token: result.token
+         }))
+       })
+     })
+    
   }
+ 
+  
 
   render() {
     return (
       <div className="o-big-container">
-<<<<<<< HEAD
       <div className="o-login">
         <form>
           <h3 className="text-white m-0">El mejor lugar</h3>
@@ -64,7 +56,7 @@ class Login extends Component {
                 aria-label="Large"
                 placeholder="Correo"
                 onChange={(event) => {
-                  this.setState({ mail: event.target.value });
+                  this.setState({ correo: event.target.value });
                 }}
               />
             </div>
@@ -81,51 +73,9 @@ class Login extends Component {
                 aria-label="Large"
                 placeholder="Contraseña"
                 onChange={(event) => {
-                  this.setState({ pass: event.target.value });
+                  this.setState({ password: event.target.value });
                 }}
               />
-=======
-        <div className="o-login">
-          <form>
-            <h3 className="text-white m-0">El mejor lugar</h3>
-            <h3 className="text-white m-0">Para tu trabajar con tu equipo</h3>
-            <p className="mt-2 mb-8 text-white font-weight-bold ">
-              Bienvenido, por favor ingresa con tu cuenta
-            </p>
-            <div className="row">
-              <div className="form-group col-md-12 input-group-lg">
-                <label for="useName" className="font-weight-bold text-info">
-                  Correo
-                </label>
-                <input
-                  type="email"
-                  class="form-control bg-transparent o-textbox mt-2 text-white o-input"
-                  id="userName"
-                  aria-label="Large"
-                  placeholder="Correo"
-                  onChange={(event) => {
-                    this.setState({ mail: event.target.value });
-                  }}
-                />
-              </div>
-            </div>
-            <div className="row">
-              <div className="form-group col-md-12 input-group-lg">
-                <label for="useName" className="font-weight-bold text-info">
-                  Contraseña
-                </label>
-                <input
-                  type="password"
-                  class="form-control bg-transparent o-textbox mt-2 text-white "
-                  id="userPassword"
-                  aria-label="Large"
-                  placeholder="Contraseña"
-                  onChange={(event) => {
-                    this.setState({ pass: event.target.value });
-                  }}
-                />
-              </div>
->>>>>>> 04c5b0935ab07a1a8699956956f53a3cfbe3c319
             </div>
           </div>
 
@@ -136,40 +86,20 @@ class Login extends Component {
                 Remember me
               </label>
             </div>
-<<<<<<< HEAD
             <div className="col-sm ml-5">
               <a className="text-info font-weight-bold " href="#">
                 Olvidaste tu contraseña?
-=======
-            <div className="o-buttons">
-              <button
-                className="btn btn-primary mt-4 o-btn font-weight-bold btn-lg"
-                onClick={() => {
-                  this.login();
-                }}
-              >
-                Ingresar
-              </button>
-
-              <a
-                className="btn btn-light mt-4 btn-lg text-primary font-weight-bold ml-3"
-                href="/Signin"
-                role="button"
-              >
-                Registrarse
->>>>>>> 04c5b0935ab07a1a8699956956f53a3cfbe3c319
               </a>
             </div>
           </div>
           <div className="o-buttons">
-            <button
+            <a
               className="btn btn-primary mt-4 o-btn font-weight-bold btn-lg"
-              onClick={() => {
-                this.login();
-              }}
+              
+              onClick={ this.loginfun }
             >
               Ingresar
-            </button>
+            </a>
 
             <a
               className="btn btn-light mt-4 btn-lg text-primary font-weight-bold ml-3"
