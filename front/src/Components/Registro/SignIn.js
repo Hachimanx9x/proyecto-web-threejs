@@ -14,13 +14,30 @@ class SigIn extends Component {
 
   componentWillMount(){
     const token = localStorage.getItem('login');  
+    
+  
     if (token == null || token === undefined){
             
      //El metodo de redireccionamiento.
     //this.props.history.push("/");
     }else{
-
-      console.log(token); 
+      const obj = JSON.parse(token);
+      const tokensito = obj.token;
+      
+      fetch('http://localhost:3030/api/protegido',{
+        method:"GET",
+        headers: {
+          'Content-type': 'application/json',
+          'authorization': `llave ${tokensito}`
+        }
+      })
+      .then((response)=>{
+        response.json().then(result=>{
+          
+          console.log(result); 
+          
+        })
+      })
     }
     
     

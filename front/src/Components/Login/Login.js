@@ -96,7 +96,7 @@ class Login extends Component {
           <div className="o-buttons">
             <a
               className="btn btn-primary mt-4 o-btn font-weight-bold btn-lg"
-              
+              href="/Signin"
               onClick={ this.loginfun }
             >
               Ingresar
