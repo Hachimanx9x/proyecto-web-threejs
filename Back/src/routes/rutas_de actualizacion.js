@@ -3,6 +3,7 @@ const ex = require('express');
 const rutas= ex.Router();
 
 const mariaDB = require('../database'); 
+
 rutas.put('/:id', (req,res)=>{
     const {name,contraseña} = req.body ; 
     const {id} = req.params ; 
