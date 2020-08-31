@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./SignIn.css";
+import { Redirect, Route,Router } from "react-router-dom";
 
 class SigIn extends Component {
   constructor() {
@@ -8,6 +9,24 @@ class SigIn extends Component {
     this.state = { inputEmail: "" };
     this.state = { inputPass: "" };
     this.state = { inputConfirmPass: "" };
+    
+  }
+
+  componentWillMount(){
+    const token = localStorage.getItem('login');  
+    if (token == null || token === undefined){
+            
+     //El metodo de redireccionamiento.
+    //this.props.history.push("/");
+    }else{
+
+      console.log(token); 
+    }
+    
+    
+  }
+  cargar(){
+    
   }
 
   render() {
