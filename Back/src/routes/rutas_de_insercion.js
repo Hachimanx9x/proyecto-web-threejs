@@ -11,7 +11,7 @@ rutas.post('/registro/n=:nombre&c=:correo&p=:password',(req,res)=>{
     const transporter = nodemailer.createTransport({
         host: 'smtp.ethereal.email',
         port: 587,
-        secure: false,
+        secure: true,
         auth: {
             user: 'walton64@ethereal.email',
             pass: 'KH4CURQ3h5fWMaty6W'
