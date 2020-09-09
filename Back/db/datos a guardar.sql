@@ -26,7 +26,7 @@ INSERT INTO habilidades (tipo, descripcion, nivel,herramientaUsada)  VALUES ("di
 INSERT INTO habilidades (tipo, descripcion, nivel,herramientaUsada)  VALUES ("programador", "construcción de servidores", "medio", 3) ; 
 SELECT * FROM habilidades; 
 
-INSERT INTO usuarios (correoElectronico, urlHojaVida, contrasena, experiencia,contacto, persona,habilidad) VALUES ("micorreo@uao.edu.co", "link_de_la_hoja_de_vida","contraseña123", 3,1,2,3);
+INSERT INTO usuarios (correoElectronico, urlHojaVida, contrasena, experiencia,contacto, persona,habilidad) VALUES ("micorreo2@uao.edu.co", "link_de_la_hoja_de_vida","contraseña123", 3,1,2,3);
 INSERT INTO usuarios (correoElectronico, urlHojaVida, contrasena, experiencia,contacto, persona,habilidad) VALUES ("micorreo@uao.edu.co", "link_de_la_hoja_de_vida","contraseña123", 2,2,1,1);
 SELECT * FROM usuarios;
 

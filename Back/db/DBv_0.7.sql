@@ -1,12 +1,21 @@
 CREATE DATABASE proyectoweb; 
 USE proyectoweb;
 create table CONTENIDOS(id int primary key AUTO_INCREMENT, nombre varchar(50), descripcion varchar(200), url_documentacion varchar (50), bibliografica varchar(50));
+
 CREATE TABLE HERRAMIENTAS(id int PRIMARY KEY AUTO_INCREMENT, nombre varchar(30), tipo varchar(20), descripcion varchar(100), url_icono varchar(50));
-CREATE TABLE CHATS(id int PRIMARY KEY AUTO_INCREMENT, url_archivo varchar(50), fecha date);
-CREATE TABLE ANOTACIONES(id int PRIMARY KEY AUTO_INCREMENT, rl_archivo varchar(50), fecha date);
+
+CREATE TABLE CHATS(id int PRIMARY KEY AUTO_INCREMENT, url_archivo varchar(50), fecha DATE);
+
+CREATE TABLE ANOTACIONES(id int PRIMARY KEY AUTO_INCREMENT, rl_archivo varchar(50), fecha DATE);
+
 CREATE TABLE IDIOMAS(id int PRIMARY KEY AUTO_INCREMENT, nombre varchar(20), nivel varchar(20));
-CREATE TABLE PERSONAS(id int PRIMARY KEY AUTO_INCREMENT, nombre varchar(50), descripcion varchar(200), otro varchar(100), pais varchar(20), edad int);
-CREATE TABLE TECNICAS(id int PRIMARY KEY AUTO_INCREMENT, titulo varchar(50), descripcion varchar(100), urlDocumento varchar(50), bibliografia varchar(50));
+
+CREATE TABLE PERSONAS(id int PRIMARY KEY AUTO_INCREMENT, nombre varchar(50), descripcion varchar(200), otro varchar(100), pais varchar(20), edad INT);
+
+CREATE TABLE HERRAMIENTASMETODOLOGIA(	id int PRIMARY KEY AUTO_INCREMENT, nombre VARCHAR(150), descripcion VARCHAR(500), urlDocumento VARCHAR(350), bibliografia VARCHAR(150)  ); 
+
+CREATE TABLE TECNICAS(id int PRIMARY KEY AUTO_INCREMENT, titulo varchar(50), descripcion varchar(100), urlDocumento varchar(50), bibliografia varchar(50), herramienta INT, FOREIGN KEY(herramienta) REFERENCES HERRAMIENTASMETODOLOGIA(id));
+
 CREATE TABLE CONTACTOS(id int PRIMARY KEY AUTO_INCREMENT, personas int, preferencias boolean, FOREIGN KEY(personas) REFERENCES PERSONAS(id));
 
 CREATE TABLE HABILIDADES(id int PRIMARY KEY AUTO_INCREMENT, tipo varchar(40), descripcion varchar(40), nivel varchar(20), herramientaUsada int, FOREIGN KEY (herramientaUsada) REFERENCES HERRAMIENTAS(id));

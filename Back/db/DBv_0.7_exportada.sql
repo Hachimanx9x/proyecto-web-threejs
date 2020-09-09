@@ -202,6 +202,20 @@ INSERT INTO `herramientas` (`id`, `nombre`, `tipo`, `descripcion`, `url_icono`) 
 	(3, 'Go', 'Desarrollo software', 'Go es un lenguaje de programación concurrente y compilado inspirado en la sintaxis de C', 'https://nodejs.org/static/images/logo.svg');
 /*!40000 ALTER TABLE `herramientas` ENABLE KEYS */;
 
+-- Volcando estructura para tabla proyectoweb.herramientasmetodologia
+CREATE TABLE IF NOT EXISTS `herramientasmetodologia` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(150) DEFAULT NULL,
+  `descripcion` varchar(500) DEFAULT NULL,
+  `urlDocumento` varchar(350) DEFAULT NULL,
+  `bibliografia` varchar(150) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Volcando datos para la tabla proyectoweb.herramientasmetodologia: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `herramientasmetodologia` DISABLE KEYS */;
+/*!40000 ALTER TABLE `herramientasmetodologia` ENABLE KEYS */;
+
 -- Volcando estructura para tabla proyectoweb.historial
 CREATE TABLE IF NOT EXISTS `historial` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -369,7 +383,10 @@ CREATE TABLE IF NOT EXISTS `tecnicas` (
   `descripcion` varchar(100) DEFAULT NULL,
   `urlDocumento` varchar(50) DEFAULT NULL,
   `bibliografia` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `herramienta` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `herramienta` (`herramienta`),
+  CONSTRAINT `tecnicas_ibfk_1` FOREIGN KEY (`herramienta`) REFERENCES `herramientasmetodologia` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Volcando datos para la tabla proyectoweb.tecnicas: ~0 rows (aproximadamente)
@@ -398,7 +415,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 -- Volcando datos para la tabla proyectoweb.usuarios: ~2 rows (aproximadamente)
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
 INSERT INTO `usuarios` (`id`, `correoElectronico`, `urlHojaVida`, `contrasena`, `experiencia`, `contacto`, `persona`, `habilidad`) VALUES
-	(1, 'micorreo@uao.edu.co', 'link_de_la_hoja_de_vida', 'contraseña123', 3, 1, 2, 3),
+	(1, 'micorreo2@uao.edu.co', 'link_de_la_hoja_de_vida', 'contraseña123', 3, 1, 2, 3),
 	(2, 'micorreo@uao.edu.co', 'link_de_la_hoja_de_vida', 'contraseña123', 2, 2, 1, 1);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 
