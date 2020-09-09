@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "./SignIn.css";
-import { Redirect, Route,Router } from "react-router-dom";
 
 class SigIn extends Component {
   constructor() {
@@ -9,42 +8,32 @@ class SigIn extends Component {
     this.state = { inputEmail: "" };
     this.state = { inputPass: "" };
     this.state = { inputConfirmPass: "" };
-    
   }
 
-  componentWillMount(){
-    const token = localStorage.getItem('login');  
-    
-  
-    if (token == null || token === undefined){
-            
-     //El metodo de redireccionamiento.
-    //this.props.history.push("/");
-    }else{
+  componentWillMount() {
+    const token = localStorage.getItem("login");
+
+    if (token == null || token === undefined) {
+      //El metodo de redireccionamiento.
+      //this.props.history.push("/");
+    } else {
       const obj = JSON.parse(token);
       const tokensito = obj.token;
-      
-      fetch('http://localhost:3030/api/protegido',{
-        method:"GET",
+
+      fetch("http://localhost:3030/api/protegido", {
+        method: "GET",
         headers: {
-          'Content-type': 'application/json',
-          'authorization': `llave ${tokensito}`
-        }
-      })
-      .then((response)=>{
-        response.json().then(result=>{
-          
-          console.log(result); 
-          
-        })
-      })
+          "Content-type": "application/json",
+          authorization: `llave ${tokensito}`,
+        },
+      }).then((response) => {
+        response.json().then((result) => {
+          console.log(result);
+        });
+      });
     }
-    
-    
   }
-  cargar(){
-    
-  }
+  cargar() {}
 
   render() {
     return (
@@ -142,7 +131,7 @@ class SigIn extends Component {
           <img
             className="o-background-img"
             alt="imagen login"
-            src={require("../../Logos/Group102.png")}
+            src={require("../../../Logos/Group102.png")}
           />
         </div>
       </div>

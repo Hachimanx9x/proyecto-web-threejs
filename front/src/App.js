@@ -1,18 +1,24 @@
 import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import Login from "./Components/Login/Login";
-import SigIn from "./Components/Registro/SignIn";
-import Test from "./Components/pruebas-test/test";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Login from "./Components/Pages/Login/Login";
+import SigIn from "./Components/Pages/Registro/SignIn";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Loged from "./Components/Pages/Loged/Loged";
+
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
   return (
     <Router>
       <Switch>
         <Route exact path="/" component={Login} />
+        <Route exact path="/Loged" component={Loged} />
         <Route path="/SignIn" component={SigIn} />
-        <Route path="/Test" component={Test} />
+        <Route exact path="/Loged/Projects" component={Loged} />
+        <Route exact path="/Loged/Contacts" component={Loged} />
+        <Route exact path="/Loged/SearchContacts" component={Loged} />
+        <Route exact path="/Loged/Calendar" component={Loged} />
       </Switch>
     </Router>
   );
