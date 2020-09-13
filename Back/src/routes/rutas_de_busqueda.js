@@ -1,58 +1,22 @@
 const ex = require('express'); 
-const rutas= ex.Router();
 const jwt = require('jsonwebtoken'); 
-const mariaDB = require('../database'); 
+const rutas= ex.Router();
+ 
+const buscarDB = require('../database/buscarDB'); 
 
 const LLAVE = 'misecretos'; 
 
 rutas.get('/login/email=:correo&pass=:password',(req,res)=>{
-    const {correo, password}= req.params; 
-    //console.log(`correo => ${correo} y la contraseña es => ${password}`);
-    const query=`
-    SELECT * FROM usuarios     
-    WHERE 
-    correoElectronico = "${correo}" 
-    AND
-    contrasena = "${password}"
-    `; 
-     mariaDB.query(query,(err,rows , fields)=>{
-        if(!err){
-          // res.json(rows); 
-            const token = jwt.sign({rows},LLAVE); 
-            res.json({token});
+    buscarDB.obtenerToken(req.params, res).then(resultado=>{
+       // console.log("Exito"); 
+    }); 
 
-        }else{
-            res.json("Usuairo no encontrado"); 
-            console.log(err);
-        }
-     });
-  //  console.log(`id : ${id} ,`)
 });
 
 rutas.post('/login',(req,res)=>{
-    //console.log(req.body);
-    const {correo, password}= req.body; 
-   // console.log(`correo => ${correo} y la contraseña es => ${password}`);
-    const query=`
-    SELECT * FROM usuarios     
-    WHERE 
-    correoElectronico = "${correo}" 
-    AND
-    contrasena = "${password}"
-    `; 
-     mariaDB.query(query,(err,rows , fields)=>{
-        if(!err){
-          // res.json(rows); 
-         
-            const token = jwt.sign({rows},LLAVE); 
-            res.json({token});
-
-        }else{
-            res.json("Usuairo no encontrado"); 
-            console.log(err);
-        }
-     });
-  //  console.log(`id : ${id} ,`)
+    buscarDB.obtenerToken(req.body, res).then(resultado=>{
+        // console.log("Exito"); 
+     }); 
 });
 
 
@@ -61,27 +25,65 @@ rutas.get('/escritorio',proToken, (req,res)=>{
         if(err){
             res.sendStatus(403)
         }else{
-            res.json({ 
-                text:'protegido',
-                data
-            });
+
+            if(data =={} || data==={} || data ==null || data === undefined){
+
+            }else{
+                buscarDB.obtenerEscritorio(data,res).then(resultado=>{
+                    // console.log("Exito"); 
+                 }); 
+            }
+            
         }
     }); 
     
 }); 
 
+
+
+
+rutas.get('/proyectos',proToken, (req,res)=>{
+
+    jwt.verify(req.token,LLAVE,(err,data)=>{
+        if(err){
+            res.sendStatus(403)
+        }else{
+
+            if(data =={} || data==={} || data ==null || data === undefined){
+
+            }else{
+                buscarDB.obtenerProyecto(data,res).then(resultado=>{
+                    // console.log("Exito"); 
+                 }); 
+            }
+            
+        }
+    }); 
+}); 
+
+/*
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+*/
+/*
+**************************************************************************************************
+************************Funciones*****************************************************************
+**************************************************************************************************
+*/
+/*
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+*/
 function proToken(req,res,next){
-   const header = req.headers['authorization'];
-   //console.log(header); 
-   if(typeof header !== 'undefined'){
-       const portador = header.split(" "); 
-       const portadorToken =portador[1]; 
-       req.token=portadorToken; 
-        next(); 
-   }else{
-       res.sendStatus(403); 
-   }
-}
+    const header = req.headers['authorization'];
+    //console.log(header); 
+    if(typeof header !== 'undefined'){
+        const portador = header.split(" "); 
+        const portadorToken =portador[1]; 
+        req.token=portadorToken; 
+         next(); 
+    }else{
+        res.sendStatus(403); 
+    }
+ }
 
 
 module.exports = rutas; 

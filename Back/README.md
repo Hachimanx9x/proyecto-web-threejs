@@ -31,3 +31,27 @@ Para hacer una busqueda de un usuario a partir del correo reguistrado y de la co
 ```sh
 Para la siguiente version de planea completar la parte de actualizacion de informacion 
 ```
+
+## Explicacion de la version 0.1.2
+
+En Esta version ya se agrego la libreria de socket.io de esta manera 
+se lograra la comunicacion entre usuarios, ademas se crearon rutas 
+para la busqueda de informacion en el apartado de proyectos y escritorio
+
+Para las autenticaciones de manda un token por los header. 
+
+para la informacion se usa req.body
+
+rutas :
+```sh
+
+ruta login : 
+  /login
+
+ruta proyectos:
+    /proyectos
+
+ruta escritorio:
+    /escritorios
+```
+

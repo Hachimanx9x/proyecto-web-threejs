@@ -14,7 +14,3 @@ app.use(require('../routes/rutas_de_eliminacion'));
 
 
 module.exports = app; 
-/*
-app.listen(app.get('PORT'),()=>{
-    console.log(`Ejecutado en ${app.get('PORT')}`)
-});*/

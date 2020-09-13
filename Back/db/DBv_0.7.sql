@@ -40,8 +40,10 @@ CREATE TABLE ENTREGAS(id int PRIMARY KEY AUTO_INCREMENT,  titulo varchar(50), fe
 
 CREATE TABLE EVENTOS(id int PRIMARY KEY AUTO_INCREMENT,  tipo varchar(20), reunion int, entregas int,  FOREIGN KEY(reunion) REFERENCES REUNIONES(id), FOREIGN KEY(entregas) REFERENCES ENTREGAS(id));
 
-CREATE TABLE HISTORIAL(id int PRIMARY KEY AUTO_INCREMENT, descripcion varchar(100), evento int, chat int, anotacion int,  FOREIGN KEY(evento) REFERENCES EVENTOS(id), FOREIGN KEY(chat) REFERENCES CHATS(id), FOREIGN KEY(anotacion) REFERENCES ANOTACIONES(id));
+CREATE TABLE HISTORIAL(id int PRIMARY KEY AUTO_INCREMENT, descripcion varchar(100), evento int, chat int, anotacion INT,FOREIGN KEY(evento) REFERENCES EVENTOS(id), FOREIGN KEY(chat) REFERENCES CHATS(id), FOREIGN KEY(anotacion) REFERENCES ANOTACIONES(id));
 
 CREATE TABLE PRACTICAS(id int PRIMARY KEY AUTO_INCREMENT, nombre varchar(20), descripcion varchar(100), alfaUsada int, ruta int, rol int,  FOREIGN KEY(alfaUsada) REFERENCES ALFAS(id),  FOREIGN KEY(ruta) REFERENCES RUTAS(id),  FOREIGN KEY(rol) REFERENCES ROLES(id));
 
 CREATE TABLE METODOLOGIAS(id int PRIMARY KEY AUTO_INCREMENT, nombre varchar(50), descripcion varchar(100), mensaje varchar(100), practica int,  FOREIGN KEY(practica) REFERENCES PRACTICAS(id));
+
+CREATE TABLE PROYECTOS (id INT PRIMARY KEY AUTO_INCREMENT, nombre VARCHAR(350), descripcion VARCHAR(1350), estado VARCHAR(150), icon VARCHAR(1000), banner VARCHAR(1000), integrante INT , historia INT, practica INT,FOREIGN KEY(integrante) REFERENCES INTEGRANTES(id),FOREIGN KEY(historia) REFERENCES HISTORIAL(id),FOREIGN KEY(practica) REFERENCES PRACTICAS(id)); 

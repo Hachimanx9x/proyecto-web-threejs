@@ -11,3 +11,7 @@ Para la descripcion inicial de la base de datos se tubo en cuenta la construccio
 ### Notas de la version 0.7
 
 En esta version por razones de tiempo y de funcionalidad se omitio la tabla de paginas, dado que no tiene un propisito claro para el sistema.
+
+### Notas de la version 0.8
+
+Se agrego la tabla de proyectos, se corrigieron relaciones y se agrego informacion de usuarios a la base de datos. 
