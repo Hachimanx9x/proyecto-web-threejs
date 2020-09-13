@@ -9,9 +9,9 @@ class Login extends Component {
 
   loginfun = () => {
     const { correo, password } = this.state;
-    console.log(`El correo es ${correo} y la contraseña es ${password}`);
+   // console.log(`El correo es ${correo} y la contraseña es ${password}`);
     const url = `http://localhost:3030/login`;
-    console.log("hol1");
+   // console.log("hol1");
 
     fetch(url, {
       method: "POST",

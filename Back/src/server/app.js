@@ -8,9 +8,9 @@ app.set('PORT', process.env.PORT || 3030 )
 app.use(ex.json()); 
 app.use(ex.urlencoded({extended:false})); 
 //Rutas
-app.use(require('./routes/rutas_de_busqueda')); 
-app.use(require('./routes/rutas_de_insercion'));
-app.use(require('./routes/rutas_de_eliminacion')); 
+app.use(require('../routes/rutas_de_busqueda')); 
+app.use(require('../routes/rutas_de_insercion'));
+app.use(require('../routes/rutas_de_eliminacion')); 
 
 
 module.exports = app; 
