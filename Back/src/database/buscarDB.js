@@ -8,7 +8,7 @@ const funcionesDB = ()=>{}
 funcionesDB.buscarLogin =async (body,res)=>{
     const { correo, password }  =body ; 
  
-    const query=`    SELECT * FROM usuarios         WHERE     correoElectronico = "${correo}"     AND    contrasena = "${password}"    `; 
+    const query=`SELECT * FROM usuarios WHERE correoElectronico = "${correo}" AND  contrasena = "${password}" `; 
      
   await mariaDB.query(query,(err,rows , fields)=>{
    // respuesta = jwt.sign({rows},LLAVE);
@@ -23,7 +23,7 @@ funcionesDB.buscarLogin =async (body,res)=>{
 funcionesDB.obtenerToken=async  (body,res)=>{
     const { correo, password }  =body ; 
  
-    const query=`    SELECT * FROM usuarios         WHERE     correoElectronico = "${correo}"     AND    contrasena = "${password}"    `; 
+    const query=`SELECT * FROM usuarios WHERE correoElectronico = "${correo}" AND contrasena = "${password}" `; 
      
   await mariaDB.query(query,(err,rows , fields)=>{
    
