@@ -19,4 +19,30 @@ const Loged = () => {
   );
 };
 
+
 export default Loged;
+/*
+ componentDidMount() {
+    const token = localStorage.getItem("login");
+
+    if (token == null || token === undefined) {
+      //El metodo de redireccionamiento.
+      this.props.history.push("/Signin");
+    } else {
+      const obj = JSON.parse(token);
+      const tokensito = obj.token;
+
+      fetch("http://localhost:3030/proyectos", {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json",
+          authorization: `llave ${tokensito}`,
+        },
+      }).then((response) => {
+        response.json().then((result) => {
+          console.log(result);//falta mapear el resultado 
+        });
+      });
+    }
+  }
+*/

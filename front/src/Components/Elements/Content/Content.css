@@ -58,16 +58,18 @@ li a.dropdown-toggle::after {
   display: none;
 }
 .side-menu {
-  overflow-y: scroll;
+  overflow-y: hidden;
 }
 
 .side-menu::-webkit-scrollbar {
-  width: 1px;
+  width: 0px;
 }
 
 .side-menu::-webkit-scrollbar-thumb {
   background: #5466b3;
   border-radius: 3px;
+  width: 0px;
+  
 }
 
 .side-menu::-webkit-scrollbar-thumb:hover {
