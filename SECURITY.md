@@ -2,8 +2,8 @@
 
 ## Supported Versions
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
+Utilice esta sección para informar a las personas sobre qué versiones de su proyecto son
+actualmente es compatible con actualizaciones de seguridad.
 
 | Version | Supported          |
 | ------- | ------------------ |
@@ -14,8 +14,8 @@ currently being supported with security updates.
 
 ## Reporting a Vulnerability
 
-Use this section to tell people how to report a vulnerability.
+Utilice esta sección para indicar a las personas cómo informar de una vulnerabilidad.
 
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+Dígales a dónde ir, con qué frecuencia pueden esperar obtener una actualización de un
+vulnerabilidad reportada, qué esperar si se acepta la vulnerabilidad o
+declinó, etc.
