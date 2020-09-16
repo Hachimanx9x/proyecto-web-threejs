@@ -5,6 +5,7 @@ import Login from "./Components/Pages/Login/Login";
 import SigIn from "./Components/Pages/Registro/SignIn";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Loged from "./Components/Pages/Loged/Loged";
+import Projects from "./Components/Pages/Projects/Projects";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 

@@ -2,7 +2,7 @@ import React from "react";
 import classNames from "classnames";
 import "./Content.css";
 import { Switch, Route } from "react-router-dom";
-
+import Projects from "../../Pages/Projects/Projects";
 import Topbar from "./Topbar";
 
 const Content = ({ sidebarIsOpen, toggleSidebar }) => (
@@ -14,7 +14,7 @@ const Content = ({ sidebarIsOpen, toggleSidebar }) => (
     <Topbar toggleSidebar={toggleSidebar} />
     <Switch>
       <Route exact path="/Loged/" component={() => "Escritorio"} />
-      <Route exact path="/Loged/Projects" component={() => "Proyectos"} />
+      <Route exact path="/Loged/Projects" component={Projects} />
       <Route exact path="/Loged/Contacts" component={() => "Contactos"} />
       <Route
         exact
