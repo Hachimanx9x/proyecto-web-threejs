@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import * as THREE from "three"; 
+import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader"; 
+import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
+import {Reflector} from "three/examples/jsm/objects/Reflector"
 
 class Test3d extends Component {
     constructor(){
@@ -21,7 +24,7 @@ class Test3d extends Component {
         camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.25, 20 );
         camera.position.set( -1.8, 0.9, 2.7 );
 
-        controls = new THREE.OrbitControls( camera );
+        controls = new OrbitControls( camera );
         controls.target.set( 0, 0, 0 );
         controls.update();
 
@@ -43,7 +46,7 @@ class Test3d extends Component {
 
 //--------------------------------------------------------------------------------------
 const objmesa = new THREE.Object3D(); 
-const mesa = new THREE.GLTFLoader(); 
+const mesa = new GLTFLoader(); 
 const urlmesa = '../../../logos/modelos3d/Mesa.gltf';
 mesa.load(urlmesa, (gltf)=>{
     gltf.scene.traverse((nino)=>{
@@ -67,7 +70,7 @@ mesa.load(urlmesa, (gltf)=>{
 
 
 const cargarModelos = new CargarObjGltf(); 
-cargarModelos.insertarEscena(envMap,new THREE.GLTFLoader(), new THREE.Object3D(), 
+cargarModelos.insertarEscena(envMap,new GLTFLoader(), new THREE.Object3D(), 
  '/publico/modelos/Mesa.gltf',//url del modelo
  scene,
 1,-0.3,-1.75, //x y z posicion
@@ -86,7 +89,7 @@ cargarModelos.insertarEscena(envMap,new THREE.GLTFLoader(), new THREE.Object3D()
 */
 var sillas=[];
 for(var i =0 ; i<8 ; i++){
-    sillas.push(cargarModelos.getOBJ3d(envMap,new THREE.GLTFLoader(), new THREE.Object3D(),'../../../logos/modelos3d/silla.gltf' )); 
+    sillas.push(cargarModelos.getOBJ3d(envMap,new GLTFLoader(), new THREE.Object3D(),'../../../logos/modelos3d/silla.gltf' )); 
     sillas[i].position.y=-0.33;
 }  
 
@@ -108,7 +111,7 @@ for(var i =0 ; i<8 ; i++){
 //----------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------
 var geometry = new THREE.PlaneBufferGeometry( 0.65, 1.93 );
-        var verticalMirror = new THREE.Reflector( geometry, {
+        var verticalMirror = new Reflector( geometry, {
             clipBias: 0.0005,
             textureWidth: WIDTH * window.devicePixelRatio,
             textureHeight: HEIGHT * window.devicePixelRatio,
@@ -137,9 +140,7 @@ objectopasidad.rotation.x = verticalMirror.rotation.x ;
 
         window.addEventListener( 'resize', onWindowResize, false );
 
-        // stats
-        stats = new Stats();
-        container.appendChild( stats.dom );
+       
     animate();
     }
 
