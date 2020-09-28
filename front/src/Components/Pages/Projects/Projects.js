@@ -10,12 +10,12 @@ class Projects extends Component {
   /**
    * 
    */
-  componentDidMount() {
+  componentWillMount() {
     const token = localStorage.getItem("login");
 
     if (token == null || token === undefined) {
       //El metodo de redireccionamiento.
-      this.props.history.push("/Signin");
+      this.props.history.push("/");
     } else {
       const obj = JSON.parse(token);
       const tokensito = obj.token;

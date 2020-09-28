@@ -6,6 +6,8 @@ import SigIn from "./Components/Pages/Registro/SignIn";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Loged from "./Components/Pages/Loged/Loged";
 import Projects from "./Components/Pages/Projects/Projects";
+import Test from "./Components/Pages/test/test"
+import Test3d from "./Components/Pages/test/test3d"
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -20,6 +22,8 @@ function App() {
         <Route exact path="/Loged/Contacts" component={Loged} />
         <Route exact path="/Loged/SearchContacts" component={Loged} />
         <Route exact path="/Loged/Calendar" component={Loged} />
+        <Route exact path="/test" component={Test} />
+        <Route exact path="/test3d" component={Test3d } />
       </Switch>
     </Router>
   );
