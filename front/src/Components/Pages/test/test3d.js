@@ -9,7 +9,7 @@ class Test3d extends Component {
         super();
         this.state ={}
     }
-
+/*
     componentDidMount(){
         
         
@@ -173,7 +173,7 @@ this.container.appendChild(  this.renderer.domElement );
 
        
 
-    }
+    }*/
  render(){
      return(
          <div className="div3d">
