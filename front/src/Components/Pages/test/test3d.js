@@ -11,6 +11,12 @@ import Detector from "../../../lib_externo/Detector";
 //import {Reflector} from "../../../lib_externo/Reflector";
 //import {OrbitControls} from "../../../lib_externo/OrbitControls"; 
 
+import posx from "../../../Logos/img/Bridge2/posx.jpg"
+import negx from "../../../Logos/img/Bridge2/negx.jpg"
+import posy from "../../../Logos/img/Bridge2/posy.jpg"
+import negy from "../../../Logos/img/Bridge2/negy.jpg"
+import posz from "../../../Logos/img/Bridge2/posz.jpg"
+import negz from "../../../Logos/img/Bridge2/negz.jpg"
 
 
 
@@ -29,18 +35,18 @@ class Test3d extends Component{
       
       this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight,0.1,50 );
       this.camera.position.set( 0, 0.9, 2.7 );
-      /*
-      this.controls = new OrbitControls(this.camera); 
-      this.controls.target.set(0,0,0); 
-      this.controls.update(); */
+      
+     
       //skybox
-      var entorno = new THREE.CubeTextureLoader().setPath( '../../../Logos/img/Bridge2/' ).load([
-        'negx.jpg', 
-        'posx.jpg',
-        'posy.jpg' , 
-        'negy.jpg',
-       'posz.jpg' ,
-       'negz.jpg'
+
+     
+      var entorno = new THREE.CubeTextureLoader().load([
+        posx, 
+        negx,
+        posy,
+        negy,
+        posz,
+        negz
       ]);
      
 
@@ -98,7 +104,10 @@ class Test3d extends Component{
         this.renderer.setPixelRatio(window.devicePixelRatio);
         this.camera.aspect = this.mount.clientWidth / this.mount.clientHeight;
         this.camera.updateProjectionMatrix();
-    
+        //----------
+        this.controls = new OrbitControls(this.camera,this.renderer.domElement); 
+        this.controls.target.set(0,0,0); 
+        this.controls.update(); 
         this.renderer.render(this.scene, this.camera);
     
         this.mount.appendChild(this.renderer.domElement);
