@@ -5,8 +5,10 @@
  * @author Takahiro / https://github.com/takahirox
  * @author Don McCurdy / https://www.donmccurdy.com
  */
-
-THREE.GLTFLoader = ( function () {
+//nombre original THREE.GLTFLoader
+import *  as THREE from "./three.module"; 
+import {DDSLoader} from "./DDSLoader";
+var GLTFLoader = ( function () {
 
 	function GLTFLoader( manager ) {
 
@@ -252,14 +254,14 @@ THREE.GLTFLoader = ( function () {
 	 */
 	function GLTFTextureDDSExtension() {
 
-		if ( ! THREE.DDSLoader ) {
+		if ( ! DDSLoader ) {
 
 			throw new Error( 'THREE.GLTFLoader: Attempting to load .dds texture without importing THREE.DDSLoader' );
 
 		}
 
 		this.name = EXTENSIONS.MSFT_TEXTURE_DDS;
-		this.ddsLoader = new THREE.DDSLoader();
+		this.ddsLoader = new DDSLoader();
 
 	}
 
@@ -2383,8 +2385,8 @@ THREE.GLTFLoader = ( function () {
 					cache.push( { geometry: geometry, baseGeometry: baseGeometry, primitives: originalPrimitives } );
 
 					return [ geometry ];
-
-				} else if ( geometries.length > 1 && THREE.BufferGeometryUtils !== undefined ) {
+					//BufferGeometryUtils  == cambiador por => BufferGeometryLoader
+				} else if ( geometries.length > 1 && THREE.BufferGeometryLoader !== undefined ) {
 
 					// Tries to merge geometries with BufferGeometryUtils if possible
 
@@ -2405,7 +2407,7 @@ THREE.GLTFLoader = ( function () {
 
 					} else {
 
-						var geometry = THREE.BufferGeometryUtils.mergeBufferGeometries( geometries, true );
+						var geometry = THREE.BufferGeometryLoader.mergeBufferGeometries( geometries, true );
 
 						cache.push( { geometry: geometry, baseGeometries: geometries } );
 
@@ -3106,3 +3108,4 @@ THREE.GLTFLoader = ( function () {
 	return GLTFLoader;
 
 } )();
+export { GLTFLoader}; 

@@ -11,6 +11,7 @@
     "@testing-library/user-event": "^7.2.1",
     "bootstrap": "^4.5.2",
     "classnames": "^2.2.6",
+    "drei": "^1.5.7",
     "jquery": "^3.5.1",
     "malihu-custom-scrollbar-plugin": "^3.1.5",
     "popper.js": "^1.16.1",
@@ -19,7 +20,9 @@
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
-    "socket.io-client": "^2.3.0"
+    "react-three-fiber": "^5.0.1",
+    "socket.io-client": "^2.3.0",
+    "three": "^0.120.1"
   },
   "scripts": {
     "start": "react-scripts start",

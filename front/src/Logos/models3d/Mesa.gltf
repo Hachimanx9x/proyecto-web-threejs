@@ -15,7 +15,7 @@
     "nodes" : [
         {
             "mesh" : 0,
-            "name" : "mesa_interactiva_1.001",
+            "name" : "mesa_interactiva_1",
             "translation" : [
                 -0.9771606922149658,
                 0.39354538917541504,
@@ -31,7 +31,7 @@
                 0,
                 0
             ],
-            "name" : "Material.050",
+            "name" : "Material0",
             "pbrMetallicRoughness" : {
                 "baseColorFactor" : [
                     0.018341392278671265,
@@ -50,7 +50,7 @@
                 0,
                 0
             ],
-            "name" : "Material.051",
+            "name" : "Material1",
             "pbrMetallicRoughness" : {
                 "baseColorFactor" : [
                     0,
@@ -69,7 +69,7 @@
                 0,
                 0
             ],
-            "name" : "Material.052",
+            "name" : "Material2",
             "pbrMetallicRoughness" : {
                 "baseColorFactor" : [
                     1,
@@ -84,7 +84,7 @@
     ],
     "meshes" : [
         {
-            "name" : "Cube.028",
+            "name" : "mesa_interactiva_1",
             "primitives" : [
                 {
                     "attributes" : {

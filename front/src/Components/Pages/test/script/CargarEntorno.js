@@ -42,7 +42,7 @@
         //--------------------------------------------------------------------------------------
         const cargarModelos = new CargarObjGltf(); 
         cargarModelos.insertarEscena(envMap,new THREE.GLTFLoader(), new THREE.Object3D(), 
-         '/publico/modelos/Mesa.gltf',//url del modelo
+         '../../../../Logos/models3d/Mesa.gltf',//url del modelo
          scene,
         1,-0.3,-1.75, //x y z posicion
         0,0,0,//x y z rotacion
