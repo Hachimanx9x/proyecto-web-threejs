@@ -130,7 +130,7 @@ this.objgrafico.position.set(-1,0.8,0);
 console.log("grafico");
 console.log(this.objgrafico);
 this.scene.add(this.objgrafico); 
-this.setupCanvasDrawing(); 
+
 
 
 //---------------default------------------------
@@ -319,7 +319,7 @@ this.scene.add(pisodefault);
     
         this.mount.appendChild(this.renderer.domElement);
         this.animate(); 
-
+   
         //zona de impresiones para pruevas 
        // console.log(this.materialC); 
 
@@ -346,6 +346,7 @@ this.scene.add(pisodefault);
       document.removeEventListener("mousedown", this.mouseEventsdown)
       document.removeEventListener("mouseup", this.mouseEventup)
         this.mount.removeChild(this.renderer.domElement);
+       
       }//fin del componentWillUnmount
     /*
     *
@@ -381,7 +382,7 @@ this.scene.add(pisodefault);
      this.materialC.needsUpdate = true;
       this.prevTime = time;
       this.renderer.render(this.scene, this.camera);
-     
+      
      //   console.log(this.camera.position); 
        // console.log("renderizando ando"); 
       }//fin animate
@@ -427,9 +428,10 @@ this.scene.add(pisodefault);
       var intersectsplay = this.raycaster.intersectObjects( this.objInteraccion1);
       var intersectspause = this.raycaster.intersectObjects( this.objInteraccion2);
       if ( intersectsplay.length > 0 ) {   this.video.play();  this.meshvideo.visible = true; }
-      if ( intersectspause.length > 0 ) {   this.video.pause();  this.meshvideo.visible = false;  }
+      if ( intersectspause.length > 0 ) {   this.video.pause();  this.meshvideo.visible = false;  this.setupCanvasDrawing();  }
 
        this.estado= true;
+       
     
     }
     mouseEventup = (event) =>{
