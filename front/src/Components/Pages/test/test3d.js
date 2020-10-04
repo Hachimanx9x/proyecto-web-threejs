@@ -12,7 +12,8 @@ import { Reflector } from "three/examples/jsm/objects/Reflector";
 import { PointerLockControls } from "three/examples/jsm/controls/PointerLockControls"
 //libreria para detectar compatibilidad
 import Detector from "../../../lib_externo/Detector"; 
-
+//charjs 
+import { Chart } from "react-chartjs-2"; 
 
 //imagenes
 import posx from "../../../Logos/img/Bridge2/posx.jpg"
@@ -34,7 +35,7 @@ import modelosilla      from "../../../Logos/models3d/silla.gltf";
 
 //videos
 import video1 from "../../../Logos/videos/gumdang.mp4";
-import { object } from "prop-types";
+
 
 class Test3d extends Component{
     constructor(props){
@@ -43,7 +44,24 @@ class Test3d extends Component{
         this.updateDimensions = this.updateDimensions.bind(this);
         this.mouseEventsdown = this.mouseEventsdown.bind(this);
         this.mouseEventup= this.mouseEventup.bind(this); 
-        this.state = { mouse:false };
+
+        this.setupCanvasDrawing = this.setupCanvasDrawing.bind(this); 
+       
+        this.state ={
+          marksData: {
+            labels: ["ruta1", "ruta2", "ruta3", "ruta4"],
+
+            datasets: [{
+                label: "Student A",
+                backgroundColor: "rgba(200,0,0,0.2)",
+                data: [65, 75, 70, 80]
+            }, {
+                label: "Student B",
+                backgroundColor: "rgba(0,0,200,0.2)",
+                data: [54, 65, 60, 70]
+            }]
+            }
+        }
 
     }
     componentDidMount(){
@@ -98,6 +116,20 @@ var objectI2 = new THREE.Mesh( geocaja , new THREE.MeshBasicMaterial( { color: 0
 
 this.scene.add(objectI1); this.scene.add(objectI2); 
 this.objInteraccion1.push(objectI1);  this.objInteraccion2.push(objectI2);
+// ejemplo de grafica 
+this.canvasG = document.createElement( 'canvas' );
+this.canvasG.height=120;this.canvasG.width=120;
+this.materialC = new THREE.MeshBasicMaterial();
+var objgrafico = new THREE.Object3D(); 
+var mesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 1, 1 ), this.materialC ); mesh.rotation.set(0,Math.PI/2 ,0);
+var mesh2 = new THREE.Mesh( new THREE.PlaneBufferGeometry( 1, 1 ), new THREE.MeshBasicMaterial( { color: 0xfffffff } ));
+objgrafico.add(mesh); objgrafico.add(mesh2);
+objgrafico.rotation.set(0,Math.PI/2,0); 
+objgrafico.position.set(-0.5,0,0); 
+console.log("grafico");
+console.log(objgrafico);
+this.scene.add(objgrafico); 
+
 
 //---------------default------------------------
 var geopiso = new THREE.PlaneBufferGeometry( 2000, 2000, 100, 100 ); geopiso.rotateX( - Math.PI / 2 );
@@ -257,7 +289,7 @@ this.scene.add(pisodefault);
       new GLTFLoader().load(modelosilla , (gltf)=>{ gltf.scene.traverse((nino)=>{ if(nino.isMesh){    nino.material.envMap = this.entorno;  } });   objsilla8.add(gltf.scene); });   
       //sillas[3].rotation.y= Math.PI/2;sillas[3].position.x=-2.28;sillas[3].position.z=-0.7;
       objsilla8.position.set(-2.28 ,-0.33 ,-0.7);   objsilla8.rotation.set(0,Math.PI/2,0);     objsilla8.scale.set(1,1,1);   this.scene.add(objsilla8); 
-
+    
   
 //--------------------------------------------------------
         var geometry = new THREE.PlaneBufferGeometry( 0.65, 1.93 );
@@ -285,6 +317,10 @@ this.scene.add(pisodefault);
     
         this.mount.appendChild(this.renderer.domElement);
         this.animate(); 
+
+        //zona de impresiones para pruevas 
+       // console.log(this.materialC); 
+
         }// fin del componentdidmount
     /*
     *
@@ -340,8 +376,10 @@ this.scene.add(pisodefault);
       
       this.controls.isLocked = this.estado; 
 
+     this.materialC.needsUpdate = true;
       this.prevTime = time;
       this.renderer.render(this.scene, this.camera);
+     
      //   console.log(this.camera.position); 
        // console.log("renderizando ando"); 
       }//fin animate
@@ -420,6 +458,30 @@ this.scene.add(pisodefault);
     * 
     *     
     */
+   setupCanvasDrawing =() =>{
+    var drawingCanvas = this.canvasG; 
+    var radarChart = new Chart(drawingCanvas, { type: 'radar',  data:this.state.marksData     });
+    this.materialC.map = new THREE.CanvasTexture( drawingCanvas );
+    this.materialC.overdraw= 0.5; 
+    this.materialC.transparent= true; 
+
+   }
+    /*
+    *
+    *
+    * *
+    * 
+    * *
+    * *
+    * 
+    fin del metodo setupCanvasDrawing
+    *
+    *
+    * *
+    * 
+    * *
+    * 
+    *  */
       render(){
           return(
               <div className="test3d">
