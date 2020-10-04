@@ -50,6 +50,7 @@ class Test3d extends Component{
         this.state ={
           marksData: {
             labels: ["ruta1", "ruta2", "ruta3", "ruta4"],
+            animation : false,
 
             datasets: [{
                 label: "Student A",
@@ -118,7 +119,9 @@ this.scene.add(objectI1); this.scene.add(objectI2);
 this.objInteraccion1.push(objectI1);  this.objInteraccion2.push(objectI2);
 // ejemplo de grafica 
 this.canvasG = document.createElement( 'canvas' );
-this.canvasG.height=120;this.canvasG.width=120;
+this.canvasG.height=1;this.canvasG.width=1;
+this.canvasG.id="cfeo";
+
 document.body.appendChild( this.canvasG );
 this.materialC = new THREE.MeshBasicMaterial();
 this.objgrafico = new THREE.Object3D(); 
@@ -293,7 +296,7 @@ this.scene.add(pisodefault);
       objsilla8.position.set(-2.28 ,-0.33 ,-0.7);   objsilla8.rotation.set(0,Math.PI/2,0);     objsilla8.scale.set(1,1,1);   this.scene.add(objsilla8); 
     
   
-//--------------------------------------------------------
+//-------------------------------------------------------- espejo
         var geometry = new THREE.PlaneBufferGeometry( 0.65, 1.93 );
 				var verticalMirror = new Reflector( geometry, {
 					clipBias: 0.0005,
