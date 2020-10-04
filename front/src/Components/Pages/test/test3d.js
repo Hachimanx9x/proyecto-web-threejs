@@ -121,16 +121,17 @@ this.canvasG = document.createElement( 'canvas' );
 this.canvasG.height=120;this.canvasG.width=120;
 document.body.appendChild( this.canvasG );
 this.materialC = new THREE.MeshBasicMaterial();
-var objgrafico = new THREE.Object3D(); 
-var mesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 1, 1 ), this.materialC ); mesh.rotation.set(0,Math.PI/2 ,0);
+this.objgrafico = new THREE.Object3D(); 
+var mesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 1, 1 ), this.materialC ); 
 var mesh2 = new THREE.Mesh( new THREE.PlaneBufferGeometry( 1, 1 ), new THREE.MeshBasicMaterial( { color: 0xfffffff } ));
-objgrafico.add(mesh); objgrafico.add(mesh2);
-objgrafico.rotation.set(0,Math.PI/2,0); 
-objgrafico.position.set(-0.5,0,0); 
+this.objgrafico.add(mesh); this.objgrafico.add(mesh2);
+this.objgrafico.rotation.set(0,Math.PI/2,0); 
+this.objgrafico.position.set(-1,0.8,0); 
 console.log("grafico");
-console.log(objgrafico);
-this.scene.add(objgrafico); 
+console.log(this.objgrafico);
+this.scene.add(this.objgrafico); 
 this.setupCanvasDrawing(); 
+
 
 //---------------default------------------------
 var geopiso = new THREE.PlaneBufferGeometry( 2000, 2000, 100, 100 ); geopiso.rotateX( - Math.PI / 2 );
@@ -376,7 +377,7 @@ this.scene.add(pisodefault);
       this.controls.moveForward( - this.velocity.z * delta );
       
       this.controls.isLocked = this.estado; 
-
+      
      this.materialC.needsUpdate = true;
       this.prevTime = time;
       this.renderer.render(this.scene, this.camera);
@@ -460,10 +461,11 @@ this.scene.add(pisodefault);
     *     
     */
    setupCanvasDrawing =() =>{
+     console.log("nuevo material"); 
     var drawingCanvas = this.canvasG; 
     var radarChart = new Chart(drawingCanvas, { type: 'radar',  data:this.state.marksData     });
     this.materialC.map = new THREE.CanvasTexture( drawingCanvas );
-    this.materialC.overdraw= 0.5; 
+    //this.materialC.overdraw= 0.5; 
     this.materialC.transparent= true; 
 
    }
