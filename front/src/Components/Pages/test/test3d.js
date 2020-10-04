@@ -119,6 +119,7 @@ this.objInteraccion1.push(objectI1);  this.objInteraccion2.push(objectI2);
 // ejemplo de grafica 
 this.canvasG = document.createElement( 'canvas' );
 this.canvasG.height=120;this.canvasG.width=120;
+document.body.appendChild( this.canvasG );
 this.materialC = new THREE.MeshBasicMaterial();
 var objgrafico = new THREE.Object3D(); 
 var mesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 1, 1 ), this.materialC ); mesh.rotation.set(0,Math.PI/2 ,0);
@@ -129,7 +130,7 @@ objgrafico.position.set(-0.5,0,0);
 console.log("grafico");
 console.log(objgrafico);
 this.scene.add(objgrafico); 
-
+this.setupCanvasDrawing(); 
 
 //---------------default------------------------
 var geopiso = new THREE.PlaneBufferGeometry( 2000, 2000, 100, 100 ); geopiso.rotateX( - Math.PI / 2 );
