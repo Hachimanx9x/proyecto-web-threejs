@@ -86,20 +86,12 @@ class Test3d extends Component{
        geovideo.scale( 0.05, 0.05, 0.05 );
        
        var materialvideo = new THREE.MeshBasicMaterial( { map: texvideo } );
-       var meshvideo = new THREE.Mesh( geovideo, materialvideo );  meshvideo.position.set(0.7,0.5,0);  meshvideo.rotation.set(0,-Math.PI/2 ,0);
-       console.log(meshvideo) ; 
-       this.scene.add(meshvideo); 
+       this.meshvideo = new THREE.Mesh( geovideo, materialvideo );  this.meshvideo.position.set(0.7,0.5,0);  this.meshvideo.rotation.set(0,-Math.PI/2 ,0);
+       this.meshvideo.visible = false; 
+       console.log(this.meshvideo) ; 
+       this.scene.add(this.meshvideo); 
 // controles del video
-/*
-var geometry = new THREE.BoxBufferGeometry( 100, 100, 100 );
-                   
-                    object1.position.x = 100; 
-                     var object2 = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial( { color: Math.random() * 0xffffff, opacity: 1 } ) );
-                    object2.position.x = -100; 
-                    scene.add( object1 );scene.add( object2 );
-                    objects.push( object1 );objects.push( object2 ); 
 
- */
 var geocaja = new THREE.BoxBufferGeometry( 1,1,1 );
 var objectI1 = new THREE.Mesh( geocaja , new THREE.MeshBasicMaterial( { color: 0x4ff20e } ) ); objectI1.scale.set(0.2,0.2,0.2);  objectI1.position.set(0.2,0.33,0);
 var objectI2 = new THREE.Mesh( geocaja , new THREE.MeshBasicMaterial( { color: 0xf2380e  } ) ); objectI2.scale.set(0.2,0.2,0.2); objectI2.position.set(-0.2,0.33,0);
@@ -394,8 +386,8 @@ this.scene.add(pisodefault);
       this.raycaster.setFromCamera( this.mouse, this.camera );
       var intersectsplay = this.raycaster.intersectObjects( this.objInteraccion1);
       var intersectspause = this.raycaster.intersectObjects( this.objInteraccion2);
-      if ( intersectsplay.length > 0 ) {   this.video.play();   }
-      if ( intersectspause.length > 0 ) {   this.video.pause();   }
+      if ( intersectsplay.length > 0 ) {   this.video.play();  this.meshvideo.visible = true; }
+      if ( intersectspause.length > 0 ) {   this.video.pause();  this.meshvideo.visible = false;  }
 
        this.estado= true;
     
