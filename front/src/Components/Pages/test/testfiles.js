@@ -37,15 +37,24 @@ class Test extends Component{
        
         
     }
+    cargarArchivo(event){
+        
+    }
     render(){
         return(
-            <div onSubmit={this.onFormSubmit}>
+         <div>
+                <div onSubmit={this.onFormSubmit}>
                 <h1>Subir archivos en react js </h1>
                  <input type="file" name="file" onChange={(event)=> this.detectarCambio(event)} />
                   
        
-            </div>
-        );
+                 </div>
+
+                 <div>
+                     <h2>cargar imagen</h2>
+                 </div>
+       
+         </div> );
     }
 }
 

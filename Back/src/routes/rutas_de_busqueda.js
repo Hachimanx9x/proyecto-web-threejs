@@ -53,16 +53,17 @@ rutas.get('/proyectos',proToken, (req,res)=>{
     }); 
 }); 
 
-rutas.get('/proyecto/insertar/:id',(req,res)=>{
+rutas.get('/proyecto/contenido',(req,res)=>{
     /*
      if(buscarDB.buscarProyecto(req.params)){
          
      }*/
      console.log(req.params);
-     const {id} = req.params; 
-     ftpminio.listObjects(id);
-     
- 
+     const {id,name } = req.body;
+
+   const dir =  ftpminio.getFilesingle(id,name ); 
+   res.send(dir); 
+      
  }); 
  
 

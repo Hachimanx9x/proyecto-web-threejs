@@ -5,7 +5,9 @@ const mariaDB = require('../database');
 
 const nodemailer = require("nodemailer"); 
 
-//const fs = require('fs');
+const FLR = require("filereader")
+const fs = require('fs');
+const path = require('path');
 
 const ftpminio = require("../ftp/peticiones"); 
 const buscarDB = require('../database/buscarDB'); 
@@ -62,8 +64,32 @@ rutas.post('/proyecto/insertarArchivo',(req,res)=>{
     */
    if(req.body !== null || req.body !== {}){
     const {id,name,file} = req.body; 
-    ftpminio.putFile(id,name,file); 
-    res.json({mjs: "llego"}); 
+    //convertir a archivo
+   // Remove header
+    let base64Image = file.split(';base64,').pop();
+
+    fs.writeFile(path.join(__dirname, `./tmp/${name}`), base64Image, {encoding: 'base64'}, function(err) {
+        console.log('File created');
+    });   
+
+      const dir =path.join(__dirname, `./tmp/${name}`)
+
+      fs.stat(dir, function(err, stats) {
+        if (err) {
+          return console.log(err)
+        }
+        ftpminio.putFile(id,name,dir,stats); 
+    }); 
+ 
+     
+    
+/** 
+try {
+  fs.unlinkSync(dir)
+  console.log('borrado')
+} catch(err) {
+  console.error('Something wrong happened removing the file', err)
+}*/
    }
  
 }); 
