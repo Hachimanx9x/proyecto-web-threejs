@@ -23,7 +23,6 @@ const Content = ({ sidebarIsOpen, toggleSidebar }) => (
         component={() => "Búsqueda de Contactos"}
       />
       <Route exact path="/Loged/Calendar" component={() => "Calendario"} />
-      <Redirect to="/Loged/Desktop" />
     </Switch>
   </div>
 );

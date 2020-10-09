@@ -21,7 +21,7 @@ class Main extends Component {
     } else {
       return (
         <div>
-          <Redirect to="/Loged" />
+          <Redirect to="/Loged/Desktop" />
         </div>
       );
     }
