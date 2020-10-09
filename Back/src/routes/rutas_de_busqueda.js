@@ -22,19 +22,11 @@ rutas.post('/login',(req,res)=>{
 
 rutas.get('/escritorio',proToken, (req,res)=>{
     jwt.verify(req.token,LLAVE,(err,data)=>{
-        if(err){
-            res.sendStatus(403)
-        }else{
-
-            if(data =={} || data==={} || data ==null || data === undefined){
-
-            }else{
-                buscarDB.obtenerEscritorio(data,res).then(resultado=>{
-                    // console.log("Exito"); 
-                 }); 
+        if(err){ res.sendStatus(403)
+        }else{if(data =={} || data==={} || data ==null || data === undefined){
+             }else{ buscarDB.obtenerEscritorio(data,res).then(resultado=>{           /*console.log("Exito"); */             }); 
             }
-            
-        }
+         }
     }); 
     
 }); 
@@ -61,6 +53,19 @@ rutas.get('/proyectos',proToken, (req,res)=>{
     }); 
 }); 
 
+rutas.get('/proyecto/insertar/:id',(req,res)=>{
+    /*
+     if(buscarDB.buscarProyecto(req.params)){
+         
+     }*/
+     console.log(req.params);
+     const {id} = req.params; 
+     ftpminio.listObjects(id);
+     
+ 
+ }); 
+ 
+
 /*
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 */
@@ -85,6 +90,14 @@ function proToken(req,res,next){
     }
  }
 
+/*
+**************************************************************************************************
+************************Exportaciones*****************************************************************
+**************************************************************************************************
+*/
+/*
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+*/
 
 module.exports = rutas; 
 

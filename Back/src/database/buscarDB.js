@@ -106,6 +106,12 @@ funcionesDB.obtenerProyecto = async (body,res)=>{
     });
 }
 
+funcionesDB.buscarProyecto = async(id)=>{
+    const query =`SELECT * FROM  proyectos where id= ${id}`;
+    await mariaDB.query(query, (err,rows , fields)=>{
+        if(!err){ return true; }else{ return false; }; 
+    } ); 
+}
 
 
 module.exports = funcionesDB; 

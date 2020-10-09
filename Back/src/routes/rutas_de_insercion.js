@@ -5,6 +5,10 @@ const mariaDB = require('../database');
 
 const nodemailer = require("nodemailer"); 
 
+//const fs = require('fs');
+
+const ftpminio = require("../ftp/peticiones"); 
+const buscarDB = require('../database/buscarDB'); 
 
 rutas.post('/registro/n=:nombre&c=:correo&p=:password',(req,res)=>{
     const {nombre,correo,password} = req.params ; 
@@ -46,6 +50,23 @@ rutas.post('/registro/n=:nombre&c=:correo&p=:password',(req,res)=>{
 } ); 
 
 
+rutas.post('/proyecto/insertarArchivo',(req,res)=>{
+   // res.json({msx:"hola"});
+   /*
+    if(buscarDB.buscarProyecto(req.params)){
+        
+    }*//*
+    console.log(req.params);
+    const {id} = req.params; 
+    ftpminio.listObjects(id);
+    */
+   if(req.body !== null || req.body !== {}){
+    const {id,name,file} = req.body; 
+    ftpminio.putFile(id,name,file); 
+    res.json({mjs: "llego"}); 
+   }
+ 
+}); 
 
 
 module.exports = rutas; 
