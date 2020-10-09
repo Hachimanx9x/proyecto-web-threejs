@@ -1,0 +1,1 @@
+start ./minio.exe server   .\contenido

@@ -6,6 +6,7 @@ import Loged from "../Pages/Loged/Loged";
 import Projects from "../Pages/Projects/Projects";
 import Test from "../Pages/test/test";
 import Test3d from "../Pages/test/test3d";
+import TestFile from "../Pages/test/testfiles";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 class Main extends Component {
@@ -35,6 +36,7 @@ class Main extends Component {
           <Route path="/Loged" component={Loged} />
           <Route exact path="/test" component={Test} />
           <Route exact path="/test3d" component={Test3d} />
+          <Route exact path="/testfile" component={TestFile} />
           {this.Redirect()}
         </Switch>
       </div>

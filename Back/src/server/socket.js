@@ -1,6 +1,7 @@
 const http = require('./httpx'); 
 const io = require('socket.io')(http);
 
+
 io.on('connection', function(socket){
     console.log('un usuario conectado');
     socket.on('disconnect', function(){

@@ -1,0 +1,2 @@
+AccessKey: minioadmin 
+SecretKey: minioadmin 
