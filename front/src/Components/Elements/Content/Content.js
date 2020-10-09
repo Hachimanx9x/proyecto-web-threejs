@@ -1,9 +1,10 @@
 import React from "react";
 import classNames from "classnames";
 import "./Content.css";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import Projects from "../../Pages/Projects/Projects";
 import Topbar from "./Topbar";
+import Accordion from "../Accordion/Accordion";
 
 const Content = ({ sidebarIsOpen, toggleSidebar }) => (
   <div
@@ -13,15 +14,16 @@ const Content = ({ sidebarIsOpen, toggleSidebar }) => (
   >
     <Topbar toggleSidebar={toggleSidebar} />
     <Switch>
-      <Route exact path="/Loged/" component={() => "Escritorio"} />
+      <Route exact path="/Loged/Desktop" component={() => "Escritorio"} />
       <Route exact path="/Loged/Projects" component={Projects} />
-      <Route exact path="/Loged/Contacts" component={() => "Contactos"} />
+      <Route exact path="/Loged/Contacts" component={Accordion} />
       <Route
         exact
         path="/Loged/SearchContacts"
         component={() => "Búsqueda de Contactos"}
       />
       <Route exact path="/Loged/Calendar" component={() => "Calendario"} />
+      <Redirect to="/Loged/Desktop" />
     </Switch>
   </div>
 );

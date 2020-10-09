@@ -4,36 +4,6 @@ import projectPNG from "../../../project.PNG";
 import illustration from "../../../ilustracion-equipo-de-trabajo.jpg";
 
 class Projects extends Component {
-  constructor() {
-    super();
-  }
-  /**
-   * 
-   */
-  componentWillMount() {
-    const token = localStorage.getItem("login");
-
-    if (token == null || token === undefined) {
-      //El metodo de redireccionamiento.
-      this.props.history.push("/");
-    } else {
-      const obj = JSON.parse(token);
-      const tokensito = obj.token;
-
-      fetch("http://localhost:3030/proyectos", {
-        method: "GET",
-        headers: {
-          "Content-type": "application/json",
-          authorization: `llave ${tokensito}`,
-        },
-      }).then((response) => {
-        response.json().then((result) => {
-          console.log(result);//falta mapear el resultado 
-        });
-      });
-    }
-  }
-
   render() {
     return (
       <div>
@@ -57,6 +27,21 @@ class Projects extends Component {
               </a>
             </div>
           </div>
+          <CardProject
+            title="Creación de entorno 3d para la web"
+            description="Este proyecto es una guía firme de como unir un grupo de trabajo para la creación de un sistema multimedia."
+            image={illustration}
+          />
+          <CardProject
+            title="Creación de entorno 3d para la web"
+            description="Este proyecto es una guía firme de como unir un grupo de trabajo para la creación de un sistema multimedia."
+            image={illustration}
+          />
+          <CardProject
+            title="Creación de entorno 3d para la web"
+            description="Este proyecto es una guía firme de como unir un grupo de trabajo para la creación de un sistema multimedia."
+            image={illustration}
+          />
           <CardProject
             title="Creación de entorno 3d para la web"
             description="Este proyecto es una guía firme de como unir un grupo de trabajo para la creación de un sistema multimedia."

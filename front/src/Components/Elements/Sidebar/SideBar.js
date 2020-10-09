@@ -11,9 +11,7 @@ import {
 import classNames from "classnames";
 import "./Sidebar.css";
 import { Link, NavLink } from "react-router-dom";
-//import ActiveLink from "../Content/ActiveLink";
-import SubMenu from "./SubMenu";
-
+function deleteUser() {}
 const SideBar = ({ isOpen, toggle }) => (
   <div id="sidebar" className={classNames("sidebar", { "is-open": isOpen })}>
     <div className="sidebar-header">
@@ -26,7 +24,7 @@ const SideBar = ({ isOpen, toggle }) => (
       <div className="list-unstyled pb-3">
         <div className="nav-item">
           <li tag={Link} to={"/contact"}>
-            <NavLink exact activeClassName="active" to="/Loged/">
+            <NavLink exact activeClassName="active" to="/Loged/Desktop">
               <a className="btn o-link-btn  font-weight-bold " role="button">
                 <FontAwesomeIcon icon={faHome} className="mr-2" />
                 Escritorio
@@ -76,7 +74,7 @@ const SideBar = ({ isOpen, toggle }) => (
         </div>
         <div className="nav-item">
           <li>
-            <NavLink exact activeClassName="active" to="/">
+            <NavLink exact activeClassName="active" to="/Login">
               <a className="btn   o-link-btn  font-weight-bold " role="button">
                 <FontAwesomeIcon icon={faDoorOpen} className="mr-2" />
                 Salir
@@ -88,32 +86,5 @@ const SideBar = ({ isOpen, toggle }) => (
     </div>
   </div>
 );
-
-const submenus = [
-  [
-    {
-      title: "Home 1",
-      target: "Home-1",
-    },
-    {
-      title: "Home 2",
-      target: "Home-2",
-    },
-    {
-      itle: "Home 3",
-      target: "Home-3",
-    },
-  ],
-  [
-    {
-      title: "Page 1",
-      target: "Page-1",
-    },
-    {
-      title: "Page 2",
-      target: "Page-2",
-    },
-  ],
-];
 
 export default SideBar;

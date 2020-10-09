@@ -10,3 +10,15 @@ body {
   font-family: "Roboto", sans-serif;
   background: #fafafa;
 }
+
+#root {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.o-container-main {
+  height: 100%;
+  margin: 0 auto;
+  width: 100%;
+  overflow: hidden;
+}

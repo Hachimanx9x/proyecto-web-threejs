@@ -104,7 +104,7 @@ class SigIn extends Component {
 
             <div className="form-row">
               <div className="col-sm ">
-                <a className="text-info font-weight-bold " href="/">
+                <a className="text-info font-weight-bold " href="/Login">
                   Ya tienes cuenta? Ingresa con ella.
                 </a>
               </div>
@@ -119,7 +119,7 @@ class SigIn extends Component {
 
               <a
                 className="btn btn-light mt-4 btn-lg text-primary font-weight-bold ml-3"
-                href="/"
+                href="/Login"
                 role="button"
               >
                 Cancelar

@@ -8,7 +8,7 @@ const Topbar = ({ toggleSidebar }, props) => {
   const toggleTopbar = () => setTopbarOpen(!topbarIsOpen);
 
   return (
-    <nav className="navbar navbar-default shadow-sm p-3 mb-5 bg-light navbar-expand-sm  rounded">
+    <nav className="navbar  sticky-top shadow-sm p-3 mb-5 bg-light navbar-expand-sm o-nav  rounded">
       <button
         className="btn btn-primary  btn-lg text-light  rounded  o-btns"
         onClick={toggleSidebar}
