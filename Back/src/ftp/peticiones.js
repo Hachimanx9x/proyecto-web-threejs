@@ -65,11 +65,32 @@ peticiones.creatBucket= async (name)=>{
 }
 
 peticiones.listObjects= async (namebucket, res)=>{
+  var names =[]; 
+  var n =0; 
     var  stream  = minio.listObjects(namebucket, '', true);
-    await stream.on('data', function(obj) { console.log(obj) } )
+
+    await stream.on('data', function(obj) {  names.push(obj.name);
+        stream.on('data', function(obj) {   
+         n++;  
+        if(n===names.length){ res.json(names); }
+        });
+    
+    }  )
+
+    
     await stream.on('error', function(err) { console.log(err) } ) 
+
+   
 }
 
 
 module.exports  = peticiones; 
-
+/*
+  await stream.on('data', function(obj) {  names.push(obj.name);
+        stream.on('data', function(obj) {   
+         n++;  
+        if(n===names.length){ res.json(names); }
+        });
+    
+    }  )
+ */

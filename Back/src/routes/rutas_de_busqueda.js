@@ -80,6 +80,19 @@ rutas.get('/proyecto/contenido',(req,res)=>{
   
       
  }); 
+ rutas.get('/proyecto/listado/:id',(req,res)=>{
+    /*
+     if(buscarDB.buscarProyecto(req.params)){
+         
+     }*/
+     console.log(req.params);
+    // const {id} = req.params; 
+    // const {id,name } = req.body;
+
+  ftpminio.listObjects(id,res ); 
+  
+      
+ }); 
 /*
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 */
