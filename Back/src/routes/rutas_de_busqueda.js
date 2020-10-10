@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const rutas= ex.Router();
  
 const buscarDB = require('../database/buscarDB'); 
-
+const ftpminio = require("../ftp/peticiones"); 
 const LLAVE = 'misecretos'; 
 
 rutas.get('/login/email=:correo&pass=:password',(req,res)=>{
@@ -67,6 +67,19 @@ rutas.get('/proyecto/contenido',(req,res)=>{
  }); 
  
 
+ rutas.get('/proyecto/contenido/:name',(req,res)=>{
+    /*
+     if(buscarDB.buscarProyecto(req.params)){
+         
+     }*/
+     console.log(req.params);
+     const {name } = req.params; 
+    // const {id,name } = req.body;
+
+   ftpminio.getFilesingle("default",name,res ); 
+  
+      
+ }); 
 /*
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 */
