@@ -1,1 +1,1 @@
-start yarn run dev
+start yarn && yarn run dev
