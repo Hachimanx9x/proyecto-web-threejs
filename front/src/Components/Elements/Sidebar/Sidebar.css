@@ -78,9 +78,10 @@ li a.dropdown-toggle::after {
   color: #3bccf6;
   border-left: 5px solid white;
 }
-
+a.active .o-link-btn {
+  color: #3bccf6;
+}
 a.active .nav-item {
   background: #203768;
   border-left: 5px solid #3bccf6;
-  color: #24a2d1;
 }
