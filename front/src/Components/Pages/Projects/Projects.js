@@ -15,9 +15,12 @@ class Projects extends Component {
               Proyectos
             </div>
             <img class="card-img o-card-project-image" src={projectPNG} />
-            <div class="card-body">
-              <p class="card-text o-card-project-text">
+            <div class="card-body o-card-description">
+              <p class="card-text o-card-description-text">
                 Some quick example text to build on the card title and make up
+                the bulk of the card's content. Some quick example text to build on the card title and make up
+                the bulk of the card's content. Some quick example text to build on the card title and make up
+                the bulk of the card's content. Some quick example text to build on the card title and make up
                 the bulk of the card's content.
               </p>
             </div>

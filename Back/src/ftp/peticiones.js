@@ -3,7 +3,7 @@ var fs = require('fs')
 const path = require('path');
 const stream = require('stream')
 
-const peticiones ={}; 
+const peticiones ={};  
 
 peticiones.getFilesingle= async (bucket,namefile,res)=>{
   

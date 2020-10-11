@@ -4,8 +4,8 @@ import "./Content.css";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Projects from "../../Pages/Projects/Projects";
 import Topbar from "./Topbar";
-import Accordion from "../Accordion/Accordion";
-
+import Documentation from "../../Pages/Documentation/Documentation";
+import Loged from "../../Pages/Loged/Loged";
 const Content = ({ sidebarIsOpen, toggleSidebar }) => (
   <div
     className={classNames("content container-fluid", {
@@ -16,12 +16,13 @@ const Content = ({ sidebarIsOpen, toggleSidebar }) => (
     <Switch>
       <Route exact path="/Loged/Desktop" component={() => "Escritorio"} />
       <Route exact path="/Loged/Projects" component={Projects} />
-      <Route exact path="/Loged/Contacts" component={Accordion} />
+      <Route exact path="/Loged/Contacts" component={Documentation} />
       <Route
         exact
         path="/Loged/SearchContacts"
         component={() => "Búsqueda de Contactos"}
       />
+      <Route exact path="Loged" component={Loged}/>
       <Route exact path="/Loged/Calendar" component={() => "Calendario"} />
     </Switch>
   </div>
