@@ -7,8 +7,8 @@ const CardProject = ({ title, description, image }) => {
     <div class="card m-3 o-card-project">
       <div class="card-header bg-transparent o-card-project-title">{title}</div>
       <img class="card-img o-card-project-image" src={image} />
-      <div class="card-body">
-        <p class="card-text o-card-project-text">{description}</p>
+      <div class="card-body o-card-description">
+        <p class="card-text o-card-description-text ">{description}</p>
       </div>
       <div class="card-footer bg-transparent border-transparent">
         <a href="#" class="btn btn-primary btn-sm o-card-project-button mr-4">

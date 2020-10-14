@@ -1,1 +1,1 @@
-start  yarn start
+start yarn &&  yarn start

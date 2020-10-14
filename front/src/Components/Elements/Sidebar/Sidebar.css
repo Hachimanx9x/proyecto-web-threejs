@@ -40,6 +40,8 @@ a:focus {
 .nav-item:hover {
   background: #203768;
   color: #3bccf6;
+  border-left: 5px solid #3bccf6;
+  transition: 0.1s;
 }
 li a.dropdown-toggle::after {
   display: inline-flex;
@@ -60,87 +62,6 @@ li a.dropdown-toggle::after {
   overflow-y: scroll;
 }
 
-.side-menu::-webkit-scrollbar {
-  width: 10px;
-}
-
-.side-menu::-webkit-scrollbar-thumb {
-  background: #5466b3;
-  border-radius: 3px;
-}
-
-.side-menu::-webkit-scrollbar-thumb:hover {
-  background: #3a4c99;
-}
-
-/* ---------------------------------------------------
-      CONTENT STYLE
-  ----------------------------------------------------- */
-.content {
-  padding: 20px;
-  margin-left: 0;
-  height: 100vh;
-}
-@media only screen and (max-width: 800px) {
-  .sidebar.is-open {
-    min-width: 200px;
-    max-width: 200px;
-  }
-  .side-menu {
-    text-align: center;
-    font-size: 1rem;
-  }
-  .o-link-btn {
-    font-size: 1rem;
-  }
-}
-@media only screen and (max-width: 590px) {
-  body {
-    overflow: hidden;
-  }
-
-  .sidebar.is-open {
-    min-width: 100%;
-    max-width: 100%;
-    z-index: 2;
-    position: fixed;
-    height: 100vh;
-    margin-left: 0;
-    transition: all 0.5s, height 0s;
-  }
-
-  .sidebar.is-open > .sidebar-header span {
-    display: unset;
-    position: fixed;
-  }
-
-  li a.dropdown-toggle::after {
-    display: inline-block;
-    position: relative;
-  }
-}
-
-.o-btns {
-  width: 3rem;
-  height: 3rem;
-  border-width: 3px;
-}
-
-.o-link-btn {
-  width: 100%;
-  height: 2.5rem;
-  text-align: start;
-  margin: 0;
-  padding: 0.2rem 0rem 0.2rem 0.9rem;
-  color: white;
-}
-
-.nav-item:hover {
-  border-left: 5px solid #3bccf6;
-  transition: 0.1s;
-  color: #3bccf6;
-}
-
 .o-link-btn:hover {
   color: #3bccf6;
 }
@@ -156,4 +77,11 @@ li a.dropdown-toggle::after {
   box-shadow: none;
   color: #3bccf6;
   border-left: 5px solid white;
+}
+a.active .o-link-btn {
+  color: #3bccf6;
+}
+a.active .nav-item {
+  background: #203768;
+  border-left: 5px solid #3bccf6;
 }

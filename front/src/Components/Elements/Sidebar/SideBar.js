@@ -11,8 +11,17 @@ import {
 import classNames from "classnames";
 import "./Sidebar.css";
 import { Link, NavLink } from "react-router-dom";
-function deleteUser() {}
-const SideBar = ({ isOpen, toggle }) => (
+ const deleteUser = (props) =>{
+    localStorage.setItem(
+      "login",
+      ""
+    );
+
+    console.log(localStorage.getItem("login"))
+  }
+const SideBar = ({ isOpen, toggle }) => {
+ 
+  return(
   <div id="sidebar" className={classNames("sidebar", { "is-open": isOpen })}>
     <div className="sidebar-header">
       <span color="info" onClick={toggle} style={{ color: "#fff" }}>
@@ -22,69 +31,84 @@ const SideBar = ({ isOpen, toggle }) => (
     </div>
     <div className="side-menu">
       <div className="list-unstyled pb-3">
+
+      <NavLink  activeClassName="active" to="/Loged/Desktop">
         <div className="nav-item">
-          <li tag={Link} to={"/contact"}>
-            <NavLink exact activeClassName="active" to="/Loged/Desktop">
+          <li tag={Link} to={"/Loged/Desktop"}>
+           
               <a className="btn o-link-btn  font-weight-bold " role="button">
                 <FontAwesomeIcon icon={faHome} className="mr-2" />
                 Escritorio
               </a>
-            </NavLink>
+           
           </li>
         </div>
+        </NavLink>
+
+        <NavLink exact activeClassName="active" to="/Loged/Projects">
         <div className="nav-item">
-          <li tag={Link} to={"/contact"}>
-            <NavLink exact activeClassName="active" to="/Loged/Projects">
+          <li tag={Link} to={"/Loged/Projects"}>
+          
               <a className="btn   o-link-btn  font-weight-bold " role="button">
                 <FontAwesomeIcon icon={faProjectDiagram} className="mr-2" />
                 Proyectos
               </a>
-            </NavLink>
+           
           </li>
         </div>
+        </NavLink>
+
+        <NavLink  activeClassName="active" to="/Loged/SearchContacts">
         <div className="nav-item">
-          <li tag={Link} to={"/contact"}>
-            <NavLink exact activeClassName="active" to="/Loged/SearchContacts">
+          <li tag={Link} to={"/Loged/SearchContacts"}>
+           
               <a className="btn   o-link-btn  font-weight-bold " role="button">
                 <FontAwesomeIcon icon={faSearch} className="mr-2" />
                 Buscar Talentos
               </a>
-            </NavLink>
+           
           </li>
         </div>
-        <div className="nav-item">
-          <li tag={Link} to={"/contact"}>
-            <NavLink exact activeClassName="active" to="/Loged/Contacts">
+        </NavLink>
+        
+            <NavLink  activeClassName="active" to="/Loged/Contacts">
+              <div className="nav-item"  >
+          <li tag={Link} to={"/Loged/Contacts"}>
               <a className="btn   o-link-btn  font-weight-bold " role="button">
                 <FontAwesomeIcon icon={faUserFriends} className="mr-2" />
                 Contactos
               </a>
-            </NavLink>
           </li>
         </div>
+        </NavLink>
+
+        <NavLink  activeClassName="active" to="/Loged/Calendar">
         <div className="nav-item">
-          <li tag={Link} to={"/contact"}>
-            <NavLink exact activeClassName="active" to="/Loged/Calendar">
+          <li tag={Link} to={"/Loged/Calendar"}>    
               <a className="btn   o-link-btn  font-weight-bold " role="button">
                 <FontAwesomeIcon icon={faCalendarAlt} className="mr-2" />
                 Calendario
               </a>
-            </NavLink>
+          
           </li>
         </div>
+        </NavLink>
+
+
         <div className="nav-item">
-          <li>
-            <NavLink exact activeClassName="active" to="/Login">
-              <a className="btn   o-link-btn  font-weight-bold " role="button">
+          <li tag={Link} to={"/Login"}>
+           
+              <a href="/Login" onClick={deleteUser} className="btn   o-link-btn  font-weight-bold " role="button">
                 <FontAwesomeIcon icon={faDoorOpen} className="mr-2" />
                 Salir
               </a>
-            </NavLink>
+           
           </li>
         </div>
       </div>
+      
     </div>
-  </div>
-);
+  </div>)
+};
 
 export default SideBar;
