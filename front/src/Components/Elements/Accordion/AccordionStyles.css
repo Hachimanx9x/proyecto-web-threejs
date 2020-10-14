@@ -39,19 +39,6 @@
   transition: max-height 0.6s ease;
 }
 
-.accordion-content.show {
-  height: 100px;
-  opacity: 1;
-
-  overflow: hidden;
-}
-
-.accordion-content.hide {
-  height: 0px;
-  opacity: 0;
-  overflow: hidden;
-}
-
 .accordion-text {
   font-weight: 400;
   font-size: 14px;

@@ -18,9 +18,6 @@ class Projects extends Component {
             <div class="card-body o-card-description">
               <p class="card-text o-card-description-text">
                 Some quick example text to build on the card title and make up
-                the bulk of the card's content. Some quick example text to build on the card title and make up
-                the bulk of the card's content. Some quick example text to build on the card title and make up
-                the bulk of the card's content. Some quick example text to build on the card title and make up
                 the bulk of the card's content.
               </p>
             </div>
@@ -32,7 +29,11 @@ class Projects extends Component {
           </div>
           <CardProject
             title="Creación de entorno 3d para la web"
-            description="Este proyecto es una guía firme de como unir un grupo de trabajo para la creación de un sistema multimedia."
+            description="Este proyecto es una guía firme de como unir un grupo de trabajo para la creación de un sistema multimedia.    Some quick example text to build on the card title and make up
+            the bulk of the card's content. Some quick example text to build on the card title and make up
+            the bulk of the card's content. Some quick example text to build on the card title and make up
+            the bulk of the card's content. Some quick example text to build on the card title and make up
+            the bulk of the card's content."
             image={illustration}
           />
           <CardProject

@@ -76,7 +76,6 @@ li a.dropdown-toggle::after {
   outline: none;
   box-shadow: none;
   color: #3bccf6;
-  border-left: 5px solid white;
 }
 a.active .o-link-btn {
   color: #3bccf6;
