@@ -22,16 +22,26 @@ funcionesDB.buscarLogin =async (body,res)=>{
 
 funcionesDB.obtenerToken=async  (body,res)=>{
     const { correo, password }  =body ; 
+    //console.log(body); 
  
     const query=`SELECT * FROM usuarios WHERE correoElectronico = "${correo}" AND contrasena = "${password}" `; 
      
   await mariaDB.query(query,(err,rows , fields)=>{
-   
+     
    if(!err){
-    const token = jwt.sign({rows},LLAVE); 
-     res.json({token});
+       if(rows[0] == null || rows.length == 0 ){
+        res.json({respuesta : "no encontrado"}); 
+        
+       }else{       
+          
+            const token = jwt.sign({rows},LLAVE); 
+            res.json({token});
+           
+           
+       }
+    
    }else{
-
+    res.json({respuesta : "Base de datos dañada"}); 
    }
  
     }); 
@@ -80,6 +90,7 @@ funcionesDB.obtenerEscritorio=async  (body,res)=>{
 
 
 funcionesDB.obtenerProyecto = async (body,res)=>{
+
     const {persona } = body.rows[0]; 
     const query =`SELECT proyectos.id,
                          proyectos.nombre,

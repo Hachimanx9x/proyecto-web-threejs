@@ -26,7 +26,7 @@ import negz from "../../../Logos/img/Bridge2/negz.jpg";
 //modelos 3d
 import modeloMesaurl from "../../../Logos/models3d/Mesa.gltf";
 import modelopiso from "../../../Logos/models3d/floor.gltf";
-import modelluz from "../../../Logos/models3d/lights.gltf";
+import modelluz from "../../../Logos/models3d/lights2.gltf";
 import modelomueble1 from "../../../Logos/models3d/mueble_2.gltf";
 import modelopared from "../../../Logos/models3d/paredes_1.gltf";
 import modelopared2 from "../../../Logos/models3d/paredes_2.gltf";

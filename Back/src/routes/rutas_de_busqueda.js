@@ -7,6 +7,7 @@ const ftpminio = require("../ftp/peticiones");
 const LLAVE = 'misecretos'; 
 
 rutas.get('/login/email=:correo&pass=:password',(req,res)=>{
+    //console.log(req.params); 
     buscarDB.obtenerToken(req.params, res).then(resultado=>{
        // console.log("Exito"); 
     }); 
@@ -22,9 +23,14 @@ rutas.post('/login',(req,res)=>{
 
 rutas.get('/escritorio',proToken, (req,res)=>{
     jwt.verify(req.token,LLAVE,(err,data)=>{
-        if(err){ res.sendStatus(403)
-        }else{if(data =={} || data==={} || data ==null || data === undefined){
-             }else{ buscarDB.obtenerEscritorio(data,res).then(resultado=>{           /*console.log("Exito"); */             }); 
+        if(err){ res.sendStatus(403);
+        }else{
+            if(data !={} || data !=={} || data !=null || data !== undefined || data.rows != [] || data.rows !== [] || data.rows !== null || data.rows !== undefined  || data.rows[0] != null){
+            
+           // console.log(data.rows);  
+            buscarDB.obtenerEscritorio(data,res);  
+             }else{
+                console.log("Basio perro ");  res.json({    estado : "no se encontro nada"    });
             }
          }
     }); 
