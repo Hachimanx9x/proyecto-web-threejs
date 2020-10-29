@@ -89,22 +89,38 @@ li a.dropdown-toggle::after {
   body {
     overflow: hidden;
   }
+  .sidebar {
+    z-index: 3;
 
+    height: 100vh;
+    position: fixed;
+  }
   .sidebar.is-open {
     min-width: 100%;
     max-width: 100%;
-    z-index: 2;
+    z-index: 3;
     position: fixed;
     height: 100vh;
     margin-left: 0;
     transition: all 0.5s, height 0s;
   }
-
+  .o-nav {
+    position: fixed;
+    z-index: 1;
+    width: 90%;
+  }
   .sidebar.is-open > .sidebar-header span {
     display: unset;
     position: fixed;
   }
-
+  .content {
+    overflow: scroll;
+    padding: 20px;
+    margin-left: 0;
+    margin-top: 60px;
+    height: 100vh;
+    position: fixed;
+  }
   li a.dropdown-toggle::after {
     display: inline-block;
     position: relative;
