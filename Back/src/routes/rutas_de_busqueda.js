@@ -25,9 +25,8 @@ rutas.get('/escritorio',proToken, (req,res)=>{
     jwt.verify(req.token,LLAVE,(err,data)=>{
         if(err){ res.sendStatus(403);
         }else{
-            if(data !={} || data !=={} || data !=null || data !== undefined || data.rows != [] || data.rows !== [] || data.rows !== null || data.rows !== undefined  || data.rows[0] != null){
-            
-           // console.log(data.rows);  
+            if(data !={} || data !=={} || data !=null || data !== undefined || data.rows != [] || data.rows !== [] || data.rows !== null || data.rows !== undefined  || data.rows[0] != null || data.rows.length > 0){
+            // console.log(data.rows);  
             buscarDB.obtenerEscritorio(data,res);  
              }else{
                 console.log("Basio perro ");  res.json({    estado : "no se encontro nada"    });
@@ -86,19 +85,22 @@ rutas.get('/proyecto/contenido',(req,res)=>{
   
       
  }); 
- rutas.get('/proyecto/listado/:id',(req,res)=>{
+ rutas.get('/proyecto/listado/:id',async (req,res)=>{
     /*
      if(buscarDB.buscarProyecto(req.params)){
          
      }*/
      console.log(req.params);
-    // const {id} = req.params; 
+     const {id} = req.params; 
     // const {id,name } = req.body;
 
-  ftpminio.listObjects(id,res ); 
+  var list1 = await  ftpminio.listObjects(id,res );
+  console.log(list1);  
   
       
  }); 
+
+
 /*
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 */

@@ -64,23 +64,29 @@ peticiones.creatBucket= async (name)=>{
       }); 
 }
 
+var externa_list_melleno;
 peticiones.listObjects= async (namebucket, res)=>{
   var names =[]; 
+  var n; 
   var n =0; 
     var  stream  = minio.listObjects(namebucket, '', true);
 
-    await stream.on('data', function(obj) {  names.push(obj.name);
+    var nums= await stream.on('data',async (obj)=> {  names.push(obj.name);
         stream.on('data', function(obj) {   
          n++;  
-        if(n===names.length){ res.json(names); }
+        if(n===names.length){ console.log(names); return names;  }
         });
     
-    }  )
+    }  ); 
 
-    
-    await stream.on('error', function(err) { console.log(err) } ) 
+    console.log(nums); 
 
    
+
+   // await stream.on('data', (obj)=> {   return obj; n=obj;      }); 
+    await stream.on('error', function(err) { console.log(err) } ) 
+
+  // return n ; 
 }
 
 

@@ -4,7 +4,8 @@ import SideToggler from "./SideToggler";
 class Loged extends Component {
   componentWillMount() {
     const token = localStorage.getItem("login");
-  
+    console.log("el token es => "+  token); 
+  /*
     if (token == null || token === undefined || token == "") {
       //El metodo de redireccionamiento.
       this.props.history.push("/Login");
@@ -23,7 +24,7 @@ class Loged extends Component {
           console.log(result); //falta mapear el resultado
         });
       });
-    }
+    }*/
   }
   render() {
     return <SideToggler />;

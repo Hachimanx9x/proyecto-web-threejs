@@ -18,10 +18,12 @@ class Login extends Component {
       body: JSON.stringify(this.state),
       headers: {
         "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
       },
     }).then((response) => {
       response.json().then((result) => {
         console.log(result.token);
+        
         localStorage.setItem(
           "login",
           JSON.stringify({
@@ -93,7 +95,7 @@ class Login extends Component {
             <div className="o-buttons">
               <a
                 className="btn btn-primary mt-4 o-btn font-weight-bold btn-lg"
-                href="/Loged/Projects"
+              
                 onClick={this.loginfun}
               >
                 Ingresar

@@ -35,6 +35,7 @@ funcionesDB.obtenerToken=async  (body,res)=>{
        }else{       
           
             const token = jwt.sign({rows},LLAVE); 
+            res.set("Access-Control-Allow-Origin", "*"); 
             res.json({token});
            
            
