@@ -16,7 +16,21 @@ class Login extends Component {
    // const value = JSON.stringify({ correo, password }); 
    const value = JSON.stringify({ correo, password }); 
    console.log(value); 
-   await  fetch(url, {
+   await  fetch(url)
+  .then(response => response.json())
+  .then(data =>{
+    console.log(data.token); 
+    localStorage.setItem(
+      "login",
+      JSON.stringify({
+        token: data.token,
+      }),
+      )
+      this.props.history.push("/Loged/Desktop");
+  });
+
+
+/*   await  fetch(url, {
     mode: 'no-cors',
     method: "GET",   
     headers: {
@@ -25,19 +39,24 @@ class Login extends Component {
     },
     redirect: 'follow'
   }).then(async (response) => {
-    console.log(response); 
-   response.json().then((result) => {
-      console.log(result.token);
-      
-      localStorage.setItem(
-        "login",
-        JSON.stringify({
-          token: result.token,
-        })
-      );
-    });
+    if (!response.ok){
+      console.log("fallo perro"); 
+    }else{
+      console.log(response); 
+      response.json().then((result) => {
+         console.log(result.token);
+         
+         localStorage.setItem(
+           "login",
+           JSON.stringify({
+             token: result.token,
+           })
+         );
+       });
+    }
+
 //  await  console.log(response); 
-  });
+  });*/
 /*
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
