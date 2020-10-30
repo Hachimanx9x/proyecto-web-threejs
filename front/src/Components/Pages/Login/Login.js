@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from 'axios';
 import "./Login.css";
 
 class Login extends Component {
@@ -10,80 +11,43 @@ class Login extends Component {
   loginfun = async () => {
     const { correo, password } = this.state; 
     console.log(`El correo es ${correo} y la contraseña es ${password}`);
-   // const url = `http://localhost:3030/login`;
-    ///login/email=:correo&pass=:password
-    const url = `http://localhost:3030/login/email=${correo}&pass=${password}`;
-   // const value = JSON.stringify({ correo, password }); 
-   const value = JSON.stringify({ correo, password }); 
-   console.log(value); 
-   await  fetch(url)
-  .then(response => response.json())
-  .then(data =>{
-    console.log(data.token); 
-    localStorage.setItem(
-      "login",
-      JSON.stringify({
-        token: data.token,
-      }),
-      )
-      this.props.history.push("/Loged/Desktop");
-  });
+    const url = `http://localhost:3030/login`;
+  
+    const value = JSON.stringify({ correo, password }); 
+    const httpInstance = axios.create( {
+      baseURL:"http://localhost:3030/",
+      timeout: 1000,
+      headers: {'Content-Type': 'application/json'}
+  });//
 
-
-/*   await  fetch(url, {
-    mode: 'no-cors',
-    method: "GET",   
-    headers: {
-      'Content-Type':'application/json',
-      "Access-Control-Allow-Origin":"*"
-    },
-    redirect: 'follow'
-  }).then(async (response) => {
-    if (!response.ok){
-      console.log("fallo perro"); 
-    }else{
-      console.log(response); 
-      response.json().then((result) => {
-         console.log(result.token);
-         
-         localStorage.setItem(
-           "login",
-           JSON.stringify({
-             token: result.token,
-           })
-         );
-       });
+  httpInstance.interceptors.response.use(null, error => {
+    const expectedError = error.response && error.response.status >= 400 && error.response.status < 500;
+    if (!expectedError) {
+        // Loggear mensaje de error a un servicio como Sentry
+        // Mostrar error genérico al usuario
+        return Promise.reject(error);
     }
-
-//  await  console.log(response); 
-  });*/
-/*
-  var myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
-  myHeaders.append("Access-Control-Allow-Origin", "*");
-  
-  var raw = JSON.stringify({ correo, password });
-  
-  var requestOptions = {
-    mode: 'no-cors',
-    method: 'POST',
-    headers: myHeaders,
-    body: raw,
-    redirect: 'follow'
-  };
-  
- await fetch("http://localhost:3030/login", requestOptions)
-    .then(response => {
-      response.json().then((result)=>{
-        console.log(result.token);
-      });
-
-    })
-    .then(result => console.log(result))
-    .catch(error => console.log('error', error));
-
-*/
-
+  }
+);
+  //------
+  httpInstance.post('login',{ correo, password }).then(respuesta => {
+    if(respuesta.statusText =="OK" ){
+      console.log(respuesta.data);
+      localStorage.setItem(
+        "login",
+        JSON.stringify({
+          token: respuesta.data.token,
+        })
+      );
+      
+     this.props.history.push("/Loged/Desktop");
+    }else{
+      console.log("error fatal")
+    }
+    
+}).catch(error => {
+    console.error(error);
+})
 
   };//fin de login fun 
 
@@ -177,3 +141,77 @@ class Login extends Component {
 }
 
 export default Login;
+/*Codugo basura */
+/**
+ const value = JSON.stringify({ correo, password }); 
+   console.log(value); 
+   await  fetch(url)
+  .then(response => response.json())
+  .then(data =>{
+    console.log(data.token); 
+    localStorage.setItem(
+      "login",
+      JSON.stringify({
+        token: data.token,
+      }),
+      )
+      this.props.history.push("/Loged/Desktop");
+  });
+
+
+  await  fetch(url, {
+    mode: 'no-cors',
+    method: "POST",   
+    headers: {
+      'Content-Type':'application/json',
+      "Access-Control-Allow-Origin":"*"
+    },
+    body : value,
+    redirect: 'follow'
+  }).then(async (response) => {
+    if (!response.ok){
+      console.log("fallo perro"); 
+    }else{
+      console.log(response); 
+      response.json().then((result) => {
+         console.log(result.token);
+         
+         localStorage.setItem(
+           "login",
+           JSON.stringify({
+             token: result.token,
+           })
+         );
+       });
+    }
+
+//  await  console.log(response); 
+  })
+
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Access-Control-Allow-Origin", "*");
+  
+  var raw = JSON.stringify({ correo, password });
+  
+  var requestOptions = {
+    mode: 'no-cors',
+    method: 'POST',
+    headers: myHeaders,
+    body: raw,
+    redirect: 'follow'
+  };
+  
+ await fetch("http://localhost:3030/login", requestOptions)
+    .then(response => {
+      response.json().then((result)=>{
+        console.log(result.token);
+      });
+
+    })
+    .then(result => console.log(result))
+    .catch(error => console.log('error', error));
+
+*/
+
+ 

@@ -1,9 +1,10 @@
 const ex = require('express'); 
 const app = ex();
 const bodyParser = require('body-parser')
+var cors = require('cors');
 //configuracion
 app.set('PORT', process.env.PORT || 3030 )
-
+app.use(cors()); 
 //Middlewares
 app.use(ex.json()); 
 app.use(ex.urlencoded({extended:false})); 
