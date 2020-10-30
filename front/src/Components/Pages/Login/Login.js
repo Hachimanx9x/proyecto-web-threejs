@@ -7,32 +7,66 @@ class Login extends Component {
     this.state = { correo: "", password: "", login: false, store: null };
   }
 
-  loginfun = () => {
-    const { correo, password } = this.state;
-   // console.log(`El correo es ${correo} y la contraseña es ${password}`);
-    const url = `http://localhost:3030/login`;
-   // console.log("hol1");
-
-    fetch(url, {
-      method: "POST",
-      body: JSON.stringify(this.state),
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*"
-      },
-    }).then((response) => {
-      response.json().then((result) => {
-        console.log(result.token);
-        
-        localStorage.setItem(
-          "login",
-          JSON.stringify({
-            token: result.token,
-          })
-        );
-      });
+  loginfun = async () => {
+    const { correo, password } = this.state; 
+    console.log(`El correo es ${correo} y la contraseña es ${password}`);
+   // const url = `http://localhost:3030/login`;
+    ///login/email=:correo&pass=:password
+    const url = `http://localhost:3030/login/email=${correo}&pass=${password}`;
+   // const value = JSON.stringify({ correo, password }); 
+   const value = JSON.stringify({ correo, password }); 
+   console.log(value); 
+   await  fetch(url, {
+    mode: 'no-cors',
+    method: "GET",   
+    headers: {
+      'Content-Type':'application/json',
+      "Access-Control-Allow-Origin":"*"
+    },
+    redirect: 'follow'
+  }).then(async (response) => {
+    console.log(response); 
+   response.json().then((result) => {
+      console.log(result.token);
+      
+      localStorage.setItem(
+        "login",
+        JSON.stringify({
+          token: result.token,
+        })
+      );
     });
+//  await  console.log(response); 
+  });
+/*
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Access-Control-Allow-Origin", "*");
+  
+  var raw = JSON.stringify({ correo, password });
+  
+  var requestOptions = {
+    mode: 'no-cors',
+    method: 'POST',
+    headers: myHeaders,
+    body: raw,
+    redirect: 'follow'
   };
+  
+ await fetch("http://localhost:3030/login", requestOptions)
+    .then(response => {
+      response.json().then((result)=>{
+        console.log(result.token);
+      });
+
+    })
+    .then(result => console.log(result))
+    .catch(error => console.log('error', error));
+
+*/
+
+
+  };//fin de login fun 
 
   render() {
     return (

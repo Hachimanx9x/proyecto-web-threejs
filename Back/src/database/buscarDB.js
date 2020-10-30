@@ -22,20 +22,23 @@ funcionesDB.buscarLogin =async (body,res)=>{
 
 funcionesDB.obtenerToken=async  (body,res)=>{
     const { correo, password }  =body ; 
-    //console.log(body); 
+    console.log(body); 
  
     const query=`SELECT * FROM usuarios WHERE correoElectronico = "${correo}" AND contrasena = "${password}" `; 
      
   await mariaDB.query(query,(err,rows , fields)=>{
      
    if(!err){
+       console.log(rows);
        if(rows[0] == null || rows.length == 0 ){
+        console.log("error en los datos ")
         res.json({respuesta : "no encontrado"}); 
         
        }else{       
           
             const token = jwt.sign({rows},LLAVE); 
-            res.set("Access-Control-Allow-Origin", "*"); 
+            console.log("token enviado"); 
+            res.header("Access-Control-Allow-Origin", "*"); 
             res.json({token});
            
            
