@@ -14,7 +14,7 @@ class Projects extends Component {
             <div className="card-header bg-transparent o-card-project-title">
               Proyectos
             </div>
-            <img className="card-img o-card-project-image" src={projectPNG} />
+            <img className="card-img o-card-project-image" alt="baseImage" src={projectPNG} />
             <div className="card-body o-card-description">
               <p className="card-text o-card-description-text">
                 Some quick example text to build on the card title and make up
@@ -22,7 +22,7 @@ class Projects extends Component {
               </p>
             </div>
             <div className="card-footer bg-transparent border-transparent">
-              <a href="#" className="btn btn-primary btn-sm o-card-project-button">
+              <a href="/CreateProject" className="btn btn-primary btn-sm o-card-project-button">
                 Crear
               </a>
             </div>

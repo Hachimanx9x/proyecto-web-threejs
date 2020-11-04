@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAlignLeft, faAlignRight } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
 
 const Topbar = ({ toggleSidebar }, props) => {
   const [topbarIsOpen, setTopbarOpen] = useState(true);
@@ -29,7 +28,7 @@ const Topbar = ({ toggleSidebar }, props) => {
         } navbar-collapse justify-content-lg-end`}
         id="navbar-menu"
       >
-        <a className="nav-link text-info">Foto perfil</a>
+        <a className="nav-link text-info" href="/Loged/InfoUser">Foto perfil</a>
       </div>
     </nav>
   );

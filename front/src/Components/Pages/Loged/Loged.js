@@ -7,7 +7,7 @@ class Loged extends Component {
     const token = localStorage.getItem("login");
     console.log("el token es => "+  token); 
  
-    if (token == null || token === undefined || token == "") {
+    if (token === null || token === undefined || token === "") {
       //El metodo de redireccionamiento.
       this.props.history.push("/Login");
     } else {
@@ -30,7 +30,7 @@ class Loged extends Component {
   );
     //------
     httpInstance.get('proyectos').then(respuesta => {
-      if(respuesta.statusText =="OK" ){
+      if(respuesta.statusText ==="OK" ){
         console.log(respuesta.data);
     
       }else{

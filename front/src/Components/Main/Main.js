@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import { Switch, Route, Router, Redirect, withRouter } from "react-router-dom";
+import { Switch, Route,  Redirect,  } from "react-router-dom";
 import Login from "../Pages/Login/Login";
 import SigIn from "../Pages/Registro/SignIn";
 import Loged from "../Pages/Loged/Loged";
-import Projects from "../Pages/Projects/Projects";
 import Test from "../Pages/test/test";
 import Test3d from "../Pages/test/test3d";
 import TestFile from "../Pages/test/testfiles";

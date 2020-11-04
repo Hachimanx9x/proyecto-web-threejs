@@ -36,9 +36,11 @@ const SideBar = ({ isOpen, toggle }) => {
         <div className="nav-item">
           <li tag={Link} to={"/Loged/Desktop"}>
            
-              <a className="btn o-link-btn  font-weight-bold " href="" role="button">          <FontAwesomeIcon icon={faHome} className="mr-2" />   Escritorio </a>
-              
-              
+              <button className="btn o-link-btn  font-weight-bold " >          
+              <FontAwesomeIcon icon={faHome} className="mr-2" />   
+              Escritorio 
+              </button>
+                           
            
           </li>
         </div>
@@ -48,10 +50,10 @@ const SideBar = ({ isOpen, toggle }) => {
         <div className="nav-item">
           <li tag={Link} to={"/Loged/Projects"}>
           
-              <a className="btn   o-link-btn  font-weight-bold " role="button">
+                <button className="btn   o-link-btn  font-weight-bold ">
                 <FontAwesomeIcon icon={faProjectDiagram} className="mr-2" />
                 Proyectos
-              </a>
+              </button>
            
           </li>
         </div>
@@ -61,10 +63,10 @@ const SideBar = ({ isOpen, toggle }) => {
         <div className="nav-item">
           <li tag={Link} to={"/Loged/SearchContacts"}>
            
-              <a className="btn   o-link-btn  font-weight-bold " role="button">
+                <button className="btn   o-link-btn  font-weight-bold " >
                 <FontAwesomeIcon icon={faSearch} className="mr-2" />
                 Buscar Talentos
-              </a>
+              </button>
            
           </li>
         </div>
@@ -73,10 +75,10 @@ const SideBar = ({ isOpen, toggle }) => {
             <NavLink  activeClassName="active" to="/Loged/Contacts">
               <div className="nav-item"  >
           <li tag={Link} to={"/Loged/Contacts"}>
-              <a className="btn   o-link-btn  font-weight-bold " role="button">
+                <button className="btn   o-link-btn  font-weight-bold " >
                 <FontAwesomeIcon icon={faUserFriends} className="mr-2" />
                 Contactos
-              </a>
+              </button>
           </li>
         </div>
         </NavLink>
@@ -84,10 +86,10 @@ const SideBar = ({ isOpen, toggle }) => {
         <NavLink  activeClassName="active" to="/Loged/Calendar">
         <div className="nav-item">
           <li tag={Link} to={"/Loged/Calendar"}>    
-              <a className="btn   o-link-btn  font-weight-bold " role="button">
+                <button className="btn   o-link-btn  font-weight-bold ">
                 <FontAwesomeIcon icon={faCalendarAlt} className="mr-2" />
                 Calendario
-              </a>
+              </button>
           
           </li>
         </div>
@@ -97,7 +99,7 @@ const SideBar = ({ isOpen, toggle }) => {
         <div className="nav-item">
           <li tag={Link} to={"/Login"}>
            
-              <a href="/Login" onClick={deleteUser} className="btn   o-link-btn  font-weight-bold " role="button">
+              <a href="/Login" onClick={deleteUser} className="btn   o-link-btn  font-weight-bold ">
                 <FontAwesomeIcon icon={faDoorOpen} className="mr-2" />
                 Salir
               </a>

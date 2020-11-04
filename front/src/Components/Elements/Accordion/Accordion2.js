@@ -1,10 +1,10 @@
-import React,{Component, useRef, useEffect} from "react";
+import React,{Component} from "react";
 import "./AccordionStyles.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Accordion2Styles.css";
 import {
-  faPlus, faCaretRight, faMinus } from "@fortawesome/free-solid-svg-icons";
+  faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 class Accordion2 extends Component {
   constructor(props){
     super();

@@ -11,9 +11,9 @@ class Login extends Component {
   loginfun = async () => {
     const { correo, password } = this.state; 
     console.log(`El correo es ${correo} y la contraseña es ${password}`);
-    const url = `http://localhost:3030/login`;
+    
   
-    const value = JSON.stringify({ correo, password }); 
+    
     const httpInstance = axios.create( {
       baseURL:"http://localhost:3030/",
       timeout: 1000,
@@ -31,7 +31,7 @@ class Login extends Component {
 );
   //------
   httpInstance.post('login',{ correo, password }).then(respuesta => {
-    if(respuesta.statusText =="OK" ){
+    if(respuesta.statusText === "OK" ){
       console.log(respuesta.data);
       localStorage.setItem(
         "login",
@@ -104,19 +104,19 @@ class Login extends Component {
                 </label>
               </div>
               <div className="col-sm ml-5">
-                <a className="text-info font-weight-bold " href="#">
+                <a className="text-info font-weight-bold " href="/PasswordRecovering">
                   Olvidaste tu contraseña?
                 </a>
               </div>
             </div>
             <div className="o-buttons">
-              <a
+              <button
                 className="btn btn-primary mt-4 o-btn font-weight-bold btn-lg"
               
                 onClick={this.loginfun}
               >
                 Ingresar
-              </a>
+              </button>
 
               <a
                 className="btn btn-light mt-4 btn-lg text-primary font-weight-bold ml-3"
