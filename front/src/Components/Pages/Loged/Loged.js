@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import SideToggler from "./SideToggler";
 import axios from 'axios';
 class Loged extends Component {
-  /*
+  
  async componentWillMount() {
     const token = localStorage.getItem("login");
     console.log("el token es => "+  token); 
@@ -85,10 +85,10 @@ class Loged extends Component {
 
       
     }
-
+*/
    
   } 
-  */
+  
   render() {
     return <SideToggler />;
   }

@@ -1,7 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 import "./Content.css";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import Projects from "../../Pages/Projects/Projects";
 import Topbar from "./Topbar";
 import Documentation from "../../Pages/Documentation/Documentation";

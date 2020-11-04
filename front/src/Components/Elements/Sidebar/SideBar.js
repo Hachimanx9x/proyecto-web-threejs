@@ -36,10 +36,9 @@ const SideBar = ({ isOpen, toggle }) => {
         <div className="nav-item">
           <li tag={Link} to={"/Loged/Desktop"}>
            
-              <a className="btn o-link-btn  font-weight-bold " role="button">
-                <FontAwesomeIcon icon={faHome} className="mr-2" />
-                Escritorio
-              </a>
+              <a className="btn o-link-btn  font-weight-bold " href="" role="button">          <FontAwesomeIcon icon={faHome} className="mr-2" />   Escritorio </a>
+              
+              
            
           </li>
         </div>

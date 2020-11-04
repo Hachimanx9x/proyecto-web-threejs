@@ -74,7 +74,7 @@ peticiones.listObjects= async (namebucket, res)=>{
     var nums= await stream.on('data',async (obj)=> {  names.push(obj.name);
         stream.on('data', function(obj) {   
          n++;  
-        if(n===names.length){ console.log(names); return names;  }
+        if(n===names.length){ /*console.log(names);*/ return names;  }
         });
     
     }  ); 

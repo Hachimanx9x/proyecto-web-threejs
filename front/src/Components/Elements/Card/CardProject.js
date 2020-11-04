@@ -4,19 +4,19 @@ import PropTypes from "prop-types";
 
 const CardProject = ({ title, description, image }) => {
   return (
-    <div class="card m-3 o-card-project">
-      <div class="card-header bg-transparent o-card-project-title">{title}</div>
-      <img class="card-img o-card-project-image" src={image} />
-      <div class="card-body o-card-description">
-        <p class="card-text o-card-description-text ">{description}</p>
+    <div className="card m-3 o-card-project">
+      <div className="card-header bg-transparent o-card-project-title">{title}</div>
+      <img className="card-img o-card-project-image" src={image} />
+      <div className="card-body o-card-description">
+        <p className="card-text o-card-description-text ">{description}</p>
       </div>
-      <div class="card-footer bg-transparent border-transparent">
-        <a href="#" class="btn btn-primary btn-sm o-card-project-button mr-4">
+      <div className="card-footer bg-transparent border-transparent">
+        <a href="#" className="btn btn-primary btn-sm o-card-project-button mr-4">
           Crear
         </a>
         <a
           href="#"
-          class="btn btn-light border-primary text-primary btn-sm o-card-project-button ml-4"
+          className="btn btn-light border-primary text-primary btn-sm o-card-project-button ml-4"
         >
           Eliminar
         </a>

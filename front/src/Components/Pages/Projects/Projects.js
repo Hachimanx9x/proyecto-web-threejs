@@ -10,19 +10,19 @@ class Projects extends Component {
         {" "}
         <h4>Proyectos</h4>
         <div className="row">
-          <div class="card m-3 o-card-project">
-            <div class="card-header bg-transparent o-card-project-title">
+          <div className="card m-3 o-card-project">
+            <div className="card-header bg-transparent o-card-project-title">
               Proyectos
             </div>
-            <img class="card-img o-card-project-image" src={projectPNG} />
-            <div class="card-body o-card-description">
-              <p class="card-text o-card-description-text">
+            <img className="card-img o-card-project-image" src={projectPNG} />
+            <div className="card-body o-card-description">
+              <p className="card-text o-card-description-text">
                 Some quick example text to build on the card title and make up
                 the bulk of the card's content.
               </p>
             </div>
-            <div class="card-footer bg-transparent border-transparent">
-              <a href="#" class="btn btn-primary btn-sm o-card-project-button">
+            <div className="card-footer bg-transparent border-transparent">
+              <a href="#" className="btn btn-primary btn-sm o-card-project-button">
                 Crear
               </a>
             </div>

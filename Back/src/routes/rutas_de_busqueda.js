@@ -88,19 +88,19 @@ rutas.get('/proyecto/contenido',(req,res)=>{
   
       
  }); 
- rutas.get('/proyecto/listado/:id',async (req,res)=>{
+ rutas.get('/proyecto/listado/:id', (req,res)=>{
     /*
      if(buscarDB.buscarProyecto(req.params)){
          
      }*/
-     console.log(req.params);
+   //  console.log(req.params);
      const {id} = req.params; 
     // const {id,name } = req.body;
 
-  var list1 = await  ftpminio.listObjects(id,res );
-  console.log(list1);  
-  
-      
+  var list1 =(id,res)=>{ return  ftpminio.listObjects(id,res );} 
+  var i =  list1(id,res); 
+  console.log(i);  
+        
  }); 
 
 

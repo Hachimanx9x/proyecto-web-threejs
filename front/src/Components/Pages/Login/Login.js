@@ -63,12 +63,12 @@ class Login extends Component {
             </p>
             <div className="row">
               <div className="form-group col-md-12 input-group-lg">
-                <label for="useName" className="font-weight-bold text-info">
+                <label form="useName" className="font-weight-bold text-info">
                   Correo
                 </label>
                 <input
                   type="email"
-                  class="form-control bg-transparent o-textbox mt-2 text-white o-input"
+                  className="form-control bg-transparent o-textbox mt-2 text-white o-input"
                   id="userName"
                   aria-label="Large"
                   placeholder="Correo"
@@ -80,12 +80,12 @@ class Login extends Component {
             </div>
             <div className="row">
               <div className="form-group col-md-12 input-group-lg">
-                <label for="useName" className="font-weight-bold text-info">
+                <label form="useName" className="font-weight-bold text-info">
                   Contraseña
                 </label>
                 <input
                   type="password"
-                  class="form-control bg-transparent o-textbox mt-2 text-white "
+                  className="form-control bg-transparent o-textbox mt-2 text-white "
                   id="userPassword"
                   aria-label="Large"
                   placeholder="Contraseña"
@@ -97,9 +97,9 @@ class Login extends Component {
             </div>
 
             <div className="form-row">
-              <div class="form-check mr-4">
-                <input type="checkbox" class="form-check-input o-check" />
-                <label class="form-check-label font-weight-bold  text-info">
+              <div className="form-check mr-4">
+                <input type="checkbox" className="form-check-input o-check" />
+                <label className="form-check-label font-weight-bold  text-info">
                   Remember me
                 </label>
               </div>
