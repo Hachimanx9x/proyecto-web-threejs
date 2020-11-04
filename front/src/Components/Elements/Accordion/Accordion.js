@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./AccordionStyles.css";
 import {
-  faPlus, faCaretRight, faMinus } from "@fortawesome/free-solid-svg-icons";
+  faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 const Accordion = (props) => {
   const [active, setActive] = useState(false);
   const contentRef = useRef(null);
