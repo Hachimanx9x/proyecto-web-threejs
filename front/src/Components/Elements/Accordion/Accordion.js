@@ -10,7 +10,7 @@ const Accordion = (props) => {
   var activeTitle = "";
   useEffect(() => { 
     contentRef.current.style.maxHeight = active
-      ? `${contentRef.current.scrollHeight}px`
+      ? `500px`
       : "0px";
   }, [contentRef, active]);
 
@@ -36,7 +36,7 @@ const Accordion = (props) => {
         </span>
       </button>
 
-      <div ref={contentRef}   className="accordion-content ">
+      <div ref={contentRef}   className={(active ? "show " : "") + " accordion-content " }>
         {props.children}
       </div>
     </div>

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import SideToggler from "./SideToggler";
 import axios from 'axios';
 class Loged extends Component {
+  /*
  async componentWillMount() {
     const token = localStorage.getItem("login");
     console.log("el token es => "+  token); 
@@ -43,6 +44,11 @@ class Loged extends Component {
 
     }//fin del else
 
+
+
+
+
+    
 /*
       var myHeaders = new Headers();
       myHeaders.append("authorization", `llave ${tokensito}`);
@@ -78,10 +84,11 @@ class Loged extends Component {
       
 
       
-    }*/
+    }
 
    
-  }
+  } 
+  */
   render() {
     return <SideToggler />;
   }

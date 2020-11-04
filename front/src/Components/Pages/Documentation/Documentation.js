@@ -10,10 +10,26 @@ const Documentation = () => (
             title="Creación de entorno 3d para la web"
             description="Este proyecto es una guía firme de como unir un grupo de trabajo para la creación de un sistema multimedia."
             image={illustration}
-          /></span>
+          /><CardProject
+          title="Creación de entorno 3d para la web"
+          description="Este proyecto es una guía firme de como unir un grupo de trabajo para la creación de un sistema multimedia."
+          image={illustration}
+        /><CardProject
+        title="Creación de entorno 3d para la web"
+        description="Este proyecto es una guía firme de como unir un grupo de trabajo para la creación de un sistema multimedia."
+        image={illustration}
+      /><CardProject
+      title="Creación de entorno 3d para la web"
+      description="Este proyecto es una guía firme de como unir un grupo de trabajo para la creación de un sistema multimedia."
+      image={illustration}
+    /></span>
     </Accordion>
     <Accordion title="B">
-      <span className="accordion-text">bbbbbb</span>
+      <span className="accordion-text"><CardProject
+      title="Creación de entorno 3d para la web"
+      description="Este proyecto es una guía firme de como unir un grupo de trabajo para la creación de un sistema multimedia."
+      image={illustration}
+    /></span>
     </Accordion>
     <Accordion title="C">
       <span className="accordion-text">cccccc</span>

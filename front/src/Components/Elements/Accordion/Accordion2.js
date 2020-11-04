@@ -14,17 +14,15 @@ class Accordion2 extends Component {
   render(){
     return(
         <div className="accordion">
-           <button className="accordionHeading" onClick={()=> this.props.active === this.props.title ? this.props.setActive("") :this.props.setActive(this.props.title)}>
-          <div >
-              <div className="container">
+           <button className="accordionHeading container" onClick={()=> this.props.active === this.props.title ? this.props.setActive("") :this.props.setActive(this.props.title)}>       
                
                 <p>{this.props.title}</p>
                 <span className={ this.props.active === this.props.title ? "accordion-icon rotate" : "accordion-icon "}>
                 <FontAwesomeIcon icon={this.props.active === this.props.title ? faMinus: faPlus } className="mr-2 rotated" />  
                 </span>
                
-              </div>
-          </div> </button>
+             
+           </button>
           
           <div  className={(this.props.active === this.props.title ? "show" : "") + " accordionContent"}>
             <div className=" accordion-text">

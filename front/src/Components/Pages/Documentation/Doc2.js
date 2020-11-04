@@ -13,8 +13,20 @@ const Doc2 = () =>{
             title="Creación de entorno 3d para la web"
             description="Este proyecto es una guía firme de como unir un grupo de trabajo para la creación de un sistema multimedia."
             image={illustration}
+          /><CardProject
+            title="Creación de entorno 3d para la web"
+            description="Este proyecto es una guía firme de como unir un grupo de trabajo para la creación de un sistema multimedia."
+            image={illustration}
+          /><CardProject
+            title="Creación de entorno 3d para la web"
+            description="Este proyecto es una guía firme de como unir un grupo de trabajo para la creación de un sistema multimedia."
+            image={illustration}
           /></Accordion>
-            <Accordion title="Title2" active={active}  setActive={setActive}>Waweaae :3</Accordion>
+            <Accordion title="Title2" active={active}  setActive={setActive}><CardProject
+            title="Creación de entorno 3d para la web"
+            description="Este proyecto es una guía firme de como unir un grupo de trabajo para la creación de un sistema multimedia."
+            image={illustration}
+          /></Accordion>
             <Accordion title="Title3" active={active}  setActive={setActive}>Waweaae :3</Accordion>
             <Accordion title="Title4" active={active}  setActive={setActive}>gg :DDDD</Accordion>
         </div>
