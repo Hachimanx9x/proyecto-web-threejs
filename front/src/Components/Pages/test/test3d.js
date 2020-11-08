@@ -676,7 +676,7 @@ class Test3d extends Component {
   setupCanvasDrawing = () => {
     console.log("nuevo material");
     var drawingCanvas = this.canvasG;
-    var radarChart = new Chart(drawingCanvas, {
+    new Chart(drawingCanvas, {
       type: "radar",
       data: this.state.marksData,
     });
