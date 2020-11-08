@@ -6,6 +6,12 @@ const buscarDB = require('../database/buscarDB');
 const ftpminio = require("../ftp/peticiones"); 
 const LLAVE = 'misecretos'; 
 
+
+//
+
+
+
+
 rutas.get('/login/email=:correo&pass=:password',(req,res)=>{
     console.log(req.params);  console.log(req.body); 
     buscarDB.obtenerToken(req.params, res).then(resultado=>{
@@ -75,31 +81,33 @@ rutas.get('/proyecto/contenido',(req,res)=>{
  }); 
  
 
- rutas.get('/proyecto/contenido/:name',(req,res)=>{
+ rutas.get('/proyecto/contenido/:buque/:name',(req,res)=>{
     /*
      if(buscarDB.buscarProyecto(req.params)){
          
      }*/
      console.log(req.params);
-     const {name } = req.params; 
+     const {buque, name } = req.params; 
     // const {id,name } = req.body;
 
-   ftpminio.getFilesingle("default",name,res ); 
+   ftpminio.getFilesingle(buque,name,res ); 
   
       
  }); 
- rutas.get('/proyecto/listado/:id', (req,res)=>{
+ rutas.get('/proyecto/listado/:id', async(req,res)=>{
     /*
      if(buscarDB.buscarProyecto(req.params)){
          
      }*/
    //  console.log(req.params);
      const {id} = req.params; 
+     const {user} = req.body; 
     // const {id,name } = req.body;
 
-  var list1 =(id,res)=>{ return  ftpminio.listObjects(id,res );} 
-  var i =  list1(id,res); 
-  console.log(i);  
+     ftpminio.listObjects(id,user, res );
+ 
+
+
         
  }); 
 

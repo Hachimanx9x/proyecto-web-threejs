@@ -3,6 +3,7 @@ var fs = require('fs')
 const path = require('path');
 const stream = require('stream')
 
+const db = require('../database/buscarDB'); 
 const peticiones ={};  
 
 peticiones.getFilesingle= async (bucket,namefile,res)=>{
@@ -64,30 +65,32 @@ peticiones.creatBucket= async (name)=>{
       }); 
 }
 
-var externa_list_melleno;
-peticiones.listObjects= async (namebucket, res)=>{
+
+peticiones.listObjects= async (namebucket,iduser, res)=>{
   var names =[]; 
   var n; 
   var n =0; 
+
+ 
     var  stream  = minio.listObjects(namebucket, '', true);
 
-    var nums= await stream.on('data',async (obj)=> {  names.push(obj.name);
-        stream.on('data', function(obj) {   
+   await stream.on('data',async (obj)=> {  names.push(obj.name);
+        stream.on('data', (obj)=> {   
          n++;  
-        if(n===names.length){ /*console.log(names);*/ return names;  }
+        if(n===names.length){ 
+          db.searchFilesUserOne(iduser,res , names); 
+        //  res.json({filesNames: names}) 
+        
+        }
         });
     
     }  ); 
-
-    console.log(nums); 
-
-   
-
-   // await stream.on('data', (obj)=> {   return obj; n=obj;      }); 
     await stream.on('error', function(err) { console.log(err) } ) 
 
-  // return n ; 
+ 
 }
+
+
 
 
 module.exports  = peticiones; 

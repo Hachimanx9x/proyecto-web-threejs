@@ -128,6 +128,30 @@ funcionesDB.buscarProyecto = async(id)=>{
     } ); 
 }
 
+funcionesDB.searchFilesUserOne=async(iduser, res, array)=>{
+
+const QUERY = `SELECT * FROM contenidos WHERE usariopropietario = ${iduser};`
+await mariaDB.query(QUERY, (err,rows, fields)=>{
+    if(!err){
+        var files = []
+      //  console.log(rows[0].nombre); 
+        //console.log(array);
+
+        for(var i =0 ; i< array.length ; i++ ){
+            for (var j =0 ; j< rows.length ; j++){
+                if(array[i] === rows[j].nombre){
+                    files.push(`/proyecto/contenido${rows[j].url_documentacion}${rows[j].nombre}`);
+                }
+            }
+        }
+        res.json({files : files}); 
+        
+    }else{
+
+    }
+});
+}
+
 
 module.exports = funcionesDB; 
 
