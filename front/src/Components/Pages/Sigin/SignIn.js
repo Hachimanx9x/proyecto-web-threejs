@@ -23,12 +23,12 @@ class SigIn extends Component {
             </p>
             <div className="row">
               <div className="form-group col-md-12 input-group-lg">
-                <label for="userName" className="font-weight-bold text-info">
+                <label htmlFor="userName" className="font-weight-bold text-info">
                   Nombre
                 </label>
                 <input
                   type="text"
-                  class="form-control bg-transparent o-textbox mt-2 text-white o-input"
+                  className="form-control bg-transparent o-textbox mt-2 text-white o-input"
                   id="userName"
                   aria-label="Large"
                   placeholder="Nombre"
@@ -37,12 +37,12 @@ class SigIn extends Component {
             </div>
             <div className="row">
               <div className="form-group col-md-12 input-group-lg">
-                <label for="email" className="font-weight-bold text-info">
+                <label htmlFor="email" className="font-weight-bold text-info">
                   Correo
                 </label>
                 <input
                   type="email"
-                  class="form-control bg-transparent o-textbox mt-2 text-white "
+                  className="form-control bg-transparent o-textbox mt-2 text-white "
                   id="userEmail"
                   aria-label="Large"
                   placeholder="Correo"
@@ -51,12 +51,12 @@ class SigIn extends Component {
             </div>
             <div className="row">
               <div className="form-group col-md-12 input-group-lg">
-                <label for="password" className="font-weight-bold text-info">
+                <label htmlFor="password" className="font-weight-bold text-info">
                   Contraseña
                 </label>
                 <input
                   type="password"
-                  class="form-control bg-transparent o-textbox mt-2 text-white o-input"
+                  className="form-control bg-transparent o-textbox mt-2 text-white o-input"
                   id="userPassword"
                   aria-label="Large"
                   placeholder="Contraseña"
@@ -65,12 +65,12 @@ class SigIn extends Component {
             </div>
             <div className="row">
               <div className="form-group col-md-12 input-group-lg">
-                <label for="password" className="font-weight-bold text-info">
+                <label htmlFor="password" className="font-weight-bold text-info">
                   Confirmar Contraseña
                 </label>
                 <input
                   type="password"
-                  class="form-control bg-transparent o-textbox mt-2 text-white "
+                  className="form-control bg-transparent o-textbox mt-2 text-white "
                   id="userConfirmPassword"
                   aria-label="Large"
                   placeholder="Confirmar Contraseña"

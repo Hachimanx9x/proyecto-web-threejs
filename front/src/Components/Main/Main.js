@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Switch, Route,  Redirect,  } from "react-router-dom";
 import Login from "../Pages/Login/Login";
-import SigIn from "../Pages/Registro/SignIn";
+import SigIn from "../Pages/Sigin/SignIn";
 import Loged from "../Pages/Loged/Dashboard";
 import Test from "../Pages/test/test";
 import Test3d from "../Pages/test/test3d";

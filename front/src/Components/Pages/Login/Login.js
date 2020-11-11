@@ -63,7 +63,7 @@ class Login extends Component {
             </p>
             <div className="row">
               <div className="form-group col-md-12 input-group-lg">
-                <label form="useName" className="font-weight-bold text-info">
+                <label htmlFor="useName" className="font-weight-bold text-info">
                   Correo
                 </label>
                 <input
@@ -80,7 +80,7 @@ class Login extends Component {
             </div>
             <div className="row">
               <div className="form-group col-md-12 input-group-lg">
-                <label form="useName" className="font-weight-bold text-info">
+                <label htmlFor="useName" className="font-weight-bold text-info">
                   Contraseña
                 </label>
                 <input
