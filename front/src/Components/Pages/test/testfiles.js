@@ -15,25 +15,10 @@ class Test extends Component{
         reader.readAsDataURL(files[0]);
        
         reader.onload=(event)=>{
-         //  console.log(event.target); 
-           // const url = "http://localhost:3030/proyecto/insertarArchivo";
+
             const formData = {id:"default",name:files[0].name ,file:event.target.result }
             console.log(formData); 
-           /* return post(url, formData)
-            .then(response=>{ console.log(response)}); */
-          /*  fetch(url, {
-                method: "POST",
-                body: JSON.stringify(formData),
-                headers: {
-                  "Content-Type": "application/json",
-                },
-              }).then((response) => {
-                response.json().then((result) => {
-                    console.log(result); 
-                });
-              });*/
-
-              const httpInstance = axios.create( {
+                const httpInstance = axios.create( {
                 baseURL:"http://localhost:3030/",
                 timeout: 1000,
                 headers: {'Content-Type': 'application/json'}
