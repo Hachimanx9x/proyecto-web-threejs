@@ -73,7 +73,7 @@ class Test extends Component{
          <div>
                 <div onSubmit={this.onFormSubmit}>
                 <h1>Subir archivos en react js </h1>
-                 <input type="file" name="file" onChange={(event)=> this.detectarCambio(event)} />
+                 <input type="file" name="file" onChange={(event)=> this.detectarCambio(event)}   />
                   
        
                  </div>
