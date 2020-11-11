@@ -40,7 +40,7 @@ class Login extends Component {
         })
       );
       
-     this.props.history.push("/Loged/Desktop");
+      this.props.history.push("/Dashboard/Desktop");
     }else{
       console.log("error fatal")
     }

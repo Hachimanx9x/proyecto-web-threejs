@@ -32,9 +32,9 @@ const SideBar = ({ isOpen, toggle }) => {
     <div className="side-menu">
       <div className="list-unstyled pb-3">
 
-      <NavLink  activeClassName="active" to="/Loged/Desktop">
+      <NavLink  activeClassName="active" to="/Dashboard/Desktop">
         <div className="nav-item">
-          <li tag={Link} to={"/Loged/Desktop"}>
+              <li tag={Link} to={"/Dashboard/Desktop"}>
            
               <button className="btn o-link-btn  font-weight-bold " >          
               <FontAwesomeIcon icon={faHome} className="mr-2" />   
@@ -46,9 +46,9 @@ const SideBar = ({ isOpen, toggle }) => {
         </div>
         </NavLink>
 
-        <NavLink exact activeClassName="active" to="/Loged/Projects">
+          <NavLink  activeClassName="active" to="/Dashboard/Projects">
         <div className="nav-item">
-          <li tag={Link} to={"/Loged/Projects"}>
+              <li tag={Link} to={"/Dashboard/Projects"}>
           
                 <button className="btn   o-link-btn  font-weight-bold ">
                 <FontAwesomeIcon icon={faProjectDiagram} className="mr-2" />
@@ -59,9 +59,9 @@ const SideBar = ({ isOpen, toggle }) => {
         </div>
         </NavLink>
 
-        <NavLink  activeClassName="active" to="/Loged/SearchContacts">
+          <NavLink activeClassName="active" to="/Dashboard/SearchContacts">
         <div className="nav-item">
-          <li tag={Link} to={"/Loged/SearchContacts"}>
+              <li tag={Link} to={"/Dashboard/SearchContacts"}>
            
                 <button className="btn   o-link-btn  font-weight-bold " >
                 <FontAwesomeIcon icon={faSearch} className="mr-2" />
@@ -72,9 +72,9 @@ const SideBar = ({ isOpen, toggle }) => {
         </div>
         </NavLink>
         
-            <NavLink  activeClassName="active" to="/Loged/Contacts">
+          <NavLink activeClassName="active" to="/Dashboard/Contacts">
               <div className="nav-item"  >
-          <li tag={Link} to={"/Loged/Contacts"}>
+              <li tag={Link} to={"/Dashboard/Contacts"}>
                 <button className="btn   o-link-btn  font-weight-bold " >
                 <FontAwesomeIcon icon={faUserFriends} className="mr-2" />
                 Contactos
@@ -83,9 +83,9 @@ const SideBar = ({ isOpen, toggle }) => {
         </div>
         </NavLink>
 
-        <NavLink  activeClassName="active" to="/Loged/Calendar">
+          <NavLink activeClassName="active" to="/Dashboard/Calendar">
         <div className="nav-item">
-          <li tag={Link} to={"/Loged/Calendar"}>    
+              <li tag={Link} to={"/Dashboard/Calendar"}>    
                 <button className="btn   o-link-btn  font-weight-bold ">
                 <FontAwesomeIcon icon={faCalendarAlt} className="mr-2" />
                 Calendario

@@ -6,7 +6,9 @@ import Projects from "../../Pages/Projects/Projects";
 import Topbar from "./Topbar";
 import Documentation from "../../Pages/Documentation/Documentation";
 import Doc2 from "../../Pages/Documentation/Doc2";
-import Loged from "../../Pages/Loged/Loged";
+import Loged from "../../Pages/Loged/Dashboard";
+import CreateProject from "../../Pages/Projects/CreateProject";
+import FullCalendar from "../Calendar/CalendarEvents";
 const Content = ({ sidebarIsOpen, toggleSidebar }) => (
   <div
     className={classNames("content container-fluid", {
@@ -15,16 +17,20 @@ const Content = ({ sidebarIsOpen, toggleSidebar }) => (
   >
     <Topbar toggleSidebar={toggleSidebar} />
     <Switch>
-      <Route exact path="/Loged/Desktop" component={() => "Escritorio"} />
-      <Route exact path="/Loged/Projects" component={Projects} />
-      <Route exact path="/Loged/Contacts" component={Documentation} />
+      <Route exact path="/Dashboard/Desktop" component={() => "Escritorio"} />
+      <Route exact path="/Dashboard/Projects" component={Projects} />
+      <Route exact path="/Dashboard/Projects/CreateProject" component={CreateProject} />
+
+      <Route exact path="/Dashboard/Projects/Documentation" component={Documentation} />
+      <Route exact path="/Dashboard/Contacts" component={() => "Contactos"} />
       <Route
         exact
-        path="/Loged/SearchContacts"
+        path="/Dashboard/SearchContacts"
         component={() => "Búsqueda de Contactos"}
       />
-      <Route exact path="Loged" component={Loged}/>
-      <Route exact path="/Loged/Calendar" component={Doc2} />
+      <Route exact path="Dashboard" component={Loged}/>
+      <Route exact path="/Dashboard/Projects/Documentation2" component={Doc2} />
+      <Route exact path="/Dashboard/Calendar" component={FullCalendar} />
     </Switch>
   </div>
 );

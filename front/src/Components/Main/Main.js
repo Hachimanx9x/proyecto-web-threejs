@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Switch, Route,  Redirect,  } from "react-router-dom";
 import Login from "../Pages/Login/Login";
 import SigIn from "../Pages/Registro/SignIn";
-import Loged from "../Pages/Loged/Loged";
+import Loged from "../Pages/Loged/Dashboard";
 import Test from "../Pages/test/test";
 import Test3d from "../Pages/test/test3d";
 import TestFile from "../Pages/test/testfiles";
@@ -14,15 +14,15 @@ class Main extends Component {
     //El metodo de redireccionamiento.
     if (token == null || token === undefined) {
       return (
-        <div>
+      
           <Redirect to="/Login" />
-        </div>
+      
       );
     } else {
       return (
-        <div>
-          <Redirect to="/Loged/Desktop" />
-        </div>
+        
+        <Redirect to="/Dashboard/Desktop" />
+        
       );
     }
   }
@@ -32,7 +32,7 @@ class Main extends Component {
         <Switch>
           <Route exact path="/Login" component={Login} />
           <Route path="/SignIn" component={SigIn} />
-          <Route path="/Loged" component={Loged} />
+          <Route path="/Dashboard" component={Loged} />
           <Route exact path="/test" component={Test} />
           <Route exact path="/test3d" component={Test3d} />
           <Route exact path="/testfile" component={TestFile} />

@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import SideToggler from "./SideToggler";
 import axios from 'axios';
-class Loged extends Component {
+class Dashboard extends Component {
   
- async componentWillMount() {
+  async componentWillMount() {
     const token = localStorage.getItem("login");
     console.log("el token es => "+  token); 
  
@@ -94,4 +94,4 @@ class Loged extends Component {
   }
 }
 
-export default Loged;
+export default Dashboard;

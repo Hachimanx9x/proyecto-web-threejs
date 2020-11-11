@@ -28,7 +28,7 @@ const Topbar = ({ toggleSidebar }, props) => {
         } navbar-collapse justify-content-lg-end`}
         id="navbar-menu"
       >
-        <a className="nav-link text-info" href="/Loged/InfoUser">Foto perfil</a>
+        <a className="nav-link text-info" href="/Dashboard/InfoUser">Foto perfil</a>
       </div>
     </nav>
   );

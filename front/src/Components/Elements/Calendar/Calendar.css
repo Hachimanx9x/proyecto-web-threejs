@@ -1,0 +1,28 @@
+.nice-dates-grid_container .-disabled::before {
+	background-color: #159fb1;
+}
+.o-date-picker-container {
+	background-color: white;
+	border-radius: 1rem;
+	margin: 0.2rem;
+	padding: 0.5rem;
+	min-height: 15rem;
+}
+
+.o-text-events {
+	margin: 1rem 0.5rem;
+}
+
+.o-create-event-container {
+	border-radius: 3rem;
+	vertical-align: middle;
+	margin: 0rem 0rem 0.5rem 0rem;
+}
+
+.o-blue-container {
+	background-color: #eef7fc;
+	height: 100vh;
+	padding: 1rem;
+	margin: 0.5rem;
+	border-radius: 1rem;
+}
