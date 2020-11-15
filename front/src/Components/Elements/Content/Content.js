@@ -9,6 +9,7 @@ import Doc2 from "../../Pages/Documentation/Doc2";
 import Loged from "../../Pages/Loged/Dashboard";
 import CreateProject from "../../Pages/Projects/CreateProject";
 import FullCalendar from "../Calendar/CalendarEvents";
+
 const Content = ({ sidebarIsOpen, toggleSidebar }) => (
   <div
     className={classNames("content container-fluid", {
@@ -28,7 +29,7 @@ const Content = ({ sidebarIsOpen, toggleSidebar }) => (
         path="/Dashboard/SearchContacts"
         component={() => "Búsqueda de Contactos"}
       />
-      <Route exact path="Dashboard" component={Loged}/>
+      <Route exact path="Dashboard" component={Loged} />
       <Route exact path="/Dashboard/Projects/Documentation2" component={Doc2} />
       <Route exact path="/Dashboard/Calendar" component={FullCalendar} />
     </Switch>

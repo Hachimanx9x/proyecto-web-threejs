@@ -44,7 +44,7 @@ class Test3d extends Component {
     this.mouseEventup = this.mouseEventup.bind(this);
 
     this.setupCanvasDrawing = this.setupCanvasDrawing.bind(this);
-    this.makeLabelCanvas = this.makeLabelCanvas.bind(this); 
+    this.makeLabelCanvas = this.makeLabelCanvas.bind(this);
 
     this.state = {
       marksData: {
@@ -131,12 +131,12 @@ class Test3d extends Component {
       geocaja,
       new THREE.MeshBasicMaterial({ color: 0x4ff20e })
     );
-   
+
     var objectI2 = new THREE.Mesh(
       geocaja,
       new THREE.MeshBasicMaterial({ color: 0xf2380e })
     );
-   
+
     this.objInteraccion1.push(objectI1);
     this.objInteraccion2.push(objectI2);
     // ejemplo de grafica
@@ -158,70 +158,70 @@ class Test3d extends Component {
     );
     this.objgrafico.add(mesh);
     this.objgrafico.add(mesh2);
-    this.objgrafico.rotation.set( -Math.PI / 2.25 ,0, Math.PI / 18);
-    this.objgrafico.position.set(-0.1, 0.22,0.8);
-    this.objgrafico.scale.set(0.2,0.2,0.2); 
+    this.objgrafico.rotation.set(-Math.PI / 2.25, 0, Math.PI / 18);
+    this.objgrafico.position.set(-0.1, 0.22, 0.8);
+    this.objgrafico.scale.set(0.2, 0.2, 0.2);
     console.log("grafico");
     console.log(this.objgrafico);
     this.scene.add(this.objgrafico);
     //Ejemplo de label 
-    const canvasLabel = this.makeLabelCanvas(32,"Testo de prueba mal escrito");
-    const canvasLabelvideo = this.makeLabelCanvas(32,"Mostrat video");
-    const canvasLabelgrafica = this.makeLabelCanvas(32,"Mostrat grafico");
+    const canvasLabel = this.makeLabelCanvas(32, "Testo de prueba mal escrito");
+    const canvasLabelvideo = this.makeLabelCanvas(32, "Mostrat video");
+    const canvasLabelgrafica = this.makeLabelCanvas(32, "Mostrat grafico");
     const textureLabel = new THREE.CanvasTexture(canvasLabel);
     // en ambas dimensiones, establezca el filtrado adecuadamente.
     const gui = new THREE.Object3D();
-    textureLabel.minFilter = THREE.LinearFilter;    textureLabel.wrapS = THREE.ClampToEdgeWrapping;     textureLabel.wrapT = THREE.ClampToEdgeWrapping;
+    textureLabel.minFilter = THREE.LinearFilter; textureLabel.wrapS = THREE.ClampToEdgeWrapping; textureLabel.wrapT = THREE.ClampToEdgeWrapping;
     const labelMaterial = new THREE.MeshBasicMaterial({
       map: textureLabel,
       side: THREE.DoubleSide,
       transparent: true,
-    });    
+    });
     const labelGeometry = new THREE.PlaneBufferGeometry(1, 1);
     const label = new THREE.Mesh(labelGeometry, labelMaterial);
     const labelBaseScale = 0.001;
-    label.scale.x = canvasLabel.width  * labelBaseScale;
+    label.scale.x = canvasLabel.width * labelBaseScale;
     label.scale.y = canvasLabel.height * labelBaseScale;
 
     const textureLabel2 = new THREE.CanvasTexture(canvasLabelvideo);
-    textureLabel2.minFilter = THREE.LinearFilter;   textureLabel2.wrapS = THREE.ClampToEdgeWrapping;     textureLabel2.wrapT = THREE.ClampToEdgeWrapping;
+    textureLabel2.minFilter = THREE.LinearFilter; textureLabel2.wrapS = THREE.ClampToEdgeWrapping; textureLabel2.wrapT = THREE.ClampToEdgeWrapping;
     const labelMaterial2 = new THREE.MeshBasicMaterial({
       map: textureLabel2,
       side: THREE.DoubleSide,
       transparent: true,
-    });    
- 
+    });
+
     const labelvideo = new THREE.Mesh(labelGeometry, labelMaterial2);
-    labelvideo.position.y = -0.04; labelvideo.position.x = -0.04; 
-    labelvideo.scale.x = canvasLabelvideo.width  * labelBaseScale;
+    labelvideo.position.y = -0.04; labelvideo.position.x = -0.04;
+    labelvideo.scale.x = canvasLabelvideo.width * labelBaseScale;
     labelvideo.scale.y = canvasLabelvideo.height * labelBaseScale;
 
     const textureLabel3 = new THREE.CanvasTexture(canvasLabelgrafica);
-    textureLabel3.minFilter = THREE.LinearFilter;   textureLabel3.wrapS = THREE.ClampToEdgeWrapping;     textureLabel3.wrapT = THREE.ClampToEdgeWrapping;
+    textureLabel3.minFilter = THREE.LinearFilter; textureLabel3.wrapS = THREE.ClampToEdgeWrapping; textureLabel3.wrapT = THREE.ClampToEdgeWrapping;
     const labelMaterial3 = new THREE.MeshBasicMaterial({
       map: textureLabel3,
       side: THREE.DoubleSide,
       transparent: true,
-    });    
- 
+    });
+
     const labelgrafica = new THREE.Mesh(labelGeometry, labelMaterial3);
-    labelgrafica.position.y = -0.1; labelgrafica.position.x = -0.04; 
-    labelgrafica.scale.x = canvasLabelgrafica.width  * labelBaseScale;
+    labelgrafica.position.y = -0.1; labelgrafica.position.x = -0.04;
+    labelgrafica.scale.x = canvasLabelgrafica.width * labelBaseScale;
     labelgrafica.scale.y = canvasLabelgrafica.height * labelBaseScale;
 
     objectI1.scale.set(0.05, 0.05, 0.05);
-    objectI1.position.set(labelvideo.position.x +0.15, labelvideo.position.y, 0);
+    objectI1.position.set(labelvideo.position.x + 0.15, labelvideo.position.y, 0);
 
     objectI2.scale.set(0.05, 0.05, 0.05);
-    objectI2.position.set(labelgrafica.position.x +0.15, labelgrafica.position.y , 0);
+    objectI2.position.set(labelgrafica.position.x + 0.15, labelgrafica.position.y, 0);
     gui.add(objectI1);
     gui.add(objectI2);
 
-    gui.position.set(0.3,0.33,0.9); gui.scale.set(0.7,0.7,0.7); gui.rotation.set(0,- Math.PI/4,0); 
-    gui.add(label); gui.add(labelvideo);  gui.add(labelgrafica); 
-    console.log("gui"); 
-    console.log(gui); 
-    this.scene.add(gui); 
+    gui.position.set(0.3, 0.33, 0.9); gui.scale.set(0.7, 0.7, 0.7); gui.rotation.set(0, - Math.PI / 4, 0);
+    gui.add(label); gui.add(labelvideo); gui.add(labelgrafica);
+    console.log("gui");
+    console.log(gui);
+    this.scene.add(gui);
 
 
     //---------------default------------------------
@@ -700,10 +700,10 @@ class Test3d extends Component {
     * *
     * 
     *  */
-   makeLabelCanvas= (size, name) => {
+  makeLabelCanvas = (size, name) => {
     const borderSize = 2;
     const ctx = document.createElement('canvas').getContext('2d');
-    const font =  `${size}px bold sans-serif`;
+    const font = `${size}px bold sans-serif`;
     ctx.font = font;
     // medir cuánto tiempo el nombre será
     const doubleBorderSize = borderSize * 2;
@@ -722,7 +722,7 @@ class Test3d extends Component {
     ctx.fillText(name, borderSize, borderSize);
 
     return ctx.canvas;
-   }
+  }
   render() {
     return (
       <div className="test3d">

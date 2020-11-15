@@ -2,13 +2,14 @@ import React, { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./AccordionStyles.css";
 import {
-  faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
+  faPlus, faMinus
+} from "@fortawesome/free-solid-svg-icons";
 const Accordion = (props) => {
   const [active, setActive] = useState(false);
   const contentRef = useRef(null);
-  
+
   var activeTitle = "";
-  useEffect(() => { 
+  useEffect(() => {
     contentRef.current.style.maxHeight = active
       ? `500px`
       : "0px";
@@ -19,7 +20,7 @@ const Accordion = (props) => {
     console.log(active);
     activeTitle = props.title;
     console.log(activeTitle);
-    
+
   };
 
   const titleStyle = {
@@ -28,15 +29,15 @@ const Accordion = (props) => {
   };
 
   return (
-    <div className= " accordion-section" >
+    <div className=" accordion-section" >
       <button className="accordion-title" onClick={toogleActive}>
         <p style={titleStyle}>{props.title}</p>
         <span className={active ? "accordion-icon rotate" : "accordion-icon"}>
-        <FontAwesomeIcon icon={active ? faMinus: faPlus } className="mr-2 rotated" />
+          <FontAwesomeIcon icon={active ? faMinus : faPlus} className="mr-2 rotated" />
         </span>
       </button>
 
-      <div ref={contentRef}   className={(active ? "show " : "") + " accordion-content " }>
+      <div ref={contentRef} className={(active ? "show " : "") + " accordion-content "}>
         {props.children}
       </div>
     </div>

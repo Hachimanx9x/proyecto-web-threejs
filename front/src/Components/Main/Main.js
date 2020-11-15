@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Switch, Route,  Redirect,  } from "react-router-dom";
+import { Switch, Route, Redirect, } from "react-router-dom";
 import Login from "../Pages/Login/Login";
 import SigIn from "../Pages/Sigin/SignIn";
 import Loged from "../Pages/Loged/Dashboard";
@@ -14,15 +14,15 @@ class Main extends Component {
     //El metodo de redireccionamiento.
     if (token == null || token === undefined) {
       return (
-      
-          <Redirect to="/Login" />
-      
+
+        <Redirect to="/Login" />
+
       );
     } else {
       return (
-        
+
         <Redirect to="/Dashboard/Desktop" />
-        
+
       );
     }
   }

@@ -23,9 +23,8 @@ const Topbar = ({ toggleSidebar }, props) => {
         <FontAwesomeIcon icon={faAlignRight} />
       </button>
       <div
-        className={`${
-          topbarIsOpen ? "collapse" : ""
-        } navbar-collapse justify-content-lg-end`}
+        className={`${topbarIsOpen ? "collapse" : ""
+          } navbar-collapse justify-content-lg-end`}
         id="navbar-menu"
       >
         <a className="nav-link text-info" href="/Dashboard/InfoUser">Foto perfil</a>

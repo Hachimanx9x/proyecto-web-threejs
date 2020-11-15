@@ -72,21 +72,20 @@ export default class CalendarEvents extends Component {
         console.log(this.state.colors);
     }*/
     handleDayClick(day, { selected }) {
-        
-       
-            this.setState({
-                selectedDate: selected ? undefined : day,
-            });
-            var date = this.state.selectedDate;
-            console.log(date);
-       
-        
+
+
+        this.setState({
+            selectedDate: selected ? undefined : day,
+        });
+        var date = this.state.selectedDate;
+        console.log(date);
+
+
     }
     bruh() {
-        if(this.state.selectedDate != null)
-        {
+        if (this.state.selectedDate != null) {
             console.log(this.state.selectedDate.toLocaleDateString())
-        } else{
+        } else {
             console.log("Nay and gg");
         }
     }
@@ -99,7 +98,7 @@ export default class CalendarEvents extends Component {
             <div className="row" >
                 <div className="col-12 col-sm-9  text-center"  >
                     <FullCalendar
-                       
+
                         headerToolbar={{
                             left: "prev,next,today",
                             center: "title",
@@ -109,7 +108,7 @@ export default class CalendarEvents extends Component {
                         themeSystem={"bootstrap"}
                         events={this.state.events}
                         locale={esLocale}
-                        
+
                     />
                 </div>
                 <div className="col o-blue-container" >
@@ -120,10 +119,10 @@ export default class CalendarEvents extends Component {
                         <div className="col text-right m-0 p-0 ">
                             <button className="btn m-0 btn-primary rounded-circle text-right" type="button" onClick={this.bruh} ><FontAwesomeIcon icon={faPlus} /></button>
                         </div>
-                    </div> 
-                   
+                    </div>
+
                     <div className="o-date-picker-container text-center">
-                        <DayPicker localeUtils={MomentLocaleUtils} onDayClick={this.handleDayClick}  selectedDays={this.state.selectedDate}
+                        <DayPicker localeUtils={MomentLocaleUtils} onDayClick={this.handleDayClick} selectedDays={this.state.selectedDate}
                             locale="es" todayButton="Hoy"
                             modifiers={{
                                 foo: new Date(),
