@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import SideToggler from "./SideToggler";
-import axios from 'axios';
+//import axios from 'axios';
 class Dashboard extends Component {
   
   async componentWillMount() {/*

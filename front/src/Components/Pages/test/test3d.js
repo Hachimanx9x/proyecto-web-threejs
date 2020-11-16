@@ -129,12 +129,14 @@ class Test3d extends Component {
     var geocaja = new THREE.BoxBufferGeometry(1, 1, 1);
     var objectI1 = new THREE.Mesh(
       geocaja,
-      new THREE.MeshBasicMaterial({ color: 0x4ff20e })
+      new THREE.MeshBasicMaterial({ color: 0x4ff20e, opacity: 0.5,
+        transparent: true, })
     );
 
     var objectI2 = new THREE.Mesh(
       geocaja,
-      new THREE.MeshBasicMaterial({ color: 0xf2380e })
+      new THREE.MeshBasicMaterial({ color: 0xf2380e, opacity: 0.5,
+        transparent: true, })
     );
 
     this.objInteraccion1.push(objectI1);
@@ -165,12 +167,13 @@ class Test3d extends Component {
     console.log(this.objgrafico);
     this.scene.add(this.objgrafico);
     //Ejemplo de label 
+    
     const canvasLabel = this.makeLabelCanvas(32, "Testo de prueba mal escrito");
     const canvasLabelvideo = this.makeLabelCanvas(32, "Mostrat video");
     const canvasLabelgrafica = this.makeLabelCanvas(32, "Mostrat grafico");
     const textureLabel = new THREE.CanvasTexture(canvasLabel);
     // en ambas dimensiones, establezca el filtrado adecuadamente.
-    const gui = new THREE.Object3D();
+    const gui = new THREE.Object3D(); ///const guiv2 = new THREE.Object3D();
     textureLabel.minFilter = THREE.LinearFilter; textureLabel.wrapS = THREE.ClampToEdgeWrapping; textureLabel.wrapT = THREE.ClampToEdgeWrapping;
     const labelMaterial = new THREE.MeshBasicMaterial({
       map: textureLabel,
@@ -195,6 +198,8 @@ class Test3d extends Component {
     labelvideo.position.y = -0.04; labelvideo.position.x = -0.04;
     labelvideo.scale.x = canvasLabelvideo.width * labelBaseScale;
     labelvideo.scale.y = canvasLabelvideo.height * labelBaseScale;
+    objectI1.scale.set(labelvideo.scale.x ,labelvideo.scale.y, 0.005);
+    objectI1.position.set(labelvideo.position.x , labelvideo.position.y,-0.005);
 
     const textureLabel3 = new THREE.CanvasTexture(canvasLabelgrafica);
     textureLabel3.minFilter = THREE.LinearFilter; textureLabel3.wrapS = THREE.ClampToEdgeWrapping; textureLabel3.wrapT = THREE.ClampToEdgeWrapping;
@@ -208,12 +213,19 @@ class Test3d extends Component {
     labelgrafica.position.y = -0.1; labelgrafica.position.x = -0.04;
     labelgrafica.scale.x = canvasLabelgrafica.width * labelBaseScale;
     labelgrafica.scale.y = canvasLabelgrafica.height * labelBaseScale;
+    objectI2.scale.set( labelgrafica.scale.x,  labelgrafica.scale.y, 0.0005);
+    objectI2.position.set(labelgrafica.position.x, labelgrafica.position.y,-0.005);
+    
 
-    objectI1.scale.set(0.05, 0.05, 0.05);
-    objectI1.position.set(labelvideo.position.x + 0.15, labelvideo.position.y, 0);
-
-    objectI2.scale.set(0.05, 0.05, 0.05);
-    objectI2.position.set(labelgrafica.position.x + 0.15, labelgrafica.position.y, 0);
+   
+    const fondogui = new THREE.Mesh(
+      new THREE.PlaneBufferGeometry(1, 1),
+      new THREE.MeshBasicMaterial({ color: 0x2E9AFE, opacity: 0.5,
+        transparent: true, })
+    );
+    fondogui.scale.set(label.scale.x*1.3,label.scale.x); 
+    fondogui.position.set(label.position.x +0.05, label.position.y- 0.1, -0.1) ; 
+    gui.add(fondogui); 
     gui.add(objectI1);
     gui.add(objectI2);
 
@@ -222,6 +234,8 @@ class Test3d extends Component {
     console.log("gui");
     console.log(gui);
     this.scene.add(gui);
+   
+   
 
 
     //---------------default------------------------
@@ -681,7 +695,7 @@ class Test3d extends Component {
       data: this.state.marksData,
     });
     this.materialC.map = new THREE.CanvasTexture(drawingCanvas);
-    //this.materialC.overdraw= 0.5;
+    
     this.materialC.transparent = true;
   };
   /*
@@ -716,7 +730,7 @@ class Test3d extends Component {
     ctx.font = font;
     ctx.textBaseline = 'top';
     //color : white , blue, black 
-    ctx.fillStyle = 'white';
+    ctx.fillStyle = 'transparent';
     ctx.fillRect(0, 0, width, height);
     ctx.fillStyle = 'black';
     ctx.fillText(name, borderSize, borderSize);
