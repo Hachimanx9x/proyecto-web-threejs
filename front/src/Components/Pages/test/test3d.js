@@ -174,6 +174,7 @@ class Test3d extends Component {
     const textureLabel = new THREE.CanvasTexture(canvasLabel);
     // en ambas dimensiones, establezca el filtrado adecuadamente.
     const gui = new THREE.Object3D(); ///const guiv2 = new THREE.Object3D();
+    const pantalla1 =new THREE.Object3D();
     textureLabel.minFilter = THREE.LinearFilter; textureLabel.wrapS = THREE.ClampToEdgeWrapping; textureLabel.wrapT = THREE.ClampToEdgeWrapping;
     const labelMaterial = new THREE.MeshBasicMaterial({
       map: textureLabel,
@@ -225,12 +226,15 @@ class Test3d extends Component {
     );
     fondogui.scale.set(label.scale.x*1.3,label.scale.x); 
     fondogui.position.set(label.position.x +0.05, label.position.y- 0.1, -0.1) ; 
-    gui.add(fondogui); 
-    gui.add(objectI1);
-    gui.add(objectI2);
+    pantalla1.add(fondogui); 
+    pantalla1.add(objectI1);
+    pantalla1.add(objectI2);
 
+    
+    pantalla1.add(label); pantalla1.add(labelvideo);  pantalla1.add(labelgrafica);
+
+    gui.add(pantalla1)
     gui.position.set(0.3, 0.33, 0.9); gui.scale.set(0.7, 0.7, 0.7); gui.rotation.set(0, - Math.PI / 4, 0);
-    gui.add(label); gui.add(labelvideo); gui.add(labelgrafica);
     console.log("gui");
     console.log(gui);
     this.scene.add(gui);
