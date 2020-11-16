@@ -15,6 +15,7 @@ import Detector from "../../../lib_externo/Detector";
 //charjs
 import { Chart } from "react-chartjs-2";
 
+
 //imagenes
 import posx from "../../../Logos/img/Bridge2/posx.jpg";
 import negx from "../../../Logos/img/Bridge2/negx.jpg";
