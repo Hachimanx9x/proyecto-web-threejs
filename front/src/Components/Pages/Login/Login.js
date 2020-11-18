@@ -20,7 +20,7 @@ class Login extends Component {
       headers: {'Content-Type': 'application/json'}
   });//
 
-  httpInstance.interceptors.response.use(null, error => {
+  await httpInstance.interceptors.response.use(null, error => {
     const expectedError = error.response && error.response.status >= 400 && error.response.status < 500;
     if (!expectedError) {
         // Loggear mensaje de error a un servicio como Sentry
@@ -30,7 +30,7 @@ class Login extends Component {
   }
 );
   //------
-  httpInstance.post('login',{ correo, password }).then(respuesta => {
+ await httpInstance.post('login',{ correo, password }).then(respuesta => {
     if(respuesta.statusText === "OK" ){
       console.log(respuesta.data);
       localStorage.setItem(

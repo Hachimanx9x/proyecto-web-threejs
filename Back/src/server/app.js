@@ -17,6 +17,7 @@ app.use(bodyParser.urlencoded({
     extended: true 
   }));
  // global controller
+ /*
 app.get('/*',function(req,res,next){
   res.header("Access-Control-Allow-Origin", "*");
   next(); // http://expressjs.com/guide.html#passing-route control
@@ -24,7 +25,7 @@ app.get('/*',function(req,res,next){
 app.post('/*',function(req,res,next){
   res.header("Access-Control-Allow-Origin", "*");
   next(); 
-}); 
+}); */
 //Rutas
 app.use(require('../routes/rutas_de_busqueda')); 
 app.use(require('../routes/rutas_de_insercion'));
