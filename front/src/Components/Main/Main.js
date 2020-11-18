@@ -6,6 +6,7 @@ import Loged from "../Pages/Loged/Dashboard";
 import Test from "../Pages/test/test";
 import Test3d from "../Pages/test/test3d";
 import TestFile from "../Pages/test/testfiles";
+import TestAxios from "../Pages/test/maxios";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 class Main extends Component {
@@ -36,6 +37,7 @@ class Main extends Component {
           <Route exact path="/test" component={Test} />
           <Route exact path="/test3d" component={Test3d} />
           <Route exact path="/testfile" component={TestFile} />
+          <Route exact path="/axios" component={TestAxios} />
           {this.Redirect()}
         </Switch>
       </div>

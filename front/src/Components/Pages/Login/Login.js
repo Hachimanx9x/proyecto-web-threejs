@@ -6,21 +6,16 @@ class Login extends Component {
   constructor() {
     super();
     this.state = { correo: "", password: "", login: false, store: null };
+    this.loginfun = this.loginfun.bind(this)
   }
-
-  loginfun = async () => {
-    const { correo, password } = this.state; 
-    console.log(`El correo es ${correo} y la contraseña es ${password}`);
-    
   
-    
-    const httpInstance = axios.create( {
+  componentWillMount(){
+  /*  this.httpInstance = axios.create( {
       baseURL:"http://localhost:3030/",
-      timeout: 1000,
+      timeout: 10000,
       headers: {'Content-Type': 'application/json'}
-  });//
-
-  await httpInstance.interceptors.response.use(null, error => {
+  });//*/
+ /* this.httpInstance.interceptors.response.use(null, error => {
     const expectedError = error.response && error.response.status >= 400 && error.response.status < 500;
     if (!expectedError) {
         // Loggear mensaje de error a un servicio como Sentry
@@ -29,8 +24,16 @@ class Login extends Component {
     }
   }
 );
+*/
+  }
+
+  loginfun =  () => {
+    const { correo, password } = this.state; 
+    console.log(`El correo es ${correo} y la contraseña es ${password}`);  
+
+ /*
   //------
- await httpInstance.post('login',{ correo, password }).then(respuesta => {
+  this.httpInstance.post('login',{ correo, password }).then(respuesta => {
     if(respuesta.statusText === "OK" ){
       console.log(respuesta.data);
       localStorage.setItem(
@@ -47,8 +50,27 @@ class Login extends Component {
     
 }).catch(error => {
     console.error(error);
-})
+})*/
 
+var data = JSON.stringify({ "correo": "micorreo@uao.edu.co", "password": "contraseña123" });
+
+var config = {
+    method: 'post',
+    url: 'http://localhost:3030/login',
+    headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+    },
+    data: data
+};
+
+axios(config)
+    .then((response)=> {
+                console.log(JSON.stringify(response.data));
+    })
+    .catch( (error) =>{
+        console.log(error);
+    });
   };//fin de login fun 
 
   render() {
