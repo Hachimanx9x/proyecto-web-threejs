@@ -10,12 +10,12 @@ class Login extends Component {
   }
   
   componentWillMount(){
-  /*  this.httpInstance = axios.create( {
+    this.httpInstance = axios.create( {
       baseURL:"http://localhost:3030/",
-      timeout: 10000,
+      timeout: 100000,
       headers: {'Content-Type': 'application/json'}
-  });//*/
- /* this.httpInstance.interceptors.response.use(null, error => {
+  });
+ this.httpInstance.interceptors.response.use(null, error => {
     const expectedError = error.response && error.response.status >= 400 && error.response.status < 500;
     if (!expectedError) {
         // Loggear mensaje de error a un servicio como Sentry
@@ -24,14 +24,15 @@ class Login extends Component {
     }
   }
 );
-*/
+
   }
 
   loginfun =  () => {
+   
     const { correo, password } = this.state; 
     console.log(`El correo es ${correo} y la contraseña es ${password}`);  
 
- /*
+ 
   //------
   this.httpInstance.post('login',{ correo, password }).then(respuesta => {
     if(respuesta.statusText === "OK" ){
@@ -50,27 +51,9 @@ class Login extends Component {
     
 }).catch(error => {
     console.error(error);
-})*/
+})
 
-var data = JSON.stringify({ "correo": "micorreo@uao.edu.co", "password": "contraseña123" });
 
-var config = {
-    method: 'post',
-    url: 'http://localhost:3030/login',
-    headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
-    },
-    data: data
-};
-
-axios(config)
-    .then((response)=> {
-                console.log(JSON.stringify(response.data));
-    })
-    .catch( (error) =>{
-        console.log(error);
-    });
   };//fin de login fun 
 
   render() {
@@ -134,7 +117,7 @@ axios(config)
             <div className="o-buttons">
               <button
                 className="btn btn-primary mt-4 o-btn font-weight-bold btn-lg"
-              
+                type="button"
                 onClick={this.loginfun}
               >
                 Ingresar
@@ -165,6 +148,33 @@ axios(config)
 export default Login;
 /*Codugo basura */
 /**
+ var data = JSON.stringify({ "correo": "micorreo@uao.edu.co", "password": "contraseña123" });
+
+var config = {
+    method: 'post',
+    url: 'http://localhost:3030/login',
+    headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+    },
+    data: data
+};
+
+axios(config)
+    .then((response)=> {
+      localStorage.setItem(
+        "login",
+        JSON.stringify({
+          token: response.data,
+        })
+      );
+               
+    })
+    .catch( (error) =>{
+        console.log(error);
+    }); 
+  
+ 
  const value = JSON.stringify({ correo, password }); 
    console.log(value); 
    await  fetch(url)

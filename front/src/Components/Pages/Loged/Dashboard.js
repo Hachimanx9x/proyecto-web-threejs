@@ -9,7 +9,7 @@ class Dashboard extends Component {
  
     if (token === null || token === undefined || token === "") {
       //El metodo de redireccionamiento.
-     // this.props.history.push("/Login");
+     this.props.history.push("/Login");
     } else {
       const obj = JSON.parse(token);
       const tokensito = obj.token;
