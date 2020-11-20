@@ -9,13 +9,13 @@ const Topbar = ({ toggleSidebar }, props) => {
   return (
     <nav className="navbar sticky-top shadow-sm p-3 mb-5 grey lighten-5 navbar-expand-sm o-nav  rounded">
       <button
-        className="btn btn-primary p-0 border-0 btn-lg text-light  rounded  o-btns"
+        className="btn btn-primary p-0 border-0 z-depth-0  btn-lg text-light  rounded  o-btns"
         onClick={toggleSidebar}
       >
         <FontAwesomeIcon icon={faAlignLeft} />
       </button>
       <button
-        className="navbar-toggler btn btn-light btn-lg text-secondary border   p-3 rounded o-btns   "
+        className="navbar-toggler btn btn-light z-depth-0  btn-lg text-secondary border   p-3 rounded o-btns   "
         data-toggle="collapse"
         aria-label="Toggle navigation"
         onClick={toggleTopbar}

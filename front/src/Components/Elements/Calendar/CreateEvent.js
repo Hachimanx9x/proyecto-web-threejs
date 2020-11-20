@@ -37,7 +37,7 @@ class CreateEvents extends Component{
                             <MDBInput className="m-0 mr-0" label="Título de la reunión" id="o-hi" outline />
                         </div>
                         <div className="col m-0 p-1">
-                            <button type="button" className="btn btn-sm btn-primary ml-0 mr-0 mt-4 text-light">Guardar</button>
+                            <button type="button" className="btn btn-sm z-depth-0 btn-primary ml-0 mr-0 mt-4 text-light">Guardar</button>
                         </div>
                     </div>
 
@@ -77,7 +77,7 @@ class CreateEvents extends Component{
                         </div>
                         <div className="col-sm-3 mr-0">
                             <select className="custom-select m-0 o-project-select" id="inputGroupSelect04">
-                                <option className="o-project-select" selected>Choose...</option>
+                                <option className="o-project-select" selected>Seleccionar</option>
                                 <option className="o-project-select" value="1">One</option>
                                 <option className="o-project-select" value="2">Two</option>
                                 <option className="o-project-select" value="3">Three</option>
@@ -88,7 +88,7 @@ class CreateEvents extends Component{
                         </div>
                         <div className="col-sm-3 mr-0">
                             <select className="custom-select m-0 o-project-select" id="inputGroupSelect04">
-                                <option className="o-project-select" selected>Choose...</option>
+                                <option className="o-project-select" selected>Seleccionar</option>
                                 <option className="o-project-select" value="1">One</option>
                                 <option className="o-project-select" value="2">Two</option>
                                 <option className="o-project-select" value="3">Three</option>
@@ -103,7 +103,7 @@ class CreateEvents extends Component{
                         <div className="col p-4">
                             <p className="m-0">Proyecto asociado</p>
                             <select className="custom-select m-0 o-project-select" id="inputGroupSelect04">
-                                <option className="o-project-select" selected>Choose...</option>
+                                <option className="o-project-select" selected>Seleccionar</option>
                                 <option className="o-project-select" value="1">One</option>
                                 <option className="o-project-select" value="2">Two</option>
                                 <option className="o-project-select" value="3">Three</option>
@@ -111,7 +111,7 @@ class CreateEvents extends Component{
                         </div>
                     </div>
 
-                    <div className="container row ml-2 mr-2 mt-2 bg-white p-2 rounded">
+                    <div className=" row ml-2 mr-2 mt-2 bg-white p-2 rounded">
                         <div className="row col-12">
                             <p className="ml-3 ">Integrantes del evento</p>
                         </div>

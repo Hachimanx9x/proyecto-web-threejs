@@ -8,7 +8,7 @@ import Documentation from "../../Pages/Documentation/Documentation";
 import Doc2 from "../../Pages/Documentation/Doc2";
 import Loged from "../../Pages/Loged/Dashboard";
 import CreateProject from "../../Pages/Projects/CreateProject";
-import FullCalendar from "../Calendar/CalendarEvents";
+import CalendarEvents from "../Calendar/CalendarEvents";
 import CreateEvent from "../Calendar/CreateEvent";
 
 const Content = ({ sidebarIsOpen, toggleSidebar }) => (
@@ -32,7 +32,7 @@ const Content = ({ sidebarIsOpen, toggleSidebar }) => (
       />
       <Route exact path="Dashboard" component={Loged} />
       <Route exact path="/Dashboard/Projects/Documentation2" component={Doc2} />
-      <Route exact path="/Dashboard/Calendar" component={FullCalendar} />
+      <Route exact path="/Dashboard/Calendar" component={CalendarEvents} />
       <Route exact path="/Dashboard/Calendar/CreateEvent" component={CreateEvent} />
     </Switch>
   </div>

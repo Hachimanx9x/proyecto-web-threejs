@@ -84,8 +84,9 @@ export default class CalendarEvents extends Component {
 
     }
     bruh() {
+        this.props.history.push("/Dashboard/Calendar/CreateEvent");
         if (this.state.selectedDate != null) {
-            console.log(this.state.selectedDate.toLocaleDateString())
+            console.log(this.state.selectedDate.toLocaleDateString());
         } else {
             console.log("Nay and gg");
         }
@@ -118,7 +119,7 @@ export default class CalendarEvents extends Component {
                             <p className="text-primary ">Crear evento</p>
                         </div>
                         <div className="col text-right m-0 p-0 ">
-                            <button className="btn m-0 btn-primary rounded-circle text-right" type="button" onClick={this.bruh} ><FontAwesomeIcon icon={faPlus} /></button>
+                            <button className="btn m-0 btn-primary z-depth-0 rounded-circle text-right" type="button" onClick={this.bruh} ><FontAwesomeIcon icon={faPlus} /></button>
                         </div>
                     </div>
 
