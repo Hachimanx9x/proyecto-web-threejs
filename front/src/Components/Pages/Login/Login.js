@@ -12,7 +12,7 @@ class Login extends Component {
   componentWillMount(){
     this.httpInstance = axios.create( {
       baseURL:"http://localhost:3030/",
-      timeout: 100000,
+      timeout: 1000,
       headers: {'Content-Type': 'application/json'}
   });
  this.httpInstance.interceptors.response.use(null, error => {

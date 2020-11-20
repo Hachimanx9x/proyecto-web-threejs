@@ -39,6 +39,7 @@ import video1 from "../../../Logos/videos/gumdang.mp4";
 class Test3d extends Component {
   constructor(props) {
     super(props);
+
     this.animate = this.animate.bind(this);
     this.updateDimensions = this.updateDimensions.bind(this);
     this.mouseEventsdown = this.mouseEventsdown.bind(this);
@@ -86,10 +87,12 @@ class Test3d extends Component {
     this.mouse = new THREE.Vector2();
     this.prevTime = performance.now();
     this.estado = false;
-
+    this.estados_pantalla = { p0: true, p1: false };
+    this.objInteraccion = [];
+    this.objInteraccion0 = [];
     this.objInteraccion1 = [];
     this.objInteraccion2 = [];
-
+    this.objInteraccion3 = [];
     //skybox
     var entorno = new THREE.CubeTextureLoader().load([
       posx,
@@ -130,14 +133,18 @@ class Test3d extends Component {
     var geocaja = new THREE.BoxBufferGeometry(1, 1, 1);
     var objectI1 = new THREE.Mesh(
       geocaja,
-      new THREE.MeshBasicMaterial({ color: 0x4ff20e, opacity: 0.5,
-        transparent: true, })
+      new THREE.MeshBasicMaterial({
+        color: 0x4ff20e, opacity: 0.5,
+        transparent: true,
+      })
     );
 
     var objectI2 = new THREE.Mesh(
       geocaja,
-      new THREE.MeshBasicMaterial({ color: 0xf2380e, opacity: 0.5,
-        transparent: true, })
+      new THREE.MeshBasicMaterial({
+        color: 0xf2380e, opacity: 0.5,
+        transparent: true,
+      })
     );
 
     this.objInteraccion1.push(objectI1);
@@ -167,81 +174,131 @@ class Test3d extends Component {
     console.log("grafico");
     console.log(this.objgrafico);
     this.scene.add(this.objgrafico);
-    //Ejemplo de label 
+
+    /*
     
-    const canvasLabel = this.makeLabelCanvas(32, "Testo de prueba mal escrito");
-    const canvasLabelvideo = this.makeLabelCanvas(32, "Mostrat video");
-    const canvasLabelgrafica = this.makeLabelCanvas(32, "Mostrat grafico");
-    const textureLabel = new THREE.CanvasTexture(canvasLabel);
-    // en ambas dimensiones, establezca el filtrado adecuadamente.
-    const gui = new THREE.Object3D(); ///const guiv2 = new THREE.Object3D();
-    const pantalla1 =new THREE.Object3D();
-    textureLabel.minFilter = THREE.LinearFilter; textureLabel.wrapS = THREE.ClampToEdgeWrapping; textureLabel.wrapT = THREE.ClampToEdgeWrapping;
-    const labelMaterial = new THREE.MeshBasicMaterial({
-      map: textureLabel,
-      side: THREE.DoubleSide,
-      transparent: true,
-    });
-    const labelGeometry = new THREE.PlaneBufferGeometry(1, 1);
-    const label = new THREE.Mesh(labelGeometry, labelMaterial);
-    const labelBaseScale = 0.001;
-    label.scale.x = canvasLabel.width * labelBaseScale;
-    label.scale.y = canvasLabel.height * labelBaseScale;
+▄▀▀ █░░█ ▀█▀
+█░█ █░░█ ░█░
+░▀▀ ░▀▀░ ▀▀▀
+    */
+    this.GUIv2 = new THREE.Object3D(); ///const guiv2 = new THREE.Object3D();
 
-    const textureLabel2 = new THREE.CanvasTexture(canvasLabelvideo);
-    textureLabel2.minFilter = THREE.LinearFilter; textureLabel2.wrapS = THREE.ClampToEdgeWrapping; textureLabel2.wrapT = THREE.ClampToEdgeWrapping;
-    const labelMaterial2 = new THREE.MeshBasicMaterial({
-      map: textureLabel2,
-      side: THREE.DoubleSide,
-      transparent: true,
-    });
+    this.fondos = {
+      fondo0: new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), new THREE.MeshBasicMaterial({ color: 0x2E9AFE, opacity: 0.5, transparent: true, })),
+      fondo1: new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), new THREE.MeshBasicMaterial({ color: 0x2E9AFE, opacity: 0.5, transparent: true, }))
+    }
+    this.btn_inter = {
+      inter0: new THREE.Mesh(new THREE.BoxBufferGeometry(1, 1, 1), new THREE.MeshBasicMaterial({ color: 0x61f20e, opacity: 0.5, transparent: true, })),
+      inter1: new THREE.Mesh(new THREE.BoxBufferGeometry(1, 1, 1), new THREE.MeshBasicMaterial({ color: 0x4ff20e, opacity: 0.5, transparent: true, })),
+      inter2: new THREE.Mesh(new THREE.BoxBufferGeometry(1, 1, 1), new THREE.MeshBasicMaterial({ color: 0xf2380e, opacity: 0.5, transparent: true, }))
+    }
+    this.pantallas = {
+      pantalla0: new THREE.Object3D(),
+      pantalla1: new THREE.Object3D()
+    }
+    this.letreros_Labels = {
+      titulo_pantalla1: this.makeLabelCanvas(32, "Pantalla1"),
+      titulo_pantalla2: this.makeLabelCanvas(32, "Pantalla2"),
+      boton_p1_r1: this.makeLabelCanvas(24, "Genesis"),
+      boton0_p2_r1: this.makeLabelCanvas(24, "video"),
+      boton1_p2_r1: this.makeLabelCanvas(24, "grafico"),
+    };
+    this.letrerostexture = {
+      titulo_pantalla1: new THREE.CanvasTexture(this.letreros_Labels.titulo_pantalla1),
+      titulo_pantalla2: new THREE.CanvasTexture(this.letreros_Labels.titulo_pantalla2),
+      boton_p1_r1: new THREE.CanvasTexture(this.letreros_Labels.boton_p1_r1),
+      boton0_p2_r1: new THREE.CanvasTexture(this.letreros_Labels.boton0_p2_r1),
+      boton1_p2_r1: new THREE.CanvasTexture(this.letreros_Labels.boton1_p2_r1),
+    };
 
-    const labelvideo = new THREE.Mesh(labelGeometry, labelMaterial2);
-    labelvideo.position.y = -0.04; labelvideo.position.x = -0.04;
-    labelvideo.scale.x = canvasLabelvideo.width * labelBaseScale;
-    labelvideo.scale.y = canvasLabelvideo.height * labelBaseScale;
-    objectI1.scale.set(labelvideo.scale.x ,labelvideo.scale.y, 0.005);
-    objectI1.position.set(labelvideo.position.x , labelvideo.position.y,-0.005);
+    //metodo poderoso encontrado por nestor :D
+    for (const property in this.letrerostexture) {
+      this.letrerostexture[property].minFilter = THREE.LinearFilter;
+      this.letrerostexture[property].wrapS = THREE.ClampToEdgeWrapping;
+      this.letrerostexture[property].wrapT = THREE.ClampToEdgeWrapping;
+    }
+    this.labelmaterials = {
+      titulo_pantalla1: new THREE.MeshBasicMaterial({ map: this.letrerostexture.titulo_pantalla1, side: THREE.DoubleSide, transparent: true, }),
+      titulo_pantalla2: new THREE.MeshBasicMaterial({ map: this.letrerostexture.titulo_pantalla2, side: THREE.DoubleSide, transparent: true }),
+      boton_p1_r1: new THREE.MeshBasicMaterial({ map: this.letrerostexture.boton_p1_r1, side: THREE.DoubleSide, transparent: true }),
+      boton0_p2_r1: new THREE.MeshBasicMaterial({ map: this.letrerostexture.boton0_p2_r1, side: THREE.DoubleSide, transparent: true }),
+      boton1_p2_r1: new THREE.MeshBasicMaterial({ map: this.letrerostexture.boton1_p2_r1, side: THREE.DoubleSide, transparent: true }),
+    }
+    this.labelGeo = {
+      titulo_pantalla1: new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), this.labelmaterials.titulo_pantalla1),
+      titulo_pantalla2: new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), this.labelmaterials.titulo_pantalla2),
+      boton_p1_r1: new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), this.labelmaterials.boton_p1_r1),
+      boton0_p2_r1: new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), this.labelmaterials.boton0_p2_r1),
+      boton1_p2_r1: new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), this.labelmaterials.boton1_p2_r1),
+    }
+    for (const property in this.labelGeo) {
+      this.labelGeo[property].scale.x = this.letreros_Labels[property].width * 0.001;
+      this.labelGeo[property].scale.y = this.letreros_Labels[property].height * 0.001;
+    }
 
-    const textureLabel3 = new THREE.CanvasTexture(canvasLabelgrafica);
-    textureLabel3.minFilter = THREE.LinearFilter; textureLabel3.wrapS = THREE.ClampToEdgeWrapping; textureLabel3.wrapT = THREE.ClampToEdgeWrapping;
-    const labelMaterial3 = new THREE.MeshBasicMaterial({
-      map: textureLabel3,
-      side: THREE.DoubleSide,
-      transparent: true,
-    });
+    var i0 = 0;
+    for (const property in this.pantallas) {
+      var i1 = 0;
+      for (const property1 in this.fondos) {
+        if (i1 === 0 && i0 === 0) {
 
-    const labelgrafica = new THREE.Mesh(labelGeometry, labelMaterial3);
-    labelgrafica.position.y = -0.1; labelgrafica.position.x = -0.04;
-    labelgrafica.scale.x = canvasLabelgrafica.width * labelBaseScale;
-    labelgrafica.scale.y = canvasLabelgrafica.height * labelBaseScale;
-    objectI2.scale.set( labelgrafica.scale.x,  labelgrafica.scale.y, 0.0005);
-    objectI2.position.set(labelgrafica.position.x, labelgrafica.position.y,-0.005);
-    
+          this.labelGeo.boton_p1_r1.position.set(this.labelGeo.titulo_pantalla1.position.x, this.labelGeo.titulo_pantalla1.position.y - 0.05, this.labelGeo.titulo_pantalla1.position.z)
+          this.objInteraccion.push(this.btn_inter.inter0);
+          this.btn_inter.inter0.scale.set(this.labelGeo.boton_p1_r1.scale.x, this.labelGeo.boton_p1_r1.scale.y, 0.005);
+          this.btn_inter.inter0.position.set(this.labelGeo.boton_p1_r1.position.x, this.labelGeo.boton_p1_r1.position.y, -0.005);
+          this.fondos[property1].scale.set(this.labelGeo.titulo_pantalla1.scale.x + 0.1, this.labelGeo.titulo_pantalla1.scale.x + 0.05);
+          this.fondos[property1].position.set(this.labelGeo.titulo_pantalla1.position.x + 0.05, this.labelGeo.titulo_pantalla1.position.y - 0.007, -0.1);
+          this.pantallas[property].add(this.labelGeo.titulo_pantalla1);
+          this.pantallas[property].add(this.labelGeo.boton_p1_r1);
+          this.pantallas[property].add(this.btn_inter.inter0);
+          this.pantallas[property].add(this.fondos[property1]);
+        } else if (i1 === 1 && i0 === 1) {
 
+          this.labelGeo.boton0_p2_r1.position.set(this.labelGeo.titulo_pantalla2.position.x - 0.05, this.labelGeo.titulo_pantalla2.position.y - 0.05, this.labelGeo.titulo_pantalla2.position.z)
+          this.labelGeo.boton1_p2_r1.position.set(this.labelGeo.titulo_pantalla2.position.x + 0.05, this.labelGeo.titulo_pantalla2.position.y - 0.05, this.labelGeo.titulo_pantalla2.position.z)
+          this.objInteraccion0.push(this.labelGeo.boton0_p2_r1);
+          this.objInteraccion3.push(this.labelGeo.boton1_p2_r1);
+          /****************/
+          this.btn_inter.inter1.scale.set(this.labelGeo.boton0_p2_r1.scale.x, this.labelGeo.boton0_p2_r1.scale.y, 0.005);
+          this.btn_inter.inter1.position.set(this.labelGeo.boton0_p2_r1.position.x, this.labelGeo.boton0_p2_r1.position.y, -0.005)
+          this.btn_inter.inter2.scale.set(this.labelGeo.boton1_p2_r1.scale.x, this.labelGeo.boton1_p2_r1.scale.y, 0.005);
+          this.btn_inter.inter2.position.set(this.labelGeo.boton1_p2_r1.position.x, this.labelGeo.boton1_p2_r1.position.y, -0.005)
+          /****** */
+          this.fondos[property1].scale.set(this.labelGeo.titulo_pantalla2.scale.x + 0.2, this.labelGeo.titulo_pantalla2.scale.x + 0.05);
+          this.fondos[property1].position.set(this.labelGeo.titulo_pantalla2.position.x + 0.05, this.labelGeo.titulo_pantalla2.position.y - 0.007, -0.1);
+          this.pantallas[property].add(this.labelGeo.titulo_pantalla2);
+          this.pantallas[property].add(this.labelGeo.boton0_p2_r1);
+          this.pantallas[property].add(this.labelGeo.boton1_p2_r1);
+          this.pantallas[property].add(this.btn_inter.inter1);
+          this.pantallas[property].add(this.btn_inter.inter2);
+          this.pantallas[property].add(this.fondos[property1]);
+        }
+        i1 += 1;
+      }
+
+      i0 += 1;
+    }
+
+    for (const property in this.pantallas) {
+      this.GUIv2.add(this.pantallas[property]);
+    }
+    this.GUIv2.position.set(0.3, 0.33, 0.9); this.GUIv2.rotation.set(0, - Math.PI / 4, 0);
+    console.log("gui2");
+    console.log(this.GUIv2);
+    this.scene.add(this.GUIv2);
+    this.pantallas.pantalla0.visible = this.estados_pantalla.p0;
+    this.pantallas.pantalla1.visible = this.estados_pantalla.p1;
+
+
+  
+
+
+    /*
+   ▄▀▀ █░░█ ▀█▀ . █▀▀ █▄░█ █▀▄
+   █░█ █░░█ ░█░ . █▀▀ █▀██ █░█
+   ░▀▀ ░▀▀░ ▀▀▀ . ▀▀▀ ▀░░▀ ▀▀░
    
-    const fondogui = new THREE.Mesh(
-      new THREE.PlaneBufferGeometry(1, 1),
-      new THREE.MeshBasicMaterial({ color: 0x2E9AFE, opacity: 0.5,
-        transparent: true, })
-    );
-    fondogui.scale.set(label.scale.x*1.3,label.scale.x); 
-    fondogui.position.set(label.position.x +0.05, label.position.y- 0.1, -0.1) ; 
-    pantalla1.add(fondogui); 
-    pantalla1.add(objectI1);
-    pantalla1.add(objectI2);
-
-    
-    pantalla1.add(label); pantalla1.add(labelvideo);  pantalla1.add(labelgrafica);
-
-    gui.add(pantalla1)
-    gui.position.set(0.3, 0.33, 0.9); gui.scale.set(0.7, 0.7, 0.7); gui.rotation.set(0, - Math.PI / 4, 0);
-    console.log("gui");
-    console.log(gui);
-    this.scene.add(gui);
-   
-   
-
+       */
 
     //---------------default------------------------
     var geopiso = new THREE.PlaneBufferGeometry(2000, 2000, 100, 100);
@@ -653,15 +710,37 @@ class Test3d extends Component {
     this.raycaster.setFromCamera(this.mouse, this.camera);
     var intersectsplay = this.raycaster.intersectObjects(this.objInteraccion1);
     var intersectspause = this.raycaster.intersectObjects(this.objInteraccion2);
+    var intersect = this.raycaster.intersectObjects(this.objInteraccion);
+    var intersect0 = this.raycaster.intersectObjects(this.objInteraccion0);
+    var intersect3 = this.raycaster.intersectObjects(this.objInteraccion3);
     if (intersectsplay.length > 0) {
-      this.video.play();
-      this.meshvideo.visible = true;
-    }
-    if (intersectspause.length > 0) {
-      this.video.pause();
-      this.meshvideo.visible = false;
-      this.setupCanvasDrawing();
-    }
+      // this.video.play();
+      //this.meshvideo.visible = true;
+    } else
+      if (intersectspause.length > 0) {
+        //this.video.pause();
+        //   this.meshvideo.visible = false;
+        //    this.setupCanvasDrawing();
+      } else
+        if (intersect0.length > 0 && this.estados_pantalla.p1) {
+          console.log("video play")
+          this.video.play();
+          this.meshvideo.visible = true;
+        } else
+          if (intersect.length > 0 && this.estados_pantalla.p0) {
+            console.log("primera pantalal fuera")
+            this.estados_pantalla.p0 = false;
+            this.pantallas.pantalla0.visible = this.estados_pantalla.p0;
+            this.estados_pantalla.p1 = true;
+            this.pantallas.pantalla1.visible = this.estados_pantalla.p1;
+          }
+          else
+            if (intersect3.length > 0 && this.estados_pantalla.p1) {
+              console.log("video pausado")
+              this.video.pause();
+              this.meshvideo.visible = false;
+              this.setupCanvasDrawing();
+            }
 
     this.estado = true;
   };
@@ -700,7 +779,7 @@ class Test3d extends Component {
       data: this.state.marksData,
     });
     this.materialC.map = new THREE.CanvasTexture(drawingCanvas);
-    
+
     this.materialC.transparent = true;
   };
   /*
