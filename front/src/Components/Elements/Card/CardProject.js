@@ -15,7 +15,7 @@ const CardProject = ({ title, description, image }) => {
         </button>
         <button
 
-          className="btn btn-light border-primary text-primary btn-sm o-card-project-button ml-4"
+          className="btn btn-light border-primary p-0 text-primary btn-sm o-card-project-button ml-4"
         >
           Eliminar
         </button>

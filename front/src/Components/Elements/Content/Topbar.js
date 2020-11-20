@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAlignLeft, faAlignRight } from "@fortawesome/free-solid-svg-icons";
+import { faAlignLeft, faAlignJustify } from "@fortawesome/free-solid-svg-icons";
 
 const Topbar = ({ toggleSidebar }, props) => {
   const [topbarIsOpen, setTopbarOpen] = useState(true);
   const toggleTopbar = () => setTopbarOpen(!topbarIsOpen);
 
   return (
-    <nav className="navbar  sticky-top shadow-sm p-3 mb-5 bg-light navbar-expand-sm o-nav  rounded">
+    <nav className="navbar sticky-top shadow-sm p-3 mb-5 grey lighten-5 navbar-expand-sm o-nav  rounded">
       <button
-        className="btn btn-primary  btn-lg text-light  rounded  o-btns"
+        className="btn btn-primary p-0 border-0 btn-lg text-light  rounded  o-btns"
         onClick={toggleSidebar}
       >
         <FontAwesomeIcon icon={faAlignLeft} />
@@ -20,7 +20,7 @@ const Topbar = ({ toggleSidebar }, props) => {
         aria-label="Toggle navigation"
         onClick={toggleTopbar}
       >
-        <FontAwesomeIcon icon={faAlignRight} />
+        <FontAwesomeIcon icon={faAlignJustify} />
       </button>
       <div
         className={`${topbarIsOpen ? "collapse" : ""

@@ -1,189 +1,189 @@
 a,
 a:hover,
 a:focus {
-  color: inherit;
-  text-decoration: none;
-  transition: all 0.3s;
+	color: inherit;
+	text-decoration: none;
+	transition: all 0.3s;
 }
 
 /* ---------------------------------------------------
       SIDEBAR STYLE
   ----------------------------------------------------- */
 .sidebar {
-  min-width: 250px;
-  max-width: 250px;
-  background: #202a5b;
-  color: #fff;
-  margin-left: -250px;
-  transition: all 0.5s;
+	min-width: 250px;
+	max-width: 250px;
+	background: #202a5b;
+	color: #fff;
+	margin-left: -250px;
+	transition: all 0.5s;
 }
 
 .sidebar.is-open {
-  margin-left: 0;
-  transition: 0.5s;
+	margin-left: 0;
+	transition: 0.5s;
 }
 
 .sidebar-header h3 {
-  color: #fff;
-  padding-left: 0;
-  padding: 1rem;
-  text-align: center;
+	color: #fff;
+	padding-left: 0;
+	padding: 1rem;
+	text-align: center;
 }
 
 .items-menu {
-  color: #fff;
+	color: #fff;
 }
 
 li a.dropdown-toggle::after {
-  display: inline-flex;
-  position: relative;
-  left: 60%;
-  top: 10%;
+	display: inline-flex;
+	position: relative;
+	left: 60%;
+	top: 10%;
 }
 
 .sidebar-header > span {
-  position: relative;
-  float: right;
-  margin: 0.5em;
-  font-size: 2rem;
-  cursor: pointer;
-  display: none;
+	position: relative;
+	float: right;
+	margin: 0.5em;
+	font-size: 2rem;
+	cursor: pointer;
+	display: none;
 }
 .side-menu {
-  overflow-y: hidden;
+	overflow-y: hidden;
 }
 
 .side-menu::-webkit-scrollbar {
-  width: 0px;
+	width: 0px;
 }
 
 .side-menu::-webkit-scrollbar-thumb {
-  background: #5466b3;
-  border-radius: 3px;
-  width: 0px;
+	background: #5466b3;
+	border-radius: 3px;
+	width: 0px;
 }
 
 .side-menu::-webkit-scrollbar-thumb:hover {
-  background: #3a4c99;
+	background: #3a4c99;
 }
 
 /* ---------------------------------------------------
       CONTENT STYLE
   ----------------------------------------------------- */
 .content {
-  overflow: scroll;
-  padding: 0px 20px 20px 20px;
-  margin-left: 0;
-  height: 100vh;
+	overflow: auto;
+	padding: 0px 20px 20px 20px;
+	margin-left: 0;
+	height: 100vh;
 }
 @media only screen and (max-width: 800px) {
-  .sidebar.is-open {
-    min-width: 180px;
-    max-width: 180px;
-  }
-  .side-menu {
-    text-align: center;
-  }
+	.sidebar.is-open {
+		min-width: 180px;
+		max-width: 180px;
+	}
+	.side-menu {
+		text-align: center;
+	}
 }
 @media only screen and (max-width: 590px) {
-  body {
-    overflow: hidden;
-  }
-  .sidebar {
-    z-index: 3;
+	body {
+		overflow: hidden;
+	}
+	.sidebar {
+		z-index: 3;
 
-    height: 100vh;
-    position: fixed;
-  }
-  .sidebar.is-open {
-    min-width: 100%;
-    max-width: 100%;
-    z-index: 3;
-    position: fixed;
-    height: 100vh;
-    margin-left: 0;
-    transition: all 0.5s, height 0s;
-  }
-  .o-nav {
-    position: fixed;
-    z-index: 1;
-    width: 90%;
-  }
-  .sidebar.is-open > .sidebar-header span {
-    display: unset;
-    position: fixed;
-  }
-  .content {
-    overflow: scroll;
-    padding: 20px;
-    margin-left: 0;
-    margin-top: 60px;
-    height: 100vh;
-    position: fixed;
-  }
-  li a.dropdown-toggle::after {
-    display: inline-block;
-    position: relative;
-  }
+		height: 100vh;
+		position: fixed;
+	}
+	.sidebar.is-open {
+		min-width: 100%;
+		max-width: 100%;
+		z-index: 3;
+		position: fixed;
+		height: 100vh;
+		margin-left: 0;
+		transition: all 0.5s, height 0s;
+	}
+	.o-nav {
+		position: fixed;
+		z-index: 1;
+		width: 90%;
+	}
+	.sidebar.is-open > .sidebar-header span {
+		display: unset;
+		position: fixed;
+	}
+	.content {
+		overflow: auto;
+		padding: 20px;
+		margin-left: 0;
+		margin-top: 60px;
+		height: 100vh;
+		position: fixed;
+	}
+	li a.dropdown-toggle::after {
+		display: inline-block;
+		position: relative;
+	}
 }
 
 .o-btns {
-  width: 3rem;
-  height: 3rem;
-  border-width: 3px;
+	width: 3rem;
+	height: 3rem;
+	border-width: 3px;
 }
 
 .o-card-project-button {
-  width: 5.5rem;
-  height: 2rem;
+	width: 5.5rem;
+	height: 2rem;
 }
 
 .o-card-project {
-  width: 18rem;
+	width: 18rem;
 }
 
 .o-card-project-title {
-  padding: 1rem;
-  font-size: small;
+	padding: 1rem;
+	font-size: small;
 }
 
 .o-card-project-body {
-  height: 8rem;
+	height: 8rem;
 }
 .o-card-description {
-  overflow-y: scroll;
-  margin: 0.6rem 1rem 0.6rem 0rem;
+	overflow-y: scroll;
+	margin: 0.6rem 1rem 0.6rem 0rem;
 }
 
 .o-card-description-text {
-  max-height: 5rem;
-  font-size: small;
+	max-height: 5rem;
+	font-size: small;
 }
 
 .o-card-project-image {
-  width: 100%;
-  height: 10rem;
+	width: 100%;
+	height: 10rem;
 }
 .o-link-btn {
-  width: 100%;
-  height: 2.5rem;
-  text-align: start;
-  margin: 0;
-  padding: 0.2rem 0rem 0.2rem 0.9rem;
-  color: white;
+	width: 100%;
+	height: 2.5rem;
+	text-align: start;
+	margin: 0;
+	padding: 0.2rem 0rem 0.2rem 0.9rem;
+	color: white;
 }
 
 .side-menu::-webkit-scrollbar,
 .o-card-description::-webkit-scrollbar {
-  width: 3px;
+	width: 3px;
 }
 .side-menu::-webkit-scrollbar-thumb,
 .o-card-description::-webkit-scrollbar-thumb {
-  background: #5466b3;
-  border-radius: 3px;
+	background: #5466b3;
+	border-radius: 3px;
 }
 
 .side-menu::-webkit-scrollbar-thumb:hover,
 .o-card-description::-webkit-scrollbar-thumb:hover {
-  background: #3a4c99;
+	background: #3a4c99;
 }

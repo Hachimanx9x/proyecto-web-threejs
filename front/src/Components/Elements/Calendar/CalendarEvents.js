@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import moment from "moment";
-import "./Calendar.css";
 import { faSquare, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -20,6 +19,8 @@ import DayPicker from 'react-day-picker';
 import MomentLocaleUtils from 'react-day-picker/moment';
 
 import 'moment/locale/es.js';
+
+import "./Calendar.css";
 require('moment/locale/es.js');
 
 

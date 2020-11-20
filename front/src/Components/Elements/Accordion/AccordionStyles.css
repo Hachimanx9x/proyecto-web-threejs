@@ -24,7 +24,7 @@
 }
 
 .accordion-title:hover,
-.active {
+.accordionHeading:active {
   background-color: #ccc;
 }
 

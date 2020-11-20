@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import axios from 'axios';
 import "./Login.css";
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import 'bootstrap-css-only/css/bootstrap.min.css';
+import 'mdbreact/dist/css/mdb.css';
 
 class Login extends Component {
   constructor() {
@@ -116,7 +119,7 @@ class Login extends Component {
             </div>
             <div className="o-buttons">
               <button
-                className="btn btn-primary mt-4 o-btn font-weight-bold btn-lg"
+                className="btn blue accent-4 text-light mt-4 o-btn font-weight-bold btn-lg"
                 type="button"
                 onClick={this.loginfun}
               >

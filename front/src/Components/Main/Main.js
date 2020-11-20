@@ -7,7 +7,6 @@ import Test from "../Pages/test/test";
 import Test3d from "../Pages/test/test3d";
 import TestFile from "../Pages/test/testfiles";
 import TestAxios from "../Pages/test/maxios";
-import "bootstrap/dist/css/bootstrap.min.css";
 
 class Main extends Component {
   Redirect() {

@@ -85,3 +85,12 @@ a.active .nav-item {
 	border-left: 5px solid #3bccf6;
 	width: 100%;
 }
+
+.nav-item {
+	height: 2.5rem;
+	box-shadow: none;
+}
+
+li {
+	box-shadow: none;
+}

@@ -43,7 +43,7 @@
   border: none;
 }
 .accordionHeading:hover,
-.active {
+.accordionHeading:active {
   background-color: #ccc;
 }
 
