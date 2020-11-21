@@ -84,9 +84,11 @@ export default class CalendarEvents extends Component {
 
     }
     bruh() {
+
         this.props.history.push("/Dashboard/Calendar/CreateEvent");
         if (this.state.selectedDate != null) {
             console.log(this.state.selectedDate.toLocaleDateString());
+
         } else {
             console.log("Nay and gg");
         }
