@@ -12,8 +12,8 @@ const path = require('path');
 const ftpminio = require("../ftp/peticiones"); 
 const buscarDB = require('../database/buscarDB'); 
 
-rutas.post('/registro/n=:nombre&c=:correo&p=:password',(req,res)=>{
-    const {nombre,correo,password} = req.params ; 
+rutas.post('/registro',(req,res)=>{
+    const {nombre,correo,password} = req.body ; 
     const transporter = nodemailer.createTransport({
         host: 'smtp.ethereal.email',
         port: 587,

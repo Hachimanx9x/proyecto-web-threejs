@@ -13,7 +13,7 @@ app.use(bodyParser.json({
   }));
 app.use(bodyParser.urlencoded({
     limit: '500mb',
-    parameterLimit: 100000000,
+    parameterLimit: 10000,
     extended: true 
   }));
  // global controller

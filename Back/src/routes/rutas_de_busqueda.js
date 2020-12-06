@@ -24,9 +24,7 @@ rutas.get('/login/email=:correo&pass=:password',(req,res)=>{
 rutas.post('/login',(req,res)=>{
     console.log("body", req.body); 
    
-    buscarDB.obtenerToken(req.body, res).then(resultado=>{
-        // console.log("Exito"); 
-     }); 
+    buscarDB.obtenerToken(req.body, res);
 });
 
 
@@ -35,7 +33,7 @@ rutas.get('/escritorio',proToken, (req,res)=>{
         if(err){ res.sendStatus(403);
         }else{
             if(data !={} || data !=={} || data !=null || data !== undefined || data.rows != [] || data.rows !== [] || data.rows !== null || data.rows !== undefined  || data.rows[0] != null || data.rows.length > 0){
-            // console.log(data.rows);  
+            //console.log(data.rows);  
             buscarDB.obtenerEscritorio(data,res);  
              }else{
                 console.log("Basio perro ");  res.json({    estado : "no se encontro nada"    });
@@ -104,12 +102,18 @@ rutas.get('/proyecto/contenido',(req,res)=>{
      const {user} = req.body; 
     // const {id,name } = req.body;
 
-     ftpminio.listObjects(id,user, res );
- 
-
-
-        
+     ftpminio.listObjects(id,user, res );        
  }); 
+
+
+rutas.get('/talentos',proToken, (req,res)=>{
+    jwt.verify(req.token,LLAVE,async  (err,data)=>{
+        //console.log(data.rows[0].id)
+    await    buscarDB.searchPeople(data.rows[0].id ,res); 
+    }); 
+   
+} );
+
 
 
 /*
