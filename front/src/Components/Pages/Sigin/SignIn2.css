@@ -1,0 +1,58 @@
+.o-sigin-container {
+	background: no-repeat;
+	background-image: url('../../../Logos/Group102.png');
+	background-position: right center;
+	background-origin: content-box;
+	background-color: #202a5b;
+	overflow-y: auto;
+}
+
+.o-sigin-form {
+	max-width: 50vw;
+	padding: 5rem 0rem 0rem 5rem;
+	min-width: 40rem;
+}
+.o-sigin-text {
+	font-size: 1rem;
+}
+
+.o-sigin-input {
+	color: white;
+	background-color: red;
+}
+.fa-lock,
+.fa-envelope,
+.fa-user {
+	color: white !important;
+}
+
+.fa-lock.active,
+.fa-user.active,
+.fa-envelope.active {
+	color: #4285f4 !important;
+}
+
+.o-button {
+	font-size: 1rem;
+	padding: 1rem;
+	border-radius: 0.3rem;
+	width: 9rem;
+	border: none;
+}
+@media only screen and (max-width: 720px) {
+	.o-sigin-container {
+		background: #202a5b;
+	}
+	.o-sigin-form {
+		padding: 4rem 1rem 0rem 1rem;
+		min-width: 20rem;
+	}
+	.o-button {
+		font-size: 0.8rem;
+		border-radius: 0.3rem;
+		padding: 0.7rem;
+		width: 7rem;
+		text-align: center;
+		border: none;
+	}
+}

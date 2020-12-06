@@ -1,0 +1,58 @@
+.o-login-container {
+	background: no-repeat;
+	background-image: url('../../../Logos/Group102.png');
+	background-position: right center;
+	background-origin: content-box;
+	background-color: #202a5b;
+	overflow-y: auto;
+	padding-top: 5rem;
+}
+
+.o-login-form {
+	max-width: 50vw;
+	padding: 10rem 0rem 0rem 5rem;
+	min-width: 40rem;
+}
+.o-login-text {
+	font-size: 1rem;
+}
+
+.o-login-input {
+	color: white;
+	background-color: red;
+}
+.fa-lock,
+.fa-envelope {
+	color: white !important;
+}
+
+.fa-lock.active,
+.fa-envelope.active {
+	color: #4285f4 !important;
+}
+
+.o-button {
+	font-size: 1rem;
+	padding: 1rem;
+	border-radius: 0.3rem;
+	width: 9rem;
+	text-align: center;
+	border: none;
+}
+@media only screen and (max-width: 720px) {
+	.o-login-container {
+		background: #202a5b;
+		padding: 0;
+	}
+	.o-login-form {
+		padding: 4rem 1rem 0rem 1rem;
+		min-width: 20rem;
+	}
+	.o-button {
+		font-size: 0.8rem;
+		border-radius: 0.3rem;
+		padding: 0.7rem;
+		width: 7rem;
+		border: none;
+	}
+}

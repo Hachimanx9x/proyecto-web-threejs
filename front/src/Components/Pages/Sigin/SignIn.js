@@ -4,10 +4,7 @@ import "./SignIn.css";
 class SigIn extends Component {
   constructor() {
     super();
-    this.state = { inputName: "" };
-    this.state = { inputEmail: "" };
-    this.state = { inputPass: "" };
-    this.state = { inputConfirmPass: "" };
+    this.state = { name: "", email: "", password: "", confirmpassword:"" };
   }
 
 
