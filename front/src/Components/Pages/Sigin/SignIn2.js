@@ -111,8 +111,8 @@ class SigIn extends Component {
                         </div>
                         <div className="form-row">
                             
-                            <div className="col-12 d-flex justify-content-end">
-                                <a className="text-info text-right o-sigin-text font-weight-bold " href="/Login">
+                            <div className="col-12 ">
+                                <a className="text-info o-sigin-text font-weight-bold " href="/Login">
                                     ¿Ya tienes cuenta? Ingresa con ella.
                                     </a>
                             </div>
