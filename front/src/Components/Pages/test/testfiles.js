@@ -72,3 +72,29 @@ class Test extends Component {
 }
 
 export default Test;
+
+/**
+ * var axios = require('axios');
+var FormData = require('form-data');
+var fs = require('fs');
+var data = new FormData();
+data.append('archivo', fs.createReadStream('/C:/Users/DIEGO/Videos/2020-12-02_21-47-13.mp4'));
+
+var config = {
+  method: 'post',
+  url: 'http://localhost:3030/proyecto/insertarArchivo2',
+  headers: { 
+    ...data.getHeaders()
+  },
+  data : data
+};
+
+axios(config)
+.then(function (response) {
+  console.log(JSON.stringify(response.data));
+})
+.catch(function (error) {
+  console.log(error);
+});
+
+ */

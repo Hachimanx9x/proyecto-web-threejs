@@ -1,6 +1,7 @@
 const ex = require('express'); 
 const app = ex();
 const bodyParser = require('body-parser')
+const fileupload = require('express-fileupload'); 
 var cors = require('cors');
 //configuracion
 app.set('PORT', process.env.PORT || 3030 )
@@ -16,6 +17,7 @@ app.use(bodyParser.urlencoded({
     parameterLimit: 10000,
     extended: true 
   }));
+  app.use(fileupload()); 
  // global controller
  /*
 app.get('/*',function(req,res,next){

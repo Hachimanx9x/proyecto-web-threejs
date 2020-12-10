@@ -95,6 +95,27 @@ try {
 }); 
 
 
+rutas.post('/proyecto/insertarArchivo2',(req,res)=>{
+console.log(req.files); 
+const {archivo } = req.files; 
+ //console.log(`entro el archivo ${archivo.name}`); 
+ archivo.mv(__dirname+'/tmp/'+ archivo.name, (err)=>{
+   if(!err){
+    var metaData = {
+      'Content-Type': `${archivo.mimetype}`,
+      'size': archivo.size,
+      'X-Amz-Meta-Testing': 1234,
+      'example': 5678
+    }
+     
+    ftpminio.putFile('default',archivo.name,path.join(__dirname, `/tmp/${archivo.name}`),metaData); 
+   }else{
+     console.log(err)
+   }
+ });
+res.json({msj:"terminado"})
+}); 
+
 module.exports = rutas; 
 
 
