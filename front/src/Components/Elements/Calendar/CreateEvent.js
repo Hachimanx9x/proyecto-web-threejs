@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./Calendar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSquare, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faSquare } from "@fortawesome/free-solid-svg-icons";
 import { MDBInput } from "mdbreact";
 
 import 'react-day-picker/lib/style.css';

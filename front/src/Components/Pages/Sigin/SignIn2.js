@@ -32,12 +32,12 @@ class SigIn extends Component {
 
     RegisterFunction = () => {
 
-        const { correo, password } = this.state;
-        console.log(`El correo es ${correo} y la contraseña es ${password}`);
+        const { email, password } = this.state;
+        console.log(`El correo es ${email} y la contraseña es ${password}`);
 
 
         //------
-        this.httpInstance.post('login', { correo, password }).then(respuesta => {
+        this.httpInstance.post('login', { email, password }).then(respuesta => {
             if (respuesta.statusText === "OK") {
                 console.log(respuesta.data);
                 localStorage.setItem(
@@ -85,7 +85,7 @@ class SigIn extends Component {
                                     Correo
                                     </label>
                                 <MDBInput onChange={(event) => {
-                                    this.setState({ correo: event.target.value });
+                                    this.setState({ email: event.target.value });
                                 }} label="Correo" className="o-sigin-input text-white" type="email" icon="envelope" />
                             </div>
                         </div>
@@ -96,7 +96,7 @@ class SigIn extends Component {
                                     </label>
                                 <MDBInput onChange={(event) => {
                                     this.setState({ password: event.target.value });
-                                }} label="Correo" className="o-sigin-input text-white" type="email" icon="lock" />
+                                }} label="Contraseña" className="o-sigin-input text-white" type="email" icon="lock" />
                             </div>
                         </div>
                         <div className="row">
