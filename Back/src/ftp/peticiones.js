@@ -35,8 +35,34 @@ peticiones.getFilesingle= async (bucket,namefile,res)=>{
 
 }
 
-peticiones.getFile=()=>{
+peticiones.getFile=(res)=>{
+  const obj={
+    bucket:"default",
+    names:['act.PNG', 'juaan.PNG', 'practicas.PNG', '2020-12-02_21-47-13.mp4']
+  }
+  var p = new Promise((resolve, reject)=>{
+    var files =[]; 
+    for(var i in obj.names){
+      minio.fGetObject(obj.bucket,obj.names[i] ,path.join(__dirname, `../routes/tmp/${obj.names[i]}`), (e)=>{
+        if(e){reject(`error el al encontrar el archivo ${bucket,obj.names[i] }`) }
+        files.push(path.join(__dirname, `../routes/tmp/${obj.names[i]}`));       
+      });
+      
+      if(i == obj.names.length-1){
+         if(files.length===0){
+          reject('error')
+         }else{
+          resolve(files)
+         }
+        
+      }
+    }
+
+  });
+
+  p.then(resp=>{res.json({array: resp})}); 
     
+  
 }
 
 peticiones.putFile=async (bucket,namefile, file ,fileStat )=>{ 

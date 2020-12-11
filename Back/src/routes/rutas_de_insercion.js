@@ -1,7 +1,7 @@
 const ex = require('express'); 
 const rutas= ex.Router();
 
-const mariaDB = require('../database'); 
+
 
 const nodemailer = require("nodemailer"); 
 
@@ -11,7 +11,7 @@ const path = require('path');
 
 const ftpminio = require("../ftp/peticiones"); 
 const buscarDB = require('../database/buscarDB'); 
-
+const insertDB = require('../database/insertarDB'); 
 rutas.post('/registro',(req,res)=>{
     const {nombre,correo,password} = req.body ; 
     const transporter = nodemailer.createTransport({
@@ -115,6 +115,24 @@ const {archivo } = req.files;
  });
 res.json({msj:"terminado"})
 }); 
+
+rutas.post('insert/user', (req,res)=>{
+
+}); 
+rutas.post('insert/person', (req,res)=>{
+  
+}); 
+
+rutas.post('insert/tools', (req,res)=>{
+  
+}); 
+rutas.post('insert/hability', (req,res)=>{
+  
+}); 
+rutas.post('insert/lenguaje', (req,res)=>{
+  
+}); 
+
 
 module.exports = rutas; 
 
