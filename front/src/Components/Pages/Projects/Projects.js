@@ -22,7 +22,7 @@ class Projects extends Component {
               </p>
             </div>
             <div className="card-footer bg-transparent border-transparent">
-              <a href="/Dashboard/Projects/CreateProject" className="btn btn-primary p-2 btn-sm o-card-project-button">
+              <a href="/Dashboard/Projects/CreateProject" className="btn btn-primary z-depth-0 p-2 btn-sm o-card-project-button">
                 Crear
               </a>
             </div>
