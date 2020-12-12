@@ -28,9 +28,9 @@ funcionesDB.buscarLogin = async (body, res) => {
 }*/
 
 funcionesDB.obtenerToken = async (body, res) => {
-    const { correo, password } = body;
+    const { email, password } = body;
    
-    if(correo !== undefined && password !== undefined){
+    if(email !== undefined && password !== undefined){
       
         await mariaDB.query( Query.login(body) , (err, rows, fields) => {
     
@@ -43,10 +43,8 @@ funcionesDB.obtenerToken = async (body, res) => {
                     //console.log(rows); 
                     const token = jwt.sign({ rows }, LLAVE);
                     //  console.log("token enviado");           
-                    res.json({ token });
-    
+                    res.json({ token });    
                 }
-    
             } else {
                 res.json({ respuesta: "Base de datos dañada" });
             }

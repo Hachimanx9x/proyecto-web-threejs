@@ -116,21 +116,29 @@ const {archivo } = req.files;
 res.json({msj:"terminado"})
 }); 
 
-rutas.post('insert/user', (req,res)=>{
+rutas.post('/insert/user', (req,res)=>{
+  
+  const{correoElectronico, urlHojaVida, contrasena, experiencia,contacto, persona,habilidad}= req.body; 
+  insertDB.insertUser(correoElectronico, urlHojaVida, contrasena, experiencia,contacto, persona,habilidad,res); 
+}); 
+rutas.post('/insert/person', (req,res)=>{
+  const {nombre, descripcion, otro, pais , edad}= req.body; 
+  insertDB.insertPerson({nombre, descripcion, otro, pais , edad }, res); 
+}); 
+
+rutas.post('/insert/tools', (req,res)=>{
+  const  {nombre, tipo,descripcion, url_icono} = req.body;
+  insertDB.insertTools({nombre, tipo,descripcion, url_icono} , res ); 
+}); 
+rutas.post('/insert/hability', (req,res)=>{
+  const {tipo, descripcion, nivel,herramientaUsada} = req.body; 
+
+  insertDB.insertAbility(tipo, descripcion, nivel,herramientaUsada , res); 
 
 }); 
-rutas.post('insert/person', (req,res)=>{
-  
-}); 
-
-rutas.post('insert/tools', (req,res)=>{
-  
-}); 
-rutas.post('insert/hability', (req,res)=>{
-  
-}); 
-rutas.post('insert/lenguaje', (req,res)=>{
-  
+rutas.post('/insert/lenguaje', (req,res)=>{
+  const {nombre, nivel} = req.body;
+  insertDB.insertLenguaje({nombre, nivel},res); 
 }); 
 
 

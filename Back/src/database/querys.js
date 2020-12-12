@@ -3,8 +3,8 @@ const query = function(e){
 }
 
 query.login= function(obj){
-    const { correo, password } = obj;
-    return `SELECT * FROM usuarios WHERE correoElectronico = "${correo}" AND contrasena = "${password}" `
+    const { email, password } = obj;
+    return `SELECT * FROM usuarios WHERE correoElectronico = "${email}" AND contrasena = "${password}" `
 }
 query.obtenerEscritorio=function(person){
     return (`SELECT    usuarios.id,  
