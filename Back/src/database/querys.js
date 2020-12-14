@@ -4,7 +4,8 @@ const query = function(e){
 
 query.login= function(obj){
     const { email, password } = obj;
-    return `SELECT * FROM usuarios WHERE correoElectronico = "${email}" AND contrasena = "${password}" `
+    //
+    return `SELECT * FROM usuarios WHERE email = "${email}" AND contrasena = "${password}" `
 }
 query.obtenerEscritorio=function(person){
     return (`SELECT    usuarios.id,  
