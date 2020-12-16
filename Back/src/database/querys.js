@@ -8,27 +8,19 @@ query.login= function(obj){
     return `SELECT * FROM usuarios WHERE email = "${email}" AND contrasena = "${password}" `
 }
 query.obtenerEscritorio=function(person){
-    return (`SELECT    usuarios.id,  
-    personas.nombre,
-    proyectos.id, 
-    practicas.nombre, 
-    rutas.nombre, 
-    alfas.nombre, 
-    alfas.estado, 
-    actividades.titulo ,
-    actividades.estado, 
-    actividades.fechaEntrega, 
-    actividades.horaEntrega
-
-FROM personas
-JOIN usuarios ON  personas.id = usuarios.persona
-JOIN integrantes ON usuarios.id = integrantes.usuario 
-JOIN proyectos ON  integrantes.id = proyectos.integrante
-JOIN practicas ON proyectos.practica = practicas.id 
-JOIN rutas ON practicas.ruta = rutas.id 
-JOIN actividades ON  rutas.actividad = actividades.id 
-JOIN alfas ON practicas.alfaUsada = alfas.id
-WHERE usuarios.id = "${person}"  GROUP BY proyectos.id ;`); 
+    return (`SELECT  
+    usuarios.nombre,
+    actividades.titulo,
+    actividades.descripcion,
+    actividades.estado,
+    actividades.fechaentrega
+    
+    FROM listaintegrantes
+    JOIN integrantes ON listaintegrantes.integrante=  integrantes.id  
+    JOIN usuarios ON integrantes.usuario = usuarios.id
+    JOIN listaactividades ON integrantes.id = listaactividades.integrante
+    JOIN actividades ON listaactividades.actividad = actividades.id
+    WHERE usuarios.id = ${person}`); 
 }
 query.obtenerProyecto= function(person){
     return (`SELECT proyectos.id,

@@ -116,9 +116,7 @@ CREATE TABLE tecnicas(
 id INT PRIMARY KEY AUTO_INCREMENT,
 titulo VARCHAR(500), 
 descripcion VARCHAR(1500),
-bibliografia VARCHAR(1500),
-herramientametodologia INT,
-FOREIGN KEY(herramientametodologia) REFERENCES herramientasmetodologia(id));
+bibliografia VARCHAR(1500));
 
 CREATE TABLE actividades(
 id INT PRIMARY KEY AUTO_INCREMENT,
@@ -151,7 +149,7 @@ CREATE TABLE roles(
 id int PRIMARY KEY AUTO_INCREMENT, 
 titulo VARCHAR(100), 
 descripcion VARCHAR(500), 
-perfilRecomencado VARCHAR(1500));
+perfilRecomendado VARCHAR(1500));
 
 CREATE TABLE listaroles(
 practica INT, 
@@ -242,7 +240,6 @@ descripcion VARCHAR(1350),
 estado VARCHAR(150), 
 icon VARCHAR(1000), 
 banner VARCHAR(1000), 
-listaintegrante INT , 
 historia INT, 
 metodologia INT,
 FOREIGN KEY(historia) REFERENCES HISTORIALES(id),
@@ -274,21 +271,19 @@ FOREIGN KEY(evento) REFERENCES eventos(id),
 FOREIGN KEY(entregable) REFERENCES entregables(id) ); 
 
 CREATE TABLE listaeventos(
-historial INTproyectoweb,
+historial INT,
 evento INT,
+integrante INT, 
 FOREIGN KEY(historial) REFERENCES historiales(id),
-FOREIGN KEY(evento) REFERENCES eventos(id)
+FOREIGN KEY(evento) REFERENCES eventos(id),
+FOREIGN KEY(integrante) REFERENCES integrantes(id)
 );
 
 
 CREATE TABLE listaintegrantes(
-reunion INT,
-proyecto INT,
-entrega INT,  
+proyecto INT,  
 integrante INT,
-FOREIGN KEY(reunion) REFERENCES reuniones(id),
 FOREIGN KEY(proyecto) REFERENCES proyectos(id),
-FOREIGN KEY(entrega) REFERENCES entregas(id),
 FOREIGN KEY(integrante) REFERENCES integrantes(id));
 -- fin de la seccion de la metodologia
 
