@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const mariaDB = require('../database');
+const promesa = require('../database');
 const Query = require('./querys'); 
 const LLAVE = 'misecretos';
 
@@ -31,30 +31,47 @@ funcionesDB.obtenerToken = async (body, res) => {
     const { email, password } = body;
    
     if(email !== undefined && password !== undefined){
-      
-        await mariaDB.query( Query.login(body) , (err, rows, fields) => {
-    
-            if (!err) {
-               // console.log(rows);
-                if (rows[0] == null || rows.length == 0) {
-                    console.log("error en los datos ")
-                    res.json({ respuesta: "no encontrado" });
-                } else {
-                    //console.log(rows); 
-                    const token = jwt.sign({ rows }, LLAVE);
-                    //  console.log("token enviado");           
-                    res.json({ token });    
-                }
-            } else {
-                res.json({ respuesta: "Base de datos dañada" });
+        promesa.then(async (result)=>{
+            const {mariaDB,sqlite,vDB} = result; 
+            //console.log(vDB); 
+            if(vDB){
+              await mariaDB.query( Query.login(body) , (err, rows, fields) => {
+          
+                  if (!err) {
+                     // console.log(rows);
+                      if (rows[0] == null || rows.length == 0) {
+                          console.log("error en los datos ")
+                          res.json({ respuesta: "no encontrado" });
+                      } else {
+                          //console.log(rows); 
+                          const token = jwt.sign({ rows }, LLAVE);
+                          //  console.log("token enviado");           
+                          res.json({ token });    
+                      }
+                  } 
+              });
+            }else{
+              //  console.log(sqlite); 
+              sqlite.all(Query.login(body), function(err, rows) {
+                  if(!err){
+                    // console.log(rows);
+                    if (rows[0] == null || rows.length == 0) {
+                        console.log("error en los datos ")
+                        res.json({ respuesta: "no encontrado" });
+                    } else {
+                        //console.log(rows); 
+                        const token = jwt.sign({ rows }, LLAVE);
+                        //  console.log("token enviado");           
+                        res.json({ token });    
+                    }
+                  }
+              });
             }
+        })
     
-        });
     }else{
         console.log('error datos indefinidos')
-    }
-    
-
+    }  
 
 }
 

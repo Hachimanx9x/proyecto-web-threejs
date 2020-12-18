@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="14.3.0">
-  <zoom_level>9</zoom_level>
+  <zoom_level>7</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>720</x>
-      <y>423</y>
-      <w>189</w>
-      <h>216</h>
+      <x>560</x>
+      <y>357</y>
+      <w>147</w>
+      <h>168</h>
     </coordinates>
     <panel_attributes>USUARIOS
 --
@@ -29,10 +29,10 @@ linkedin: cadena</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1062</x>
-      <y>729</y>
-      <w>189</w>
-      <h>162</h>
+      <x>826</x>
+      <y>595</y>
+      <w>147</w>
+      <h>126</h>
     </coordinates>
     <panel_attributes>Proyecto
 --
@@ -53,10 +53,10 @@ historial: llaveforanea
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1413</x>
-      <y>288</y>
-      <w>189</w>
-      <h>126</h>
+      <x>1099</x>
+      <y>252</y>
+      <w>147</w>
+      <h>98</h>
     </coordinates>
     <panel_attributes>PRACTICAS
 --
@@ -69,10 +69,10 @@ Descripcion:cadena
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1080</x>
-      <y>333</y>
-      <w>189</w>
-      <h>99</h>
+      <x>840</x>
+      <y>287</y>
+      <w>147</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>METODOLOGIAS
 --
@@ -86,10 +86,10 @@ consejo:cadena
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>801</x>
-      <y>315</y>
-      <w>72</w>
-      <h>126</h>
+      <x>623</x>
+      <y>273</y>
+      <w>56</w>
+      <h>98</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -100,10 +100,10 @@ tiene &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1260</x>
-      <y>234</y>
-      <w>171</w>
-      <h>126</h>
+      <x>980</x>
+      <y>210</y>
+      <w>133</w>
+      <h>98</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -114,10 +114,10 @@ tiene &gt;</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1413</x>
-      <y>540</y>
-      <w>189</w>
-      <h>99</h>
+      <x>1099</x>
+      <y>448</y>
+      <w>147</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>ALFAS
 --
@@ -131,10 +131,10 @@ estado:cadena
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2043</x>
-      <y>135</y>
-      <w>216</w>
-      <h>117</h>
+      <x>1589</x>
+      <y>133</y>
+      <w>168</w>
+      <h>91</h>
     </coordinates>
     <panel_attributes>TECNICAS
 --
@@ -149,10 +149,10 @@ bibliografia: cadena
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2025</x>
-      <y>531</y>
-      <w>153</w>
-      <h>90</h>
+      <x>1575</x>
+      <y>441</y>
+      <w>119</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>LISTACONTENIDO
 --
@@ -164,10 +164,10 @@ contenido: llave foranea
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1719</x>
-      <y>513</y>
-      <w>189</w>
-      <h>171</h>
+      <x>1337</x>
+      <y>427</y>
+      <w>147</w>
+      <h>133</h>
     </coordinates>
     <panel_attributes>ENTREGABLES
 --
@@ -187,10 +187,10 @@ numero de revisiones: entero
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1701</x>
-      <y>387</y>
-      <w>225</w>
-      <h>117</h>
+      <x>1323</x>
+      <y>329</y>
+      <w>175</w>
+      <h>91</h>
     </coordinates>
     <panel_attributes>ROLES
 --
@@ -205,10 +205,10 @@ perfil recomendado: cadena
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1593</x>
-      <y>576</y>
-      <w>144</w>
-      <h>180</h>
+      <x>1239</x>
+      <y>476</y>
+      <w>112</w>
+      <h>140</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -219,10 +219,10 @@ tiene &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1899</x>
-      <y>567</y>
-      <w>144</w>
-      <h>45</h>
+      <x>1477</x>
+      <y>469</y>
+      <w>112</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -233,10 +233,10 @@ tiene &gt;</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1422</x>
+      <x>1106</x>
       <y>126</y>
-      <w>189</w>
-      <h>99</h>
+      <w>147</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>RUTAS
 --
@@ -251,10 +251,10 @@ bg=red
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1728</x>
-      <y>108</y>
-      <w>189</w>
-      <h>153</h>
+      <x>1344</x>
+      <y>112</y>
+      <w>147</w>
+      <h>119</h>
     </coordinates>
     <panel_attributes>ACTIVIDADES
 --
@@ -271,10 +271,10 @@ tenica: llave foranea</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1260</x>
-      <y>162</y>
-      <w>279</w>
-      <h>144</h>
+      <x>980</x>
+      <y>154</y>
+      <w>217</w>
+      <h>112</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -285,10 +285,10 @@ tiene &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1593</x>
-      <y>306</y>
-      <w>162</w>
-      <h>72</h>
+      <x>1239</x>
+      <y>266</y>
+      <w>126</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -299,10 +299,10 @@ tiene &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1602</x>
-      <y>153</y>
-      <w>144</w>
-      <h>45</h>
+      <x>1246</x>
+      <y>147</y>
+      <w>112</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -313,10 +313,10 @@ tiene &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1908</x>
-      <y>171</y>
-      <w>153</w>
-      <h>45</h>
+      <x>1484</x>
+      <y>161</y>
+      <w>119</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -327,10 +327,10 @@ tiene &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1818</x>
-      <y>675</y>
-      <w>423</w>
-      <h>117</h>
+      <x>1414</x>
+      <y>553</y>
+      <w>329</w>
+      <h>91</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -341,10 +341,10 @@ m2=0..1
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>171</x>
-      <y>450</y>
-      <w>153</w>
-      <h>90</h>
+      <x>133</x>
+      <y>378</y>
+      <w>119</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>CONTACTOS
 --
@@ -356,10 +356,10 @@ preferencia: bool</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>333</x>
-      <y>621</y>
-      <w>198</w>
-      <h>99</h>
+      <x>259</x>
+      <y>511</y>
+      <w>154</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>LISTAHABILIDADES
 --
@@ -373,10 +373,10 @@ habilidad: llave forane
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>135</x>
-      <y>837</y>
-      <w>189</w>
-      <h>135</h>
+      <x>105</x>
+      <y>679</y>
+      <w>147</w>
+      <h>105</h>
     </coordinates>
     <panel_attributes>HERRAMIENTAS
 --
@@ -390,10 +390,10 @@ nombreIcono: cadena</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>729</x>
-      <y>756</y>
-      <w>189</w>
-      <h>90</h>
+      <x>567</x>
+      <y>616</y>
+      <w>147</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>INTEGRANTES
 --
@@ -407,10 +407,10 @@ rol:llave foranea
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>522</x>
-      <y>594</y>
-      <w>216</w>
-      <h>99</h>
+      <x>406</x>
+      <y>490</y>
+      <w>168</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -421,10 +421,10 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1152</x>
-      <y>423</y>
-      <w>72</w>
-      <h>324</h>
+      <x>896</x>
+      <y>357</y>
+      <w>56</w>
+      <h>252</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1..n
@@ -435,10 +435,10 @@ tiene &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>999</x>
-      <y>792</y>
-      <w>81</w>
-      <h>144</h>
+      <x>777</x>
+      <y>644</y>
+      <w>63</w>
+      <h>112</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -449,10 +449,10 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>792</x>
-      <y>630</y>
-      <w>72</w>
-      <h>144</h>
+      <x>616</x>
+      <y>518</y>
+      <w>56</w>
+      <h>112</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -463,10 +463,10 @@ tiene &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>873</x>
-      <y>459</y>
-      <w>846</w>
-      <h>315</h>
+      <x>679</x>
+      <y>385</y>
+      <w>658</w>
+      <h>245</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -477,10 +477,10 @@ tiene &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>855</x>
-      <y>36</y>
-      <w>639</w>
-      <h>738</h>
+      <x>665</x>
+      <y>56</y>
+      <w>497</w>
+      <h>574</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -491,10 +491,10 @@ tiene &gt;</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2079</x>
-      <y>774</y>
-      <w>198</w>
-      <h>126</h>
+      <x>1617</x>
+      <y>630</y>
+      <w>154</w>
+      <h>98</h>
     </coordinates>
     <panel_attributes>ENTREGAS
 --
@@ -513,10 +513,10 @@ entregable:llave foranea
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1062</x>
-      <y>1026</y>
-      <w>189</w>
-      <h>72</h>
+      <x>826</x>
+      <y>826</y>
+      <w>147</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>HISTORIALES
 --
@@ -530,10 +530,10 @@ descripcion:cadena
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1143</x>
-      <y>882</y>
-      <w>72</w>
-      <h>162</h>
+      <x>889</x>
+      <y>714</y>
+      <w>56</w>
+      <h>126</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -544,10 +544,10 @@ tiene &gt;</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1692</x>
-      <y>738</y>
-      <w>198</w>
-      <h>126</h>
+      <x>1316</x>
+      <y>602</y>
+      <w>154</w>
+      <h>98</h>
     </coordinates>
     <panel_attributes>REUNIONES
 --
@@ -567,10 +567,10 @@ vigencia : bool
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1566</x>
-      <y>891</y>
-      <w>144</w>
-      <h>72</h>
+      <x>1218</x>
+      <y>721</y>
+      <w>112</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -581,10 +581,10 @@ tiene &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1512</x>
-      <y>954</y>
-      <w>297</w>
-      <h>126</h>
+      <x>1176</x>
+      <y>770</y>
+      <w>231</w>
+      <h>98</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -595,10 +595,10 @@ tiene &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1908</x>
-      <y>225</y>
-      <w>387</w>
-      <h>567</h>
+      <x>1484</x>
+      <y>203</y>
+      <w>301</w>
+      <h>441</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -609,10 +609,10 @@ m2=1
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>2304</x>
-      <y>648</y>
-      <w>162</w>
-      <h>63</h>
+      <x>1792</x>
+      <y>532</y>
+      <w>126</w>
+      <h>49</h>
     </coordinates>
     <panel_attributes>Se suben los entregables
 para que se puegan 
@@ -624,10 +624,10 @@ bg=blue</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1386</x>
-      <y>864</y>
-      <w>189</w>
-      <h>99</h>
+      <x>1078</x>
+      <y>700</y>
+      <w>147</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>EVENTOS
 --
@@ -638,10 +638,10 @@ fechacreacion: fecha</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1233</x>
-      <y>1413</y>
-      <w>198</w>
-      <h>90</h>
+      <x>959</x>
+      <y>1127</y>
+      <w>154</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>CHATS
 --
@@ -656,10 +656,10 @@ fecha:fecha
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1215</x>
-      <y>1089</y>
-      <w>144</w>
-      <h>207</h>
+      <x>945</x>
+      <y>875</y>
+      <w>112</w>
+      <h>161</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -670,10 +670,10 @@ tiene &gt;</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2295</x>
-      <y>243</y>
-      <w>225</w>
-      <h>108</h>
+      <x>1785</x>
+      <y>217</y>
+      <w>175</w>
+      <h>84</h>
     </coordinates>
     <panel_attributes>HERRAMIENTASMETODOLOGIA
 --
@@ -687,10 +687,10 @@ bibliografia: cadena
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>720</x>
-      <y>252</y>
-      <w>180</w>
-      <h>72</h>
+      <x>560</x>
+      <y>224</y>
+      <w>140</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>ListaIDiomas
 --
@@ -701,10 +701,10 @@ idioma: llave foranea</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>756</x>
-      <y>90</y>
-      <w>117</w>
-      <h>81</h>
+      <x>588</x>
+      <y>98</y>
+      <w>91</w>
+      <h>63</h>
     </coordinates>
     <panel_attributes>IDIOMAS
 --
@@ -717,10 +717,10 @@ Nivel: cadena
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>801</x>
-      <y>162</y>
-      <w>72</w>
-      <h>108</h>
+      <x>623</x>
+      <y>154</y>
+      <w>56</w>
+      <h>84</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -731,10 +731,10 @@ sabe &gt;</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>981</x>
-      <y>441</y>
-      <w>162</w>
-      <h>63</h>
+      <x>763</x>
+      <y>371</y>
+      <w>126</w>
+      <h>49</h>
     </coordinates>
     <panel_attributes>todos los proyectos
 usan la misma metodologia
@@ -745,9 +745,9 @@ bg=blue</panel_attributes>
     <id>UMLNote</id>
     <coordinates>
       <x>0</x>
-      <y>738</y>
-      <w>243</w>
-      <h>63</h>
+      <y>602</y>
+      <w>189</w>
+      <h>49</h>
     </coordinates>
     <panel_attributes>tipo de habilidad = desarrollador web
 descripcion= e trabajdo en el area de ui
@@ -759,10 +759,10 @@ bg=blue</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>468</x>
-      <y>837</y>
-      <w>207</w>
-      <h>72</h>
+      <x>364</x>
+      <y>679</y>
+      <w>161</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>LISTAHERRAMIENTAS
 --
@@ -773,10 +773,10 @@ herramienta usada: llave foranea</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>621</x>
-      <y>630</y>
-      <w>153</w>
-      <h>225</h>
+      <x>483</x>
+      <y>518</y>
+      <w>119</w>
+      <h>175</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -787,10 +787,10 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>315</x>
-      <y>828</y>
-      <w>171</w>
-      <h>45</h>
+      <x>245</x>
+      <y>672</y>
+      <w>133</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -801,10 +801,10 @@ m2=1..n
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2007</x>
-      <y>414</y>
-      <w>252</w>
-      <h>63</h>
+      <x>1561</x>
+      <y>350</y>
+      <w>196</w>
+      <h>49</h>
     </coordinates>
     <panel_attributes>LISTAHERRAMIENTASMETODOSLOGIA
 --
@@ -815,10 +815,10 @@ herramientametodologia: llave foranea</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1899</x>
-      <y>441</y>
-      <w>126</w>
-      <h>117</h>
+      <x>1477</x>
+      <y>371</y>
+      <w>98</w>
+      <h>91</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -829,10 +829,10 @@ tiene &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2250</x>
-      <y>342</y>
-      <w>162</w>
-      <h>144</h>
+      <x>1750</x>
+      <y>294</y>
+      <w>126</w>
+      <h>112</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -843,10 +843,10 @@ tiene &gt;</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1413</x>
-      <y>702</y>
-      <w>189</w>
-      <h>54</h>
+      <x>1099</x>
+      <y>574</y>
+      <w>147</w>
+      <h>42</h>
     </coordinates>
     <panel_attributes>LISTAENTREGABLES
 --
@@ -857,10 +857,10 @@ entregable: llave foranea</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1494</x>
-      <y>630</y>
-      <w>72</w>
-      <h>90</h>
+      <x>1162</x>
+      <y>518</y>
+      <w>56</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -871,10 +871,10 @@ tiene &gt;</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1413</x>
-      <y>441</y>
-      <w>189</w>
-      <h>54</h>
+      <x>1099</x>
+      <y>371</y>
+      <w>147</w>
+      <h>42</h>
     </coordinates>
     <panel_attributes>LISTAALFAS
 --
@@ -885,10 +885,10 @@ alfa: llave foranea</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1368</x>
-      <y>468</y>
-      <w>81</w>
-      <h>126</h>
+      <x>1064</x>
+      <y>392</y>
+      <w>63</w>
+      <h>98</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -899,10 +899,10 @@ tiene &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1593</x>
-      <y>396</y>
-      <w>99</w>
-      <h>90</h>
+      <x>1239</x>
+      <y>336</y>
+      <w>77</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -913,10 +913,10 @@ tiene &gt;</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>891</x>
-      <y>918</y>
-      <w>189</w>
-      <h>90</h>
+      <x>693</x>
+      <y>742</y>
+      <w>147</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>LISTAINTEGRANTES
 --
@@ -927,10 +927,10 @@ integrante: llave foranea</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>909</x>
-      <y>792</y>
-      <w>117</w>
-      <h>144</h>
+      <x>707</x>
+      <y>644</y>
+      <w>91</w>
+      <h>112</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -941,10 +941,10 @@ m2=1..n
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1296</x>
-      <y>1080</y>
-      <w>189</w>
-      <h>72</h>
+      <x>1008</x>
+      <y>868</y>
+      <w>147</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>LISTAEVENTOS
 --
@@ -956,10 +956,10 @@ integrante: llave foranea</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1440</x>
-      <y>954</y>
-      <w>72</w>
-      <h>144</h>
+      <x>1120</x>
+      <y>770</y>
+      <w>56</w>
+      <h>112</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -970,10 +970,10 @@ tiene &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1323</x>
-      <y>1332</y>
-      <w>72</w>
-      <h>99</h>
+      <x>1029</x>
+      <y>1064</y>
+      <w>56</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -984,10 +984,10 @@ tiene &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1242</x>
-      <y>1035</y>
-      <w>180</w>
-      <h>63</h>
+      <x>966</x>
+      <y>833</y>
+      <w>140</w>
+      <h>49</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -998,10 +998,10 @@ tiene &gt;</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1683</x>
-      <y>1062</y>
-      <w>189</w>
-      <h>63</h>
+      <x>1309</x>
+      <y>854</y>
+      <w>147</w>
+      <h>49</h>
     </coordinates>
     <panel_attributes>LISTAENTREGAS
 --
@@ -1012,10 +1012,10 @@ entrega: llave foranea</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1692</x>
-      <y>918</y>
-      <w>189</w>
-      <h>63</h>
+      <x>1316</x>
+      <y>742</y>
+      <w>147</w>
+      <h>49</h>
     </coordinates>
     <panel_attributes>LISTAREUNIONES
 --
@@ -1026,10 +1026,10 @@ reunion:llave foranea</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1863</x>
-      <y>855</y>
-      <w>234</w>
-      <h>252</h>
+      <x>1449</x>
+      <y>693</y>
+      <w>182</w>
+      <h>196</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -1040,10 +1040,10 @@ tiene &gt;</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1242</x>
-      <y>1278</y>
-      <w>189</w>
-      <h>63</h>
+      <x>966</x>
+      <y>1022</y>
+      <w>147</w>
+      <h>49</h>
     </coordinates>
     <panel_attributes>LISTACHATS
 --
@@ -1054,10 +1054,10 @@ chat: llave foranea</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1080</x>
-      <y>207</y>
-      <w>189</w>
-      <h>63</h>
+      <x>840</x>
+      <y>189</y>
+      <w>147</w>
+      <h>49</h>
     </coordinates>
     <panel_attributes>LISTAPRACTICAS
 --
@@ -1068,10 +1068,10 @@ pratica:llave foranea</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1161</x>
-      <y>261</y>
-      <w>72</w>
-      <h>90</h>
+      <x>903</x>
+      <y>231</y>
+      <w>56</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -1082,10 +1082,10 @@ tiene &gt;</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1080</x>
-      <y>117</y>
-      <w>189</w>
-      <h>63</h>
+      <x>840</x>
+      <y>119</y>
+      <w>147</w>
+      <h>49</h>
     </coordinates>
     <panel_attributes>LISTARUTAS
 --
@@ -1097,10 +1097,10 @@ bg=red</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1260</x>
-      <y>117</y>
-      <w>180</w>
-      <h>45</h>
+      <x>980</x>
+      <y>119</y>
+      <w>140</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -1111,10 +1111,10 @@ tiene &gt;</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>1899</x>
-      <y>99</y>
-      <w>126</w>
-      <h>63</h>
+      <x>1477</x>
+      <y>105</y>
+      <w>98</w>
+      <h>49</h>
     </coordinates>
     <panel_attributes>cada actividad tiene 
 su tecnicas asociadas
@@ -1124,10 +1124,10 @@ bg=blue</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1737</x>
-      <y>297</y>
-      <w>189</w>
-      <h>63</h>
+      <x>1351</x>
+      <y>259</y>
+      <w>147</w>
+      <h>49</h>
     </coordinates>
     <panel_attributes>LISTAROLES
 --
@@ -1138,10 +1138,10 @@ rol: llave foranea</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1917</x>
-      <y>324</y>
-      <w>108</w>
-      <h>135</h>
+      <x>1491</x>
+      <y>280</y>
+      <w>84</w>
+      <h>105</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -1152,10 +1152,10 @@ tiene &gt;</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2313</x>
-      <y>531</y>
-      <w>135</w>
-      <h>90</h>
+      <x>1799</x>
+      <y>441</y>
+      <w>105</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>CONTENIDO
 --
@@ -1169,10 +1169,10 @@ bibliografia: cadena
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2169</x>
-      <y>576</y>
-      <w>162</w>
-      <h>45</h>
+      <x>1687</x>
+      <y>476</y>
+      <w>126</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -1183,10 +1183,10 @@ tiene &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1872</x>
-      <y>819</y>
-      <w>99</w>
-      <h>144</h>
+      <x>1456</x>
+      <y>665</y>
+      <w>77</w>
+      <h>112</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1..n
@@ -1197,10 +1197,10 @@ m2=1
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>45</x>
-      <y>0</y>
-      <w>270</w>
-      <h>360</h>
+      <x>35</x>
+      <y>28</y>
+      <w>210</w>
+      <h>280</h>
     </coordinates>
     <panel_attributes>Notas generales
 
@@ -1229,10 +1229,10 @@ bg=blue</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>9</x>
-      <y>621</y>
-      <w>198</w>
-      <h>99</h>
+      <x>7</x>
+      <y>511</y>
+      <w>154</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>HABILIDADES
 --
@@ -1247,10 +1247,10 @@ nivel: cadena
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>198</x>
-      <y>648</y>
-      <w>153</w>
-      <h>45</h>
+      <x>154</x>
+      <y>532</y>
+      <w>119</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1..n
@@ -1261,10 +1261,10 @@ m2=1
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1476</x>
-      <y>9</y>
-      <w>189</w>
-      <h>63</h>
+      <x>1148</x>
+      <y>35</y>
+      <w>147</w>
+      <h>49</h>
     </coordinates>
     <panel_attributes>LISTAACTIVIDADES
 --
@@ -1275,10 +1275,10 @@ actividad: llave foranea</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1656</x>
-      <y>27</y>
-      <w>180</w>
-      <h>99</h>
+      <x>1288</x>
+      <y>49</y>
+      <w>140</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -1289,10 +1289,10 @@ tiene &gt;</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>1890</x>
-      <y>621</y>
-      <w>135</w>
-      <h>63</h>
+      <x>1470</x>
+      <y>511</y>
+      <w>105</w>
+      <h>49</h>
     </coordinates>
     <panel_attributes>tipo de archivo
 es lo que se
@@ -1304,10 +1304,10 @@ bg=blue</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>2277</x>
-      <y>801</y>
-      <w>180</w>
-      <h>153</h>
+      <x>1771</x>
+      <y>651</y>
+      <w>140</w>
+      <h>119</h>
     </coordinates>
     <panel_attributes>lo que manda
 el usuario
@@ -1325,10 +1325,10 @@ bg=blue</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>1710</x>
-      <y>666</y>
-      <w>99</w>
-      <h>36</h>
+      <x>1330</x>
+      <y>546</y>
+      <w>77</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lo que debe 
 entregar
@@ -1338,10 +1338,10 @@ bg=blue</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>441</x>
-      <y>450</y>
-      <w>153</w>
-      <h>90</h>
+      <x>343</x>
+      <y>378</y>
+      <w>119</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>LISTACONTACTOS
 --
@@ -1353,10 +1353,10 @@ contacto: llave foranea
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>585</x>
-      <y>486</y>
-      <w>153</w>
-      <h>45</h>
+      <x>455</x>
+      <y>406</y>
+      <w>119</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -1367,10 +1367,10 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>315</x>
-      <y>477</y>
-      <w>144</w>
-      <h>45</h>
+      <x>245</x>
+      <y>399</y>
+      <w>112</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1..n
@@ -1381,10 +1381,10 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>243</x>
-      <y>369</y>
-      <w>531</w>
-      <h>99</h>
+      <x>189</x>
+      <y>315</y>
+      <w>413</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -1395,10 +1395,10 @@ es &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>828</x>
-      <y>837</y>
-      <w>648</w>
-      <h>360</h>
+      <x>644</x>
+      <y>679</y>
+      <w>504</w>
+      <h>280</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=0..n
@@ -1409,10 +1409,10 @@ teaches to &gt;</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>342</x>
-      <y>0</y>
-      <w>180</w>
-      <h>351</h>
+      <x>266</x>
+      <y>28</y>
+      <w>140</w>
+      <h>273</h>
     </coordinates>
     <panel_attributes>lo que esta en esta en rojo
 no es util

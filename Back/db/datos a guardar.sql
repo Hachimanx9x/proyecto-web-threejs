@@ -1,4 +1,4 @@
-USE proyectoweb;
+-- USE proyectoweb;
 
 INSERT INTO IDIOMAS (nombre, nivel) VALUES ("Ingles","A1 Beginner");
 INSERT INTO IDIOMAS (nombre, nivel) VALUES ("Ingles","A2 Elementary");
