@@ -1,28 +1,31 @@
+
+-- Sector de los usuarios
 CREATE TABLE idiomas(
 id INTEGER PRIMARY KEY AUTOINCREMENT, 
-nombre VARCHAR(35), 
-nivel VARCHAR(150));
+idiomanombre VARCHAR(35), 
+idiomanivel VARCHAR(150));
 
 
 CREATE TABLE habilidades(
 id INTEGER PRIMARY KEY AUTOINCREMENT, 
-tipo varchar(40), 
-descripcion varchar(40), 
-nivel varchar(20)); 
+habilidadtipo varchar(40), 
+habilidaddescripcion varchar(40), 
+habilidadnivel varchar(20)); 
 
 
 CREATE TABLE herramientas(
 id INTEGER PRIMARY KEY AUTOINCREMENT, 
-nombre VARCHAR(120), 
-tipo VARCHAR(100), 
-descripcion varchar(1000), 
-nombreIcono VARCHAR(75));
+herramientanombre VARCHAR(120), 
+herramientatipo VARCHAR(100), 
+herramientadescripcion varchar(1000), 
+herramientanombreIcono VARCHAR(75));
 
 
 CREATE TABLE usuarios(
 id INTEGER PRIMARY KEY AUTOINCREMENT,
 email VARCHAR(250),
 contrasena VARCHAR(15),
+fotoperfil VARCHAR(100), 
 nombrearchivohojadevida VARCHAR(150),
 anosdeexperiencia INTEGER,
 nombre VARCHAR(230),
@@ -35,6 +38,12 @@ bitbucket VARCHAR(130),
 linkedin VARCHAR(130)
 );
 
+CREATE TABLE palabrasclave (
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+pcusuario INTEGER,
+palabra VARCHAR(150),
+FOREIGN KEY(pcusuario) REFERENCES usuarios(id)
+); 
 CREATE TABLE listaidiomas (
 usuario INTEGER,
 idioma INTEGER ,
@@ -44,9 +53,9 @@ FOREIGN KEY(idioma) REFERENCES idiomas(id));
 
 CREATE TABLE contactos(
 id INTEGER PRIMARY KEY AUTOINCREMENT, 
-usuario INTEGER,
+contactousuario INTEGER,
 preferencias BOOLEAN, 
-FOREIGN KEY(usuario) REFERENCES usuarios(id));
+FOREIGN KEY(contactousuario) REFERENCES usuarios(id));
 
 CREATE TABLE listacontactos(
 usuario INTEGER ,
@@ -74,14 +83,14 @@ FOREIGN KEY(herramientausada) REFERENCES herramientas(id));
 
 CREATE TABLE metodologias(
 id INTEGER PRIMARY KEY AUTOINCREMENT, 
-nombre VARCHAR(500), 
-descripcion VARCHAR(1500),
-consejo VARCHAR(500));
+metodologianombre VARCHAR(500), 
+metodologiadescripcion VARCHAR(1500),
+metodologiaconsejo VARCHAR(500));
 
 CREATE TABLE practicas (
 id INTEGER PRIMARY KEY AUTOINCREMENT, 
-nombre VARCHAR(500),
-descripcion VARCHAR(2000));
+practicanombre VARCHAR(500),
+practicadescripcion VARCHAR(2000));
 
 CREATE TABLE listapracticas(
 metodologia INTEGER,  
@@ -91,9 +100,9 @@ FOREIGN KEY(practica) REFERENCES practicas(id));
 
 CREATE TABLE alfas (
 id INTEGER PRIMARY KEY AUTOINCREMENT,
-nombre VARCHAR(300),
-descripcion VARCHAR(1500),
-estado VARCHAR(35));
+alfanombre VARCHAR(300),
+alfadescripcion VARCHAR(1500),
+alfaestado VARCHAR(35));
 
 
 CREATE TABLE listaalfas(
@@ -111,45 +120,45 @@ bibliografia VARCHAR(150));
 
 CREATE TABLE tecnicas(
 id INTEGER PRIMARY KEY AUTOINCREMENT,
-titulo VARCHAR(500), 
-descripcion VARCHAR(1500),
-bibliografia VARCHAR(1500));
+tecnicatitulo VARCHAR(500), 
+tecnicadescripcion VARCHAR(1500),
+tecnicabibliografia VARCHAR(1500));
 
 CREATE TABLE actividades(
 id INTEGER PRIMARY KEY AUTOINCREMENT,
-titulo VARCHAR(1000),
-estado VARCHAR(300),
-descripcion VARCHAR(1200),
-fechacreacion DATE,
-fechaentrega DATE,
-revision INTEGER,
+actividadtitulo VARCHAR(1000),
+actividadestado VARCHAR(300),
+actividaddescripcion VARCHAR(1200),
+actividadfechacreacion DATE,
+actividadfechaentrega DATE,
+actividadrevision INTEGER,
 tecnica INTEGER,
 FOREIGN KEY(tecnica) REFERENCES tecnicas(id)
 );
 
 
-CREATE TABLE rutas(
-id INTEGER PRIMARY KEY AUTOINCREMENT, 
-nombre varchar(20), 
-descripcion varchar(100), 
-actividad INTEGER,
-FOREIGN KEY(actividad) REFERENCES ACTIVIDADES(id));
-
-CREATE TABLE listarutas(
-practica INTEGER,
-ruta INTEGER,
-FOREIGN KEY(practica) REFERENCES practicas(id),
-FOREIGN KEY(ruta) REFERENCES rutas(id)
-);
-
+-- CREATE TABLE rutas(
+-- id INTEGER PRIMARY KEY AUTOINCREMENT, 
+-- nombre varchar(20), 
+-- descripcion varchar(100), 
+-- actividad INTEGER, 
+-- FOREIGN KEY(actividad) REFERENCES ACTIVIDADES(id));
+-- 
+-- CREATE TABLE listarutas(
+-- practica INTEGER,
+-- ruta INTEGER,
+-- FOREIGN KEY(practica) REFERENCES practicas(id),
+-- FOREIGN KEY(ruta) REFERENCES rutas(id)
+-- );
+-- 
 CREATE TABLE roles(
 id INTEGER PRIMARY KEY AUTOINCREMENT, 
-titulo VARCHAR(100), 
-descripcion VARCHAR(500), 
-perfilRecomendado VARCHAR(1500));
+roltitulo VARCHAR(100), 
+roldescripcion VARCHAR(500), 
+rolperfilRecomendado VARCHAR(1500));
 
 CREATE TABLE listaroles(
-practica INTEGER,
+practica INTEGER, 
 rol INTEGER,
 FOREIGN KEY(practica) REFERENCES practicas(id),
 FOREIGN KEY(rol) REFERENCES roles(id)
@@ -157,12 +166,13 @@ FOREIGN KEY(rol) REFERENCES roles(id)
 
 CREATE TABLE integrantes(
 id INTEGER PRIMARY KEY AUTOINCREMENT, 
-usuario varchar(50), 
+usuario INTEGER, 
 rol INTEGER,
-FOREIGN KEY(rol) REFERENCES ROLES(id));
+FOREIGN KEY(rol) REFERENCES ROLES(id),
+FOREIGN KEY(usuario) REFERENCES usuarios(id));
 
 CREATE TABLE listaactividades(
-integrante INTEGER,
+integrante INTEGER, 
 actividad INTEGER,
 FOREIGN KEY(integrante) references integrantes(id),
 FOREIGN KEY(actividad) references actividades(id)
@@ -170,19 +180,19 @@ FOREIGN KEY(actividad) references actividades(id)
 
 CREATE TABLE contenidos(
 id INTEGER primary key AUTOINCREMENT, 
-nombre VARCHAR(250),
-nombrearchivo VARCHAR(500), 
-descripcion varchar(200), 
-bibliografica VARCHAR(1500));
+contenidonombre VARCHAR(250),
+contenidonombrearchivo VARCHAR(500), 
+contenidodescripcion varchar(200), 
+contenidobibliografica VARCHAR(1500));
 
 CREATE TABLE entregables(
 id INTEGER PRIMARY KEY AUTOINCREMENT, 
-titulo VARCHAR(200), 
-descripcion VARCHAR(1000), 
-estado varchar(20),
-tipoArchivo varchar(20), 
-fechaEntrega DATE, 
-numeroRevisiones INTEGER );
+entregatitulo VARCHAR(200), 
+entregadescripcion VARCHAR(1000), 
+entregaestado varchar(20),
+entregatipoArchivo varchar(20), 
+entregafechaEntrega DATE, 
+entreganumeroRevisiones INTEGER );
 
 CREATE TABLE listaentregables(
 alfa INTEGER,
@@ -204,9 +214,9 @@ FOREIGN KEY(contenido) REFERENCES contenidos(id));
 
 CREATE TABLE entregas(
 id INTEGER PRIMARY KEY AUTOINCREMENT, 
-titulo VARCHAR(300),
-descripcion VARCHAR(1000),
-nombrearchivoguardado VARCHAR(300),
+entregastitulo VARCHAR(300),
+entregasdescripcion VARCHAR(1000),
+entregasnombrearchivoguardado VARCHAR(300),
 actividad INTEGER,
 entragable INTEGER ,
 FOREIGN KEY(actividad) REFERENCES actividades(id),
@@ -214,12 +224,12 @@ FOREIGN KEY(entragable) REFERENCES entregables(id));
 
 CREATE TABLE chats(
 id INTEGER PRIMARY KEY AUTOINCREMENT, 
-nombreArchivo VARCHAR(150), 
-fecha DATE);
+chatnombreArchivo VARCHAR(150), 
+chatfecha DATE);
 
 CREATE TABLE historiales(
 id INTEGER PRIMARY KEY AUTOINCREMENT, 
-descripcion VARCHAR(1000)
+historiadescripcion VARCHAR(1000)
 );
 
 
@@ -232,27 +242,27 @@ FOREIGN KEY(chat) REFERENCES chats(id)
 
 CREATE TABLE proyectos (
 id INTEGER PRIMARY KEY AUTOINCREMENT, 
-nombre VARCHAR(350), 
-descripcion VARCHAR(1350), 
-estado VARCHAR(150), 
-icon VARCHAR(1000), 
-banner VARCHAR(1000), 
-historia INTEGER,
+proyectonombre VARCHAR(350), 
+proyectodescripcion VARCHAR(1350), 
+proyectoestado VARCHAR(150), 
+proyectoicon VARCHAR(1000), 
+proyectobanner VARCHAR(1000), 
+historia INTEGER, 
 metodologia INTEGER,
 FOREIGN KEY(historia) REFERENCES HISTORIALES(id),
 FOREIGN KEY(metodologia) REFERENCES metodologias(id));
 
 CREATE TABLE eventos(
 id INTEGER PRIMARY KEY AUTOINCREMENT,  
-fechacreacion DATE);
+eventofechacreacion DATE);
 
 CREATE TABLE reuniones(
 id INTEGER PRIMARY KEY AUTOINCREMENT,
-titulo VARCHAR(500),
-fecha DATE,
-hora VARCHAR(15),
-durancion DOUBLE,
-descripcion VARCHAR(1000),
+reuniontitulo VARCHAR(500),
+reunionfecha DATE,
+reunionhora VARCHAR(15),
+reuniondurancion DOUBLE,
+reuniondescripcion VARCHAR(1000),
 vigente BOOL); 
 
 CREATE TABLE listareuniones(
@@ -270,7 +280,7 @@ FOREIGN KEY(entregable) REFERENCES entregables(id) );
 CREATE TABLE listaeventos(
 historial INTEGER,
 evento INTEGER,
-integrante INTEGER,
+integrante INTEGER, 
 FOREIGN KEY(historial) REFERENCES historiales(id),
 FOREIGN KEY(evento) REFERENCES eventos(id),
 FOREIGN KEY(integrante) REFERENCES integrantes(id)
@@ -278,7 +288,7 @@ FOREIGN KEY(integrante) REFERENCES integrantes(id)
 
 
 CREATE TABLE listaintegrantes(
-proyecto INTEGER, 
+proyecto INTEGER,  
 integrante INTEGER,
 FOREIGN KEY(proyecto) REFERENCES proyectos(id),
 FOREIGN KEY(integrante) REFERENCES integrantes(id));

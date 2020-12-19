@@ -1,4 +1,3 @@
-USE proyectoweb;
 
 INSERT INTO IDIOMAS (idiomanombre, idiomanivel) VALUES ("Ingles","A1 Beginner");
 INSERT INTO IDIOMAS (idiomanombre, idiomanivel) VALUES ("Ingles","A2 Elementary");
@@ -17,10 +16,10 @@ INSERT INTO IDIOMAS (idiomanombre, idiomanivel) VALUES ("Español","C2 Perfeccio
 INSERT INTO IDIOMAS (idiomanombre, idiomanivel) VALUES ("Español","nativo");
  SELECT * FROM idiomas ; 
 
-INSERT INTO usuarios (email, contrasena,fotoperfil, nombrearchivohojadevida, anosdeexperiencia, nombre, descripcion,pais ,edad, github, gitlab,bitbucket,linkedin)
-VALUES("micorreo2@uao.edu.co", "contraseña123","fotodefault1.jpg" ,"asdqdqsdwqds.txt", 0, "nestor ivan martinez marulanda", "Soy una persona que le gusta le modelo 3d la programacion y aprender cosas","Colombia", 21, "https://github.com/Accelx9", NULL,NULL,NULL);
-INSERT INTO usuarios (email, contrasena,fotoperfil, nombrearchivohojadevida, anosdeexperiencia, nombre, descripcion,pais ,edad, github, gitlab,bitbucket,linkedin)
-VALUES("micorreo@uao.edu.co", "contraseña123","fotodefault1.jpg", "asdqdqsdwqds.txt", 0, "diego fernando bolaños", "Soy una persona que le gusta la programacion y aprender cosas","Colombia", 26, "https://github.com/Hachimanx9x", NULL,NULL,NULL);
+INSERT INTO usuarios (email, contrasena, nombrearchivohojadevida, anosdeexperiencia, nombre, descripcion,pais ,edad, github, gitlab,bitbucket,linkedin)
+VALUES("micorreo2@uao.edu.co", "contraseña123", "asdqdqsdwqds.txt", 0, "nestor ivan martinez marulanda", "Soy una persona que le gusta le modelo 3d la programacion y aprender cosas","Colombia", 21, "https://github.com/Accelx9", NULL,NULL,NULL);
+INSERT INTO usuarios (email, contrasena, nombrearchivohojadevida, anosdeexperiencia, nombre, descripcion,pais ,edad, github, gitlab,bitbucket,linkedin)
+VALUES("micorreo@uao.edu.co", "contraseña123", "asdqdqsdwqds.txt", 0, "diego fernando bolaños", "Soy una persona que le gusta la programacion y aprender cosas","Colombia", 26, "https://github.com/Hachimanx9x", NULL,NULL,NULL);
 
 SELECT * FROM usuarios; 
 INSERT INTO palabrasclave (pcusuario, palabra) VALUES(1, "web develoment");

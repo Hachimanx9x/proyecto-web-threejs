@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const promesa = require('../database');
-const Query = require('./querys'); 
+const Query = require('./querys');
 const LLAVE = 'misecretos';
 
 const funcionesDB = () => {
@@ -29,69 +29,97 @@ funcionesDB.buscarLogin = async (body, res) => {
 
 funcionesDB.obtenerToken = async (body, res) => {
     const { email, password } = body;
-   
-    if(email !== undefined && password !== undefined){
-        promesa.then(async (result)=>{
-            const {mariaDB,sqlite,vDB} = result; 
+
+    if (email !== undefined && password !== undefined) {
+        promesa.then(async (result) => {
+            const { mariaDB, sqlite, vDB } = result;
             //console.log(vDB); 
-            if(vDB){
-              await mariaDB.query( Query.login(body) , (err, rows, fields) => {
-          
-                  if (!err) {
-                     // console.log(rows);
-                      if (rows[0] == null || rows.length == 0) {
-                          console.log("error en los datos ")
-                          res.json({ respuesta: "no encontrado" });
-                      } else {
-                          //console.log(rows); 
-                          const token = jwt.sign({ rows }, LLAVE);
-                          //  console.log("token enviado");           
-                          res.json({ token });    
-                      }
-                  } 
-              });
-            }else{
-              //  console.log(sqlite); 
-              sqlite.all(Query.login(body), function(err, rows) {
-                  if(!err){
-                    // console.log(rows);
-                    if (rows[0] == null || rows.length == 0) {
-                        console.log("error en los datos ")
-                        res.json({ respuesta: "no encontrado" });
-                    } else {
-                        //console.log(rows); 
-                        const token = jwt.sign({ rows }, LLAVE);
-                        //  console.log("token enviado");           
-                        res.json({ token });    
+            if (vDB) {
+                await mariaDB.query(Query.login(body), (err, rows, fields) => {
+
+                    if (!err) {
+                        // console.log(rows);
+                        if (rows[0] == null || rows.length == 0) {
+                            console.log("error en los datos ")
+                            res.json({ respuesta: "no encontrado" });
+                        } else {
+                            //console.log(rows); 
+                            const token = jwt.sign({ rows }, LLAVE);
+                            //  console.log("token enviado");           
+                            res.json({ token });
+                        }
                     }
-                  }
-              });
+                });
+            } else {
+                //  console.log(sqlite); 
+                sqlite.all(Query.login(body), function (err, rows) {
+                    if (!err) {
+                        // console.log(rows);
+                        if (rows[0] == null || rows.length == 0) {
+                            console.log("error en los datos ")
+                            res.json({ respuesta: "no encontrado" });
+                        } else {
+                            //console.log(rows); 
+                            const token = jwt.sign({ rows }, LLAVE);
+                            //  console.log("token enviado");           
+                            res.json({ token });
+                        }
+                    }
+                });
             }
         })
-    
-    }else{
+
+    } else {
         console.log('error datos indefinidos')
-    }  
+    }
 
 }
 
 funcionesDB.obtenerEscritorio = async (body, res) => {
-    const { persona } = body.rows[0];
-    if(persona !== undefined ){
-        await mariaDB.query(Query.obtenerEscritorio(persona), (err, rows, fields) => {
-            if (!err) {    
-                res.json({
-                    estado: "protegido",
-                    rows
+    const { id } = body.rows[0];
+    if (id !== undefined) {
+        promesa.then(async (result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                await mariaDB.query(Query.obtenerEscritorioActividades(id), async (err, rows) => {
+                    if (!err) {
+                        await mariaDB.query(Query.obtenerEscritorioProyectos(id), async (err2, rows2) => {
+                            if (!err2) {
+                                res.json({
+                                    actividades: rows,
+                                    proyectos: rows2
+
+                                });
+                            }
+                        })
+
+                    }
+
                 });
             } else {
-                res.json({estado : "vulnerado",
-            msj : "error interno no se como paso mis if"});
+                sqlite.all(Query.obtenerEscritorioActividades(id), (err, rows) => {
+                    if (!err) {
+                        sqlite.all(Query.obtenerEscritorioProyectos(id), (err2, rows2) => {
+                            if (!err2) {
+                                res.json({
+                                    actividades: rows,
+                                    proyectos: rows2
+
+                                });
+                            }
+                        });
+                    }
+                });
             }
-    
+
+
         });
-    }
-  
+
+
+
+
+    }//fin del if 
+
 
     // console.log(body.rows[0].persona);
 }
@@ -99,28 +127,63 @@ funcionesDB.obtenerEscritorio = async (body, res) => {
 
 funcionesDB.obtenerProyecto = async (body, res) => {
 
-    const { persona } = body.rows[0];
-    if(persona !== undefined ){
-        await mariaDB.query(Query.obtenerProyecto(persona) , (err, rows, fields) => {
+    const { id } = body.rows[0];
+    if (id !== undefined) {
+        promesa.then(async (result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                await mariaDB.query(Query.obtenerProyecto(id), (err, rows, fields) => {
 
-            if (!err) {
-                res.json({   estado: "protegido",    rows   });
-            } else {
-                res.json({estado : "vulnerado",
-                msj : "error interno no se como paso mis if"   });
-            }
-    
+                    if (!err) {
+                        res.json({ proyectos: rows });
+                    } else {
+                        res.json({
+                            estado: "vulnerado",
+                            msj: "error interno no se como paso mis if"
+                        });
+                    }
+                });
+            }else{
+                sqlite.all(Query.obtenerProyecto(id), (err, rows) => {
+                    if (!err) {
+                        res.json({ proyectos: rows });
+                    } else {
+                        res.json({
+                            estado: "vulnerado",
+                            msj: "error interno no se como paso mis if"
+                        });
+                    }
+                });
+            }           
         });
     }
-   
 }
 
-funcionesDB.buscarProyecto = async (id) => {
-    
-    if(id !== undefined || id !== ""){
-        await mariaDB.query(Query.buscarProyecto(id), (err, rows, fields) => {
-            if (!err) { return true; } else { return false; };
-        });
+funcionesDB.buscarProyecto = async (user,idp,res) => {
+
+    if (idp !== undefined || idp !== "") {
+        promesa.then(async (result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if(vDB){
+                await mariaDB.query(Query.buscarProyecto(idp), (err, rows) => {
+                    if (!err) {
+                         res.json({data:rows});  
+                        
+                        } 
+                });
+            }else{
+                sqlite.all(Query.obtenerProyecto( idp), (err, rows) => {
+                    if (!err) {
+                        res.json({ proyectos: rows });
+
+                    } 
+                });
+            }
+        }); 
+        
+
+
+
     }
 }
 
@@ -148,7 +211,7 @@ funcionesDB.searchFilesUserOne = async (iduser, res, array) => {
     });
 }
 
-funcionesDB.searchPeople = async (idUser, res)=>{
+funcionesDB.searchPeople = async (idUser, res) => {
     const QUERY = `SELECT    
     (@usid:=usuarios.id), 
     (@pername:=personas.nombre), 
@@ -164,16 +227,16 @@ funcionesDB.searchPeople = async (idUser, res)=>{
     JOIN herramientas ON habilidades.herramientaUsada = herramientas.id;`;
     await mariaDB.query(QUERY, (err, rows, fields) => {
         if (!err) {
-            console.log(rows); 
-            for (var i=0; i< rows.length ; i++){
-               // console.log(rows[i].id); 
-                if(rows[i].id== idUser){
-                    console.log("entro"); 
+            console.log(rows);
+            for (var i = 0; i < rows.length; i++) {
+                // console.log(rows[i].id); 
+                if (rows[i].id == idUser) {
+                    console.log("entro");
                     rows.splice(i, 1);
                 }
             }
-            
-            res.json({rows });
+
+            res.json({ rows });
 
         } else {
 

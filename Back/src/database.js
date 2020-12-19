@@ -3,7 +3,7 @@ const path = require('path');
 const maria= require('mysql'); 
 const sqlite3 = require('sqlite3').verbose();
 
-const dbPath = path.resolve(__dirname, '../db/intento1.db')
+const dbPath = path.resolve(__dirname, '../db/database.db')
 var vDB = true; 
 // busca la coneccion 
 let sqlite; 

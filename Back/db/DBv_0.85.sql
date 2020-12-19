@@ -3,29 +3,30 @@ USE proyectoweb;
 -- Sector de los usuarios
 CREATE TABLE idiomas(
 id int PRIMARY KEY AUTO_INCREMENT, 
-nombre VARCHAR(35), 
-nivel VARCHAR(150));
+idiomanombre VARCHAR(35), 
+idiomanivel VARCHAR(150));
 
 
 CREATE TABLE habilidades(
 id int PRIMARY KEY AUTO_INCREMENT, 
-tipo varchar(40), 
-descripcion varchar(40), 
-nivel varchar(20)); 
+habilidadtipo varchar(40), 
+habilidaddescripcion varchar(40), 
+habilidadnivel varchar(20)); 
 
 
 CREATE TABLE herramientas(
 id int PRIMARY KEY AUTO_INCREMENT, 
-nombre VARCHAR(120), 
-tipo VARCHAR(100), 
-descripcion varchar(1000), 
-nombreIcono VARCHAR(75));
+herramientanombre VARCHAR(120), 
+herramientatipo VARCHAR(100), 
+herramientadescripcion varchar(1000), 
+herramientanombreIcono VARCHAR(75));
 
 
 CREATE TABLE usuarios(
 id INT PRIMARY KEY AUTO_INCREMENT,
 email VARCHAR(250),
 contrasena VARCHAR(15),
+fotoperfil VARCHAR(100), 
 nombrearchivohojadevida VARCHAR(150),
 anosdeexperiencia INT,
 nombre VARCHAR(230),
@@ -37,7 +38,12 @@ gitlab VARCHAR(130),
 bitbucket VARCHAR(130),
 linkedin VARCHAR(130)
 );
-
+CREATE TABLE palabrasclave (
+id int PRIMARY KEY AUTO_INCREMENT,
+pcusuario INT,
+palabra VARCHAR(150),
+FOREIGN KEY(pcusuario) REFERENCES usuarios(id)
+); 
 CREATE TABLE listaidiomas (
 usuario INT,
 idioma INT ,
@@ -47,9 +53,9 @@ FOREIGN KEY(idioma) REFERENCES idiomas(id));
 
 CREATE TABLE contactos(
 id int PRIMARY KEY AUTO_INCREMENT, 
-usuario INT,
+contactousuario INT,
 preferencias BOOLEAN, 
-FOREIGN KEY(usuario) REFERENCES usuarios(id));
+FOREIGN KEY(contactousuario) REFERENCES usuarios(id));
 
 CREATE TABLE listacontactos(
 usuario INT ,
@@ -77,14 +83,14 @@ FOREIGN KEY(herramientausada) REFERENCES herramientas(id));
 
 CREATE TABLE metodologias(
 id int PRIMARY KEY AUTO_INCREMENT, 
-nombre VARCHAR(500), 
-descripcion VARCHAR(1500),
-consejo VARCHAR(500));
+metodologianombre VARCHAR(500), 
+metodologiadescripcion VARCHAR(1500),
+metodologiaconsejo VARCHAR(500));
 
 CREATE TABLE practicas (
 id int PRIMARY KEY AUTO_INCREMENT, 
-nombre VARCHAR(500),
-descripcion VARCHAR(2000));
+practicanombre VARCHAR(500),
+practicadescripcion VARCHAR(2000));
 
 CREATE TABLE listapracticas(
 metodologia INT,  
@@ -94,9 +100,9 @@ FOREIGN KEY(practica) REFERENCES practicas(id));
 
 CREATE TABLE alfas (
 id int PRIMARY KEY AUTO_INCREMENT,
-nombre VARCHAR(300),
-descripcion VARCHAR(1500),
-estado VARCHAR(35));
+alfanombre VARCHAR(300),
+alfadescripcion VARCHAR(1500),
+alfaestado VARCHAR(35));
 
 
 CREATE TABLE listaalfas(
@@ -114,42 +120,42 @@ bibliografia VARCHAR(150));
 
 CREATE TABLE tecnicas(
 id INT PRIMARY KEY AUTO_INCREMENT,
-titulo VARCHAR(500), 
-descripcion VARCHAR(1500),
-bibliografia VARCHAR(1500));
+tecnicatitulo VARCHAR(500), 
+tecnicadescripcion VARCHAR(1500),
+tecnicabibliografia VARCHAR(1500));
 
 CREATE TABLE actividades(
 id INT PRIMARY KEY AUTO_INCREMENT,
-titulo VARCHAR(1000),
-estado VARCHAR(300),
-descripcion VARCHAR(1200),
-fechacreacion DATE,
-fechaentrega DATE,
-revision INT,
+actividadtitulo VARCHAR(1000),
+actividadestado VARCHAR(300),
+actividaddescripcion VARCHAR(1200),
+actividadfechacreacion DATE,
+actividadfechaentrega DATE,
+actividadrevision INT,
 tecnica INT,
 FOREIGN KEY(tecnica) REFERENCES tecnicas(id)
 );
 
 
-CREATE TABLE rutas(
-id int PRIMARY KEY AUTO_INCREMENT, 
-nombre varchar(20), 
-descripcion varchar(100), 
-actividad INT, 
-FOREIGN KEY(actividad) REFERENCES ACTIVIDADES(id));
-
-CREATE TABLE listarutas(
-practica INT,
-ruta INT,
-FOREIGN KEY(practica) REFERENCES practicas(id),
-FOREIGN KEY(ruta) REFERENCES rutas(id)
-);
-
+-- CREATE TABLE rutas(
+-- id int PRIMARY KEY AUTO_INCREMENT, 
+-- nombre varchar(20), 
+-- descripcion varchar(100), 
+-- actividad INT, 
+-- FOREIGN KEY(actividad) REFERENCES ACTIVIDADES(id));
+-- 
+-- CREATE TABLE listarutas(
+-- practica INT,
+-- ruta INT,
+-- FOREIGN KEY(practica) REFERENCES practicas(id),
+-- FOREIGN KEY(ruta) REFERENCES rutas(id)
+-- );
+-- 
 CREATE TABLE roles(
 id int PRIMARY KEY AUTO_INCREMENT, 
-titulo VARCHAR(100), 
-descripcion VARCHAR(500), 
-perfilRecomendado VARCHAR(1500));
+roltitulo VARCHAR(100), 
+roldescripcion VARCHAR(500), 
+rolperfilRecomendado VARCHAR(1500));
 
 CREATE TABLE listaroles(
 practica INT, 
@@ -160,9 +166,10 @@ FOREIGN KEY(rol) REFERENCES roles(id)
 
 CREATE TABLE integrantes(
 id int PRIMARY KEY AUTO_INCREMENT, 
-usuario varchar(50), 
+usuario INT, 
 rol INT,
-FOREIGN KEY(rol) REFERENCES ROLES(id));
+FOREIGN KEY(rol) REFERENCES ROLES(id),
+FOREIGN KEY(usuario) REFERENCES usuarios(id));
 
 CREATE TABLE listaactividades(
 integrante INT, 
@@ -173,19 +180,19 @@ FOREIGN KEY(actividad) references actividades(id)
 
 CREATE TABLE contenidos(
 id int primary key AUTO_INCREMENT, 
-nombre VARCHAR(250),
-nombrearchivo VARCHAR(500), 
-descripcion varchar(200), 
-bibliografica VARCHAR(1500));
+contenidonombre VARCHAR(250),
+contenidonombrearchivo VARCHAR(500), 
+contenidodescripcion varchar(200), 
+contenidobibliografica VARCHAR(1500));
 
 CREATE TABLE entregables(
 id int PRIMARY KEY AUTO_INCREMENT, 
-titulo VARCHAR(200), 
-descripcion VARCHAR(1000), 
-estado varchar(20),
-tipoArchivo varchar(20), 
-fechaEntrega DATE, 
-numeroRevisiones INT );
+entregatitulo VARCHAR(200), 
+entregadescripcion VARCHAR(1000), 
+entregaestado varchar(20),
+entregatipoArchivo varchar(20), 
+entregafechaEntrega DATE, 
+entreganumeroRevisiones INT );
 
 CREATE TABLE listaentregables(
 alfa INT,
@@ -207,9 +214,9 @@ FOREIGN KEY(contenido) REFERENCES contenidos(id));
 
 CREATE TABLE entregas(
 id int PRIMARY KEY AUTO_INCREMENT, 
-titulo VARCHAR(300),
-descripcion VARCHAR(1000),
-nombrearchivoguardado VARCHAR(300),
+entregastitulo VARCHAR(300),
+entregasdescripcion VARCHAR(1000),
+entregasnombrearchivoguardado VARCHAR(300),
 actividad INT,
 entragable INT ,
 FOREIGN KEY(actividad) REFERENCES actividades(id),
@@ -217,12 +224,12 @@ FOREIGN KEY(entragable) REFERENCES entregables(id));
 
 CREATE TABLE chats(
 id int PRIMARY KEY AUTO_INCREMENT, 
-nombreArchivo VARCHAR(150), 
-fecha DATE);
+chatnombreArchivo VARCHAR(150), 
+chatfecha DATE);
 
 CREATE TABLE historiales(
 id int PRIMARY KEY AUTO_INCREMENT, 
-descripcion VARCHAR(1000)
+historiadescripcion VARCHAR(1000)
 );
 
 
@@ -235,11 +242,11 @@ FOREIGN KEY(chat) REFERENCES chats(id)
 
 CREATE TABLE proyectos (
 id INT PRIMARY KEY AUTO_INCREMENT, 
-nombre VARCHAR(350), 
-descripcion VARCHAR(1350), 
-estado VARCHAR(150), 
-icon VARCHAR(1000), 
-banner VARCHAR(1000), 
+proyectonombre VARCHAR(350), 
+proyectodescripcion VARCHAR(1350), 
+proyectoestado VARCHAR(150), 
+proyectoicon VARCHAR(1000), 
+proyectobanner VARCHAR(1000), 
 historia INT, 
 metodologia INT,
 FOREIGN KEY(historia) REFERENCES HISTORIALES(id),
@@ -247,15 +254,15 @@ FOREIGN KEY(metodologia) REFERENCES metodologias(id));
 
 CREATE TABLE eventos(
 id int PRIMARY KEY AUTO_INCREMENT,  
-fechacreacion DATE);
+eventofechacreacion DATE);
 
 CREATE TABLE reuniones(
 id int PRIMARY KEY AUTO_INCREMENT,
-titulo VARCHAR(500),
-fecha DATE,
-hora VARCHAR(15),
-durancion DOUBLE,
-descripcion VARCHAR(1000),
+reuniontitulo VARCHAR(500),
+reunionfecha DATE,
+reunionhora VARCHAR(15),
+reuniondurancion DOUBLE,
+reuniondescripcion VARCHAR(1000),
 vigente BOOL); 
 
 CREATE TABLE listareuniones(

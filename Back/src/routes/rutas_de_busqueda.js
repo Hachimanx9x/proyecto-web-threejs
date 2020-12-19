@@ -9,8 +9,7 @@ const LLAVE = 'misecretos';
 
 //
 
-
-
+/*
 
 rutas.get('/login/email=:correo&pass=:password',(req,res)=>{
     console.log(req.params);  console.log(req.body); 
@@ -18,21 +17,23 @@ rutas.get('/login/email=:correo&pass=:password',(req,res)=>{
        // console.log("Exito"); 
     }); 
 
-});
+});*/
 
 
 rutas.post('/login',(req,res)=>{
-    console.log("body", req.body); 
+//    console.log("body", req.body); 
    
     buscarDB.obtenerToken(req.body, res);
 });
 
 
 rutas.get('/escritorio',proToken, (req,res)=>{
+   // console.log("hola /escritorio")
     jwt.verify(req.token,LLAVE,(err,data)=>{
+        
         if(err){ res.sendStatus(403);
         }else{
-            if(data !={} || data !=={} || data !=null || data !== undefined || data.rows != [] || data.rows !== [] || data.rows !== null || data.rows !== undefined  || data.rows[0] != null || data.rows.length > 0){
+            if(data.rows[0] != null || data.rows.length > 0){
             //console.log(data.rows);  
             buscarDB.obtenerEscritorio(data,res);  
              }else{
@@ -52,18 +53,25 @@ rutas.get('/proyectos',proToken, (req,res)=>{
         if(err){
             res.sendStatus(403)
         }else{
-
-            if(data =={} || data==={} || data ==null || data === undefined){
-
-            }else{
-                buscarDB.obtenerProyecto(data,res).then(resultado=>{
-                    // console.log("Exito"); 
-                 }); 
-            }
-            
+            if(data !={} || data !=={} || data !==null || data !== undefined){
+                buscarDB.obtenerProyecto(data,res); 
+            }            
         }
     }); 
 }); 
+
+rutas.get('/proyectos/:id',proToken, (req,res)=>{
+    
+    jwt.verify(req.token,LLAVE,(err,data)=>{
+        if(err){
+            res.sendStatus(403)
+        }else{
+            if(data !={} || data !=={} || data !==null || data !== undefined){
+                buscarDB.buscarProyecto(data,req.params.id,res); 
+            }            
+        }
+    }); 
+});
 
 
  rutas.get('/proyecto/contenido/:buque/:name',(req,res)=>{
