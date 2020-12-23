@@ -31,7 +31,7 @@ class SearchTalents extends Component {
                 ]
             },
                 {
-                    id: "1",
+                    id: "2",
                     name: "Andrés David Londoño",
                     description: "Ingeniero multimedia. Desarrollador web. Senior en tecnologías para desarrollo fronend y backend con experiencia en desarrollo de aplicaciones web y móviles",
                     job: "Desarrollador Web",
