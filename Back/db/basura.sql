@@ -165,8 +165,7 @@ USE proyectoweb;
  FROM usuarios
  JOIN palabrasclave ON usuarios.id = palabrasclave.pcusuario
  JOIN listaherramientas ON usuarios.id = listaherramientas.usuario
- JOIN herramientas ON listaherramientas.herramientausada = herramientas.id
- WHERE usuarios.id=2; 
+ JOIN herramientas ON listaherramientas.herramientausada = herramientas.id; 
  
  
 

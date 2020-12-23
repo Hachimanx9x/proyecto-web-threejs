@@ -129,7 +129,7 @@ INSERT INTO entregables (entregatitulo, entregadescripcion, entregaestado, entre
 INSERT INTO entregables (entregatitulo, entregadescripcion, entregaestado, entregatipoArchivo, entregafechaEntrega,entreganumeroRevisiones) VALUES ("Especificaciones del diseño responsable", "Consiste en un documento en donde se especifica","asignada","documento de texto", "2021-01-23", 0);
 SELECT * FROM entregables; 
 
-INSERT INTO tecnicas (tecnicatitulo, tecnicadescripcion, tecnicabibliografia) VALUES ("tecnica T1", "esta tecnica no se a terminadado de documentar por lo que se dejara este espacio", "links de la bibliografias"); 
+
 INSERT INTO tecnicas (tecnicatitulo, tecnicadescripcion, tecnicabibliografia)  VALUES ("tecnica T2", "esta tecnica no se a terminadado de documentar por lo que se dejara este espacio", "links de la bibliografias"); 
 INSERT INTO tecnicas (tecnicatitulo, tecnicadescripcion, tecnicabibliografia)  VALUES ("tecnica T3", "esta tecnica no se a terminadado de documentar por lo que se dejara este espacio", "links de la bibliografias"); 
 INSERT INTO tecnicas (tecnicatitulo, tecnicadescripcion, tecnicabibliografia)  VALUES ("tecnica T4", "esta tecnica no se a terminadado de documentar por lo que se dejara este espacio", "links de la bibliografias"); 
