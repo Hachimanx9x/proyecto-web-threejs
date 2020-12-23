@@ -94,3 +94,8 @@ a.active .nav-item {
 li {
 	box-shadow: none;
 }
+@media only screen and (max-width: 800px) {
+	.o-link-btn {
+		font-size: 0.8rem;
+	}
+}

@@ -59,9 +59,9 @@ const SideBar = ({ isOpen, toggle }) => {
             </div>
           </NavLink>
 
-          <NavLink activeClassName="active" to="/Dashboard/SearchContacts">
+          <NavLink activeClassName="active" to="/Dashboard/SearchTalents">
             <div className="nav-item">
-              <li tag={Link} to={"/Dashboard/SearchContacts"}>
+              <li tag={Link} to={"/Dashboard/SearchTalents"}>
 
                 <button className="btn z-depth-0 o-link-btn font-weight-bold " >
                   <FontAwesomeIcon icon={faSearch} className="mr-2" />
