@@ -3,7 +3,7 @@ import SideToggler from "./SideToggler";
 import axios from 'axios';
 class Dashboard extends Component {
   
-  async componentWillMount() {/*
+  async componentWillMount() {
     const token = localStorage.getItem("login");
     console.log("el token es => "+  token); 
  
