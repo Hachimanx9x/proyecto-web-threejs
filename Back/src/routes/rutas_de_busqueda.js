@@ -1,10 +1,10 @@
-const ex = require('express'); 
-const jwt = require('jsonwebtoken'); 
-const rutas= ex.Router();
- 
-const buscarDB = require('../database/buscarDB'); 
-const ftpminio = require("../ftp/peticiones"); 
-const LLAVE = 'misecretos'; 
+const ex = require('express');
+const jwt = require('jsonwebtoken');
+const rutas = ex.Router();
+
+const buscarDB = require('../database/buscarDB');
+const ftpminio = require("../ftp/peticiones");
+const LLAVE = 'misecretos';
 
 
 //
@@ -20,101 +20,110 @@ rutas.get('/login/email=:correo&pass=:password',(req,res)=>{
 });*/
 
 
-rutas.post('/login',(req,res)=>{
-//    console.log("body", req.body); 
-   
+rutas.post('/login', (req, res) => {
+    //    console.log("body", req.body); 
+
     buscarDB.obtenerToken(req.body, res);
 });
 
 
-rutas.get('/escritorio',proToken, (req,res)=>{
-   // console.log("hola /escritorio")
-    jwt.verify(req.token,LLAVE,(err,data)=>{
-        
-        if(err){ res.sendStatus(403);
-        }else{
-            if(data.rows[0] != null || data.rows.length > 0){
-            //console.log(data.rows);  
-            buscarDB.obtenerEscritorio(data,res);  
-             }else{
-                console.log("Basio perro ");  res.json({    estado : "no se encontro nada"    });
+rutas.get('/escritorio', proToken, (req, res) => {
+    // console.log("hola /escritorio")
+    jwt.verify(req.token, LLAVE, (err, data) => {
+
+        if (err) {
+            res.sendStatus(403);
+        } else {
+            if (data.rows[0] != null || data.rows.length > 0) {
+                //console.log(data.rows);  
+                buscarDB.obtenerEscritorio(data, res);
+            } else {
+                console.log("Basio perro "); res.json({ estado: "no se encontro nada" });
             }
-         }
-    }); 
-    
-}); 
-
-
-
-
-rutas.get('/proyectos',proToken, (req,res)=>{
-
-    jwt.verify(req.token,LLAVE,(err,data)=>{
-        if(err){
-            res.sendStatus(403)
-        }else{
-            if(data !={} || data !=={} || data !==null || data !== undefined){
-                buscarDB.obtenerProyecto(data,res); 
-            }            
         }
-    }); 
-}); 
+    });
 
-rutas.get('/proyectos/:id',proToken, (req,res)=>{
-    
-    jwt.verify(req.token,LLAVE,(err,data)=>{
-        if(err){
-            res.sendStatus(403)
-        }else{
-            if(data !={} || data !=={} || data !==null || data !== undefined){
-                buscarDB.buscarProyecto(data,req.params.id,res); 
-            }            
-        }
-    }); 
 });
 
 
- rutas.get('/proyecto/contenido/:buque/:name',(req,res)=>{
+rutas.get('/talentos', proToken, (req, res) => {
+    jwt.verify(req.token, LLAVE, (err, data) => {
+        if (!err) {
+            if (data.rows[0] != null || data.rows.length > 0) {
+                buscarDB.buscartalentogeneral(data.rows[0].id, res);
+            }
+        }
+    })
+});
+
+rutas.get('/proyectos', proToken, (req, res) => {
+
+    jwt.verify(req.token, LLAVE, (err, data) => {
+        if (err) {
+            res.sendStatus(403)
+        } else {
+            if (data != {} || data !== {} || data !== null || data !== undefined) {
+                buscarDB.obtenerProyecto(data, res);
+            }
+        }
+    });
+});
+
+rutas.get('/proyectos/:id', proToken, (req, res) => {
+
+    jwt.verify(req.token, LLAVE, (err, data) => {
+        if (err) {
+            res.sendStatus(403)
+        } else {
+            if (data != {} || data !== {} || data !== null || data !== undefined) {
+                buscarDB.buscarProyecto(data, req.params.id, res);
+            }
+        }
+    });
+});
+
+
+rutas.get('/proyecto/contenido/:buque/:name', (req, res) => {
     /*
      if(buscarDB.buscarProyecto(req.params)){
          
      }*/
-     console.log(req.params);
-     const {buque, name } = req.params; 
+    console.log(req.params);
+    const { buque, name } = req.params;
     // const {id,name } = req.body;
 
-   ftpminio.getFilesingle(buque,name,res ); 
-  
-      
- }); 
- rutas.get('/proyecto/contenidos',(req,res)=>{
-   
+    ftpminio.getFilesingle(buque, name, res);
 
-   ftpminio.getFile(res); 
-  
-      
- }); 
- rutas.get('/proyecto/listado/:id', async(req,res)=>{
+
+});
+rutas.get('/proyecto/contenidos', (req, res) => {
+
+
+    ftpminio.getFile(res);
+
+
+});
+rutas.get('/proyecto/listado/:id', async (req, res) => {
     /*
      if(buscarDB.buscarProyecto(req.params)){
          
      }*/
-   //  console.log(req.params);
-     const {id} = req.params; 
-     //const {user} = req.body; 
+    //  console.log(req.params);
+    const { id } = req.params;
+    //const {user} = req.body; 
     // const {id,name } = req.body;
 
-     ftpminio.listObjects(id,user, res );        
- }); 
+    ftpminio.listObjects(id, user, res);
+});
 
 
-rutas.get('/talentos',proToken, (req,res)=>{
-    jwt.verify(req.token,LLAVE,async  (err,data)=>{
+rutas.get('/talentos', proToken, (req, res) => {
+    jwt.verify(req.token, LLAVE, async (err, data) => {
         //console.log(data.rows[0].id)
-    await    buscarDB.searchPeople(data.rows[0].id ,res); 
-    }); 
-   
-} );
+        await buscarDB.searchPeople(data.rows[0].id, res);
+    });
+
+});
 
 
 
@@ -129,18 +138,18 @@ rutas.get('/talentos',proToken, (req,res)=>{
 /*
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 */
-function proToken(req,res,next){
+function proToken (req, res, next) {
     const header = req.headers['authorization'];
     //console.log(header); 
-    if(typeof header !== 'undefined'){
-        const portador = header.split(" "); 
-        const portadorToken =portador[1]; 
-        req.token=portadorToken; 
-         next(); 
-    }else{
-        res.sendStatus(403); 
+    if (typeof header !== 'undefined') {
+        const portador = header.split(" ");
+        const portadorToken = portador[1];
+        req.token = portadorToken;
+        next();
+    } else {
+        res.sendStatus(403);
     }
- }
+}
 
 /*
 **************************************************************************************************
@@ -151,10 +160,10 @@ function proToken(req,res,next){
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 */
 
-module.exports = rutas; 
+module.exports = rutas;
 
 
-/*         ,--"""",--.__,---[],-------._         
+/*         ,--"""",--.__,---[],-------._
        ,"   __,'            \         \--""""""==;-
      ," _,-"  "/---.___     \       ___\   ,-'',"
     /,-'      / ;. ,.--'-.__\  _,-"" ,| `,'   /
@@ -191,4 +200,4 @@ module.exports = rutas;
         '.    `-.   . . . . . . . . . . ,-'::::;
           `:_    ``--..___________..--'':::::;'`
              `._::,.:,.:,:_ctr_:,:,.::,.:_;'`
-________________`"\/"\/\/'""""`\/"\/""\/"____________________________ */ 
+________________`"\/"\/\/'""""`\/"\/""\/"____________________________ */

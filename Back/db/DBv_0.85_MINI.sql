@@ -25,7 +25,7 @@ CREATE TABLE usuarios(
 id INTEGER PRIMARY KEY AUTOINCREMENT,
 email VARCHAR(250),
 contrasena VARCHAR(15),
-fotoperfil VARCHAR(100), 
+fotoperfil VARCHAR(100), s
 nombrearchivohojadevida VARCHAR(150),
 anosdeexperiencia INTEGER,
 nombre VARCHAR(230),

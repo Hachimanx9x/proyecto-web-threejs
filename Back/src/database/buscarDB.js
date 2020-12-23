@@ -52,7 +52,7 @@ funcionesDB.obtenerToken = async (body, res) => {
                 });
             } else {
                 //  console.log(sqlite); 
-                sqlite.all(Query.login(body), function (err, rows) {
+                sqlite.all(Query.login(body), (err, rows) => {
                     if (!err) {
                         // console.log(rows);
                         if (rows[0] == null || rows.length == 0) {
@@ -124,6 +124,17 @@ funcionesDB.obtenerEscritorio = async (body, res) => {
     // console.log(body.rows[0].persona);
 }
 
+funcionesDB.obtenertalentosGeneral = async () => {
+    promesa.then(async (result) => {
+        const { mariaDB, sqlite, vDB } = result;
+        if (vDB) {
+
+        }
+        else {
+
+        }
+    })
+}
 
 funcionesDB.obtenerProyecto = async (body, res) => {
 
@@ -143,7 +154,7 @@ funcionesDB.obtenerProyecto = async (body, res) => {
                         });
                     }
                 });
-            }else{
+            } else {
                 sqlite.all(Query.obtenerProyecto(id), (err, rows) => {
                     if (!err) {
                         res.json({ proyectos: rows });
@@ -154,37 +165,114 @@ funcionesDB.obtenerProyecto = async (body, res) => {
                         });
                     }
                 });
-            }           
+            }
         });
     }
 }
 
-funcionesDB.buscarProyecto = async (user,idp,res) => {
+funcionesDB.buscarProyecto = async (user, idp, res) => {
 
     if (idp !== undefined || idp !== "") {
         promesa.then(async (result) => {
             const { mariaDB, sqlite, vDB } = result;
-            if(vDB){
+            if (vDB) {
                 await mariaDB.query(Query.buscarProyecto(idp), (err, rows) => {
                     if (!err) {
-                         res.json({data:rows});  
-                        
-                        } 
+                        res.json({ data: rows });
+
+                    }
                 });
-            }else{
-                sqlite.all(Query.obtenerProyecto( idp), (err, rows) => {
+            } else {
+                sqlite.all(Query.obtenerProyecto(idp), (err, rows) => {
                     if (!err) {
                         res.json({ proyectos: rows });
 
-                    } 
+                    }
                 });
             }
-        }); 
-        
+        });
+
 
 
 
     }
+}
+funcionesDB.buscartalentogeneral = async (idUser, res) => {
+    promesa.then(async (result) => {
+        const { mariaDB, sqlite, vDB } = result;
+        if (vDB) {
+            await mariaDB.query(Query.buscartalentos(), (err, rows, fields) => {
+                if (!err) {
+                    console.log(rows);
+                    for (var i = 0; i < rows.length; i++) {
+                        // console.log(rows[i].id);
+                        if (rows[i].id == idUser) {
+                            console.log("entro");
+                            rows.splice(i, 1);
+                        }
+                    }
+
+                    res.json({ rows });
+
+                }
+            });
+        } else {
+            sqlite.all(Query.buscartalentos(), (err, rows) => {
+                if (!err) {
+                    console.log(idUser);
+                    //console.log(rows);
+                    var array = [];
+                    var cont = 0;
+                    for (var i = 0; i < rows.length; i++) {
+                        // console.log(rows[i].id);
+                        if (rows[i].id !== idUser) {
+
+                            array[cont] = rows[i];
+                            cont += 1;
+                        }
+                    }
+
+                    res.json({ array });
+
+                }
+            });
+        }
+    });
+
+}
+
+funcionesDB.searchPeople = async (idUser, res) => {
+    const QUERY = `SELECT
+    (@usid:=usuarios.id),
+    (@pername:=personas.nombre),
+    (@pername:=personas.descripcion),
+    usuarios.palabraClave,
+    herramientas.url_icono,
+    herramientas.nombre,
+    herramientas.descripcion
+    FROM personas
+    JOIN usuarios ON  personas.id = usuarios.persona
+    JOIN idiomas ON usuarios.idioma = idiomas.id
+    JOIN habilidades ON usuarios.habilidad = habilidades.id
+    JOIN herramientas ON habilidades.herramientaUsada = herramientas.id;`;
+    await mariaDB.query(QUERY, (err, rows, fields) => {
+        if (!err) {
+            console.log(rows);
+            for (var i = 0; i < rows.length; i++) {
+                // console.log(rows[i].id);
+                if (rows[i].id == idUser) {
+                    console.log("entro");
+                    rows.splice(i, 1);
+                }
+            }
+
+            res.json({ rows });
+
+        } else {
+
+        }
+    });
+
 }
 
 funcionesDB.searchFilesUserOne = async (iduser, res, array) => {
@@ -209,40 +297,6 @@ funcionesDB.searchFilesUserOne = async (iduser, res, array) => {
 
         }
     });
-}
-
-funcionesDB.searchPeople = async (idUser, res) => {
-    const QUERY = `SELECT    
-    (@usid:=usuarios.id), 
-    (@pername:=personas.nombre), 
-    (@pername:=personas.descripcion), 
-    usuarios.palabraClave, 
-    herramientas.url_icono, 
-    herramientas.nombre, 
-    herramientas.descripcion		
-    FROM personas
-    JOIN usuarios ON  personas.id = usuarios.persona
-    JOIN idiomas ON usuarios.idioma = idiomas.id
-    JOIN habilidades ON usuarios.habilidad = habilidades.id
-    JOIN herramientas ON habilidades.herramientaUsada = herramientas.id;`;
-    await mariaDB.query(QUERY, (err, rows, fields) => {
-        if (!err) {
-            console.log(rows);
-            for (var i = 0; i < rows.length; i++) {
-                // console.log(rows[i].id); 
-                if (rows[i].id == idUser) {
-                    console.log("entro");
-                    rows.splice(i, 1);
-                }
-            }
-
-            res.json({ rows });
-
-        } else {
-
-        }
-    });
-
 }
 
 
@@ -270,4 +324,7 @@ contrasena = "${password}"
     }
  });
 //  console.log(`id : ${id} ,`)
+
+
+
 */

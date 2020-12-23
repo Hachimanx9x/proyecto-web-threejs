@@ -143,17 +143,30 @@ USE proyectoweb;
 -- JOIN reuniones ON listareuniones.reunion = reuniones.id
 -- WHERE proyectos.id= 1 ; 
 
-SELECT proyectos.proyectonombre,
-practicas.practicanombre,
-alfas.alfanombre,
-alfas.alfaestado
-FROM proyectos
-JOIN metodologias ON proyectos.metodologia = metodologias.id
-JOIN listapracticas ON metodologias.id = listapracticas.metodologia
-JOIN practicas ON listapracticas.practica = practicas.id
-JOIN listaalfas ON practicas.id = listaalfas.practica
-JOIN alfas ON listaalfas.alfa = alfas.id
- WHERE proyectos.id = 1 ; 
+-- SELECT proyectos.proyectonombre,
+-- practicas.practicanombre,
+-- alfas.alfanombre,
+-- alfas.alfaestado
+-- FROM proyectos
+-- JOIN metodologias ON proyectos.metodologia = metodologias.id
+-- JOIN listapracticas ON metodologias.id = listapracticas.metodologia
+-- JOIN practicas ON listapracticas.practica = practicas.id
+-- JOIN listaalfas ON practicas.id = listaalfas.practica
+-- JOIN alfas ON listaalfas.alfa = alfas.id
+--  WHERE proyectos.id = 1 ; 
 
+ SELECT 
+ usuarios.id,
+ usuarios.nombre,
+ usuarios.descripcion,
+ herramientas.herramientanombre,
+ herramientas.herramientadescripcion,
+ herramientas.herramientanombreIcono
+ FROM usuarios
+ JOIN palabrasclave ON usuarios.id = palabrasclave.pcusuario
+ JOIN listaherramientas ON usuarios.id = listaherramientas.usuario
+ JOIN herramientas ON listaherramientas.herramientausada = herramientas.id
+ WHERE usuarios.id=2; 
+ 
  
 
