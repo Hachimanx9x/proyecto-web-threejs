@@ -1,0 +1,49 @@
+.o-talent-icon {
+	width: 100px;
+}
+
+.o-search-talents-btn {
+	width: 100%;
+	max-width: 11rem;
+}
+
+.o-talent-favorite-icon {
+	font-size: 1.3rem;
+	margin: 0;
+}
+
+.o-hide-this {
+	margin: 0rem;
+}
+.o-show-this {
+	display: none;
+}
+@media only screen and (max-width: 980px) {
+	.o-search-talents-btn {
+		font-size: 0.3rem;
+	}
+
+	.o-text-info-contact {
+		margin-left: 1rem;
+	}
+	.o-talent-icon {
+		max-width: 5rem;
+	}
+}
+@media only screen and (max-width: 590px) {
+	.o-search-talents-btn {
+		font-size: 1rem;
+		max-width: 100%;
+	}
+	.o-hide-this {
+		display: none;
+	}
+	.o-show-this {
+		margin-left: auto;
+		display: unset;
+	}
+	.o-talent-icon {
+		width: 100%;
+		margin-left: auto;
+	}
+}

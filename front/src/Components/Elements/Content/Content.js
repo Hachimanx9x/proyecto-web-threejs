@@ -8,6 +8,8 @@ import Documentation from "../../Pages/Documentation/Documentation";
 import Doc2 from "../../Pages/Documentation/Doc2";
 import Loged from "../../Pages/Loged/Dashboard";
 import CreateProject from "../../Pages/Projects/CreateProject";
+import SearchTalents from "../../Pages/SearchTalents/SearchTalents";
+import Contacts from "../../Pages/Contacts/Contacts";
 import CalendarEvents from "../Calendar/CalendarEvents";
 import CreateEvent from "../Calendar/CreateEvent";
 
@@ -24,11 +26,11 @@ const Content = ({ sidebarIsOpen, toggleSidebar }) => (
       <Route exact path="/Dashboard/Projects/CreateProject" component={CreateProject} />
 
       <Route exact path="/Dashboard/Projects/Documentation" component={Documentation} />
-      <Route exact path="/Dashboard/Contacts" component={() => "Contactos"} />
+      <Route exact path="/Dashboard/Contacts" component={Contacts} />
       <Route
         exact
-        path="/Dashboard/SearchContacts"
-        component={() => "Búsqueda de Contactos"}
+        path="/Dashboard/SearchTalents"
+        component={SearchTalents}
       />
       <Route exact path="Dashboard" component={Loged} />
       <Route exact path="/Dashboard/Projects/Documentation2" component={Doc2} />
