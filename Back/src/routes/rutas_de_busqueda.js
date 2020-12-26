@@ -83,6 +83,12 @@ rutas.get('/proyectos/:id', proToken, (req, res) => {
 });
 
 
+rutas.get('/herramientas/todas', (req, res) => {
+    buscarDB.obtenertodasherramientas(res);
+
+});
+
+
 rutas.get('/proyecto/contenido/:buque/:name', (req, res) => {
     /*
      if(buscarDB.buscarProyecto(req.params)){

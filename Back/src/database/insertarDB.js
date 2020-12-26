@@ -146,7 +146,7 @@ funcionesDB.insertlistlenguaje = (obj) => {
 }
 //----------------------------------------------------------
 //return new Promise((res, rej) => {});
-funcionesDB.insertAbility = (obj, res) => {
+funcionesDB.insertAbility = (obj) => {
     return new Promise((res, rej) => {
         const { tipo, descripcion, nivel } = obj;
         promesa.then((result) => {
@@ -651,4 +651,257 @@ funcionesDB.insertlistActivity = (obj) => {
 
 }
 //-----------------------------------------------------------------------
+funcionesDB.insertchat = (obj) => {
+    return new Promise((res, rej) => {
+        const { archivo, fecha } = obj;
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.insertchats(archivo, fecha), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.insertchats(archivo, fecha), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+
+}
+//-----------------------------------------------------------------------
+funcionesDB.insertlistchat = (obj) => {
+    return new Promise((res, rej) => {
+        const { historial, chat } = obj;
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.insertlistchats(historial, chat), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.insertlistchats(historial, chat), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.insertEvent = (obj) => {
+    return new Promise((res, rej) => {
+        const { fechacreacion } = obj;
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.inserteventos(fechacreacion), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.inserteventos(fechacreacion), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.insertListEvent = (obj) => {
+    return new Promise((res, rej) => {
+        const { historial, evento, integrante } = obj;
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.insertlisteventos(historial, evento, integrante), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.insertlisteventos(historial, evento, integrante), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.insertMeeting = (obj) => {
+    return new Promise((res, rej) => {
+        const { titulo, fecha, hora, duracion, descripcion, vigente } = obj;
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.insertreunion(titulo, fecha, hora, duracion, descripcion, vigente), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.insertreunion(titulo, fecha, hora, duracion, descripcion, vigente), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.insertListMeeting = (obj) => {
+    return new Promise((res, rej) => {
+        const { evento, reunion } = obj;
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.insertlistreunion(evento, reunion), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.insertlistreunion(evento, reunion), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.insertDelivery = (obj) => {
+    return new Promise((res, rej) => {
+        const { titulo, descripcion, nombrearchivoguardado, actividad, entragable } = obj;
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.insertentrega(titulo, descripcion, nombrearchivoguardado, actividad, entragable), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.insertentrega(titulo, descripcion, nombrearchivoguardado, actividad, entragable), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.insertContent = (obj) => {
+    return new Promise((res, rej) => {
+        const { nombre, nombrearchivo, descripcion, bibliografia } = obj;
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.insertcontenido(nombre, nombrearchivo, descripcion, bibliografia), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.insertcontenido(nombre, nombrearchivo, descripcion, bibliografia), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.insertlistContent = (obj) => {
+    return new Promise((res, rej) => {
+        const { entregable, contenido } = obj;
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.insertlistcontenido(entregable, contenido), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.insertlistcontenido(entregable, contenido), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.insertMethodologyTool = (obj) => {
+    return new Promise((res, rej) => {
+        const { nombre, descripcion, bibliografia } = obj;
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.insertherramientametodologia(nombre, descripcion, bibliografia), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.insertherramientametodologia(nombre, descripcion, bibliografia), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.insertListMethodologyTool = (obj) => {
+    return new Promise((res, rej) => {
+        const { entregable, herramientametodologia } = obj;
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.insertlistherramientametodologia(entregable, herramientametodologia), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.insertlistherramientametodologia(entregable, herramientametodologia), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
 module.exports = funcionesDB;

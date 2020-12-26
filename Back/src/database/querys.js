@@ -140,6 +140,11 @@ query.buscartalentos = function () {
     JOIN listaherramientas ON usuarios.id = listaherramientas.usuario
     JOIN herramientas ON listaherramientas.herramientausada = herramientas.id; `;
 }
+query.obtenertodasHerramientas = function () {
+    return `SELECT * FROM herramientas ; `;
+}
+
+//--------------------------------
 //INSERT INTO IDIOMAS (idiomanombre, idiomanivel) VALUES ("Ingles","A1 Beginner");
 query.insertLenguaje = function (nombre, nivel) {
     return `INSERT INTO IDIOMAS (idiomanombre, idiomanivel) VALUES ("${nombre}","${nivel}");`
@@ -283,4 +288,66 @@ query.insertActividades = function (actividadtitulo, actividadestado, actividadd
 query.insertlistaactiviades = function (integrante, actividad) {
     return `INSERT INTO listaactividades VALUES (${integrante},${actividad}); `;
 }
+query.insertchats = function (archivo, fecha) {
+    return `INSERT INTO chats (chatnombreArchivo, chatfecha) VALUES("${archivo}","${fecha}");`;
+}
+query.insertlistchats = function (historial, chat) {
+    return `INSERT INTO listachats (historial, chat) VALUES(${historial},${chat});`;
+}
+query.inserteventos = function (fechacreacion) {
+    return ` INSERT INTO eventos (eventofechacreacion) values("${fechacreacion}");`;
+}
+query.insertlisteventos = function (historial, evento, integrante) {
+    return `INSERT INTO listaeventos (historial, evento , integrante) VALUES (
+        ${historial},
+        ${evento},
+        ${integrante}
+    );`;
+}
+query.insertreunion = function (titulo, fecha, hora, duracion, descripcion, vigente) {
+    return `INSERT INTO reuniones (reuniontitulo ,reunionfecha ,reunionhora ,reuniondurancion ,reuniondescripcion ,vigente ) VALUES (
+        "${titulo}",
+        "${fecha}",
+        "${hora}",
+        ${duracion},
+        "${descripcion}",
+        ${vigente}
+    ); `;
+}
+query.insertlistreunion = function (evento, reunion) {
+    return `INSERT INTO listaeventos (evento,reunion ) VALUES (${evento},${reunion});`;
+}
+query.insertentrega = function (titulo, descripcion, nombrearchivoguardado, actividad, entragable) {
+    return `INSERT INTO entregas (entregastitulo ,entregasdescripcion,entregasnombrearchivoguardado ,actividad ,entragable ) VALUES (
+        "${titulo}",
+        "${descripcion}",
+        "${nombrearchivoguardado}",
+         ${actividad},
+         ${entragable}
+    ) ;`;
+}
+query.insertcontenido = function (nombre, nombrearchivo, descripcion, bibliografia) {
+    return `INSERT INTO contenidos (contenidonombre ,contenidonombrearchivo , contenidodescripcion , contenidobibliografica ) VALUES (
+        "${nombre}",
+        "${nombrearchivo}",
+        "${descripcion}",
+        "${bibliografia}"
+    );`;
+}
+query.insertlistcontenido = function (entregable, contenido) {
+    return `INSERT INTO listacontenidos (entregable , contenido ) VALUES (
+        ${entregable}, ${contenido}
+    ); `;
+}
+query.insertherramientametodologia = function (nombre, descripcion, bibliografia) {
+    return `INSERT INTO herramientasmetodologia (nombre, descripcion , bibliografia ) VALUES(
+        "${nombre}", "${descripcion}", "${bibliografia}"
+    ); `;
+}
+query.insertlistherramientametodologia = function (entregable, herramientametodologia) {
+    return `INSERT INTO listaherramientasmetodologia (entregable , herramientametodologia) VALUES(
+        ${entregable}, ${herramientametodologia}
+    );`;
+}
+
 module.exports = query;

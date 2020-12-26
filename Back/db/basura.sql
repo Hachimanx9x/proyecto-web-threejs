@@ -155,17 +155,18 @@ USE proyectoweb;
 -- JOIN alfas ON listaalfas.alfa = alfas.id
 --  WHERE proyectos.id = 1 ; 
 
- SELECT 
- usuarios.id,
- usuarios.nombre,
- usuarios.descripcion,
- herramientas.herramientanombre,
- herramientas.herramientadescripcion,
- herramientas.herramientanombreIcono
- FROM usuarios
- JOIN palabrasclave ON usuarios.id = palabrasclave.pcusuario
- JOIN listaherramientas ON usuarios.id = listaherramientas.usuario
- JOIN herramientas ON listaherramientas.herramientausada = herramientas.id; 
- 
- 
+--  SELECT 
+--  usuarios.id,
+--  usuarios.nombre,
+--  usuarios.descripcion,
+--  herramientas.herramientanombre,
+--  herramientas.herramientadescripcion,
+--  herramientas.herramientanombreIcono
+--  FROM usuarios
+--  JOIN palabrasclave ON usuarios.id = palabrasclave.pcusuario
+--  JOIN listaherramientas ON usuarios.id = listaherramientas.usuario
+--  JOIN herramientas ON listaherramientas.herramientausada = herramientas.id; 
+--  
+--  
 
+SELECT * FROM herramientas ; 

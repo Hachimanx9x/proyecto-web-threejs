@@ -136,6 +136,26 @@ funcionesDB.obtenertalentosGeneral = async () => {
     })
 }
 
+funcionesDB.obtenertodasherramientas = async (res) => {
+    promesa.then(async (result) => {
+        const { mariaDB, sqlite, vDB } = result;
+        if (vDB) {
+            await mariaDB.query(Query.obtenertodasHerramientas(), async (err, rows) => {
+                if (!err) {
+                    res.json({ herramientas: rows });
+                }
+            });
+        }
+        else {
+            sqlite.all(Query.obtenertodasHerramientas(), (err, rows) => {
+                if (!err) {
+                    res.json({ herramientas: rows });
+                }
+            });
+        }
+    })
+}
+
 funcionesDB.obtenerProyecto = async (body, res) => {
 
     const { id } = body.rows[0];

@@ -204,11 +204,6 @@ rutas.post('/insert/tools', (req, res) => {
 });
 
 
-rutas.post('/insert/lenguaje', (req, res) => {
-  const { nombre, nivel } = req.body;
-  insertDB.insertLenguaje({ nombre, nivel }, res);
-});
-
 
 module.exports = rutas;
 
