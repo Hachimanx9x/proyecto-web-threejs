@@ -184,7 +184,7 @@ rutas.post('/insert/Ability', (req, res) => {
 rutas.post('/insert/ListAbility', (req, res) => {
   const { usuario, habilidad } = req.body;
   if (typeof usuario === 'string' && typeof habilidad === 'number') {
-
+    insertDB.insetlistAbility(req.body).then(resul => res.json(resul));
   }
 });
 //-----------------------------------------------------
