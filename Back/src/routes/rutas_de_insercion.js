@@ -58,10 +58,10 @@ rutas.post('/proyecto/insertarArchivo', (req, res) => {
    if(buscarDB.buscarProyecto(req.params)){
        
    }*//*
-  console.log(req.params);
-  const {id} = req.params; 
-  ftpminio.listObjects(id);
-  */
+console.log(req.params);
+const {id} = req.params; 
+ftpminio.listObjects(id);
+*/
   if (req.body !== null || req.body !== {}) {
     const { id, name, file } = req.body;
     //convertir a archivo
@@ -107,26 +107,103 @@ rutas.post('/proyecto/insertarArchivo2', (req, res) => {
   res.json({ msj: "terminado" })
 });
 
+
+//--------------------------------------------------
+rutas.post('/insert/lenguaje', (req, res) => {
+  const { nombre, nivel } = req.body;
+  if (typeof nombre === 'string' && typeof nivel === 'string') {
+    insertDB.insertLenguaje(req.body).then((result) => {
+      res.json(result);
+    });
+  } else {
+    res.json({ msj: "error en los datos" })
+  }
+
+});
+//--------------------------------------------------
 rutas.post('/insert/user', (req, res) => {
 
-  const { email, contrasena, fotoperfil, nombrearchivohojadevida, anosdeexperiencia, nombre, descripcion, pais, edad, github, gitlab, bitbucket, linkedin } = req.body;
-  insertDB.insertUser(email, contrasena, fotoperfil, nombrearchivohojadevida, anosdeexperiencia, nombre, descripcion, pais, edad, github, gitlab, bitbucket, linkedin, res);
-});
-rutas.post('/insert/person', (req, res) => {
-  const { nombre, descripcion, otro, pais, edad } = req.body;
-  insertDB.insertPerson({ nombre, descripcion, otro, pais, edad }, res);
-});
+  const {
+    email,
+    contrasena,
+    fotoperfil,
+    nombrearchivohojadevida,
+    anosdeexperiencia,
+    nombre,
+    descripcion,
+    pais,
+    edad,
+    github,
+    gitlab,
+    bitbucket,
+    linkedin } = req.body;
 
+  if (typeof email === 'string' &&
+    typeof contrasena === 'string' &&
+    typeof fotoperfil === 'string' &&
+    typeof nombrearchivohojadevida === 'string' &&
+    typeof anosdeexperiencia === 'string' &&
+    typeof nombre === 'string' &&
+    typeof descripcion === 'string' &&
+    typeof pais === 'string' &&
+    typeof edad === 'string' &&
+    typeof github === 'string' &&
+    typeof gitlab === 'string' &&
+    typeof bitbucket === 'string' &&
+    typeof linkedin === 'string') {
+    insertDB.insertUser(req.body).then(result => res.json(result));
+  }
+
+});
+//---------------------------------------------------
+rutas.post('/insert/Keyword', (req, res) => {
+
+  const { user, palabra } = req.body;
+  if (typeof user === 'number' && typeof palabra === 'string') {
+    insertDB.insertKeyword(req.body).then(result => res.json(result));
+  }
+});
+//---------------------------------------------------
+rutas.post('/insert/listlenguaje ', (req, res) => {
+
+  const { user, idioma } = req.body;
+  if (typeof user === 'string' && typeof idioma === 'number') {
+    insertDB.insertlistlenguaje(req.body).then((result) => {
+      res.json(result);
+    });
+  }
+});
+//-----------------------------------------------------
+rutas.post('/insert/Ability', (req, res) => {
+  const { tipo, descripcion, nivel } = req.body;
+  if (typeof tipo === 'string' && typeof descripcion === 'string' && typeof nivel === 'string') {
+    insertDB.insertAbility(req.body).then(result => res.json(result));
+  }
+});
+//-----------------------------------------------------
+rutas.post('/insert/ListAbility', (req, res) => {
+  const { usuario, habilidad } = req.body;
+  if (typeof usuario === 'string' && typeof habilidad === 'number') {
+
+  }
+});
+//-----------------------------------------------------
 rutas.post('/insert/tools', (req, res) => {
   const { nombre, tipo, descripcion, url_icono } = req.body;
-  insertDB.insertTools({ nombre, tipo, descripcion, url_icono }, res);
-});
-rutas.post('/insert/hability', (req, res) => {
-  const { tipo, descripcion, nivel, herramientaUsada } = req.body;
+  if (
+    typeof nombre === 'string' &&
+    typeof tipo === 'string' &&
+    typeof descripcion === 'string' &&
+    typeof url_icono === 'string'
+  ) {
+    insertDB.insertTools(req.body).then((result) => {
+      res.json(result);
+    });
+  }
 
-  insertDB.insertAbility(tipo, descripcion, nivel, herramientaUsada, res);
-
 });
+
+
 rutas.post('/insert/lenguaje', (req, res) => {
   const { nombre, nivel } = req.body;
   insertDB.insertLenguaje({ nombre, nivel }, res);
