@@ -166,7 +166,6 @@ USE proyectoweb;
 --  JOIN palabrasclave ON usuarios.id = palabrasclave.pcusuario
 --  JOIN listaherramientas ON usuarios.id = listaherramientas.usuario
 --  JOIN herramientas ON listaherramientas.herramientausada = herramientas.id; 
---  
---  
 
-SELECT * FROM herramientas ; 
+ 
+

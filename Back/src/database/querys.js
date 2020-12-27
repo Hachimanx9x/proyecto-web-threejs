@@ -1,7 +1,18 @@
 const query = function (e) {
     return `SELECT * FROM  usuarios; `;
 }
-
+/**
+ `7MM"""Yp,                                                          `7MM                   
+  MM    Yb                                                            MM                   
+  MM    dP `7MM  `7MM  ,pP"Ybd   ,dW"Yvd  `7MM  `7MM   .gP"Ya    ,M""bMM   ,6"Yb.  ,pP"Ybd 
+  MM"""bg.   MM    MM  8I   `"  ,W'   MM    MM    MM  ,M'   Yb ,AP    MM  8)   MM  8I   `" 
+  MM    `Y   MM    MM  `YMMMa.  8M    MM    MM    MM  8M"""""" 8MI    MM   ,pm9MM  `YMMMa. 
+  MM    ,9   MM    MM  L.   I8  YA.   MM    MM    MM  YM.    , `Mb    MM  8M   MM  L.   I8 
+.JMMmmmd9    `Mbod"YML.M9mmmP'   `MbmdMM    `Mbod"YML. `Mbmmd'  `Wbmd"MML.`Moo9^Yo.M9mmmP' 
+                                      MM                                                   
+                                    .JMML.                                                  
+ */
+//--------------busquedas personalizadas
 query.login = function (obj) {
     const { email, password } = obj;
     //
@@ -140,10 +151,54 @@ query.buscartalentos = function () {
     JOIN listaherramientas ON usuarios.id = listaherramientas.usuario
     JOIN herramientas ON listaherramientas.herramientausada = herramientas.id; `;
 }
-query.obtenertodasHerramientas = function () {
-    return `SELECT * FROM herramientas ; `;
-}
+//-------------busquedas por tablas
+query.obtenertodasIdiomas = function () { return `SELECT * FROM idiomas ; `; }
+query.obtenertodasHabilidades = function () { return `SELECT * FROM habilidades ; `; }
+query.obtenertodasHerramientas = function () { return `SELECT * FROM herramientas ; `; }
+query.obtenertodasUsuarios = function () { return `SELECT * FROM usuarios ; `; }
+query.obtenertodasPalabrasClave = function () { return `SELECT * FROM palabrasclave ; `; }
+query.obtenertodasListaidiomas = function () { return `SELECT * FROM listaidiomas ; `; }
+query.obtenertodasContactos = function () { return `SELECT * FROM contactos ; `; }
+query.obtenertodasListaContactos = function () { return `SELECT * FROM listacontactos ; `; }
+query.obtenertodasListaHabilidades = function () { return `SELECT * FROM listahabilidades ; `; }
+query.obtenertodasListaHerramientas = function () { return `SELECT * FROM listaherramientas ; `; }
+query.obtenertodasMetodologias = function () { return `SELECT * FROM metodologias ; `; }
+query.obtenertodasPracticas = function () { return `SELECT * FROM practicas ; `; }
+query.obtenertodasListasPracticas = function () { return `SELECT * FROM listapracticas ; `; }
+query.obtenertodasAlfas = function () { return `SELECT * FROM alfas ; `; }
+query.obtenertodasListaAlfas = function () { return `SELECT * FROM listaalfas ; `; }
+query.obtenertodasHerramientasMetodologia = function () { return `SELECT * FROM herramientasmetodologia ; `; }
+query.obtenertodasTecnicas = function () { return `SELECT * FROM tecnicas ; `; }
+query.obtenertodasActividades = function () { return `SELECT * FROM actividades ; `; }
+query.obtenertodasRoles = function () { return `SELECT * FROM roles ; `; }
+query.obtenertodasListaRoles = function () { return `SELECT * FROM listaroles ; `; }
+query.obtenertodasIntegrantes = function () { return `SELECT * FROM integrantes ; `; }
+query.obtenertodasListaActividades = function () { return `SELECT * FROM listaactividades ; `; }
+query.obtenertodasContenidos = function () { return `SELECT * FROM contenidos ; `; }
+query.obtenertodasEntregables = function () { return `SELECT * FROM entregables ; `; }
+query.obtenertodasListaentregables = function () { return `SELECT * FROM listaentregables ; `; }
+query.obtenertodasListaHerramientasMetodologia = function () { return `SELECT * FROM listaherramientasmetodologia ; `; }
+query.obtenertodasListaContenidos = function () { return `SELECT * FROM listacontenidos ; `; }
+query.obtenertodasEntregas = function () { return `SELECT * FROM entregas ; `; }
+query.obtenertodasChats = function () { return `SELECT * FROM chats ; `; }
+query.obtenertodasHistoriales = function () { return `SELECT * FROM historiales ; `; }
+query.obtenertodasListaChats = function () { return `SELECT * FROM listachats ; `; }
+query.obtenertodasProyectos = function () { return `SELECT * FROM proyectos ; `; }
+query.obtenertodasReuniones = function () { return `SELECT * FROM reuniones ; `; }
+query.obtenertodasListaReuniones = function () { return `SELECT * FROM listareuniones ; `; }
+query.obtenertodasListaEntregas = function () { return `SELECT * FROM listaentregas ; `; }
+query.obtenertodasListaEventos = function () { return `SELECT * FROM listaeventos ; `; }
+query.obtenertodasListaIntegrantes = function () { return `SELECT * FROM listaintegrantes ; `; }
 
+/**
+ `7MMF'                                                 db                        
+  MM                                                                             
+  MM  `7MMpMMMb.  ,pP"Ybd  .gP"Ya  `7Mb,od8  ,p6"bo  `7MM   ,pW"Wq.  `7MMpMMMb.  
+  MM    MM    MM  8I   `" ,M'   Yb   MM' "' 6M'  OO    MM  6W'   `Wb   MM    MM  
+  MM    MM    MM  `YMMMa. 8M""""""   MM     8M         MM  8M     M8   MM    MM  
+  MM    MM    MM  L.   I8 YM.    ,   MM     YM.    ,   MM  YA.   ,A9   MM    MM  
+.JMML..JMML  JMML.M9mmmP'  `Mbmmd' .JMML.    YMbmd'  .JMML. `Ybmd9'  .JMML  JMML.
+ */
 //--------------------------------
 //INSERT INTO IDIOMAS (idiomanombre, idiomanivel) VALUES ("Ingles","A1 Beginner");
 query.insertLenguaje = function (nombre, nivel) {
@@ -349,5 +404,90 @@ query.insertlistherramientametodologia = function (entregable, herramientametodo
         ${entregable}, ${herramientametodologia}
     );`;
 }
+/**
+ *                                                      ,,    ,,                            
+      db                 mm                         `7MM    db                            
+     ;MM:                MM                           MM                                  
+    ,V^MM.     ,p6"bo  mmMMmm  `7MM  `7MM   ,6"Yb.    MM  `7MM  M"""MMV  ,6"Yb.  `7Mb,od8 
+   ,M  `MM    6M'  OO    MM      MM    MM  8)   MM    MM    MM  '  AMV  8)   MM    MM' "' 
+   AbmmmqMA   8M         MM      MM    MM   ,pm9MM    MM    MM    AMV    ,pm9MM    MM     
+  A'     VML  YM.    ,   MM      MM    MM  8M   MM    MM    MM   AMV  , 8M   MM    MM     
+.AMA.   .AMMA. YMbmd'    `Mbmo   `Mbod"YML.`Moo9^Yo..JMML..JMML.AMMmmmM `Moo9^Yo..JMML.   
+ 
+ */
+query.updateidiomasnombre = function (nombre, id) {
+    return `UPDATE idiomas 
+    SET idiomanombre =${nombre} 
+    WHERE id = ${id}; `;
+}
+query.updateidiomasnivel = function (nivel, id) {
+    return `UPDATE idiomas 
+    SET idiomanivel =${nivel} 
+    WHERE id = ${id}; `;
+}
+query.updateidiomas = function (nombre, nivel, id) {
+    return `UPDATE idiomas 
+    SET idiomanombre =${nombre},  idiomanivel =${nivel}
+    WHERE id = ${id}; `;
+}
+query.updateusuarioscontrasena = function (password, id) {
+    return `UPDATE usuarios 
+    SET contrasena =${password}
+    WHERE id = ${id}; `;
+}
+query.updateusuariosgithub = function (github, id) {
+    return `UPDATE usuarios 
+    SET github =${github}
+    WHERE id = ${id}; `;
+}
+query.updateusuariosbitbucket = function (bitbucket, id) {
+    return `UPDATE usuarios 
+    SET bitbucket=${password}
+    WHERE id = ${id}; `;
+}
+query.updateusuariosgitlab = function (gitlab, id) {
+    return `UPDATE usuarios 
+    SET gitlab =${gitlab}
+    WHERE id = ${id}; `;
+}
+query.updateusuarioslinkedin = function (linkedin, id) {
+    return `UPDATE usuarios 
+    SET linkedin =${linkedin}
+    WHERE id = ${id}; `;
+}
+query.updatecontacto = function (preferencias, id) {
+    return `UPDATE contactos 
+    SET preferencias =${preferencias}
+    WHERE id = ${id}; `;
+}
+query.updateactividadfechaentrega = function (fecha, id) {
+    return `UPDATE actividades 
+    SET actividadfechaentrega =${fecha}
+    WHERE id = ${id}; `;
+}
+query.updateactividadestado = function (estado, id) {
+    return `UPDATE actividades 
+    SET actividadestado =${estado}
+    WHERE id = ${id}; `;
+}
+query.updateactividadrevisiones = function (revision, id) {
+    return `UPDATE actividades 
+    SET actividadrevision =${revision}
+    WHERE id = ${id}; `;
+}
+query.updateaintegrantes = function (rol, id) {
+    return `UPDATE integrantes 
+    SET rol =${rol}
+    WHERE id = ${id}; `;
+}
+/**
+ `7MM"""Yp,                                               
+  MM    Yb                                               
+  MM    dP  ,pW"Wq.  `7Mb,od8 `7Mb,od8  ,6"Yb.  `7Mb,od8 
+  MM"""bg. 6W'   `Wb   MM' "'   MM' "' 8)   MM    MM' "' 
+  MM    `Y 8M     M8   MM       MM      ,pm9MM    MM     
+  MM    ,9 YA.   ,A9   MM       MM     8M   MM    MM     
+.JMMmmmd9   `Ybmd9'  .JMML.   .JMML.   `Moo9^Yo..JMML.   
+ */
 
 module.exports = query;
