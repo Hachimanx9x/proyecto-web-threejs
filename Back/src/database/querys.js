@@ -442,7 +442,7 @@ query.updateusuariosgithub = function (github, id) {
 }
 query.updateusuariosbitbucket = function (bitbucket, id) {
     return `UPDATE usuarios 
-    SET bitbucket=${password}
+    SET bitbucket=${bitbucket}
     WHERE id = ${id}; `;
 }
 query.updateusuariosgitlab = function (gitlab, id) {
@@ -480,6 +480,21 @@ query.updateaintegrantes = function (rol, id) {
     SET rol =${rol}
     WHERE id = ${id}; `;
 }
+query.updatecontenidos = function (nombreArchivo, id) {
+    return `UPDATE integrantes 
+    SET contenidonombrearchivo =${nombreArchivo}
+    WHERE id = ${id}; `;
+}
+query.updatentregable = function (estado, id) {
+    return `UPDATE entregables 
+    SET entregaestado =${estado}
+    WHERE id = ${id}; `;
+}
+query.updathistorial = function (descripcion, id) {
+    return `UPDATE historiales 
+    SET historiadescripcion =${descripcion}
+    WHERE id = ${id}; `;
+}
 /**
  `7MM"""Yp,                                               
   MM    Yb                                               
@@ -489,5 +504,54 @@ query.updateaintegrantes = function (rol, id) {
   MM    ,9 YA.   ,A9   MM       MM     8M   MM    MM     
 .JMMmmmd9   `Ybmd9'  .JMML.   .JMML.   `Moo9^Yo..JMML.   
  */
-
+//DELETE FROM table_name WHERE condition;
+query.deleteIdiomas = function (id) { return `DELETE FROM idiomas WHERE id=${id} ; `; }
+query.deleteHabilidades = function (id) { return `DELETE FROM habilidades  WHERE id=${id}; `; }
+query.deleteHerramientas = function (id) { return `DELETE FROM herramientas  WHERE id=${id}; `; }
+query.deleteUsuarios = function (id) { return `DELETE FROM usuarios  WHERE id=${id}; `; }
+query.deletePalabrasClave = function (id) { return `DELETE FROM palabrasclave  WHERE id=${id}; `; }
+query.deleteListaidiomas = function (id) { return `DELETE FROM listaidiomas  WHERE usuario=${id}; `; }
+query.deleteContactos = function (id) { return `DELETE FROM contactos  WHERE id=${id}; `; }
+query.deleteListaContactos = function (id) { return `DELETE FROM listacontactos  WHERE usuario=${id}; `; }
+query.deleteListaHabilidades = function (id) { return `DELETE FROM listahabilidades  WHERE usuario=${id}; `; }
+query.deleteListaHerramientas = function (id) { return `DELETE FROM listaherramientas  WHERE usuario=${id}; `; }
+query.deleteMetodologias = function (id) { return `DELETE FROM metodologias  WHERE id=${id}; `; }
+query.deletePracticas = function (id) { return `DELETE FROM practicas  WHERE id=${id}; `; }
+query.deleteListasPracticas = function (id) { return `DELETE FROM listapracticas  WHERE practica=${id}; `; }
+query.deleteAlfas = function (id) { return `DELETE FROM alfas  WHERE id=${id}; `; }
+query.deleteListaAlfas = function (id) { return `DELETE FROM listaalfas  WHERE alfa=${id}; `; }
+query.deleteHerramientasMetodologia = function (id) { return `DELETE FROM herramientasmetodologia WHERE id=${id};`; }
+query.deleteTecnicas = function (id) { return `DELETE FROM tecnicas  WHERE id=${id}; `; }
+query.deleteActividades = function (id) { return `DELETE FROM actividades  WHERE id=${id}; `; }
+query.deleteRoles = function (id) { return `DELETE FROM roles  WHERE id=${id}; `; }
+query.deleteListaRoles = function (id) { return `DELETE FROM listaroles  WHERE rol=${id}; `; }
+query.deleteIntegrantes = function (id) { return `DELETE FROM integrantes  WHERE id=${id}; `; }
+query.deleteListaActividades = function (id) { return `DELETE FROM listaactividades  WHERE actividad=${id}; `; }
+query.deleteContenidos = function (id) { return `DELETE FROM contenidos  WHERE id=${id}; `; }
+query.deleteEntregables = function (id) { return `DELETE FROM entregables  WHERE id=${id}; `; }
+query.deleteListaentregables = function (id) { return `DELETE FROM listaentregables  WHERE entregable=${id}; `; }
+query.deleteListaHerramientasMetodologia = function (id) { return `DELETE FROM listaherramientasmetodologia  WHERE herramientametodologia=${id}; `; }
+query.deleteListaContenidos = function (id) { return `DELETE FROM listacontenidos  WHERE contenido=${id}; `; }
+query.deleteEntregas = function (id) { return `DELETE FROM entregas  WHERE id=${id}; `; }
+query.deleteChats = function (id) { return `DELETE FROM chats  WHERE id=${id}; `; }
+query.deleteHistoriales = function (id) { return `DELETE FROM historiales  WHERE id=${id}; `; }
+query.deleteListaChats = function (id) { return `DELETE FROM listachats  WHERE chat=${id}; `; }
+query.deleteProyectos = function (id) { return `DELETE FROM proyectos  WHERE id=${id}; `; }
+query.deleteReuniones = function (id) { return `DELETE FROM reuniones  WHERE id=${id}; `; }
+query.deleteListaReuniones = function (id) { return `DELETE FROM listareuniones  WHERE reunion=${id}; `; }
+query.deleteListaEntregas = function (id) { return `DELETE FROM listaentregas  WHERE entregable=${id}; `; }
+query.deleteEventos = function (id) { return `DELETE FROM eventos  WHERE id=${id}; `; }
+query.deleteListaEventos = function (id) { return `DELETE FROM listaeventos  WHERE evento=${id}; `; }
+query.deleteListaIntegrantes = function (id) { return `DELETE FROM listaintegrantes  WHERE integrante=${id}; `; }
+/**
+ `7MM"""YMM                                             mm                        db                        
+  MM    `7                                             MM                                                  
+  MM   d    `7M'   `MF'`7MMpdMAo.  ,pW"Wq.  `7Mb,od8 mmMMmm   ,6"Yb.   ,p6"bo  `7MM   ,pW"Wq.  `7MMpMMMb.  
+  MMmmMM      `VA ,V'    MM   `Wb 6W'   `Wb   MM' "'   MM    8)   MM  6M'  OO    MM  6W'   `Wb   MM    MM  
+  MM   Y  ,     XMX      MM    M8 8M     M8   MM       MM     ,pm9MM  8M         MM  8M     M8   MM    MM  
+  MM     ,M   ,V' VA.    MM   ,AP YA.   ,A9   MM       MM    8M   MM  YM.    ,   MM  YA.   ,A9   MM    MM  
+.JMMmmmmMMM .AM.   .MA.  MMbmmd'   `Ybmd9'  .JMML.     `Mbmo `Moo9^Yo. YMbmd'  .JMML. `Ybmd9'  .JMML  JMML.
+                         MM                                                                                
+                       .JMML.                                                                              
+ */
 module.exports = query;

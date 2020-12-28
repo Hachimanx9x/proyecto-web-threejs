@@ -22,8 +22,11 @@ rutas.get('/login/email=:correo&pass=:password',(req,res)=>{
 
 rutas.post('/login', (req, res) => {
     //    console.log("body", req.body); 
+    const { email, password } = req.body
+    if (typeof email === 'string' && typeof password === 'string') {
+        buscarDB.obtenerToken(req.body).then(resul => res.json(resul)).catch(err => res.json(err));
+    }
 
-    buscarDB.obtenerToken(req.body, res);
 });
 
 
@@ -36,7 +39,7 @@ rutas.get('/escritorio', proToken, (req, res) => {
         } else {
             if (data.rows[0] != null || data.rows.length > 0) {
                 //console.log(data.rows);  
-                buscarDB.obtenerEscritorio(data, res);
+                buscarDB.obtenerEscritorio(data).then(result => res.json(result)).catch(err => res.json(err));
             } else {
                 console.log("Basio perro "); res.json({ estado: "no se encontro nada" });
             }
@@ -50,7 +53,7 @@ rutas.get('/talentos', proToken, (req, res) => {
     jwt.verify(req.token, LLAVE, (err, data) => {
         if (!err) {
             if (data.rows[0] != null || data.rows.length > 0) {
-                buscarDB.buscartalentogeneral(data.rows[0].id, res);
+                buscarDB.buscartalentogeneral(data.rows[0].id).then(result => res.json(result)).catch(err => res.json(err));
             }
         }
     })
@@ -63,7 +66,7 @@ rutas.get('/proyectos', proToken, (req, res) => {
             res.sendStatus(403)
         } else {
             if (data != {} || data !== {} || data !== null || data !== undefined) {
-                buscarDB.obtenerProyecto(data, res);
+                buscarDB.obtenerProyecto(data).then(result => res.json(result)).catch(err => res.json(err));
             }
         }
     });
@@ -76,7 +79,7 @@ rutas.get('/proyectos/:id', proToken, (req, res) => {
             res.sendStatus(403)
         } else {
             if (data != {} || data !== {} || data !== null || data !== undefined) {
-                buscarDB.buscarProyecto(data, req.params.id, res);
+                buscarDB.buscarProyecto(req.params.id).then(result => res.json(result)).catch(err => res.json(err));
             }
         }
     });
@@ -84,7 +87,7 @@ rutas.get('/proyectos/:id', proToken, (req, res) => {
 
 
 rutas.get('/herramientas/todas', (req, res) => {
-    buscarDB.obtenertodasherramientas(res);
+    buscarDB.obtenertodasherramientas().then(result => res.json(result)).catch(err => res.json(err));
 
 });
 
