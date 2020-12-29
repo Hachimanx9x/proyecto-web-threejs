@@ -143,6 +143,7 @@ query.buscartalentos = function () {
     usuarios.id,
     usuarios.nombre,
     usuarios.descripcion,
+    palabrasclave.palabra,
     herramientas.herramientanombre,
     herramientas.herramientadescripcion,
     herramientas.herramientanombreIcono
@@ -389,8 +390,8 @@ query.insertcontenido = function (nombre, nombrearchivo, descripcion, bibliograf
         "${bibliografia}"
     );`;
 }
-query.insertlistcontenido = function (entregable, contenido) {
-    return `INSERT INTO listacontenidos (entregable , contenido ) VALUES (
+query.insertlistcontenido = function (entregable, contenido, actividad) {
+    return `INSERT INTO listacontenidos (entregable , contenido, actividad ) VALUES (
         ${entregable}, ${contenido}
     ); `;
 }

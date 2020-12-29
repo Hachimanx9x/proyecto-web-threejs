@@ -1,3 +1,4 @@
+
 USE proyectoweb;
 
 INSERT INTO IDIOMAS (idiomanombre, idiomanivel) VALUES ("Ingles","A1 Beginner");

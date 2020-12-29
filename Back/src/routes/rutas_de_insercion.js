@@ -87,7 +87,8 @@ ftpminio.listObjects(id);
 
 
 rutas.post('/proyecto/insertarArchivo2', (req, res) => {
-  console.log(req.files);
+  console.log(req.body);
+  const { bucket } = req.body;
   const { archivo } = req.files;
   //console.log(`entro el archivo ${archivo.name}`); 
   archivo.mv(__dirname + '/tmp/' + archivo.name, (err) => {
@@ -99,12 +100,11 @@ rutas.post('/proyecto/insertarArchivo2', (req, res) => {
         'example': 5678
       }
 
-      ftpminio.putFile('default', archivo.name, path.join(__dirname, `/tmp/${archivo.name}`), metaData);
+      ftpminio.putFile(bucket, archivo.name, path.join(__dirname, `/tmp/${archivo.name}`), metaData).then(resul => res.json({ estado: "completado" })).catch(err => res.json(err));
     } else {
       console.log(err)
     }
   });
-  res.json({ msj: "terminado" })
 });
 
 

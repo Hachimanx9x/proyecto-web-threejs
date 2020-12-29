@@ -6,8 +6,34 @@ const LLAVE = 'misecretos';
 const funcionesDB = () => {
     console.log("funciones de la base de datos")
 }
-//  return new Promise((res, rej) => {}).catch(e => { console.log(e) });
 
+/*
+ ________  __  __                     
+|        \|  \|  \                    
+| $$$$$$$$ \$$| $$  ______    _______ 
+| $$__    |  \| $$ /      \  /       \
+| $$  \   | $$| $$|  $$$$$$\|  $$$$$$$
+| $$$$$   | $$| $$| $$    $$ \$$    \ 
+| $$      | $$| $$| $$$$$$$$ _\$$$$$$\
+| $$      | $$| $$ \$$     \|       $$
+ \$$       \$$ \$$  \$$$$$$$ \$$$$$$$ 
+                                       */
+
+
+
+/**
+ * 
+  _______              __                __                                     
+|       \            |  \              |  \                                    
+| $$$$$$$\  ______  _| $$_     ______  | $$____    ______    _______   ______  
+| $$  | $$ |      \|   $$ \   |      \ | $$    \  |      \  /       \ /      \ 
+| $$  | $$  \$$$$$$\\$$$$$$    \$$$$$$\| $$$$$$$\  \$$$$$$\|  $$$$$$$|  $$$$$$\
+| $$  | $$ /      $$ | $$ __  /      $$| $$  | $$ /      $$ \$$    \ | $$    $$
+| $$__/ $$|  $$$$$$$ | $$|  \|  $$$$$$$| $$__/ $$|  $$$$$$$ _\$$$$$$\| $$$$$$$$
+| $$    $$ \$$    $$  \$$  $$ \$$    $$| $$    $$ \$$    $$|       $$ \$$     \
+ \$$$$$$$   \$$$$$$$   \$$$$   \$$$$$$$ \$$$$$$$   \$$$$$$$ \$$$$$$$   \$$$$$$$
+ */
+//--------------------------------------------------------------
 funcionesDB.insertLenguaje = (obj) => {
     return new Promise((res, rej) => {
         const { nombre, nivel } = obj;
@@ -33,7 +59,6 @@ funcionesDB.insertLenguaje = (obj) => {
 
 
 }
-//--------------------------------------------------------------
 funcionesDB.insertUser = (obj) => {
     return new Promise((res, rej) => {
         const { email,
@@ -838,18 +863,18 @@ funcionesDB.insertContent = (obj) => {
 //---------------------------------------------------------------------
 funcionesDB.insertlistContent = (obj) => {
     return new Promise((res, rej) => {
-        const { entregable, contenido } = obj;
+        const { entregable, contenido, actividad } = obj;
         promesa.then((result) => {
             const { mariaDB, sqlite, vDB } = result;
             if (vDB) {
-                mariaDB.query(Query.insertlistcontenido(entregable, contenido), (err) => {
+                mariaDB.query(Query.insertlistcontenido(entregable, contenido, actividad), (err) => {
                     if (!err) {
                         res({ msj: "success" });
                     } else { rej({ msj: "error" }); }
                 });
             }
             else {
-                sqlite.all(Query.insertlistcontenido(entregable, contenido), (err) => {
+                sqlite.all(Query.insertlistcontenido(entregable, contenido, actividad), (err) => {
                     if (!err) {
                         res({ msj: "success" });
                     } else { rej({ msj: "error" }); }

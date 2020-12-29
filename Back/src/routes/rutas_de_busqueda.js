@@ -39,7 +39,12 @@ rutas.get('/escritorio', proToken, (req, res) => {
         } else {
             if (data.rows[0] != null || data.rows.length > 0) {
                 //console.log(data.rows);  
-                buscarDB.obtenerEscritorio(data).then(result => res.json(result)).catch(err => res.json(err));
+                buscarDB.obtenerEscritorioActividades(data).then(result => {
+                    //res.json(result)
+                    buscarDB.obtenerEscritorioProyectos(data).then(result2 => {
+                        res.json({ actividades: result.actividades, proyectos: result2.proyectos });
+                    }).catch(err2 => res.json(err2));
+                }).catch(err => res.json(err));
             } else {
                 console.log("Basio perro "); res.json({ estado: "no se encontro nada" });
             }
@@ -50,6 +55,15 @@ rutas.get('/escritorio', proToken, (req, res) => {
 
 
 rutas.get('/talentos', proToken, (req, res) => {
+    jwt.verify(req.token, LLAVE, (err, data) => {
+        if (!err) {
+            if (data.rows[0] != null || data.rows.length > 0) {
+                buscarDB.buscartalentogeneral(data.rows[0].id).then(result => res.json(result)).catch(err => res.json(err));
+            }
+        }
+    })
+});
+rutas.get('/usuarios:/id', proToken, (req, res) => {
     jwt.verify(req.token, LLAVE, (err, data) => {
         if (!err) {
             if (data.rows[0] != null || data.rows.length > 0) {
@@ -122,7 +136,7 @@ rutas.get('/proyecto/listado/:id', async (req, res) => {
     //const {user} = req.body; 
     // const {id,name } = req.body;
 
-    ftpminio.listObjects(id, user, res);
+    ftpminio.listObjects(id).then(result => res.json(result)).catch(err => res.json(err));
 });
 
 

@@ -59,7 +59,7 @@ funcionesDB.obtenerToken = (body) => {
 
 }
 
-funcionesDB.obtenerEscritorio = async (body) => {
+funcionesDB.obtenerEscritorioActividades = async (body) => {
     return new Promise((res, rej) => {
         const { id } = body.rows[0];
         if (id !== undefined) {
@@ -68,31 +68,22 @@ funcionesDB.obtenerEscritorio = async (body) => {
                 if (vDB) {
                     await mariaDB.query(Query.obtenerEscritorioActividades(id), async (err, rows) => {
                         if (!err) {
-                            await mariaDB.query(Query.obtenerEscritorioProyectos(id), async (err2, rows2) => {
-                                if (!err2) {
-                                    res({
-                                        actividades: rows,
-                                        proyectos: rows2
+                            res({
+                                actividades: rows
+                            });
 
-                                    });
-                                } else { rej({ err }) }
-                            })
-
-                        } else { rej({ err }) }
+                        } else {
+                            rej({ err })
+                        }
 
                     });
                 } else {
                     sqlite.all(Query.obtenerEscritorioActividades(id), (err, rows) => {
                         if (!err) {
-                            sqlite.all(Query.obtenerEscritorioProyectos(id), (err2, rows2) => {
-                                if (!err2) {
-                                    res({
-                                        actividades: rows,
-                                        proyectos: rows2
-
-                                    });
-                                } else { rej({ err }) }
+                            res({
+                                actividades: rows
                             });
+
                         } else {
                             rej({ err })
                         }
@@ -103,7 +94,26 @@ funcionesDB.obtenerEscritorio = async (body) => {
     })
     // console.log(body.rows[0].persona);
 }
-
+funcionesDB.obtenerEscritorioProyectos = async (body) => {
+    return new Promise((res, rej) => {
+        const { id } = body.rows[0];
+        if (id !== undefined) {
+            promesa.then(async (result) => {
+                const { mariaDB, sqlite, vDB } = result;
+                if (vDB) {
+                    mariaDB.query(Query.obtenerEscritorioProyectos(id), async (err, rows) => {
+                        if (!err) { res({ proyectos: rows }); } else { rej({ err }) }
+                    })
+                } else {
+                    sqlite.all(Query.obtenerEscritorioProyectos(id), (err, rows) => {
+                        if (!err) { res({ proyectos: rows }); } else { rej({ err }) }
+                    });
+                }
+            });
+        }//fin del i
+    })
+    // console.log(body.rows[0].persona);
+}
 funcionesDB.obtenertalentosGeneral = async () => {
     return new Promise((res, rej) => {
         promesa.then(async (result) => {
@@ -193,32 +203,17 @@ funcionesDB.buscartalentogeneral = async (idUser) => {
             if (vDB) {
                 await mariaDB.query(Query.buscartalentos(), (err, rows, fields) => {
                     if (!err) {
-                        console.log(rows);
-                        for (var i = 0; i < rows.length; i++) {
-                            // console.log(rows[i].id);
-                            if (rows[i].id == idUser) {
-                                console.log("entro");
-                                rows.splice(i, 1);
-                            }
-                        }
-                        res({ rows });
+                        const data = rearmas(idUser, rows)
+                        res({ data });
+
                     } else { rej(err) }
                 });
             } else {
                 sqlite.all(Query.buscartalentos(), (err, rows) => {
                     if (!err) {
-                        console.log(idUser);
-                        //console.log(rows);
-                        var array = [];
-                        var cont = 0;
-                        for (var i = 0; i < rows.length; i++) {
-                            // console.log(rows[i].id);
-                            if (rows[i].id !== idUser) {
-                                array[cont] = rows[i];
-                                cont += 1;
-                            }
-                        }
-                        res({ array });
+                        
+                        const data = rearmas(idUser, rows)
+                        res({ data });
                     } else { rej(err) }
                 });
             }
@@ -226,6 +221,66 @@ funcionesDB.buscartalentogeneral = async (idUser) => {
     });
 }
 
+function rearmas (idUser, rows) {
+    //   console.log(idUser);
+    //console.log(rows);
+    var array = [];
+    var cont = 0;
+    for (var i = 0; i < rows.length; i++) {
+        // console.log(rows[i].id);
+        if (rows[i].id !== idUser) {
+            array[cont] = rows[i];
+            cont += 1;
+        }
+    }
+    var tempid=0,temp, herramientas, palabra;
+    var defarray = [];
+    var model ={
+        userid:null,
+        nombre:null,
+        descripcion:null,
+        herramientas : [] ,
+        palabras:[]
+    }
+    for (var i = 0; i < array.length; i++) {
+        if (tempid != array[i].id) {
+            
+            tempid= array[i].id;
+            model.userid =tempid
+            model.nombre = array[i].nombre;
+            model.descripcion= array[i].descripcion;
+            defarray.push(model);
+        } 
+    }
+    var herramientatemp; 
+     for (var i = 0; i < defarray.length; i++) {
+        for (var j = 0; j < array.length; j++) {
+            if (defarray[i].userid === array[j].id){
+                if(herramientatemp !=array[j].herramientanombre ){
+                    defarray[i].herramientas.push({
+                        nombre : array[j].herramientanombre,
+                        descripcion: array[j].herramientadescripcion,
+                        icono:array[j].herramientanombreIcono
+                    })
+                    herramientatemp=array[j].herramientanombre
+                }
+            }
+        }
+    }
+    var palabratemp; 
+     for (var i = 0; i < defarray.length; i++) {
+        for (var j = 0; j < array.length; j++) {
+            if (defarray[i].userid === array[j].id){
+                if(palabratemp !=array[j].palabra ){
+                    defarray[i].palabras.push({ palabra : array[j].palabra  })
+                    palabratemp= array[j].palabra ; 
+                }
+            }
+        }
+    }
+   // console.log(defarray); 
+    return defarray;
+}
 
 //-----------------------------------------------------
 funcionesDB.obtenertodasIdiomas = async () => {

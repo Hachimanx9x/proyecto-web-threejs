@@ -209,6 +209,8 @@ FOREIGN KEY(herramientametodologia) REFERENCES herramientasmetodologia(id));
 CREATE TABLE listacontenidos(
 entregable INT , 
 contenido INT,
+actividad INT,
+FOREIGN KEY(actividad) REFERENCES actividades(id),
 FOREIGN KEY(entregable) REFERENCES entregables(id),
 FOREIGN KEY(contenido) REFERENCES contenidos(id));
 
