@@ -120,7 +120,7 @@ rutas.get('/proyecto/contenido/:buque/:name', (req, res) => {
      if(buscarDB.buscarProyecto(req.params)){
          
      }*/
-    console.log(req.params);
+    //console.log(req.params);
     const { buque, name } = req.params;
     // const {id,name } = req.body;
 
@@ -128,13 +128,7 @@ rutas.get('/proyecto/contenido/:buque/:name', (req, res) => {
 
 
 });
-rutas.get('/proyecto/contenidos', (req, res) => {
 
-
-    ftpminio.getFile(res);
-
-
-});
 rutas.get('/proyecto/listado/:id', async (req, res) => {
     /*
      if(buscarDB.buscarProyecto(req.params)){

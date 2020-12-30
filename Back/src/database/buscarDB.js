@@ -69,7 +69,7 @@ funcionesDB.obtenerEscritorioActividades = async (body) => {
                     await mariaDB.query(Query.obtenerEscritorioActividades(id), async (err, rows) => {
                         if (!err) {
                             res({
-                                actividades: rows
+                                actividades: ponercontenidoenactividades(rows)
                             });
 
                         } else {
@@ -81,7 +81,7 @@ funcionesDB.obtenerEscritorioActividades = async (body) => {
                     sqlite.all(Query.obtenerEscritorioActividades(id), (err, rows) => {
                         if (!err) {
                             res({
-                                actividades: rows
+                                actividades: ponercontenidoenactividades(rows)
                             });
 
                         } else {
@@ -1221,6 +1221,11 @@ function obtenerproyectos (array) {
         }
     }
     return arraydef;
+}
+
+function ponercontenidoenactividades (array) {
+
+    return array;
 }
 //-------------------
 module.exports = funcionesDB;

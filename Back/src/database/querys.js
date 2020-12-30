@@ -21,6 +21,7 @@ query.login = function (obj) {
 query.obtenerEscritorioActividades = function (id) {
     return (`SELECT  
     usuarios.nombre,
+    actividades.id,
     actividades.actividadtitulo,
     actividades.actividaddescripcion,
     actividades.actividadestado,
@@ -32,6 +33,18 @@ query.obtenerEscritorioActividades = function (id) {
     JOIN listaactividades ON integrantes.id = listaactividades.integrante
     JOIN actividades ON listaactividades.actividad = actividades.id
     WHERE usuarios.id = ${id}; `);
+}
+query.obtenercontenidoactividad = function (id) {
+    return `SELECT 
+    contenidos.contenidonombre,
+    contenidos.contenidonombrearchivo,
+    contenidos.contenidodescripcion,
+    contenidos.contenidobibliografica
+    
+     FROM contenidos 
+    JOIN listacontenidos ON contenidos.id = listacontenidos.contenido
+    JOIN actividades ON listacontenidos.actividad = actividades.id
+    WHERE actividades.id =${id}`;
 }
 query.obtenerEscritorioProyectos = function (id) {
     return (`SELECT 
