@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const promesa = require('../database');
 const Query = require('./querys');
 const LLAVE = 'misecretos';
-
+const minio = require('../ftp/peticiones')
 const funcionesDB = () => {
     console.log("funciones de la base de datos")
 }
@@ -1224,9 +1224,29 @@ function obtenerproyectos (array) {
 }
 
 function ponercontenidoenactividades (array) {
+    var arraydef = [];
+    var acttemp;
+    for (var i = 0; i < array.length; i++) {
+        if (acttemp != array[i].actividadtitulo) {
+            arraydef.push({
+                proyecto: array[i].id,
+                usuario: array[i].nombre,
+                actividad: array[i].actividadtitulo,
+                descripcion: array[i].actividaddescripcion,
+                estado: array[i].actividadestado,
+                entrega: array[i].actividadfechaentrega,
+                contenido: {
+                    nombre: array[i].contenidonombre,
+                    url: `http://localhost:3030/proyecto/contenido/proyecto${array[i].id}/${array[i].contenidonombrearchivo}`
+                }
+            })
+        }
+    }
+    return arraydef;
 
-    return array;
 }
+
+
 //-------------------
 module.exports = funcionesDB;
 

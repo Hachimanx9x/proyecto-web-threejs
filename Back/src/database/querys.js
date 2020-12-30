@@ -19,31 +19,38 @@ query.login = function (obj) {
     return `SELECT * FROM usuarios WHERE email = "${email}" AND contrasena = "${password}" `
 }
 query.obtenerEscritorioActividades = function (id) {
-    return (`SELECT  
+    return (` SELECT  
     usuarios.nombre,
-    actividades.id,
+    proyectos.id,
     actividades.actividadtitulo,
     actividades.actividaddescripcion,
     actividades.actividadestado,
-    actividades.actividadfechaentrega
+    actividades.actividadfechaentrega,
+    contenidos.contenidonombre
     
     FROM listaintegrantes
     JOIN integrantes ON listaintegrantes.integrante=  integrantes.id  
     JOIN usuarios ON integrantes.usuario = usuarios.id
     JOIN listaactividades ON integrantes.id = listaactividades.integrante
     JOIN actividades ON listaactividades.actividad = actividades.id
-    WHERE usuarios.id = ${id}; `);
+    JOIN listacontenidos ON actividades.id = listacontenidos.actividad
+    JOIN contenidos ON listacontenidos.contenido = contenidos.id
+    JOIN proyectos ON listaintegrantes.proyecto = proyectos.id
+    WHERE usuarios.id = ${id}  `);
 }
 query.obtenercontenidoactividad = function (id) {
     return `SELECT 
-    contenidos.contenidonombre,
+
     contenidos.contenidonombrearchivo,
-    contenidos.contenidodescripcion,
-    contenidos.contenidobibliografica
+    proyectos.id
     
      FROM contenidos 
     JOIN listacontenidos ON contenidos.id = listacontenidos.contenido
     JOIN actividades ON listacontenidos.actividad = actividades.id
+    JOIN listaactividades ON actividades.id = listaactividades.actividad
+    JOIN integrantes ON  listaactividades.integrante =  integrantes.id
+    JOIN listaintegrantes ON integrantes.id = listaintegrantes.integrante
+    JOIN proyectos ON listaintegrantes.proyecto = proyectos.id
     WHERE actividades.id =${id}`;
 }
 query.obtenerEscritorioProyectos = function (id) {
