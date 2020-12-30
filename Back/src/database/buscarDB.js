@@ -150,7 +150,7 @@ funcionesDB.obtenerProyecto = async (body) => {
                     await mariaDB.query(Query.obtenerProyecto(id), (err, rows) => {
 
                         if (!err) {
-                            res({ proyectos: rows });
+                            res({ proyectos: obtenerproyectos(rows) });
                         } else {
                             rej({
                                 estado: "vulnerado",
@@ -161,7 +161,7 @@ funcionesDB.obtenerProyecto = async (body) => {
                 } else {
                     sqlite.all(Query.obtenerProyecto(id), (err, rows) => {
                         if (!err) {
-                            res({ proyectos: rows });
+                            res({ proyectos: obtenerproyectos(rows) });
                         } else {
                             rej({
                                 estado: "vulnerado",
@@ -1202,32 +1202,26 @@ function rearmarcontactos (array) {
     // console.log(arraydef);
     return arraydef;
 }
+
+
+function obtenerproyectos (array) {
+    var arraydef = [];
+    var idproyecto;
+    for (var i = 0; i < array.length; i++) {
+        if (idproyecto != array[i].id) {
+            idproyecto = array[i].id;
+            arraydef.push({
+                idproyecto,
+                pronombre: array[i].proyectonombre,
+                prodescripcion: array[i].proyectodescripcion,
+                estado: array[i].proyectoestado,
+                icono: `http://localhost:3030/proyecto/contenido/proyecto${array[i].id}/${array[i].proyectoicon}`,
+                banner: `http://localhost:3030/proyecto/contenido/proyecto${array[i].id}/${array[i].proyectobanner}`
+            })
+        }
+    }
+    return arraydef;
+}
 //-------------------
 module.exports = funcionesDB;
 
-/*
-const {correo, password}= req.params;
-//console.log(`correo => ${correo} y la contraseña es => ${password}`);
-const query=`
-SELECT * FROM usuarios
-WHERE
-correoElectronico = "${correo}"
-AND
-contrasena = "${password}"
-`;
- mariaDB.query(query,(err,rows , fields)=>{
-    if(!err){
-      // res.json(rows);
-        const token = jwt.sign({rows},LLAVE);
-        res.json({token});
-
-    }else{
-        res.json("Usuairo no encontrado");
-        console.log(err);
-    }
- });
-//  console.log(`id : ${id} ,`)
-
-
-
-*/

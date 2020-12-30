@@ -86,14 +86,16 @@ peticiones.putFile = async (bucket, namefile, file, fileStat) => {
 
 }
 
-peticiones.creatBucket = async (name) => {
-
-  await minio.makeBucket(name, minio.ubicacion, function (e) {
-    if (e) {
-      return console.log(e)
-    }
-    console.log("cubeta creada exitosamente")
+peticiones.creatBucket = (name) => {
+  return new Promise((res, rej) => {
+    minio.makeBucket(name, minio.ubicacion, function (e) {
+      if (e) {
+        rej(e);
+      }
+      res(true);
+    });
   });
+
 }
 
 

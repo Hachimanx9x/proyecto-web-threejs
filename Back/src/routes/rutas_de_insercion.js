@@ -202,7 +202,15 @@ rutas.post('/insert/tools', (req, res) => {
   }
 
 });
+rutas.post('/api/crearbucket', (req, res) => {
+  const { bucket } = req.body;
+  ftpminio.creatBucket(bucket).then(r => {
+    if (r) {
+      res.json({ msj: "creado" })
+    }
+  }).catch(err => { res.json(err) });
 
+});
 
 
 module.exports = rutas;
