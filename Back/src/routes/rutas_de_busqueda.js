@@ -63,11 +63,20 @@ rutas.get('/talentos', proToken, (req, res) => {
         }
     })
 });
-rutas.get('/usuarios:/id', proToken, (req, res) => {
+rutas.get('/usuarios/:id', proToken, (req, res) => {
     jwt.verify(req.token, LLAVE, (err, data) => {
         if (!err) {
             if (data.rows[0] != null || data.rows.length > 0) {
                 buscarDB.buscartalentogeneral(data.rows[0].id).then(result => res.json(result)).catch(err => res.json(err));
+            }
+        }
+    })
+});
+rutas.get(`/contactos`, proToken, (req, res) => {
+    jwt.verify(req.token, LLAVE, (err, data) => {
+        if (!err) {
+            if (data.rows[0] != null || data.rows.length > 0) {
+                buscarDB.obtenerContactosUsuario(data).then(result => res.json(result)).catch(err => res.json(err));
             }
         }
     })

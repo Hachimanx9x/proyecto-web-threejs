@@ -154,6 +154,24 @@ query.buscartalentos = function () {
     JOIN listaherramientas ON usuarios.id = listaherramientas.usuario
     JOIN herramientas ON listaherramientas.herramientausada = herramientas.id; `;
 }
+
+query.buscarcontactosusuario = function (id) {
+    return `SELECT 
+    usuarios.id,
+    usuarios.nombre,
+    palabrasclave.palabra,
+    contactos.preferencias
+    FROM usuarios
+    JOIN contactos ON usuarios.id = contactos.contactousuario
+    JOIN palabrasclave ON usuarios.id = palabrasclave.pcusuario
+    WHERE usuarios.id IN (
+    SELECT 
+    listacontactos.usuario
+    FROM usuarios
+    JOIN listacontactos ON usuarios.id = listacontactos.usuario
+    WHERE usuarios.id=${id}
+    ) ; `;
+}
 //-------------busquedas por tablas
 query.obtenertodasIdiomas = function () { return `SELECT * FROM idiomas ; `; }
 query.obtenertodasHabilidades = function () { return `SELECT * FROM habilidades ; `; }

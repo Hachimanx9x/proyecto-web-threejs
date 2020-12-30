@@ -2,7 +2,7 @@
 -- 
 USE proyectoweb; 
 
- DROP DATABASE proyectoweb;
+-- DROP DATABASE proyectoweb;
 
 -- SELECT * FROM usuarios WHERE email = "micorreo2@uao.edu.co" AND contrasena = "contraseña123";
 
@@ -155,17 +155,33 @@ USE proyectoweb;
 -- JOIN alfas ON listaalfas.alfa = alfas.id
 --  WHERE proyectos.id = 1 ; 
 
---  SELECT 
---  usuarios.id,
---  usuarios.nombre,
---  usuarios.descripcion,
---  herramientas.herramientanombre,
---  herramientas.herramientadescripcion,
---  herramientas.herramientanombreIcono
---  FROM usuarios
---  JOIN palabrasclave ON usuarios.id = palabrasclave.pcusuario
---  JOIN listaherramientas ON usuarios.id = listaherramientas.usuario
---  JOIN herramientas ON listaherramientas.herramientausada = herramientas.id; 
+-- SELECT 
+--     usuarios.id,
+--     usuarios.nombre,
+--     usuarios.descripcion,
+--     palabrasclave.palabra,
+--     herramientas.herramientanombre,
+--     herramientas.herramientadescripcion,
+--     herramientas.herramientanombreIcono
+--     FROM usuarios
+--     JOIN palabrasclave ON usuarios.id = palabrasclave.pcusuario
+--     JOIN listaherramientas ON usuarios.id = listaherramientas.usuario
+--     JOIN herramientas ON listaherramientas.herramientausada = herramientas.id;
+
+SELECT 
+usuarios.id,
+usuarios.nombre,
+palabrasclave.palabra,
+contactos.preferencias
+FROM usuarios
+JOIN contactos ON usuarios.id = contactos.contactousuario
+JOIN palabrasclave ON usuarios.id = palabrasclave.pcusuario
+WHERE usuarios.id IN (
+SELECT 
+listacontactos.usuario
+FROM usuarios
+JOIN listacontactos ON usuarios.id = listacontactos.usuario
+WHERE usuarios.id=1
+) ; 
 
  
-
