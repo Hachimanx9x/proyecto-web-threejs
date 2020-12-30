@@ -102,7 +102,9 @@ funcionesDB.obtenerEscritorioProyectos = async (body) => {
                 const { mariaDB, sqlite, vDB } = result;
                 if (vDB) {
                     mariaDB.query(Query.obtenerEscritorioProyectos(id), async (err, rows) => {
-                        if (!err) { res({ proyectos: rows }); } else { rej({ err }) }
+                        if (!err) {
+                            res(rearmarProyectosescri(rows));
+                        } else { rej({ err }) }
                     })
                 } else {
                     sqlite.all(Query.obtenerEscritorioProyectos(id), (err, rows) => {
@@ -124,12 +126,12 @@ funcionesDB.obtenerContactosUsuario = async (body) => {
             const { mariaDB, sqlite, vDB } = result;
             if (vDB) {
                 mariaDB.query(Query.buscarcontactosusuario(id), async (err, rows) => {
-                    if (!err) { res({ contactos: rows }); } else { rej({ err }) }
+                    if (!err) { res({ contactos: rearmarcontactos(rows) }); } else { rej({ err }) }
                 })
             }
             else {
                 sqlite.all(Query.buscarcontactosusuario(id), (err, rows) => {
-                    if (!err) { res({ contactos: rows }); } else { rej({ err }) }
+                    if (!err) { res({ contactos: rearmarcontactos(rows) }); } else { rej({ err }) }
                 });
             }
         })
@@ -1166,6 +1168,40 @@ function rearmas (idUser, rows) {
     return defarray;
 }
 
+function rearmarcontactos (array) {
+    var arraydef = [];
+    var iduser;
+    var palabras = [];
+
+    for (var i = 0; i < array.length; i++) {
+        if (iduser != array[i].id) {
+
+            arraydef.push({
+                iduser: array[i].id,
+                nombre: array[i].nombre,
+                palabras,
+                preferencia: array[i].preferencias
+            })
+            iduser = array[i].id
+        }
+    }
+
+    for (var i = 0; i < arraydef.length; i++) {
+        var palabratemp; var temparray = [];
+        for (var j = 0; j < array.length; j++) {
+            if (arraydef[i].iduser == array[j].id) {
+                if (palabratemp != array[j].palabra) {
+                    temparray.push(array[j].palabra);
+                    palabratemp = array[j].palabra;
+                }
+            }
+        }
+        arraydef[i].palabras = temparray;
+        temparray = [];
+    }
+    // console.log(arraydef);
+    return arraydef;
+}
 //-------------------
 module.exports = funcionesDB;
 
