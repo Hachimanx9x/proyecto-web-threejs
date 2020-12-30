@@ -34,7 +34,9 @@ query.obtenerEscritorioActividades = function (id) {
     WHERE usuarios.id = ${id}; `);
 }
 query.obtenerEscritorioProyectos = function (id) {
-    return (`SELECT proyectos.proyectonombre,
+    return (`SELECT 
+    proyectos.id,
+    proyectos.proyectonombre,
     practicas.practicanombre,
     alfas.alfanombre,
     alfas.alfaestado

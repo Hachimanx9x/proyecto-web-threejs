@@ -106,7 +106,7 @@ funcionesDB.obtenerEscritorioProyectos = async (body) => {
                     })
                 } else {
                     sqlite.all(Query.obtenerEscritorioProyectos(id), (err, rows) => {
-                        if (!err) { res({ proyectos: rows }); } else { rej({ err }) }
+                        if (!err) { res(rearmarProyectosescri(rows)); } else { rej({ err }) }
                     });
                 }
             });
@@ -114,6 +114,67 @@ funcionesDB.obtenerEscritorioProyectos = async (body) => {
     })
     // console.log(body.rows[0].persona);
 }
+function rearmarProyectosescri (array) {
+    var arraydef = [];
+
+
+    var idproyecto = null
+    var proyectonombre = null
+    var practicas = []
+    var practicanombre = null;
+    var alfas = [];
+    var alfanombre = null, alfaestado = null;
+
+    for (var i = 0; i < array.length; i++) {
+        console.log
+        if (idproyecto != array[i].id) {
+            idproyecto = array[i].id;
+            proyectonombre = array[i].proyectonombre;
+            arraydef.push({ idproyecto, proyectonombre, practicas });
+        }
+    }
+    //console.log(arraydef)
+    for (var i = 0; i < arraydef.length; i++) {
+        for (var j = 0; j < array.length; j++) {
+            if (arraydef[i].idproyecto == array[j].id) {
+                if (practicanombre != array[j].practicanombre) {
+                    practicanombre = array[j].practicanombre;
+                    arraydef[i].practicas.push({ practicanombre, alfas });
+                }
+            }
+        }
+
+    }
+    //console.log(arraydef[0].practicas)
+    var alfastemp = [];
+    for (var i = 0; i < arraydef.length; i++) {
+        for (var j = 0; j < arraydef[i].practicas.length; j++) {
+            for (var k = 0; k < array.length; k++) {
+
+                if (arraydef[i].practicas[j].practicanombre == array[k].practicanombre) {
+                    if (alfanombre != array[k].alfanombre) {
+                        // console.log("cambio");
+                        //  console.log(arraydef[i].practicas[j].practicanombre);
+                        alfanombre = array[k].alfanombre;
+                        alfaestado = array[k].alfaestado;
+                        alfastemp.push({ alfanombre, alfaestado });
+                        // arraydef[i].practicas[j].alfas.push({ alfanombre, alfaestado })
+
+                    }
+                }
+
+            }
+            arraydef[i].practicas[j].alfas = alfastemp
+            alfastemp = [];
+        }
+    }
+
+
+    //console.log(arraydef[0].practicas[0].alfas[0]);
+    return { proyectos: arraydef }
+}
+
+
 funcionesDB.obtenertalentosGeneral = async () => {
     return new Promise((res, rej) => {
         promesa.then(async (result) => {
@@ -211,7 +272,7 @@ funcionesDB.buscartalentogeneral = async (idUser) => {
             } else {
                 sqlite.all(Query.buscartalentos(), (err, rows) => {
                     if (!err) {
-                        
+
                         const data = rearmas(idUser, rows)
                         res({ data });
                     } else { rej(err) }
@@ -233,52 +294,52 @@ function rearmas (idUser, rows) {
             cont += 1;
         }
     }
-    var tempid=0,temp, herramientas, palabra;
+    var tempid = 0, temp, herramientas, palabra;
     var defarray = [];
-    var model ={
-        userid:null,
-        nombre:null,
-        descripcion:null,
-        herramientas : [] ,
-        palabras:[]
+    var model = {
+        userid: null,
+        nombre: null,
+        descripcion: null,
+        herramientas: [],
+        palabras: []
     }
     for (var i = 0; i < array.length; i++) {
         if (tempid != array[i].id) {
-            
-            tempid= array[i].id;
-            model.userid =tempid
+
+            tempid = array[i].id;
+            model.userid = tempid
             model.nombre = array[i].nombre;
-            model.descripcion= array[i].descripcion;
+            model.descripcion = array[i].descripcion;
             defarray.push(model);
-        } 
+        }
     }
-    var herramientatemp; 
-     for (var i = 0; i < defarray.length; i++) {
+    var herramientatemp;
+    for (var i = 0; i < defarray.length; i++) {
         for (var j = 0; j < array.length; j++) {
-            if (defarray[i].userid === array[j].id){
-                if(herramientatemp !=array[j].herramientanombre ){
+            if (defarray[i].userid === array[j].id) {
+                if (herramientatemp != array[j].herramientanombre) {
                     defarray[i].herramientas.push({
-                        nombre : array[j].herramientanombre,
+                        nombre: array[j].herramientanombre,
                         descripcion: array[j].herramientadescripcion,
-                        icono:array[j].herramientanombreIcono
+                        icono: array[j].herramientanombreIcono
                     })
-                    herramientatemp=array[j].herramientanombre
+                    herramientatemp = array[j].herramientanombre
                 }
             }
         }
     }
-    var palabratemp; 
-     for (var i = 0; i < defarray.length; i++) {
+    var palabratemp;
+    for (var i = 0; i < defarray.length; i++) {
         for (var j = 0; j < array.length; j++) {
-            if (defarray[i].userid === array[j].id){
-                if(palabratemp !=array[j].palabra ){
-                    defarray[i].palabras.push({ palabra : array[j].palabra  })
-                    palabratemp= array[j].palabra ; 
+            if (defarray[i].userid === array[j].id) {
+                if (palabratemp != array[j].palabra) {
+                    defarray[i].palabras.push({ palabra: array[j].palabra })
+                    palabratemp = array[j].palabra;
                 }
             }
         }
     }
-   // console.log(defarray); 
+    // console.log(defarray); 
     return defarray;
 }
 
