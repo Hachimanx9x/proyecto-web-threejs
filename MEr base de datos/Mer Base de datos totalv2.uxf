@@ -4,7 +4,7 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>819</x>
+      <x>774</x>
       <y>423</y>
       <w>189</w>
       <h>225</h>
@@ -30,7 +30,7 @@ linkedin: cadena</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1161</x>
+      <x>1116</x>
       <y>729</y>
       <w>189</w>
       <h>162</h>
@@ -54,7 +54,7 @@ historial: llaveforanea
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1512</x>
+      <x>1467</x>
       <y>288</y>
       <w>189</w>
       <h>126</h>
@@ -70,7 +70,7 @@ practicaDescripcion:cadena
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1179</x>
+      <x>1134</x>
       <y>333</y>
       <w>189</w>
       <h>99</h>
@@ -87,7 +87,7 @@ metodologiaconsejo:cadena
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>900</x>
+      <x>855</x>
       <y>315</y>
       <w>72</w>
       <h>126</h>
@@ -101,7 +101,7 @@ tiene &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1359</x>
+      <x>1314</x>
       <y>234</y>
       <w>171</w>
       <h>126</h>
@@ -115,7 +115,7 @@ tiene &gt;</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1512</x>
+      <x>1467</x>
       <y>540</y>
       <w>189</w>
       <h>99</h>
@@ -132,7 +132,7 @@ alfaestado:cadena
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2142</x>
+      <x>2097</x>
       <y>135</y>
       <w>216</w>
       <h>117</h>
@@ -150,7 +150,7 @@ tecnicabibliografia: cadena
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2124</x>
+      <x>2079</x>
       <y>531</y>
       <w>153</w>
       <h>90</h>
@@ -166,7 +166,7 @@ contenido: llave foranea
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1818</x>
+      <x>1773</x>
       <y>513</y>
       <w>189</w>
       <h>171</h>
@@ -189,7 +189,7 @@ entregablenumero de revisiones: entero
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1800</x>
+      <x>1755</x>
       <y>387</y>
       <w>225</w>
       <h>117</h>
@@ -207,7 +207,7 @@ rolperfil recomendado: cadena
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1692</x>
+      <x>1647</x>
       <y>576</y>
       <w>144</w>
       <h>180</h>
@@ -221,7 +221,7 @@ tiene &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1998</x>
+      <x>1953</x>
       <y>567</y>
       <w>144</w>
       <h>45</h>
@@ -235,7 +235,7 @@ tiene &gt;</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1521</x>
+      <x>1476</x>
       <y>126</y>
       <w>189</w>
       <h>99</h>
@@ -253,7 +253,7 @@ bg=red
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1827</x>
+      <x>1782</x>
       <y>108</y>
       <w>189</w>
       <h>153</h>
@@ -273,7 +273,7 @@ tenica: llave foranea</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1359</x>
+      <x>1314</x>
       <y>162</y>
       <w>279</w>
       <h>144</h>
@@ -287,7 +287,7 @@ tiene &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1692</x>
+      <x>1647</x>
       <y>306</y>
       <w>162</w>
       <h>72</h>
@@ -301,7 +301,7 @@ tiene &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1701</x>
+      <x>1656</x>
       <y>153</y>
       <w>144</w>
       <h>45</h>
@@ -315,7 +315,7 @@ tiene &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2007</x>
+      <x>1962</x>
       <y>171</y>
       <w>153</w>
       <h>45</h>
@@ -329,7 +329,7 @@ tiene &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1917</x>
+      <x>1872</x>
       <y>675</y>
       <w>423</w>
       <h>117</h>
@@ -343,7 +343,7 @@ m2=0..1
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>270</x>
+      <x>225</x>
       <y>450</y>
       <w>153</w>
       <h>90</h>
@@ -358,7 +358,7 @@ preferencia: bool</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>432</x>
+      <x>387</x>
       <y>621</y>
       <w>198</w>
       <h>99</h>
@@ -375,7 +375,7 @@ habilidad: llave forane
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>234</x>
+      <x>189</x>
       <y>837</y>
       <w>189</w>
       <h>135</h>
@@ -392,7 +392,7 @@ nombreIcono: cadena</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>828</x>
+      <x>783</x>
       <y>756</y>
       <w>189</w>
       <h>90</h>
@@ -409,7 +409,7 @@ rol:llave foranea
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>621</x>
+      <x>576</x>
       <y>594</y>
       <w>216</w>
       <h>99</h>
@@ -423,7 +423,7 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1251</x>
+      <x>1206</x>
       <y>423</y>
       <w>72</w>
       <h>324</h>
@@ -437,7 +437,7 @@ tiene &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1098</x>
+      <x>1053</x>
       <y>792</y>
       <w>81</w>
       <h>144</h>
@@ -451,7 +451,7 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>891</x>
+      <x>846</x>
       <y>639</y>
       <w>72</w>
       <h>135</h>
@@ -465,7 +465,7 @@ tiene &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>972</x>
+      <x>927</x>
       <y>459</y>
       <w>846</w>
       <h>315</h>
@@ -479,7 +479,7 @@ tiene &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>954</x>
+      <x>909</x>
       <y>36</y>
       <w>639</w>
       <h>738</h>
@@ -493,7 +493,7 @@ tiene &gt;</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2178</x>
+      <x>2133</x>
       <y>774</y>
       <w>198</w>
       <h>126</h>
@@ -515,7 +515,7 @@ entregaentregable:llave foranea
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1161</x>
+      <x>1116</x>
       <y>1026</y>
       <w>189</w>
       <h>72</h>
@@ -532,7 +532,7 @@ historiadescripcion:cadena
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1242</x>
+      <x>1197</x>
       <y>882</y>
       <w>72</w>
       <h>162</h>
@@ -546,7 +546,7 @@ tiene &gt;</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1791</x>
+      <x>1746</x>
       <y>738</y>
       <w>198</w>
       <h>126</h>
@@ -569,7 +569,7 @@ reunionvigencia : bool
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1665</x>
+      <x>1620</x>
       <y>891</y>
       <w>144</w>
       <h>72</h>
@@ -583,7 +583,7 @@ tiene &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1611</x>
+      <x>1566</x>
       <y>954</y>
       <w>297</w>
       <h>126</h>
@@ -597,7 +597,7 @@ tiene &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2007</x>
+      <x>1962</x>
       <y>225</y>
       <w>387</w>
       <h>567</h>
@@ -611,7 +611,7 @@ m2=1
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>2403</x>
+      <x>2358</x>
       <y>648</y>
       <w>162</w>
       <h>63</h>
@@ -626,7 +626,7 @@ bg=blue</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1485</x>
+      <x>1440</x>
       <y>864</y>
       <w>189</w>
       <h>99</h>
@@ -640,7 +640,7 @@ eventofechacreacion: fecha</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1332</x>
+      <x>1287</x>
       <y>1413</y>
       <w>198</w>
       <h>90</h>
@@ -658,7 +658,7 @@ fecha:fecha
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1314</x>
+      <x>1269</x>
       <y>1089</y>
       <w>144</w>
       <h>207</h>
@@ -672,7 +672,7 @@ tiene &gt;</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2394</x>
+      <x>2349</x>
       <y>243</y>
       <w>225</w>
       <h>108</h>
@@ -689,7 +689,7 @@ herramientaMbibliografia: cadena
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>819</x>
+      <x>774</x>
       <y>252</y>
       <w>180</w>
       <h>72</h>
@@ -703,7 +703,7 @@ idioma: llave foranea</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>855</x>
+      <x>810</x>
       <y>90</y>
       <w>117</w>
       <h>81</h>
@@ -719,7 +719,7 @@ idiomaNivel: cadena
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>900</x>
+      <x>855</x>
       <y>162</y>
       <w>72</w>
       <h>108</h>
@@ -733,7 +733,7 @@ sabe &gt;</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>1287</x>
+      <x>1242</x>
       <y>450</y>
       <w>162</w>
       <h>63</h>
@@ -746,7 +746,7 @@ bg=blue</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>99</x>
+      <x>54</x>
       <y>738</y>
       <w>243</w>
       <h>63</h>
@@ -761,7 +761,7 @@ bg=blue</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>567</x>
+      <x>522</x>
       <y>837</y>
       <w>207</w>
       <h>72</h>
@@ -775,7 +775,7 @@ herramienta usada: llave foranea</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>720</x>
+      <x>675</x>
       <y>639</y>
       <w>153</w>
       <h>216</h>
@@ -789,7 +789,7 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>414</x>
+      <x>369</x>
       <y>828</y>
       <w>171</w>
       <h>45</h>
@@ -803,7 +803,7 @@ m2=1..n
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2106</x>
+      <x>2061</x>
       <y>414</y>
       <w>252</w>
       <h>63</h>
@@ -817,7 +817,7 @@ herramientametodologia: llave foranea</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1998</x>
+      <x>1953</x>
       <y>441</y>
       <w>126</w>
       <h>117</h>
@@ -831,7 +831,7 @@ tiene &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2349</x>
+      <x>2304</x>
       <y>342</y>
       <w>162</w>
       <h>144</h>
@@ -845,7 +845,7 @@ tiene &gt;</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1512</x>
+      <x>1467</x>
       <y>702</y>
       <w>189</w>
       <h>54</h>
@@ -859,7 +859,7 @@ entregable: llave foranea</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1593</x>
+      <x>1548</x>
       <y>630</y>
       <w>72</w>
       <h>90</h>
@@ -873,7 +873,7 @@ tiene &gt;</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1512</x>
+      <x>1467</x>
       <y>441</y>
       <w>189</w>
       <h>54</h>
@@ -887,7 +887,7 @@ alfa: llave foranea</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1467</x>
+      <x>1422</x>
       <y>468</y>
       <w>81</w>
       <h>126</h>
@@ -901,7 +901,7 @@ tiene &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1692</x>
+      <x>1647</x>
       <y>396</y>
       <w>99</w>
       <h>90</h>
@@ -915,7 +915,7 @@ tiene &gt;</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>990</x>
+      <x>945</x>
       <y>918</y>
       <w>189</w>
       <h>90</h>
@@ -929,7 +929,7 @@ integrante: llave foranea</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1008</x>
+      <x>963</x>
       <y>792</y>
       <w>117</w>
       <h>144</h>
@@ -943,7 +943,7 @@ m2=1..n
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1395</x>
+      <x>1350</x>
       <y>1080</y>
       <w>189</w>
       <h>72</h>
@@ -958,7 +958,7 @@ integrante: llave foranea</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1539</x>
+      <x>1494</x>
       <y>954</y>
       <w>72</w>
       <h>144</h>
@@ -972,7 +972,7 @@ tiene &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1422</x>
+      <x>1377</x>
       <y>1332</y>
       <w>72</w>
       <h>99</h>
@@ -986,7 +986,7 @@ tiene &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1341</x>
+      <x>1296</x>
       <y>1035</y>
       <w>180</w>
       <h>63</h>
@@ -1000,7 +1000,7 @@ tiene &gt;</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1782</x>
+      <x>1737</x>
       <y>1062</y>
       <w>189</w>
       <h>63</h>
@@ -1008,13 +1008,14 @@ tiene &gt;</panel_attributes>
     <panel_attributes>LISTAENTREGAS
 --
 evento : llave foranea
-entrega: llave foranea</panel_attributes>
+entrega: llave foranea
+bg=red</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1791</x>
+      <x>1746</x>
       <y>918</y>
       <w>189</w>
       <h>63</h>
@@ -1028,7 +1029,7 @@ reunion:llave foranea</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1962</x>
+      <x>1917</x>
       <y>855</y>
       <w>234</w>
       <h>252</h>
@@ -1042,7 +1043,7 @@ tiene &gt;</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1341</x>
+      <x>1296</x>
       <y>1278</y>
       <w>189</w>
       <h>63</h>
@@ -1056,7 +1057,7 @@ chat: llave foranea</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1179</x>
+      <x>1134</x>
       <y>207</y>
       <w>189</w>
       <h>63</h>
@@ -1070,7 +1071,7 @@ pratica:llave foranea</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1260</x>
+      <x>1215</x>
       <y>261</y>
       <w>72</w>
       <h>90</h>
@@ -1084,7 +1085,7 @@ tiene &gt;</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1179</x>
+      <x>1134</x>
       <y>117</y>
       <w>189</w>
       <h>63</h>
@@ -1099,7 +1100,7 @@ bg=red</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1359</x>
+      <x>1314</x>
       <y>117</y>
       <w>180</w>
       <h>45</h>
@@ -1113,7 +1114,7 @@ tiene &gt;</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>1989</x>
+      <x>1944</x>
       <y>54</y>
       <w>126</w>
       <h>63</h>
@@ -1126,7 +1127,7 @@ bg=blue</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1836</x>
+      <x>1791</x>
       <y>297</y>
       <w>189</w>
       <h>63</h>
@@ -1140,7 +1141,7 @@ rol: llave foranea</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2016</x>
+      <x>1971</x>
       <y>324</y>
       <w>108</w>
       <h>135</h>
@@ -1154,9 +1155,9 @@ tiene &gt;</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2412</x>
+      <x>2367</x>
       <y>531</y>
-      <w>135</w>
+      <w>189</w>
       <h>90</h>
     </coordinates>
     <panel_attributes>CONTENIDO
@@ -1171,7 +1172,7 @@ contenidobibliografia: cadena
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2268</x>
+      <x>2223</x>
       <y>576</y>
       <w>162</w>
       <h>45</h>
@@ -1185,7 +1186,7 @@ tiene &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1971</x>
+      <x>1926</x>
       <y>819</y>
       <w>99</w>
       <h>144</h>
@@ -1199,7 +1200,7 @@ m2=1
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>144</x>
+      <x>99</x>
       <y>0</y>
       <w>270</w>
       <h>360</h>
@@ -1231,7 +1232,7 @@ bg=blue</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>108</x>
+      <x>63</x>
       <y>621</y>
       <w>198</w>
       <h>99</h>
@@ -1249,7 +1250,7 @@ habilidadnivel: cadena
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>297</x>
+      <x>252</x>
       <y>648</y>
       <w>153</w>
       <h>45</h>
@@ -1263,7 +1264,7 @@ m2=1
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1575</x>
+      <x>1530</x>
       <y>9</y>
       <w>189</w>
       <h>63</h>
@@ -1277,7 +1278,7 @@ actividad: llave foranea</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1755</x>
+      <x>1710</x>
       <y>27</y>
       <w>180</w>
       <h>99</h>
@@ -1291,7 +1292,7 @@ tiene &gt;</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>2007</x>
+      <x>1962</x>
       <y>630</y>
       <w>135</w>
       <h>63</h>
@@ -1306,7 +1307,7 @@ bg=blue</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>2376</x>
+      <x>2331</x>
       <y>801</y>
       <w>180</w>
       <h>153</h>
@@ -1327,7 +1328,7 @@ bg=blue</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>1818</x>
+      <x>1773</x>
       <y>684</y>
       <w>99</w>
       <h>36</h>
@@ -1340,7 +1341,7 @@ bg=blue</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>540</x>
+      <x>495</x>
       <y>450</y>
       <w>153</w>
       <h>90</h>
@@ -1355,7 +1356,7 @@ contacto: llave foranea
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>684</x>
+      <x>639</x>
       <y>486</y>
       <w>153</w>
       <h>45</h>
@@ -1369,7 +1370,7 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>414</x>
+      <x>369</x>
       <y>477</y>
       <w>144</w>
       <h>45</h>
@@ -1383,7 +1384,7 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>342</x>
+      <x>297</x>
       <y>369</y>
       <w>531</w>
       <h>99</h>
@@ -1397,7 +1398,7 @@ es &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>927</x>
+      <x>882</x>
       <y>837</y>
       <w>648</w>
       <h>360</h>
@@ -1411,7 +1412,7 @@ teaches to &gt;</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>441</x>
+      <x>396</x>
       <y>0</y>
       <w>180</w>
       <h>351</h>
@@ -1427,7 +1428,7 @@ bg=red</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1062</x>
+      <x>1017</x>
       <y>531</y>
       <w>162</w>
       <h>81</h>
@@ -1442,7 +1443,7 @@ palabra: cadena</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>999</x>
+      <x>954</x>
       <y>468</y>
       <w>189</w>
       <h>81</h>
@@ -1456,7 +1457,7 @@ teaches to &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2007</x>
+      <x>1962</x>
       <y>144</y>
       <w>189</w>
       <h>405</h>
@@ -1466,5 +1467,21 @@ m1=1
 m2=1..n
 tiene &gt;</panel_attributes>
     <additional_attributes>10.0;10.0;80.0;10.0;80.0;400.0;170.0;400.0;170.0;430.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>1935</x>
+      <y>1116</y>
+      <w>135</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>el uso de esta tabla es 
+confuso, es necesario 
+replantear
+por el momento
+sera ignorada
+bg=red</panel_attributes>
+    <additional_attributes/>
   </element>
 </diagram>

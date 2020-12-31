@@ -4,6 +4,11 @@ USE proyectoweb;
 
 -- DROP DATABASE proyectoweb;
 
+
+ SELECT * FROM usuarios
+ JOIN listaherramientas ON usuarios.id = listaherramientas.usuario
+ JOIN herramientas ON listaherramientas.herramientausada = herramientas.id
+WHERE usuarios.is =1; 
 -- SELECT 
 -- 
 -- contenidos.contenidonombrearchivo,
@@ -19,41 +24,46 @@ USE proyectoweb;
 -- WHERE actividades.id IN (1,2)
 
 
-SELECT 
+-- SELECT 
+-- 
+-- proyectos.id AS "proyectoid",
+-- reuniones.id AS "reunionid",
+-- reuniones.reuniontitulo,
+-- reuniones.reunionfecha,
+-- reuniones.reunionhora,
+-- reuniones.reuniondurancion,
+-- reuniones.reuniondescripcion,
+-- reuniones.vigente,
+-- actividades.id AS "actividadesid",
+-- actividades.actividadtitulo,
+-- actividades.actividaddescripcion,
+-- actividades.actividadfechaentrega,
+-- actividades.actividadestado,
+-- entregables.id AS "entregaid",
+-- entregables.entregatitulo,
+-- entregables.entregadescripcion,
+-- entregables.entregaestado,
+-- entregables.entregafechaEntrega
+-- FROM usuarios
+-- JOIN integrantes ON usuarios.id = integrantes.usuario
+-- JOIN listaeventos ON integrantes.id = listaeventos.integrante
+-- JOIN historiales ON listaeventos.historial = historiales.id
+-- JOIN proyectos ON historiales.id = proyectos.historia
+-- JOIN eventos ON listaeventos.evento = eventos.id
+-- JOIN listareuniones ON eventos.id = listareuniones.reunion
+-- JOIN reuniones ON listareuniones.reunion = reuniones.id
+-- JOIN listaactividades ON integrantes.id = listaactividades.integrante
+-- JOIN actividades ON listaactividades.actividad = actividades.id
+-- JOIN metodologias ON proyectos.metodologia = metodologias.id
+-- JOIN listapracticas ON metodologias.id = listapracticas.metodologia
+-- JOIN practicas ON listapracticas.practica = practicas.id
+-- JOIN listaalfas ON practicas.id = listaalfas.practica
+-- JOIN alfas ON listaalfas.alfa = alfas.id
+-- JOIN listaentregables ON alfas.id = listaentregables.alfa
+-- JOIN entregables ON  listaentregables.entregable = entregables.id
+-- WHERE usuarios.id =2; 
 
-proyectos.id,
-reuniones.reuniontitulo,
-reuniones.reunionfecha,
-reuniones.reunionhora,
-reuniones.reuniondurancion,
-reuniones.reuniondescripcion,
-reuniones.vigente,
-actividades.actividadtitulo,
-actividades.actividaddescripcion,
-actividades.actividadfechaentrega,
-actividades.actividadestado,
-entregables.entregatitulo,
-entregables.entregadescripcion,
-entregables.entregaestado,
-entregables.entregafechaEntrega
-FROM usuarios
-INNER JOIN integrantes ON usuarios.id = integrantes.usuario
-INNER JOIN listaeventos ON integrantes.id = listaeventos.integrante
-INNER JOIN historiales ON listaeventos.historial = historiales.id
-INNER JOIN proyectos ON historiales.id = proyectos.historia
-INNER JOIN eventos ON listaeventos.evento = eventos.id
-INNER JOIN listareuniones ON eventos.id = listareuniones.reunion
-INNER JOIN reuniones ON listareuniones.reunion = reuniones.id
-INNER JOIN listaactividades ON integrantes.id = listaactividades.integrante
-INNER JOIN actividades ON listaactividades.actividad = actividades.id
-INNER JOIN metodologias ON proyectos.metodologia = metodologias.id
-INNER JOIN listapracticas ON metodologias.id = listapracticas.metodologia
-INNER JOIN practicas ON listapracticas.practica = practicas.id
-INNER JOIN listaalfas ON practicas.id = listaalfas.practica
-INNER JOIN alfas ON listaalfas.alfa = alfas.id
-INNER JOIN listaentregables on alfas.id = listaentregables.alfa
-INNER JOIN entregables on  listaentregables.entregable = entregables.id
-WHERE usuarios.id =1; 
+
 
 
 

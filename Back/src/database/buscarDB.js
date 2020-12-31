@@ -215,6 +215,30 @@ funcionesDB.buscartalentogeneral = async (idUser) => {
         });
     });
 }
+funcionesDB.buscarusuariocontatelento = async (idp) => {
+    return new Promise((res, rej) => {
+        promesa.then(async (result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                await mariaDB.query(Query.buscarcontactosusuariotalento(idp), (err, rows) => {
+                    if (!err) {
+                        res(filtarinfo(rows));
+                    } else {
+                        rej({ err })
+                    }
+                });
+            } else {
+                sqlite.all(Query.buscarcontactosusuariotalento(idp), (err, rows) => {
+                    if (!err) {
+                        res(filtarinfo(rows));
+                    } else {
+                        rej({ err })
+                    }
+                });
+            }
+        });
+    });
+}
 funcionesDB.buscareventoscalendario = async (idUser) => {
     return new Promise((res, rej) => {
         //console.log(idUser)
@@ -1328,7 +1352,124 @@ function organizarcalendario (array) {
     }
     return arraydef;
 }
+function filtarinfo (array) {
+    let arraydef = [];
+    let userid;
+    let palabraid;
+    let palabras = [];
+    let herramientaid;
+    let herramientas = [];
+    let habilidadid;
+    let habilidades = [];
 
+    for (let a = 0; a < array.length; a++) {
+        if (userid != array[a].userid) {
+            userid = array[a].userid;
+            arraydef.push({
+                id: userid,
+                nombre: array[a].nombre,
+                descripcion: array[a].descripcion,
+                fotoperfil: array[a].fotoperfil,
+                experiencia: array[a].anosdeexperiencia,
+                cv: `http://localhost:3030/default/${array[a].nombrearchivohojadevida}`,
+                pais: array[a].pais,
+                github: array[a].github,
+                gitlab: array[a].gitlab,
+                bitbucket: array[a].bitbucket,
+                linkedin: array[a].linkedin,
+                palabras,
+                herramientas,
+                habilidades
+            })
+        }
+    }
+    let tb; let temb = 1
+    for (let a = 0; a < arraydef.length; a++) {
+        tb = temb;
+        for (tb; tb < arraydef.length; tb++) {
+            if (arraydef[a].id == arraydef[tb].id) {
+                arraydef.palabras.splice(tb, 1);
+            }
+        }
+        temb++;
+    }
+    for (let a = 0; a < arraydef.length; a++) {
+        for (let b = 0; b < array.length; b++) {
+            if (arraydef[a].id === array[b].userid) {
+                if (palabraid != array[b].wordid) {
+                    palabraid = array[b].wordid;
+                    arraydef[a].palabras.push(array[b].palabra);
 
+                }
+            }
+        }
+        let d = 1; let temnum = 1;
+        for (let c = 0; c < arraydef[a].palabras.length; c++) {
+            d = temnum;
+            for (d; d < arraydef[a].palabras.length; d++) {
+                if (arraydef[a].palabras[c] == arraydef[a].palabras[d]) {
+                    arraydef[a].palabras.splice(d, 1);
+                }
+            }
+            temnum++;
+        }
+    }
+    for (let a = 0; a < arraydef.length; a++) {
+        for (let b = 0; b < array.length; b++) {
+            if (arraydef[a].id == array[b].userid) {
+                if (herramientaid != array[b].toolsid) {
+                    herramientaid = array[b].toolsid;
+                    arraydef[a].herramientas.push({
+                        id: array[b].toolsid,
+                        nombre: array[b].herramientanombre,
+                        descripcion: array[b].herramientadescripcion,
+                        icono: array[b].herramientanombreIcono
+                    })
+                }
+            }
+        }
+        let d = 1; let temnum = 1;
+
+        for (let c = 0; c < arraydef[a].herramientas.length; c++) {
+            d = temnum;
+            for (d; d < arraydef[a].herramientas.length; d++) {
+                if (arraydef[a].herramientas[c].id == arraydef[a].herramientas[d].id) {
+                    console.log(c + " | " + d)
+                    console.log(arraydef[a].herramientas[c].id + " | " + arraydef[a].herramientas[d].id);
+                    arraydef[a].herramientas.splice(d, 1);
+
+                }
+
+            }
+            temnum++;
+        }
+    }
+    for (let a = 0; a < arraydef.length; a++) {
+        for (let b = 0; b < array.length; b++) {
+            if (arraydef[a].id == array[b].userid) {
+                if (habilidadid != array[b].abilityid) {
+                    habilidadid = array[b].abilityid;
+                    arraydef[a].habilidades.push({
+                        id: array[b].abilityid,
+                        tipo: array[b].habilidadtipo,
+                        descripcion: array[b].habilidaddescripcion,
+                        nivel: array[b].habilidadnivel
+                    });
+                }
+            }
+        }
+        let d = 1; let temnum = 1;
+        for (let c = 0; c < arraydef[a].habilidades.length; c++) {
+            d = temnum;
+            for (d; d < arraydef[a].habilidades.length; d++) {
+                if (arraydef[a].habilidades[c].id == arraydef[a].habilidades[d].id) {
+                    arraydef[a].habilidades.splice(d, 1);
+                }
+            }
+            temnum++;
+        }
+    }
+    return arraydef;
+}
 //-------------------
 module.exports = funcionesDB;

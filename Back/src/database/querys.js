@@ -77,7 +77,7 @@ JOIN listaintegrantes ON proyectos.id = listaintegrantes.proyecto
 JOIN integrantes ON listaintegrantes.integrante = integrantes.id
 JOIN usuarios ON integrantes.usuario = usuarios.id
 WHERE usuarios.id = ${id}
-  ) GROUP BY proyectos.id ;   `);
+  ) GROUP BY proyectos.id ;`);
 }
 
 query.obtenercalendario = function (id) {
@@ -216,6 +216,42 @@ query.buscarcontactosusuario = function (id) {
     JOIN listacontactos ON usuarios.id = listacontactos.usuario
     WHERE usuarios.id=${id}
     ) ; `;
+}
+query.buscarcontactosusuariotalento = function (id) {
+    return `SELECT 
+    usuarios.id AS "userid",
+    usuarios.fotoperfil,
+    usuarios.nombrearchivohojadevida,
+    usuarios.anosdeexperiencia,
+    usuarios.nombre,
+    usuarios.descripcion,
+    usuarios.pais,
+    usuarios.github,
+    usuarios.gitlab,
+    usuarios.bitbucket,
+    usuarios.linkedin,
+    
+    palabrasclave.id AS "wordid",
+    palabrasclave.palabra, 
+    
+    herramientas.id AS "toolsid",
+    herramientas.herramientanombre,
+    herramientas.herramientadescripcion,
+    herramientas.herramientanombreIcono,
+    
+    habilidades.id  AS "abilityid",
+    habilidades.habilidadtipo,
+    habilidades.habilidaddescripcion,
+    habilidades.habilidadnivel
+    
+     FROM usuarios
+    JOIN listaherramientas ON usuarios.id = listaherramientas.usuario
+    JOIN herramientas ON listaherramientas.herramientausada = herramientas.id
+    JOIN listahabilidades ON usuarios.id = listahabilidades.usuario
+    JOIN habilidades ON listahabilidades.habilidad = habilidades.id 
+    JOIN palabrasclave ON usuarios.id = palabrasclave.pcusuario
+    
+    WHERE usuarios.id =${id}; `;
 }
 //-------------busquedas por tablas
 query.obtenertodasIdiomas = function () { return `SELECT * FROM idiomas ; `; }

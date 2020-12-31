@@ -63,6 +63,16 @@ rutas.get('/talentos', proToken, (req, res) => {
         }
     })
 });
+rutas.get('/talentos/:id', proToken, (req, res) => {
+    const { id } = req.params;
+    jwt.verify(req.token, LLAVE, (err, data) => {
+        if (!err) {
+            if (data.rows[0] != null || data.rows.length > 0) {
+                buscarDB.buscarusuariocontatelento(id).then(result => res.json(result)).catch(err => res.json(err));
+            }
+        }
+    })
+});
 rutas.get('/usuarios/:id', proToken, (req, res) => {
     jwt.verify(req.token, LLAVE, (err, data) => {
         if (!err) {
@@ -109,10 +119,6 @@ rutas.get('/proyectos/:id', proToken, (req, res) => {
 });
 
 
-rutas.get('/herramientas/todas', (req, res) => {
-    buscarDB.obtenertodasherramientas().then(result => res.json(result)).catch(err => res.json(err));
-
-});
 
 
 rutas.get('/proyecto/contenido/:buque/:name', (req, res) => {
