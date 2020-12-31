@@ -12,7 +12,7 @@ peticiones.getFilesingle = async (bucket, namefile, res) => {
     if (e) {
       return console.log(e)
     }
-    console.log('done')
+    //console.log('done')
     const r = fs.createReadStream(path.join(__dirname, `../routes/tmp/${namefile}`)) //llamamos el archivo para el envio 
     const ps = new stream.PassThrough()
     stream.pipeline(r, ps, //<---- esto hace un truco con el manejo de errores de transmisión
@@ -26,44 +26,16 @@ peticiones.getFilesingle = async (bucket, namefile, res) => {
     ps.pipe(res); //se renderiza el archivo
     try {
       fs.unlinkSync(path.join(__dirname, `../routes/tmp/${namefile}`))//se borra el archivo temporal 
-      console.log('borrado')
+      // console.log('borrado')
     } catch (err) {
-      console.error('Something wrong happened removing the file', err)//No hay tal archivo o cualquier otro tipo de error
+      //  console.error('Something wrong happened removing the file', err)//No hay tal archivo o cualquier otro tipo de error
     }
 
   })
 
 }
 
-peticiones.getFile = (res) => {
-  const obj = {
-    bucket: "default",
-    names: ['act.PNG', 'juaan.PNG', 'practicas.PNG', '2020-12-02_21-47-13.mp4']
-  }
-  var p = new Promise((resolve, reject) => {
-    var files = [];
-    for (var i in obj.names) {
-      minio.fGetObject(obj.bucket, obj.names[i], path.join(__dirname, `../routes/tmp/${obj.names[i]}`), (e) => {
-        if (e) { reject(`error el al encontrar el archivo ${bucket, obj.names[i]}`) }
-        files.push(path.join(__dirname, `../routes/tmp/${obj.names[i]}`));
-      });
 
-      if (i == obj.names.length - 1) {
-        if (files.length === 0) {
-          reject('error')
-        } else {
-          resolve(files)
-        }
-
-      }
-    }
-
-  });
-
-  p.then(resp => { res.json({ array: resp }) });
-
-
-}
 
 peticiones.putFile = async (bucket, namefile, file, fileStat) => {
   var data = { upload: false, file: false }

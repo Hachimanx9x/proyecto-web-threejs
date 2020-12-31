@@ -19,20 +19,26 @@ query.login = function (obj) {
     return `SELECT * FROM usuarios WHERE email = "${email}" AND contrasena = "${password}" `
 }
 query.obtenerEscritorioActividades = function (id) {
-    return (`SELECT  
+    return (` SELECT  
     usuarios.nombre,
+    proyectos.id,
     actividades.actividadtitulo,
     actividades.actividaddescripcion,
     actividades.actividadestado,
-    actividades.actividadfechaentrega
+    actividades.actividadfechaentrega,
+    contenidos.contenidonombre
     
     FROM listaintegrantes
     JOIN integrantes ON listaintegrantes.integrante=  integrantes.id  
     JOIN usuarios ON integrantes.usuario = usuarios.id
     JOIN listaactividades ON integrantes.id = listaactividades.integrante
     JOIN actividades ON listaactividades.actividad = actividades.id
-    WHERE usuarios.id = ${id}; `);
+    JOIN listacontenidos ON actividades.id = listacontenidos.actividad
+    JOIN contenidos ON listacontenidos.contenido = contenidos.id
+    JOIN proyectos ON listaintegrantes.proyecto = proyectos.id
+    WHERE usuarios.id = ${id}  `);
 }
+
 query.obtenerEscritorioProyectos = function (id) {
     return (`SELECT 
     proyectos.id,
@@ -74,7 +80,46 @@ WHERE usuarios.id = ${id}
   ) GROUP BY proyectos.id ;   `);
 }
 
+query.obtenercalendario = function (id) {
+    return `SELECT 
 
+    proyectos.id AS "proyectoid",
+    reuniones.id AS "reunionid",
+    reuniones.reuniontitulo,
+    reuniones.reunionfecha,
+    reuniones.reunionhora,
+    reuniones.reuniondurancion,
+    reuniones.reuniondescripcion,
+    reuniones.vigente,
+    actividades.id AS "actividadesid",
+    actividades.actividadtitulo,
+    actividades.actividaddescripcion,
+    actividades.actividadfechaentrega,
+    actividades.actividadestado,
+    entregables.id AS "entregaid",
+    entregables.entregatitulo,
+    entregables.entregadescripcion,
+    entregables.entregaestado,
+    entregables.entregafechaEntrega
+    FROM usuarios
+    JOIN integrantes ON usuarios.id = integrantes.usuario
+    JOIN listaeventos ON integrantes.id = listaeventos.integrante
+    JOIN historiales ON listaeventos.historial = historiales.id
+    JOIN proyectos ON historiales.id = proyectos.historia
+    JOIN eventos ON listaeventos.evento = eventos.id
+    JOIN listareuniones ON eventos.id = listareuniones.reunion
+    JOIN reuniones ON listareuniones.reunion = reuniones.id
+    JOIN listaactividades ON integrantes.id = listaactividades.integrante
+    JOIN actividades ON listaactividades.actividad = actividades.id
+    JOIN metodologias ON proyectos.metodologia = metodologias.id
+    JOIN listapracticas ON metodologias.id = listapracticas.metodologia
+    JOIN practicas ON listapracticas.practica = practicas.id
+    JOIN listaalfas ON practicas.id = listaalfas.practica
+    JOIN alfas ON listaalfas.alfa = alfas.id
+    JOIN listaentregables ON alfas.id = listaentregables.alfa
+    JOIN entregables ON  listaentregables.entregable = entregables.id
+    WHERE usuarios.id=${id}; `;
+}
 query.buscarProyecto = function (id) {
     return (`SELECT 
     proyectos.id,

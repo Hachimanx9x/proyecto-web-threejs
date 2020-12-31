@@ -120,7 +120,7 @@ rutas.get('/proyecto/contenido/:buque/:name', (req, res) => {
      if(buscarDB.buscarProyecto(req.params)){
          
      }*/
-    console.log(req.params);
+    //console.log(req.params);
     const { buque, name } = req.params;
     // const {id,name } = req.body;
 
@@ -128,13 +128,7 @@ rutas.get('/proyecto/contenido/:buque/:name', (req, res) => {
 
 
 });
-rutas.get('/proyecto/contenidos', (req, res) => {
 
-
-    ftpminio.getFile(res);
-
-
-});
 rutas.get('/proyecto/listado/:id', async (req, res) => {
     /*
      if(buscarDB.buscarProyecto(req.params)){
@@ -149,16 +143,134 @@ rutas.get('/proyecto/listado/:id', async (req, res) => {
 });
 
 
-rutas.get('/talentos', proToken, (req, res) => {
+
+
+rutas.get('/calendario', proToken, (req, res) => {
     jwt.verify(req.token, LLAVE, async (err, data) => {
         //console.log(data.rows[0].id)
-        await buscarDB.searchPeople(data.rows[0].id, res);
+        await buscarDB.buscareventoscalendario(data.rows[0].id).then(respu => res.json(respu)).catch(err => res.json(err));
     });
-
 });
 
 
+//-----------seccion de la api
+rutas.get('/api/idiomas', async (req, res) => {
+    buscarDB.obtenertodasIdiomas().then(respu => res.json(respu)).catch(err => res.json(err));
+});
+rutas.get('/api/habilidades', async (req, res) => {
+    buscarDB.obtenertodasHabilidades().then(respu => res.json(respu)).catch(err => res.json(err));
+});
 
+rutas.get('/api/herramientas', async (req, res) => {
+    buscarDB.obtenertodasherramientas().then(respu => res.json(respu)).catch(err => res.json(err));
+});
+
+rutas.get('/api/usuarios', async (req, res) => {
+    buscarDB.obtenertodasUsuarios().then(respu => res.json(respu)).catch(err => res.json(err));
+});
+
+rutas.get('/api/palabrasclave', async (req, res) => {
+    buscarDB.obtenertodasPalabrasClave().then(respu => res.json(respu)).catch(err => res.json(err));
+});
+
+rutas.get('/api/listaidiomas', async (req, res) => {
+    buscarDB.obtenertodasListaidiomas().then(respu => res.json(respu)).catch(err => res.json(err));
+});
+
+rutas.get('/api/contactos', async (req, res) => {
+    buscarDB.obtenertodasContactos().then(respu => res.json(respu)).catch(err => res.json(err));
+});
+
+rutas.get('/api/listacontactos', async (req, res) => {
+    buscarDB.obtenertodasListaContactos().then(respu => res.json(respu)).catch(err => res.json(err));
+});
+rutas.get('/api/listahabilidades', async (req, res) => {
+    buscarDB.obtenertodasListaHabilidades().then(respu => res.json(respu)).catch(err => res.json(err));
+});
+rutas.get('/api/listaherramientas', async (req, res) => {
+    buscarDB.obtenertodasListaHerramientas().then(respu => res.json(respu)).catch(err => res.json(err));
+});
+rutas.get('/api/metodologias', async (req, res) => {
+    buscarDB.obtenertodasMetodologias().then(respu => res.json(respu)).catch(err => res.json(err));
+});
+rutas.get('/api/practicas', async (req, res) => {
+    buscarDB.obtenertodasPracticas().then(respu => res.json(respu)).catch(err => res.json(err));
+});
+rutas.get('/api/practicas', async (req, res) => {
+    buscarDB.obtenertodasPracticas().then(respu => res.json(respu)).catch(err => res.json(err));
+});
+rutas.get('/api/listapracticas', async (req, res) => {
+    buscarDB.obtenertodasListasPracticas().then(respu => res.json(respu)).catch(err => res.json(err));
+});
+rutas.get('/api/alfas', async (req, res) => {
+    buscarDB.obtenertodasPracticas().then(respu => res.json(respu)).catch(err => res.json(err));
+});
+rutas.get('/api/practicas', async (req, res) => {
+    buscarDB.obtenertodasAlfas().then(respu => res.json(respu)).catch(err => res.json(err));
+});
+rutas.get('/api/listaalfas', async (req, res) => {
+    buscarDB.obtenertodasListaAlfas().then(respu => res.json(respu)).catch(err => res.json(err));
+});
+rutas.get('/api/herramientasmetodologia', async (req, res) => {
+    buscarDB.obtenertodasHerramientasMetodologia().then(respu => res.json(respu)).catch(err => res.json(err));
+});
+rutas.get('/api/tecnicas', async (req, res) => {
+    buscarDB.obtenertodasTecnicas().then(respu => res.json(respu)).catch(err => res.json(err));
+});
+rutas.get('/api/actividades', async (req, res) => {
+    buscarDB.obtenertodasActividades().then(respu => res.json(respu)).catch(err => res.json(err));
+});
+rutas.get('/api/roles', async (req, res) => {
+    buscarDB.obtenertodasRoles().then(respu => res.json(respu)).catch(err => res.json(err));
+});
+rutas.get('/api/integrantes', async (req, res) => {
+    buscarDB.obtenertodasIntegrantes().then(respu => res.json(respu)).catch(err => res.json(err));
+});
+rutas.get('/api/listaactividades', async (req, res) => {
+    buscarDB.obtenertodasListaActividades().then(respu => res.json(respu)).catch(err => res.json(err));
+});
+rutas.get('/api/entregables', async (req, res) => {
+    buscarDB.obtenertodasEntregables().then(respu => res.json(respu)).catch(err => res.json(err));
+});
+rutas.get('/api/listaentregables', async (req, res) => {
+    buscarDB.obtenertodasListaentregables().then(respu => res.json(respu)).catch(err => res.json(err));
+});
+rutas.get('/api/listaherramientasmetodologia', async (req, res) => {
+    buscarDB.obtenertodasListaHerramientasMetodologia().then(respu => res.json(respu)).catch(err => res.json(err));
+});
+rutas.get('/api/listacontenidos', async (req, res) => {
+    buscarDB.obtenertodasListaContenidos().then(respu => res.json(respu)).catch(err => res.json(err));
+});
+rutas.get('/api/entregas', async (req, res) => {
+    buscarDB.obtenertodasEntregas().then(respu => res.json(respu)).catch(err => res.json(err));
+});
+rutas.get('/api/chats', async (req, res) => {
+    buscarDB.obtenertodasChats().then(respu => res.json(respu)).catch(err => res.json(err));
+});
+rutas.get('/api/historial', async (req, res) => {
+    buscarDB.obtenertodasHistoriales().then(respu => res.json(respu)).catch(err => res.json(err));
+});
+rutas.get('/api/listachats', async (req, res) => {
+    buscarDB.obtenertodasListaChats().then(respu => res.json(respu)).catch(err => res.json(err));
+});
+rutas.get('/api/proyectos', async (req, res) => {
+    buscarDB.obtenertodasProyectos().then(respu => res.json(respu)).catch(err => res.json(err));
+});
+rutas.get('/api/reuniones', async (req, res) => {
+    buscarDB.obtenertodasReuniones().then(respu => res.json(respu)).catch(err => res.json(err));
+});
+rutas.get('/api/listareuniones', async (req, res) => {
+    buscarDB.obtenertodasListaReuniones().then(respu => res.json(respu)).catch(err => res.json(err));
+});
+rutas.get('/api/listaentregas', async (req, res) => {
+    buscarDB.obtenertodasListaEntregas().then(respu => res.json(respu)).catch(err => res.json(err));
+});
+rutas.get('/api/listaeventos', async (req, res) => {
+    buscarDB.obtenertodasListaEventos().then(respu => res.json(respu)).catch(err => res.json(err));
+});
+rutas.get('/api/listaintegrantes', async (req, res) => {
+    buscarDB.obtenertodasListaIntegrantes().then(respu => res.json(respu)).catch(err => res.json(err));
+});
 /*
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 */
