@@ -18,22 +18,46 @@ USE proyectoweb;
 -- JOIN proyectos ON listaintegrantes.proyecto = proyectos.id
 -- WHERE actividades.id IN (1,2)
 
- SELECT  
-    usuarios.nombre,
-    proyectos.id,
-    actividades.actividadtitulo,
-    actividades.actividaddescripcion,
-    actividades.actividadestado,
-    actividades.actividadfechaentrega,
-    contenidos.contenidonombre,
-    contenidos.contenidonombrearchivo
-    
-    FROM listaintegrantes
-    JOIN integrantes ON listaintegrantes.integrante=  integrantes.id  
-    JOIN usuarios ON integrantes.usuario = usuarios.id
-    JOIN listaactividades ON integrantes.id = listaactividades.integrante
-    JOIN actividades ON listaactividades.actividad = actividades.id
-    JOIN listacontenidos ON actividades.id = listacontenidos.actividad
-    JOIN contenidos ON listacontenidos.contenido = contenidos.id
-    JOIN proyectos ON listaintegrantes.proyecto = proyectos.id
-    WHERE usuarios.id = 1; 
+
+SELECT 
+
+proyectos.id,
+reuniones.reuniontitulo,
+reuniones.reunionfecha,
+reuniones.reunionhora,
+reuniones.reuniondurancion,
+reuniones.reuniondescripcion,
+reuniones.vigente,
+actividades.actividadtitulo,
+actividades.actividaddescripcion,
+actividades.actividadfechaentrega,
+actividades.actividadestado,
+entregables.entregatitulo,
+entregables.entregadescripcion,
+entregables.entregaestado,
+entregables.entregafechaEntrega
+FROM usuarios
+INNER JOIN integrantes ON usuarios.id = integrantes.usuario
+INNER JOIN listaeventos ON integrantes.id = listaeventos.integrante
+INNER JOIN historiales ON listaeventos.historial = historiales.id
+INNER JOIN proyectos ON historiales.id = proyectos.historia
+INNER JOIN eventos ON listaeventos.evento = eventos.id
+INNER JOIN listareuniones ON eventos.id = listareuniones.reunion
+INNER JOIN reuniones ON listareuniones.reunion = reuniones.id
+INNER JOIN listaactividades ON integrantes.id = listaactividades.integrante
+INNER JOIN actividades ON listaactividades.actividad = actividades.id
+INNER JOIN metodologias ON proyectos.metodologia = metodologias.id
+INNER JOIN listapracticas ON metodologias.id = listapracticas.metodologia
+INNER JOIN practicas ON listapracticas.practica = practicas.id
+INNER JOIN listaalfas ON practicas.id = listaalfas.practica
+INNER JOIN alfas ON listaalfas.alfa = alfas.id
+INNER JOIN listaentregables on alfas.id = listaentregables.alfa
+INNER JOIN entregables on  listaentregables.entregable = entregables.id
+WHERE usuarios.id =1; 
+
+
+
+
+
+
+ 
