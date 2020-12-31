@@ -63,9 +63,9 @@ export default class CalendarEvents extends Component {
         //Inicia consulta
 
         //Cierra consulta
-        var colors;
-        for (var i = 0; i < this.state.events; i++) {
-            var color = '#' + Math.floor(Math.random() * 16777215).toString(16);
+        let colors;
+        for (let i = 0; i < this.state.events; i++) {
+            const color = '#' + Math.floor(Math.random() * 16777215).toString(16);
             colors.push(color);
             this.setState({ colors: colors });
         }
@@ -78,7 +78,7 @@ export default class CalendarEvents extends Component {
         this.setState({
             selectedDate: selected ? undefined : day,
         });
-        var date = this.state.selectedDate;
+        const date = this.state.selectedDate;
         console.log(date);
 
 
@@ -94,7 +94,7 @@ export default class CalendarEvents extends Component {
         }
     }
     getRandomColor() {
-        var color = '#' + Math.floor(Math.random() * 16777215).toString(16);
+        const color = '#' + Math.floor(Math.random() * 16777215).toString(16);
         return color;
     }
     render() {

@@ -8,8 +8,8 @@ import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
 
 class Login extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = { email: "", password: "", rememberMe: "" }
         this.LoginFunction = this.LoginFunction.bind(this);
 
@@ -33,7 +33,7 @@ class Login extends Component {
     LoginFunction = () => {
 
         const { email, password } = this.state;
-        console.log(`El correo es ${email} y la contraseña es ${password}`);
+       // console.log(`El correo es ${email} y la contraseña es ${password}`);
 
 
         //------
