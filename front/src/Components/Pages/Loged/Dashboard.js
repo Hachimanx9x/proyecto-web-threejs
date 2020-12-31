@@ -5,7 +5,7 @@ class Dashboard extends Component {
   
   async componentWillMount() {
     const token = localStorage.getItem("login");
-    console.log("el token es => "+  token); 
+    //console.log("el token es => "+  token); 
  
     if (token === null || token === undefined || token === "") {
       //El metodo de redireccionamiento.
@@ -50,10 +50,10 @@ class Dashboard extends Component {
 
     
 /*
-      var myHeaders = new Headers();
+      let myHeaders = new Headers();
       myHeaders.append("authorization", `llave ${tokensito}`);
       
-      var requestOptions = {
+      const requestOptions = {
         mode: 'no-cors',
         method: 'GET',
         headers: myHeaders,

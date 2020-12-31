@@ -149,11 +149,11 @@ class Login extends Component {
 }
 
 export default Login;
-/*Codugo basura */
+/*Codigo basura */
 /**
- var data = JSON.stringify({ "correo": "micorreo@uao.edu.co", "password": "contraseña123" });
+ cont data = JSON.stringify({ "correo": "micorreo@uao.edu.co", "password": "contraseña123" });
 
-var config = {
+  const config = {
     method: 'post',
     url: 'http://localhost:3030/login',
     headers: {
@@ -223,13 +223,13 @@ axios(config)
 //  await  console.log(response); 
   })
 
-  var myHeaders = new Headers();
+  let myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("Access-Control-Allow-Origin", "*");
   
-  var raw = JSON.stringify({ correo, password });
+  const raw = JSON.stringify({ correo, password });
   
-  var requestOptions = {
+  let requestOptions = {
     mode: 'no-cors',
     method: 'POST',
     headers: myHeaders,

@@ -175,11 +175,11 @@ li a.dropdown-toggle::after {
 
 .side-menu::-webkit-scrollbar,
 .o-card-description::-webkit-scrollbar {
-	width: 3px;
+	width: 7px;
 }
 .side-menu::-webkit-scrollbar-thumb,
 .o-card-description::-webkit-scrollbar-thumb {
-	background: #5466b3;
+	background: #3eb0e0;
 	border-radius: 3px;
 }
 

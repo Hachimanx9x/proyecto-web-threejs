@@ -19,15 +19,26 @@ class SearchTalents extends Component {
                 job: "Desarrollador FullStack",
                 img: User,
                 skills: [
-                    { skill: "https://cdn4.iconfinder.com/data/icons/logos-3/600/React.js_logo-512.png" },
-                    { skill: "https://gblobscdn.gitbook.com/assets%2F-LW1Rd6Lo-WMisT20MSI%2F-LfkebmAD7Zk3UmVHVbS%2F-LfkljcRh5HU0rsYOki1%2Fangular.png?alt=media&token=9071f895-7d9f-4af2-beaf-460b033feada" },
-                    { skill: "https://assets.stickpng.com/images/58482acecef1014c0b5e4a1e.png" },
-                    { skill: "https://ayudawp.com/wp-content/uploads/2017/01/javascript-logo-escudo.png" }, 
-                    { skill: "https://icon-library.com/images/html-icon-png/html-icon-png-4.jpg" }, 
-                    { skill: "https://markuslista.es/wp-content/uploads/2020/12/css.png" }, 
-                    { skill: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/PHP-logo.svg/1280px-PHP-logo.svg.png" }, 
-                    { skill: "https://plugins.jetbrains.com/files/13666/100004/icon/pluginIcon.png" },
-                    { skill: "https://download.logo.wine/logo/MySQL/MySQL-Logo.wine.png" }
+                    { skill: "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg" },
+                    { skill: "https://www.vectorlogo.zone/logos/angular/angular-icon.svg" },
+                    { skill: "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg" },
+                    { skill: "https://cdn.worldvectorlogo.com/logos/javascript.svg" }, 
+                    { skill: "https://www.vectorlogo.zone/logos/nodejs/nodejs-icon.svg" },
+                    { skill: "https://www.vectorlogo.zone/logos/w3_html5/w3_html5-icon.svg" },
+                    { skill: "https://raw.githubusercontent.com/devicons/devicon/ac557d6ff33ff370a5db99f97aeab35ea5c67fbd/icons/css3/css3-original.svg" },
+                    { skill: "https://www.vectorlogo.zone/logos/php/php-icon.svg" },
+                    { skill: "https://www.vectorlogo.zone/logos/flutterio/flutterio-icon.svg" },
+                    { skill: "https://cdn.worldvectorlogo.com/logos/mysql-7.svg" },
+                    { skill: "https://www.vectorlogo.zone/logos/golang/golang-official.svg" },
+                    { skill: "https://www.vectorlogo.zone/logos/graphql/graphql-icon.svg" },
+                    { skill: "https://www.vectorlogo.zone/logos/typescriptlang/typescriptlang-icon.svg" },
+                    { skill: "https://cdn.worldvectorlogo.com/logos/laravel-2.svg" },
+                    { skill: "https://www.vectorlogo.zone/logos/jquery/jquery-icon.svg" },
+                    { skill: "https://www.vectorlogo.zone/logos/getbootstrap/getbootstrap-icon.svg" },
+                    { skill: "https://cdn.worldvectorlogo.com/logos/material-ui-1.svg" },
+                    { skill: "https://cdn.worldvectorlogo.com/logos/rails.svg" },
+                    { skill: "https://cdn.worldvectorlogo.com/logos/figma-1.svg" },
+
                 ]
             },
                 {
@@ -37,13 +48,34 @@ class SearchTalents extends Component {
                     job: "Desarrollador Web",
                     img: User,
                     skills: [
-                        { skill: "https://cdn4.iconfinder.com/data/icons/logos-3/600/React.js_logo-512.png" },
-                        { skill: "https://gblobscdn.gitbook.com/assets%2F-LW1Rd6Lo-WMisT20MSI%2F-LfkebmAD7Zk3UmVHVbS%2F-LfkljcRh5HU0rsYOki1%2Fangular.png?alt=media&token=9071f895-7d9f-4af2-beaf-460b033feada" },
-                        { skill: "https://assets.stickpng.com/images/58482acecef1014c0b5e4a1e.png" },
-                        { skill: "https://markuslista.es/wp-content/uploads/2020/12/css.png" },
-                        { skill: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/PHP-logo.svg/1280px-PHP-logo.svg.png" },
-                        { skill: "https://plugins.jetbrains.com/files/13666/100004/icon/pluginIcon.png" },
-                        { skill: "https://download.logo.wine/logo/MySQL/MySQL-Logo.wine.png" }
+                        { skill: "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg" },
+                        { skill: "https://www.vectorlogo.zone/logos/angular/angular-icon.svg" },
+                        { skill: "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg" },
+                        { skill: "https://www.vectorlogo.zone/logos/nodejs/nodejs-icon.svg" },
+                        { skill: "https://www.vectorlogo.zone/logos/w3_html5/w3_html5-icon.svg" },
+                        { skill: "https://raw.githubusercontent.com/devicons/devicon/ac557d6ff33ff370a5db99f97aeab35ea5c67fbd/icons/css3/css3-original.svg" },
+                        { skill: "https://www.vectorlogo.zone/logos/php/php-icon.svg" },
+                        { skill: "https://www.vectorlogo.zone/logos/flutterio/flutterio-icon.svg" },
+                        { skill: "https://cdn.worldvectorlogo.com/logos/mysql-7.svg" },
+                        { skill: "https://www.vectorlogo.zone/logos/golang/golang-official.svg" },
+                        { skill: "https://www.vectorlogo.zone/logos/graphql/graphql-icon.svg" },
+                        { skill: "https://www.vectorlogo.zone/logos/typescriptlang/typescriptlang-icon.svg" },
+                        { skill: "https://www.vectorlogo.zone/logos/jquery/jquery-icon.svg" },
+                        { skill: "https://www.vectorlogo.zone/logos/getbootstrap/getbootstrap-icon.svg" },
+                        { skill: "https://www.vectorlogo.zone/logos/python/python-icon.svg" },
+                        { skill: "https://www.vectorlogo.zone/logos/djangoproject/djangoproject-icon.svg" },
+                        { skill: "https://www.vectorlogo.zone/logos/mongodb/mongodb-icon.svg"},
+                        { skill: "https://cdn.worldvectorlogo.com/logos/dotnet.svg" },
+                        { skill: "https://www.vectorlogo.zone/logos/sqlite/sqlite-icon.svg" },
+                        { skill: "https://cdn.worldvectorlogo.com/logos/redux.svg" },
+                        { skill: "https://cdn.worldvectorlogo.com/logos/android.svg" },
+                        { skill: "https://www.vectorlogo.zone/logos/ionicframework/ionicframework-icon.svg" },
+                        { skill: "https://cdn.worldvectorlogo.com/logos/c--4.svg" },
+                        { skill: "https://cdn.worldvectorlogo.com/logos/c.svg" },
+                        { skill: "https://cdn.worldvectorlogo.com/logos/c-2975.svg" },
+                        { skill: "https://cdn.worldvectorlogo.com/logos/java-14.svg" },
+                        { skill: "https://cdn.worldvectorlogo.com/logos/wordpress-blue.svg" },
+
                     ]
                 }]
         }
@@ -53,7 +85,7 @@ class SearchTalents extends Component {
 
     selectFilter = (filter) => {
         this.setState({ filter: filter });
-        console.log(this.state.filter);
+        //console.log(this.state.filter);
     };
 
     render() {

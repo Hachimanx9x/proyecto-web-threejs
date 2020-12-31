@@ -41,12 +41,12 @@ const CardTalents = ({id, name, description, picture, job, skills}) => {
               <p style={{ fontSize: "0.8rem", color: "#757575" }}>{description}</p>
               <div className="row mt-2">
                 {skills.map((skill, i) => (
-                  <img key={i} src={skill.skill} className="o-talent-skills ml-2 mb-4" alt="skill" />
+                  <img key={i} src={skill.skill} className="o-talent-skills ml-2 mr-2" alt="skill" />
                 ))}
               </div>
             </div>
           </div>
-          <div className="col-12 col-sm-2 mb-3 d-flex justify-content-center">
+          <div className="col-12 col-sm-2 mb-1 d-flex justify-content-center">
             <img src={picture} className="rounded-circle o-talent-picture z-depth-1" alt="user" />
           </div>
           <div className="col-12 col-sm-3">

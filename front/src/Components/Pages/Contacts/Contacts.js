@@ -22,7 +22,15 @@ class Contacts extends Component {
                 name: "Juan Carlos",
                 description: "Programador e ingeniero multimedia con experiencia en entorno web",
                 favorite: false
-            }]
+            },
+                {
+                    id: "2",
+                    job: "Desarrollador FullStack",
+                    urlimage: User,
+                    name: "Juan Carlos",
+                    description: "Programador e ingeniero multimedia con experiencia en entorno web",
+                    favorite: true
+                }]
         }
     }
 
