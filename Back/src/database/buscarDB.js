@@ -261,6 +261,43 @@ funcionesDB.buscareventoscalendario = async (idUser) => {
         });
     });
 }
+funcionesDB.buscaractividadesproyecto = async (id) => {
+    return new Promise((res, rej) => {
+        //console.log(idUser)
+        promesa.then(async (result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                await mariaDB.query(Query.obtenerproyectosactividadescompleto(id), async (err, rows) => {
+                    if (!err) {
+
+                        await mariaDB.query(Query.obtenerproyectoentregablescompleto(id), (err2, rows2) => {
+                            if (!err) {
+                                res({
+                                    actividades: rows,
+                                    entregables: rows2
+                                });
+
+                            } else { rej(err2) }
+                        });
+                    } else { rej(err) }
+                });
+            } else {
+                sqlite.all(Query.obtenerproyectosactividadescompleto(id), (err, rows) => {
+                    if (!err) {
+                        sqlite.all(Query.obtenerproyectosactividadescompleto(id), (err, rows2) => {
+                            if (!err) {
+                                res({
+                                    actividades: rows,
+                                    entregables: rows2
+                                })
+                            } else { rej(err2) }
+                        });
+                    } else { rej(err) }
+                });
+            }
+        });
+    });
+}
 //-----------------------------------------------------
 funcionesDB.obtenertodasIdiomas = async () => {
     return new Promise((res, rej) => {

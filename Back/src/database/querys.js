@@ -253,6 +253,61 @@ query.buscarcontactosusuariotalento = function (id) {
     
     WHERE usuarios.id =${id}; `;
 }
+
+query.obtenerproyectosactividadescompleto = function (id) {
+    return `SELECT 
+
+    actividades.id AS "actid",
+    actividades.actividadtitulo,
+    actividades.actividaddescripcion,
+    actividades.actividadestado,
+    actividades.actividadfechacreacion,
+    actividades.actividadfechaentrega,
+    actividades.actividadrevision,
+    
+    proyectos.id AS "proid",
+    contenidos.id AS "conid",
+    contenidos.contenidonombre,
+    contenidos.contenidonombrearchivo,
+    contenidos.contenidodescripcion
+    
+    FROM actividades 
+    JOIN listaactividades ON actividades.id = listaactividades.actividad
+    JOIN integrantes ON listaactividades.integrante = integrantes.id
+    JOIN listaintegrantes ON integrantes.id = listaintegrantes.integrante
+    JOIN proyectos ON listaintegrantes.proyecto = proyectos.id
+    JOIN listacontenidos ON actividades.id = listacontenidos.actividad
+    JOIN contenidos ON listacontenidos.contenido = contenidos.id
+    WHERE proyectos.id =${id}; `;
+}
+query.obtenerproyectoentregablescompleto = function (id) {
+    return `SELECT 
+    entregables.id AS "entrid",
+    entregables.entregatitulo,
+    entregables.entregadescripcion,
+    entregables.entregaestado,
+    entregables.entregatipoArchivo,
+    entregables.entregafechaEntrega,
+    entregables.entreganumeroRevisiones,
+    
+    proyectos.id AS "proid",
+    contenidos.id AS "conid",
+    contenidos.contenidonombre,
+    contenidos.contenidonombrearchivo,
+    contenidos.contenidodescripcion
+    
+    FROM entregables
+    JOIN listaentregables ON entregables.id = listaentregables.entregable
+    JOIN alfas ON listaentregables.alfa = alfas.id 
+    JOIN listaalfas ON alfas.id = listaalfas.alfa
+    JOIN practicas ON listaalfas.practica = practicas.id
+    JOIN listapracticas ON practicas.id = listapracticas.practica
+    JOIN metodologias ON listapracticas.metodologia = metodologias.id
+    JOIN proyectos ON metodologias.id = proyectos.metodologia
+    JOIN listacontenidos ON entregables.id = listacontenidos.entregable
+    JOIN contenidos ON listacontenidos.contenido = contenidos.id
+    WHERE proyectos.id =${id}; `;
+}
 //-------------busquedas por tablas
 query.obtenertodasIdiomas = function () { return `SELECT * FROM idiomas ; `; }
 query.obtenertodasHabilidades = function () { return `SELECT * FROM habilidades ; `; }

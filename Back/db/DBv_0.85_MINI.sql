@@ -780,6 +780,14 @@ INSERT INTO contenidos
     (contenidonombre, contenidonombrearchivo, contenidodescripcion, contenidobibliografica)
 VALUES
     (NULL, NULL, NULL, NULL);
+INSERT INTO contenidos
+    (contenidonombre, contenidonombrearchivo, contenidodescripcion, contenidobibliografica)
+VALUES
+    (NULL, NULL, NULL, NULL);
+INSERT INTO contenidos
+    (contenidonombre, contenidonombrearchivo, contenidodescripcion, contenidobibliografica)
+VALUES
+    (NULL, NULL, NULL, NULL);
 SELECT *
 FROM contenidos;
 INSERT INTO listacontenidos
@@ -802,6 +810,14 @@ INSERT INTO listacontenidos
     (entregable, contenido, actividad)
 VALUES
     (NULL, 5, 5);
+INSERT INTO listacontenidos
+    (entregable, contenido, actividad)
+VALUES
+    (1, 6, null);
+INSERT INTO listacontenidos
+    (entregable, contenido, actividad)
+VALUES
+    (2, 7, null);
 SELECT *
 FROM listacontenidos;
 INSERT INTO chats

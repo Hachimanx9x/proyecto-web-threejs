@@ -148,6 +148,14 @@ rutas.get('/proyecto/listado/:id', async (req, res) => {
     ftpminio.listObjects(id).then(result => res.json(result)).catch(err => res.json(err));
 });
 
+rutas.get('/proyecto/actividades/:id', proToken, async (req, res) => {
+
+    const { id } = req.params;
+    //const {user} = req.body; 
+    // const {id,name } = req.body;
+
+    await buscarDB.buscaractividadesproyecto(id).then(respu => res.json(respu)).catch(err => res.json(err));
+});
 
 
 

@@ -51,6 +51,154 @@ rutas.post('/registro', (req, res) => {
 
 });
 
+//-----------------
+rutas.post(`/create/user`, (req, res) => {
+
+  const {
+
+    listidiomas,
+    listhabilidades,
+    listherramientas,
+    email,
+    password,
+    experiencia,
+    nombre,
+    descripcion,
+    pais,
+    edad,
+    github,
+    gitlab,
+    bitbucket,
+    linkedin
+  } = req.body;
+  const {
+    cv, foto
+  } = req.file
+  let bucket, fotofile, cvfile;
+  if (Array.isArray(listidiomas) &&
+    Array.isArray(listhabilidades) &&
+    Array.isArray(listhabilidades) &&
+    typeof mail === 'string' &&
+    typeof password === 'string' &&
+    typeof experiencia === 'string' &&
+    typeof nombre === 'number' &&
+    typeof descripcion === 'string' &&
+    typeof pais === 'string' &&
+    typeof edad === 'number' &&
+    typeof github === 'string' &&
+    typeof gitlab === 'string' &&
+    typeof bitbucket === 'string' &&
+    typeof linkedin === 'string' &&
+    cv !== undefined && cv !== null &&
+    foto !== undefined && foto !== null
+
+  ) {
+    buscarDB.obtenertodasUsuarios().then(result => {
+      const { API } = result;
+      if (comprobaremail(API, email)) {
+        let ultimo = API[API.length - 1].id;
+
+        ultimo += ultimo + 1;
+        bucket = `usuaruio${ultimo + 1}`;
+        ftpminio.creatBucket(bucket).then(result2 => {
+          if (result2) {
+            fotofile = `/${bucket}/${foto.name}`;
+            cvfile = `/${bucket}/${cv.name}`;
+            foto.mv(__dirname + '/tmp/' + foto.name, (err3) => {
+              if (!err) {
+                let metaData = {
+                  'Content-Type': `${foto.mimetype}`,
+                  'size': foto.size,
+                  'X-Amz-Meta-Testing': 1234,
+                  'example': 5678
+                }
+                ftpminio.putFile(bucket, foto.name, path.join(__dirname, `/tmp/${foto.name}`), metaData).
+                  then(resul3 => {
+                    const { file } = resul3
+                    if (file) {
+                      cv.mv(__dirname + '/tmp/' + cv.name, (err3) => {
+                        if (!err) {
+                          metaData = {
+                            'Content-Type': `${cv.mimetype}`,
+                            'size': cv.size,
+                            'X-Amz-Meta-Testing': 1234,
+                            'example': 5678
+                          }
+
+                          ftpminio.putFile(bucket, cv.name, path.join(__dirname, `/tmp/${cv.name}`), metaData).
+                            then(resul3 => {
+                              const { file } = resul5
+                              if (file) {
+                                insertDB.insertUser({
+                                  email,
+                                  contrasena: password,
+                                  fotoperfil: fotofile,
+                                  nombrearchivohojadevida: cvfile,
+                                  anosdeexperiencia: experiencia,
+                                  nombre: nombre,
+                                  descripcion,
+                                  pais,
+                                  edad,
+                                  github,
+                                  gitlab,
+                                  bitbucket,
+                                  linkedin
+                                }).then(resuluser => {
+                                  for (let usera = 0; usera < listidiomas.length; usera++) {
+                                    let user = ultimo;
+                                    let idioma = listidiomas[usera];
+                                    insertDB.insertlistlenguaje({ user, idioma }).then(
+                                      resulidioma => {
+                                        if (listidiomas[usera] === listidiomas[listidiomas.length - 1]) {
+                                          for (let userb = 0; userb < listhabilidades.length; userb++) {
+                                            let habilidad = listhabilidades[userb];
+                                            insertDB.insetlistAbility({ usuario: user, habilidad }).then(resulhabi => {
+                                              if (habilidad === listhabilidades[listhabilidades.length - 1]) {
+                                                for (let userc = 0; userc < listherramientas.length; userc++) {
+                                                  let herramienta = listherramientas[userc];
+                                                  insertDB.insertlistTool({ usuario: user, herramienta }).then(resulherr => {
+                                                    if (herramienta === listherramientas[listherramientas.length - 1]) {
+                                                      res.json(resulherr);
+                                                    }
+                                                  }).catch(errherr => res.json(errherr))
+                                                }
+                                              }
+                                            }).catch(errhabi => res.json(errhabi))
+                                          }
+                                        }
+                                      }
+                                    )
+                                  }
+                                }).catch(eruser => res.json(eruser));
+
+                              }
+
+                            }).catch(er5 => res.json(err5));
+                        } else {
+                          console.log(err3)
+                        }
+                      });
+
+                    }
+
+                  }).catch(err4 => res.json(err4));
+              } else {
+                console.log(err3)
+              }
+            });
+          }
+        }).catch(err2 => res.json(err2))
+      } else {
+        res.json({ msj: `error el correo ${email} ya esta registrado` })
+      }
+
+
+    }).catch(err => res.json(err))
+  } else {
+    res.json({ msj: "datos erroneos" })
+  }
+});
+
 
 rutas.post('/proyecto/insertarArchivo', (req, res) => {
   // res.json({msx:"hola"});
@@ -212,6 +360,18 @@ rutas.post('/api/crearbucket', (req, res) => {
 
 });
 
+
+//-------------------
+
+function comprobaremail (array, email) {
+  let vari = true;
+  for (let a = 0; a < array.length; a++) {
+    if (array[a] == email) {
+      return false;
+    }
+  }
+  return vari;
+}
 
 module.exports = rutas;
 

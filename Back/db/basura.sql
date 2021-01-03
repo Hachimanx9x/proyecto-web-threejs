@@ -6,26 +6,57 @@ USE proyectoweb;
 
 
 SELECT 
-actividades.id AS "actid",
-contenidos.id
-FROM proyectos pro
-INNER JOIN listaintegrantes ON pro.id = listaintegrantes.proyecto
-INNER JOIN integrantes ON listaintegrantes.integrante = integrantes.id
-INNER JOIN listaactividades ON integrantes.id = listaactividades.integrante
-INNER JOIN actividades ON listaactividades.actividad = actividades.id
-INNER JOIN metodologias ON pro.metodologia = metodologias.id
-INNER JOIN listapracticas ON metodologias.id = listapracticas.metodologia
-INNER JOIN practicas ON listapracticas.practica = practicas.id
-INNER JOIN listaalfas ON practicas.id = listaalfas.practica
-INNER JOIN alfas ON listaalfas.alfa = alfas.id
-INNER JOIN listaentregables ON alfas.id = listaentregables.alfa
-INNER JOIN entregables ON listaentregables.entregable = entregables.id
-INNER JOIN listacontenidos lisco1 ON actividades.id = lisco1.actividad 
-LEFT JOIN listacontenidos lisco2 ON actividades.id = lisco2.contenido 
-LEFT JOIN contenidos con1 ON lisco1.contenido = con1.id
-LEFT JOIN contenidos con2 ON lisco2.contenido = con2.id
-WHERE pro.id =1; 
 
+actividades.id AS "actid",
+actividades.actividadtitulo,
+actividades.actividaddescripcion,
+actividades.actividadestado,
+actividades.actividadfechacreacion,
+actividades.actividadfechaentrega,
+actividades.actividadrevision,
+
+proyectos.id AS "proid",
+contenidos.id AS "conid",
+contenidos.contenidonombre,
+contenidos.contenidonombrearchivo,
+contenidos.contenidodescripcion
+
+FROM actividades 
+JOIN listaactividades ON actividades.id = listaactividades.actividad
+JOIN integrantes ON listaactividades.integrante = integrantes.id
+JOIN listaintegrantes ON integrantes.id = listaintegrantes.integrante
+JOIN proyectos ON listaintegrantes.proyecto = proyectos.id
+JOIN listacontenidos ON actividades.id = listacontenidos.actividad
+JOIN contenidos ON listacontenidos.contenido = contenidos.id
+WHERE proyectos.id =1; 
+
+SELECT 
+entregables.id AS "entrid",
+entregables.entregatitulo,
+entregables.entregadescripcion,
+entregables.entregaestado,
+entregables.entregatipoArchivo,
+entregables.entregafechaEntrega,
+entregables.entreganumeroRevisiones,
+
+proyectos.id AS "proid",
+contenidos.id AS "conid",
+contenidos.contenidonombre,
+contenidos.contenidonombrearchivo,
+contenidos.contenidodescripcion
+
+FROM entregables
+JOIN listaentregables ON entregables.id = listaentregables.entregable
+JOIN alfas ON listaentregables.alfa = alfas.id 
+JOIN listaalfas ON alfas.id = listaalfas.alfa
+JOIN practicas ON listaalfas.practica = practicas.id
+JOIN listapracticas ON practicas.id = listapracticas.practica
+JOIN metodologias ON listapracticas.metodologia = metodologias.id
+JOIN proyectos ON metodologias.id = proyectos.metodologia
+JOIN listacontenidos ON entregables.id = listacontenidos.entregable
+JOIN contenidos ON listacontenidos.contenido = contenidos.id
+WHERE proyectos.id = 1; 
+ 
 --  SELECT 
 --  usuarios.id AS "userid",
 --  usuarios.fotoperfil,

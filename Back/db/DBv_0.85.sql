@@ -821,6 +821,14 @@ INSERT INTO listacontenidos
     (entregable, contenido, actividad)
 VALUES
     (NULL, 5, 5);
+INSERT INTO listacontenidos
+    (entregable, contenido, actividad)
+VALUES
+    (1, 6, null);    
+INSERT INTO listacontenidos
+    (entregable, contenido, actividad)
+VALUES
+    (2, 7, null);    
 SELECT *
 FROM listacontenidos;
 INSERT INTO chats
