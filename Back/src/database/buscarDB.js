@@ -1176,6 +1176,7 @@ function rearmas (idUser, rows) {
             }
         }
         defarray[i].herramientas = Array.from(new Set(herramientemp));
+
         herramientemp = [];
     }
     var palabratemp; var palaarray = [];
@@ -1322,12 +1323,14 @@ function organizarcalendario (array) {
                 }
             }
         }
+        let l = 1;
         for (let k = 0; k < temparra.length; k++) {
-            for (let l = 1; l < temparra.length; l++) {
+            for (l; l < temparra.length; l++) {
                 if (temparra[k].actividadid == temparra[l].actividadid) {
                     temparra.splice(l, 1);
                 }
             }
+            l++;
         }
         arraydef[i].actividades = temparra;
         temparra = [];
@@ -1471,5 +1474,6 @@ function filtarinfo (array) {
     }
     return arraydef;
 }
+
 //-------------------
 module.exports = funcionesDB;
