@@ -245,10 +245,6 @@ rutas.post('/create/usuario', (req, res) => {
         }).catch(err => { res.json(err) });
       }
     });
-
-
-
-
   } else { res.json({ msj: "error en los datos" }) }
 })
 

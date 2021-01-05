@@ -4,6 +4,10 @@ USE proyectoweb;
 
 -- DROP DATABASE proyectoweb;
 
+-- UPDATE idiomas 
+--     SET idiomanivel ="A1 Beginner" 
+--     WHERE id =1;
+--     
 
 SELECT 
 
@@ -15,7 +19,10 @@ actividades.actividadfechacreacion,
 actividades.actividadfechaentrega,
 actividades.actividadrevision,
 
-proyectos.id AS "proid",
+usuarios.id AS "userid",
+usuarios.nombre,
+roles.roltitulo,
+tecnicas.tecnicatitulo, 
 contenidos.id AS "conid",
 contenidos.contenidonombre,
 contenidos.contenidonombrearchivo,
@@ -28,34 +35,37 @@ JOIN listaintegrantes ON integrantes.id = listaintegrantes.integrante
 JOIN proyectos ON listaintegrantes.proyecto = proyectos.id
 JOIN listacontenidos ON actividades.id = listacontenidos.actividad
 JOIN contenidos ON listacontenidos.contenido = contenidos.id
+JOIN usuarios ON integrantes.usuario = usuarios.id
+JOIN roles ON integrantes.rol = roles.id
+JOIN tecnicas ON actividades.tecnica = tecnicas.id
 WHERE proyectos.id =1; 
-
-SELECT 
-entregables.id AS "entrid",
-entregables.entregatitulo,
-entregables.entregadescripcion,
-entregables.entregaestado,
-entregables.entregatipoArchivo,
-entregables.entregafechaEntrega,
-entregables.entreganumeroRevisiones,
-
-proyectos.id AS "proid",
-contenidos.id AS "conid",
-contenidos.contenidonombre,
-contenidos.contenidonombrearchivo,
-contenidos.contenidodescripcion
-
-FROM entregables
-JOIN listaentregables ON entregables.id = listaentregables.entregable
-JOIN alfas ON listaentregables.alfa = alfas.id 
-JOIN listaalfas ON alfas.id = listaalfas.alfa
-JOIN practicas ON listaalfas.practica = practicas.id
-JOIN listapracticas ON practicas.id = listapracticas.practica
-JOIN metodologias ON listapracticas.metodologia = metodologias.id
-JOIN proyectos ON metodologias.id = proyectos.metodologia
-JOIN listacontenidos ON entregables.id = listacontenidos.entregable
-JOIN contenidos ON listacontenidos.contenido = contenidos.id
-WHERE proyectos.id = 1; 
+-- 
+-- SELECT 
+-- entregables.id AS "entrid",
+-- entregables.entregatitulo,
+-- entregables.entregadescripcion,
+-- entregables.entregaestado,
+-- entregables.entregatipoArchivo,
+-- entregables.entregafechaEntrega,
+-- entregables.entreganumeroRevisiones,
+-- 
+-- proyectos.id AS "proid",
+-- contenidos.id AS "conid",
+-- contenidos.contenidonombre,
+-- contenidos.contenidonombrearchivo,
+-- contenidos.contenidodescripcion
+-- 
+-- FROM entregables
+-- JOIN listaentregables ON entregables.id = listaentregables.entregable
+-- JOIN alfas ON listaentregables.alfa = alfas.id 
+-- JOIN listaalfas ON alfas.id = listaalfas.alfa
+-- JOIN practicas ON listaalfas.practica = practicas.id
+-- JOIN listapracticas ON practicas.id = listapracticas.practica
+-- JOIN metodologias ON listapracticas.metodologia = metodologias.id
+-- JOIN proyectos ON metodologias.id = proyectos.metodologia
+-- JOIN listacontenidos ON entregables.id = listacontenidos.entregable
+-- JOIN contenidos ON listacontenidos.contenido = contenidos.id
+-- WHERE proyectos.id = 1; 
  
 --  SELECT 
 --  usuarios.id AS "userid",

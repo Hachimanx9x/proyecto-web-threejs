@@ -148,13 +148,22 @@ rutas.get('/proyecto/listado/:id', async (req, res) => {
     ftpminio.listObjects(id).then(result => res.json(result)).catch(err => res.json(err));
 });
 
-rutas.get('/proyecto/actividades/:id', proToken, async (req, res) => {
+rutas.get('/proyecto/actividades/:id', proToken, (req, res) => {
 
     const { id } = req.params;
     //const {user} = req.body; 
     // const {id,name } = req.body;
+    jwt.verify(req.token, LLAVE, (err, data) => {
+        if (err) {
+            res.sendStatus(403)
+        } else {
+            if (data != {} || data !== {} || data !== null || data !== undefined) {
 
-    await buscarDB.buscaractividadesproyecto(id).then(respu => res.json(respu)).catch(err => res.json(err));
+                buscarDB.buscaractividadesproyecto(data.rows[0], id).then(respu => res.json(respu)).catch(err => res.json(err));
+            }
+        }
+    });
+
 });
 
 

@@ -265,7 +265,10 @@ query.obtenerproyectosactividadescompleto = function (id) {
     actividades.actividadfechaentrega,
     actividades.actividadrevision,
     
-    proyectos.id AS "proid",
+    usuarios.id AS "userid",
+    usuarios.nombre,
+    roles.roltitulo,
+    tecnicas.tecnicatitulo, 
     contenidos.id AS "conid",
     contenidos.contenidonombre,
     contenidos.contenidonombrearchivo,
@@ -278,6 +281,9 @@ query.obtenerproyectosactividadescompleto = function (id) {
     JOIN proyectos ON listaintegrantes.proyecto = proyectos.id
     JOIN listacontenidos ON actividades.id = listacontenidos.actividad
     JOIN contenidos ON listacontenidos.contenido = contenidos.id
+    JOIN usuarios ON integrantes.usuario = usuarios.id
+    JOIN roles ON integrantes.rol = roles.id
+    JOIN tecnicas ON actividades.tecnica = tecnicas.id
     WHERE proyectos.id =${id}; `;
 }
 query.obtenerproyectoentregablescompleto = function (id) {
@@ -587,9 +593,50 @@ query.updateidiomas = function (nombre, nivel, id) {
     SET idiomanombre =${nombre},  idiomanivel =${nivel}
     WHERE id = ${id}; `;
 }
+//-----------------------------------------------------
+query.updateusuarioscorreo = function (email, id) {
+    return `UPDATE usuarios 
+    SET email="${email}"
+    WHERE id = ${id}; `;
+}
 query.updateusuarioscontrasena = function (password, id) {
     return `UPDATE usuarios 
     SET contrasena ="${password}"
+    WHERE id = ${id}; `;
+}
+query.updateusuariofotoperfil = function (foto, id) {
+    return `UPDATE usuarios 
+    SET fotoperfil ="${foto}"
+    WHERE id = ${id}; `;
+}
+query.updateusuarioshojavida = function (cv, id) {
+    return `UPDATE usuarios 
+    SET nombrearchivohojadevida ="${cv}"
+    WHERE id = ${id}; `;
+}
+query.updateusuariosexperiencia = function (experiencia, id) {
+    return `UPDATE usuarios 
+    SET anosdeexperiencia ="${experiencia}"
+    WHERE id = ${id}; `;
+}
+query.updateusuariosnombre = function (name, id) {
+    return `UPDATE usuarios 
+    SET nombre ="${name}"
+    WHERE id = ${id}; `;
+}
+query.updateusuariosdescripcion = function (descrip, id) {
+    return `UPDATE usuarios 
+    SET descripcion ="${descrip}"
+    WHERE id = ${id}; `;
+}
+query.updateusuariospais = function (pais, id) {
+    return `UPDATE usuarios 
+    SET pais ="${descrip}"
+    WHERE id = ${id}; `;
+}
+query.updateusuariosedad = function (edad, id) {
+    return `UPDATE usuarios 
+    SET edad ="${edad}"
     WHERE id = ${id}; `;
 }
 query.updateusuariosgithub = function (github, id) {
@@ -642,6 +689,7 @@ query.updateusuario = function (id,
     linkedin= "${linkedin}",
     WHERE id = ${id}; `;
 }
+//----------------------------------------------------------------------
 query.updatecontacto = function (preferencias, id) {
     return `UPDATE contactos 
     SET preferencias =${preferencias}

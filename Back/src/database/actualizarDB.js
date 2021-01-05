@@ -192,9 +192,73 @@ funcionesDB.updateuserlinkedin = (obj) => {
     })
 }
 //----------------------------------------------------------------
+funcionesDB.updateuser = (obj) => {
+    const { id,
+        email,
+        password,
+        experiencia,
+        fotoperfil,
+        nombrearchivohojadevida,
+        nombre,
+        descripcion,
+        pais,
+        edad,
+        github,
+        gitlab,
+        bitbucket,
+        linkedin } = obj;
+    return new Promise((res, rej) => {
+        const { linkedin, id } = obj;
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.updateusuario(id,
+                    email,
+                    password,
+                    experiencia,
+                    fotoperfil,
+                    nombrearchivohojadevida,
+                    nombre,
+                    descripcion,
+                    pais,
+                    edad,
+                    github,
+                    gitlab,
+                    bitbucket,
+                    linkedin), (err) => {
+                        if (!err) {
+                            res({ msj: "success" });
+                        } else { rej({ msj: "error" }); }
+                    });
+            }
+            else {
+                sqlite.all(Query.updateusuario(id,
+                    email,
+                    password,
+                    experiencia,
+                    fotoperfil,
+                    nombrearchivohojadevida,
+                    nombre,
+                    descripcion,
+                    pais,
+                    edad,
+                    github,
+                    gitlab,
+                    bitbucket,
+                    linkedin), (err) => {
+                        if (!err) {
+                            res({ msj: "success" });
+                        } else { rej({ msj: "error" }); }
+                    });
+            }
+        })
+    })
+
+}
+//----------------------------------------------------------------
 funcionesDB.updatecontact = (obj) => {
     return new Promise((res, rej) => {
-        const { nopreferenciasmbre, id } = obj;
+        const { preferencias, id } = obj;
         promesa.then((result) => {
             const { mariaDB, sqlite, vDB } = result;
             if (vDB) {

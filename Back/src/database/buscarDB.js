@@ -261,7 +261,7 @@ funcionesDB.buscareventoscalendario = async (idUser) => {
         });
     });
 }
-funcionesDB.buscaractividadesproyecto = async (id) => {
+funcionesDB.buscaractividadesproyecto = async (user, id) => {
     return new Promise((res, rej) => {
         //console.log(idUser)
         promesa.then(async (result) => {
@@ -273,7 +273,7 @@ funcionesDB.buscaractividadesproyecto = async (id) => {
                         await mariaDB.query(Query.obtenerproyectoentregablescompleto(id), (err2, rows2) => {
                             if (!err) {
                                 res({
-                                    actividades: rows,
+                                    actividades: actividadespro(user, rows),
                                     entregables: rows2
                                 });
 
@@ -287,7 +287,7 @@ funcionesDB.buscaractividadesproyecto = async (id) => {
                         sqlite.all(Query.obtenerproyectosactividadescompleto(id), (err, rows2) => {
                             if (!err) {
                                 res({
-                                    actividades: rows,
+                                    actividades: actividadespro(user, rows),
                                     entregables: rows2
                                 })
                             } else { rej(err2) }
@@ -1512,5 +1512,42 @@ function filtarinfo (array) {
     return arraydef;
 }
 
+function actividadespro (user, array) {
+    let arraydef = [];
+
+    for (let a = 0; a < array.length; a++) {
+        if (user.id === array[a].userid) {
+            arraydef.push({
+                actividadid: array[a].actid,
+                titulo: array[a].actividadtitulo,
+                descripcion: array[a].actividaddescripcion,
+                revisiones: array[a].actividadrevision,
+                nombre: array[a].nombre,
+                rol: array[a].roltitulo,
+                estado: array[a].actividadestado,
+                fechaentrega: array[a].actividadfechaentrega,
+                tecnica: array[a].tecnicatitulo,
+                contenido: array[a].contenidonombrearchivo,
+                entregar: true
+            })
+        } else {
+            arraydef.push({
+                actividadid: array[a].actid,
+                titulo: array[a].actividadtitulo,
+                descripcion: array[a].actividaddescripcion,
+                revisiones: array[a].actividadrevision,
+                nombre: array[a].nombre,
+                rol: array[a].roltitulo,
+                estado: array[a].actividadestado,
+                fechaentrega: array[a].actividadfechaentrega,
+                tecnica: array[a].tecnicatitulo,
+                contenido: array[a].contenidonombrearchivo,
+                entregar: false
+            })
+        }
+
+    }
+    return arraydef;
+}
 //-------------------
 module.exports = funcionesDB;

@@ -6,19 +6,22 @@ const exec = require('child_process').exec;
 //const socket = require('./server/socket'); 
 //const minio = require("./serverMinio"); 
 
-async function inicio () {
-    await http.listen(app.get('PORT'), () => {
-        console.log(chalk.blue('Sitema ejecutandose en :') + chalk.white.bgBlue(isWin));
-        if (isWin === "win32") {
-            exec('start ./min.sh', function (err, stdout, stderr) {
-                if (!err) {
-                    console.log(stdout);
-                }
-            });
-        }
+function inicio () {
+    if (isWin === "win32") {
+        console.log(chalk.blue('Iniciando min.io :') + chalk.green(" - - espera"));
+        exec('start ./min.sh', function (err, stdout, stderr) {
+            if (!err) {
+                console.log(stdout);
+            }
+        });
+    }
+    setTimeout(() => {
+        http.listen(app.get('PORT'), () => {
+            console.log(chalk.blue('Sitema ejecutandose en :') + chalk.white.bgBlue(isWin));
+            console.log(chalk.blue('Ejecutando en el puerto :') + chalk.white.bgBlue(' 3030 '));
+        });
+    }, 3000);
 
-        console.log(chalk.blue('Ejecutando en el puerto :') + chalk.white.bgBlue(' 3030 '));
-    });
 }
 
 inicio(); 
