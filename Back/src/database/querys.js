@@ -548,7 +548,7 @@ query.insertcontenido = function (nombre, nombrearchivo, descripcion, bibliograf
 }
 query.insertlistcontenido = function (entregable, contenido, actividad) {
     return `INSERT INTO listacontenidos (entregable , contenido, actividad ) VALUES (
-        ${entregable}, ${contenido}
+        ${entregable}, ${contenido},"${actividad}"
     ); `;
 }
 query.insertherramientametodologia = function (nombre, descripcion, bibliografia) {
@@ -574,12 +574,12 @@ query.insertlistherramientametodologia = function (entregable, herramientametodo
  */
 query.updateidiomasnombre = function (nombre, id) {
     return `UPDATE idiomas 
-    SET idiomanombre =${nombre} 
+    SET idiomanombre ="${nombre}" 
     WHERE id = ${id}; `;
 }
 query.updateidiomasnivel = function (nivel, id) {
     return `UPDATE idiomas 
-    SET idiomanivel =${nivel} 
+    SET idiomanivel ="${nivel} "
     WHERE id = ${id}; `;
 }
 query.updateidiomas = function (nombre, nivel, id) {
@@ -589,27 +589,57 @@ query.updateidiomas = function (nombre, nivel, id) {
 }
 query.updateusuarioscontrasena = function (password, id) {
     return `UPDATE usuarios 
-    SET contrasena =${password}
+    SET contrasena ="${password}"
     WHERE id = ${id}; `;
 }
 query.updateusuariosgithub = function (github, id) {
     return `UPDATE usuarios 
-    SET github =${github}
+    SET github ="${github}"
     WHERE id = ${id}; `;
 }
 query.updateusuariosbitbucket = function (bitbucket, id) {
     return `UPDATE usuarios 
-    SET bitbucket=${bitbucket}
+    SET bitbucket="${bitbucket}"
     WHERE id = ${id}; `;
 }
 query.updateusuariosgitlab = function (gitlab, id) {
     return `UPDATE usuarios 
-    SET gitlab =${gitlab}
+    SET gitlab ="${gitlab}"
     WHERE id = ${id}; `;
 }
 query.updateusuarioslinkedin = function (linkedin, id) {
     return `UPDATE usuarios 
-    SET linkedin =${linkedin}
+    SET linkedin ="${linkedin}"
+    WHERE id = ${id}; `;
+}
+query.updateusuario = function (id,
+    email,
+    password,
+    experiencia,
+    fotoperfil,
+    nombrearchivohojadevida,
+    nombre,
+    descripcion,
+    pais,
+    edad,
+    github,
+    gitlab,
+    bitbucket,
+    linkedin) {
+    return `UPDATE usuarios 
+    SET email ="${email}",
+    contrasena= "${password}",
+    fotoperfil= "${fotoperfil}",
+    nombrearchivohojadevida= "${nombrearchivohojadevida}",
+    anosdeexperiencia= "${experiencia}",
+    nombre= "${nombre}",
+    descripcion= "${descripcion}",
+    pais= "${pais}",
+    edad= "${edad}",
+    github= "${github}",
+    gitlab= "${gitlab}",
+    bitbucket= "${bitbucket}",
+    linkedin= "${linkedin}",
     WHERE id = ${id}; `;
 }
 query.updatecontacto = function (preferencias, id) {
@@ -624,7 +654,7 @@ query.updateactividadfechaentrega = function (fecha, id) {
 }
 query.updateactividadestado = function (estado, id) {
     return `UPDATE actividades 
-    SET actividadestado =${estado}
+    SET actividadestado ="${estado}"
     WHERE id = ${id}; `;
 }
 query.updateactividadrevisiones = function (revision, id) {
@@ -639,17 +669,17 @@ query.updateaintegrantes = function (rol, id) {
 }
 query.updatecontenidos = function (nombreArchivo, id) {
     return `UPDATE integrantes 
-    SET contenidonombrearchivo =${nombreArchivo}
+    SET contenidonombrearchivo ="${nombreArchivo}"
     WHERE id = ${id}; `;
 }
 query.updatentregable = function (estado, id) {
     return `UPDATE entregables 
-    SET entregaestado =${estado}
+    SET entregaestado ="${estado}"
     WHERE id = ${id}; `;
 }
 query.updathistorial = function (descripcion, id) {
     return `UPDATE historiales 
-    SET historiadescripcion =${descripcion}
+    SET historiadescripcion ="${descripcion}"
     WHERE id = ${id}; `;
 }
 /**

@@ -28,11 +28,6 @@ let promesa = new Promise((res, rej) => {
                 console.log(chalk.bgBlue("Reiniciando base de datos"));
                 vDB = false;
                 console.log(chalk.white.bold('Estado de SQLITE es :') + chalk.white.bgBlue(' Conectado '));
-                //console.log(sqlite); 
-                //  sqlite.all(`SELECT * FROM usuarios WHERE email = "micorreo@uao.edu.co" AND contrasena = "contraseña123" `,function(err, row) {
-                //    console.log(row);
-
-                //   });
                 res({ mariaDB, sqlite, vDB });
             });
 

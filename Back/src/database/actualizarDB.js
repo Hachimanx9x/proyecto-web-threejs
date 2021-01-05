@@ -15,17 +15,17 @@ funcionesDB.updatelenguajename = (obj) => {
                 mariaDB.query(Query.updateidiomasnombre(nombre, id), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: err }); }
                 });
             }
             else {
                 sqlite.all(Query.updateidiomasnombre(nombre, id), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: err }); }
                 });
             }
-        })
+        }).catch(err => console.log(err))
     })
 }
 //----------------------------------------------------------------
@@ -35,20 +35,21 @@ funcionesDB.updatelenguajelevel = (obj) => {
         promesa.then((result) => {
             const { mariaDB, sqlite, vDB } = result;
             if (vDB) {
-                mariaDB.query(Query.updateidiomasnivel(nivel, id), (err) => {
+                console.log("entro1")
+                mariaDB.query(Query.updateidiomasnivel(nivel, id), (err, rows) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: err }); }
                 });
             }
             else {
                 sqlite.all(Query.updateidiomasnivel(nivel, id), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: err }); }
                 });
             }
-        })
+        }).catch(err => console.log(err))
     })
 }
 //----------------------------------------------------------------
@@ -56,12 +57,13 @@ funcionesDB.updatelenguaje = (obj) => {
     return new Promise((res, rej) => {
         const { nombre, nivel, id } = obj;
         promesa.then((result) => {
+
             const { mariaDB, sqlite, vDB } = result;
             if (vDB) {
                 mariaDB.query(Query.updateidiomas(nombre, nivel, id), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: err }); }
                 });
             }
             else {
@@ -71,7 +73,7 @@ funcionesDB.updatelenguaje = (obj) => {
                     } else { rej({ msj: "error" }); }
                 });
             }
-        })
+        }).catch(err => console.log(err))
     })
 }
 //----------------------------------------------------------------

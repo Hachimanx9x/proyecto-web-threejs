@@ -3,9 +3,11 @@ const ex = require('express');
 const rutas = ex.Router();
 
 const actualizarDB = require('../database/actualizarDB');
+const buscarDB = require('../database/buscarDB');
 const ftpminio = require("../ftp/peticiones");
 const LLAVE = 'misecretos';
 const path = require('path');
+const { then } = require('../database');
 
 rutas.put('/entrega/actividad', proToken, (req, res) => {
     const { estado, actividad } = req.body;
@@ -29,7 +31,74 @@ rutas.put('/entrega/actividad', proToken, (req, res) => {
 
 });
 
+/**
+      db      `7MM"""Mq. `7MMF'                                 mm    `7MM                       `7MM          
+     ;MM:       MM   `MM.  MM                                   MM      MM                         MM          
+    ,V^MM.      MM   ,M9   MM      `7MMpMMMb.pMMMb.   .gP"Ya  mmMMmm    MMpMMMb.   ,pW"Wq.    ,M""bMM  ,pP"Ybd 
+   ,M  `MM      MMmmdM9    MM        MM    MM    MM  ,M'   Yb   MM      MM    MM  6W'   `Wb ,AP    MM  8I   `" 
+   AbmmmqMA     MM         MM        MM    MM    MM  8M""""""   MM      MM    MM  8M     M8 8MI    MM  `YMMMa. 
+  A'     VML    MM         MM        MM    MM    MM  YM.    ,   MM      MM    MM  YA.   ,A9 `Mb    MM  L.   I8 
+.AMA.   .AMMA..JMML.     .JMML.    .JMML  JMML  JMML. `Mbmmd'   `Mbmo .JMML  JMML. `Ybmd9'   `Wbmd"MML.M9mmmP' 
+ */
 
+rutas.put('/update/lenguaje', proToken, (req, res) => {
+    const { id, nombre, nivel } = req.body;
+    console.log(req.body);
+    buscarDB.obtenertodasIdiomas().then((resul) => {
+        const { API } = resul;
+        for (let a = 0; a < API.length; a++) {
+            if (id == API[a].id) {
+                if (nombre != API[a].idiomanombre && nivel === API[a].idiomanivel) {
+                    console.log("entro nombre");
+                    actualizarDB.updatelenguajename({ id, nombre })
+                        .then(re => res.json(re)).catch(err => res.json(err));
+                } else if (nombre === API[a].idiomanombre && nivel != API[a].idiomanivel) {
+                    console.log("entro nivel");
+                    actualizarDB.updatelenguajelevel({ id, nivel })
+                        .then((re) => {
+                            console.log("entro");
+                            res.json(re)
+                        }).catch((err) => { res.json(err) });
+                } else if (nombre != API[a].idiomanombre && nivel != API[a].idiomanivel) {
+                    console.log("entro idioma");
+                    actualizarDB.updatelenguaje({ id, nombre, nivel }).then(re => res.json(re)).catch(err => res.json(err));
+                }
+            }
+        }
+    }).catch(err => res.json(err));
+});
+
+rutas.put('/update/lenguaje', proToken, (req, res) => {
+    const { id, nombre, nivel } = req.body;
+    console.log(req.body);
+    buscarDB.obtenertodasIdiomas().then((resul) => {
+        const { API } = resul;
+        for (let a = 0; a < API.length; a++) {
+            if (id == API[a].id) {
+                if (nombre != API[a].idiomanombre && nivel === API[a].idiomanivel) {
+                    console.log("entro nombre");
+                    actualizarDB.updatelenguajename({ id, nombre })
+                        .then(re => res.json(re)).catch(err => res.json(err));
+                } else if (nombre === API[a].idiomanombre && nivel != API[a].idiomanivel) {
+                    console.log("entro nivel");
+                    actualizarDB.updatelenguajelevel({ id, nivel })
+                        .then((re) => {
+                            console.log("entro");
+                            res.json(re)
+                        }).catch((err) => { res.json(err) });
+                } else if (nombre != API[a].idiomanombre && nivel != API[a].idiomanivel) {
+                    console.log("entro idioma");
+                    actualizarDB.updatelenguaje({ id, nombre, nivel }).then(re => res.json(re)).catch(err => res.json(err));
+                }
+            }
+        }
+    }).catch(err => res.json(err));
+});
+
+
+rutas.put(`/update/usuario`, proToken, (req, res) => {
+
+});
 /**
 `7MM"""YMM                                    db                                         
   MM    `7                                                                               
@@ -51,7 +120,7 @@ function proToken (req, res, next) {
         res.sendStatus(403);
     }
 }
-function randomNumber  {
+function randomNumber () {
     const possible = 'abcdefghijklmnopqrstuvwxyz0123456789';
     let randomNumber = 0;
     for (let i = 0; i < 6; i++) {
