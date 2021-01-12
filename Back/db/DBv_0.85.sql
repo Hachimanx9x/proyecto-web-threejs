@@ -258,7 +258,7 @@ id int PRIMARY KEY AUTO_INCREMENT,
 entregatitulo VARCHAR
 (200), 
 entregadescripcion VARCHAR
-(1000), 
+(10000), 
 entregaestado varchar
 (20),
 entregatipoArchivo varchar

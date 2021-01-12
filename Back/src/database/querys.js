@@ -18,6 +18,11 @@ query.login = function (obj) {
     //
     return `SELECT * FROM usuarios WHERE email = "${email}" AND contrasena = "${password}" `
 }
+query.usuarioid = function (id) {
+
+    //
+    return `SELECT * FROM usuarios WHERE id = ${id}; `
+}
 query.obtenerEscritorioActividades = function (id) {
     return (` SELECT  
     usuarios.nombre,
@@ -410,7 +415,10 @@ query.insertlistaHabilidades = function (usuario, habilidad) {
 query.insertcontactos = function (usuario, preferencia) {
     return `INSERT INTO contactos (contactousuario, preferencias) VALUES (${usuario}, ${preferencia});`;
 }
-
+//INSERT INTO listacontactos VALUES(1, 2);
+query.insertlistcontactos = function (usuario, contacto) {
+    return `INSERT INTO listacontactos VALUES(${usuario}, ${contacto});`;
+}
 //INSERT INTO herramientas (herramientanombre, herramientatipo, herramientadescripcion, herramientanombreIcono) VALUES ("nodejs","Desarrollo software", "Node.js es un entorno multiplataforma, basado en el lenguaje de programación JavaScript.","nodejslogo.svg"); 
 query.insertherramientas = function (herramientanombre, herramientatipo, herramientadescripcion, herramientanombreIcono) {
     return `INSERT INTO herramientas (herramientanombre, herramientatipo, herramientadescripcion, herramientanombreIcono) VALUES 
@@ -678,15 +686,15 @@ query.updateusuario = function (id,
     contrasena= "${password}",
     fotoperfil= "${fotoperfil}",
     nombrearchivohojadevida= "${nombrearchivohojadevida}",
-    anosdeexperiencia= "${experiencia}",
+    anosdeexperiencia= ${experiencia},
     nombre= "${nombre}",
     descripcion= "${descripcion}",
     pais= "${pais}",
-    edad= "${edad}",
+    edad= ${edad},
     github= "${github}",
     gitlab= "${gitlab}",
     bitbucket= "${bitbucket}",
-    linkedin= "${linkedin}",
+    linkedin= "${linkedin}"
     WHERE id = ${id}; `;
 }
 //----------------------------------------------------------------------
@@ -740,6 +748,7 @@ query.updathistorial = function (descripcion, id) {
 .JMMmmmd9   `Ybmd9'  .JMML.   .JMML.   `Moo9^Yo..JMML.   
  */
 //DELETE FROM table_name WHERE condition;
+query.deleteTabla = function (tabla) { return `DELETE FROM ${tabla};` }
 query.deleteIdiomas = function (id) { return `DELETE FROM idiomas WHERE id=${id} ; `; }
 query.deleteHabilidades = function (id) { return `DELETE FROM habilidades  WHERE id=${id}; `; }
 query.deleteHerramientas = function (id) { return `DELETE FROM herramientas  WHERE id=${id}; `; }
@@ -778,6 +787,47 @@ query.deleteListaEntregas = function (id) { return `DELETE FROM listaentregas  W
 query.deleteEventos = function (id) { return `DELETE FROM eventos  WHERE id=${id}; `; }
 query.deleteListaEventos = function (id) { return `DELETE FROM listaeventos  WHERE evento=${id}; `; }
 query.deleteListaIntegrantes = function (id) { return `DELETE FROM listaintegrantes  WHERE integrante=${id}; `; }
+
+query.deleteallIdiomas = function () { return `DELETE FROM idiomas WHERE  ; `; }
+query.deleteallHabilidades = function () { return `DELETE FROM habilidades ; `; }
+query.deleteallHerramientas = function () { return `DELETE FROM herramientas  ; `; }
+query.deleteallUsuarios = function () { return `DELETE FROM usuarios  ; `; }
+query.deleteallPalabrasClave = function () { return `DELETE FROM palabrasclave ; `; }
+query.deleteallListaidiomas = function () { return `DELETE FROM listaidiomas ; `; }
+query.deleteallContactos = function () { return `DELETE FROM contactos  ; `; }
+query.deleteallListaContactos = function () { return `DELETE FROM listacontactos  ; `; }
+query.deleteallListaHabilidades = function () { return `DELETE FROM listahabilidades  ; `; }
+query.deleteallListaHerramientas = function () { return `DELETE FROM listaherramientas ; `; }
+query.deleteallMetodologias = function () { return `DELETE FROM metodologias  ; `; }
+query.deleteallPracticas = function () { return `DELETE FROM practicas  ; `; }
+query.deleteallListasPracticas = function () { return `DELETE FROM listapracticas ; `; }
+query.deleteallAlfas = function () { return `DELETE FROM alfas  ; `; }
+query.deleteallListaAlfas = function () { return `DELETE FROM listaalfas  WHERE alfa=${id}; `; }
+query.deleteallHerramientasMetodologia = function () { return `DELETE FROM herramientasmetodologia ;`; }
+query.deleteallTecnicas = function () { return `DELETE FROM tecnicas  ; `; }
+query.deleteallActividades = function () { return `DELETE FROM actividades  ; `; }
+query.deleteallRoles = function () { return `DELETE FROM roles  ; `; }
+query.deleteallListaRoles = function () { return `DELETE FROM listaroles  ; `; }
+query.deleteallIntegrantes = function () { return `DELETE FROM integrantes ; `; }
+query.deleteallListaActividades = function () { return `DELETE FROM listaactividades  ; `; }
+query.deleteallContenidos = function () { return `DELETE FROM contenidos  ; `; }
+query.deleteallEntregables = function () { return `DELETE FROM entregables  ; `; }
+query.deleteallListaentregables = function () { return `DELETE FROM listaentregables  ; `; }
+query.deleteallListaHerramientasMetodologia = function () { return `DELETE FROM listaherramientasmetodologia ; `; }
+query.deleteallListaContenidos = function () { return `DELETE FROM listacontenidos ; `; }
+query.deleteallEntregas = function () { return `DELETE FROM entregas ; `; }
+query.deleteallChats = function () { return `DELETE FROM chats; `; }
+query.deleteallHistoriales = function () { return `DELETE FROM historiales  ; `; }
+query.deleteallListaChats = function () { return `DELETE FROM listachats ; `; }
+query.deleteallProyectos = function () { return `DELETE FROM proyectos  ; `; }
+query.deleteallReuniones = function () { return `DELETE FROM reuniones ; `; }
+query.deleteallListaReuniones = function () { return `DELETE FROM listareuniones  ; `; }
+query.deleteallListaEntregas = function () { return `DELETE FROM listaentregas ; `; }
+query.deleteallEventos = function () { return `DELETE FROM eventos ; `; }
+query.deleteallListaEventos = function () { return `DELETE FROM listaeventos ; `; }
+query.deleteallListaIntegrantes = function () { return `DELETE FROM listaintegrantes  ; `; }
+
+
 /**
  `7MM"""YMM                                             mm                        db                        
   MM    `7                                             MM                                                  

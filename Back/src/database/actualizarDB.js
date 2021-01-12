@@ -77,6 +77,29 @@ funcionesDB.updatelenguaje = (obj) => {
     })
 }
 //----------------------------------------------------------------
+funcionesDB.updateuseremail= (obj) => {
+    return new Promise((res, rej) => {
+        const { email, id } = obj;
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.updateusuarioscorreo(email, id), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.updateusuarioscorreo(email, id), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        })
+    })
+}
+//----------------------------------------------------------------
 funcionesDB.updateuserpassword = (obj) => {
     return new Promise((res, rej) => {
         const { password, id } = obj;
@@ -99,6 +122,168 @@ funcionesDB.updateuserpassword = (obj) => {
         })
     })
 }
+//----------------------------------------------------------------
+funcionesDB.updateuserprofilephoto= (obj) => {
+    return new Promise((res, rej) => {
+        const { foto, id } = obj;
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.updateusuariofotoperfil(foto, id), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.updateusuariofotoperfil(foto, id), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        })
+    })
+}
+//----------------------------------------------------------------
+funcionesDB.updateusercv= (obj) => {
+    return new Promise((res, rej) => {
+        const { cv, id } = obj;
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.updateusuarioshojavida(cv, id), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.updateusuarioshojavida(cv, id), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        })
+    })
+}
+//----------------------------------------------------------------
+funcionesDB.updateuserexperience= (obj) => {
+    return new Promise((res, rej) => {
+        const { experiencia, id } = obj;
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.updateusuariosexperiencia(experiencia, id), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.updateusuariosexperiencia(experiencia, id), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        })
+    })
+}
+//----------------------------------------------------------------
+funcionesDB.updateusername= (obj) => {
+    return new Promise((res, rej) => {
+        const { nombre, id } = obj;
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.updateusuariosnombre(nombre, id), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.updateusuariosnombre(nombre, id), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        })
+    })
+}
+//----------------------------------------------------------------
+funcionesDB.updateuserdescription = (obj) => {
+    return new Promise((res, rej) => {
+        const { descripcion, id } = obj;
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.updateusuariosdescripcion(descripcion, id), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.updateusuariosdescripcion(descripcion, id), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        })
+    })
+}
+//----------------------------------------------------------------
+funcionesDB.updateusercountry = (obj) => {
+    return new Promise((res, rej) => {
+        const { pais, id } = obj;
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.updateusuariospais(pais, id), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.updateusuariospais(pais, id), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        })
+    })
+}
+//----------------------------------------------------------------
+funcionesDB.updateuserage = (obj) => {
+    return new Promise((res, rej) => {
+        const { edad, id } = obj;
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.updateusuariosedad(edad, id), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.updateusuariosedad(edad, id), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        })
+    })
+}
+
 //----------------------------------------------------------------
 funcionesDB.updateusergithub = (obj) => {
     return new Promise((res, rej) => {
@@ -193,22 +378,22 @@ funcionesDB.updateuserlinkedin = (obj) => {
 }
 //----------------------------------------------------------------
 funcionesDB.updateuser = (obj) => {
-    const { id,
-        email,
-        password,
-        experiencia,
-        fotoperfil,
-        nombrearchivohojadevida,
-        nombre,
-        descripcion,
-        pais,
-        edad,
-        github,
-        gitlab,
-        bitbucket,
-        linkedin } = obj;
+  
     return new Promise((res, rej) => {
-        const { linkedin, id } = obj;
+        const { id,
+            email,
+            password,
+            experiencia,
+            fotoperfil,
+            nombrearchivohojadevida,
+            nombre,
+            descripcion,
+            pais,
+            edad,
+            github,
+            gitlab,
+            bitbucket,
+            linkedin } = obj;
         promesa.then((result) => {
             const { mariaDB, sqlite, vDB } = result;
             if (vDB) {
@@ -228,7 +413,7 @@ funcionesDB.updateuser = (obj) => {
                     linkedin), (err) => {
                         if (!err) {
                             res({ msj: "success" });
-                        } else { rej({ msj: "error" }); }
+                        } else { rej({ msj: err }); }
                     });
             }
             else {
@@ -248,7 +433,7 @@ funcionesDB.updateuser = (obj) => {
                     linkedin), (err) => {
                         if (!err) {
                             res({ msj: "success" });
-                        } else { rej({ msj: "error" }); }
+                        } else { rej({ msj:err }); }
                     });
             }
         })

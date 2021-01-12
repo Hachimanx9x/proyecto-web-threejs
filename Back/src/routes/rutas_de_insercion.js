@@ -5,14 +5,15 @@ const rutas = ex.Router();
 
 const nodemailer = require("nodemailer");
 
-const FLR = require("filereader")
-const fs = require('fs');
+
 const path = require('path');
 
 const ftpminio = require("../ftp/peticiones");
 const buscarDB = require('../database/buscarDB');
 const insertDB = require('../database/insertarDB');
 
+const jwt = require('jsonwebtoken');
+const modelomt = require('../models/models');
 const LLAVE = 'misecretos';
 
 rutas.post('/registro', (req, res) => {
@@ -81,7 +82,7 @@ rutas.post(`/create/user`, (req, res) => {
   if (Array.isArray(listidiomas) &&
     Array.isArray(listhabilidades) &&
     Array.isArray(listhabilidades) &&
-    typeof mail === 'string' &&
+    typeof email === 'string' &&
     typeof password === 'string' &&
     typeof experiencia === 'string' &&
     typeof nombre === 'number' &&
@@ -248,8 +249,114 @@ rutas.post('/create/usuario', (req, res) => {
   } else { res.json({ msj: "error en los datos" }) }
 })
 
+rutas.post('/agregar/contacto', proToken, (req, res) => {
+  const { usuario, preferencia } = req.body;
+  if (typeof usuario === 'number' && typeof preferencia === 'boolean') {
+    jwt.verify(req.token, LLAVE, (err, data) => {
+
+      if (err) {
+        res.sendStatus(403);
+      } else {
+        if (data.rows.length > 0) {
+          insertDB.insertContacts(req.body).then(result => {
+            buscarDB.obtenertodasContactos().then(result2 => {
+              const { API } = result2;
+              let ultimo = API[API.length - 1].id;
+              const id = data.rows[0].id
+              insertDB.insertlistContacts({ usuario: ultimo, contacto: ultimo })
+                .then(result => {
+                  res.json(result);
+                }).catch(err3 => res.json(err3))
+            }).catch(err2 => res.json(err2))
+          }).catch(err => res.json(err))
+        }
+      }
+    });
+  }
+});
+
+rutas.post('/agregar/palabraclave', proToken, (req, res) => {
+  jwt.verify(req.token, LLAVE, (err, data) => {
+
+    if (err) {
+      res.sendStatus(403);
+    } else {
+      if (data.length > 0) {
+        const { palabra } = req.body;
+
+        insertDB.insertKeyword({ user: data[0].id, palabra }).then(result => {
+          res.json(result)
+        }).catch(err => res.json(err))
+      }
+      else { res.sendStatus(403); }
+
+    }
+  });
+});
 
 rutas.post('/create/proyecto', proToken, (req, res) => {
+  jwt.verify(req.token, LLAVE, (err, data) => {
+    if (err) {
+      res.sendStatus(403);
+    } else {
+      if (data.length > 0) {
+        const {
+          proyecto,
+          practica,
+          integrantes
+        } = req.body;
+        const { banner, icon } = req.files;
+        if (proyecto.nombre != undefined) {
+          const {
+            nombre,
+            descripcion,
+            metodologia,
+            historia } = proyecto;
+          if (typeof nombre === 'string' &&
+            typeof descripcion === 'string' &&
+            typeof metodologia === 'string' &&
+            typeof historia === 'string') {
+
+            insertDB.insertMethodology({ nombre: modelomt.nombre, descripcion: modelomt.descripcion, consejo: modelomt.consejo })
+              .then(resul => {
+                let fecha = new Date();
+                insertDB.insertHistory({ descripcion: `proyecto creado el ${fecha}` }).then(resul => {
+                  if (req.files != undefined || req.files != null) {
+                    if (banner != undefined || banner != null && icon == undefined || icon == null) {
+                      //..........
+                    } else if (icon != undefined || icon != null && banner == undefined || banner == null) {
+                      //..........
+                    } else if (icon == undefined || icon == null && banner == undefined || banner == null) {
+                      //..........
+                    }
+                  } else {
+                    buscarDB.obtenertodasMetodologias().then(result => {
+                      const { API } = result;
+                      let ultimeto = API[API.length - 1];
+                      buscarDB.obtenertodasHistoriales().then(resulthis => {
+                        let ultihis = resulthis.API;
+                        const ultimohis = ultihis[ultihis.length - 1];
+                        insertDB.insertProject({
+                          nombre,
+                          descripcion,
+                          estado: "iniciado",
+                          icon: null,
+                          banner: null,
+                          metodologia: ultimeto.id,
+                          historia: ultimohis.id
+                        }).then(result3 => {
+
+                        }).catch(err => res.json(err))
+                      }).catch(err => res.json(err))
+                    }).catch(err => res.json(err));
+                  }
+                }).catch(err = res.json(err));
+              }).catch(err = res.json(err));
+          }
+        }
+      }
+    }
+  })
 
 });
 /**
@@ -658,7 +765,7 @@ rutas.post('/proyecto/insertarArchivo', (req, res) => {
   MM         MM    MM    MM    MM  YM.    ,   MM      MM  YA.   ,A9   MM    MM  L.   I8 
 .JMML.       `Mbod"YML..JMML  JMML. YMbmd'    `Mbmo .JMML. `Ybmd9'  .JMML  JMML.M9mmmP' 
 */
-function comprobaremail (array, email) {
+function comprobaremail(array, email) {
   let vari = true;
   for (let a = 0; a < array.length; a++) {
     if (array[a].email == email) {
@@ -667,7 +774,7 @@ function comprobaremail (array, email) {
   }
   return vari;
 }
-function proToken (req, res, next) {
+function proToken(req, res, next) {
   const header = req.headers['authorization'];
   //console.log(header); 
   if (typeof header !== 'undefined') {
@@ -682,29 +789,6 @@ function proToken (req, res, next) {
 module.exports = rutas;
 
 
-/*  const transportador = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: 'bolanosd38@gmail.com',
-      pass: 'Hachiman999' // naturally, replace both with your real credentials or an application-specific password
-    }
-   });
-
-   const mainoptions ={
-       from: "bolanosd38@gmail.com",
-       to: `"${correo}"`,
-       subject: "Enviado desde Nodemailer",
-       text : contenido(nombre,correo,"url")
-   };
-
-   transportador.sendMail(mainoptions, (error,info)=>{
-    if(error){
-        res.status(500).send(error.message);
-    }else{
-        console.log("Email enviado");
-        res.status(200).jsonp(req.body);
-    }
-   }); */
 /*
                              _.      .' `-.
                         .'  `-.::/_.    `.

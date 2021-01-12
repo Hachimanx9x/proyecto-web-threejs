@@ -90,17 +90,20 @@ peticiones.listObjects = async (namebucket) => {
   });
 
 }
+peticiones.removeObject = (bucket, obj)=>{
+  return new Promise((res,rej)=>{
+   
+    minio.removeObject(bucket, obj,(e)=>{
+      if(e){
+        res({msj: e.message})
+      }else{
+        res({msj: `borrado el archivo ${obj}`})
+      }
+    });
 
+  });
+}
 
 
 
 module.exports = peticiones;
-/*
-  await stream.on('data', function(obj) {  names.push(obj.name);
-        stream.on('data', function(obj) {
-         n++;
-        if(n===names.length){ res.json(names); }
-        });
-
-    }  )
- */

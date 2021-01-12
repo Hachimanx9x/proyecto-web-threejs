@@ -1,8 +1,9 @@
 const jwt = require('jsonwebtoken');
 const promesa = require('../database');
+const buscarDB = require('./buscarDB');
 const Query = require('./querys');
 const LLAVE = 'misecretos';
-
+const modelo = require('../models/models');
 const funcionesDB = () => {
     console.log("funciones de la base de datos")
 }
@@ -19,7 +20,51 @@ const funcionesDB = () => {
  \$$       \$$ \$$  \$$$$$$$ \$$$$$$$ 
                                        */
 
+funcionesDB.creaprouyecto = (obj) => {
+    return new Promise((res, rej) => {
+        const { proyect, members, practice } = obj
+        funcionesDB.insertMethodology({
+            nombre: modelo.nombre,
+            descripcion: modelo.descripcion,
+            consejo: modelo.consejo
+        }).then(result1 => {
+            funcionesDB.insertHistory({ descripcion: `proyecto creado el ${fecha}` }).then(result2 => {
+                buscarDB.obtenertodasMetodologias().then(result3 => {
+                    const ultimeto = result3.API[result3.API.length - 1];
+                    buscarDB.obtenertodasHistoriales().then(result4 => {
+                        const ultihis = result4.API[result4.API.length - 1];
+                        funcionesDB.insertProject({
+                            nombre: proyect.nombre,
+                            descripcion: proyect.descripcion,
+                            estado: "iniciado",
+                            icon: proyect.icono,
+                            banner: proyect.banner,
+                            metodologia: ultimeto.id,
+                            historia: ultihis.id
+                        }).then(result5 => {
+                            buscarDB.obtenertodasProyectos().then(result6 => {
+                                let proyectodate = result6.API[result6.API.length - 1];
+                                for (let a = 0; a < practice.length; a++) {
+                                    if (practice[a] === modelo.CEM.nombre) {
+                                        funcionesDB.insertPractice({ nombre: modelo.CEM.nombre, descripcion: modelo.CEM.descripcion }).then(result7 => {
 
+                                        }).catch(err => rej(err));
+                                    } else if (practice[a] === modelo.SMMV.nombre) {
+                                        funcionesDB.insertPractice({ nombre: modelo.SMMV.nombre, descripcion: modelo.SMMV.descripcion }).then(result7 => {
+
+                                        }).catch(err => rej(err));
+                                    }
+
+
+                                }
+                            }).catch(err => rej(err))
+                        }).catch(err => rej(err))
+                    }).catch(err => rej(err))
+                }).catch(err => rej(err))
+            }).catch(err => rej(err));
+        }).catch(err => rej(err));
+    });
+}
 
 /**
  * 
@@ -131,14 +176,14 @@ funcionesDB.insertKeyword = (obj) => {
                 mariaDB.query(Query.insertpalabraclave(user, palabra), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: err }); }
                 });
             }
             else {
                 sqlite.all(Query.insertpalabraclave(user, palabra), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: err }); }
                 });
             }
         }).catch(e => { console.log(e) });
@@ -155,14 +200,14 @@ funcionesDB.insertlistlenguaje = (obj) => {
                 mariaDB.query(Query.insertlistaidiomas(user, idioma), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: err }); }
                 });
             }
             else {
                 sqlite.all(Query.insertlistaidiomas(user, idioma), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: err }); }
                 });
             }
         });
@@ -230,14 +275,38 @@ funcionesDB.insertContacts = (obj) => {
                 mariaDB.query(Query.insertcontactos(usuario, preferencia), (err, rows, fields) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: err }); }
                 });
             }
             else {
                 sqlite.all(Query.insertcontactos(usuario, preferencia), (err, rows) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: err }); }
+                });
+            }
+        });
+    });
+
+}
+//----------------------------------------------------------
+funcionesDB.insertlistContacts = (obj) => {
+    return new Promise((res, rej) => {
+        const { usuario, contacto } = obj;
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.insertlistcontactos(usuario, contacto), (err, rows, fields) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: err }); }
+                });
+            }
+            else {
+                sqlite.all(Query.insertlistcontactos(usuario, contacto), (err, rows) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: err }); }
                 });
             }
         });
@@ -303,14 +372,14 @@ funcionesDB.insertMethodology = (obj) => {
                 mariaDB.query(Query.insertmetodologia(nombre, descripcion, consejo), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: err }); }
                 });
             }
             else {
                 sqlite.all(Query.insertmetodologia(nombre, descripcion, consejo), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: err }); }
                 });
             }
         });
@@ -327,14 +396,14 @@ funcionesDB.insertHistory = (obj) => {
                 mariaDB.query(Query.inserthistoriales(descripcion), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: err }); }
                 });
             }
             else {
                 sqlite.all(Query.inserthistoriales(descripcion), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: err }); }
                 });
             }
         });
@@ -928,5 +997,9 @@ funcionesDB.insertListMethodologyTool = (obj) => {
             }
         });
     });
+}
+
+function insertactividades() {
+
 }
 module.exports = funcionesDB;

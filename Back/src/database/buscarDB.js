@@ -51,6 +51,25 @@ funcionesDB.obtenerToken = (body) => {
     });
 }
 
+funcionesDB.obtenerusuarioid = async (body) => {
+    return new Promise((res, rej) => {
+        const { id } =body
+        promesa.then(async (result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.usuarioid(id), async (err, rows) => {
+                    if (!err) { res(rows[0]); } else { rej({ err }) }
+                })
+            }
+            else {
+                sqlite.all(Query.usuarioid(id), (err, rows) => {
+                    if (!err) { res(rows[0]); } else { rej({ err }) }
+                });
+            }
+        })
+    });
+
+}
 funcionesDB.obtenerEscritorioActividades = async (body) => {
     return new Promise((res, rej) => {
         const { id } = body.rows[0];

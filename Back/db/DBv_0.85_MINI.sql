@@ -242,7 +242,7 @@ id INTEGER PRIMARY KEY AUTOINCREMENT,
 entregatitulo VARCHAR
 (200), 
 entregadescripcion VARCHAR
-(1000), 
+(2000), 
 entregaestado varchar
 (20),
 entregatipoArchivo varchar

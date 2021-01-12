@@ -6,6 +6,29 @@ const funcionesDB = () => {
     console.log("funciones de la base de datos")
 }
 //---------------------------------------------------------------------
+funcionesDB.deletetabla = (obj) => {
+    return new Promise((res, rej) => {
+        const { tabla } = obj;
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.deleteTabla(tabla), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.deleteTabla(tabla), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
 funcionesDB.deletelenguaje = (obj) => {
     return new Promise((res, rej) => {
         const { id } = obj;
@@ -123,18 +146,18 @@ funcionesDB.deleteKeyword = (obj) => {
 //---------------------------------------------------------------------
 funcionesDB.deleteListLenguaje = (obj) => {
     return new Promise((res, rej) => {
-        const { id } = obj;
+        const { userid } = obj;
         promesa.then((result) => {
             const { mariaDB, sqlite, vDB } = result;
             if (vDB) {
-                mariaDB.query(Query.deleteListaidiomas(id), (err) => {
+                mariaDB.query(Query.deleteListaidiomas(userid), (err) => {
                     if (!err) {
                         res({ msj: "success" });
                     } else { rej({ msj: "error" }); }
                 });
             }
             else {
-                sqlite.all(Query.deleteListaidiomas(id), (err) => {
+                sqlite.all(Query.deleteListaidiomas(userid), (err) => {
                     if (!err) {
                         res({ msj: "success" });
                     } else { rej({ msj: "error" }); }
@@ -871,6 +894,882 @@ funcionesDB.deleteListMember = (obj) => {
             }
             else {
                 sqlite.all(Query.deleteListaIntegrantes(id), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+
+//---------------------------------
+//---------------------------------
+//---------------------------------
+//---------------------------------------------------------------------
+funcionesDB.deletealllenguaje = () => {
+    return new Promise((res, rej) => {
+
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.deleteallIdiomas(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.deleteallIdiomas(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.deleteaallbility = () => {
+    return new Promise((res, rej) => {
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.deleteallHabilidades(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.deleteallHabilidades(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.deletealltools = () => {
+    return new Promise((res, rej) => {
+
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.deleteallHerramientas(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.deleteallHerramientas(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.deleteallUser = () => {
+    return new Promise((res, rej) => {
+
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.deleteallUsuarios(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.deleteallUsuarios(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.deleteallKeyword = () => {
+    return new Promise((res, rej) => {
+
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.deleteallPalabrasClave(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.deleteallPalabrasClave(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.deleteallListLenguaje = () => {
+    return new Promise((res, rej) => {
+
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.deleteallListaidiomas(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.deleteallListaidiomas(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.deleteallContact = () => {
+    return new Promise((res, rej) => {
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.deleteallContactos(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.deleteallContactos(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.deleteallListContact = () => {
+    return new Promise((res, rej) => {
+
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.deleteallListaContactos(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.deleteallListaContactos(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.deleteallListAbility = () => {
+    return new Promise((res, rej) => {
+
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.deleteallListaHabilidades(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.deleteallListaHabilidades(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.deleteListTools = () => {
+    return new Promise((res, rej) => {
+
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.deleteallListaHerramientas(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.deleteallListaHerramientas(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.deleteallMetology = () => {
+    return new Promise((res, rej) => {
+
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.deleteallMetodologias(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.deleteallMetodologias(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.deleteallPractice = () => {
+    return new Promise((res, rej) => {
+
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.deleteallPracticas(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.deleteallPracticas(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.deleteallListPractice = () => {
+    return new Promise((res, rej) => {
+
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.deleteallListasPracticas(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.deleteallListasPracticas(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.deleteallAlpha = () => {
+    return new Promise((res, rej) => {
+
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.deleteallAlfas(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.deleteallAlfas(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.deleteallListAlpha = () => {
+    return new Promise((res, rej) => {
+
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.deleteallListaAlfas(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.deleteallListaAlfas(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.deleteallToolsMetodology = () => {
+    return new Promise((res, rej) => {
+
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.deleteallHerramientasMetodologia(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.deleteallHerramientasMetodologia(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.deleteallTechnical = () => {
+    return new Promise((res, rej) => {
+
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.deleteallTecnicas(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.deleteallTecnicas(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.deleteallActivity = () => {
+    return new Promise((res, rej) => {
+
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.deleteallActividades(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.deleteallActividades(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.deleteallRole = () => {
+    return new Promise((res, rej) => {
+
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.deleteallRoles(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.deleteallRoles(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.deleteallListRole = () => {
+    return new Promise((res, rej) => {
+
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.deleteallListaRoles(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.deleteallListaRoles(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.deleteallMember = () => {
+    return new Promise((res, rej) => {
+
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.deleteallIntegrantes(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.deleteallIntegrantes(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.deleteallListActivity = () => {
+    return new Promise((res, rej) => {
+
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.deleteallListaActividades(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.deleteallListaActividades(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.deleteallContent = () => {
+    return new Promise((res, rej) => {
+
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.deleteallContenidos(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.deleteallContenidos(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.deleteallDeliverable = () => {
+    return new Promise((res, rej) => {
+
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.deleteallEntregables(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.deleteallEntregables(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.deleteallListDeliverable = () => {
+    return new Promise((res, rej) => {
+
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.deleteallListaentregables(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.deleteallListaentregables(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.deleteallListToolsMetodology = () => {
+    return new Promise((res, rej) => {
+
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.deleteallListaHerramientasMetodologia(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.deleteallListaHerramientasMetodologia(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.deleteallListContect = () => {
+    return new Promise((res, rej) => {
+
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.deleteallListaContenidos(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.deleteallListaContenidos(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//--------------------------------------------------------------------
+funcionesDB.deleteallDelivery = () => {
+    return new Promise((res, rej) => {
+
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.deleteallEntregas(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.deleteallEntregas(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.deleteallChat = () => {
+    return new Promise((res, rej) => {
+
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.deleteallChats(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.deleteallChats(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.deleteallHistory = () => {
+    return new Promise((res, rej) => {
+
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.deleteallHistoriales(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.deleteallHistoriales(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.deleteallListChat = () => {
+    return new Promise((res, rej) => {
+
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.deleteallListaChats(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.deleteallListaChats(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.deleteallProject = () => {
+    return new Promise((res, rej) => {
+
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.deleteallProyectos(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.deleteallProyectos(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.deleteallMeeting = () => {
+    return new Promise((res, rej) => {
+
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.deleteallReuniones(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.deleteallReuniones(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.deleteallListMeeting = () => {
+    return new Promise((res, rej) => {
+
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.deleteallListaReuniones(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.deleteallListaReuniones(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.deleteallListDelivery = () => {
+    return new Promise((res, rej) => {
+
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.deleteallListaEntregas(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.deleteallListaEntregas(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.deleteallEvent = () => {
+    return new Promise((res, rej) => {
+
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.deleteallEventos(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.deleteallEventos(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.deleteallEvent = () => {
+    return new Promise((res, rej) => {
+
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.deleteallListaEventos(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.deleteallListaEventos(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        });
+    });
+}
+//---------------------------------------------------------------------
+funcionesDB.deleteallListMember = () => {
+    return new Promise((res, rej) => {
+
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.deleteallListaIntegrantes(), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.deleteallListaIntegrantes(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
                     } else { rej({ msj: "error" }); }
