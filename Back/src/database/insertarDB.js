@@ -42,22 +42,61 @@ funcionesDB.creaprouyecto = (obj) => {
                             metodologia: ultimeto.id,
                             historia: ultihis.id
                         }).then(result5 => {
-                            buscarDB.obtenertodasProyectos().then(result6 => {
-                                let proyectodate = result6.API[result6.API.length - 1];
-                                for (let a = 0; a < practice.length; a++) {
-                                    if (practice[a] === modelo.CEM.nombre) {
-                                        funcionesDB.insertPractice({ nombre: modelo.CEM.nombre, descripcion: modelo.CEM.descripcion }).then(result7 => {
+                            for (let a = 0; a < practice.length; a++) {
+                                for (let b = 0; b < modelo.Practicas.length; b++) {
+                                    if (practice[a] == modelo.Practicas[b].nombre) {
+                                        funcionesDB.insertPractice({
+                                            nombre: modelo.Practicas[b].nombre,
+                                            descripcion: Practicas[b].descripcion
+                                        }).then(result6 => {
+                                            buscarDB.obtenertodasPracticas().then(result7 => {
+                                                const ultipra = result1.API[result1.API.length - 1];
+                                                funcionesDB.insertlistPractice({
+                                                    metodologia: ultimeto.id,
+                                                    practica: ultipra.id
+                                                }).then(result8 => {
+                                                    for (let c = 0; c < modelo.Practicas[b].alfas.length; c++) {
+                                                        funcionesDB.insertAlpha({
+                                                            nombre: modelo.Practicas[b].alfas[c].nombre,
+                                                            descripcion: modelo.Practicas[b].alfas[c].descripcion,
+                                                            estado: modelo.Practicas[b].alfas[c].estado
+                                                        }).then(result9 => {
+                                                            buscarDB.obtenertodasAlfas().then(result9 => {
+                                                                const ultialfa = result9.API[result9.API.length - 1];
+                                                                entregable.insertlistAlpha({
+                                                                    practica: ultipra.id,
+                                                                    alfa: ultialfa.id
+                                                                }).then(result10 => {
+                                                                    for (let d = 0; d < modelo.Practicas[b].alfas[c].entregable.length; d++) {
+                                                                        for (let e = 0; e < modelo.Practicas[b].Entregables.length; e++) {
+                                                                            if (modelo.Practicas[b].alfas[c].entregable[d] === modelo.Practicas[b].Entregables[e].entregatitulo)
+                                                                                funcionesDB.insertDeliverable({
+                                                                                    titulo: modelo.Practicas[b].Entregables[e].entregatitulo,
+                                                                                    descripcion: modelo.Practicas[b].Entregables[e].entregadescripcion,
+                                                                                    estado: modelo.Practicas[b].Entregables[e].entregaestado,
+                                                                                    tipoArchivo: modelo.Practicas[b].Entregables[e].entregatipoArchivo,
+                                                                                    fechaEntrega: modelo.Practicas[b].Entregables[e].entregafechaEntrega,
+                                                                                    numeroRevisiones: modelo.Practicas[b].Entregables[e].entreganumeroRevisiones
+                                                                                }).then(result11 => {
 
-                                        }).catch(err => rej(err));
-                                    } else if (practice[a] === modelo.SMMV.nombre) {
-                                        funcionesDB.insertPractice({ nombre: modelo.SMMV.nombre, descripcion: modelo.SMMV.descripcion }).then(result7 => {
-
+                                                                                    if (c === (modelo.Practicas[b].alfas.length - 1)) {
+                                                                                        if (a === practice.length - 1) {
+                                                                                            res(practicas);
+                                                                                        }
+                                                                                    }
+                                                                                }).catch(err => rej(err));
+                                                                        }
+                                                                    }
+                                                                }).catch(err => res.json(err))
+                                                            }).catch(err => rej(err))
+                                                        }).catch(err => rej(err))
+                                                    }
+                                                }).catch(err => rej(err))
+                                            }).catch(err => rej(err))
                                         }).catch(err => rej(err));
                                     }
-
-
                                 }
-                            }).catch(err => rej(err))
+                            }
                         }).catch(err => rej(err))
                     }).catch(err => rej(err))
                 }).catch(err => rej(err))
@@ -68,7 +107,7 @@ funcionesDB.creaprouyecto = (obj) => {
 
 /**
  * 
-  _______              __                __                                     
+ _______              __                __                                     
 |       \            |  \              |  \                                    
 | $$$$$$$\  ______  _| $$_     ______  | $$____    ______    _______   ______  
 | $$  | $$ |      \|   $$ \   |      \ | $$    \  |      \  /       \ /      \ 
@@ -999,7 +1038,5 @@ funcionesDB.insertListMethodologyTool = (obj) => {
     });
 }
 
-function insertactividades() {
 
-}
 module.exports = funcionesDB;
