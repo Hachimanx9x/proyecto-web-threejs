@@ -20,7 +20,7 @@ const funcionesDB = () => {
  \$$       \$$ \$$  \$$$$$$$ \$$$$$$$ 
                                        */
 
-funcionesDB.creaprouyecto = (obj) => {
+funcionesDB.creaproyecto = (obj) => {
     return new Promise((res, rej) => {
         const { proyect, members, practice } = obj
         funcionesDB.insertMethodology({
@@ -78,12 +78,100 @@ funcionesDB.creaprouyecto = (obj) => {
                                                                                     fechaEntrega: modelo.Practicas[b].Entregables[e].entregafechaEntrega,
                                                                                     numeroRevisiones: modelo.Practicas[b].Entregables[e].entreganumeroRevisiones
                                                                                 }).then(result11 => {
+                                                                                    buscarDB.obtenertodasEntregables().then(result12 => {
+                                                                                        const ultientre = result12.API[result12.API.length - 1];
+                                                                                        funcionesDB.insertlistDeliverable({ alfa: ultialfa.id, entregable: ultientre.id }).then(result13 => {
+                                                                                            funcionesDB.insertContent({
+                                                                                                nombre: null,
+                                                                                                nombrearchivo: null,
+                                                                                                descripcion: null,
+                                                                                                bibliografia: null
+                                                                                            }).then(result14 => {
+                                                                                                buscarDB.obtenertodasContenidos().then(result15 => {
+                                                                                                    const ulticont = result16.API[result16.API.length - 1]
+                                                                                                    funcionesDB.insertlistContent({
+                                                                                                        entregable: ultientre.id,
+                                                                                                        contenido: ulticont.id,
+                                                                                                        actividad: null
+                                                                                                    }).then(result16 => {
+                                                                                                        for (let f = 0; f < members.length; f++) {
+                                                                                                            funcionesDB.insertMembers({
+                                                                                                                usuario: members[f].user,
+                                                                                                                rol: members[f].rol
+                                                                                                            }).then(result17 => {
+                                                                                                                buscarDB.obtenertodasIntegrantes().then(result18 => {
+                                                                                                                    const ultiinte = result18.API[result18.API.length - 1];
+                                                                                                                    buscarDB.obtenertodasProyectos().then(result19 => {
+                                                                                                                        const ultipro = result19.API[result19.API.length - 1];
+                                                                                                                        funcionesDB.insertlistMembers({ proyecto: ultipro.id, integrante: ultiinte.id }).then(result19 => {
+                                                                                                                            for (let h = 0; h < modelo.Practicas[b].Roles.length; h++) {
+                                                                                                                                if (ultiinte.rol == modelo.Practicas[b].Roles[h].nombre) {
+                                                                                                                                    for (let i = 0; i < modelo.Practicas[b].Roles[h].actividades.length; i++) {
+                                                                                                                                        for (let g = 0; g < modelo.Practicas[b].Actividades.length; g++) {
+                                                                                                                                            if (modelo.Practicas[b].Roles[h].actividades[i] = modelo.Practicas[b].Actividades[g].titulo) {
+                                                                                                                                                funcionesDB.insertActivity({
+                                                                                                                                                    titulo: modelo.Practicas[b].Actividades[g].titulo,
+                                                                                                                                                    estado: modelo.Practicas[b].Actividades[g].estado,
+                                                                                                                                                    descripcion: modelo.Practicas[b].Actividades[g].descripcion,
+                                                                                                                                                    fechacreacion: modelo.Practicas[b].Actividades[g].fechacreacion,
+                                                                                                                                                    fechaentrega: modelo.Practicas[b].Actividades[g].fechaentrega,
+                                                                                                                                                    revision: modelo.Practicas[b].Actividades[g].revision,
+                                                                                                                                                    tecnica: modelo.Practicas[b].Actividades[g].tecnica
+                                                                                                                                                }).then(result20 => {
+                                                                                                                                                    buscarDB.obtenertodasActividades().then(result20 => {
+                                                                                                                                                        const ultiactivi = result20.API[result20.API.length - 1];
+                                                                                                                                                        funcionesDB.insertlistActivity({
+                                                                                                                                                            integrante: ultiinte.id,
+                                                                                                                                                            actividad: ultiactivi.id
+                                                                                                                                                        }).then(result21 => {
+                                                                                                                                                            buscarDB.obtenertodasContenidos().then(result22 => {
+                                                                                                                                                                const ulticont2 = result22.API[result22.API.length - 1]
+                                                                                                                                                                funcionesDB.insertlistContent({
+                                                                                                                                                                    entregable: null,
+                                                                                                                                                                    contenido: ulticont2.id,
+                                                                                                                                                                    actividad: ultiactivi.id
+                                                                                                                                                                }).then(result16 => {
+                                                                                                                                                                    if (a == practice.length - 1) {
+                                                                                                                                                                        if (b == modelo.Practicas.length - 1) {
+                                                                                                                                                                            if (c == modelo.Practicas[b].alfas.length - 1) {
+                                                                                                                                                                                if (d == modelo.Practicas[b].alfas[c].entregable.length - 1) {
+                                                                                                                                                                                    if (e == modelo.Practicas[b].Entregables.length - 1) {
+                                                                                                                                                                                        if (f == members.length - 1) {
+                                                                                                                                                                                            if (h == modelo.Practicas[b].Roles.length - 1) {
+                                                                                                                                                                                                if (i == modelo.Practicas[b].Roles[h].actividades.length - 1) {
+                                                                                                                                                                                                    if (g = modelo.Practicas[b].Actividades.length - 1) {
+                                                                                                                                                                                                        res({ msj: "success" })
+                                                                                                                                                                                                    }
+                                                                                                                                                                                                }
+                                                                                                                                                                                            }
+                                                                                                                                                                                        }
+                                                                                                                                                                                    }
+                                                                                                                                                                                }
+                                                                                                                                                                            }
+                                                                                                                                                                        }
+                                                                                                                                                                    }
+                                                                                                                                                                }).catch(err => rej(err))
+                                                                                                                                                            }).catch(err => rej(err))
+                                                                                                                                                        }).catch(err => rej(err))
+                                                                                                                                                    }).catch(err => rej(err))
+                                                                                                                                                }).catch(err => rej(err))
+                                                                                                                                            }
+                                                                                                                                        }
+                                                                                                                                    }
 
-                                                                                    if (c === (modelo.Practicas[b].alfas.length - 1)) {
-                                                                                        if (a === practice.length - 1) {
-                                                                                            res(practicas);
-                                                                                        }
-                                                                                    }
+                                                                                                                                }
+                                                                                                                            }
+
+                                                                                                                        }).catch(err => rej(err))
+                                                                                                                    }).catch(err => rej(err))
+                                                                                                                }).catch(err => rej(err))
+                                                                                                            }).catch(err => rej(err))
+                                                                                                        }
+                                                                                                    }).catch(err => rej(err))
+                                                                                                }).catch(err => rej(err))
+                                                                                            }).catch(err => rej(err))
+                                                                                        }).catch(err => rej(err))
+                                                                                    }).catch(err => rej(err))
                                                                                 }).catch(err => rej(err));
                                                                         }
                                                                     }
@@ -692,6 +780,32 @@ funcionesDB.insertDeliverable = (obj) => {
                                 res({ msj: "success" });
                             } else { rej({ msj: "error" }); }
                         });
+            }
+        });
+    });
+
+}
+//-----------------------------------------------------------------------
+funcionesDB.insertlistDeliverable = (obj) => {
+    return new Promise((res, rej) => {
+        const { alfa, entregable } = obj;
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(
+                    Query.insertlistEntregables(alfa, entregable), (err) => {
+                        if (!err) {
+                            res({ msj: "success" });
+                        } else { rej({ msj: err }); }
+                    });
+            }
+            else {
+                sqlite.all(
+                    Query.insertlistEntregables(alfa, entregable), (err) => {
+                        if (!err) {
+                            res({ msj: "success" });
+                        } else { rej({ msj: err }); }
+                    });
             }
         });
     });
