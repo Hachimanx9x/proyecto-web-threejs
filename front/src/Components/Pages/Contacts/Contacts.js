@@ -111,7 +111,7 @@ class Contacts extends Component {
                     </div>
                     <div className="o-card-talents-container w-100">
                         {this.state.contacts.map((contact) => (
-                            <CardContacts key={contact.id} id={contact.id} name={contact.name} description={contact.description} job={contact.job} urlimg={contact.urlimage} favorite={contact.favorite}/>
+                            <CardContacts key={contact.id} contact={contact}/>
                         ))}
                     </div>
 

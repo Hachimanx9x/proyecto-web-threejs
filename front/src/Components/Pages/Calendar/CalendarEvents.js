@@ -100,7 +100,7 @@ export default class CalendarEvents extends Component {
     render() {
         return (
             <div className="row" >
-                <div className="col-12 col-sm-9  text-center"  >
+                <div className="col-12 col-sm-8 o-calendar-container  text-center"  >
                     <FullCalendar
 
                         headerToolbar={{
@@ -115,7 +115,7 @@ export default class CalendarEvents extends Component {
 
                     />
                 </div>
-                <div className="col o-blue-container" >
+                <div className="col-12 col-sm-3 o-picker-cont ml-1 o-blue-container" >
                     <div className="row bg-white o-create-event-container  mr-1 ml-1 ">
                         <div className="col-12 col-sm-8 ">
                             <p className="text-primary ">Crear evento</p>
@@ -126,7 +126,7 @@ export default class CalendarEvents extends Component {
                     </div>
 
                     <div className="o-date-picker-container text-center">
-                        <DayPicker localeUtils={MomentLocaleUtils} onDayClick={this.handleDayClick} selectedDays={this.state.selectedDate}
+                        <DayPicker localeUtils={MomentLocaleUtils} className="o-date-picker-container" onDayClick={this.handleDayClick} selectedDays={this.state.selectedDate}
                             locale="es" todayButton="Hoy"
                             modifiers={{
                                 foo: new Date(),

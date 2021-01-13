@@ -31,7 +31,7 @@ class CreateEvents extends Component{
 
         return (
             <div className="row" >
-                <div className="col-12 col-sm-8  text-center o-blue-container"  >
+                <div className="col-12 col-xs-12 col-sm-8 o-create-event-container-form  text-center o-blue-container"  >
                     <div className="row ml-2 mr-2 bg-white p-2 rounded">
                         <div className="col-sm-10 mr-1">
                             <MDBInput className="m-0 mr-0" label="Título de la reunión" id="o-hi" outline />
@@ -138,9 +138,9 @@ class CreateEvents extends Component{
                         </div>
                     </div>
                 </div>
-                <div className="col o-blue-container" >
+                <div className="col-12 col-sm-3 o-picker-cont ml-1 o-blue-container" >
                     <div className="o-date-picker-container text-center">
-                        <DayPicker localeUtils={MomentLocaleUtils} onDayClick={this.handleDayClick} selectedDays={this.state.selectedDate}
+                        <DayPicker localeUtils={MomentLocaleUtils} className="o-date-picker-container" onDayClick={this.handleDayClick} selectedDays={this.state.selectedDate}
                             locale="es" todayButton="Hoy"
                             modifiers={{
                                 foo: new Date(),

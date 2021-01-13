@@ -10,12 +10,12 @@ const CardProject = ({ title, description, image }) => {
         <p className="card-text o-card-description-text ">{description}</p>
       </div>
       <div className="card-footer bg-transparent border-transparent">
-        <button className="btn btn-primary z-depth-0 btn-sm o-card-project-button mr-4">
+        <button className="btn btn-primary border-0 z-depth-0 btn-sm o-card-project-button mr-4">
           Ver
         </button>
         <button
 
-          className="btn btn-light z-depth-0 border-primary p-0 text-primary btn-sm o-card-project-button ml-4"
+          className="btn bg-white z-depth-0 border-primary p-0 text-primary btn-sm o-card-project-button ml-4"
         >
           Eliminar
         </button>

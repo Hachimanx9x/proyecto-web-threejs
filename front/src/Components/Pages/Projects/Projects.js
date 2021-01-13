@@ -17,12 +17,11 @@ class Projects extends Component {
             <img className="card-img o-card-project-image" alt="baseImage" src={projectPNG} />
             <div className="card-body o-card-description">
               <p className="card-text o-card-description-text">
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
+                Espacio para la creación de un nuevo proyecto.
               </p>
             </div>
             <div className="card-footer bg-transparent border-transparent">
-              <a href="/Dashboard/Projects/CreateProject" className="btn btn-primary z-depth-0 p-2 btn-sm o-card-project-button">
+              <a href="/Dashboard/Projects/CreateProject" className="btn btn-primary border-0 z-depth-0 p-2 btn-sm o-card-project-button">
                 Crear
               </a>
             </div>

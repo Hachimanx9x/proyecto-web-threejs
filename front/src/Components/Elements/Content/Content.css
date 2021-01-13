@@ -179,11 +179,16 @@ li a.dropdown-toggle::after {
 }
 .side-menu::-webkit-scrollbar-thumb,
 .o-card-description::-webkit-scrollbar-thumb {
-	background: #3eb0e0;
+	background: #4285f4;
 	border-radius: 3px;
 }
 
 .side-menu::-webkit-scrollbar-thumb:hover,
 .o-card-description::-webkit-scrollbar-thumb:hover {
 	background: #3a4c99;
+}
+@media only screen and (max-width: 540px) {
+	.content {
+		margin: 5rem 0rem;
+	}
 }

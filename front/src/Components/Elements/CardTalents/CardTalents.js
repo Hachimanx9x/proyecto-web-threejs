@@ -51,7 +51,7 @@ const CardTalents = ({id, name, description, picture, job, skills}) => {
           </div>
           <div className="col-12 col-sm-3">
             <button type="button" className="btn z-depth-0 border-primary text-primary font-weight-bold  o-search-talents-btn">Perfil</button>
-            <button type="button" className="btn btn-primary z-depth-0 text-white font-weight-bold o-search-talents-btn">Guardar</button>
+            <button type="button" className="btn btn-primary border-0 z-depth-0 text-white font-weight-bold o-search-talents-btn">Guardar</button>
           </div>
 
         </div>
