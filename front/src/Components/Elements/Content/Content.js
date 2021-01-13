@@ -1,7 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 import "./Content.css";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import Projects from "../../Pages/Projects/Projects";
 import Topbar from "./Topbar";
 import Documentation from "../../Pages/Documentation/Documentation";
@@ -10,8 +10,9 @@ import Loged from "../../Pages/Loged/Dashboard";
 import CreateProject from "../../Pages/Projects/CreateProject";
 import SearchTalents from "../../Pages/SearchTalents/SearchTalents";
 import Contacts from "../../Pages/Contacts/Contacts";
-import CalendarEvents from "../Calendar/CalendarEvents";
-import CreateEvent from "../Calendar/CreateEvent";
+import CalendarEvents from "../../Pages/Calendar/CalendarEvents";
+import CreateEvent from "../../Pages/Calendar/CreateEvent";
+import ContactProfile from "../../Pages/ContactProfile/ContactProfile";
 
 const Content = ({ sidebarIsOpen, toggleSidebar }) => (
   <div
@@ -36,6 +37,10 @@ const Content = ({ sidebarIsOpen, toggleSidebar }) => (
       <Route exact path="/Dashboard/Projects/Documentation2" component={Doc2} />
       <Route exact path="/Dashboard/Calendar" component={CalendarEvents} />
       <Route exact path="/Dashboard/Calendar/CreateEvent" component={CreateEvent} />
+      <Route exact path="/Dashboard/SearchTalents/ContactProfile" component={ContactProfile} />
+      <Route path="/Dashboard/Contacts/:contactName" render={(props) => <ContactProfile {...props} link={`/Dashboard/Contacts`} />} />
+      <Route path="/Dashboard/Talents/:talentName" render={(props) => <ContactProfile {...props} link={`/Dashboard/SearchTalents`} />} />
+      <Redirect to="/Dashboard/Desktop" />
     </Switch>
   </div>
 );

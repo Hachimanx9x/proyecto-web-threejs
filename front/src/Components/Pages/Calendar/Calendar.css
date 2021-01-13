@@ -4,11 +4,40 @@
 .o-date-picker-container {
 	background-color: white;
 	border-radius: 1rem;
-	margin: 0.2rem;
+	width: 100%;
+	margin: 0;
 	padding: 0.5rem;
 	min-height: 15rem;
 }
+/*
+.fc-scrollgrid::-webkit-scrollbar,
+.table-bordered::-webkit-scrollbar,
+.fc-scrollgrid-liquid::-webkit-scrollbar,
+.fc-timegrid::-webkit-scrollbar,
+.fc-timeGridDay-view::-webkit-scrollbar,
+.fc-view::-webkit-scrollbar {
+	width: 5px;
+}
 
+.fc-scrollgrid::-webkit-scrollbar-thumb,
+.table-bordered::-webkit-scrollbar-thumb,
+.fc-scrollgrid-liquid::-webkit-scrollbar-thumb,
+.fc-timegrid::-webkit-scrollbar-thumb,
+.fc-timeGridDay-view::-webkit-scrollbar-thumb,
+.fc-view::-webkit-scrollbar-thumb {
+	background: #4285f4;
+	border-radius: 3px;
+}
+
+.fc-scrollgrid::-webkit-scrollbar-thumb:hover,
+.table-bordered::-webkit-scrollbar-thumb:hover,
+.fc-scrollgrid-liquid::-webkit-scrollbar-thumb:hover,
+.fc-timegrid::-webkit-scrollbar-thumb:hover,
+.fc-timeGridDay-view::-webkit-scrollbar-thumb:hover,
+.fc-view::-webkit-scrollbar-thumb:hover {
+	background: #3a4c99;
+}
+*/
 .o-text-events {
 	margin: 1rem 0.5rem;
 }
@@ -22,6 +51,7 @@
 .o-blue-container {
 	background-color: #eef7fc;
 	height: 100vh;
+	height: 100%;
 	padding: 1rem;
 	margin: 0.5rem;
 	border-radius: 1rem;
@@ -104,4 +134,46 @@
 .o-check:checked {
 	background-color: #2962ff;
 	color: white;
+}
+@media only screen and (max-width: 1380px) {
+	.o-date-picker-container {
+		width: 100%;
+		margin: 0;
+	}
+}
+
+@media only screen and (max-width: 1260px) {
+	.o-calendar-container {
+		margin-right: 5rem;
+	}
+	.o-create-event-container-form {
+		margin-right: 4rem;
+	}
+	.o-date-picker-container {
+		width: 100%;
+		margin: 0;
+	}
+	.o-picker-cont {
+		min-width: 20rem;
+		margin: 0;
+	}
+}
+
+@media only screen and (max-width: 960px) {
+	.o-calendar-container {
+		margin-right: 2rem;
+		min-width: 100%;
+	}
+	.o-create-event-container-form {
+		margin-right: 2rem;
+		min-width: 100%;
+	}
+}
+@media only screen and (max-width: 960px) {
+	.o-calendar-container {
+		margin: 1rem 0;
+	}
+	.o-create-event-container-form {
+		margin: 1rem 0;
+	}
 }
