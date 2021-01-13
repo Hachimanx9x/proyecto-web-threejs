@@ -79,7 +79,7 @@ module.exports = {
                 ]
             }
         ],
-        roles: [
+        Roles: [
             {
                 nombre: "Arquitecto Experiencia Multimedia ",
                 descripcion: `Consiste en el rol que hace parte del equipo de
@@ -376,7 +376,17 @@ module.exports = {
                 entregaestado: "asignado",
                 entregatipoArchivo: "documento",
                 entregafechaEntrega: "2021-01-23",
-                entreganumeroRevisiones: 0
+                entreganumeroRevisiones: 0,
+                Herramientas: [
+                    "Modelo Canvas",
+                    "Matriz de clasificación de recursos",
+                    "Matriz DOFA",
+                    "Estructura de desglose de riesgos del SM ",
+                    "Kit tarjetas de previsión",
+                    "Matriz de riesgos",
+                    "Matriz para la clasificación de recursos Hardware/Software",
+                    "Lluvia de ideas posibles métodos de ataque"
+                ]
             },
             {
                 entregatitulo: "Proposición de valor del Sistema Multimedia",
@@ -385,7 +395,10 @@ module.exports = {
                 entregaestado: "asignado",
                 entregatipoArchivo: "documento",
                 entregafechaEntrega: "2021-01-23",
-                entreganumeroRevisiones: 0
+                entreganumeroRevisiones: 0,
+                Herramientas: [
+                    "Matriz de proposición de valor"
+                ]
             },
             {
                 entregatitulo: "Visión del Sistema Multimedia Minimo Viable",
@@ -395,7 +408,10 @@ module.exports = {
                 entregaestado: "asignado",
                 entregatipoArchivo: "documento",
                 entregafechaEntrega: "2021-01-23",
-                entreganumeroRevisiones: 0
+                entreganumeroRevisiones: 0,
+                Herramientas: [
+                    "Estructura para la formulación de la visión del SMMV"
+                ]
             },
             {
                 entregatitulo: "Modelo Canvas del Sistema Multimedia Minimo Viable",
@@ -405,7 +421,158 @@ module.exports = {
                 entregaestado: "asignado",
                 entregatipoArchivo: "documento",
                 entregafechaEntrega: "2021-01-23",
-                entreganumeroRevisiones: 0
+                entreganumeroRevisiones: 0,
+                Herramientas: [
+                    "Modelo Canvas adaptado"
+                ]
+            }
+        ],
+        Roles: [
+            {
+                nombre: "Arquitecto Experiencia Multimedia ",
+                descripcion: `Consiste en el rol que hace parte del equipo de
+                Arquitectos, responsable de llevar a cabo la realización
+                de un conjunto de productos de trabajo de la práctica.`,
+                actividades: ["A6"]
+            },
+            {
+                nombre: "Arquitecto de Hardware/Software",
+                descripcion: `Responsable de llevar a cabo, una serie de esfuerzos
+                relacionados principalmente, con el análisis de
+                viabilidad del Sistema Multimedia. `,
+                actividades: ["A5", "A13"]
+            },
+            {
+                nombre: "Arquitecto de información ",
+                descripcion: `Es el rol responsable dentro del análisis de viabilidad,
+                de analizar a la luz de la información y estructura, que
+                sustenta el contenido multimedia, realizar una
+                concepción inicial acerca de las posibles motivaciones
+                que tengan potenciales adversarios para atacar el
+                Sistema Multimedia, así como las consecuencias que
+                esto podría traer a sus usuarios. `,
+                actividades: ["A4"]
+            },
+            {
+                nombre: "Diseñador Audiovisual",
+                descripcion: `Es un miembro del equipo de diseño, cuya
+                participación como apoyo en el análisis para la
+                proposición de valor, visión y modelo Canvas del
+                Sistema Multimedia mínimo viable, resulta crucial,
+                dada la relevancia que deben cumplir los medios
+                audiovisuales en la creación de Valor del Sistema
+                Multimedia mínimo viable.`,
+                actividades: ["A20", "A21"]
+            },
+            {
+                nombre: "Diseñador de Concepto y Storyboard ",
+                descripcion: `Se trata de un miembro del equipo de diseño, que
+                apoya el análisis frente a la definición del Sistema
+                Multimedia mínimo viable, atendiendo a su alineación
+                frente al universo narrativo y la historia que han sido
+                concebidas para la experiencia multimedia interactiva.
+                `,
+                actividades: ["A16", "A22"]
+            },
+        ],
+        Herramientas: [
+            {
+                nombre: "Modelo Canvas",
+                descripcion: `Permite concretar la hipótesis de valor, identificando
+                para quiénes se persigue generar la creación de valor como resultado del desarrollo del Sistema
+                Multimedia, expresando el problema que desea
+                resolverse, la necesidad que busca satisfacerse, y la
+                experiencia que pretende ofrecerse (ver matriz 4). `,
+                bibliografia: ``
+            },
+            {
+                nombre: "Matriz de clasificación de recursos",
+                descripcion: `Por medio de la realización del análisis de estimación
+                análoga y ascendente de recursos, se produce una
+                matriz que estime los recursos necesarios y
+                disponibles, para el desarrollo del Sistema Multimedia
+                (ver matriz 4).`,
+                bibliografia: ``
+            },
+            {
+                nombre: "Matriz DOFA",
+                descripcion: `Se trata de una matriz la cual no solamente puede
+                aportar a la práctica sobre conocer mejor las
+                motivaciones y necesidades que tienen clientes y
+                patrocinadores, sino también, a las limitaciones que se
+                tienen para alcanzarlas, como parte del análisis de
+                viabilidad en el desarrollo del Sistema Multimedia (ver
+                matriz 4).`,
+                bibliografia: ``
+            },
+            {
+                nombre: "Estructura de desglose de riesgos del SM ",
+                descripcion: `A partir del análisis del desglose de riesgos, se lleva a
+                cabo una estimación de los riesgos internos y
+                externos, efectuando una jerarquía de riesgos
+                asociados a la realización del Sistema Multimedia,
+                relacionados con aspectos financieros, tecnológicos,
+                políticos, normativos, entre otros (ver matriz 4).`,
+                bibliografia: ``
+            },
+            {
+                nombre: "Kit tarjetas de previsión",
+                descripcion: `Ofrece la posibilidad para que los interesados y el
+                equipo de trabajo, realicen una actividad encaminada
+                hacia el análisis de las posibles motivaciones que
+                pueden tener interesados indirectos, en atacar el
+                Sistema Multimedia, entre otros factores (ver matriz
+                6). `,
+                bibliografia: ``
+            },
+            {
+                nombre: "Matriz de riesgos",
+                descripcion: `Se produce a partir de la identificación de riesgos por
+                parte del equipo de trabajo, valiéndose de la
+                realización de entrevistas y posible encuestan en
+                campo, a diferentes interesados relacionados con el
+                Sistema Multimedia (ver matriz 4). `,
+                bibliografia: ``
+            },
+            {
+                nombre: "Matriz para la clasificación de recursos Hardware/Software",
+                descripcion: `Se trata de un instrumento que permite recopilar la
+                información concebida, relacionada con los recursos
+                específicos de hardware y software estimados para el
+                desarrollo del Sistema Multimedia (ver matriz 5). `,
+                bibliografia: ``
+            },
+            {
+                nombre: "Lluvia de ideas posibles métodos de ataque",
+                descripcion: `Apertura de espacios de trabajo colaborativo entre
+                interesados y equipo de trabajo, con el fin de analizar
+                las motivaciones, así como los posibles métodos de
+                ataque al Sistema Multimedia, por parte de
+                interesados indirectos. `,
+                bibliografia: ``
+            },
+            {
+                nombre: "Matriz de proposición de valor",
+                descripcion: `Corresponde a la matriz que permite llevar a cabo, la
+                realización del análisis de proposición de valor del
+                Sistema Multimedia mínimo viable (ver matriz 11).  `,
+                bibliografia: ``
+            },
+            {
+                nombre: "Estructura para la formulación de la visión del SMMV",
+                descripcion: `Corresponde al modelo de estructura gramatical que
+                se sugiere, para llevar a cabo la realización de la
+                formulación de la visión del Sistema Multimedia
+                mínimo viable (ver tabla 14).`,
+                bibliografia: ``
+            },
+            {
+                nombre: "Modelo Canvas adaptado",
+                descripcion: `Se trata de la estructura adaptada para la realización
+                del modelo Canvas para el Sistema Multimedia
+                mínimo viable (ver figura 12) y la descripción de sus
+                diferentes componentes constitutivos (ver tabla 15). `,
+                bibliografia: ``
             }
         ],
         Actividades: [
@@ -430,7 +597,7 @@ module.exports = {
                 tecnica: 1
             },
             {
-                titulo: "A5",
+                titulo: "A6",
                 estado: "asignada",
                 descripcion: `Analice la viabilidad para el desarrollo del Sistema
                 Multimedia y contrástela con las oportunidades de
