@@ -490,6 +490,12 @@ query.insertEntregables = function (entregatitulo, entregadescripcion, entregaes
         "${entregafechaEntrega}", 
         ${entreganumeroRevisiones});`;
 }
+query.insertlistEntregables = function (alfa, entregable) {
+    return `INSERT INTO listaentregables (alfa,entregable) 
+    VALUES (
+        ${alfa}, 
+        ${entregable});`;
+}
 //INSERT INTO tecnicas (tecnicatitulo, tecnicadescripcion, tecnicabibliografia) VALUES ("tecnica T1", "esta tecnica no se a terminadado de documentar por lo que se dejara este espacio", "links de la bibliografias"); 
 query.insertTecnicas = function (tecnicatitulo, tecnicadescripcion, tecnicabibliografia) {
     return `INSERT INTO tecnicas (tecnicatitulo, tecnicadescripcion, tecnicabibliografia) 
