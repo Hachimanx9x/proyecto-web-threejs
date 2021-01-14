@@ -13,6 +13,7 @@ import Contacts from "../../Pages/Contacts/Contacts";
 import CalendarEvents from "../../Pages/Calendar/CalendarEvents";
 import CreateEvent from "../../Pages/Calendar/CreateEvent";
 import ContactProfile from "../../Pages/ContactProfile/ContactProfile";
+import Desktop from "../../Pages/Desktop/Desktop";
 
 const Content = ({ sidebarIsOpen, toggleSidebar }) => (
   <div
@@ -22,7 +23,7 @@ const Content = ({ sidebarIsOpen, toggleSidebar }) => (
   >
     <Topbar toggleSidebar={toggleSidebar} />
     <Switch>
-      <Route exact path="/Dashboard/Desktop" component={() => "Escritorio"} />
+      <Route exact path="/Dashboard/Desktop" component={Desktop} />
       <Route exact path="/Dashboard/Projects" component={Projects} />
       <Route exact path="/Dashboard/Projects/CreateProject" component={CreateProject} />
 

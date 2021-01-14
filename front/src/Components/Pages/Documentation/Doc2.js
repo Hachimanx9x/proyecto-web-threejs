@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Accordion from "../../Elements/Accordion/Accordion2";
-import CardProject from "../../Elements/Card/CardProject";
+import CardProject from "../../Elements/CardProjects/CardProject";
 import illustration from "../../../ilustracion-equipo-de-trabajo.jpg";
 
 

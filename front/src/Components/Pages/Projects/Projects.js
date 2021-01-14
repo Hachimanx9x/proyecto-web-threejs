@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import CardProject from "../../Elements/Card/CardProject";
+import CardProject from "../../Elements/CardProjects/CardProject";
 import projectPNG from "../../../project.PNG";
 import illustration from "../../../ilustracion-equipo-de-trabajo.jpg";
 

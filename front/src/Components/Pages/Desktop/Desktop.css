@@ -1,0 +1,21 @@
+.o-updates-container {
+	height: 30rem;
+	overflow-y: auto;
+	width: 100%;
+	padding: 0 0.7rem;
+}
+
+.o-updates-container::-webkit-scrollbar {
+	width: 8px;
+	margin-left: 1rem;
+	background-color: white;
+}
+
+.o-updates-container::-webkit-scrollbar-thumb {
+	background: #4285f4;
+	border-radius: 3px;
+}
+
+.o-updates-container::-webkit-scrollbar-thumb:hover {
+	background: #3a4c99;
+}
