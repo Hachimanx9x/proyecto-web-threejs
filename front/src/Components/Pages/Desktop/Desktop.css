@@ -19,3 +19,25 @@
 .o-updates-container::-webkit-scrollbar-thumb:hover {
 	background: #3a4c99;
 }
+
+.o-updates-section {
+	min-width: 40rem;
+}
+@media only screen and (max-width: 800px) {
+	.o-updates-section {
+		min-width: 35rem;
+	}
+}
+
+@media only screen and (max-width: 700px) {
+	.o-updates-section {
+		width: 40rem;
+		min-width: 31rem;
+	}
+}
+@media only screen and (max-width: 590px) {
+	.o-updates-section {
+		min-width: auto;
+		margin: 0;
+	}
+}
