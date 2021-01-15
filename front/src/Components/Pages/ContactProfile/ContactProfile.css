@@ -34,6 +34,7 @@
 .o-description-profile-contact::-webkit-scrollbar,
 .o-talent-tool-list::-webkit-scrollbar {
 	width: 5px;
+	background-color: white;
 }
 .o-description-profile-contact::-webkit-scrollbar-thumb,
 .o-talent-tool-list::-webkit-scrollbar-thumb {

@@ -151,7 +151,7 @@ li a.dropdown-toggle::after {
 	height: 8rem;
 }
 .o-card-description {
-	overflow-y: scroll;
+	overflow-y: auto;
 	margin: 0.6rem 1rem 0.6rem 0rem;
 }
 
@@ -176,6 +176,7 @@ li a.dropdown-toggle::after {
 .side-menu::-webkit-scrollbar,
 .o-card-description::-webkit-scrollbar {
 	width: 7px;
+	background-color: #e0e0e0;
 }
 .side-menu::-webkit-scrollbar-thumb,
 .o-card-description::-webkit-scrollbar-thumb {

@@ -94,8 +94,15 @@ a.active .nav-item {
 li {
 	box-shadow: none;
 }
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 923px) {
 	.o-link-btn {
 		font-size: 0.8rem;
+	}
+	.sidebar.is-open {
+		min-width: 180px;
+		max-width: 180px;
+	}
+	.side-menu {
+		text-align: center;
 	}
 }

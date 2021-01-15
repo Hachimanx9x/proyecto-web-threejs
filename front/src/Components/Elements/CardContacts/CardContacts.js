@@ -51,9 +51,13 @@ const CardContacts = ({ contact }) => {
                     <div className="row">
                         <div className="col-12 col-sm-2 mb-3 ">
                             <div className="d-flex">
+                                <span className="btn p-0 z-depth-0 o-show-this" onClick={changefavorite}><FontAwesomeIcon color={isfavorite ? "#4285F4" : "#9e9e9e"} className="o-talent-favorite-icon" icon={faHeart} /></span>
+                            </div>
+                            
+
+                            <div className="d-flex">
 
                                 <img src={contact.urlimage} className="rounded-circle o-talent-icon z-depth-1" alt="user " />
-                                <span className="btn p-0 z-depth-0 o-show-this" onClick={changefavorite}><FontAwesomeIcon color={isfavorite ? "#4285F4" : "#9e9e9e"} className="o-talent-favorite-icon" icon={faHeart} /></span>
 
                             </div>
 

@@ -1,6 +1,6 @@
 import React from "react";
 import Accordion from "../../Elements/Accordion/Accordion"
-import CardProject from "../../Elements/Card/CardProject";
+import CardProject from "../../Elements/CardProjects/CardProject";
 import illustration from "../../../ilustracion-equipo-de-trabajo.jpg";
 
 const Documentation = () => (

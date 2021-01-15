@@ -36,6 +36,7 @@
 	border-radius: 0.5rem;
 	padding: 1rem;
 	margin: 1rem;
+	min-width: 40rem;
 }
 
 /*Styles for image of the user*/
@@ -48,6 +49,7 @@
 	margin: 0.5rem 0rem 0rem 0rem;
 	padding: 0.05rem 0.8rem 0.1rem;
 	max-width: 10rem;
+	min-width: 10rem;
 	max-height: 1.2rem;
 	font-size: 0.7rem;
 	text-align: center;
@@ -159,6 +161,8 @@
 
 	.o-card-talents-container {
 		padding: 0.8rem;
+		margin: 1rem 0;
+		min-width: 30rem;
 	}
 }
 
@@ -166,7 +170,7 @@
 .o-talent-skills {
 	width: 2.5rem;
 }
-@media only screen and (max-width: 575px) {
+@media only screen and (max-width: 590px) {
 	.o-bg-blue {
 		min-width: 15rem;
 		padding: 0.5rem;
@@ -174,7 +178,8 @@
 	}
 
 	.o-card-talents-container {
-		margin: 0.2rem;
+		margin: 0.2rem 0 5rem 0 !important;
+		min-width: auto;
 		padding: 1rem;
 	}
 
