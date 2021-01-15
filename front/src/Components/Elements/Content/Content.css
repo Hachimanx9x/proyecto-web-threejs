@@ -152,6 +152,8 @@ li a.dropdown-toggle::after {
 }
 .o-card-description {
 	overflow-y: auto;
+	scrollbar-color: #4285f4 rgb(240, 238, 238);
+	scrollbar-width: thin;
 	margin: 0.6rem 1rem 0.6rem 0rem;
 }
 
