@@ -357,7 +357,8 @@ query.obtenertodasListaReuniones = function () { return `SELECT * FROM listareun
 query.obtenertodasListaEntregas = function () { return `SELECT * FROM listaentregas ; `; }
 query.obtenertodasListaEventos = function () { return `SELECT * FROM listaeventos ; `; }
 query.obtenertodasListaIntegrantes = function () { return `SELECT * FROM listaintegrantes ; `; }
-
+//-------------busquedas por tablas puntual
+query.obtenerunrol = function (id) { return `SELECT * FROM roles where id = ${id} ; `; }
 /**
  `7MMF'                                                 db                        
   MM                                                                             
@@ -433,12 +434,11 @@ query.insertlistaherramientas = function (usuario, herramienta) {
 }
 //INSERT INTO metodologias(metodologianombre, metodologiadescripcion,metodologiaconsejo ) VALUES("metodologia para preprodución de un sistema multimedia [MPSM]", "es modular tiene varias practicas modular que utiliza las buenas practicas para la diseño de un sistema multimedia apoyado en metodos agiles","sigue tu corazon");
 query.insertmetodologia = function (metodologianombre, metodologiadescripcion, metodologiaconsejo) {
-    return `INSERT INTO metodologias(metodologianombre, metodologiadescripcion,metodologiaconsejo ) VALUES(
-        "${metodologianombre}", "${metodologiadescripcion}","${metodologiaconsejo}"); `;
+    return `INSERT INTO metodologias (metodologianombre, metodologiadescripcion,metodologiaconsejo ) VALUES("${metodologianombre}", "${metodologiadescripcion}","${metodologiaconsejo}"); `;
 }
 //INSERT INTO historiales(historiadescripcion) VALUES("esta hara seguimiento a todos los suscesos echos en el prouyecto asociado");
 query.inserthistoriales = function (historiadescripcion) {
-    return `INSERT INTO historiales(historiadescripcion) VALUES("${historiadescripcion}");`;
+    return `INSERT INTO historiales (historiadescripcion) VALUES("${historiadescripcion}");`;
 }
 //INSERT INTO proyectos (proyectonombre, proyectodescripcion, proyectoestado, proyectoicon,proyectobanner, metodologia, historia) 
 //VALUES("Desarrollo de un entorno virtual colaborativo para preproducción de un sistema multimedia", "Como se expone en el apartado de planteamiento del problema los equipos de trabajo encargados de la preproducción de un sistema multimedia poseen muchos retos en la gestión, por lo tanto, el sistema propuesto por este documento podrá garantizar los siguientes beneficios","iniciada","iconoTemporaldelsistema.jpg","bannertemporal.jpg",1,1);
@@ -448,8 +448,7 @@ query.insertproyecto = function (proyectonombre, proyectodescripcion, proyectoes
 }
 //INSERT INTO practicas (practicanombre, practicadescripcion ) VALUES ("concepción del experiencia multimedia [CEM]", "se estara haciendo uso de fierentes herramientras para creacion de una ccorrecta experiencia");
 query.insertpractica = function (practicanombre, practicadescripcion) {
-    return `INSERT INTO practicas (practicanombre, practicadescripcion ) 
-    VALUES ("${practicanombre}, "${practicadescripcion}");`;
+    return `INSERT INTO practicas (practicanombre, practicadescripcion ) VALUES ("${practicanombre}", "${practicadescripcion}");`;
 }
 //INSERT INTO listapracticas VALUES (1, 1); 
 query.insertlistapracticas = function (metodologia, practica) {
@@ -742,6 +741,16 @@ query.updatentregable = function (estado, id) {
 query.updathistorial = function (descripcion, id) {
     return `UPDATE historiales 
     SET historiadescripcion ="${descripcion}"
+    WHERE id = ${id}; `;
+}
+query.updatproyectobanner = function (banner, id) {
+    return `UPDATE proyectos 
+    SET proyectobanner ="${banner}"
+    WHERE id = ${id}; `;
+}
+query.updatproyectoicono = function (icono, id) {
+    return `UPDATE proyectos 
+    SET proyectoicon ="${icono}"
     WHERE id = ${id}; `;
 }
 /**

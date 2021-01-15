@@ -77,7 +77,7 @@ funcionesDB.updatelenguaje = (obj) => {
     })
 }
 //----------------------------------------------------------------
-funcionesDB.updateuseremail= (obj) => {
+funcionesDB.updateuseremail = (obj) => {
     return new Promise((res, rej) => {
         const { email, id } = obj;
         promesa.then((result) => {
@@ -123,7 +123,7 @@ funcionesDB.updateuserpassword = (obj) => {
     })
 }
 //----------------------------------------------------------------
-funcionesDB.updateuserprofilephoto= (obj) => {
+funcionesDB.updateuserprofilephoto = (obj) => {
     return new Promise((res, rej) => {
         const { foto, id } = obj;
         promesa.then((result) => {
@@ -146,7 +146,7 @@ funcionesDB.updateuserprofilephoto= (obj) => {
     })
 }
 //----------------------------------------------------------------
-funcionesDB.updateusercv= (obj) => {
+funcionesDB.updateusercv = (obj) => {
     return new Promise((res, rej) => {
         const { cv, id } = obj;
         promesa.then((result) => {
@@ -169,7 +169,7 @@ funcionesDB.updateusercv= (obj) => {
     })
 }
 //----------------------------------------------------------------
-funcionesDB.updateuserexperience= (obj) => {
+funcionesDB.updateuserexperience = (obj) => {
     return new Promise((res, rej) => {
         const { experiencia, id } = obj;
         promesa.then((result) => {
@@ -192,7 +192,7 @@ funcionesDB.updateuserexperience= (obj) => {
     })
 }
 //----------------------------------------------------------------
-funcionesDB.updateusername= (obj) => {
+funcionesDB.updateusername = (obj) => {
     return new Promise((res, rej) => {
         const { nombre, id } = obj;
         promesa.then((result) => {
@@ -378,7 +378,7 @@ funcionesDB.updateuserlinkedin = (obj) => {
 }
 //----------------------------------------------------------------
 funcionesDB.updateuser = (obj) => {
-  
+
     return new Promise((res, rej) => {
         const { id,
             email,
@@ -433,7 +433,7 @@ funcionesDB.updateuser = (obj) => {
                     linkedin), (err) => {
                         if (!err) {
                             res({ msj: "success" });
-                        } else { rej({ msj:err }); }
+                        } else { rej({ msj: err }); }
                     });
             }
         })
@@ -616,6 +616,52 @@ funcionesDB.updatehistory = (obj) => {
             }
             else {
                 sqlite.all(Query.updathistorial(descripcion, id), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        })
+    })
+}
+//----------------------------------------------------------------
+funcionesDB.updateproyectbanner = (obj) => {
+    return new Promise((res, rej) => {
+        const { banner, id } = obj;
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.updatproyectobanner(banner, id), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.updatproyectobanner(banner, id), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        })
+    })
+}
+//----------------------------------------------------------------
+funcionesDB.updateproyecticon = (obj) => {
+    return new Promise((res, rej) => {
+        const { icono, id } = obj;
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.updatproyectoicono(icono, id), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.updatproyectoicono(icono, id), (err) => {
                     if (!err) {
                         res({ msj: "success" });
                     } else { rej({ msj: "error" }); }

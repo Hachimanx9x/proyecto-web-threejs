@@ -120,6 +120,13 @@ rutas.delete('/delete/herramientasmetodologia', (req, res) => {
     }
 });
 //-------------------------------------------------------
+rutas.delete('/delete/herramientasmetodologia', (req, res) => {
+    const { id } = req.body;
+    if (typeof id === 'number') {
+        deleteDB.deleteToolsMetodology(req.body).then(re => { res.json(re) }).catch(err => res.json(err));
+    }
+});
+//-------------------------------------------------------
 rutas.delete('/delete/actividad', (req, res) => {
     const { id } = req.body;
     if (typeof id === 'number') {
@@ -231,6 +238,16 @@ rutas.delete('/delete/listaintegrantes', (req, res) => {
         deleteDB.deleteListMember(req.body).then(re => { res.json(re) }).catch(err => res.json(err));
     }
 });
+//-------------------------------------------------------
+rutas.delete('/delete/metodologia', (req, res) => {
+    const { id } = req.body;
+    if (typeof id === 'number') {
+        deleteDB.deleteMetology(req.body).then(re => { res.json(re) }).catch(err => res.json(err));
+    } else {
+        console.log(id)
+    }
+});
+
 
 rutas.delete('/', (req, res) => {
     const { codigo } = req.body

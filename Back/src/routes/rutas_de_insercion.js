@@ -11,9 +11,10 @@ const path = require('path');
 const ftpminio = require("../ftp/peticiones");
 const buscarDB = require('../database/buscarDB');
 const insertDB = require('../database/insertarDB');
-
+const actualizarDB = require('../database/actualizarDB')
 const jwt = require('jsonwebtoken');
 const modelomt = require('../models/models');
+const { then } = require('../database');
 const LLAVE = 'misecretos';
 
 rutas.post('/registro', (req, res) => {
@@ -215,7 +216,7 @@ rutas.post('/create/usuario', (req, res) => {
     nombre } = req.body;
   if (
     typeof email === 'string' &&
-    typeof contrasena === 'string' &&
+    typeof password === 'string' &&
     typeof nombre === 'string') {
     buscarDB.obtenertodasUsuarios().then(result => {
       const { API } = result;
@@ -244,9 +245,11 @@ rutas.post('/create/usuario', (req, res) => {
           }).catch(err2 => { res.json(err2) });
 
         }).catch(err => { res.json(err) });
+      } else {
+        res.json({ msj: "error email ya registrado" })
       }
     });
-  } else { res.json({ msj: "error en los datos" }) }
+  } else { res.json({ msj: `Erro en los datos  email => ${email} password=> ${password} nombre => ${nombre} ` }) }
 })
 
 rutas.post('/agregar/contacto', proToken, (req, res) => {
@@ -299,66 +302,108 @@ rutas.post('/create/proyecto', proToken, (req, res) => {
     if (err) {
       res.sendStatus(403);
     } else {
-      if (data.length > 0) {
+
+      if (data.rows.length > 0) {
         const {
-          proyecto,
+          nombre,
+          descripcion,
           practica,
           integrantes
         } = req.body;
-        const { banner, icon } = req.files;
+        integrantes.push({ user: data.rows[0].id, rol: "Arquitecto Experiencia Multimedia" })
+        let proyecto = {
+          nombre: nombre,
+          descripcion: descripcion,
+        }
         if (proyecto.nombre != undefined) {
           const {
             nombre,
-            descripcion,
-            metodologia,
-            historia } = proyecto;
+            descripcion } = proyecto;
           if (typeof nombre === 'string' &&
             typeof descripcion === 'string' &&
-            typeof metodologia === 'string' &&
-            typeof historia === 'string') {
+            Array.isArray(practica) &&
+            Array.isArray(integrantes)) {
+            insertDB.creaproyecto2({
+              proyect: {
+                nombre: proyecto.nombre,
+                descripcion: proyecto.descripcion,
+                icono: null,
+                banner: null
+              },
+              members: integrantes,
+              practice: practica
+            }).then(result => {
 
-            insertDB.insertMethodology({ nombre: modelomt.nombre, descripcion: modelomt.descripcion, consejo: modelomt.consejo })
-              .then(resul => {
-                let fecha = new Date();
-                insertDB.insertHistory({ descripcion: `proyecto creado el ${fecha}` }).then(resul => {
-                  if (req.files != undefined || req.files != null) {
-                    if (banner != undefined || banner != null && icon == undefined || icon == null) {
-                      //..........
-                    } else if (icon != undefined || icon != null && banner == undefined || banner == null) {
-                      //..........
-                    } else if (icon == undefined || icon == null && banner == undefined || banner == null) {
-                      //..........
-                    }
+              const bucket = `proyecto${result.proyectoid}`;
+              ftpminio.creatBucket(bucket).then(result2 => {
+                if (req.files != null || req.files != undefined) {
+                  const { banner, icon } = req.files;
+                  if (banner != null || banner != undefined && icon == null || icon == undefined) {
+                    banner.mv(__dirname + '/tmp/' + banner.name, (err) => {
+                      if (!err) {
+                        var metaData = { 'Content-Type': `${banner.mimetype}`, 'size': banner.size, 'X-Amz-Meta-Testing': 1234, 'example': 5678 }
+                        ftpminio.putFile(bucket, banner.name, path.join(__dirname, `/tmp/${banner.name}`), metaData).then(resulbaner => {
+                          actualizarDB.updateproyectbanner({ banner: banner.name, id: result.proyectoid }).then(resultba => {
+                            res.json({ msj: "guardado" })
+                          }).catch(err => res.json(err));
+                        }).catch(err => res.json(err));
+                      } else {
+                        console.log(err)
+                      }
+                    });
+                  } else if (banner == null || banner == undefined && icon != null || icon != undefined) {
+                    icon.mv(__dirname + '/tmp/' + icon.name, (err) => {
+                      if (!err) {
+                        var metaData = { 'Content-Type': `${icon.mimetype}`, 'size': icon.size, 'X-Amz-Meta-Testing': 1234, 'example': 5678 }
+                        ftpminio.putFile(bucket, icon.name, path.join(__dirname, `/tmp/${icon.name}`), metaData).then(resulicon => {
+                          actualizarDB.updateproyecticon({ icono, id }).then(resultdf => {
+                            res.json({ msj: "guardado" })
+                          }).catch(err => res.json(err));
+                        }).catch(err => res.json(err));
+                      } else {
+                        console.log(err)
+                      }
+                    });
+                  } else if (banner != null || banner != undefined && icon != null || icon != undefined) {
+                    banner.mv(__dirname + '/tmp/' + banner.name, (err) => {
+                      if (!err) {
+                        var metaData = { 'Content-Type': `${banner.mimetype}`, 'size': banner.size, 'X-Amz-Meta-Testing': 1234, 'example': 5678 }
+                        ftpminio.putFile(bucket, banner.name, path.join(__dirname, `/tmp/${banner.name}`), metaData).then(resulbaner => {
+                          actualizarDB.updateproyectbanner({ banner: banner.name, id: result.proyectoid }).then(resultba => {
+                            icon.mv(__dirname + '/tmp/' + icon.name, (err) => {
+                              if (!err) {
+                                var metaData = { 'Content-Type': `${icon.mimetype}`, 'size': icon.size, 'X-Amz-Meta-Testing': 1234, 'example': 5678 }
+                                ftpminio.putFile(bucket, icon.name, path.join(__dirname, `/tmp/${icon.name}`), metaData).then(resulicon => {
+                                  actualizarDB.updateproyecticon({ icono, id }).then(resultdf => {
+                                    res.json({ msj: "guardado" })
+                                  }).catch(err => res.json(err));
+                                }).catch(err => res.json(err));
+                              } else {
+                                console.log(err)
+                              }
+                            });
+                          }).catch(err => res.json(err));
+                        }).catch(err => res.json(err));
+                      } else {
+                        console.log(err)
+                      }
+                    });
                   } else {
-                    buscarDB.obtenertodasMetodologias().then(result => {
-                      const { API } = result;
-                      let ultimeto = API[API.length - 1];
-                      buscarDB.obtenertodasHistoriales().then(resulthis => {
-                        let ultihis = resulthis.API;
-                        const ultimohis = ultihis[ultihis.length - 1];
-                        insertDB.insertProject({
-                          nombre,
-                          descripcion,
-                          estado: "iniciado",
-                          icon: null,
-                          banner: null,
-                          metodologia: ultimeto.id,
-                          historia: ultimohis.id
-                        }).then(result3 => {
-
-                        }).catch(err => res.json(err))
-                      }).catch(err => res.json(err))
-                    }).catch(err => res.json(err));
+                    res.json({ msj: "guardado" })
                   }
-                }).catch(err = res.json(err));
-              }).catch(err = res.json(err));
+                } else {
+                  res.json({ msj: "guardado" })
+                }
+              }).catch(err => res.json({ msj: err }));
+            }).catch(err => res.json({ msj: err }));
+          } else {
+            res.json({ msj: "error" })
           }
         }
       }
     }
   })
-
-});
+});//fin de l ruta
 /**
       db      `7MM"""Mq. `7MMF'                                 mm    `7MM                       `7MM          
      ;MM:       MM   `MM.  MM                                   MM      MM                         MM          
@@ -466,21 +511,21 @@ rutas.post('/insert/tools', (req, res) => {
 rutas.post('/insert/listtools', (req, res) => {
   const { usuario, herramienta } = req.body;
   if (typeof usuario === 'string' && typeof herramienta === 'string') {
-    insertDB.insertlistTool(req.body).then(resul => { res.json(resul) }).catch(err = res.json(err));
+    insertDB.insertlistTool(req.body).then(resul => { res.json(resul) }).catch(err => res.json(err));
   }
 });
 //--------------------------------------------------------------
 rutas.post('/insert/metodology', (req, res) => {
   const { nombre, descripcion, consejo } = req.body;
   if (typeof nombre === 'string' && typeof descripcion === 'string' && typeof consejo === 'string') {
-    insertDB.insertMethodology(req.body).then(resul => { res.json(resul) }).catch(err = res.json(err));
+    insertDB.insertMethodology(req.body).then(resul => { res.json(resul) }).catch(err => res.json(err));
   }
 });
 //--------------------------------------------------------------
 rutas.post('/insert/history', (req, res) => {
   const { descripcion } = req.body;
   if (typeof descripcion === 'string') {
-    insertDB.insertHistory(req.body).then(resul => { res.json(resul) }).catch(err = res.json(err));
+    insertDB.insertHistory(req.body).then(resul => { res.json(resul) }).catch(err => res.json(err));
   }
 });
 //--------------------------------------------------------------
@@ -493,7 +538,7 @@ rutas.post('/insert/proyect', (req, res) => {
     typeof banner === 'string' &&
     typeof metodologia === 'string' &&
     typeof historia === 'string') {
-    insertDB.insertHistory(req.body).then(resul => { res.json(resul) }).catch(err = res.json(err));
+    insertDB.insertHistory(req.body).then(resul => { res.json(resul) }).catch(err => res.json(err));
   }
 });
 //--------------------------------------------------------------
@@ -501,7 +546,7 @@ rutas.post('/insert/practice', (req, res) => {
   const { nombre, descripcion } = req.body;
   if (typeof nombre === 'string' &&
     typeof descripcion === 'string') {
-    insertDB.insertPractice(req.body).then(resul => { res.json(resul) }).catch(err = res.json(err));
+    insertDB.insertPractice(req.body).then(resul => { res.json(resul) }).catch(err => res.json(err));
   }
 });
 //--------------------------------------------------------------
@@ -510,7 +555,9 @@ rutas.post('/insert/role', (req, res) => {
   if (typeof titulo === 'string' &&
     typeof descripcion === 'string' &&
     typeof recomendacion === 'string') {
-    insertDB.inserRoles(req.body).then(resul => { res.json(resul) }).catch(err = res.json(err));
+    insertDB.inserRoles(req.body).then(resul => { res.json(resul) }).catch(err => res.json(err));
+  } else {
+    res.json({ msj: "error datos" })
   }
 });
 //--------------------------------------------------------------
@@ -518,7 +565,7 @@ rutas.post('/insert/listrole', (req, res) => {
   const { practica, rol } = req.body;
   if (typeof practica === 'number' &&
     typeof rol === 'number') {
-    insertDB.insertlistRoles(req.body).then(resul => { res.json(resul) }).catch(err = res.json(err));
+    insertDB.insertlistRoles(req.body).then(resul => { res.json(resul) }).catch(err => res.json(err));
   }
 });
 //--------------------------------------------------------------
@@ -526,7 +573,7 @@ rutas.post('/insert/member', (req, res) => {
   const { usuario, rol } = req.body;
   if (typeof usuario === 'number' &&
     typeof rol === 'number') {
-    insertDB.insertMembers(req.body).then(resul => { res.json(resul) }).catch(err = res.json(err));
+    insertDB.insertMembers(req.body).then(resul => { res.json(resul) }).catch(err => res.json(err));
   }
 });
 //--------------------------------------------------------------
@@ -534,7 +581,7 @@ rutas.post('/insert/listmember', (req, res) => {
   const { proyecto, integrante } = req.body;
   if (typeof proyecto === 'number' &&
     typeof integrante === 'number') {
-    insertDB.insertlistMembers(req.body).then(resul => { res.json(resul) }).catch(err = res.json(err));
+    insertDB.insertlistMembers(req.body).then(resul => { res.json(resul) }).catch(err => res.json(err));
   }
 });
 //--------------------------------------------------------------
@@ -543,7 +590,7 @@ rutas.post('/insert/Alpha', (req, res) => {
   if (typeof nombre === 'string' &&
     typeof descripcion === 'string'
     && typeof estado === 'string') {
-    insertDB.insertAlpha(req.body).then(resul => { res.json(resul) }).catch(err = res.json(err));
+    insertDB.insertAlpha(req.body).then(resul => { res.json(resul) }).catch(err => res.json(err));
   }
 });
 //--------------------------------------------------------------
@@ -552,7 +599,7 @@ rutas.post('/insert/listAlpha', (req, res) => {
   if (typeof nombre === 'string' &&
     typeof descripcion === 'string'
     && typeof estado === 'string') {
-    insertDB.insertlistAlpha(req.body).then(resul => { res.json(resul) }).catch(err = res.json(err));
+    insertDB.insertlistAlpha(req.body).then(resul => { res.json(resul) }).catch(err => res.json(err));
   }
 });
 //--------------------------------------------------------------
@@ -564,7 +611,7 @@ rutas.post('/insert/deliverable', (req, res) => {
     && typeof tipoArchivo === 'string'
     && typeof fechaEntrega === 'string'
     && typeof numeroRevisiones === 'number') {
-    insertDB.insertDeliverable(req.body).then(resul => { res.json(resul) }).catch(err = res.json(err));
+    insertDB.insertDeliverable(req.body).then(resul => { res.json(resul) }).catch(err => res.json(err));
   }
 });
 //--------------------------------------------------------------
@@ -574,7 +621,7 @@ rutas.post('/insert/technical', (req, res) => {
     && typeof descripcion === 'string'
     && typeof bibliografia === 'string'
   ) {
-    insertDB.insertTechnical(req.body).then(resul => { res.json(resul) }).catch(err = res.json(err));
+    insertDB.insertTechnical(req.body).then(resul => { res.json(resul) }).catch(err => res.json(err));
   }
 });
 //--------------------------------------------------------------
@@ -589,7 +636,9 @@ rutas.post('/insert/activity', (req, res) => {
     && typeof tecnica === 'number'
 
   ) {
-    insertDB.insertActivity(req.body).then(resul => { res.json(resul) }).catch(err = res.json(err));
+    insertDB.insertActivity(req.body).then(resul => { res.json(resul) }).catch(err => res.json(err));
+  } else {
+    res.json({ msj: "error" })
   }
 });
 //--------------------------------------------------------------
@@ -598,7 +647,7 @@ rutas.post('/insert/listactivity', (req, res) => {
   if (typeof integrante === 'number'
     && typeof actividad === 'number'
   ) {
-    insertDB.insertTechnical(req.body).then(resul => { res.json(resul) }).catch(err = res.json(err));
+    insertDB.insertTechnical(req.body).then(resul => { res.json(resul) }).catch(err => res.json(err));
   }
 });
 //--------------------------------------------------------------
@@ -607,7 +656,7 @@ rutas.post('/insert/chat', (req, res) => {
   if (typeof archivo === 'string'
     && typeof fecha === 'string'
   ) {
-    insertDB.insertchat(req.body).then(resul => { res.json(resul) }).catch(err = res.json(err));
+    insertDB.insertchat(req.body).then(resul => { res.json(resul) }).catch(err => res.json(err));
   }
 });
 //--------------------------------------------------------------
@@ -616,7 +665,7 @@ rutas.post('/insert/listchat', (req, res) => {
   if (typeof historial === 'number'
     && typeof chat === 'string'
   ) {
-    insertDB.insertlistchat(req.body).then(resul => { res.json(resul) }).catch(err = res.json(err));
+    insertDB.insertlistchat(req.body).then(resul => { res.json(resul) }).catch(err => res.json(err));
   }
 });
 //--------------------------------------------------------------
@@ -625,7 +674,7 @@ rutas.post('/insert/event', (req, res) => {
   if (typeof fechacreacion === 'string'
 
   ) {
-    insertDB.insertEvent(req.body).then(resul => { res.json(resul) }).catch(err = res.json(err));
+    insertDB.insertEvent(req.body).then(resul => { res.json(resul) }).catch(err => res.json(err));
   }
 });
 //--------------------------------------------------------------
@@ -635,7 +684,7 @@ rutas.post('/insert/listevent', (req, res) => {
     && typeof evento === 'number'
     && typeof integrante === 'number'
   ) {
-    insertDB.insertListEvent(req.body).then(resul => { res.json(resul) }).catch(err = res.json(err));
+    insertDB.insertListEvent(req.body).then(resul => { res.json(resul) }).catch(err => res.json(err));
   }
 });
 //--------------------------------------------------------------
@@ -648,7 +697,7 @@ rutas.post('/insert/Meeting', (req, res) => {
     && typeof descripcion === 'string'
     && typeof vigente === 'string'
   ) {
-    insertDB.insertMeeting(req.body).then(resul => { res.json(resul) }).catch(err = res.json(err));
+    insertDB.insertMeeting(req.body).then(resul => { res.json(resul) }).catch(err => res.json(err));
   }
 });
 //--------------------------------------------------------------
@@ -658,7 +707,7 @@ rutas.post('/insert/Meeting', (req, res) => {
     && typeof reunion === 'number'
 
   ) {
-    insertDB.insertListMeeting(req.body).then(resul => { res.json(resul) }).catch(err = res.json(err));
+    insertDB.insertListMeeting(req.body).then(resul => { res.json(resul) }).catch(err => res.json(err));
   }
 });
 //--------------------------------------------------------------
@@ -670,7 +719,7 @@ rutas.post('/insert/delivery', (req, res) => {
     && typeof actividad === 'number'
     && typeof entragable === 'number'
   ) {
-    insertDB.insertDelivery(req.body).then(resul => { res.json(resul) }).catch(err = res.json(err));
+    insertDB.insertDelivery(req.body).then(resul => { res.json(resul) }).catch(err => res.json(err));
   }
 });
 //--------------------------------------------------------------
@@ -681,7 +730,7 @@ rutas.post('/insert/contenct', (req, res) => {
     && typeof descripcion === 'string'
     && typeof bibliografia === 'string'
   ) {
-    insertDB.insertContent(req.body).then(resul => { res.json(resul) }).catch(err = res.json(err));
+    insertDB.insertContent(req.body).then(resul => { res.json(resul) }).catch(err => res.json(err));
   }
 });
 //--------------------------------------------------------------
@@ -691,7 +740,7 @@ rutas.post('/insert/listcontent', (req, res) => {
     && typeof contenido === 'number'
     && typeof actividad === 'number'
   ) {
-    insertDB.insertlistContent(req.body).then(resul => { res.json(resul) }).catch(err = res.json(err));
+    insertDB.insertlistContent(req.body).then(resul => { res.json(resul) }).catch(err => res.json(err));
   }
 });
 //--------------------------------------------------------------
@@ -701,7 +750,7 @@ rutas.post('/insert/methodologyTool', (req, res) => {
     && typeof descripcion === 'string'
     && typeof bibliografia === 'string'
   ) {
-    insertDB.insertMethodologyTool(req.body).then(resul => { res.json(resul) }).catch(err = res.json(err));
+    insertDB.insertMethodologyTool(req.body).then(resul => { res.json(resul) }).catch(err => res.json(err));
   }
 });
 //--------------------------------------------------------------
@@ -710,7 +759,7 @@ rutas.post('/insert/listmethodologyTool', (req, res) => {
   if (typeof entregable === 'number'
     && typeof herramientametodologia === 'number'
   ) {
-    insertDB.insertListMethodologyTool(req.body).then(resul => { res.json(resul) }).catch(err = res.json(err));
+    insertDB.insertListMethodologyTool(req.body).then(resul => { res.json(resul) }).catch(err => res.json(err));
   }
 });
 

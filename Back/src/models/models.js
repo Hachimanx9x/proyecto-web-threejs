@@ -87,7 +87,7 @@ module.exports = {
             ],
             Roles: [
                 {
-                    nombre: "Arquitecto Experiencia Multimedia ",
+                    nombre: "Arquitecto Experiencia Multimedia",
                     descripcion: `Consiste en el rol que hace parte del equipo de
                     Arquitectos, responsable de llevar a cabo la realización
                     de las actividades A8, A9 y A12, A18 y A19 necesarios
@@ -97,7 +97,7 @@ module.exports = {
                     actividades: ["A8", "A9", "A12", "A18", "A19"]
                 },
                 {
-                    nombre: "Arquitecto de producción de contenidos ",
+                    nombre: "Arquitecto de producción de contenidos",
                     descripcion: `Consiste en el rol que hace parte del equipo de
                     Arquitectos, responsable de llevar a cabo la realización
                     de la actividad A10, para la definición de los contenidos
@@ -108,7 +108,7 @@ module.exports = {
                     actividades: ["A10"]
                 },
                 {
-                    nombre: "Arquitecto de información ",
+                    nombre: "Arquitecto de información",
                     descripcion: `Es el rol responsable porque se cumplan las actividades
                     A12 y A17, necesarias para generar el producto de
                     trabajo de la propuesta de diseño de la experiencia
@@ -117,7 +117,7 @@ module.exports = {
                     actividades: ["A12", "A17"]
                 },
                 {
-                    nombre: "Arquitecto de pruebas ",
+                    nombre: "Arquitecto de pruebas",
                     descripcion: `Es el rol responsable de llevar a cabo la actividad A14,
                     que consiste en planificar y realizar las diferentes
                     pruebas que se estimen necesarias, para verificar la

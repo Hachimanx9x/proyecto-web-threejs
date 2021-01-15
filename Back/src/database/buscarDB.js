@@ -53,7 +53,7 @@ funcionesDB.obtenerToken = (body) => {
 
 funcionesDB.obtenerusuarioid = async (body) => {
     return new Promise((res, rej) => {
-        const { id } =body
+        const { id } = body
         promesa.then(async (result) => {
             const { mariaDB, sqlite, vDB } = result;
             if (vDB) {
@@ -1135,8 +1135,32 @@ funcionesDB.obtenertodasListaIntegrantes = async () => {
         })
     });
 }
+//---------------------------------------------------------
+funcionesDB.obtenerunrol = async (obj) => {
+    const { id } = obj
+    return new Promise((res, rej) => {
+        promesa.then(async (result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                await mariaDB.query(Query.obtenerunrol(id), async (err, rows) => {
+                    if (!err) {
+                        res({ API: rows });
+                    } else { rej(err) }
+                });
+            }
+            else {
+
+                sqlite.all(Query.obtenerunrol(id), (err, rows) => {
+                    if (!err) {
+                        res({ API: rows });
+                    } else { rej(err) }
+                });
+            }
+        })
+    });
+}
 //-------------------
-function rearmarProyectosescri (array) {
+function rearmarProyectosescri(array) {
     var arraydef = [];
     var idproyecto = null
     var proyectonombre = null
@@ -1187,7 +1211,7 @@ function rearmarProyectosescri (array) {
     //console.log(arraydef[0].practicas[0].alfas[0]);
     return { proyectos: arraydef }
 }
-function rearmas (idUser, rows) {
+function rearmas(idUser, rows) {
     //   console.log(idUser);
     //console.log(rows);
     var array = [];
@@ -1252,7 +1276,7 @@ function rearmas (idUser, rows) {
     // console.log(defarray); 
     return defarray;
 }
-function rearmarcontactos (array) {
+function rearmarcontactos(array) {
     var arraydef = [];
     var iduser;
     var palabras = [];
@@ -1285,7 +1309,7 @@ function rearmarcontactos (array) {
     // console.log(arraydef);
     return arraydef;
 }
-function obtenerproyectos (array) {
+function obtenerproyectos(array) {
     var arraydef = [];
     var idproyecto;
     for (var i = 0; i < array.length; i++) {
@@ -1303,7 +1327,7 @@ function obtenerproyectos (array) {
     }
     return arraydef;
 }
-function ponercontenidoenactividades (array) {
+function ponercontenidoenactividades(array) {
     var arraydef = [];
     var acttemp;
     for (var i = 0; i < array.length; i++) {
@@ -1324,7 +1348,7 @@ function ponercontenidoenactividades (array) {
     }
     return arraydef;
 }
-function organizarcalendario (array) {
+function organizarcalendario(array) {
     let arraydef = [];
     let proyectoid;
     let reunionid;
@@ -1411,7 +1435,7 @@ function organizarcalendario (array) {
     }
     return arraydef;
 }
-function filtarinfo (array) {
+function filtarinfo(array) {
     let arraydef = [];
     let userid;
     let palabraid;
@@ -1531,7 +1555,7 @@ function filtarinfo (array) {
     return arraydef;
 }
 
-function actividadespro (user, array) {
+function actividadespro(user, array) {
     let arraydef = [];
 
     for (let a = 0; a < array.length; a++) {

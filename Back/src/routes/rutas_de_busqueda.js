@@ -216,7 +216,7 @@ rutas.get('/api/listaherramientas', async (req, res) => {
 rutas.get('/api/metodologias', async (req, res) => {
     buscarDB.obtenertodasMetodologias().then(respu => res.json(respu)).catch(err => res.json(err));
 });
-rutas.get('/api/practicas', async (req, res) => {
+rutas.get('console.log("oinsert list integrante " + result19.msj);', async (req, res) => {
     buscarDB.obtenertodasPracticas().then(respu => res.json(respu)).catch(err => res.json(err));
 });
 rutas.get('/api/practicas', async (req, res) => {
@@ -294,6 +294,9 @@ rutas.get('/api/listaeventos', async (req, res) => {
 rutas.get('/api/listaintegrantes', async (req, res) => {
     buscarDB.obtenertodasListaIntegrantes().then(respu => res.json(respu)).catch(err => res.json(err));
 });
+rutas.get('/api/rol/:id', async (req, res) => {
+    buscarDB.obtenerunrol(req.params).then(respu => res.json(respu)).catch(err => res.json(err));
+});
 /*
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 */
@@ -305,7 +308,7 @@ rutas.get('/api/listaintegrantes', async (req, res) => {
 /*
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 */
-function proToken (req, res, next) {
+function proToken(req, res, next) {
     const header = req.headers['authorization'];
     //console.log(header); 
     if (typeof header !== 'undefined') {
