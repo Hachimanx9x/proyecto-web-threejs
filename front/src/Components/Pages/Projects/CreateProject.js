@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import "./CreateProject.css";
 import { MDBInput } from "mdbreact";
+import User from "../../../Logos/user-icon.png";
 
 class CreateProject extends Component {
     constructor(props) {
