@@ -3,6 +3,8 @@
 	overflow-y: auto;
 	width: 100%;
 	padding: 0 0.7rem;
+	scrollbar-color: #4285f4 white;
+	scrollbar-width: thin;
 }
 
 .o-updates-container::-webkit-scrollbar {

@@ -68,13 +68,13 @@ class ContactProfile extends Component {
                     <div className="bg-white mt-2 mb-2 rounded p-2">
                         <p style={{ fontSize: "1.2rem" }}>Ubicación geográfica</p>
                         <div className="row">
-                            <div className="col-12 col-sm-5"><img src="https://smart.servier.com/wp-content/uploads/2016/10/world-map-update.png" className="o-geo-map" /></div>
+                            <div className="col-12 col-sm-5"><img src="https://smart.servier.com/wp-content/uploads/2016/10/world-map-update.png" alt="map" className="o-geo-map" /></div>
                             <div className="col-12 col-sm-7 p-1">
-                                <div className="row" className="o-geo-info">
+                                <div className="row o-geo-info">
                                     <MDBInput label="Asunto" outline value={"re"} />
-                                    <MDBInput label="Asunto" outline value={"re"} />
-                                    <MDBInput label="Asunto" outline value={"re"} />
-                                    <MDBInput label="Asunto" outline value={"re"} />
+                                    <MDBInput label="Asunto" outline value={"re2"} />
+                                    <MDBInput label="Asunto" outline value={"re3"} />
+                                    <MDBInput label="Asunto" outline value={"re4"} />
                                 </div>
                             </div>
                         </div>

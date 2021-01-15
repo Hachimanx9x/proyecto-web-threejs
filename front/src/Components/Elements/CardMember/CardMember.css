@@ -1,0 +1,11 @@
+.o-card-member {
+	width: 10rem;
+	height: 20rem;
+	padding: 0.5rem;
+	margin: 1rem;
+}
+
+.o-card-member-rols {
+	height: 10rem;
+	background-color: chocolate;
+}

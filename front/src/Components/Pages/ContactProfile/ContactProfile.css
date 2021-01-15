@@ -3,6 +3,8 @@
 	padding: 0.3rem;
 	width: 100%;
 	overflow-y: auto;
+	scrollbar-color: #4285f4 white;
+	scrollbar-width: thin;
 	white-space: pre-wrap; /* CSS3 */
 	white-space: -moz-pre-wrap; /* Firefox */
 	white-space: -pre-wrap; /* Opera <7 */
@@ -22,6 +24,8 @@
 	max-height: 40rem;
 	padding: 0rem 2rem;
 	overflow-y: auto;
+	scrollbar-color: #4285f4 white;
+	scrollbar-width: thin;
 }
 
 .o-hire-btn {
