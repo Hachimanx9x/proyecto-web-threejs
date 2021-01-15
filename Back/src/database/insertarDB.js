@@ -74,7 +74,8 @@ funcionesDB.creaproyecto2 = (obj) => {
                                                                             buscarDB.obtenertodasRoles().then(result10 => {
                                                                                 for (let f = 0; f < members.length; f++) {
                                                                                     for (let g = 0; g < result10.API.length; g++) {
-                                                                                        if (members[f].rol === result10.API[g].roltitulo) {
+                                                                                        if (members[f].rol == result10.API[g].roltitulo) {
+                                                                                            console.log(members[f].rol + " | " + result10.API[g].roltitulo)
                                                                                             insertintegrante({
                                                                                                 usuario: members[f].user,
                                                                                                 rol: result10.API[g].id
@@ -157,6 +158,21 @@ funcionesDB.creaproyecto2 = (obj) => {
             }).catch(err2 => rej(err2))
         }).catch(err => rej(err))
     })
+}
+
+funcionesDB.agregarcontacto = (obj) => {
+    return new Promise((res, rej) => {
+        const { usuario, preferiodo, propietario } = obj;
+        funcionesDB.insertContacts({ usuario: usuario, preferencia: preferiodo }).then(result => {
+            console.log("insert contacto " + result);
+            buscarDB.obtenertodasContactos().then(result2 => {
+                let ultimo = result2.API[result2.API.length - 1]
+                funcionesDB.insertlistContacts({ usuario: propietario, contacto: ultimo.id }).then(result3 => {
+                    res({ msj: `contacto ${result3}` });
+                }).catch(err3 => rej(err3))
+            }).catch(err2 => rej(err2));
+        }).catch(err => rej(err))
+    });
 }
 
 
