@@ -2,18 +2,36 @@
 	background-color: #eef7fc;
 	height: 100vh;
 	height: 100%;
+	min-width: 50rem;
 	padding: 2rem;
 	margin: 0.5rem;
 	border-radius: 1rem;
 }
 .o-project-basic-info {
 	padding: 1rem;
+	border-radius: 1rem;
 }
 .o-member-selection-container {
 	display: flex;
+	width: 100%;
+	height: 18rem;
+	padding: 2rem;
 	overflow-x: auto;
 	scrollbar-color: #4285f4 rgb(240, 238, 238);
 	scrollbar-width: auto;
+}
+
+.o-member-selection-container::-webkit-scrollbar {
+	height: 8px;
+	background-color: #e0e0e0;
+}
+.o-member-selection-container::-webkit-scrollbar-thumb {
+	background: #4285f4;
+	border-radius: 3px;
+}
+
+.o-member-selection-container::-webkit-scrollbar-thumb:hover {
+	background: #3a4c99;
 }
 .inputWrapper {
 	height: 3rem;
@@ -72,4 +90,84 @@
 }
 .o-project-creation-section .md-outline textarea {
 	height: 10rem;
+}
+
+.o-picture-project {
+	width: 100%;
+	position: absolute;
+}
+.o-project-form {
+	height: 10rem;
+}
+
+.o-icon-input-text {
+	left: 8.1rem;
+	top: 0.7rem;
+	font-size: 1rem;
+	position: absolute;
+}
+.o-inputWrapper-btn {
+	width: 7.5rem;
+	height: 2.3rem;
+	top: 6rem;
+	left: 8rem;
+}
+.o-practice-container {
+	max-width: 15rem;
+	min-width: 15rem;
+}
+.o-btn-partices {
+	padding: 0.3rem;
+}
+@media only screen and (max-width: 800px) {
+	.o-project-creation-section {
+		min-width: 45rem;
+	}
+
+	.inputWrapper {
+		width: 10rem;
+	}
+	.o-icon-input-text {
+		left: 3.1rem;
+	}
+	.o-inputWrapper-btn {
+		width: 7rem;
+		height: 2rem;
+		top: 4.3rem;
+		left: 5.8rem;
+	}
+}
+
+@media only screen and (max-width: 700px) {
+	.o-project-creation-section {
+		width: 45rem;
+		min-width: 38rem;
+	}
+	.o-inputWrapper-btn {
+		width: 6rem;
+		font-size: 0.8rem;
+		top: 3.5rem;
+		left: 3.8rem;
+	}
+}
+@media only screen and (max-width: 590px) {
+	.o-project-creation-section {
+		min-width: 100%;
+		margin: 0;
+	}
+	.inputWrapper {
+		width: 100%;
+	}
+	.o-inputWrapper-btn {
+		width: 7.5rem;
+		height: 2.3rem;
+		top: 7.4rem;
+		left: 11rem;
+	}
+	.o-icon-input-text {
+		left: 11.3rem;
+	}
+	.o-practice-container {
+		min-width: 100%;
+	}
 }
