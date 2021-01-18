@@ -923,7 +923,7 @@ funcionesDB.deletealllenguaje = () => {
                 sqlite.all(Query.deleteallIdiomas(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "deletealllenguaje" }); }
                 });
             }
         });
@@ -938,14 +938,14 @@ funcionesDB.deleteaallbility = () => {
                 mariaDB.query(Query.deleteallHabilidades(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "deleteaallbility" }); }
                 });
             }
             else {
                 sqlite.all(Query.deleteallHabilidades(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "deleteaallbility" }); }
                 });
             }
         });
@@ -968,7 +968,7 @@ funcionesDB.deletealltools = () => {
                 sqlite.all(Query.deleteallHerramientas(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "deletealltools" }); }
                 });
             }
         });
@@ -991,7 +991,7 @@ funcionesDB.deleteallUser = () => {
                 sqlite.all(Query.deleteallUsuarios(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "deleteallUser" }); }
                 });
             }
         });
@@ -1014,7 +1014,7 @@ funcionesDB.deleteallKeyword = () => {
                 sqlite.all(Query.deleteallPalabrasClave(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "deleteallKeyword" }); }
                 });
             }
         });
@@ -1037,7 +1037,7 @@ funcionesDB.deleteallListLenguaje = () => {
                 sqlite.all(Query.deleteallListaidiomas(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "deleteallListLenguaje" }); }
                 });
             }
         });
@@ -1059,7 +1059,7 @@ funcionesDB.deleteallContact = () => {
                 sqlite.all(Query.deleteallContactos(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "deleteallContact" }); }
                 });
             }
         });
@@ -1082,7 +1082,7 @@ funcionesDB.deleteallListContact = () => {
                 sqlite.all(Query.deleteallListaContactos(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "deleteallListContact" }); }
                 });
             }
         });
@@ -1105,7 +1105,7 @@ funcionesDB.deleteallListAbility = () => {
                 sqlite.all(Query.deleteallListaHabilidades(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "deleteallListAbility" }); }
                 });
             }
         });
@@ -1128,7 +1128,7 @@ funcionesDB.deleteListTools = () => {
                 sqlite.all(Query.deleteallListaHerramientas(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "deleteListTools" }); }
                 });
             }
         });
@@ -1151,7 +1151,7 @@ funcionesDB.deleteallMetology = () => {
                 sqlite.all(Query.deleteallMetodologias(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "deleteallMetology" }); }
                 });
             }
         });
@@ -1174,7 +1174,7 @@ funcionesDB.deleteallPractice = () => {
                 sqlite.all(Query.deleteallPracticas(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "deleteallPractice" }); }
                 });
             }
         });
@@ -1197,7 +1197,7 @@ funcionesDB.deleteallListPractice = () => {
                 sqlite.all(Query.deleteallListasPracticas(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "deleteallListPractice" }); }
                 });
             }
         });
@@ -1220,7 +1220,7 @@ funcionesDB.deleteallAlpha = () => {
                 sqlite.all(Query.deleteallAlfas(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "deleteallAlpha" }); }
                 });
             }
         });
@@ -1243,7 +1243,7 @@ funcionesDB.deleteallListAlpha = () => {
                 sqlite.all(Query.deleteallListaAlfas(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "deleteallListAlpha" }); }
                 });
             }
         });
@@ -1266,7 +1266,7 @@ funcionesDB.deleteallToolsMetodology = () => {
                 sqlite.all(Query.deleteallHerramientasMetodologia(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "deleteallToolsMetodology" }); }
                 });
             }
         });
@@ -1289,7 +1289,7 @@ funcionesDB.deleteallTechnical = () => {
                 sqlite.all(Query.deleteallTecnicas(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "deleteallTechnical" }); }
                 });
             }
         });
@@ -1312,7 +1312,7 @@ funcionesDB.deleteallActivity = () => {
                 sqlite.all(Query.deleteallActividades(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "deleteallActivity" }); }
                 });
             }
         });
@@ -1335,7 +1335,7 @@ funcionesDB.deleteallRole = () => {
                 sqlite.all(Query.deleteallRoles(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "deleteallRole" }); }
                 });
             }
         });
@@ -1358,7 +1358,7 @@ funcionesDB.deleteallListRole = () => {
                 sqlite.all(Query.deleteallListaRoles(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "deleteallListRole" }); }
                 });
             }
         });
@@ -1381,7 +1381,7 @@ funcionesDB.deleteallMember = () => {
                 sqlite.all(Query.deleteallIntegrantes(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "deleteallMember" }); }
                 });
             }
         });
@@ -1404,7 +1404,7 @@ funcionesDB.deleteallListActivity = () => {
                 sqlite.all(Query.deleteallListaActividades(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "deleteallListActivity" }); }
                 });
             }
         });
@@ -1427,7 +1427,7 @@ funcionesDB.deleteallContent = () => {
                 sqlite.all(Query.deleteallContenidos(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "deleteallContent" }); }
                 });
             }
         });
@@ -1450,7 +1450,7 @@ funcionesDB.deleteallDeliverable = () => {
                 sqlite.all(Query.deleteallEntregables(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "deleteallDeliverable" }); }
                 });
             }
         });
@@ -1473,7 +1473,7 @@ funcionesDB.deleteallListDeliverable = () => {
                 sqlite.all(Query.deleteallListaentregables(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "deleteallListDeliverable" }); }
                 });
             }
         });
@@ -1496,7 +1496,7 @@ funcionesDB.deleteallListToolsMetodology = () => {
                 sqlite.all(Query.deleteallListaHerramientasMetodologia(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "deleteallListToolsMetodology" }); }
                 });
             }
         });
@@ -1519,7 +1519,7 @@ funcionesDB.deleteallListContect = () => {
                 sqlite.all(Query.deleteallListaContenidos(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "deleteallListContect" }); }
                 });
             }
         });
@@ -1542,7 +1542,7 @@ funcionesDB.deleteallDelivery = () => {
                 sqlite.all(Query.deleteallEntregas(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "deleteallDelivery" }); }
                 });
             }
         });
@@ -1565,7 +1565,7 @@ funcionesDB.deleteallChat = () => {
                 sqlite.all(Query.deleteallChats(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "deleteallChat" }); }
                 });
             }
         });
@@ -1588,7 +1588,7 @@ funcionesDB.deleteallHistory = () => {
                 sqlite.all(Query.deleteallHistoriales(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "deleteallHistory" }); }
                 });
             }
         });
@@ -1611,7 +1611,7 @@ funcionesDB.deleteallListChat = () => {
                 sqlite.all(Query.deleteallListaChats(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "deleteallListChat" }); }
                 });
             }
         });
@@ -1634,7 +1634,7 @@ funcionesDB.deleteallProject = () => {
                 sqlite.all(Query.deleteallProyectos(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "deleteallProject" }); }
                 });
             }
         });
@@ -1650,14 +1650,14 @@ funcionesDB.deleteallMeeting = () => {
                 mariaDB.query(Query.deleteallReuniones(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "deleteallMeeting" }); }
                 });
             }
             else {
                 sqlite.all(Query.deleteallReuniones(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "deleteallMeeting" }); }
                 });
             }
         });
@@ -1673,14 +1673,14 @@ funcionesDB.deleteallListMeeting = () => {
                 mariaDB.query(Query.deleteallListaReuniones(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "deleteallListMeeting" }); }
                 });
             }
             else {
                 sqlite.all(Query.deleteallListaReuniones(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "deleteallListMeeting" }); }
                 });
             }
         });
@@ -1703,7 +1703,7 @@ funcionesDB.deleteallListDelivery = () => {
                 sqlite.all(Query.deleteallListaEntregas(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "deleteallListDelivery" }); }
                 });
             }
         });
@@ -1726,7 +1726,7 @@ funcionesDB.deleteallEvent = () => {
                 sqlite.all(Query.deleteallEventos(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "deleteallEvent" }); }
                 });
             }
         });
@@ -1749,7 +1749,7 @@ funcionesDB.deleteallEvent = () => {
                 sqlite.all(Query.deleteallListaEventos(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "deleteallEvent" }); }
                 });
             }
         });
@@ -1772,7 +1772,7 @@ funcionesDB.deleteallListMember = () => {
                 sqlite.all(Query.deleteallListaIntegrantes(), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "deleteallListMember" }); }
                 });
             }
         });

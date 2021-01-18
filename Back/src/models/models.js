@@ -94,7 +94,7 @@ module.exports = {
                     para la generación de la propuesta de diseño de la
                     experiencia multimedia, y las especificaciones del
                     diseño responsable (ver matriz 2). `,
-                    actividades: ["A8", "A9", "A12", "A18", "A19"]
+                    actividades: ["A8", "A9", "A18", "A19"]
                 },
                 {
                     nombre: "Arquitecto de producción de contenidos",
@@ -340,6 +340,103 @@ module.exports = {
                     tecnica: 1
                 }
             ],
+            Tecnicas: [
+                {
+                    titulo: "Video como apoyo a la etnografía",
+                    descripcion: "-Defina aquello que debe filmarse. -Determine quién llevará a cabo la filmación. -Realice la gestión necesaria para obtener los permisos de filmación. -Realice el video. -Analice y recopile información del video.",
+                    bibliografia: ""
+                },
+                {
+                    titulo: "Definición de personas",
+                    descripcion: "-Genere una lista de usuarios potenciales y sus atributos relevantes alrededor de la experiencia multimedia. -Defina un número finito y controlable de tipos de usuario. -Cree personas asociadas a los tipos de usuario, asociándole los atributos definidos con anterioridad (nombre, edad, género, profesión, gustos, intereses, etc.). -Construya un perfil visual para cadapersona, que sea altamente visual y rápido de leer, asociándole sus atributos, anécdotas y citas para cada uno.",
+                    bibliografia: ""
+                },
+                {
+                    titulo: "Producción de metáforas y analogías",
+                    descripcion: "-Determine el punto de partida para el uso de metáforas y analogías. -Identifique las mejores metáforas y analogías para el desarrollo de la historia y su implementación en la experiencia. *Analogía directa (objetos reales). *Analogía de fantasía (objetos que no existen pero que pueden ser imaginables). *Analogía simbólica (compare aspectos del concepto, con aspectos de otro diferente).  *Analogía personal (relacionarse así mismo con el concepto, poniéndose en una situación determinada). -Genere los conceptos por cada metáfora y analogía producida. -Documente, discuta y mejore los conceptos. Discuta cómo deberían ser evaluados y desarrollados a futuro. Conserve los prototipos de baja fidelidad de las metáforas y analogías producidas.",
+                    bibliografia: ""
+                },
+                {
+                    titulo: "Generación de Storyboards",
+                    descripcion: "-Defina con claridad la solución que se desea ilustrar. -Cree los personajes y describa sus experiencias. -Trace el viaje a través de situaciones imaginadas y defina puntos en el mapa en donde el usuario se encontrará con contenido multimedia, percepciones sensoriales, opciones de interacción con la experiencia. -Ilustre los escenarios con un storyboard marco a marco, desarrollando las narrativas en cada uno, utilizando bocetos. -Comparta la historia con los demás interesados y utilice su retroalimentación para refinar conceptos y demás aspectos como el tipo de contenido multimedia a utilizar, así como las percepciones, cognición o posibilidades de interacción que desean influirse en cada uno de los puntos del mapa. -Conserve los prototipos de baja fidelidad del storyboard producido.",
+                    bibliografia: ""
+                },
+                {
+                    titulo: "Mapa de experiencias convincentes",
+                    descripcion: "-Seleccione una experiencia narrada que desea analizar y cree una hoja de trabajo que referencie los siguientes aspectos: atracción, entrada, compromiso, salida y extensión. -Describa la etapa de atracción, pensando en las diferentes interacciones previas que pueden generar interés. Describa todas las acciones que puede llevar a cabo para este propósito. -Describa la etapa de entrada, considerando lo que ocurre cuando el usuario llega a la experiencia y lo que esto influye en el propósito final. -Describa la etapa de compromiso, que consiste en el núcleo o esencia de la experiencia para el usuario. -Describa la etapa de salida, cuando el usuario se prepara para retirarse de la experiencia. -Describa la etapa de extensión, describiendo todo lo que debe sucederle al usuario después de la experiencia para mantenerlo comprometido.",
+                    bibliografia: ""
+                },
+                {
+                    titulo: "Matriz para la definición preliminar del tipo de medios digitales.",
+                    descripcion: "-En el eje horizontal defina los diferentes tipos de medios digitales y en el eje vertical relacione los puntos definidos en la historia de la experiencia, en donde se desplegará contenido multimedia.  -En los puntos de intersección de la matriz defina conceptos favorables y desfavorables para el uso de cada medio digital, en cada uno de los hitos definidos en la historia. Defina para cada medio digital y cada hito un peso de 1 a 100. -Selección de los medios digitales para la potencial producción del contenido multimedia",
+                    bibliografia: ""
+                },
+                {
+                    titulo: "Análisis clasificación de información",
+                    descripcion: "-Defina el conjunto de participantes en la prueba y las categorías de información para la experiencia. -Permita la realización de agrupaciones de categorías de información por parte de los participantes, en los conjuntos que consideren necesarios para el enfoque abierto. -Defina los conjuntos de agrupación para las categorías en el enfoque cerrado. -Realice análisis cualitativo y cuantitativo de los resultados, según se requiera.",
+                    bibliografia: ""
+                },
+                {
+                    titulo: "Diseño para la estructura de contenidos e información",
+                    descripcion: "-Produzca una lista de componentes de información para la experiencia y clasifíquelos con etiquetas por: título, autor, imágenes, audio, video y documentos, entre otros.  -Diseñe la estructura y los esquemas que representan el flujo de información a lo largo de la experiencia. -Defina los sistemas de organización, etiquetado, navegación y búsqueda que debería ofrecerse a través de la experiencia. -Establezca los potenciales puntos de interacción del contenido con el usuario. -Socialice esta estructura y los esquemas con los demás arquitectos y realice sus ajustes.",
+                    bibliografia: ""
+                },
+                {
+                    titulo: "Wireframes",
+                    descripcion: "-Construya representaciones de las potenciales interfaces de usuario en función de la experiencia. -Defina los elementos que deben ser interactivos con el usuario a través del boceto de las interfaces. -Asocie los contenidos digitales para cada componente del wireframe. -Vincule potenciales percepciones sensoriales y modalidades de interacción y vincúlelas a cada elemento del wireframe. -Socialice la propuesta y realice ajustes. -Conserve los prototipos de baja fidelidad de los wireframes producidos.",
+                    bibliografia: ""
+                },
+                {
+                    titulo: "Matriz de agrupamiento asimétrico entre percepciones sensoriales,modalidades de interacción y medios digitales.",
+                    descripcion: "-Defina las percepciones sensoriales y las modalidades de interacción que va a analizar frente a los medios digitales seleccionados para la producción de contenido multimedia. -Defina la relación entre la percepción sensorial – modalidad de interacción –medio digital más adecuada, para la experiencia multimedia. -Cree la matriz asimétrica con las tres dimensiones descritas. -Defina un puntaje para cada relación que va entre 1 y 3. 1 representa una relación poco adecuada, 2 una relación medianamente adecuada y 3 una relación muy adecuada. -Construya la matriz asimétrica con los parámetros y asigne los puntajes en cada una de las relaciones. -Capture ideas y compártalas para abrir discusiones con el equipo de trabajo.",
+                    bibliografia: ""
+                },
+                {
+                    titulo: "Diseñe el journey map para la experiencia",
+                    descripcion: "-Genere una lista de todas las actividades específicas que llevará a cabo el usuario en la experiencia. -Relacione las actividades específicas con actividades de alto nivel dentro de la experiencia. -Genere una lista de los medios digitales y asocie su despliegue a cada una de las actividades específicas en donde debe utilizarse.",
+                    bibliografia: ""
+                },
+                {
+                    titulo: "Prototipos de comportamiento",
+                    descripcion: "-Identifique la actividad específica del journey map que desea simular y planifique la simulación de la situación, incluyendo los elementos necesarios, actores, objetos que se involucran en la actividad a simular. - Prepare el entorno para la simulación, encontrando o produciendo un entorno físico o virtual y exponga los comportamientos clave que desea entender (físico, cognitivo, social, cultural o emocional). Utilice accesorios para representar los conceptos y apoye a los participantes para que puedan interactuar con ellos.",
+                    bibliografia: ""
+                },
+                {
+                    titulo: "Prototipos de conceptos",
+                    descripcion: "-Identifique el concepto o idea relacionada con la experiencia que desea probar y evalúe si es susceptible de prototiparse alguno o varios aspectos en una forma tangible y cuál sería su utilidad. - Defina un espacio en donde pueda llevarse a cabo la construcción del prototipo y su prueba. -Revise el prototipo que se asocia con la experiencia, pruébelo con su equipo de trabajo y con un grupo de usuarios y discuta sobre el mismo, a partir de los principios del diseño de la experiencia inicial, las necesidades de usuario, sus intereses y expectativas.",
+                    bibliografia: ""
+                },
+                {
+                    titulo: "Simulación de experiencia",
+                    descripcion: "-Identificación de la pregunta de investigación. -Selección de la experiencia específica que desea simularse. -Diseñe la simulación y represente los recursos por medio de objetos con significado para los participantes, construya el entorno, produzca los mensajes necesarios para guiar a los participantes a través del servicio. -Ejecución de la simulación.",
+                    bibliografia: ""
+                },
+                {
+                    titulo: "Identificación de políticas y normativas",
+                    descripcion: "-Realice una reunión de lluvia de ideas con expertos en la materia, que ayuden a identificar: *Políticas y normativas de la(s) organización(es) involucrada(s) representada(s) por patrocinador(es) y cliente(s). *Políticas de estado que deben considerarse y potencialmente restringen el diseño de la solución. *Políticas y normativas que potencialmente afectan el diseño de la experiencia, dada su influencia en el usuario. -Discuta y analice los resultados obtenidos con el equipo de trabajo.",
+                    bibliografia: ""
+                },
+                {
+                    titulo: "Uso no dirigido",
+                    descripcion: "-Identifique otros posibles usos que pueden darle al Sistema Multimedia, diferentes a los concebidos originalmente por sus diseñadores. -Analice que tipo de interesados indirectos pueden llegar a hacer un uso diferente del Sistema y estime sus posibles motivos. -Identifique si estos motivos pueden influir en aspectos éticos, morales y de seguridad que pueden afectar a las personas.",
+                    bibliografia: ""
+                },
+                {
+                    titulo: "Análisis de respuestas de usuarios",
+                    descripcion: "-Identifique otros posibles usos que pueden darle al Sistema Multimedia, diferentes a los concebidos originalmente por sus diseñadores. -Analice que tipo de interesados indirectos pueden llegar a hacer un uso diferente del Sistema y estime sus posibles motivos. -Identifique si estos motivos pueden influir en aspectos éticos, morales y de seguridad que pueden afectar a las personas.",
+                    bibliografia: ""
+                },
+                {
+                    titulo: "Identificación de patrones",
+                    descripcion: "-Asegúrese de entender el contexto en donde se llevará cabo el despliegue de la experiencia multimedia. -Estudie el panorama e identifique patrones en el nivel de abstracción del contexto. -Identifique los patrones de “panorama” que establezcan el contexto. Para esto, aborde el problema en su mayor nivel de abstracción identificando patrones que respondan a su necesidad.  -Trabaje dentro del contexto con el fin de identificar patrones a un nivel más bajo de abstracción que ayuden posteriormente al diseño de la solución. Para esto, intente subdividir el problema, en problemas más concretos e intente identificar patrones en dicho nivel.",
+                    bibliografia: ""
+                },
+                {
+                    titulo: "Base de datos de observaciones del usuario",
+                    descripcion: "-Identifique la información que debe ser ingresada en la base de datos, desde las diferentes técnicas aplicadas. -Registre los datos con información relevante relacionada con su captura: nombre de quien captura la información, dato, locación, título de la observación, descripción y cualquier otra información considerada como relevante para el equipo de trabajo. -Etiquete los datos con marcos simples con significado útil para el equipo. -Realice búsquedas y comparte los hallazgos con proyectos de Sistemas Multimedia desarrollados con anterioridad e identifique patrones y nuevas perspectivas para el actual proyecto.",
+                    bibliografia: ""
+                }
+            ],
             contenidos: [
                 { nombre: "", nombrearchivo: "", descripcion: "", bibliografia: "" },
                 { nombre: "", nombrearchivo: "", descripcion: "", bibliografia: "" },
@@ -381,7 +478,7 @@ module.exports = {
             ],
             Entregables: [
                 {
-                    entregatitulo: "Análisis de viabilidad del Sistema Multiemdia",
+                    entregatitulo: "Análisis de viabilidad del Sistema Multimedia",
                     entregadescripcion: `Es un documento en donde se consigna un análisis
                     sobre la necesidad de los diferentes tipos de recursos
                     y de riesgos, a la luz de la aplicación de diferentes
@@ -444,7 +541,7 @@ module.exports = {
             ],
             Roles: [
                 {
-                    nombre: "Arquitecto Experiencia Multimedia ",
+                    nombre: "Arquitecto Experiencia Multimedia",
                     descripcion: `Consiste en el rol que hace parte del equipo de
                     Arquitectos, responsable de llevar a cabo la realización
                     de un conjunto de productos de trabajo de la práctica.`,
@@ -458,7 +555,7 @@ module.exports = {
                     actividades: ["A5", "A13"]
                 },
                 {
-                    nombre: "Arquitecto de información ",
+                    nombre: "Arquitecto de información",
                     descripcion: `Es el rol responsable dentro del análisis de viabilidad,
                     de analizar a la luz de la información y estructura, que
                     sustenta el contenido multimedia, realizar una
@@ -480,7 +577,7 @@ module.exports = {
                     actividades: ["A20", "A21"]
                 },
                 {
-                    nombre: "Diseñador de Concepto y Storyboard ",
+                    nombre: "Diseñador de Concepto y Storyboard",
                     descripcion: `Se trata de un miembro del equipo de diseño, que
                     apoya el análisis frente a la definición del Sistema
                     Multimedia mínimo viable, atendiendo a su alineación
@@ -699,6 +796,68 @@ module.exports = {
                     tecnica: 1
                 }
             ],
+            Tecnicas: [
+                {
+                    titulo: "Análisis DOFA",
+                    descripcion: "",
+                    bibliografia: ""
+                },
+                {
+                    titulo: "Análisis de desglose de riesgos asociada al desarrollo del Sistema Multimedia",
+                    descripcion: "-Identifique riesgos internos, relacionados con la iniciativa propia que motiva el desarrollo del Sistema Multimedia y las organizaciones patrocinadoras y clientes en su realización. Se sugiere analizar factores como el financiero, tecnológico, de recursos disponibles, base de capital intelectual y de conocimiento, entre otros. -Identifique riesgos externos que se encuentran en el entorno y con alto potencial de influir en la iniciativa. Se sugiere analizar factores sociales, económicos, físicos, políticos y de cambio en la tecnología.",
+                    bibliografia: ""
+                },
+                {
+                    titulo: "Análisis para la identificación de riesgos",
+                    descripcion: "-Genere espacios para la realización de talleres con expertos en la identificación de riesgos tanto a nivel general, relacionados con el desarrollo de soluciones basadas en Sistemas Multimedia, así como las específicas que desencadenan las motivaciones y necesidades del proyecto.",
+                    bibliografia: ""
+                },
+                {
+                    titulo: "Identificación análoga de los recursos",
+                    descripcion: "-Efectúe una estimación análoga de recursos, basándose en experiencias e iniciativas similares que se hayan llevado a cabo, para revisar sus datos históricos de las actividades, relacionados con los recursos utilizados para su realización. Indague sobre: *Presupuestos asignados. *Recursos adquiridos. *Conformación del equipo de trabajo. *Tiempos estimados para el desarrollo de la solución. -Realice un análisis sobre los resultados obtenidos en la estimación análoga.",
+                    bibliografia: ""
+                },
+                {
+                    titulo: "Identificación ascendente de recursos",
+                    descripcion: "-Efectúe una Estructura de Desglose de Trabajo preliminar, que permita identificar los paquetes preliminares de trabajo, necesarios para la realización de la experiencia y relacionados con el desarrollo de la solución. -Efectúe de manera ascendente, un análisis de los recursos necesarios (tecnológico, humano, materiales, espacios físicos, entre otros) para llevar a cabo la realización de cada paquete de trabajo. -Analice los resultados de esta estimación ascendente de recursos con la estimación análoga, con su equipo de trabajo y valide su viabilidad junto con los patrocinadores.",
+                    bibliografia: ""
+                },
+                {
+                    titulo: "Identificación análoga de los recursos",
+                    descripcion: "",
+                    bibliografia: ""
+                },
+                {
+                    titulo: "Identificación ascendente de recursos",
+                    descripcion: "",
+                    bibliografia: ""
+                },
+                {
+                    titulo: "Generación de Canvas",
+                    descripcion: "Defina el segmento de clientes/usuarios de la experiencia multimedia. Piense en: *Para quién estará creando valor la experiencia multimedia. *Quiénes serían los clientes/usuarios más importantes. -Defina la propuesta o hipótesis de valor. Si aplicó la técnica Análisis de Valor , ya cuenta con la hipótesis de valor definida. En caso contrario, piense en: *El valor que la experiencia multimedia le estará entregando a sus clientes. *El problema que se resolverá. *La necesidad que va a satisfacerse. *El tipo de experiencia que se ofrece. -Defina los canales en cómo se va a llevar y a distribuir la experiencia multimedia a sus clientes/usuarios. *Mediante qué canales puede llegarse a clientes/usuarios. *Qué canal funciona mejor para la experiencia multimedia a ofrecerse. *Cuáles serían los canales más rentables.",
+                    bibliografia: ""
+                },
+                {
+                    titulo: "Análisis para la definición preliminar de tecnologías Software",
+                    descripcion: "-En el eje horizontal estime en el mayor nivel de abstracción, la naturaleza y los componentes software que potencialmente se requieren para la generación de la experiencia: *Naturaleza de la aplicación (móvil, basada en pc tradicional, nube, otro tipo de dispositivo). *Recursos software (motor gráfico, entorno para modelado/animación, edición de audio/video, diseño gráfico, librerías especializadas, prototipado, bases de datos, entorno de programación). -En el eje vertical relacione las diferentes actividades específicas que llevará a cabo al usuario, durante la experiencia (puede apoyarse en la realización de un Journey Map).",
+                    bibliografia: ""
+                },
+                {
+                    titulo: "Análisis para la definición preliminar de tecnologías Hardware",
+                    descripcion: "-En el eje horizontal estime en el mayor nivel de abstracción, la naturaleza y los componentes hardware que potencialmente se requieren para la generación de la experiencia: *Naturaleza del componente hardware(basado en sistema o subsistema embebido, basado en PC tradicional, consola de videojuego, otro dispositivo). *Recursos hardware (sensores, actuadores, proyectores, interfaces, periféricos, objetos físicos fabricados). -En el eje vertical relacione las diferentes actividades específicas que llevará a cabo al usuario, durante la experiencia (puede apoyarse en la realización de un Journey Map).",
+                    bibliografia: ""
+                },
+                {
+                    titulo: "Uso no dirigido",
+                    descripcion: "-Identifique otros posibles usos que pueden darle al Sistema Multimedia, diferentes a los concebidos originalmente por sus diseñadores. -Analice que tipo de interesados indirectos pueden llegar a hacer un uso diferente del Sistema y estime sus posibles motivos. -Identifique si estos motivos pueden influir en aspectos éticos, morales y de seguridad que pueden afectar a las personas. -Identifique tensiones de valor entre los interesados. -Reúnase y discuta los resultados del análisis con su equipo de trabajo.",
+                    bibliografia: ""
+                },
+                {
+                    titulo: "Identificación de los métodos, motivaciones y recursos del adversario e impacto del sistema en las personas.",
+                    descripcion: "-Realice una reunión de lluvia de ideas, en donde el equipo de trabajo discuta sobre: *Posibles métodos que un adversario puede utilizar para vulnerar el sistema y afectar la experiencia multimedia. *Motivaciones que tiene para llevar a cabo un ataque que exponga la seguridad del Sistema Multimedia. *Recursos que potencialmente podría utilizar para vulnerar el Sistema Multimedia. *Analice sobre el impacto directo o indirecto que podría tener el Sistema Multimedia en el bienestar emocional o mental de las personas y el impacto que puede producir en los individuos, la vulneración de su seguridad. -Consulte sobre otros métodos, motivaciones y recursos que puedan existir, con otros interesados, así como usuarios clave, clientes potenciales e interesados indirectos. -Discuta los resultados obtenidos con el equipo de trabajo.",
+                    bibliografia: ""
+                },
+            ],
             contenidos: [
                 { nombre: "", nombrearchivo: "", descripcion: "", bibliografia: "" },
                 { nombre: "", nombrearchivo: "", descripcion: "", bibliografia: "" },
@@ -717,3 +876,5 @@ module.exports = {
     ]
 
 };
+
+

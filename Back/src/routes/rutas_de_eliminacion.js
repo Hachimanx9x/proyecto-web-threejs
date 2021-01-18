@@ -332,6 +332,8 @@ rutas.delete('/', (req, res) => {
             }).catch(err => res.json(err))
         }).catch(err => res.json(err))
 
+    } else {
+        res.json("salvado por un error")
     }
 });
 module.exports = rutas;

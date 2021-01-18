@@ -317,6 +317,27 @@ funcionesDB.buscaractividadesproyecto = async (user, id) => {
         });
     });
 }
+funcionesDB.obtenerintegranteconrol = async (integrante) => {
+    return new Promise((res, rej) => {
+        promesa.then(async (result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                await mariaDB.query(Query.obtenerintegrantyrol(integrante), async (err, rows) => {
+                    if (!err) {
+                        res({ API: rows });
+                    } else { rej(err) }
+                });
+            }
+            else {
+                sqlite.all(Query.obtenerintegrantyrol(integrante), (err, rows) => {
+                    if (!err) {
+                        res({ API: rows });
+                    } else { rej(err) }
+                });
+            }
+        })
+    });
+}
 //-----------------------------------------------------
 funcionesDB.obtenertodasIdiomas = async () => {
     return new Promise((res, rej) => {
@@ -332,7 +353,7 @@ funcionesDB.obtenertodasIdiomas = async () => {
             else {
                 sqlite.all(Query.obtenertodasIdiomas(), (err, rows) => {
                     if (!err) {
-                        res({ herramientas: rows });
+                        res({ API: rows });
                     } else { rej(err) }
                 });
             }

@@ -19,8 +19,6 @@ query.login = function (obj) {
     return `SELECT * FROM usuarios WHERE email = "${email}" AND contrasena = "${password}" `
 }
 query.usuarioid = function (id) {
-
-    //
     return `SELECT * FROM usuarios WHERE id = ${id}; `
 }
 query.obtenerEscritorioActividades = function (id) {
@@ -318,6 +316,14 @@ query.obtenerproyectoentregablescompleto = function (id) {
     JOIN listacontenidos ON entregables.id = listacontenidos.entregable
     JOIN contenidos ON listacontenidos.contenido = contenidos.id
     WHERE proyectos.id =${id}; `;
+}
+query.obtenerintegrantyrol = function (id) {
+    return `SELECT
+    integrantes.id,
+    roles.roltitulo
+    from integrantes
+    join roles on integrantes.rol = roles.id
+    where integrantes.id = ${id}; `
 }
 //-------------busquedas por tablas
 query.obtenertodasIdiomas = function () { return `SELECT * FROM idiomas ; `; }
@@ -803,7 +809,7 @@ query.deleteEventos = function (id) { return `DELETE FROM eventos  WHERE id=${id
 query.deleteListaEventos = function (id) { return `DELETE FROM listaeventos  WHERE evento=${id}; `; }
 query.deleteListaIntegrantes = function (id) { return `DELETE FROM listaintegrantes  WHERE integrante=${id}; `; }
 
-query.deleteallIdiomas = function () { return `DELETE FROM idiomas WHERE  ; `; }
+query.deleteallIdiomas = function () { return `DELETE FROM idiomas  ; `; }
 query.deleteallHabilidades = function () { return `DELETE FROM habilidades ; `; }
 query.deleteallHerramientas = function () { return `DELETE FROM herramientas  ; `; }
 query.deleteallUsuarios = function () { return `DELETE FROM usuarios  ; `; }
@@ -817,7 +823,7 @@ query.deleteallMetodologias = function () { return `DELETE FROM metodologias  ; 
 query.deleteallPracticas = function () { return `DELETE FROM practicas  ; `; }
 query.deleteallListasPracticas = function () { return `DELETE FROM listapracticas ; `; }
 query.deleteallAlfas = function () { return `DELETE FROM alfas  ; `; }
-query.deleteallListaAlfas = function () { return `DELETE FROM listaalfas  WHERE alfa=${id}; `; }
+query.deleteallListaAlfas = function () { return `DELETE FROM listaalfas ; `; }
 query.deleteallHerramientasMetodologia = function () { return `DELETE FROM herramientasmetodologia ;`; }
 query.deleteallTecnicas = function () { return `DELETE FROM tecnicas  ; `; }
 query.deleteallActividades = function () { return `DELETE FROM actividades  ; `; }
