@@ -39,6 +39,7 @@
     "react-switch-selector": "^1.2.1",
     "rodal": "^1.8.1",
     "socket.io-client": "^2.3.0",
+    "styled-components": "^5.2.1",
     "three": "^0.120.1"
   },
   "scripts": {
