@@ -58,8 +58,6 @@
 	opacity: 0;
 	-moz-opacity: 0;
 	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0);
-	background-color: brown;
-	color: red;
 }
 .o-project-creation-section .md-outline input[type=text] + label,
 .o-project-creation-section .md-outline textarea + label {

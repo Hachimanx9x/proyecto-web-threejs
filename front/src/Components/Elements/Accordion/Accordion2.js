@@ -5,11 +5,6 @@ import "./Accordion2Styles.css";
 import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 
 class Accordion2 extends Component {
-  constructor(props) {
-    super();
-  }
-
-
   render() {
     return (
       <div className="accordion">

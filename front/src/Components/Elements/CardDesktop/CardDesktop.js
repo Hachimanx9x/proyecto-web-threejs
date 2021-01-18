@@ -29,7 +29,7 @@ const CardDesktop = ({update}) => {
                     </div>
                     <div className="col-xs-6 col-sm-6 p-0 d-flex justify-content-end">
                         <form method="get" action={update.fileUrl}>
-                            <button type="submit" className="border-0 rounded-pill grey lighten-2 cyan-text o-download-btn">Download! <FontAwesomeIcon className="mr-2" icon={faDownload} /></button>
+                            <button type="submit" className="border-0 rounded-pill grey lighten-2 cyan-text o-download-btn">Descargar <FontAwesomeIcon className="mr-2" icon={faDownload} /></button>
                         </form>
                     </div>
                 </div>

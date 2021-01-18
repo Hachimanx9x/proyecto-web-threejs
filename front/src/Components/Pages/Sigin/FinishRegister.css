@@ -1,0 +1,49 @@
+.o-register-container {
+	margin: -2rem 0 0 0;
+	width: 100%;
+	padding: 2rem;
+	border-radius: 0.8rem;
+	background-color: #eef7fc;
+	overflow: hidden;
+}
+
+.o-register-container .inputWrapper {
+	height: 2rem;
+	width: 7rem;
+	overflow: hidden;
+	position: relative;
+	cursor: pointer;
+	/*Using a background color, but you can use a background image to represent a button*/
+	background-color: #4285f4;
+	border-radius: 2px;
+}
+.o-register-container .inputWrapper:hover {
+	background-color: #0d47a1;
+}
+.o-register-container .fileInput {
+	cursor: pointer;
+	height: 100%;
+	width: 100%;
+	padding-bottom: 4rem;
+	position: absolute;
+	z-index: 99;
+	justify-self: center;
+	/*This makes the button huge. If you want a bigger button, increase the font size*/
+	/*Opacity settings for all browsers*/
+	opacity: 0;
+	-moz-opacity: 0;
+	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0);
+}
+
+.o-register-container .o-icon-input-text {
+	left: 1.3rem;
+	top: 0.4rem;
+	font-size: 0.9rem;
+	position: absolute;
+}
+@media only screen and (max-width: 590px) {
+	.o-register-container {
+		margin: 0 0 5rem 0;
+		padding: 0.3rem;
+	}
+}

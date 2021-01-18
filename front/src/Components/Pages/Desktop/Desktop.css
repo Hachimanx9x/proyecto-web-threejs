@@ -24,11 +24,18 @@
 	height: auto;
 }
 .o-blue-container .chartjs-render-monitor {
-	margin: 1rem 0 0 -4rem;
-	width: 25rem !important;
-	height: 20rem !important;
+	margin: 1rem 0 0 -1.5rem;
+	width: 20rem !important;
+	height: 15rem !important;
+	font-size: 0.1rem !important;
 }
-
+.o-btn-graph {
+	width: 80%;
+	height: 2rem;
+	margin: 0.5rem auto;
+	font-size: 0.8rem;
+	border-width: 1px;
+}
 @media only screen and (max-width: 1320px) {
 	.o-slider-container {
 		min-width: 10rem;
@@ -37,6 +44,9 @@
 		margin: 1rem 0 0 -2rem;
 		width: 15rem !important;
 		height: 15rem !important;
+	}
+	.o-btn-graph {
+		font-size: 1rem;
 	}
 }
 @media only screen and (max-width: 1166px) {
@@ -87,6 +97,9 @@
 		margin: 3rem 0 0 0;
 		width: 100% !important;
 		height: auto !important;
+	}
+	.o-btn-graph {
+		font-size: 0.7rem;
 	}
 }
 

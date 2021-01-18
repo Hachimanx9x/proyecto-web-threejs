@@ -14,6 +14,8 @@ import CalendarEvents from "../../Pages/Calendar/CalendarEvents";
 import CreateEvent from "../../Pages/Calendar/CreateEvent";
 import ContactProfile from "../../Pages/ContactProfile/ContactProfile";
 import Desktop from "../../Pages/Desktop/Desktop";
+import FinishRegister from "../../Pages/Sigin/FinishRegister";
+
 
 const Content = ({ sidebarIsOpen, toggleSidebar }) => (
   <div
@@ -26,7 +28,7 @@ const Content = ({ sidebarIsOpen, toggleSidebar }) => (
       <Route exact path="/Dashboard/Desktop" component={Desktop} />
       <Route exact path="/Dashboard/Projects" component={Projects} />
       <Route exact path="/Dashboard/Projects/CreateProject" component={CreateProject} />
-
+      <Route exact path="/Dashboard/FinishRegister" component={FinishRegister} />
       <Route exact path="/Dashboard/Projects/Documentation" component={Documentation} />
       <Route exact path="/Dashboard/Contacts" component={Contacts} />
       <Route
