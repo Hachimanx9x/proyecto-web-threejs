@@ -7,18 +7,6 @@ const ftpminio = require("../ftp/peticiones");
 const LLAVE = 'misecretos';
 
 
-//
-
-/*
-
-rutas.get('/login/email=:correo&pass=:password',(req,res)=>{
-    console.log(req.params);  console.log(req.body); 
-    buscarDB.obtenerToken(req.params, res).then(resultado=>{
-       // console.log("Exito"); 
-    }); 
-
-});*/
-
 
 rutas.post('/login', (req, res) => {
     //    console.log("body", req.body); 
@@ -33,7 +21,6 @@ rutas.post('/login', (req, res) => {
 rutas.get('/escritorio', proToken, (req, res) => {
     // console.log("hola /escritorio")
     jwt.verify(req.token, LLAVE, (err, data) => {
-
         if (err) {
             res.sendStatus(403);
         } else {
@@ -50,7 +37,6 @@ rutas.get('/escritorio', proToken, (req, res) => {
             }
         }
     });
-
 });
 
 

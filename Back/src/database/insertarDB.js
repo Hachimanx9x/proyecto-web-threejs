@@ -4,6 +4,8 @@ const buscarDB = require('./buscarDB');
 const Query = require('./querys');
 const LLAVE = 'misecretos';
 const modelo = require('../models/models');
+const chalk = require('chalk');
+const { obtenertodasPracticas } = require('./querys');
 const funcionesDB = () => {
     console.log("funciones de la base de datos")
 }
@@ -160,6 +162,22 @@ funcionesDB.creaproyecto2 = (obj) => {
     })
 }
 
+funcionesDB.creaproyecto3 = (obj) => {
+    return new Promise((res, rej) => {
+        const { proyect, members, practice } = obj
+        inserproyectocompleto(proyect).then(proyecto => {
+            console.log(chalk.blue(`agregado proyecto ${proyecto.pro.id}`))
+            insertpracticasconalfascompleto2(practice, proyecto).then(result => {
+                console.log(chalk.blue(`entregables`))
+                insertintegrantesconrolesyactividades(proyecto, members, practice).then(result2 => {
+                    console.log(chalk.blue(`actividades`))
+                    res({ proyectoid: proyecto.pro.id });
+                }).catch(err3 => rej(err3))
+            }).catch(err2 => rej(err2))
+        }).catch(err => rej(err))
+    })
+}
+
 funcionesDB.agregarcontacto = (obj) => {
     return new Promise((res, rej) => {
         const { usuario, preferiodo, propietario } = obj;
@@ -275,6 +293,46 @@ funcionesDB.insertUser = (obj) => {
     })
 
 
+}
+
+funcionesDB.ingresartecnicas = (obj) => {
+    return new Promise((res, rej) => {
+        let final = false;
+        for (let a = 0; a < obj.length; a++) {
+            funcionesDB.insertTechnical({
+                titulo: obj[a].titulo,
+                descripcion: obj[a].descripcion,
+                bibliografia: obj[a].bibliografia
+            }).then(result => {
+                if (final) {
+                    res({ msj: "termino" })
+                }
+            }).catch(err => rej(err))
+            if (a === (obj.length - 1)) {
+                final = true;
+            }
+        }
+    })
+}
+
+funcionesDB.ingresarherramientasmetodologia = (obj) => {
+    return new Promise((res, rej) => {
+        let final = false;
+        for (let a = 0; a < obj.length; a++) {
+            funcionesDB.insertMethodologyTool({
+                nombre: obj[a].nombre,
+                descripcion: obj[a].descripcion,
+                bibliografia: obj[a].bibliografia
+            }).then(result => {
+                if (final) {
+                    res({ msj: "termino" })
+                }
+            }).catch(err => rej(err))
+            if (a === (obj.length - 1)) {
+                final = true;
+            }
+        }
+    })
 }
 //--------------------------------------------------------------------
 funcionesDB.insertKeyword = (obj) => {
@@ -631,7 +689,7 @@ funcionesDB.insertlistRoles = (obj) => {
                 sqlite.all(Query.insertlistaroles(practica, rol), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: err }); }
                 });
             }
         });
@@ -654,7 +712,7 @@ funcionesDB.insertMembers = (obj) => {
                 sqlite.all(Query.insertIntegrante(usuario, rol), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: "insertMembers" }); }
                 });
             }
         });
@@ -670,7 +728,7 @@ funcionesDB.insertlistMembers = (obj) => {
                 mariaDB.query(Query.insertListaintegrantes(proyecto, integrante), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: err }); }
                 });
             }
             else {
@@ -1216,7 +1274,7 @@ function insertcontenido() {
             descripcion: null,
             bibliografia: null
         }).then(result => {
-            console.log("insert entragable " + result.msj);
+            console.log("insert contenido1 " + result.msj);
             buscarDB.obtenertodasContenidos().then(result1 => {
                 res(result1.API[result1.API.length - 1])
             }).catch(err2 => rej(err2))
@@ -1224,16 +1282,477 @@ function insertcontenido() {
     })
 }
 
-function insertintegrante(obj) {
-    return new Promise((res, rej) => {
-        funcionesDB.insertMembers(obj).then(result => {
-            console.log("insert integrante " + result.msj);
-            buscarDB.obtenertodasIntegrantes().then(result1 => {
-                res(result1.API[result1.API.length - 1])
+function insertintegrante(obj, proyecto) {
+    return new Promise(async (res, rej) => {
+        await funcionesDB.insertMembers(obj).then(async (result) => {
+            await buscarDB.obtenertodasIntegrantes().then(async (result1) => {
+                console.log(chalk.red(`integrante ${result1.API[result1.API.length - 1].id}`))
+                await funcionesDB.insertlistMembers({
+                    proyecto: proyecto.id,
+                    integrante: result1.API[result1.API.length - 1].id
+                }).then(result => {
+                    res(result1.API[result1.API.length - 1])
+                }).catch(err3 => rej(err3))
             }).catch(err2 => rej(err2))
         }).catch(err => rej(err))
     })
 }
+
+function inserintegrantes2(array) {
+    return new Promise(async (res, rej) => {
+        let con = 0
+        for (let a = 0; a < array.length; a++) {
+            funcionesDB.insertMembers({
+                usuario: array[a].user.user,
+                rol: array[a].rol.id
+            }).then((result) => {
+                if (con == (array.length - 1)) { res(true); }
+                con++;
+            }).catch(err => rej(err))
+        }
+    })
+}
+function inserlistintegrantes2(array, proyecto) {
+    return new Promise(async (res, rej) => {
+        let con = 0
+        for (let a = 0; a < array.length; a++) {
+            funcionesDB.insertlistMembers({
+                proyecto: proyecto.id,
+                integrante: array[a].id
+            }).then(result => {
+                if (con == (array.length - 1)) { res(true); console.log(chalk.green('fin lista integrantes')) }
+                con++;
+            }).catch(err => { rej(err); console.log(err) })
+            if (a === (array.length - 1)) {
+
+            }
+        }
+    })
+}
+function asignaentrecontenidopro(array) {
+    return new Promise((res, rej) => {
+        let cont = 0
+        for (let a = 0; a < array.length; a++) {
+            funcionesDB.insertlistContent({
+                entregable: array[a].entre,
+                contenido: array[a].con,
+                actividad: null
+            }).then(result => {
+                if (cont === (array.length - 1)) res(true);
+                cont++;
+            }).catch(err => { console.log(err); rej(err) })
+        }
+    })
+}
+function asignaractividadconintegrante(array) {
+    //{ integrante: users[a].integrante, actividad: actividades[c].id }
+    return new Promise((res, rej) => {
+        let cont = 0;
+        for (let a = 0; a < array.length; a++) {
+            funcionesDB.insertlistActivity({
+                integrante: array[a].integrante,
+                actividad: array[a].actividad
+            }).then(result => {
+                if (cont === (array.length - 1)) res(true);
+                cont++;
+            }).catch(err => { console.log(err); rej(err) })
+        }
+    })
+}
+
+function asignarcontenidoaactividad(array) {
+    //{actividad:actividad[a].id, contenido:cotenido[b].id }
+    return new Promise((res, rej) => {
+        let cont = 0;
+        for (let a = 0; a < array.length; a++) {
+            funcionesDB.insertlistContent({
+                entregable: null,
+                contenido: array[a].contenido,
+                actividad: array[a].actividad
+            }).then(result => {
+                if (cont === (array.length - 1)) res(true)
+                cont++;
+            }).catch(err => rej(err))
+        }
+    })
+}
+function asignarentregaactividad(array) {
+    return new Promise((res, rej) => {
+        let cont = 0;
+        for (let a = 0; a < array.length; a++) {
+            funcionesDB.insertDelivery({
+                titulo: "",
+                descripcion: "",
+                nombrearchivoguardado: "",
+                actividad: array[a].actividad,
+                entragable: null
+            }).then(result => {
+                if (cont === (array.length - 1)) res(true);
+                cont++;
+            }).catch(err => rej(err))
+        }
+    })
+}
+
+function asignarentregaconentregable(array) {
+    return new Promise((res, rej) => {
+        let cont = 0;
+        for (let a = 0; a < array.length; a++) {
+            funcionesDB.insertDelivery({
+                titulo: "",
+                descripcion: "",
+                nombrearchivoguardado: "",
+                actividad: null,
+                entragable: array[a].entre
+            }).then(result => {
+                if (cont === (array.length - 1)) res(true);
+                cont++;
+            }).catch(err => rej(err))
+        }
+    })
+}
+function crearcontenidos(num) {
+    return new Promise((res, rej) => {
+        let cont = 0
+        for (let a = 0; a < num; a++) {
+            funcionesDB.insertContent({
+                nombre: null,
+                nombrearchivo: null,
+                descripcion: null,
+                bibliografia: null
+            }).then(result => {
+                if (cont === (num - 1)) res(true);
+                cont++;
+            }).catch(err => rej(err));
+        }
+    })
+}
+
+
+function insertlispracmeto(array, metodologia) {
+    return new Promise((res, rej) => {
+        let cont = 0
+        for (let a = 0; a < array.length; a++) {
+            funcionesDB.insertlistPractice({
+                metodologia: metodologia.id,
+                practica: array[a].id
+            }).then(result => {
+                if (cont === (array.length - 1)) res(true);
+                cont++;
+            }).catch(err => rej(err));
+        }
+    }).catch(err => rej(err));
+}
+function insertarraypracticas(array) {
+    return new Promise((res, rej) => {
+        let cont = 0;
+        for (let a = 0; a < array.length; a++) {
+            funcionesDB.insertPractice({
+                nombre: modelo.Practicas[a].nombre,
+                descripcion: modelo.Practicas[a].descripcion
+            }).then(result => {
+                if (cont === (array.length - 1)) res(true);
+                cont++;
+            }).catch(err => { rej(err); })
+        }
+    })
+}
+function insertaralfasendb(array) {
+    return new Promise((res, rej) => {
+        let cont = 0;
+        for (let a = 0; a < array.length; a++) {
+            funcionesDB.insertAlpha(
+                {
+                    nombre: array[a].alfa.nombre,
+                    descripcion: array[a].alfa.descripcion,
+                    estado: array[a].alfa.estado
+                }).then(result => {
+                    if (cont === (array.length - 1)) res(true);
+                    cont++;
+                }).catch(err => rej(err))
+        }
+    })
+}
+function inserlistalfa(alfas) {
+    return new Promise((res, rej) => {
+        let cont = 0;
+        for (let a = 0; a < alfas.length; a++) {
+            funcionesDB.insertlistAlpha(
+                {
+                    practica: alfas[a].pra.id,
+                    alfa: alfas[a].alfa.id
+                }).then(result => {
+                    if (cont === (alfas.length - 1)) res(true);
+                    cont++;
+                }).catch(err => rej(err))
+        }
+    })
+}
+function insertlistentregablepro(array) {
+    return new Promise((res, rej) => {
+        let cont = 0;
+        for (let a = 0; a < array.length; a++) {
+            funcionesDB.insertlistDeliverable({
+                alfa: array[a].alfa,
+                entregable: array[a].entre
+            }).then(result => {
+                if (cont === (array.length - 1)) res(true);
+                cont++;
+            }).catch(err => rej(err))
+        }
+    })
+}
+function reordenaralfaspracticas(practicas, alfas, orden) {
+    let arraydef = [];
+    for (let a = 0; a < practicas.length; a++) {
+        for (let b = 0; b < orden.length; b++) {
+            if (orden[b].pra === practicas[a].practicanombre) {
+                for (let c = 0; c < alfas.length; c++) {
+                    if (orden[b].alfa.nombre === alfas[c].alfanombre) {
+                        arraydef.push({ pra: practicas[a], alfa: alfas[c] })
+                    }
+                }
+            }
+        }
+    }
+    return arraydef
+}
+function enlistalfaspracti(practicas) {
+    let arraydef = []
+    for (let a = 0; a < practicas.length; a++) {
+        for (let b = 0; b < modelo.Practicas.length; b++) {
+            if (practicas[a].practicanombre === modelo.Practicas[b].nombre) {
+                for (let c = 0; c < modelo.Practicas[b].alfas.length; c++) {
+                    arraydef.push({ pra: modelo.Practicas[b].nombre, alfa: modelo.Practicas[b].alfas[c] })
+                }
+            }
+
+        }
+    }
+    return arraydef;
+}
+
+function asignaciondeactividaporrol(array, practicas, API) {
+    let arraydef = []
+    let num = 0
+    for (let a = 0; a < practicas.length; a++) {
+        for (let b = 0; b < modelo.Practicas.length; b++) {
+            if (practicas[a] === modelo.Practicas[b].nombre) {
+                for (let c = 0; c < array.length; c++) {
+                    let actividades = [];
+                    for (let d = 0; d < modelo.Practicas[b].Roles.length; d++) {
+                        if (array[c].rol === modelo.Practicas[b].Roles[d].nombre) {
+                            for (let e = 0; e < modelo.Practicas[b].Roles[d].actividades.length; e++) {
+                                for (let f = 0; f < modelo.Practicas[b].Actividades.length; f++) {
+                                    if (modelo.Practicas[b].Roles[d].actividades[e] === modelo.Practicas[b].Actividades[f].titulo) {
+                                        actividades.push({
+                                            titulo: modelo.Practicas[b].Actividades[f].titulo,
+                                            estado: modelo.Practicas[b].Actividades[f].estado,
+                                            descripcion: modelo.Practicas[b].Actividades[f].descripcion,
+                                            fechacreacion: modelo.Practicas[b].Actividades[f].fechacreacion,
+                                            fechaentrega: modelo.Practicas[b].Actividades[f].fechaentrega,
+                                            revision: modelo.Practicas[b].Actividades[f].revision,
+                                            tecnica: buscartecnicaactividad(API, modelo.Practicas[b].Actividades[f].titulo)
+                                        });
+                                        num++;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    arraydef.push({ integrante: array[c].integrante, actividades: actividades });
+                }
+            }
+        }
+    }
+    return { user: arraydef, num };
+}
+function listaintegranteconroles(array) {
+    return new Promise(async (res, rej) => {
+        let arraydef = []
+        let cont = 0;
+        for (let a = 0; a < array.length; a++) {
+            buscarDB.obtenerintegranteconrol(array[a].id).then(result => {
+
+                arraydef.push({ integrante: result.API[0].id, rol: result.API[0].roltitulo })
+                if (cont == (array.length - 1)) res(arraydef);
+                cont++;
+            }).catch(err => rej(err))
+        }
+    })
+}
+
+function creactividades(array) {
+    return new Promise((res, rej) => {
+        let cont = 0;
+        for (let a = 0; a < array.length; a++) {
+
+            funcionesDB.insertActivity({
+                titulo: array[a].titulo,
+                estado: array[a].estado,
+                descripcion: array[a].descripcion,
+                fechacreacion: array[a].fechacreacion,
+                fechaentrega: array[a].fechaentrega,
+                revision: array[a].revision,
+                tecnica: array[a].tecnica
+            }).then(result => {
+                if (cont === (array.length - 1)) { res(true); }
+                cont++;
+            }).catch(err => { console.log(err); rej(err) });
+        }
+    })
+}
+function insertentregableherr(array) {
+    return new Promise((res, rej) => {
+        let cont = 0;
+        for (let a = 0; a < array.length; a++) {
+            funcionesDB.insertDeliverable({
+                titulo: array[a].entragable.nombre,
+                descripcion: array[a].entragable.descripcion,
+                estado: array[a].entragable.estado,
+                tipoArchivo: array[a].entragable.tipoarchivo,
+                fechaEntrega: array[a].entragable.fechaentrega,
+                numeroRevisiones: array[a].entragable.revisiones
+            }).then(result => {
+                if (cont === (array.length - 1)) { res(true); }
+                cont++
+            }).catch(err => rej(err))
+        }
+    })
+}
+function reorganizarroles(integrantes, API) {
+    let arraydef = [];
+    for (let a = 0; a < integrantes.length; a++) {
+        for (let b = 0; b < API.length; b++) {
+            if (integrantes[a].rol == API[b].roltitulo) {
+                arraydef.push({ user: integrantes[a], rol: API[b] })
+            }
+        }
+    }
+    return arraydef;
+}
+function reoryasignarvalores(API, num) {
+    let ref = 1;
+    let arradef = []
+    for (let a = 0; a < num; a++) {
+        arradef.push(API[API.length - ref])
+        ref++;
+    }
+    return arradef;
+}
+function estraeractividades(array) {
+    let arradef = []
+    for (let a = 0; a < array.length; a++) {
+        for (let b = 0; b < array[a].actividades.length; b++) {
+            arradef.push(array[a].actividades[b]);
+        }
+    }
+    return arradef;
+}
+
+function reasignacionactividadintegrante(actividades, users) {
+    let arradef = [];
+
+    for (let a = 0; a < users.length; a++) {
+        for (let b = 0; b < users[a].actividades.length; b++) {
+            for (let c = 0; c < actividades.length; c++) {
+                if (users[a].actividades[b].titulo === actividades[c].actividadtitulo) {
+                    arradef.push({ integrante: users[a].integrante, actividad: actividades[c].id })
+                }
+            }
+        }
+    }
+    return arradef;
+}
+function ordenaractividadcontenido(actividad, cotenido) {
+    let arradef = []
+    for (let a = 0; a < actividad.length; a++) {
+        for (let b = 0; b < cotenido.length; b++) {
+            if (a == b) {
+                arradef.push({ actividad: actividad[a].id, contenido: cotenido[b].id })
+            }
+        }
+    }
+    return arradef;
+}
+
+function pranticasainsertar(array) {
+    let arradef = []
+    for (let a = 0; a < array.length; a++) {
+        for (let b = 0; b < modelo.Practicas.length; b++) {
+            if (array[a] === modelo.Practicas[b].nombre) {
+                arradef.push({
+                    nombre: modelo.Practicas[b].nombre,
+                    descripcion: modelo.Practicas[b].descripcion
+                });
+            }
+        }
+    }
+    return arradef;
+}
+
+function reorganizamientoentrealfa(entregables, orden) {
+    let arradef = []
+    for (let a = 0; a < entregables.length; a++) {
+        for (let b = 0; b < orden.length; b++) {
+            if (entregables[a].entregatitulo === orden[b].entragable.nombre) {
+                arradef.push({ alfa: orden[b].alfa, entre: entregables[a].id })
+            }
+        }
+    }
+    return arradef;
+}
+function reordenaralfaconentregable(array) {
+    let arradef = []
+    for (let a = 0; a < modelo.Practicas.length; a++) {
+        for (let b = 0; b < array.length; b++) {
+            if (array[b].pra.practicanombre === modelo.Practicas[a].nombre) {
+                for (let c = 0; c < modelo.Practicas[a].alfas.length; c++) {
+                    if (array[b].alfa.alfanombre === modelo.Practicas[a].alfas[c].nombre) {
+                        for (let d = 0; d < modelo.Practicas[a].alfas[c].entregable.length; d++) {
+                            for (let e = 0; e < modelo.Practicas[a].Entregables.length; e++) {
+                                if (modelo.Practicas[a].alfas[c].entregable[d] === modelo.Practicas[a].Entregables[e].entregatitulo) {
+                                    arradef.push({ alfa: array[b].alfa.id, entregable: modelo.Practicas[a].Entregables[e] })
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return arradef;
+}
+function filtadodeherramientas(array, API) {
+    let arradef = []
+    for (let a = 0; a < array.length; a++) {
+        for (let b = 0; b < API.length; b++) {
+            if (array[a].entregable.Herramientas[0] === API[b].nombre) {
+                arradef.push({
+                    alfa: array[a].alfa, entragable: {
+                        nombre: array[a].entregable.entregatitulo,
+                        descripcion: array[a].entregable.entregadescripcion,
+                        estado: array[a].entregable.entregaestado,
+                        tipoarchivo: array[a].entregable.entregatipoArchivo,
+                        fechaentrega: array[a].entregable.entregafechaEntrega,
+                        revisiones: array[a].entregable.entreganumeroRevisiones,
+                        herramienta: API[b].id
+                    }
+                })
+            }
+        }
+    }
+    return arradef;
+}
+function ordenarconteentregable(contenidos, entregables) {
+    let arradef = []
+    for (let a = 0; a < contenidos.length; a++) {
+        arradef.push({ con: contenidos[a].id, entre: entregables[a].entre })
+    }
+    return arradef;
+}
+
+//------------------------------------------------
 function insertactividad(obj) {
     return new Promise((res, rej) => {
         funcionesDB.insertActivity(obj).then(result => {
@@ -1244,4 +1763,295 @@ function insertactividad(obj) {
         }).catch(err => rej(err))
     })
 }
+function inserproyectocompleto(obj) {
+    return new Promise((res, rej) => {
+        const { nombre, descripcion, icono, banner } = obj;
+        insertmetodologia().then(metodologia => {
+            inserthistoria().then(historia => {
+                inserproyecto({
+                    nombre: nombre,
+                    descripcion: descripcion,
+                    estado: "iniciado",
+                    icon: icono,
+                    banner: banner,
+                    metodologia: metodologia.id,
+                    historia: historia.id
+                }).then(proyecto => {
+                    res({ pro: proyecto, meto: metodologia });
+                }).catch(err3 => rej(err3))
+            }).catch(err2 => rej(err2))
+        }).catch(err => rej(err))
+    })
+}
+
+function insertpracticasconalfascompleto2(practicas, proyecto) {
+    //{pro:proyecto, meto: metodologia}
+    return new Promise((res, rej) => {
+        let practicasus = pranticasainsertar(practicas);
+        insertarraypracticas(practicasus).then(result => {
+            console.log(chalk.green("practicas ingresadas"))
+            buscarDB.obtenertodasPracticas().then(practicaapi => {
+                let pracparaasig = reoryasignarvalores(practicaapi.API, practicasus.length);
+                console.log(chalk.green(`practicas en la base de datos ${practicasus.length}`))
+                insertlispracmeto(pracparaasig, proyecto.meto).then(result0 => {
+                    console.log(chalk.green("practicas lista ingresadas"))
+                    let lisalfas = enlistalfaspracti(pracparaasig)
+                    insertaralfasendb(lisalfas).then(result1 => {
+                        console.log(chalk.green("alfas ingresadas"))
+                        buscarDB.obtenertodasAlfas().then(alfas => {
+                            let alfaslist = reoryasignarvalores(alfas.API, lisalfas.length);
+                            let practicaalfa = reordenaralfaspracticas(pracparaasig, alfaslist, lisalfas);
+                            inserlistalfa(practicaalfa).then(result2 => {
+                                console.log(chalk.green("alfas lista ingresadas"))
+                                let entregaslis = reordenaralfaconentregable(practicaalfa);
+                                buscarDB.obtenertodasHerramientasMetodologia().then(herramientas => {
+                                    let entregafilto = filtadodeherramientas(entregaslis, herramientas.API)
+                                    insertentregableherr(entregafilto).then(result5 => {
+                                        console.log(chalk.green("entregables ingresadas"))
+                                        buscarDB.obtenertodasEntregables().then(entregables => {
+                                            let entregalist = reoryasignarvalores(entregables.API, entregafilto.length)
+                                            let alfalistpre = reorganizamientoentrealfa(entregalist, entregafilto);
+                                            insertlistentregablepro(alfalistpre).then(result6 => {
+                                                console.log(chalk.green("entregables lista ingresadas"))
+                                                crearcontenidos(alfalistpre.length).then(result7 => {
+                                                    console.log(chalk.green(`contenidos creados ${alfalistpre.length}`))
+                                                    buscarDB.obtenertodasContenidos().then(contendos => {
+                                                        let lisconteni = reoryasignarvalores(contendos.API, alfalistpre.length);
+                                                        let preconteentre = ordenarconteentregable(lisconteni, alfalistpre)
+                                                        asignaentrecontenidopro(preconteentre).then(result8 => {
+                                                            console.log(chalk.green("contenidos lista ingresadas"))
+                                                            asignarentregaconentregable(preconteentre).then(result8 => {
+                                                                console.log(chalk.green("entregas colocadas"))
+                                                                res(true);
+                                                            }).catch(err13 => rej(err13))
+                                                        }).catch(err12 => rej(err12))
+                                                    }).catch(err11 => rej(err11))
+                                                }).catch(err10 => rej(err10))
+                                            }).catch(err9 => rej(err9))
+                                        }).catch(err9 => rej(err9))
+                                    }).catch(err8 => rej(err8))
+                                }).catch(err7 => rej(err7))
+                            }).catch(err6 => rej(err6))
+                        }).catch(err5 => rej(err5))
+                    }).catch(err4 => rej(err4))
+                }).catch(err3 => rej(err3))
+            }).catch(err2 => rej(err2))
+        }).catch(err => rej(err))
+    })
+
+}
+
+function insertintegrantesconrolesyactividades(proyecto, integrantes, practicas) {
+    return new Promise((res, rej) => {
+        buscarDB.obtenertodasRoles().then(roles => {
+            let date = reorganizarroles(integrantes, roles.API);
+            inserintegrantes2(date).then(result => {
+                console.log(chalk.green("entegrantes ingresadas"))
+                buscarDB.obtenertodasIntegrantes().then(allinter => {
+                    let dateintegrantes = reoryasignarvalores(allinter.API, date.length);
+                    inserlistintegrantes2(dateintegrantes, proyecto.pro).then(result1 => {
+                        console.log(chalk.green("entegrantes lista ingresadas"))
+                        listaintegranteconroles(dateintegrantes).then(interol => {
+                            console.log(chalk.green("obtener integrantes con rol"))
+                            buscarDB.obtenertodasTecnicas().then(tecnicas => {
+                                let dataActividades = asignaciondeactividaporrol(interol, practicas, tecnicas.API);
+                                crearcontenidos(dataActividades.num).then(result2 => {
+                                    console.log(chalk.green(`contenidos creados ${dataActividades.num}`))
+                                    buscarDB.obtenertodasContenidos().then(contendos => {
+                                        let datacontenidos = reoryasignarvalores(contendos.API, dataActividades.num);
+                                        let actividadesrea = estraeractividades(dataActividades.user);
+
+                                        creactividades(actividadesrea).then(result3 => {
+                                            console.log(chalk.green(`creandoactividades`))
+                                            buscarDB.obtenertodasActividades().then(actividades => {
+                                                let actiadignar = reoryasignarvalores(actividades.API, actividadesrea.length)
+                                                let asiginteacti = reasignacionactividadintegrante(actiadignar, dataActividades.user)
+                                                asignaractividadconintegrante(asiginteacti).then(result4 => {
+                                                    console.log(chalk.green(`asignada las actividades a los contenidos`))
+                                                    asignarcontenidoaactividad(ordenaractividadcontenido(actiadignar, datacontenidos)).then(result5 => {
+                                                        console.log(chalk.green(`lista de contenidos agregada`))
+                                                        asignarentregaactividad(ordenaractividadcontenido(actiadignar, datacontenidos)).then(result6 => {
+                                                            console.log(chalk.green(`asignado los entregables`))
+                                                            res({ proyectoid: proyecto.pro.id })
+                                                        }).catch(err11 => rej(err11))
+                                                    }).catch(err10 => rej(err10))
+                                                }).catch(err10 => { console.log(err10); rej(err10); })
+                                            }).catch(err9 => rej(err9))
+                                        }).catch(err8 => rej(err8))
+                                    }).catch(err7 => rej(err7));
+                                }).catch(err6 => rej(err6))
+                            }).catch(err5 => rej(err5))
+                        }).catch(err4 => rej(err4))
+                    }).catch(err3 => rej(err3))
+                }).catch(err2 => rej(err2))
+            }).catch(err => rej(err))
+        })
+    })
+}
+
+
+function buscartecnicaactividad(API, actividad) {
+
+    if (actividad == "A8") {
+        for (let a1 = 0; a1 < API.length; a1++) {
+            if (API[a1].tecnicatitulo == "Video como apoyo a la etnografía") {
+                return API[a1].id
+            }
+        }
+    } else if (actividad == "A9") {
+        for (let a1 = 0; a1 < API.length; a1++) {
+            if (API[a1].tecnicatitulo == "Producción de metáforas y analogías") {
+                return API[a1].id
+            }
+        }
+    }
+    else if (actividad == "A10") {
+        for (let a1 = 0; a1 < API.length; a1++) {
+            if (API[a1].tecnicatitulo == "Generación de Storyboards") {
+                return API[a1].id
+            }
+        }
+    }
+    else if (actividad == "A11") {
+        for (let a1 = 0; a1 < API.length; a1++) {
+            if (API[a1].tecnicatitulo == "Producción de metáforas y analogías") {
+                return API[a1].id
+            }
+        }
+    }
+    else if (actividad == "A12") {
+        for (let a1 = 0; a1 < API.length; a1++) {
+            if (API[a1].tecnicatitulo == "Wireframes") {
+                return API[a1].id
+            }
+        }
+    }
+    else if (actividad == "A14") {
+        for (let a1 = 0; a1 < API.length; a1++) {
+            if (API[a1].tecnicatitulo == "Simulación de experiencia") {
+                return API[a1].id
+            }
+        }
+    }
+    else if (actividad == "A17") {
+        for (let a1 = 0; a1 < API.length; a1++) {
+            if (API[a1].tecnicatitulo == "Identificación de políticas y normativas") {
+                return API[a1].id
+            }
+        }
+    }
+    else if (actividad == "A18") {
+        for (let a1 = 0; a1 < API.length; a1++) {
+            if (API[a1].tecnicatitulo == "Uso no dirigido") {
+                return API[a1].id
+            }
+        }
+    }
+    else if (actividad == "A19") {
+        for (let a1 = 0; a1 < API.length; a1++) {
+            if (API[a1].tecnicatitulo == "Análisis de respuestas de usuarios") {
+                return API[a1].id
+            }
+        }
+    }
+    else if (actividad == "A4") {
+        for (let a1 = 0; a1 < API.length; a1++) {
+            if (API[a1].tecnicatitulo == "Análisis DOFA") {
+                return API[a1].id
+            }
+        }
+    }
+    else if (actividad == "A5") {
+        for (let a1 = 0; a1 < API.length; a1++) {
+            if (API[a1].tecnicatitulo == "Identificación análoga de los recursos") {
+                return API[a1].id
+            }
+        }
+    }
+    else if (actividad == "A6") {
+        for (let a1 = 0; a1 < API.length; a1++) {
+            if (API[a1].tecnicatitulo == "Análisis para la identificación de riesgos") {
+                return API[a1].id
+            }
+        }
+    }
+    else if (actividad == "A13") {
+        for (let a1 = 0; a1 < API.length; a1++) {
+            if (API[a1].tecnicatitulo == "Análisis para la definición preliminar de tecnologías Software") {
+                return API[a1].id
+            }
+        }
+    }
+    else if (actividad == "A16") {
+        for (let a1 = 0; a1 < API.length; a1++) {
+            if (API[a1].tecnicatitulo == "Identificación de los métodos, motivaciones y recursos del adversario e impacto del sistema en las personas.") {
+                return API[a1].id
+            }
+        }
+    }
+    else if (actividad == "A20") {
+        for (let a1 = 0; a1 < API.length; a1++) {
+            if (API[a1].tecnicatitulo == "Matriz de proposición de valor") {
+                return API[a1].id
+            }
+        }
+    }
+    else if (actividad == "A21") {
+        for (let a1 = 0; a1 < API.length; a1++) {
+            if (API[a1].tecnicatitulo == "Estructura de formulación para la misión del SMMV.") {
+                return API[a1].id
+            }
+        }
+    }
+    else if (actividad == "A22") {
+        for (let a1 = 0; a1 < API.length; a1++) {
+            if (API[a1].tecnicatitulo == "Canvas de SMMV") {
+                return API[a1].id
+            }
+        }
+    }
+
+}
+
+function buscarherramientaparaentregable(API, entregable) {
+    if (entregable === "Propuesta de diseño de la Experiencia Multimedia") {
+        for (let a = 0; a < API.length; a++) {
+            if (API[a].nombre == "Boceto de Storyboards") {
+                return API[a].id
+            }
+        }
+    } else if (entregable === "Especificaciones del diseño responsable") {
+        for (let a = 0; a < API.length; a++) {
+            if (API[a].nombre == "Reunión lluvia de ideas leyes y normatividades") {
+                return API[a].id
+            }
+        }
+    } else if (entregable === "Análisis de viabilidad del Sistema Multimedia") {
+        for (let a = 0; a < API.length; a++) {
+            if (API[a].nombre == "Matriz DOFA") {
+                return API[a].id
+            }
+        }
+    } else if (entregable === "Proposición de valor del Sistema Multimedia") {
+        for (let a = 0; a < API.length; a++) {
+            if (API[a].nombre == "Matriz de proposición de valor") {
+                return API[a].id
+            }
+        }
+    } else if (entregable === "Visión del Sistema Multimedia Minimo Viable") {
+        for (let a = 0; a < API.length; a++) {
+            if (API[a].nombre == "Estructura para la formulación de la visión del SMMV") {
+                return API[a].id
+            }
+        }
+    } else if (entregable === "Modelo Canvas del Sistema Multimedia Minimo Viable") {
+        for (let a = 0; a < API.length; a++) {
+            if (API[a].nombre == "Modelo Canvas adaptado") {
+                return API[a].id
+            }
+        }
+    }
+
+}
+
 module.exports = funcionesDB;

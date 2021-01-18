@@ -16,7 +16,7 @@ const jwt = require('jsonwebtoken');
 const modelomt = require('../models/models');
 const { then } = require('../database');
 const LLAVE = 'misecretos';
-
+const chalk = require('chalk');
 rutas.post('/registro', (req, res) => {
   const { nombre, correo, password } = req.body;
   const transporter = nodemailer.createTransport({
@@ -57,155 +57,6 @@ rutas.post('/registro', (req, res) => {
 });
 
 //-----------------
-rutas.post(`/create/user`, (req, res) => {
-
-  const {
-
-    listidiomas,
-    listhabilidades,
-    listherramientas,
-    email,
-    password,
-    experiencia,
-    nombre,
-    descripcion,
-    pais,
-    edad,
-    github,
-    gitlab,
-    bitbucket,
-    linkedin
-  } = req.body;
-  const {
-    cv, foto
-  } = req.file
-  let bucket, fotofile, cvfile;
-  if (Array.isArray(listidiomas) &&
-    Array.isArray(listhabilidades) &&
-    Array.isArray(listhabilidades) &&
-    typeof email === 'string' &&
-    typeof password === 'string' &&
-    typeof experiencia === 'string' &&
-    typeof nombre === 'number' &&
-    typeof descripcion === 'string' &&
-    typeof pais === 'string' &&
-    typeof edad === 'number' &&
-    typeof github === 'string' &&
-    typeof gitlab === 'string' &&
-    typeof bitbucket === 'string' &&
-    typeof linkedin === 'string' &&
-    cv !== undefined && cv !== null &&
-    foto !== undefined && foto !== null
-
-  ) {
-    buscarDB.obtenertodasUsuarios().then(result => {
-      const { API } = result;
-      if (comprobaremail(API, email)) {
-        let ultimo = API[API.length - 1].id;
-
-        ultimo += ultimo + 1;
-        bucket = `usuario${ultimo + 1}`;
-        ftpminio.creatBucket(bucket).then(result2 => {
-          if (result2) {
-            fotofile = `/${bucket}/${foto.name}`;
-            cvfile = `/${bucket}/${cv.name}`;
-            foto.mv(__dirname + '/tmp/' + foto.name, (err3) => {
-              if (!err) {
-                let metaData = {
-                  'Content-Type': `${foto.mimetype}`,
-                  'size': foto.size,
-                  'X-Amz-Meta-Testing': 1234,
-                  'example': 5678
-                }
-                ftpminio.putFile(bucket, foto.name, path.join(__dirname, `/tmp/${foto.name}`), metaData).
-                  then(resul3 => {
-                    const { file } = resul3
-                    if (file) {
-                      cv.mv(__dirname + '/tmp/' + cv.name, (err3) => {
-                        if (!err) {
-                          metaData = {
-                            'Content-Type': `${cv.mimetype}`,
-                            'size': cv.size,
-                            'X-Amz-Meta-Testing': 1234,
-                            'example': 5678
-                          }
-
-                          ftpminio.putFile(bucket, cv.name, path.join(__dirname, `/tmp/${cv.name}`), metaData).
-                            then(resul3 => {
-                              const { file } = resul5
-                              if (file) {
-                                insertDB.insertUser({
-                                  email,
-                                  contrasena: password,
-                                  fotoperfil: fotofile,
-                                  nombrearchivohojadevida: cvfile,
-                                  anosdeexperiencia: experiencia,
-                                  nombre: nombre,
-                                  descripcion,
-                                  pais,
-                                  edad,
-                                  github,
-                                  gitlab,
-                                  bitbucket,
-                                  linkedin
-                                }).then(resuluser => {
-                                  for (let usera = 0; usera < listidiomas.length; usera++) {
-                                    let user = ultimo;
-                                    let idioma = listidiomas[usera];
-                                    insertDB.insertlistlenguaje({ user, idioma }).then(
-                                      resulidioma => {
-                                        if (listidiomas[usera] === listidiomas[listidiomas.length - 1]) {
-                                          for (let userb = 0; userb < listhabilidades.length; userb++) {
-                                            let habilidad = listhabilidades[userb];
-                                            insertDB.insetlistAbility({ usuario: user, habilidad }).then(resulhabi => {
-                                              if (habilidad === listhabilidades[listhabilidades.length - 1]) {
-                                                for (let userc = 0; userc < listherramientas.length; userc++) {
-                                                  let herramienta = listherramientas[userc];
-                                                  insertDB.insertlistTool({ usuario: user, herramienta }).then(resulherr => {
-                                                    if (herramienta === listherramientas[listherramientas.length - 1]) {
-                                                      res.json(resulherr);
-                                                    }
-                                                  }).catch(errherr => res.json(errherr))
-                                                }
-                                              }
-                                            }).catch(errhabi => res.json(errhabi))
-                                          }
-                                        }
-                                      }
-                                    )
-                                  }
-                                }).catch(eruser => res.json(eruser));
-
-                              }
-
-                            }).catch(er5 => res.json(err5));
-                        } else {
-                          console.log(err3)
-                        }
-                      });
-
-                    }
-
-                  }).catch(err4 => res.json(err4));
-              } else {
-                console.log(err3)
-              }
-            });
-          }
-        }).catch(err2 => res.json(err2))
-      } else {
-        res.json({ msj: `error el correo ${email} ya esta registrado` })
-      }
-
-
-    }).catch(err => res.json(err))
-  } else {
-    res.json({ msj: "datos erroneos" })
-  }
-});
-
-
-
 
 
 
@@ -218,12 +69,8 @@ rutas.post('/create/usuario', (req, res) => {
     typeof email === 'string' &&
     typeof password === 'string' &&
     typeof nombre === 'string') {
-    buscarDB.obtenertodasUsuarios().then(result => {
-      const { API } = result;
-      let ultimo = API[API.length - 1].id;
-      ultimo++;
-      const bucket = `usuario${ultimo}`
-      if (comprobaremail(API, email)) {
+    buscarDB.obtenertodasUsuarios().then(result4 => {
+      if (comprobaremail(result4.API, email)) {
         let model = {
           email: email,
           contrasena: password,
@@ -240,10 +87,14 @@ rutas.post('/create/usuario', (req, res) => {
           linkedin: null
         }
         insertDB.insertUser(model).then(result => {
-          ftpminio.creatBucket(bucket).then(result2 => {
-            res.json(result)
-          }).catch(err2 => { res.json(err2) });
-
+          buscarDB.obtenertodasUsuarios().then(result3 => {
+            const { API } = result3;
+            let ultimo = API[API.length - 1].id;
+            const bucket = `usuario${ultimo}`
+            ftpminio.creatBucket(bucket).then(result2 => {
+              res.json(result)
+            }).catch(err2 => { res.json(err2) });
+          }).catch(err3 => { res.json(err3) });
         }).catch(err => { res.json(err) });
       } else {
         res.json({ msj: "error email ya registrado" })
@@ -323,7 +174,7 @@ rutas.post('/create/proyecto', proToken, (req, res) => {
             typeof descripcion === 'string' &&
             Array.isArray(practica) &&
             Array.isArray(integrantes)) {
-            insertDB.creaproyecto2({
+            insertDB.creaproyecto3({
               proyect: {
                 nombre: proyecto.nombre,
                 descripcion: proyecto.descripcion,
@@ -333,9 +184,10 @@ rutas.post('/create/proyecto', proToken, (req, res) => {
               members: integrantes,
               practice: practica
             }).then(result => {
-
+              console.log(chalk.bgBlue("____") + chalk.blue(` se terminico de cargar el proyecto ${result.proyectoid} `) + chalk.bgBlue("____"))
               const bucket = `proyecto${result.proyectoid}`;
               ftpminio.creatBucket(bucket).then(result2 => {
+                console.log(chalk.bgBlue("_▓_") + chalk.blue(` bucket proyecto${result.proyectoid} a sido cargado `) + chalk.bgBlue("_▓_"))
                 if (req.files != null || req.files != undefined) {
                   const { banner, icon } = req.files;
                   if (banner != null || banner != undefined && icon == null || icon == undefined) {
@@ -344,6 +196,7 @@ rutas.post('/create/proyecto', proToken, (req, res) => {
                         var metaData = { 'Content-Type': `${banner.mimetype}`, 'size': banner.size, 'X-Amz-Meta-Testing': 1234, 'example': 5678 }
                         ftpminio.putFile(bucket, banner.name, path.join(__dirname, `/tmp/${banner.name}`), metaData).then(resulbaner => {
                           actualizarDB.updateproyectbanner({ banner: banner.name, id: result.proyectoid }).then(resultba => {
+                            console.log(chalk.bgRed("__") + chalk.bgYellow("__") + chalk.bgGreen("__") + chalk.green("=>proyecto creado"))
                             res.json({ msj: "guardado" })
                           }).catch(err => res.json(err));
                         }).catch(err => res.json(err));
@@ -357,6 +210,7 @@ rutas.post('/create/proyecto', proToken, (req, res) => {
                         var metaData = { 'Content-Type': `${icon.mimetype}`, 'size': icon.size, 'X-Amz-Meta-Testing': 1234, 'example': 5678 }
                         ftpminio.putFile(bucket, icon.name, path.join(__dirname, `/tmp/${icon.name}`), metaData).then(resulicon => {
                           actualizarDB.updateproyecticon({ icono, id }).then(resultdf => {
+                            console.log(chalk.bgRed("__") + chalk.bgYellow("__") + chalk.bgGreen("__") + chalk.green("=>proyecto creado"))
                             res.json({ msj: "guardado" })
                           }).catch(err => res.json(err));
                         }).catch(err => res.json(err));
@@ -375,6 +229,7 @@ rutas.post('/create/proyecto', proToken, (req, res) => {
                                 var metaData = { 'Content-Type': `${icon.mimetype}`, 'size': icon.size, 'X-Amz-Meta-Testing': 1234, 'example': 5678 }
                                 ftpminio.putFile(bucket, icon.name, path.join(__dirname, `/tmp/${icon.name}`), metaData).then(resulicon => {
                                   actualizarDB.updateproyecticon({ icono, id }).then(resultdf => {
+                                    console.log(chalk.bgRed("__") + chalk.bgYellow("__") + chalk.bgGreen("__") + chalk.green("=>proyecto creado"))
                                     res.json({ msj: "guardado" })
                                   }).catch(err => res.json(err));
                                 }).catch(err => res.json(err));
@@ -389,21 +244,111 @@ rutas.post('/create/proyecto', proToken, (req, res) => {
                       }
                     });
                   } else {
+                    console.log(chalk.bgRed("__") + chalk.bgYellow("__") + chalk.bgGreen("__") + chalk.green("=>proyecto creado"))
                     res.json({ msj: "guardado" })
                   }
                 } else {
+                  console.log(chalk.bgRed("__") + chalk.bgYellow("__") + chalk.bgGreen("__") + chalk.green("=>proyecto creado"))
                   res.json({ msj: "guardado" })
                 }
-              }).catch(err => res.json({ msj: err }));
+              }).catch(err2 => res.json({ msj: err2 }));
             }).catch(err => res.json({ msj: err }));
           } else {
-            res.json({ msj: "error" })
+            res.json({ msj: "error datos incorrectos" })
           }
         }
       }
     }
   })
 });//fin de l ruta
+
+rutas.post('/insert/auto/tecnicas', (req, res) => {
+  let arradef = [];
+  for (let a = 0; a < modelomt.Practicas.length; a++) {
+    arradef.push(modelomt.Practicas[a].Tecnicas);
+  }
+  arradef = reordenararraytecnicas(arradef)
+  let fin = false;
+
+  let promesatecnica = new Promise((resu, rej) => {
+    for (let b = 0; b < arradef.length; b++) {
+      insertDB.insertTechnical({
+        titulo: arradef[b].titulo,
+        descripcion: arradef[b].descripcion,
+        bibliografia: arradef[b].bibliografia
+      }).then(resul => {
+        if (fin) {
+          resu({ msj: "echo" })
+        }
+      }).catch(err => rej(err))
+      if (b === (arradef.length - 1)) {
+        fin = true;
+
+      }
+    }
+  })
+  promesatecnica.then(reul => {
+    res.json(reul)
+  }).catch(err => res.json(err))
+})
+rutas.post('/insert/auto/herramientasmetodologia', (req, res) => {
+  let arradef = [];
+  for (let a = 0; a < modelomt.Practicas.length; a++) {
+    arradef.push(modelomt.Practicas[a].Herramientas);
+  }
+  arradef = reordenararrayherramientasmetodologia(arradef);
+  let fin = false;
+
+  let promesatecnica = new Promise((resu, rej) => {
+    for (let b = 0; b < arradef.length; b++) {
+      insertDB.insertMethodologyTool({
+        nombre: arradef[b].nombre,
+        descripcion: arradef[b].descripcion,
+        bibliografia: arradef[b].bibliografia
+      }).then(resul => {
+        if (fin) {
+          resu({ msj: "echo" })
+        }
+      }).catch(err => rej(err))
+      if (b === (arradef.length - 1)) {
+        fin = true;
+
+      }
+    }
+  })
+  promesatecnica.then(reul => {
+    res.json(reul)
+  }).catch(err => res.json(err))
+});
+rutas.post('/insert/auto/roles', (req, res) => {
+  let arradef = [];
+  for (let a = 0; a < modelomt.Practicas.length; a++) {
+    arradef.push(modelomt.Practicas[a].Roles);
+  }
+  arradef = reordenararrayroles(arradef);
+  let fin = false;
+
+  let promesarol = new Promise((resu, rej) => {
+    for (let b = 0; b < arradef.length; b++) {
+      insertDB.inserRoles({
+        titulo: arradef[b].nombre,
+        descripcion: arradef[b].descripcion,
+        recomendacion: ""
+      }).then(result => {
+        if (fin) {
+          resu({ msj: "echo" })
+        }
+      }).catch(err => { rej(err); console.log(err) })
+      if (b === (arradef.length - 1)) {
+        fin = true;
+
+      }
+    }
+  })
+  promesarol.then(reul => {
+    res.json(reul)
+  }).catch(err => res.json(err))
+})
 /**
       db      `7MM"""Mq. `7MMF'                                 mm    `7MM                       `7MM          
      ;MM:       MM   `MM.  MM                                   MM      MM                         MM          
@@ -834,6 +779,63 @@ function proToken(req, res, next) {
   } else {
     res.sendStatus(403);
   }
+}
+function reordenararraytecnicas(array) {
+  let arratem = [];
+  for (let a = 0; a < array.length; a++) {
+    for (let b = 0; b < array[a].length; b++) {
+      arratem.push(array[a][b]);
+    }
+  }
+  let c = 0, d = 1, tem = 1;
+  for (c; c < arratem.length; c++) {
+    d = tem;
+    for (d; d < arratem.length; d++) {
+      if (arratem[c].titulo === arratem[d].titulo) {
+        arratem.splice(d, 1);
+      }
+    }
+    tem++;
+  }
+  return arratem;
+}
+function reordenararrayherramientasmetodologia(array) {
+  let arratem = [];
+  for (let a = 0; a < array.length; a++) {
+    for (let b = 0; b < array[a].length; b++) {
+      arratem.push(array[a][b]);
+    }
+  }
+  let c = 0, d = 1, tem = 1;
+  for (c; c < arratem.length; c++) {
+    d = tem;
+    for (d; d < arratem.length; d++) {
+      if (arratem[c].nombre === arratem[d].nombre) {
+        arratem.splice(d, 1);
+      }
+    }
+    tem++;
+  }
+  return arratem;
+}
+function reordenararrayroles(array) {
+  let arratem = [];
+  for (let a = 0; a < array.length; a++) {
+    for (let b = 0; b < array[a].length; b++) {
+      arratem.push(array[a][b]);
+    }
+  }
+  let c = 0, d = 1, tem = 1;
+  for (c; c < arratem.length; c++) {
+    d = tem;
+    for (d; d < arratem.length; d++) {
+      if (arratem[c].nombre === arratem[d].nombre) {
+        arratem.splice(d, 1);
+      }
+    }
+    tem++;
+  }
+  return arratem;
 }
 module.exports = rutas;
 
