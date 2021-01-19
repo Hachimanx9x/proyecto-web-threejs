@@ -1,9 +1,143 @@
-const jwt = require('jsonwebtoken');
+
 const promesa = require('../database');
+const buscarDB = require('./buscarDB')
 const Query = require('./querys');
+const chalk = require('chalk');
 //const LLAVE = 'misecretos';
 const funcionesDB = () => {
     console.log("funciones de la base de datos")
+}
+
+funcionesDB.entregaractividad = (actividad, nombre) => {
+    return new Promise((res, rej) => {
+        buscarDB.obtenerentreactividad(actividad).then(actientre => {
+            let revisio = actientre.API[0].actividadrevision + 1;
+            funcionesDB.updateDelivery({
+                descripcion: `${actientre.API[0].actividadtitulo} entregado unos ${revisio}`,
+                titulo: actientre.API[0].actividadtitulo,
+                nombrearchivo: nombre,
+                id: actientre.API[0].entregaid
+            }).then(result => {
+                console.log(chalk.bgRed("|   |") + " entrega actividad echa");
+                funcionesDB.updatecontent({
+                    nombreArchivo: nombre,
+                    id: actientre.API[0].contenidoid
+                }).then(result2 => {
+                    console.log(chalk.bgYellow("|   |") + " contenido actualizado");
+                    funcionesDB.updateactivitystate({
+                        estado: "entregada",
+                        id: actientre.API[0].actividadid
+                    }).then(result2 => {
+                        funcionesDB.updateactivityrevised({
+                            revision: (actientre.API[0].actividadrevision + 1),
+                            id: actientre.API[0].actividadid
+                        }).then(result3 => {
+                            res({ proyecto: actientre.API[0].proyectoid })
+                        }).catch(err4 => rej(err4))
+                    }).catch(err3 => rej(err3))
+                }).catch(err3 => rej(err3))
+            }).catch(err2 => rej(err2))
+        }).catch(err => rej(err))
+    })
+}
+
+funcionesDB.entregarentregable = (entregable, nombre) => {
+    return new Promise((res, rej) => {
+        buscarDB.obtenerentreentregable(entregable).then(result => {
+            let practicas = result.API[0].entreganumeroRevisiones + 1;
+            funcionesDB.updateDelivery({
+                descripcion: `${result.API[0].entregatitulo} entregado unos ${practicas}`,
+                titulo: result.API[0].entregatitulo,
+                nombrearchivo: nombre,
+                id: result.API[0].entregaid
+            }).then(result => {
+                console.log(chalk.bgRed("|   |") + " entrega entregable echa");
+                funcionesDB.updatecontent({
+                    nombreArchivo: nombre,
+                    id: result.API[0].contenidoid
+                }).then(result2 => {
+                    funcionesDB.updatedeliverablenum({
+                        num: (practicas), id: result.API[0].entregableid
+                    }).then(result3 => {
+                        res({ proyecto: result.API[0].proyectoid })
+                    }).catch(err4 => rej(err4))
+                }).catch(err3 => rej(err3))
+            }).catch(err2 => rej(err2))
+
+        }).catch(err => rej(err))
+    })
+}
+//falta implementar 
+funcionesDB.entregarentregable = (entregable, nombre) => {
+    return new Promise((res, rej) => {
+        buscarDB.obtenerentreentregable(entregable).then(result => {
+            let practicas = result.API[0].entreganumeroRevisiones + 1;
+            funcionesDB.updateDelivery({
+                descripcion: `${result.API[0].entregatitulo} entregado unos ${practicas}`,
+                titulo: result.API[0].entregatitulo,
+                nombrearchivo: nombre,
+                id: result.API[0].entregaid
+            }).then(result => {
+                console.log(chalk.bgRed("|   |") + " entrega entregable echa");
+                funcionesDB.updatecontent({
+                    nombreArchivo: nombre,
+                    id: result.API[0].contenidoid
+                }).then(result2 => {
+                    funcionesDB.updatedeliverablenum({
+                        num: (practicas), estado: "entregado", id: result.API[0].entregableid
+                    }).then(result3 => {
+                        res({ proyecto: result.API[0].proyectoid })
+                    }).catch(err4 => rej(err4))
+                }).catch(err3 => rej(err3))
+            }).catch(err2 => rej(err2))
+
+        }).catch(err => rej(err))
+    })
+}
+//----------------------------------------------------------------
+funcionesDB.updateDelivery = (obj) => {
+    return new Promise((res, rej) => {
+        const { descripcion, titulo, nombrearchivo, id } = obj;
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.updatentrega(descripcion, titulo, nombrearchivo, id), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: err }); }
+                });
+            }
+            else {
+                sqlite.all(Query.updatentrega(descripcion, titulo, nombrearchivo, id), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: err }); }
+                })
+            }
+        })
+    })
+}
+funcionesDB.updatedeliverablenum = (obj) => {
+    return new Promise((res, rej) => {
+        const { num, id } = obj;
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.updatentregablenum(num, id), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: err }); }
+                });
+            }
+            else {
+                sqlite.all(Query.updatentregablenum(num, id), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: err }); }
+                });
+            }
+        })
+    })
 }
 //----------------------------------------------------------------
 funcionesDB.updatelenguajename = (obj) => {

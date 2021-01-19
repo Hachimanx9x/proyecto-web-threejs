@@ -325,6 +325,50 @@ query.obtenerintegrantyrol = function (id) {
     join roles on integrantes.rol = roles.id
     where integrantes.id = ${id}; `
 }
+query.obtenerentregableconactividad = function (id) {
+    return `SELECT 
+    entregas.id AS "entregaid", 
+    actividades.id AS "actividadid" ,
+	actividades.actividadtitulo,
+	actividades.actividaddescripcion,
+	actividades.actividadrevision,
+	actividades.actividadfechaentrega,
+	contenidos.id as "contenidoid",
+	proyectos.id as "proyectoid"
+    from  actividades
+    join entregas on actividades.id = entregas.actividad
+	join listacontenidos on actividades.id = listacontenidos.actividad
+	join contenidos on listacontenidos.contenido= contenidos.id
+	join listaactividades on actividades.id = listaactividades.actividad
+	join integrantes on listaactividades.integrante = integrantes.id
+	join listaintegrantes on integrantes.id = listaintegrantes.integrante
+	join proyectos on listaintegrantes.proyecto = proyectos.id
+    where actividades.id =${id}; `
+}
+query.obtenerentreconcotenido = function (id) {
+    return `SELECT
+    entregables.id AS "entregableid",
+    entregables.entregatitulo ,
+    entregables.entregadescripcion,
+    entregables.entreganumeroRevisiones,
+    entregables.entregaestado,
+    entregas.id AS "entregaid",
+    contenidos.id AS "contenidoid",
+    proyectos.id AS "proyectoid"
+    from entregables
+    join listacontenidos on entregables.id = listacontenidos.entregable
+    join entregas on entregables.id = entregas.entragable
+    join contenidos on listacontenidos.contenido= contenidos.id
+    join listaentregables on entregables.id = listaentregables.entregable
+    join alfas on listaentregables.alfa = alfas.id
+    join listaalfas on listaalfas.alfa = alfas.id
+    join practicas on listaalfas.practica = practicas.id
+    join listapracticas on practicas.id = listapracticas.practica
+    join metodologias on listapracticas.metodologia = metodologias.id
+    join proyectos on     metodologias.id = proyectos.metodologia
+    where entregables.id = ${id}; `
+}
+
 //-------------busquedas por tablas
 query.obtenertodasIdiomas = function () { return `SELECT * FROM idiomas ; `; }
 query.obtenertodasHabilidades = function () { return `SELECT * FROM habilidades ; `; }
@@ -735,7 +779,7 @@ query.updateaintegrantes = function (rol, id) {
     WHERE id = ${id}; `;
 }
 query.updatecontenidos = function (nombreArchivo, id) {
-    return `UPDATE integrantes 
+    return `UPDATE contenidos 
     SET contenidonombrearchivo ="${nombreArchivo}"
     WHERE id = ${id}; `;
 }
@@ -757,6 +801,18 @@ query.updatproyectobanner = function (banner, id) {
 query.updatproyectoicono = function (icono, id) {
     return `UPDATE proyectos 
     SET proyectoicon ="${icono}"
+    WHERE id = ${id}; `;
+}
+query.updatentregablenum = function (num, id) {
+    return `UPDATE entregables 
+    SET entreganumeroRevisiones =${num}
+    WHERE id = ${id}; `;
+}
+query.updatentrega = function (descripcion, titulo, nombrearchivo, id) {
+    return `UPDATE entregas 
+    SET entregastitulo ="${titulo}",
+    entregasdescripcion ="${descripcion}",
+    entregasnombrearchivoguardado ="${nombrearchivo}"
     WHERE id = ${id}; `;
 }
 /**

@@ -4,6 +4,45 @@ module.exports = {
     consejo: "No sacar la información de wikipedia, hace uso de fuentes confiables",
     Practicas: [
         {
+            Estados: [
+                {
+                    nombre: "Identificado",
+                    descripcion: `Se han identificado una serie de factores
+            críticos para el diseño responsable del Sistema
+            Multimedia, que afectan a sus interesados (usuarios,
+            clientes, interesados indirectos): tensiones de valor
+            entre interesados, posibles usos mal intencionados del
+            Sistema Multimedia, patrones que afectan el Sistema
+            Multimedia, leyes y normatividades que influyen en la
+            solución, aspectos culturales, sociales y cognitivos que
+            influyen en la comunidad objeto de análisis.`
+                },
+                {
+                    nombre: "Comprendido",
+                    descripcion: `El equipo de trabajo y los interesados
+            (usuarios, clientes y otros interesados) tienen un
+            entendimiento común del significado y alcance de los
+            factores clave que son críticos para el diseño
+            responsable del Sistema Multimedia, y la manera en
+            cómo influyen en la experiencia multimedia. `
+                },
+                {
+                    nombre: "Acordado",
+                    descripcion: `El equipo de trabajo y los interesados,
+            identifican de manera conjunta, la necesidad de
+            concebir ideas de diseño que mitiguen los factores
+            adversos y potencien los factores favorables que creen
+            valor en torno al diseño responsable.`
+                },
+                {
+                    nombre: "Concebido",
+                    descripcion: `El equipo de trabajo y los interesados,
+                coinciden en que la concepción de la solución
+                propuesta para el diseño responsable es la adecuada
+                para atender los factores que influyen en la
+                experiencia multimedia. `
+                }
+            ],
             nombre: "Concepción de la experiencia multimedia",
             descripcion: `Con el uso de esta práctica se plantea el poder diseñar de una 
             manera concreta todos los elementos que hacen parte de la experiencia multimedia
@@ -453,6 +492,45 @@ module.exports = {
         },
 
         {
+            Estados: [
+                {
+                    nombre: "Identificado",
+                    descripcion: `Se han identificado una serie de factores
+        críticos para el diseño responsable del Sistema
+        Multimedia, que afectan a sus interesados (usuarios,
+        clientes, interesados indirectos): tensiones de valor
+        entre interesados, posibles usos mal intencionados del
+        Sistema Multimedia, patrones que afectan el Sistema
+        Multimedia, leyes y normatividades que influyen en la
+        solución, aspectos culturales, sociales y cognitivos que
+        influyen en la comunidad objeto de análisis.`
+                },
+                {
+                    nombre: "Comprendido",
+                    descripcion: `El equipo de trabajo y los interesados
+        (usuarios, clientes y otros interesados) tienen un
+        entendimiento común del significado y alcance de los
+        factores clave que son críticos para el diseño
+        responsable del Sistema Multimedia, y la manera en
+        cómo influyen en la experiencia multimedia. `
+                },
+                {
+                    nombre: "Acordado",
+                    descripcion: `El equipo de trabajo y los interesados,
+        identifican de manera conjunta, la necesidad de
+        concebir ideas de diseño que mitiguen los factores
+        adversos y potencien los factores favorables que creen
+        valor en torno al diseño responsable.`
+                },
+                {
+                    nombre: "Concebido",
+                    descripcion: `El equipo de trabajo y los interesados,
+            coinciden en que la concepción de la solución
+            propuesta para el diseño responsable es la adecuada
+            para atender los factores que influyen en la
+            experiencia multimedia. `
+                }
+            ],
             nombre: "Sistema Multimedia mínimo viable",
             descripcion: `Define el minimo producto viable para la entrega ante el cliente`,
             alfas: [

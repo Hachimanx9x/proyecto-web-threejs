@@ -1180,6 +1180,50 @@ funcionesDB.obtenerunrol = async (obj) => {
         })
     });
 }
+//---------------------------------------------------------
+funcionesDB.obtenerentreactividad = async (actividad) => {
+    return new Promise((res, rej) => {
+        promesa.then(async (result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.obtenerentregableconactividad(actividad), async (err, rows) => {
+                    if (!err) {
+                        res({ API: rows });
+                    } else { rej(err) }
+                });
+            } else {
+                sqlite.all(Query.obtenerentregableconactividad(actividad), (err, rows) => {
+                    if (!err) {
+                        res({ API: rows });
+                    } else { rej(err) }
+                });
+            }
+        }).catch(err => rej(err))
+    })
+}
+
+funcionesDB.obtenerentreentregable = (entregable) => {
+    return new Promise((res, rej) => {
+        promesa.then(async (result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.obtenerentreconcotenido(entregable), async (err, rows) => {
+                    if (!err) {
+                        res({ API: rows });
+                    } else { rej(err) }
+                });
+            }
+            else {
+                sqlite.all(Query.obtenerentreconcotenido(entregable), (err, rows) => {
+                    if (!err) {
+                        res({ API: rows });
+                    } else { rej(err) }
+                });
+            }
+        }).catch(err => rej(err))
+    })
+}
+
 //-------------------
 function rearmarProyectosescri(array) {
     var arraydef = [];

@@ -38,19 +38,20 @@ peticiones.getFilesingle = async (bucket, namefile, res) => {
 
 
 peticiones.putFile = async (bucket, namefile, file, fileStat) => {
+
   var data = { upload: false, file: false }
   return new Promise((resolve, reject) => {
     // Using fPutObject API upload your file to the bucket europetrip.
     minio.fPutObject(bucket, namefile, file, fileStat, function (err, etag) {
-      if (err) reject(data);
+      if (err) reject(err);
       data.upload = true
       try {
         fs.unlinkSync(file)
         data.file = true;
         resolve(data)
-        //console.log('borrado')
+        console.log('borrado')
       } catch (err) {
-        reject(data);
+        reject(err);
       }
     });
   });
@@ -90,18 +91,17 @@ peticiones.listObjects = async (namebucket) => {
   });
 
 }
-peticiones.removeObject = (bucket, obj)=>{
-  return new Promise((res,rej)=>{
-   
-    minio.removeObject(bucket, obj,(e)=>{
-      if(e){
-        res({msj: e.message})
-      }else{
-        res({msj: `borrado el archivo ${obj}`})
+peticiones.removeObject = (bucket, obj) => {
+  return new Promise((res, rej) => {
+
+    minio.removeObject(bucket, obj, (e) => {
+      if (e) {
+        res({ msj: e.message })
+      } else {
+        res({ msj: `borrado el archivo ${obj}` })
       }
     });
-
-  });
+  })
 }
 
 
