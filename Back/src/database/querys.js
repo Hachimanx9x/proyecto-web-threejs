@@ -803,9 +803,10 @@ query.updatproyectoicono = function (icono, id) {
     SET proyectoicon ="${icono}"
     WHERE id = ${id}; `;
 }
-query.updatentregablenum = function (num, id) {
+query.updatentregablenum = function (num, estado, id) {
     return `UPDATE entregables 
-    SET entreganumeroRevisiones =${num}
+    SET entreganumeroRevisiones =${num},
+    entregaestado ="${estado}"
     WHERE id = ${id}; `;
 }
 query.updatentrega = function (descripcion, titulo, nombrearchivo, id) {

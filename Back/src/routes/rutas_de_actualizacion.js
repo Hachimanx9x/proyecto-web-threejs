@@ -25,14 +25,13 @@ rutas.put('/entrega/actividad', proToken, (req, res) => {
                             'example': 5678
                         }
                         console.log(chalk.bgGreen("|   |") + " actualizando actividad");
-                        actualizarDB.entregaractividad(actividad).then(result => {
+                        actualizarDB.entregaractividad(actividad, archivo.name).then(result => {
                             console.log(chalk.bgGreen("|   |") + `insertando en el bocket ${result.proyecto}`);
                             ftpminio.putFile(
                                 `proyecto${result.proyecto}`,
                                 archivo.name,
                                 path.join(__dirname, `/tmp/${archivo.name}`),
                                 metaData).then(result => {
-                                    console.log(result)
                                     res.json({ msj: `activdad ${actividad} entregada` })
                                 }).catch(err2 => res.json(err2))
                         }).catch(err => res.json(err))
@@ -47,15 +46,31 @@ rutas.put('/entrega/actividad', proToken, (req, res) => {
 
 });
 
-rutas.put('/entrega/actividad', proToken, (req, res) => {
+rutas.put('/entrega/entregable', proToken, (req, res) => {
     const { entregable } = req.body;
     if (req.files !== undefined || req.files !== null) {
         if (req.files.archivo !== undefined || req.files.archivo !== null) {
             const { archivo } = req.files;
-            if (typeof actividad === 'string') {
+            if (typeof entregable === 'string') {
                 archivo.mv(__dirname + '/tmp/' + archivo.name, (err) => {
                     if (!err) {
-
+                        var metaData = {
+                            'Content-Type': `${archivo.mimetype}`,
+                            'size': archivo.size,
+                            'X-Amz-Meta-Testing': 1234,
+                            'example': 5678
+                        }
+                        console.log(chalk.bgGreen("|   |") + " actualizando entregable");
+                        actualizarDB.entregarentregable(entregable, archivo.name).then(result => {
+                            console.log(chalk.bgGreen("|   |") + `insertando en el bocket ${result.proyecto}`);
+                            ftpminio.putFile(
+                                `proyecto${result.proyecto}`,
+                                archivo.name,
+                                path.join(__dirname, `/tmp/${archivo.name}`),
+                                metaData).then(result => {
+                                    res.json({ msj: `entregalbe ${entregable} entregado` })
+                                }).catch(err3 => res.json(err3))
+                        }).catch(err2 => res.json(err2))
                     } else { res.json(err) }
                 });
             }

@@ -41,32 +41,7 @@ funcionesDB.entregaractividad = (actividad, nombre) => {
     })
 }
 
-funcionesDB.entregarentregable = (entregable, nombre) => {
-    return new Promise((res, rej) => {
-        buscarDB.obtenerentreentregable(entregable).then(result => {
-            let practicas = result.API[0].entreganumeroRevisiones + 1;
-            funcionesDB.updateDelivery({
-                descripcion: `${result.API[0].entregatitulo} entregado unos ${practicas}`,
-                titulo: result.API[0].entregatitulo,
-                nombrearchivo: nombre,
-                id: result.API[0].entregaid
-            }).then(result => {
-                console.log(chalk.bgRed("|   |") + " entrega entregable echa");
-                funcionesDB.updatecontent({
-                    nombreArchivo: nombre,
-                    id: result.API[0].contenidoid
-                }).then(result2 => {
-                    funcionesDB.updatedeliverablenum({
-                        num: (practicas), id: result.API[0].entregableid
-                    }).then(result3 => {
-                        res({ proyecto: result.API[0].proyectoid })
-                    }).catch(err4 => rej(err4))
-                }).catch(err3 => rej(err3))
-            }).catch(err2 => rej(err2))
 
-        }).catch(err => rej(err))
-    })
-}
 //falta implementar 
 funcionesDB.entregarentregable = (entregable, nombre) => {
     return new Promise((res, rej) => {
@@ -77,15 +52,16 @@ funcionesDB.entregarentregable = (entregable, nombre) => {
                 titulo: result.API[0].entregatitulo,
                 nombrearchivo: nombre,
                 id: result.API[0].entregaid
-            }).then(result => {
-                console.log(chalk.bgRed("|   |") + " entrega entregable echa");
+            }).then(result2 => {
                 funcionesDB.updatecontent({
                     nombreArchivo: nombre,
                     id: result.API[0].contenidoid
-                }).then(result2 => {
+                }).then(result3 => {
+                    console.log(chalk.bgYellow("|   |") + " contenido actualizado");
                     funcionesDB.updatedeliverablenum({
                         num: (practicas), estado: "entregado", id: result.API[0].entregableid
-                    }).then(result3 => {
+                    }).then(result4 => {
+                        console.log(chalk.bgGreen("|   |") + " entregable actualizado");
                         res({ proyecto: result.API[0].proyectoid })
                     }).catch(err4 => rej(err4))
                 }).catch(err3 => rej(err3))
@@ -119,18 +95,18 @@ funcionesDB.updateDelivery = (obj) => {
 }
 funcionesDB.updatedeliverablenum = (obj) => {
     return new Promise((res, rej) => {
-        const { num, id } = obj;
+        const { num, estado, id } = obj;
         promesa.then((result) => {
             const { mariaDB, sqlite, vDB } = result;
             if (vDB) {
-                mariaDB.query(Query.updatentregablenum(num, id), (err) => {
+                mariaDB.query(Query.updatentregablenum(num, estado, id), (err) => {
                     if (!err) {
                         res({ msj: "success" });
                     } else { rej({ msj: err }); }
                 });
             }
             else {
-                sqlite.all(Query.updatentregablenum(num, id), (err) => {
+                sqlite.all(Query.updatentregablenum(num, estado, id), (err) => {
                     if (!err) {
                         res({ msj: "success" });
                     } else { rej({ msj: err }); }
@@ -699,14 +675,14 @@ funcionesDB.updatecontent = (obj) => {
                 mariaDB.query(Query.updatecontenidos(nombreArchivo, id), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: err }); }
                 });
             }
             else {
                 sqlite.all(Query.updatecontenidos(nombreArchivo, id), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: err }); }
                 });
             }
         })
