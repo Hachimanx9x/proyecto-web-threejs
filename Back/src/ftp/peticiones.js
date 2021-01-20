@@ -38,19 +38,20 @@ peticiones.getFilesingle = async (bucket, namefile, res) => {
 
 
 peticiones.putFile = async (bucket, namefile, file, fileStat) => {
+
   var data = { upload: false, file: false }
   return new Promise((resolve, reject) => {
     // Using fPutObject API upload your file to the bucket europetrip.
     minio.fPutObject(bucket, namefile, file, fileStat, function (err, etag) {
-      if (err) reject(data);
+      if (err) reject(err);
       data.upload = true
       try {
         fs.unlinkSync(file)
         data.file = true;
         resolve(data)
-        //console.log('borrado')
+        console.log('borrado')
       } catch (err) {
-        reject(data);
+        reject(err);
       }
     });
   });
@@ -73,37 +74,86 @@ peticiones.creatBucket = (name) => {
 
 peticiones.listObjects = async (namebucket) => {
   return new Promise((res, rej) => {
-    var names = [];
+    var names = []; var names2 = [];
     var n = 0;
+    console.log(`bucket de lista ${namebucket}`)
     var stream = minio.listObjects(namebucket, '', true);
+    stream.on('data', (obj) => {
+      names2.push(obj.name);
+      stream.on('data', (obj2) => {
+        console.log(names2)
+        console.log(names2.length)
+      })
+    })/*
     stream.on('data', async (obj) => {
       names.push(obj.name);
+      console.log(obj.name)
       stream.on('data', (obj2) => {
         n++;
+        console.log(names)
         if (n === names.length) {
-          res(names);
+          res(names); console.log("sali de metodo lista bucket")
         }
       });
-    });
+    });*/
     stream.on('error', function (err) { rej(err) })
 
   });
 
 }
-peticiones.removeObject = (bucket, obj)=>{
-  return new Promise((res,rej)=>{
-   
-    minio.removeObject(bucket, obj,(e)=>{
-      if(e){
-        res({msj: e.message})
-      }else{
-        res({msj: `borrado el archivo ${obj}`})
+
+peticiones.removeObject = (bucket, obj) => {
+  return new Promise((res, rej) => {
+
+    minio.removeObject(bucket, obj, (e) => {
+      if (e) {
+        rej({ msj: e.message })
+      } else {
+        res({ msj: `borrado el archivo ${obj}` })
       }
     });
+  })
+}
+peticiones.removeBucket = (bucket, archivos) => {
+  return new Promise((res, rej) => {
+    removerobjeto(bucket).then(result => {
+      minio.removeBucket(bucket, function (err) {
+        if (err) {
+          console.log('error')
+          console.log(err.message)
+          rej(err)
+        }
+        else {
+          res(bucket);
+          console.log('Bucket removed successfully.')
+        }
 
-  });
+      })
+    }).catch(err => rej(err))
+  })
 }
 
 
+function removerobjeto(lista) {
+  return new Promise((res, rej) => {
 
+    console.log(lista)
+
+    if (lista.length == 0) {
+      res(true)
+    } else {
+      for (let a = 0; a < lista.length; a++) {
+        let num = 0;
+        peticiones.removeObject(lista[a], bucket).then(result => {
+          console.log(result.msj)
+          if (num === lista.length) { res(true) }
+          num++;
+        }).catch(err => rej(err))
+
+      }
+    }
+
+  })
+
+}
 module.exports = peticiones;

@@ -117,7 +117,7 @@ rutas.post('/agregar/contacto', proToken, (req, res) => {
               const { API } = result2;
               let ultimo = API[API.length - 1].id;
               const id = data.rows[0].id
-              insertDB.insertlistContacts({ usuario: ultimo, contacto: ultimo })
+              insertDB.insertlistContacts({ usuario: id, contacto: ultimo })
                 .then(result => {
                   res.json(result);
                 }).catch(err3 => res.json(err3))

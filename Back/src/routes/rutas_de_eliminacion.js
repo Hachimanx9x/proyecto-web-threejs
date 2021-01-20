@@ -1,10 +1,17 @@
 const ex = require('express');
 const rutas = ex.Router();
-
-
 const deleteDB = require('../database/eliminacion');
+const ftpminio = require("../ftp/peticiones");
 
 
+rutas.delete('/eliminar/proyecto', proToken, (req, res) => {
+    const { proyecto } = req.body;
+    deleteDB.eliminarproyecto(proyecto).then(result => {
+        ftpminio.removeBucket(`proyecto${proyecto}`, result.archivos).then(result2 => {
+            res.json("Adios amigo")
+        }).catch(err2 => res.json(err2))
+    }).catch(err => res.json(err))
+})
 
 /**
       db      `7MM"""Mq. `7MMF'                                 mm    `7MM                       `7MM          
@@ -336,6 +343,21 @@ rutas.delete('/', (req, res) => {
         res.json("salvado por un error")
     }
 });
+
+
+//
+function proToken(req, res, next) {
+    const header = req.headers['authorization'];
+    //console.log(header); 
+    if (typeof header !== 'undefined') {
+        const portador = header.split(" ");
+        const portadorToken = portador[1];
+        req.token = portadorToken;
+        next();
+    } else {
+        res.sendStatus(403);
+    }
+}
 module.exports = rutas;
 /*                                    `\\  \\     !||
                                     \  \\\\\\\\,  !||

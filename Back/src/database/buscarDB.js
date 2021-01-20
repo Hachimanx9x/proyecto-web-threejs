@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const promesa = require('../database');
 const Query = require('./querys');
 const LLAVE = 'misecretos';
+const chalk = require('chalk');
 const funcionesDB = () => {
     console.log("funciones de la base de datos")
 }
@@ -128,6 +129,24 @@ funcionesDB.obtenerEscritorioProyectos = async (body) => {
     // console.log(body.rows[0].persona);
 }
 
+funcionesDB.obtenerdatosintgrantesdeproyecto = async (proyecto) => {
+    return new Promise((res, rej) => {
+        promesa.then(async (result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.obteneracticontinte(proyecto), async (err, rows) => {
+                    if (!err) { res({ API: rows }); } else { rej({ err }) }
+                })
+            }
+            else {
+                sqlite.all(Query.obteneracticontinte(proyecto), (err, rows) => {
+                    if (!err) { res({ API: rows }); } else { rej({ err }) }
+                });
+            }
+        })
+    });
+
+}
 
 
 funcionesDB.obtenerContactosUsuario = async (body) => {
@@ -1180,8 +1199,53 @@ funcionesDB.obtenerunrol = async (obj) => {
         })
     });
 }
+//---------------------------------------------------------
+funcionesDB.obtenerentreactividad = async (actividad) => {
+    return new Promise((res, rej) => {
+        promesa.then(async (result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.obtenerentregableconactividad(actividad), async (err, rows) => {
+                    if (!err) {
+                        res({ API: rows });
+                    } else { rej(err) }
+                });
+            } else {
+                sqlite.all(Query.obtenerentregableconactividad(actividad), (err, rows) => {
+                    if (!err) {
+                        res({ API: rows });
+                    } else { rej(err) }
+                });
+            }
+        }).catch(err => rej(err))
+    })
+}
+
+funcionesDB.obtenerentreentregable = (entregable) => {
+    return new Promise((res, rej) => {
+        promesa.then(async (result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.obtenerentreconcotenido(entregable), async (err, rows) => {
+                    if (!err) {
+                        res({ API: rows });
+                    } else { rej(err) }
+                });
+            }
+            else {
+                sqlite.all(Query.obtenerentreconcotenido(entregable), (err, rows) => {
+                    if (!err) {
+                        res({ API: rows });
+                    } else { rej(err) }
+                });
+            }
+        }).catch(err => rej(err))
+    })
+}
+
 //-------------------
 function rearmarProyectosescri(array) {
+
     var arraydef = [];
     var idproyecto = null
     var proyectonombre = null
@@ -1189,29 +1253,36 @@ function rearmarProyectosescri(array) {
     var practicanombre = null;
     var alfas = [];
     var alfanombre = null, alfaestado = null;
+
+
     for (var i = 0; i < array.length; i++) {
-        console.log
+
         if (idproyecto != array[i].id) {
             idproyecto = array[i].id;
             proyectonombre = array[i].proyectonombre;
             arraydef.push({ idproyecto, proyectonombre, practicas });
         }
     }
-    //console.log(arraydef)
+    //  console.log(arraydef)
     for (var i = 0; i < arraydef.length; i++) {
+        let practicasinter = []
         for (var j = 0; j < array.length; j++) {
             if (arraydef[i].idproyecto == array[j].id) {
                 if (practicanombre != array[j].practicanombre) {
                     practicanombre = array[j].practicanombre;
-                    arraydef[i].practicas.push({ practicanombre, alfas });
+                    practicasinter.push({ practicanombre, alfas });
                 }
             }
         }
+        let set = new Set(practicasinter.map(JSON.stringify))
+        practicasinter = Array.from(set).map(JSON.parse);
+        arraydef[i].practicas = practicasinter;
     }
     //console.log(arraydef[0].practicas)
-    var alfastemp = [];
+
     for (var i = 0; i < arraydef.length; i++) {
         for (var j = 0; j < arraydef[i].practicas.length; j++) {
+            var alfastemp = [];
             for (var k = 0; k < array.length; k++) {
 
                 if (arraydef[i].practicas[j].practicanombre == array[k].practicanombre) {
@@ -1225,10 +1296,13 @@ function rearmarProyectosescri(array) {
                     }
                 }
             }
-            arraydef[i].practicas[j].alfas = alfastemp
-            alfastemp = [];
+            let set = new Set(alfastemp.map(JSON.stringify))
+            alfastemp = Array.from(set).map(JSON.parse);
+            arraydef[i].practicas[j].alfas = alfastemp;
         }
     }
+
+
     //console.log(arraydef[0].practicas[0].alfas[0]);
     return { proyectos: arraydef }
 }
@@ -1356,6 +1430,7 @@ function ponercontenidoenactividades(array) {
             arraydef.push({
                 proyecto: array[i].id,
                 usuario: array[i].nombre,
+                actividadid: array[i].actividadid,
                 actividad: array[i].actividadtitulo,
                 descripcion: array[i].actividaddescripcion,
                 estado: array[i].actividadestado,

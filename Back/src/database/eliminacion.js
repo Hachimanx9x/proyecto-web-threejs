@@ -1,10 +1,33 @@
 const jwt = require('jsonwebtoken');
 const promesa = require('../database');
+const buscarDB = require('./buscarDB')
 const Query = require('./querys');
+const chalk = require('chalk');
 //const LLAVE = 'misecretos';
 const funcionesDB = () => {
     console.log("funciones de la base de datos")
 }
+// esto basicamente bloquea el proyecto para todos sus integrantes
+funcionesDB.eliminarproyecto = (proyecto) => {
+    return new Promise((res, rej) => {
+        buscarDB.obtenerdatosintgrantesdeproyecto(proyecto).then(result => {
+            let integrantes = reorganizarintegrantes(result.API);
+            eliminaciondelistaintegrantes(integrantes, proyecto).then(result2 => {
+                console.log(chalk.bgRed("|   |") + " lista integrantes eliminada");
+                eleminarintegrantes(integrantes).then(result3 => {
+                    console.log(chalk.bgRed("|   |") + " integrantes eliminada");
+                    funcionesDB.deleteProject({ id: proyecto }).then(result4 => {
+                        let archivos = archivosaeliminar(result.API);
+                        console.log(chalk.bgRed("|   |") + " proyecto eliminada");
+                        res({ proyecto: proyecto, archivos: archivos })
+                    }).catch(err4 => rej(err4))
+                }).catch(err3 => rej(err3))
+            }).catch(err2 => rej(err2))
+
+        }).catch(err => rej(err))
+    })
+}
+
 //---------------------------------------------------------------------
 funcionesDB.deletetabla = (obj) => {
     return new Promise((res, rej) => {
@@ -751,14 +774,14 @@ funcionesDB.deleteProject = (obj) => {
                 mariaDB.query(Query.deleteProyectos(id), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: err }); }
                 });
             }
             else {
                 sqlite.all(Query.deleteProyectos(id), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: err }); }
                 });
             }
         });
@@ -882,21 +905,21 @@ funcionesDB.deleteListEvent = (obj) => {
 //---------------------------------------------------------------------
 funcionesDB.deleteListMember = (obj) => {
     return new Promise((res, rej) => {
-        const { id } = obj;
+        const { integrante, proyecto } = obj;
         promesa.then((result) => {
             const { mariaDB, sqlite, vDB } = result;
             if (vDB) {
-                mariaDB.query(Query.deleteListaIntegrantes(id), (err) => {
+                mariaDB.query(Query.deleteListaIntegrantes(integrante, proyecto), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: err }); }
                 });
             }
             else {
-                sqlite.all(Query.deleteListaIntegrantes(id), (err) => {
+                sqlite.all(Query.deleteListaIntegrantes(integrante, proyecto), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: err }); }
                 });
             }
         });
@@ -1778,4 +1801,68 @@ funcionesDB.deleteallListMember = () => {
         });
     });
 }
+
+//funciones
+
+function eliminaciondelistaintegrantes(array, proyecto) {
+    return new Promise((res, rej) => {
+        let cont = 0;
+        for (let a = 0; a < array.length; a++) {
+            funcionesDB.deleteListMember({
+                integrante: array[a],
+                proyecto: proyecto
+            }).then(result => {
+                if (cont == (array.length - 1)) { res(true); console.log("salio ") };
+                cont++;
+            }).catch(err => { rej(err); })
+        }
+    })
+}
+function eleminarintegrantes(array) {
+    return new Promise((res, rej) => {
+        let cont = 0;
+        for (let a = 0; a < array.length; a++) {
+            funcionesDB.deleteMember({ id: array[a] }).then(result => {
+                if (cont === (array.length - 1)) res(true)
+                cont++;
+            }).catch(err => rej(err))
+        }
+    })
+}
+
+
+//operaciones logicas
+function reorganizarintegrantes(array) {
+    let arraydef = []
+
+    for (let c = 0; c < array.length; c++) {
+        arraydef.push(array[c].integraid)
+    }
+    return Array.from(new Set(arraydef))
+
+}
+
+function archivosaeliminar(array) {
+    let arraydef = [];
+    let arraydef2 = [];
+
+    for (let a = 0; a < array.length; a++) {
+        arraydef.push(array[a].archivos);
+    }
+
+    arraydef = Array.from(new Set(arraydef))
+
+    for (let a = 0; a < arraydef.length; a++) {
+        if (arraydef[a] === null && arraydef[a] === "null") { } else {
+            arraydef2.push(arraydef[a]);
+        }
+    }
+    c
+    return arraydef2;
+}
 module.exports = funcionesDB;
+
+
+/**
+ *
+ */
