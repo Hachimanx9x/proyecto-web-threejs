@@ -7,6 +7,21 @@ class Test extends Component {
     this.state = {
       img: ''
     }
+    this.enviar = this.enviar.bind(this);
+    this.httpInstance = axios.create({
+      baseURL: "http://localhost:3030/",
+      timeout: 1000,
+      headers: { 'Content-Type': 'application/json' }
+    });
+    this.httpInstance.interceptors.response.use(null, error => {
+      const expectedError = error.response && error.response.status >= 400 && error.response.status < 500;
+      if (!expectedError) {
+        // Loggear mensaje de error a un servicio como Sentry
+        // Mostrar error genérico al usuario
+        return Promise.reject(error);
+      }
+    }
+    );
   }
   detectarCambio(event) {
     let files = event.target.files;
@@ -53,14 +68,28 @@ class Test extends Component {
   cargarArchivo(event) {
 
   }
+  enviar = () => {
+    const data = new FormData();
+    data.append("file", img);
+    this.httpInstance.post('login', { email, password }).then(respuesta => {
+      if (respuesta.statusText === "OK") {
+        console.log(respuesta.data);
+      } else {
+        console.log("error fatal")
+      }
+
+    }).catch(error => {
+      console.error(error);
+    })
+  }
   render() {
     return (
       <div>
         <div onSubmit={this.onFormSubmit}>
           <h1>Subir archivos en react js </h1>
-          <input type="file" name="file" onChange={(event) => this.detectarCambio(event)} />
+          <input type="file" name="file" onChange={e => {this.setState({img: e.target.files[0]}); }}  />
 
-
+        <button onClick={this.enviar}>Enviar</button>
         </div>
 
         <div>

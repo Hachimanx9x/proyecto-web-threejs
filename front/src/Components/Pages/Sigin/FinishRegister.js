@@ -99,7 +99,7 @@ export default function FinishRegister() {
                             </div>
                         </div>
                         <div className="col-xs-6 col-sm-6 bg-white o-f" style={{  border: "1px solid #4285F4", lineHeight: "1", padding: "5px 0 0 0.3rem", overflow: "hidden" }}>
-                            <small style={{ fontSize: "0.6rem" }}>archivolargodetexto.jpeg</small>
+                            <small style={{ fontSize: "0.6rem" }}>{cvpicture === null ? "" : cvpicture.name}</small>
                         </div>
 
                     </div>

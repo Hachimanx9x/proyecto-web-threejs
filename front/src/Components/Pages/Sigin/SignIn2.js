@@ -31,7 +31,9 @@ class SigIn extends Component {
 
 
     RegisterFunction = () => {
+        this.props.history.push("/Dashboard/FinishRegister");
 
+        /*
         const { email, password } = this.state;
         console.log(`El correo es ${email} y la contraseña es ${password}`);
 
@@ -56,7 +58,7 @@ class SigIn extends Component {
             console.error(error);
         })
 
-
+*/
     };
 
     render() {
@@ -96,7 +98,7 @@ class SigIn extends Component {
                                     </label>
                                 <MDBInput onChange={(event) => {
                                     this.setState({ password: event.target.value });
-                                }} label="Contraseña" className="o-sigin-input text-white" type="email" icon="lock" />
+                                }} label="Contraseña" className="o-sigin-input text-white" type="password" icon="lock" />
                             </div>
                         </div>
                         <div className="row">
