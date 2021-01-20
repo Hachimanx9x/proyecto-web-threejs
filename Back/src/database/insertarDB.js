@@ -461,6 +461,7 @@ funcionesDB.insertContacts = (obj) => {
 funcionesDB.insertlistContacts = (obj) => {
     return new Promise((res, rej) => {
         const { usuario, contacto } = obj;
+        console.log(obj)
         promesa.then((result) => {
             const { mariaDB, sqlite, vDB } = result;
             if (vDB) {

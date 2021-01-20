@@ -25,6 +25,7 @@ query.obtenerEscritorioActividades = function (id) {
     return (` SELECT  
     usuarios.nombre,
     proyectos.id,
+    actividades.id AS "actividadid",
     actividades.actividadtitulo,
     actividades.actividaddescripcion,
     actividades.actividadestado,
@@ -49,17 +50,19 @@ query.obtenerEscritorioProyectos = function (id) {
     practicas.practicanombre,
     alfas.alfanombre,
     alfas.alfaestado
-    FROM usuarios
-    
-    JOIN integrantes ON usuarios.id = integrantes.usuario
-    JOIN listaintegrantes ON integrantes.usuario = listaintegrantes.integrante
-    JOIN proyectos ON   listaintegrantes.proyecto = proyectos.id
-    JOIN metodologias ON proyectos.metodologia = metodologias.id
-    JOIN listapracticas ON metodologias.id = listapracticas.metodologia
-    JOIN practicas ON listapracticas.practica = practicas.id
-    JOIN listaalfas ON practicas.id = listaalfas.practica
-    JOIN alfas ON listaalfas.alfa = alfas.id
-     WHERE usuarios.id= ${id}; `);
+	from proyectos
+	join metodologias on  proyectos.metodologia = metodologias.id
+	join listapracticas on metodologias.id = listapracticas.metodologia
+	join practicas on listapracticas.practica = practicas.id
+	join listaalfas on practicas.id = listaalfas.practica
+	join alfas on listaalfas.alfa = alfas.id
+	where proyectos.id in (select 
+proyectos.id
+from proyectos
+join listaintegrantes on proyectos.id = listaintegrantes.proyecto
+join integrantes on listaintegrantes.integrante = integrantes.id
+join usuarios on integrantes.usuario = usuarios.id
+where usuarios.id =${id}); `);
 }
 query.obtenerProyecto = function (id) {
     return (`SELECT 
@@ -212,9 +215,9 @@ query.buscarcontactosusuario = function (id) {
     FROM usuarios
     JOIN contactos ON usuarios.id = contactos.contactousuario
     JOIN palabrasclave ON usuarios.id = palabrasclave.pcusuario
-    WHERE usuarios.id IN (
+    WHERE contactos.id IN (
     SELECT 
-    listacontactos.usuario
+    listacontactos.contacto
     FROM usuarios
     JOIN listacontactos ON usuarios.id = listacontactos.usuario
     WHERE usuarios.id=${id}
@@ -367,6 +370,24 @@ query.obtenerentreconcotenido = function (id) {
     join metodologias on listapracticas.metodologia = metodologias.id
     join proyectos on     metodologias.id = proyectos.metodologia
     where entregables.id = ${id}; `
+}
+query.obteneracticontinte = function (id) {
+    return `SELECT 
+    integrantes.id AS "integraid",
+    actividades.id AS "actividadid",
+    contenidos.id AS "contenidoid",
+    contenidos.contenidonombrearchivo AS "archivos",
+    entregas.id AS "entregaid"
+    from proyectos
+    join listaintegrantes on proyectos.id = listaintegrantes.proyecto
+    join integrantes on listaintegrantes.integrante = integrantes.id
+    join listaactividades on integrantes.id = listaactividades.integrante
+    join actividades on listaactividades.actividad = actividades.id
+    join listacontenidos on actividades.id = listacontenidos.actividad
+    join contenidos on listacontenidos.contenido = contenidos.id
+    join entregas on actividades.id = entregas.actividad
+    where proyectos.id = ${id}; 
+        `
 }
 
 //-------------busquedas por tablas
@@ -864,7 +885,7 @@ query.deleteListaReuniones = function (id) { return `DELETE FROM listareuniones 
 query.deleteListaEntregas = function (id) { return `DELETE FROM listaentregas  WHERE entregable=${id}; `; }
 query.deleteEventos = function (id) { return `DELETE FROM eventos  WHERE id=${id}; `; }
 query.deleteListaEventos = function (id) { return `DELETE FROM listaeventos  WHERE evento=${id}; `; }
-query.deleteListaIntegrantes = function (id) { return `DELETE FROM listaintegrantes  WHERE integrante=${id}; `; }
+query.deleteListaIntegrantes = function (integrante, proyecto) { return `DELETE FROM listaintegrantes  WHERE integrante=${integrante} and proyecto=${proyecto}; `; }
 
 query.deleteallIdiomas = function () { return `DELETE FROM idiomas  ; `; }
 query.deleteallHabilidades = function () { return `DELETE FROM habilidades ; `; }
