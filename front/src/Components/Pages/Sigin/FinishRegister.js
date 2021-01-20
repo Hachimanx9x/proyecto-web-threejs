@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import "./FinishRegister.css";
 import User from "../../../Logos/user-icon.png";
 import { MDBInput } from "mdbreact";
-import Select from 'react-select';
-import makeAnimated from 'react-select/animated';
+import { Multiselect } from "multiselect-react-dropdown";
+
+import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function FinishRegister() {
-    const [picture, setPicture] = useState();
+    const [picture, setPicture] = useState(null);
     const [name, setName] = useState("");
     const [lastname, setLastname] = useState("");
     const [cv, setCv] = useState("");
@@ -16,19 +18,21 @@ export default function FinishRegister() {
     const [github, setGithub] = useState("");
     const [gitlab, setGitlab] = useState("");
     const [bitbucket, setBitbucket] = useState("");
-    const [skills, setSkills] = useState([]);
+    const [skills,setSkills] = useState([]);
+    const userLanguages = [];
+    const userKeywords = [];
     const languages = [
-        { value: 'chocolate', label: 'Inglés' },
-        { value: 'strawberry', label: 'Español' },
-        { value: 'vanilla', label: 'Alemán' },
-        { value: 'chocolate', label: 'Francés' },
-        { value: 'strawberry', label: 'Russo' },
-        { value: 'vanilla', label: 'Japonés' },
-        { value: 'vanilla', label: 'Italiano' },
-        { value: 'vanilla', label: 'Sueco' },
-        { value: 'vanilla', label: 'Chino' },
-        { value: 'vanilla', label: 'Koreano' },
-        { value: 'vanilla', label: 'Portugués' },
+        { key: 'Inglés', cat: {id:'1',value:"1" }},
+        { key: 'Español', cat: '2' },
+        { key: 'Alemán', cat: '3' },
+        { key: 'Francés', cat: '4' },
+        { key: 'Russo', cat: '5' },
+        { key: 'Japonés', cat: '6' },
+        { key: 'Italiano', cat: '7' },
+        { key: 'Sueco', cat: '8' },
+        { key: 'Chino', cat: '9' },
+        { key: 'Koreano', cat: '10' },
+        { key: 'Portugués', cat: '11' },
     ];
     const keywords = [
         { value: 'chocolate', label: 'Desarrollador Web' },
@@ -39,19 +43,43 @@ export default function FinishRegister() {
         { value: 'vanilla', label: 'Diseñador Gráfico' },
         { value: 'vanilla', label: 'Diseñador UI' },
         { value: 'vanilla', label: 'Diseñador UX' },
-    ]
-    let data = new FormData();
-    const animatedComponents = makeAnimated();
+    ];
+    const tools = [
+        { cat: { id: '1', icon:"https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg", name:"React JS"}, key: 'React js' },
+        { cat: { id: '2', icon: "https://www.vectorlogo.zone/logos/angular/angular-icon.svg", name: "Angular" }, key: 'Angular' },
+        { cat: { id: "3", icon: "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg", name: "Vue JS" }, key: 'Vue js' },
+        { cat: { id: "4", icon: "https://www.vectorlogo.zone/logos/nodejs/nodejs-icon.svg", name: "Node JS" }, key: 'Node js' },
+        { cat: { id: "5", icon: "https://www.vectorlogo.zone/logos/python/python-icon.svg", name: "Python" }, key: 'Deno' },
+        { cat: { id: "7", icon: "https://www.vectorlogo.zone/logos/php/php-icon.svg", name:"PHP" }, key:"PHP"},
+        { cat: { id: "8", icon: "https://www.vectorlogo.zone/logos/flutterio/flutterio-icon.svg", name: "Flutter" }, key: "Flutter" },
+        { cat: { id: "9", icon: "https://cdn.worldvectorlogo.com/logos/mysql-7.svg", name: "MySQL" }, key: "MySQL" },
+        { cat: { id: "10", icon: "https://www.vectorlogo.zone/logos/golang/golang-official.svg", name: "Golang" }, key: "Golang" },
+        { cat: { id: "11", icon: "https://www.vectorlogo.zone/logos/graphql/graphql-icon.svg", name: "GraphQL" }, key: "GraphQL" },
+        { cat: { id: "12", icon: "https://www.vectorlogo.zone/logos/typescriptlang/typescriptlang-icon.svg", name: "TypeScript" }, key: "TypeScript" },
+    ];
 
+    const RemoveSkill = (selectedItem) => {
+        if(selectedItem != undefined){
+        const skill = skills
+        const item = skill.find(iterador => iterador.id == selectedItem.id);
+        if (item) {
+            skills.splice(item, 1);
+            setSkills([...skills]);
+        }
+        console.log(skills);}
+    }
     return (
         <div className="o-register-container">
             <div className="bg-white rounded row p-2" style={{ height: "auto" }}>
                 <div className="col-xs-12 col-sm-3 text-center o-col">
                     <p>Foto perfil</p>
-                    <img src={User} alt={"User profile"} className="o-user-register-pic rounded-circle" />
+                    <img src={picture === null ? User : URL.createObjectURL(picture)} alt={"User profile"} className="o-user-register-pic rounded-circle" />
                     <div className="inputWrapper bg-primary">
                         <p className="text-white o-icon-input-text">Subir foto</p>
-                        <input className="fileInput rounded-pill" type="file" name="file1" onChange={e => { setPicture(e.target.files[0]); }} />
+                        <input className="fileInput rounded-pill" type="file" name="file1" accept="image/*" onChange={event => {
+                            const file = event.target.files[0]; 
+                            setPicture(file);
+                        }} />
                     </div>
                 </div>
                 <div className="col-xs-12 col-sm-3 o-col">
@@ -64,13 +92,13 @@ export default function FinishRegister() {
                     <p>Hoja de vida</p>
                     <MDBInput type="text" label="URL/Link" onChange={e => { setCv(e.target.value); }} outline />
                     <div className="row bg-primary p-0 m-0" style={{ height: "2.3rem" }}>
-                        <div className="col-xs-6 col-sm-6  p-0 m-0 bg-primary ">
+                        <div className="col-xs-6 col-sm-6 p-0 m-0 o-up-btn bg-primary ">
                             <div className="inputWrapper m-0 bg-primary" >
                                 <p className="text-white o-icon-input-text">Subir foto</p>
                                 <input className="fileInput rounded-pill" type="file" name="file1" onChange={e => { setCvpicture(e.target.files[0]); }} />
                             </div>
                         </div>
-                        <div className="col-xs-6 col-sm-6 bg-white" style={{ border: "1px solid #4285F4", lineHeight: "1", padding: "5px 0 0 0.3rem", overflow: "hidden" }}>
+                        <div className="col-xs-6 col-sm-6 bg-white o-f" style={{  border: "1px solid #4285F4", lineHeight: "1", padding: "5px 0 0 0.3rem", overflow: "hidden" }}>
                             <small style={{ fontSize: "0.6rem" }}>archivolargodetexto.jpeg</small>
                         </div>
 
@@ -78,33 +106,29 @@ export default function FinishRegister() {
                 </div>
                 <div className="col-xs-12 col-sm-3 o-col mb-4 pb-5">
                     <p>Años de experiencia</p>
-                    <div className="o-box">
-                        <select>
-                            <option>Seleccione el número de años</option>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>4</option>
-                            <option>5</option>
-                            <option>5</option>
-                            <option>6</option>
-                            <option>7</option>
-                            <option>8</option>
-                            <option>9</option>
-                            <option>10</option>
-                            <option>Más de 10</option>
-                        </select>
-                    </div>
+                    
                     <small>Idiomas</small>
-                    <Select options={languages} closeMenuOnSelect={false}
-                        components={animatedComponents}
-                        isMulti />
+                    <Multiselect
+                        options={languages}
+                        displayValue="key"
+                        closeOnSelect={false}
+                        placeholder="Selecciona tus idiomas"
+                        hidePlaceholder={true}
+                        id="languageT"
+                        onSelect={(selectedList, selectedItem) => {console.log(selectedItem)}}
+                    />
+
                     <small>Palabras clave</small>
-                    <Select options={keywords} closeMenuOnSelect={false}
-                        components={animatedComponents}
-                        isMulti  />
+                    <Multiselect
+                        options={languages}
+                        displayValue="key"
+                        placeholder="Selecciona...."
+                        hidePlaceholder={true}
+                        id="keyWorkdb"
+                    />
                 </div>
             </div>
-            <div className="bg-white rounded mt-3 row text-center" style={{ height: "auto" }}>
+            <div className="bg-white rounded mt-3 row text-center p-2" style={{ height: "auto" }}>
                 <p className="col-xs-12 col-sm-12">Vincultar con otras plataformas</p>
 
                 <div className="col-xs-12 col-sm-3 text-center o-col">
@@ -124,29 +148,61 @@ export default function FinishRegister() {
                     <MDBInput type="text" label="URL/GitHub" onChange={e => { setGithub(e.target.value); }} outline />
                 </div>
             </div>
-            <div className="bg-white rounded mt-3 row text-center" style={{ height: "auto" }}>
-                <div className="col-xs-12 col-sm-4  o-skills-select">
+            <div className="bg-white rounded mt-3 row text-center p-2" style={{ height: "auto" }}>
+                <div className="col-xs-12 col-sm-4 text-center  o-skills-select">
                     <p>Habilidades</p>
-                    <div className="p-0 pl-1 pr-3 rounded" style={{ border: "1px solid #4285F4", height: "8.3rem" }}>
+                    <div className="p-0 pl-3 pr-3 rounded o-list-skill-cont">
                         <small style={{ fontSize: "0.6rem" }}>Tipo</small>
                         <hr className="bg-primary mt-0 mb-3" />
-                        <div className="o-box mt-0 mb-3">
-                            <select>
-                                <option>Seleccione una herramienta</option>
-                                <option>1</option>
-                                <option>1</option>
-                            </select>
-                        </div>
+                        <Multiselect
+                            options={tools}
+                            displayValue="key"
+                            closeOnSelect={false}
+                            onSelect={(selectedList, selectedItem) => {
+                                const skill = skills
+                                const item = skill.find(iterador => iterador.id == selectedItem.cat.id);
+                                if (!item) {
+                                    setSkills([...skills, { id: selectedItem.cat.id, icon: selectedItem.cat.icon, name: selectedItem.cat.name }]);  
+                                } 
+                                console.log(skills);
+                            }}
+                            onRemove={(selectedList, selectedItem) => { RemoveSkill(selectedItem.cat)  }}
+                            id="toolb"
+                            hidePlaceholder={true}
+                        />
+                        {/**<button className="btn mt-2 bg-primary z-depth-0 text-white">Agregar</button>*/}
+
                     </div>
                 </div>
                 <div className="col-xs-12 o-col col-sm-9">
                     <p>Herramientas</p>
-                    <div className="rounded" style={{ border: "1px solid #4285F4" }}>
-
+                    <div className="rounded p-2 pt-3 d-flex o-skill-list-cnt">
+                        {skills.map((skill) => (
+                            <div key={skill.id} className="o-card-select-skill rounded">
+                                <span onClick={()=>{RemoveSkill(skill)}} className="o-x-btn"><FontAwesomeIcon icon={faTimesCircle} /></span>
+                                <img className="o-selected-skill-img" alt={skill.name} src={skill.icon} />
+                                <div className="bg-primary text-white">
+                                    <small style={{ fontSize: "0.65rem" }}>{skill.name}</small>
+                                </div>
+                            </div>
+                        ))}
                     </div>
+                </div>
+
+                <div className="col-xs-12 col-sm-12 d-flex justify-content-end">
+                    <button className="btn mt-2 bg-primary z-depth-0 text-white">Guardar</button>
                 </div>
             </div>
 
         </div>
     )
 }
+
+/*
+
+ <div className="o-box">
+                        <select>
+                            <option>Seleccione el número de años</option>
+                        </select>
+                    </div>
+*/

@@ -1,12 +1,14 @@
 .o-register-container {
 	margin: -2rem 0 0 0;
 	width: 100%;
+	height: auto;
 	padding: 1rem 2rem;
 	border-radius: 0.8rem;
 	background-color: #eef7fc;
-	overflow: hidden;
 }
-
+.o-list-skill-cont {
+	height: 10rem;
+}
 .o-register-container .inputWrapper {
 	height: 2rem;
 	width: 7rem;
@@ -70,6 +72,10 @@
 	border-bottom: 0.1px solid #007bff;
 }
 
+.o-f {
+	max-width: auto;
+}
+
 .o-box {
 	position: absolute;
 	margin-top: 1.5rem;
@@ -118,12 +124,57 @@
 .o-col {
 	min-width: 17rem;
 }
+.o-card-select-skill {
+	width: 7rem;
+	min-width: 7rem;
+	height: 8rem;
+	background-color: #fff;
+	border: 1px solid #0472ca;
+	padding: 0;
+	margin: 0.5rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+}
+.o-selected-skill-img {
+	width: 5rem;
+	height: 5rem;
+	margin: 0.7rem auto auto auto;
+}
+
+.o-x-btn {
+	width: 1.5rem;
+	height: 1.4rem;
+	font-size: 1.5rem;
+	color: red;
+	background: white;
+	margin: 0.6rem 0 0 6.1rem;
+	position: absolute;
+	padding: 0;
+	top: 0;
+}
+
+.o-x-btn:hover {
+	color: rgb(182, 5, 5);
+}
+.o-skill-list-cnt {
+	min-height: 9rem;
+	overflow-x: auto;
+	position: relative;
+	border: 1px solid #4285f4;
+}
 @media only screen and (max-width: 1290px) {
 	.o-box {
 		margin-bottom: 4rem;
 	}
 	.o-col {
 		padding-bottom: 2rem;
+	}
+}
+@media only screen and (max-width: 890px) {
+	.o-col {
+		padding-bottom: 2rem;
+		min-width: 15rem;
 	}
 }
 @media only screen and (max-width: 590px) {
@@ -134,8 +185,29 @@
 	}
 	.o-skills-select {
 		min-width: auto;
+		margin: 0 auto 0 auto;
 	}
 	.o-col {
 		padding: 3px;
+		min-width: 17rem;
 	}
+	.o-f {
+		max-width: 11.5rem;
+	}
+	.o-up-btn {
+		max-width: 9rem;
+	}
+}
+
+.o-skill-list-cnt::-webkit-scrollbar {
+	height: 8px;
+	background-color: #e0e0e0;
+}
+.o-skill-list-cnt::-webkit-scrollbar-thumb {
+	background: #4285f4;
+	border-radius: 3px;
+}
+
+.o-skill-list-cnt::-webkit-scrollbar-thumb:hover {
+	background: #3a4c99;
 }

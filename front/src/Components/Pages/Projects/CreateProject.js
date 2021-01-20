@@ -6,7 +6,9 @@ import ProjectIcon from "../../../Logos/project.png";
 import ProjectPicture from "../../../ilustracion-equipo-de-trabajo.jpg";
 import CardMember from "../../Elements/CardMember/CardMember";
 import { faAngleDoubleUp } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; class CreateProject extends Component {
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+class CreateProject extends Component {
     
     constructor(props) {
         super(props);
