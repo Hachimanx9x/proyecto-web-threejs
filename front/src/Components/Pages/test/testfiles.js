@@ -70,8 +70,10 @@ class Test extends Component {
   }
   enviar = () => {
     const data = new FormData();
-    data.append("file", img);
-    this.httpInstance.post('login', { email, password }).then(respuesta => {
+    const file = this.state.img; 
+    data.append("file", file);
+    /*
+    this.httpInstance.post('login', { }).then(respuesta => {
       if (respuesta.statusText === "OK") {
         console.log(respuesta.data);
       } else {
@@ -81,6 +83,7 @@ class Test extends Component {
     }).catch(error => {
       console.error(error);
     })
+    */
   }
   render() {
     return (
