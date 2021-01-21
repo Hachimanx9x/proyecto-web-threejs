@@ -12,18 +12,27 @@ funcionesDB.eliminarproyecto = (proyecto) => {
     return new Promise((res, rej) => {
         buscarDB.obtenerdatosintgrantesdeproyecto(proyecto).then(result => {
             let integrantes = reorganizarintegrantes(result.API);
-            eliminaciondelistaintegrantes(integrantes, proyecto).then(result2 => {
-                console.log(chalk.bgRed("|   |") + " lista integrantes eliminada");
-                eleminarintegrantes(integrantes).then(result3 => {
-                    console.log(chalk.bgRed("|   |") + " integrantes eliminada");
-                    funcionesDB.deleteProject({ id: proyecto }).then(result4 => {
-                        let archivos = archivosaeliminar(result.API);
-                        console.log(chalk.bgRed("|   |") + " proyecto eliminada");
-                        res({ proyecto: proyecto, archivos: archivos })
-                    }).catch(err4 => rej(err4))
-                }).catch(err3 => rej(err3))
-            }).catch(err2 => rej(err2))
 
+            buscarDB.obtenerentredeproyectoconconte(proyecto).then(info => {
+                let entregalbes = filtrarinfopraeleminacioentregalbe(info.API)
+                eliminaciondelistaintegrantes(integrantes, proyecto).then(result2 => {
+                    console.log(chalk.bgRed("|   |") + " lista integrantes eliminada");
+                    eleminarintegrantes(integrantes).then(result3 => {
+                        console.log(chalk.bgRed("|   |") + " integrantes eliminada");
+                        funcionesDB.deleteProject({ id: proyecto }).then(result4 => {
+                            console.log(chalk.bgRed("|   |") + " proyecto eliminada");
+                            let archivos = archivosaeliminar(result.API);
+                            let listaarchivos = archivos.concat(entregalbes.contenidos)
+
+                            let set = new Set(listaarchivos.map(JSON.stringify))
+                            let arrSinDuplicaciones = Array.from(set).map(JSON.parse);
+
+
+                            res({ proyecto: proyecto, archivos: arrSinDuplicaciones })
+                        }).catch(err4 => rej(err4))
+                    }).catch(err3 => rej(err3))
+                }).catch(err2 => rej(err2))
+            }).catch(err5 => rej(err5))
         }).catch(err => rej(err))
     })
 }
@@ -1818,6 +1827,7 @@ function eliminaciondelistaintegrantes(array, proyecto) {
         }
     })
 }
+
 function eleminarintegrantes(array) {
     return new Promise((res, rej) => {
         let cont = 0;
@@ -1853,13 +1863,60 @@ function archivosaeliminar(array) {
     arraydef = Array.from(new Set(arraydef))
 
     for (let a = 0; a < arraydef.length; a++) {
-        if (arraydef[a] === null && arraydef[a] === "null") { } else {
+        if (arraydef[a] !== null || arraydef[a] !== "null") {
             arraydef2.push(arraydef[a]);
         }
     }
-    c
+
     return arraydef2;
 }
+function filtrarinfopraeleminacioentregalbe(array) {
+    let obj = {}
+    let practicas = []
+    let alfas = []
+    let entregable = []
+    let entregas = []
+    let contenidos = []
+
+    for (let a = 0; a < array.length; a++) {
+        practicas.push(array[a].practicaid)
+    }
+    let set0 = new Set(practicas.map(JSON.stringify))
+    practicas = Array.from(set0).map(JSON.parse);
+    for (let b = 0; b < array.length; b++) {
+        alfas.push(array[b].alfaid)
+    }
+    let set1 = new Set(alfas.map(JSON.stringify))
+    alfas = Array.from(set1).map(JSON.parse);
+    for (let c = 0; c < array.length; c++) {
+        entregable.push(array[c].entregableid)
+    }
+    let set2 = new Set(entregable.map(JSON.stringify))
+    entregable = Array.from(set2).map(JSON.parse);
+    for (let d = 0; d < array.length; d++) {
+        entregas.push(array[d].entregaid)
+    }
+    let set3 = new Set(entregas.map(JSON.stringify))
+    entregas = Array.from(set3).map(JSON.parse);
+    for (let e = 0; e < array.length; e++) {
+        if (array[e].contenidoid !== null || array[e].contenidoid !== "null") {
+            contenidos.push(array[e].contenidoid)
+        }
+    }
+    let set4 = new Set(contenidos.map(JSON.stringify))
+    contenidos = Array.from(set4).map(JSON.parse);
+
+    obj.practicas = practicas;
+    obj.alfas = alfas;
+    obj.entregable = entregable;
+    obj.entregas = entregas;
+    obj.contenidos = contenidos;
+    return obj;
+
+
+}
+
+
 module.exports = funcionesDB;
 
 

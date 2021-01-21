@@ -24,8 +24,9 @@ rutas.get('/escritorio', proToken, (req, res) => {
         if (err) {
             res.sendStatus(403);
         } else {
+            //console.log(data)
             if (data.rows[0] != null || data.rows.length > 0) {
-                //console.log(data.rows);  
+                // console.log(data.rows);
                 buscarDB.obtenerEscritorioActividades(data).then(result => {
                     //res.json(result)
                     buscarDB.obtenerEscritorioProyectos(data).then(result2 => {
@@ -108,12 +109,9 @@ rutas.get('/proyectos/:id', proToken, (req, res) => {
 
 
 rutas.get('/proyecto/contenido/:buque/:name', (req, res) => {
-    /*
-     if(buscarDB.buscarProyecto(req.params)){
-         
-     }*/
-    //console.log(req.params);
+
     const { buque, name } = req.params;
+    console.log(req.params)
     // const {id,name } = req.body;
 
     ftpminio.getFilesingle(buque, name, res);

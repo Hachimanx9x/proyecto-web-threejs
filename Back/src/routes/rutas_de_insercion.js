@@ -14,7 +14,7 @@ const insertDB = require('../database/insertarDB');
 const actualizarDB = require('../database/actualizarDB')
 const jwt = require('jsonwebtoken');
 const modelomt = require('../models/models');
-const { then } = require('../database');
+
 const LLAVE = 'misecretos';
 const chalk = require('chalk');
 rutas.post('/registro', (req, res) => {
@@ -90,9 +90,14 @@ rutas.post('/create/usuario', (req, res) => {
           buscarDB.obtenertodasUsuarios().then(result3 => {
             const { API } = result3;
             let ultimo = API[API.length - 1].id;
+            let usuario = API[API.length - 1]
             const bucket = `usuario${ultimo}`
             ftpminio.creatBucket(bucket).then(result2 => {
-              res.json(result)
+              let rows = []
+              rows.push(usuario)
+              const token = jwt.sign({ rows }, LLAVE);
+
+              res.json({ token: token })
             }).catch(err2 => { res.json(err2) });
           }).catch(err3 => { res.json(err3) });
         }).catch(err => { res.json(err) });
@@ -135,17 +140,75 @@ rutas.post('/agregar/palabraclave', proToken, (req, res) => {
     if (err) {
       res.sendStatus(403);
     } else {
-      if (data.length > 0) {
+      if (data.rows.length > 0) {
         const { palabra } = req.body;
-
-        insertDB.insertKeyword({ user: data[0].id, palabra }).then(result => {
-          res.json(result)
-        }).catch(err => res.json(err))
+        if (Array.isArray(palabra)) {
+          let c = 0;
+          for (let a = 0; a < palabra.length; a++) {
+            insertDB.insertKeyword({ user: data.rows[0].id, palabra: palabra[a] }).then(result => {
+              if (c === (palabra.length - 1)) {
+                res.json(result)
+              }
+              c++
+            }).catch(err => res.json(err))
+          }
+        } else {
+          res.json({ msj: "palabra no es un array" })
+        }
       }
       else { res.sendStatus(403); }
 
     }
   });
+});
+rutas.post('/agregar/idioma', proToken, (req, res) => {
+  jwt.verify(req.token, LLAVE, (err, data) => {
+    if (err) {
+      res.sendStatus(403);
+    } else {
+      // console.log(data)
+      const { idioma } = req.body;
+      if (Array.isArray(idioma)) {
+        let c = 0;
+        for (let a = 0; a < idioma.length; a++) {
+          insertDB.insertlistlenguaje({ user: data.rows[0].id, idioma: idioma[a] }).then((result) => {
+            if (c === (idioma.length - 1)) {
+              res.json(result);
+            }
+            c++
+          }).catch(err => res.json(err));
+        }
+
+      } else {
+        res.json({ msj: "idioma no es un array" })
+      }
+
+    }
+  })
+
+});
+
+rutas.post('/agregar/herramientas', proToken, (req, res) => {
+  jwt.verify(req.token, LLAVE, (err, data) => {
+    if (err) {
+      res.sendStatus(403);
+    } else {
+      const { herramienta } = req.body;
+      if (Array.isArray(herramienta)) {
+        let c = 0;
+        for (let a = 0; a < herramienta.length; a++) {
+          insertDB.insertlistTool({ usuario: data.rows[0].id, herramienta: herramienta[a] }).then(resul => {
+            if (c === (idioma.length - 1)) { res.json(resul) }
+            c++
+          }).catch(err => res.json(err));
+        }
+      } else {
+        res.json({ msj: "herramienta no es un array" })
+      }
+
+    }
+  })
+
 });
 
 rutas.post('/create/proyecto', proToken, (req, res) => {
@@ -349,6 +412,8 @@ rutas.post('/insert/auto/roles', (req, res) => {
     res.json(reul)
   }).catch(err => res.json(err))
 })
+
+
 /**
       db      `7MM"""Mq. `7MMF'                                 mm    `7MM                       `7MM          
      ;MM:       MM   `MM.  MM                                   MM      MM                         MM          
@@ -747,6 +812,13 @@ rutas.post('/proyecto/insertarArchivo', (req, res) => {
       console.log(err)
     }
   });
+});
+
+rutas.post('/proyecto/insertarArchivo2', (req, res) => {
+  console.log(req.body);
+  console.log(req.files);
+
+
 });
 
 //-------------------

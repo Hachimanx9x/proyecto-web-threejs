@@ -30,7 +30,7 @@ query.obtenerEscritorioActividades = function (id) {
     actividades.actividaddescripcion,
     actividades.actividadestado,
     actividades.actividadfechaentrega,
-    contenidos.contenidonombre
+    contenidos.contenidonombrearchivo
     
     FROM listaintegrantes
     JOIN integrantes ON listaintegrantes.integrante=  integrantes.id  
@@ -388,6 +388,27 @@ query.obteneracticontinte = function (id) {
     join entregas on actividades.id = entregas.actividad
     where proyectos.id = ${id}; 
         `
+}
+
+query.obtenerentregcontinte = function (id) {
+    return ` SELECT 
+    practicas.id AS "practicaid" ,
+    alfas.id AS "alfaid" ,
+    entregables.id AS "entregableid",
+    entregas.id AS "entregaid",
+    contenidos.contenidonombrearchivo AS "contenidoid"
+    FROM proyectos
+    join metodologias on proyectos.metodologia = metodologias.id
+    join listapracticas on metodologias.id = listapracticas.metodologia
+    join practicas on listapracticas.practica = practicas.id
+    join listaalfas on practicas.id = listaalfas.practica
+    join alfas on listaalfas.alfa = alfas.id
+    join listaentregables on alfas.id = listaentregables.alfa
+    join entregables on listaentregables.entregable= entregables.id
+    join listacontenidos on entregables.id = listacontenidos.entregable
+    join contenidos on listacontenidos.contenido = contenidos.id
+    join entregas on entregables.id = entregas.entragable
+    where proyectos.id = ${id};`
 }
 
 //-------------busquedas por tablas

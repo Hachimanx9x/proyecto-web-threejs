@@ -547,7 +547,7 @@ module.exports = {
                     descripcion: "Define las propuestas de valor claves para hacer destacar al producto",
                     estado: "iniciado",
                     entregable: [
-                        "Análisis de viabilidad del Sistema Multiemdia",
+                        "Análisis de viabilidad del Sistema Multimedia",
                         "Proposición de valor del Sistema Multimedia",
                         "Visión del Sistema Multimedia Minimo Viable",
                         "Modelo Canvas del Sistema Multimedia Minimo Viable"

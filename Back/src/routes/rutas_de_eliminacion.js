@@ -344,6 +344,15 @@ rutas.delete('/', (req, res) => {
     }
 });
 
+rutas.delete('/delete/bucket', (req, res) => {
+    let proyecto = 111;
+    let archivos = ["calavera.pdf"]
+    ftpminio.removeBucket(`proyecto${proyecto}`, archivos).then(result2 => {
+        res.json("Adios amigo")
+    }).catch(err2 => res.json(err2))
+})
+
+
 
 //
 function proToken(req, res, next) {

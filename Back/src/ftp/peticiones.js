@@ -116,7 +116,7 @@ peticiones.removeObject = (bucket, obj) => {
 }
 peticiones.removeBucket = (bucket, archivos) => {
   return new Promise((res, rej) => {
-    removerobjeto(bucket).then(result => {
+    removerobjeto(archivos, bucket).then(result => {
       minio.removeBucket(bucket, function (err) {
         if (err) {
           console.log('error')
@@ -134,19 +134,19 @@ peticiones.removeBucket = (bucket, archivos) => {
 }
 
 
-function removerobjeto(lista) {
+function removerobjeto(lista, bucket) {
+
   return new Promise((res, rej) => {
-
     console.log(lista)
-
-    if (lista.length == 0) {
+    if (lista.length == 0 || lista[0] == "null") {
       res(true)
     } else {
+      let num = 0;
       for (let a = 0; a < lista.length; a++) {
-        let num = 0;
-        peticiones.removeObject(lista[a], bucket).then(result => {
-          console.log(result.msj)
-          if (num === lista.length) { res(true) }
+
+        peticiones.removeObject(bucket, lista[a]).then(result => {
+          console.log(result.msj);
+          if (num === (lista.length - 1)) { res(true); console.log("sali") }
           num++;
         }).catch(err => rej(err))
 

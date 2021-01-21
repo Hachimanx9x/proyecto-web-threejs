@@ -49,7 +49,7 @@ class Test extends Component {
       }
       );
       //------
-      httpInstance.post('proyecto/insertarArchivo', formData).then(respuesta => {
+      httpInstance.post('proyecto/insertarArchivo2', formData).then(respuesta => {
         if (respuesta.statusText === "OK") {
           console.log(respuesta.data);
         } else {
@@ -70,10 +70,12 @@ class Test extends Component {
   }
   enviar = () => {
     const data = new FormData();
-    const file = this.state.img; 
-    data.append("file", file);
-    /*
-    this.httpInstance.post('login', { }).then(respuesta => {
+    const file = this.state.img;
+    console.log(file)
+    data.append("bucket", "default");
+    data.append("archivo", file);
+    console.log(data)
+    this.httpInstance.post('proyecto/insertarArchivo', data).then(respuesta => {
       if (respuesta.statusText === "OK") {
         console.log(respuesta.data);
       } else {
@@ -83,16 +85,16 @@ class Test extends Component {
     }).catch(error => {
       console.error(error);
     })
-    */
+
   }
   render() {
     return (
       <div>
         <div onSubmit={this.onFormSubmit}>
           <h1>Subir archivos en react js </h1>
-          <input type="file" name="file" onChange={e => {this.setState({img: e.target.files[0]}); }}  />
+          <input type="file" name="file" onChange={e => { this.setState({ img: e.target.files[0] }); }} />
 
-        <button onClick={this.enviar}>Enviar</button>
+          <button onClick={this.enviar}>Enviar</button>
         </div>
 
         <div>
@@ -115,7 +117,7 @@ data.append('archivo', fs.createReadStream('/C:/Users/DIEGO/Videos/2020-12-02_21
 var config = {
   method: 'post',
   url: 'http://localhost:3030/proyecto/insertarArchivo2',
-  headers: { 
+  headers: {
     ...data.getHeaders()
   },
   data : data

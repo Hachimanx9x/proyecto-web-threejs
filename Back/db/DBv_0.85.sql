@@ -159,20 +159,20 @@ CREATE TABLE listaalfas
 CREATE TABLE herramientasmetodologia(	
 id int PRIMARY KEY AUTO_INCREMENT, 
 nombre VARCHAR
-(150), 
+(1500), 
 descripcion VARCHAR
-(500), 
+(5000), 
 bibliografia VARCHAR
-(150));
+(1500));
 
 CREATE TABLE tecnicas(
 id INT PRIMARY KEY AUTO_INCREMENT,
 tecnicatitulo VARCHAR
-(500), 
+(5000), 
 tecnicadescripcion VARCHAR
-(1500),
+(15000),
 tecnicabibliografia VARCHAR
-(1500));
+(15000));
 
 CREATE TABLE actividades(
 id INT PRIMARY KEY AUTO_INCREMENT,
@@ -209,11 +209,11 @@ FOREIGN KEY
 CREATE TABLE roles(
 id int PRIMARY KEY AUTO_INCREMENT, 
 roltitulo VARCHAR
-(100), 
+(1000), 
 roldescripcion VARCHAR
-(500), 
+(50000), 
 rolperfilRecomendado VARCHAR
-(1500));
+(15000));
 
 CREATE TABLE listaroles
 (
@@ -512,408 +512,188 @@ SELECT *
 FROM listaidiomas
 ;
 
-INSERT INTO habilidades
-    (habilidadtipo, habilidaddescripcion, habilidadnivel)
-VALUES
-    ("diseño ui", "Expecialista en diseño para la web", "medio")
-;
-INSERT INTO habilidades
-    (habilidadtipo, habilidaddescripcion, habilidadnivel)
-VALUES
-    ("diseño software", "Expecialista seguridad", "alto")
-;
-INSERT INTO habilidades
-    (habilidadtipo, habilidaddescripcion, habilidadnivel)
-VALUES
-    ("programador", "construcción de servidores", "medio")
-;
-SELECT *
-FROM habilidades;
-
-
-INSERT INTO listahabilidades
-VALUES(1, 1);
-INSERT INTO listahabilidades
-VALUES(1, 2);
-
-INSERT INTO listahabilidades
-VALUES(2, 2);
-INSERT INTO listahabilidades
-VALUES(2, 3);
-
-SELECT *
-FROM listahabilidades;
-
-
-
-INSERT INTO contactos
-    (contactousuario, preferencias)
-VALUES
-    (1, TRUE);
-INSERT INTO contactos
-    (contactousuario, preferencias)
-VALUES
-    (2, FALSE);
-SELECT *
-FROM contactos;
-
-INSERT INTO listacontactos
-VALUES(1, 2);
-INSERT INTO listacontactos
-VALUES(2, 1);
-SELECT *
-FROM listacontactos;
-
-INSERT INTO herramientas
-    (herramientanombre, herramientatipo, herramientadescripcion, herramientanombreIcono)
-VALUES
-    ("nodejs", "Desarrollo software", "Node.js es un entorno multiplataforma, basado en el lenguaje de programación JavaScript.", "nodejslogo.svg");
-INSERT INTO herramientas
-    (herramientanombre, herramientatipo, herramientadescripcion, herramientanombreIcono)
-VALUES
-    ("Bootstrap", "Desarrollo web", "Bootstrap es una biblioteca multiplataforma para el diseño de entornos web.", "Bootstraplogo.svg");
-INSERT INTO herramientas
-    (herramientanombre, herramientatipo, herramientadescripcion, herramientanombreIcono)
-VALUES
-    ("Go", "Desarrollo software", "Go es un lenguaje de programación concurrente y compilado inspirado en la sintaxis de C", "golanglogo.svg");
-SELECT *
-FROM herramientas;
-
-
-INSERT INTO listaherramientas
-VALUES(1, 1);
-INSERT INTO listaherramientas
-VALUES(1, 2);
-INSERT INTO listaherramientas
-VALUES(2, 1);
-INSERT INTO listaherramientas
-VALUES(2, 3);
-SELECT *
-FROM listaherramientas;
-
-INSERT INTO metodologias
-    (metodologianombre, metodologiadescripcion,metodologiaconsejo )
-VALUES("metodologia para preprodución de un sistema multimedia [MPSM]", "es modular tiene varias practicas modular que utiliza las buenas practicas para la diseño de un sistema multimedia apoyado en metodos agiles", "sigue tu corazon");
-SELECT *
-FROM metodologias;
-
-
-INSERT INTO historiales
-    (historiadescripcion)
-VALUES("esta hara seguimiento a todos los suscesos echos en el prouyecto asociado");
-SELECT *
-FROM historiales;
-
-INSERT INTO proyectos
-    (proyectonombre, proyectodescripcion, proyectoestado, proyectoicon,proyectobanner, metodologia, historia)
-VALUES("Desarrollo de un entorno virtual colaborativo para preproducción de un sistema multimedia", "Como se expone en el apartado de planteamiento del problema los equipos de trabajo encargados de la preproducción de un sistema multimedia poseen muchos retos en la gestión, por lo tanto, el sistema propuesto por este documento podrá garantizar los siguientes beneficios", "iniciada", "iconoTemporaldelsistema.jpg", "bannertemporal.jpg", 1, 1);
-SELECT *
-FROM proyectos;
-
-INSERT INTO practicas
-    (practicanombre, practicadescripcion )
-VALUES
-    ("concepción del experiencia multimedia [CEM]", "se estara haciendo uso de fierentes herramientras para creacion de una ccorrecta experiencia");
-INSERT INTO practicas
-    (practicanombre, practicadescripcion )
-VALUES
-    ("sistema multimedia minimo viable [SMMV]", "En este aparatado se establecera el minimo producto viable a entregar ");
-SELECT *
-FROM practicas
-;
-
-INSERT INTO listapracticas
-VALUES
-    (1, 1);
-INSERT INTO listapracticas
-VALUES
-    (1, 2);
-SELECT *
-FROM listapracticas;
-
-INSERT INTO roles
-    (roltitulo , roldescripcion , rolperfilRecomendado)
-VALUES
-    ("arquitecto de expericia multimedia [AEM]", "es el escargado de dirigil, coordinar y estrucutrar todo lo relacionado con la expericia final del sistema", "Diseñador ui");
-INSERT INTO roles
-    (roltitulo , roldescripcion , rolperfilRecomendado)
-VALUES
-    ("arquitecto de informacion [AI]", "es el escargado estructural toda la informacion mostrada en el sistema asi mismo como todo la informacion de sosporte para el equipo", "Diseñador back-end");
-SELECT *
-FROM roles;
-
-
-INSERT INTO listaroles
-VALUES
-    (1, 1);
-INSERT INTO listaroles
-VALUES
-    (1, 2);
-INSERT INTO listaroles
-VALUES
-    (2, 1);
-INSERT INTO listaroles
-VALUES
-    (2, 2);
-
-SELECT *
-FROM listaroles;
-
-INSERT INTO integrantes
-    (usuario, rol)
-VALUES(1, 1);
-INSERT INTO integrantes
-    (usuario, rol)
-VALUES(2, 2);
-SELECT *
-FROM integrantes;
-
-INSERT INTO listaintegrantes
-values(1, 1);
-INSERT INTO listaintegrantes
-values(1, 2);
-SELECT *
-FROM listaintegrantes;
-
-
-INSERT INTO alfas
-    (alfanombre, alfadescripcion,alfaestado)
-VALUES("Oportunidad", "estudia la aceptacion de la propuesta en el mercado", "iniciado");
-INSERT INTO alfas
-    (alfanombre, alfadescripcion,alfaestado)
-VALUES("Valor del sistema multimedia", "Es una sub-alfa que se inscribe en el alfa de Oportunidad, concebida para llevar a cabo la concreción de la propuesta de valor del Sistema Multimedia mínimo viable.", "iniciado");
-INSERT INTO alfas
-    (alfanombre, alfadescripcion,alfaestado)
-VALUES("Experiencia multimedia", "estudia la experiencia multimedia resultante del sistema multimediaproyectoweb", "iniciado");
-INSERT INTO alfas
-    (alfanombre, alfadescripcion,alfaestado)
-VALUES("Diseño responsable", "Es una sub-alfa que se inscribe en el alfa de Experiencia Multimedia de la adaptación producida al kernel de Esencia, concebida para hacer un seguimiento granular al progreso del diseño responsable que debe concebirse para el Sistema Multimedia, y que influye en consecuencia, en la experiencia multimedia.", "iniciado");
-SELECT *
-FROM alfas;
-
-INSERT INTO listaalfas
-VALUES(1, 3);
-INSERT INTO listaalfas
-VALUES(1, 4);
-INSERT INTO listaalfas
-VALUES(2, 1);
-INSERT INTO listaalfas
-VALUES(2, 2);
-SELECT *
-FROM listaalfas;
-
-
-INSERT INTO entregables
-    (entregatitulo, entregadescripcion, entregaestado, entregatipoArchivo, entregafechaEntrega,entreganumeroRevisiones)
-VALUES
-    ("Porpuesta de diseño de la EM", "Consiste en un documento en donde se especifica", "asignada", "documento de texto", "2021-01-23", 0);
-INSERT INTO entregables
-    (entregatitulo, entregadescripcion, entregaestado, entregatipoArchivo, entregafechaEntrega,entreganumeroRevisiones)
-VALUES
-    ("Especificaciones del diseño responsable", "Consiste en un documento en donde se especifica", "asignada", "documento de texto", "2021-01-23", 0);
-SELECT *
-FROM entregables;
-
-INSERT INTO tecnicas
-    (tecnicatitulo, tecnicadescripcion, tecnicabibliografia)
-VALUES
-    ("tecnica T1", "esta tecnica no se a terminadado de documentar por lo que se dejara este espacio", "links de la bibliografias");
-INSERT INTO tecnicas
-    (tecnicatitulo, tecnicadescripcion, tecnicabibliografia)
-VALUES
-    ("tecnica T2", "esta tecnica no se a terminadado de documentar por lo que se dejara este espacio", "links de la bibliografias");
-INSERT INTO tecnicas
-    (tecnicatitulo, tecnicadescripcion, tecnicabibliografia)
-VALUES
-    ("tecnica T3", "esta tecnica no se a terminadado de documentar por lo que se dejara este espacio", "links de la bibliografias");
-INSERT INTO tecnicas
-    (tecnicatitulo, tecnicadescripcion, tecnicabibliografia)
-VALUES
-    ("tecnica T4", "esta tecnica no se a terminadado de documentar por lo que se dejara este espacio", "links de la bibliografias");
-INSERT INTO tecnicas
-    (tecnicatitulo, tecnicadescripcion, tecnicabibliografia)
-VALUES
-    ("tecnica T5", "esta tecnica no se a terminadado de documentar por lo que se dejara este espacio", "links de la bibliografias");
-SELECT *
-FROM tecnicas;
-
-
-INSERT INTO actividades
-    (actividadtitulo, actividadestado,actividaddescripcion, actividadfechacreacion,actividadfechaentrega,actividadrevision,tecnica)
-VALUES
-    ("Actividad A1", "asignada", "descripcion de la actividad", "2020-12-14", "2021-02-13", 0, 1 );
-INSERT INTO actividades
-    (actividadtitulo, actividadestado,actividaddescripcion, actividadfechacreacion,actividadfechaentrega,actividadrevision,tecnica)
-VALUES
-    ("Actividad A2", "asignada", "descripcion de la actividad", "2020-12-14", "2021-02-13", 0, 2 );
-INSERT INTO actividades
-    (actividadtitulo, actividadestado,actividaddescripcion, actividadfechacreacion,actividadfechaentrega,actividadrevision,tecnica)
-VALUES
-    ("Actividad A3", "asignada", "descripcion de la actividad", "2020-12-14", "2021-02-13", 0, 3 );
-INSERT INTO actividades
-    (actividadtitulo, actividadestado,actividaddescripcion, actividadfechacreacion,actividadfechaentrega,actividadrevision,tecnica)
-VALUES
-    ("Actividad A4", "asignada", "descripcion de la actividad", "2020-12-14", "2021-02-13", 0, 4 );
-INSERT INTO actividades
-    (actividadtitulo, actividadestado,actividaddescripcion, actividadfechacreacion,actividadfechaentrega,actividadrevision,tecnica)
-VALUES
-    ("Actividad A5", "asignada", "descripcion de la actividad", "2020-12-14", "2021-02-13", 0, 5 );
-SELECT *
-FROM actividades;
-
-INSERT INTO listaactividades
-VALUES
-    (1, 1);
-INSERT INTO listaactividades
-VALUES
-    (1, 2);
-INSERT INTO listaactividades
-VALUES
-    (1, 3);
-INSERT INTO listaactividades
-VALUES
-    (2, 4);
-INSERT INTO listaactividades
-VALUES
-    (2, 5);
-SELECT *
-FROM listaactividades;
-
-INSERT INTO contenidos
-    (contenidonombre, contenidonombrearchivo, contenidodescripcion, contenidobibliografica)
-VALUES
-    (NULL, NULL, NULL, NULL);
-INSERT INTO contenidos
-    (contenidonombre, contenidonombrearchivo, contenidodescripcion, contenidobibliografica)
-VALUES
-    (NULL, NULL, NULL, NULL);
-INSERT INTO contenidos
-    (contenidonombre, contenidonombrearchivo, contenidodescripcion, contenidobibliografica)
-VALUES
-    (NULL, NULL, NULL, NULL);
-INSERT INTO contenidos
-    (contenidonombre, contenidonombrearchivo, contenidodescripcion, contenidobibliografica)
-VALUES
-    (NULL, NULL, NULL, NULL);
-INSERT INTO contenidos
-    (contenidonombre, contenidonombrearchivo, contenidodescripcion, contenidobibliografica)
-VALUES
-    (NULL, NULL, NULL, NULL);
-SELECT *
-FROM contenidos;
-INSERT INTO listacontenidos
-    (entregable, contenido, actividad)
-VALUES
-    (NULL, 1, 1);
-INSERT INTO listacontenidos
-    (entregable, contenido, actividad)
-VALUES
-    (NULL, 2, 2);
-INSERT INTO listacontenidos
-    (entregable, contenido, actividad)
-VALUES
-    (NULL, 3, 3);
-INSERT INTO listacontenidos
-    (entregable, contenido, actividad)
-VALUES
-    (NULL, 4, 4);
-INSERT INTO listacontenidos
-    (entregable, contenido, actividad)
-VALUES
-    (NULL, 5, 5);
-INSERT INTO listacontenidos
-    (entregable, contenido, actividad)
-VALUES
-    (1, 6, null);    
-INSERT INTO listacontenidos
-    (entregable, contenido, actividad)
-VALUES
-    (2, 7, null);    
-SELECT *
-FROM listacontenidos;
-INSERT INTO chats
-    (chatnombreArchivo, chatfecha)
-VALUES
-    (NULL, NULL);
-SELECT *
-FROM chats;
-INSERT INTO listachats
-    (historial, chat)
-VALUES
-    (1, 1);
-SELECT *
-FROM listachats;
-INSERT INTO reuniones
-    (reuniontitulo, reunionfecha, reunionhora,reuniondurancion,reuniondescripcion,vigente)
-VALUES
-    (NULL, NULL, NULL, NULL, NULL, NULL );
-SELECT *
-FROM reuniones;
-INSERT INTO eventos
-    (eventofechacreacion)
-VALUES
-    (NULL);
-SELECT *
-FROM eventos;
-INSERT INTO listareuniones
-    (evento, reunion)
-VALUES
-    (1, 1);
-SELECT *
-FROM listareuniones;
-INSERT INTO entregas
-    (entregastitulo, entregasdescripcion, entregasnombrearchivoguardado , actividad,entragable)
-VALUES
-    (NULL, null, null, 1, null );
-INSERT INTO entregas
-    (entregastitulo, entregasdescripcion, entregasnombrearchivoguardado , actividad,entragable)
-VALUES
-    (NULL, null, null, 2, NULL );
-INSERT INTO entregas
-    (entregastitulo, entregasdescripcion, entregasnombrearchivoguardado , actividad,entragable)
-VALUES
-    (NULL, null, null, 3, NULL );
-INSERT INTO entregas
-    (entregastitulo, entregasdescripcion, entregasnombrearchivoguardado , actividad,entragable)
-VALUES
-    (NULL, null, null, 4, NULL );
-INSERT INTO entregas
-    (entregastitulo, entregasdescripcion, entregasnombrearchivoguardado , actividad,entragable)
-VALUES
-    (NULL, null, null, 5, NULL );
-
-INSERT INTO entregas
-    (entregastitulo, entregasdescripcion, entregasnombrearchivoguardado , actividad,entragable)
-VALUES
-    (NULL, null, null, NULL, 1 );
-INSERT INTO entregas
-    (entregastitulo, entregasdescripcion, entregasnombrearchivoguardado , actividad,entragable)
-VALUES
-    (NULL, null, null, NULL, 2 );
-
-SELECT *
-FROM entregas;
-INSERT INTO listaeventos
-    (historial, evento, integrante)
-VALUES(1, 1, 1);
-INSERT INTO listaeventos
-    (historial, evento, integrante)
-VALUES(1, 1, 2);
-SELECT *
-FROM listaeventos;
-
-INSERT INTO listaentregables
-    (alfa, entregable)
-VALUES
-    (3, 1 );
-INSERT INTO listaentregables
-    (alfa, entregable)
-VALUES
-    (4, 2 );
-SELECT *
-FROM listaentregables;
-
-
+INSERT INTO herramientas (herramientanombre, herramientatipo, herramientadescripcion, herramientanombreIcono) VALUES 
+    ("Reactjs",
+    "desarrollo", 
+    "Es una biblioteca Javascript de código abierto diseñada para crear interfaces de usuario con el objetivo de facilitar el desarrollo de aplicaciones en una sola página. Es mantenido por Facebook y la comunidad de software libre. En el proyecto hay más de mil desarrolladores libres. ",
+    "reactjs-icon.svg");
+-- /////////////////////////////
+INSERT INTO herramientas (herramientanombre, herramientatipo, herramientadescripcion, herramientanombreIcono) VALUES 
+    ("Angularjs",
+    "desarrollo", 
+    "Es un framework de JavaScript de código abierto, mantenido por Google, que se utiliza para crear y mantener aplicaciones web de una sola página. Su objetivo es aumentar las aplicaciones basadas en navegador con capacidad de Modelo Vista Controlador (MVC), en un esfuerzo para hacer que el desarrollo y las pruebas sean más fáciles.",
+    "angular-icon.svg");
+-- /////////////////////////////
+	INSERT INTO herramientas (herramientanombre, herramientatipo, herramientadescripcion, herramientanombreIcono) VALUES 
+    ("Vuejs",
+    "desarrollo", 
+    "Es un framework de JavaScript de código abierto para la construcción de interfaces de usuario y aplicaciones de una sola página. Fue creado por Evan You, y es mantenido por él y por el resto de los miembros activos del equipo central que provienen de diversas empresas como Netlify y Netguru.",
+    "reactjs-icon.svg");
+-- /////////////////////////////	
+INSERT INTO herramientas (herramientanombre, herramientatipo, herramientadescripcion, herramientanombreIcono) VALUES 
+    ("Nodejs",
+    "desarrollo", 
+    "Es un entorno en tiempo de ejecución multiplataforma, de código abierto, para la capa del servidor (pero no limitándose a ello) basado en el lenguaje de programación JavaScript, asíncrono, con E/S de datos en una arquitectura orientada a eventos y basado en el motor V8 de Google. Fue creado con el enfoque de ser útil en la creación de programas de red altamente escalables, como por ejemplo, servidores web.​ Fue creado por Ryan Dahl en 2009 y su evolución está apadrinada por la empresa Joyent, que además tiene contratado a Dahl en plantilla.
+",
+    "nodejs-icon.svg");
+-- /////////////////////////////	
+INSERT INTO herramientas (herramientanombre, herramientatipo, herramientadescripcion, herramientanombreIcono) VALUES 
+    ("HTML5",
+    "desarrollo", 
+    "Conocida como HTML5, y una variante XHTML conocida como sintaxis XHTML 5 que deberá servirse con sintaxis XML (application/xhtml+xml).1​2​ Esta es la primera vez que HTML y XHTML se han desarrollado en paralelo. La versión definitiva de la quinta revisión del estándar se publicó en octubre de 2014",
+    "w3_html5-icon.svg");	
+-- /////////////////////////////	
+INSERT INTO herramientas (herramientanombre, herramientatipo, herramientadescripcion, herramientanombreIcono) VALUES 
+    ("CSS3",
+    "desarrollo", 
+    "Es un lenguaje de diseño gráfico para definir y crear la presentación de un documento estructurado escrito en un lenguaje de marcado.2​ Es muy usado para establecer el diseño visual de los documentos web, e interfaces de usuario escritas en HTML o XHTML; el lenguaje puede ser aplicado a cualquier documento XML, incluyendo XHTML, SVG, XUL, RSS, etcétera. Te puede ayudar a crear tu propio sitio web. Junto con HTML y JavaScript, CSS es una tecnología usada por muchos sitios web para crear páginas visualmente atractivas, interfaces de usuario para aplicaciones web y GUIs para muchas aplicaciones móviles (como Firefox OS)",
+    "css3-original.svg");	
+-- /////////////////////////////	
+INSERT INTO herramientas (herramientanombre, herramientatipo, herramientadescripcion, herramientanombreIcono) VALUES 
+    ("PHP",
+    "desarrollo", 
+    "Es un lenguaje de programación de uso general que se adapta especialmente al desarrollo web.2​ Fue creado inicialmente por el programador danés-canadiense Rasmus Lerdorf en 1994.3​ En la actualidad, la implementación de referencia de PHP es producida por The PHP Group.4​ PHP originalmente significaba Personal Home Page (Página personal), pero ahora significa el inicialismon 1​ recursivo PHP: Hypertext Preprocessor.",
+    "php-icon.svg");	
+-- /////////////////////////////	
+INSERT INTO herramientas (herramientanombre, herramientatipo, herramientadescripcion, herramientanombreIcono) VALUES 
+    ("Flutter",
+    "desarrollo", 
+    "Es un SDK de código fuente abierto de desarrollo de aplicaciones móviles creado por Google. Suele usarse para desarrollar interfaces de usuario para aplicaciones en Android, iOS y Web así como método primario para crear aplicaciones para Google Fuchsia",
+    "flutterio-icon.svg");	
+-- /////////////////////////////	
+INSERT INTO herramientas (herramientanombre, herramientatipo, herramientadescripcion, herramientanombreIcono) VALUES 
+    ("Mysql",
+    "desarrollo", 
+    "Es un sistema de gestión de bases de datos relacional desarrollado bajo licencia dual: Licencia pública general/Licencia comercial por Oracle Corporation y está considerada como la base de datos de código abierto más popular del mundo, y una de las más populares en general junto a Oracle y Microsoft SQL Server, todo para entornos de desarrollo web.",
+    "mysql-7.svg");
+-- /////////////////////////////	
+INSERT INTO herramientas (herramientanombre, herramientatipo, herramientadescripcion, herramientanombreIcono) VALUES 
+    ("golang",
+    "desarrollo", 
+    "Es un lenguaje de programación concurrente y compilado inspirado en la sintaxis de C, que intenta ser dinámico como Python y con el rendimiento de C o C++. Ha sido desarrollado por Google9​ y sus diseñadores iniciales fueron Robert Griesemer, Rob Pike y Ken Thompson. 10​ Actualmente está disponible en formato binario para los sistemas operativos Windows, GNU/Linux, FreeBSD y Mac OS X, pudiendo también ser instalado en estos y en otros sistemas mediante el código fuente.",
+    "golang-official.svg");
+-- /////////////////////////////	
+INSERT INTO herramientas (herramientanombre, herramientatipo, herramientadescripcion, herramientanombreIcono) VALUES 
+    ("graphql",
+    "desarrollo", 
+    "Es un lenguaje de consulta y manipulación de datos para APIs, y un entorno de ejecución para realizar consultas con datos existentes.",
+    "graphql-icon.svg");
+-- /////////////////////////////	
+INSERT INTO herramientas (herramientanombre, herramientatipo, herramientadescripcion, herramientanombreIcono) VALUES 
+    ("typescript",
+    "desarrollo", 
+    "Es un lenguaje de programación libre y de código abierto desarrollado y mantenido por Microsoft. Es un superconjunto de JavaScript, que esencialmente añade tipos estáticos y objetos basados en clases. Anders Hejlsberg, diseñador de C# y creador de Delphi y Turbo Pascal, ha trabajado en el desarrollo de TypeScript.1​ TypeScript es usado para desarrollar aplicaciones JavaScript que se ejecutarán en el lado del cliente o del servidor, o extensiones para programas (Node.js y Deno (software)).",
+    "typescriptlang-icon.svg");
+-- /////////////////////////////	
+INSERT INTO herramientas (herramientanombre, herramientatipo, herramientadescripcion, herramientanombreIcono) VALUES 
+    ("jquery",
+    "desarrollo", 
+    "Es una biblioteca multiplataforma de JavaScript, creada inicialmente por John Resig, que permite simplificar la manera de interactuar con los documentos HTML, manipular el árbol DOM, manejar eventos, desarrollar animaciones y agregar interacción con la técnica AJAX a páginas web.1​ Fue presentada el 14 de enero de 2006 en el BarCamp NYC. De acuerdo a un análisis de la Web (realizado en 2017) JQuery es la biblioteca de JavaScript más utilizada, por un amplio margen.",
+    "jquery-icon.svg");
+-- /////////////////////////////	
+INSERT INTO herramientas (herramientanombre, herramientatipo, herramientadescripcion, herramientanombreIcono) VALUES 
+    ("bootstrap",
+    "desarrollo", 
+    "Es una biblioteca multiplataforma o conjunto de herramientas de código abierto para diseño de sitios y aplicaciones web. Contiene plantillas de diseño con tipografía, formularios, botones, cuadros, menús de navegación y otros elementos de diseño basado en HTML y CSS, así como extensiones de JavaScript adicionales. A diferencia de muchos frameworks web, solo se ocupa del desarrollo front-end.",
+    "getbootstrap-icon.svg");
+-- /////////////////////////////	
+INSERT INTO herramientas (herramientanombre, herramientatipo, herramientadescripcion, herramientanombreIcono) VALUES 
+    ("python",
+    "desarrollo", 
+    "Es un lenguaje de programación interpretado cuya filosofía hace hincapié en la legibilidad de su código.2​ Se trata de un lenguaje de programación multiparadigma, ya que soporta orientación a objetos, programación imperativa y, en menor medida, programación funcional. Es un lenguaje interpretado, dinámico y multiplataforma.",
+    "python-icon.svg");
+-- /////////////////////////////	
+INSERT INTO herramientas (herramientanombre, herramientatipo, herramientadescripcion, herramientanombreIcono) VALUES 
+    ("django",
+    "desarrollo", 
+    "Es un framework de desarrollo web de código abierto, escrito en Python, que respeta el patrón de diseño conocido como modelo–vista–controlador (MVC). Fue desarrollado en origen para gestionar varias páginas orientadas a noticias de la World Company de Lawrence, Kansas, y fue liberada al público bajo una licencia BSD en julio de 2005; el framework fue nombrado en alusión al guitarrista de jazz gitano Django Reinhardt.",
+    "djangoproject-icon.svg");
+-- /////////////////////////////	
+INSERT INTO herramientas (herramientanombre, herramientatipo, herramientadescripcion, herramientanombreIcono) VALUES 
+    ("mongodb",
+    "desarrollo", 
+    "Es un sistema de base de datos NoSQL, orientado a documentos y de código abierto.",
+    "mongodb-icon.svg");
+-- /////////////////////////////	
+INSERT INTO herramientas (herramientanombre, herramientatipo, herramientadescripcion, herramientanombreIcono) VALUES 
+    ("javascript",
+    "desarrollo", 
+    "Es un lenguaje de programación interpretado, dialecto del estándar ECMAScript. Se define como orientado a objetos,2​ basado en prototipos, imperativo, débilmente tipado y dinámico.",
+    "javascript.svg");
+-- /////////////////////////////	
+INSERT INTO herramientas (herramientanombre, herramientatipo, herramientadescripcion, herramientanombreIcono) VALUES 
+    ("material-ui",
+    "desarrollo", 
+    "Es una biblioteca de código abierto que implementa el lenguaje visual de «materiales» de Google en sus componentes React. Ofrece la capacidad de combinar su biblioteca de interfaz de usuario, con el marco front-end de React.js.",
+    "material-ui-1.svg");
+-- /////////////////////////////	
+INSERT INTO herramientas (herramientanombre, herramientatipo, herramientadescripcion, herramientanombreIcono) VALUES 
+    ("rails",
+    "desarrollo", 
+    "También conocido como RoR o Rails, es un framework de aplicaciones web de código abierto escrito en el lenguaje de programación Ruby, siguiendo el paradigma del patrón Modelo Vista Controlador (MVC).",
+    "rails.svg");
+-- /////////////////////////////	
+INSERT INTO herramientas (herramientanombre, herramientatipo, herramientadescripcion, herramientanombreIcono) VALUES 
+    ("figma",
+    "diseño", 
+    "es un programa que ofrece todas las herramientas necesarias para diseñar un proyecto. Sobre todo es ideal para crear interfaces de usuario tanto para web como para móvil. También permite crear prototipos,  generar código para el traspaso (hand-off) e ilustrar, aunque para esto último no es la mejor herramienta para ello.",
+    "figma-1.svg");
+-- /////////////////////////////	
+INSERT INTO herramientas (herramientanombre, herramientatipo, herramientadescripcion, herramientanombreIcono) VALUES 
+    ("dotnet",
+    "desarrollo", 
+    "Es un framework de Microsoft que hace un énfasis en la transparencia de redes, con independencia de plataforma de hardware y que permite un rápido desarrollo de aplicaciones. Basada en ella, la empresa intenta desarrollar una estrategia horizontal que integre sus productos, desde el sistema operativo hasta las herramientas de mercado.",
+    "dotnet.svg");
+-- /////////////////////////////	
+INSERT INTO herramientas (herramientanombre, herramientatipo, herramientadescripcion, herramientanombreIcono) VALUES 
+    ("sqlite",
+    "desarrollo", 
+    "es un sistema de gestión de bases de datos relacional compatible con ACID, contenida en una relativamente pequeña (~275 kiB)2​ biblioteca escrita en C. SQLite es un proyecto de dominio público1​ creado por D. Richard Hipp.",
+    "sqlite-icon.svg");
+-- /////////////////////////////	
+INSERT INTO herramientas (herramientanombre, herramientatipo, herramientadescripcion, herramientanombreIcono) VALUES 
+    ("android",
+    "desarrollo", 
+    "es el entorno de desarrollo integrado oficial para la plataforma Android. Fue anunciado el 16 de mayo de 2013 en la conferencia Google I/O, y reemplazó a Eclipse como el IDE oficial para el desarrollo de aplicaciones para Android. La primera versión estable fue publicada en diciembre de 2014.",
+    "android.svg");
+-- /////////////////////////////	
+INSERT INTO herramientas (herramientanombre, herramientatipo, herramientadescripcion, herramientanombreIcono) VALUES 
+    ("ionic",
+    "desarrollo", 
+    "Es una estructura tecnológica (Framework)  de código abierto que se utiliza en el desarrollo de aplicaciones móviles híbridas, es decir, se combinan el HTML5, CSS y JavaScript dando como resultado aplicaciones con una interfaz amigable e intuitiva para el usuario que luego se comercializan o descargan en plataformas como Android o IOs.",
+    "ionicframework-icon.svg");
+-- /////////////////////////////	
+INSERT INTO herramientas (herramientanombre, herramientatipo, herramientadescripcion, herramientanombreIcono) VALUES 
+    ("c++",
+    "desarrollo", 
+    "Es un lenguaje de programación diseñado en 1979 por Bjarne Stroustrup. La intención de su creación fue extender al lenguaje de programación C mecanismos que permiten la manipulación de objetos. En ese sentido, desde el punto de vista de los lenguajes orientados a objetos, C++ es un lenguaje híbrido.",
+    "c++.svg");
+-- /////////////////////////////	
+INSERT INTO herramientas (herramientanombre, herramientatipo, herramientadescripcion, herramientanombreIcono) VALUES 
+    ("c",
+    "desarrollo", 
+    "Es un lenguaje de programación de propósito general2​:1 originalmente desarrollado por Dennis Ritchie entre 1969 y 1972 en los Laboratorios Bell,1​ como evolución del anterior lenguaje B, a su vez basado en BCPL.",
+    "c.svg");
+-- /////////////////////////////	
+INSERT INTO herramientas (herramientanombre, herramientatipo, herramientadescripcion, herramientanombreIcono) VALUES 
+    ("c#",
+    "desarrollo", 
+    "Es un lenguaje de programación orientado a objetos. Con este nuevo lenguaje se quiso mejorar con respecto de los dos lenguajes anteriores de los que deriva el C, y el C++.",
+    "cs.svg");
+-- /////////////////////////////	
+INSERT INTO herramientas (herramientanombre, herramientatipo, herramientadescripcion, herramientanombreIcono) VALUES 
+    ("java",
+    "desarrollo", 
+    "Es un lenguaje de programación y una plataforma informática que fue comercializada por primera vez en 1995 por Sun Microsystems. Hay muchas aplicaciones y sitios web que no funcionarán, probablemente, a menos que tengan Java instalado y cada día se crean más. Java es rápido, seguro y fiable. ",
+    "java-icon.svg");
+-- /////////////////////////////	
+INSERT INTO herramientas (herramientanombre, herramientatipo, herramientadescripcion, herramientanombreIcono) VALUES 
+    ("wordpress",
+    "diseño", 
+    "Es un sistema de gestión de contenidos ( en inglés, Content Management System o CMS) lanzado el 27 de mayo de 2003, enfocado a la creación de cualquier tipo de página web. Originalmente alcanzó una gran popularidad en la creación de blogs, para luego convertirse en una de las principales herramientas para la creación de páginas web comerciales",
+    "wordpress-blue.svg");
+	
+	
 
 
 

@@ -5,7 +5,6 @@ const Query = require('./querys');
 const LLAVE = 'misecretos';
 const modelo = require('../models/models');
 const chalk = require('chalk');
-const { obtenertodasPracticas } = require('./querys');
 const funcionesDB = () => {
     console.log("funciones de la base de datos")
 }
@@ -21,6 +20,25 @@ const funcionesDB = () => {
 | $$      | $$| $$ \$$     \|       $$
  \$$       \$$ \$$  \$$$$$$$ \$$$$$$$ 
                                        */
+
+
+
+funcionesDB.agregarherramientas = (obj) => {
+    return new Promise((res, rej) => {
+        buscarDB.obtenertodasherramientas().then(tools => {
+            const { herramientas, id } = obj
+            let c = 0;
+            for (let a = 0; a < herramientas.length; a++) {
+                insertDB.insertlistTool({ usuario: id, herramienta: herramientas[a] }).then(resul => {
+                    if (c === (idioma.length - 1)) {
+
+                    }
+                    c++
+                }).catch(err => res.json(err));
+            }
+        }).catch(errt => rej(errt))
+    })
+}
 
 funcionesDB.creaproyecto2 = (obj) => {
     return new Promise((res, rej) => {
@@ -192,6 +210,9 @@ funcionesDB.agregarcontacto = (obj) => {
         }).catch(err => rej(err))
     });
 }
+
+
+
 
 
 /**

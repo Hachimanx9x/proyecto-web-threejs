@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const promesa = require('../database');
 const Query = require('./querys');
 const LLAVE = 'misecretos';
+const env = require('../env');
 const chalk = require('chalk');
 const funcionesDB = () => {
     console.log("funciones de la base de datos")
@@ -411,14 +412,14 @@ funcionesDB.obtenertodasherramientas = async () => {
             if (vDB) {
                 await mariaDB.query(Query.obtenertodasHerramientas(), async (err, rows) => {
                     if (!err) {
-                        res({ API: rows });
+                        res({ API: ponerurlherramientas(rows) });
                     } else { rej(err) }
                 });
             }
             else {
                 sqlite.all(Query.obtenertodasHerramientas(), (err, rows) => {
                     if (!err) {
-                        res({ API: rows });
+                        res({ API: ponerurlherramientas(rows) });
                     } else { rej(err) }
                 });
             }
@@ -1243,6 +1244,28 @@ funcionesDB.obtenerentreentregable = (entregable) => {
     })
 }
 
+funcionesDB.obtenerentredeproyectoconconte = (proyecto) => {
+    return new Promise((res, rej) => {
+        promesa.then(async (result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.obtenerentregcontinte(proyecto), async (err, rows) => {
+                    if (!err) {
+                        res({ API: rows });
+                    } else { rej(err) }
+                });
+            }
+            else {
+                sqlite.all(Query.obtenerentregcontinte(proyecto), (err, rows) => {
+                    if (!err) {
+                        res({ API: rows });
+                    } else { rej(err) }
+                });
+            }
+        }).catch(err => rej(err))
+    })
+}
+
 //-------------------
 function rearmarProyectosescri(array) {
 
@@ -1415,14 +1438,15 @@ function obtenerproyectos(array) {
                 pronombre: array[i].proyectonombre,
                 prodescripcion: array[i].proyectodescripcion,
                 estado: array[i].proyectoestado,
-                icono: `http://localhost:3030/proyecto/contenido/proyecto${array[i].id}/${array[i].proyectoicon}`,
-                banner: `http://localhost:3030/proyecto/contenido/proyecto${array[i].id}/${array[i].proyectobanner}`
+                icono: `${env.host}/proyecto/contenido/proyecto${array[i].id}/${array[i].proyectoicon}`,
+                banner: `${env.host}//proyecto/contenido/proyecto${array[i].id}/${array[i].proyectobanner}`
             })
         }
     }
     return arraydef;
 }
 function ponercontenidoenactividades(array) {
+    // console.log(array)
     var arraydef = [];
     var acttemp;
     for (var i = 0; i < array.length; i++) {
@@ -1437,7 +1461,7 @@ function ponercontenidoenactividades(array) {
                 entrega: array[i].actividadfechaentrega,
                 contenido: {
                     nombre: array[i].contenidonombre,
-                    url: `http://localhost:3030/proyecto/contenido/proyecto${array[i].id}/${array[i].contenidonombrearchivo}`
+                    url: `${env.host}/proyecto/contenido/proyecto${array[i].id}/${array[i].contenidonombrearchivo}`
                 }
             })
         }
@@ -1550,7 +1574,7 @@ function filtarinfo(array) {
                 descripcion: array[a].descripcion,
                 fotoperfil: array[a].fotoperfil,
                 experiencia: array[a].anosdeexperiencia,
-                cv: `http://localhost:3030/default/${array[a].nombrearchivohojadevida}`,
+                cv: `${env.host}/proyecto/contenido/usuario${userid}/${array[a].nombrearchivohojadevida}`,
                 pais: array[a].pais,
                 github: array[a].github,
                 gitlab: array[a].gitlab,
@@ -1688,5 +1712,19 @@ function actividadespro(user, array) {
     }
     return arraydef;
 }
+function ponerurlherramientas(array) {
+    let arraydef = []
+    for (let a = 0; a < array.length; a++) {
+        arraydef.push({
+            id: array[a].id,
+            nombre: array[a].herramientanombre,
+            tipo: array[a].herramientatipo,
+            descripcion: array[a].herramientadescripcion,
+            icono: `${env.host}/proyecto/contenido/default/${array[a].herramientanombreIcono}`
+        })
+    }
+    return arraydef;
+}
+
 //-------------------
 module.exports = funcionesDB;

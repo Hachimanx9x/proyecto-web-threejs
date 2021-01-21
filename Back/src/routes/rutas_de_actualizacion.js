@@ -109,26 +109,34 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
                     }
                     if (req.files != null) {
                         if (req.files.foto != null || req.files.foto != undefined) {
-                            ftpminio.removeObject(bucket, datos.fotoperfil).then(result => {
-                                req.files.foto.mv(__dirname + '/tmp/' + req.files.foto.name, (err) => {
-                                    if (!err) {
-                                        var metaData = {
-                                            'Content-Type': `${req.files.foto.mimetype}`,
-                                            'size': req.files.foto.size,
-                                            'X-Amz-Meta-Testing': 1234,
-                                            'example': 5678
-                                        }
+                            if (datos.fotoperfil != "null" || datos.fotoperfil != null) {
+                                ftpminio.removeObject(bucket, datos.fotoperfil).then(result => {
+                                    req.files.foto.mv(__dirname + '/tmp/' + req.files.foto.name, (err) => {
+                                        if (!err) {
+                                            var metaData = {
+                                                'Content-Type': `${req.files.foto.mimetype}`,
+                                                'size': req.files.foto.size,
+                                                'X-Amz-Meta-Testing': 1234,
+                                                'example': 5678
+                                            }
 
-                                        ftpminio.putFile(bucket, req.files.foto.name, path.join(__dirname, `/tmp/${req.files.foto.name}`), metaData)
-                                            .then(resul => {
-                                                actualizarDB.updateuserprofilephoto({ foto: req.files.foto.name, id: datos.id })
-                                                    .catch(err => console.log(err))
-                                            }).catch(err => res.json(err));
-                                    } else {
-                                        console.log(err)
-                                    }
+                                            ftpminio.putFile(bucket, req.files.foto.name, path.join(__dirname, `/tmp/${req.files.foto.name}`), metaData)
+                                                .then(resul => {
+                                                    actualizarDB.updateuserprofilephoto({ foto: req.files.foto.name, id: datos.id })
+                                                        .catch(err => console.log(err))
+                                                }).catch(err => res.json(err));
+                                        } else {
+                                            console.log(err)
+                                        }
+                                    });
                                 });
-                            });
+                            } else {
+                                ftpminio.putFile(bucket, req.files.foto.name, path.join(__dirname, `/tmp/${req.files.foto.name}`), metaData)
+                                    .then(resul => {
+                                        actualizarDB.updateuserprofilephoto({ foto: req.files.foto.name, id: datos.id })
+                                            .catch(err => console.log(err))
+                                    }).catch(err => res.json(err));
+                            }
                         }
                         if (req.files.cv !== null || req.files.cv !== undefined) {
                             ftpminio.removeObject(bucket, datos.nombrearchivohojadevida).then(result => {
@@ -160,7 +168,7 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
                     if (nombre !== datos.nombre && nombre !== undefined) {
                         actualizarDB.updateusername({ nombre: nombre, id: datos.id }).catch(err => console.log(err))
                     }
-                    if (descripcion !== datos.descripcion && descripcion !== undefined) {
+                    if (descripcion !== datos.descripcion && descripcion !== undefined && descripcion !== '') {
                         actualizarDB.updateuserdescription({ descrip: descripcion, id: datos.id }).catch(err => console.log(err))
                     }
                     if (pais !== datos.pais && pais !== undefined) {
