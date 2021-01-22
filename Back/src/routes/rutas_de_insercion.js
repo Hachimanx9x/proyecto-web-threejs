@@ -195,13 +195,10 @@ rutas.post('/agregar/herramientas', proToken, (req, res) => {
     } else {
       const { herramienta } = req.body;
       if (Array.isArray(herramienta)) {
-        let c = 0;
-        for (let a = 0; a < herramienta.length; a++) {
-          insertDB.insertlistTool({ usuario: data.rows[0].id, herramienta: herramienta[a] }).then(resul => {
-            if (c === (idioma.length - 1)) { res.json(resul) }
-            c++
-          }).catch(err => res.json(err));
-        }
+        insertDB.agregarherramientas({ herramientas: herramienta, id: data.rows[0].id }).then(resul => {
+          res.json({ msj: "agregados" })
+        }).catch(err => res.json(err));
+
       } else {
         res.json({ msj: "herramienta no es un array" })
       }

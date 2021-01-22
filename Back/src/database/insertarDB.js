@@ -27,14 +27,32 @@ funcionesDB.agregarherramientas = (obj) => {
     return new Promise((res, rej) => {
         buscarDB.obtenertodasherramientas().then(tools => {
             const { herramientas, id } = obj
+            // console.log(obj)
+            let habi = organizarherramientasparahabilidaes(herramientas, tools.API)
+            // console.log(habi)
             let c = 0;
+            // console.log("hola")
             for (let a = 0; a < herramientas.length; a++) {
-                insertDB.insertlistTool({ usuario: id, herramienta: herramientas[a] }).then(resul => {
-                    if (c === (idioma.length - 1)) {
 
+                funcionesDB.insertlistTool({ usuario: id, herramienta: herramientas[a] }).then(resul => {
+                    //  console.log(`${a} vs ${herramientas.length} ==  ${herramientas[a]}`)
+                    if (c === (herramientas.length - 1)) {
+
+                        organizarhabilidades(habi).then(result3 => {
+                            console.log(result3)
+                            let g = 0;
+                            for (let d = 0; d < result3.length; d++) {
+
+                                funcionesDB.insetlistAbility({ usuario: id, habilidad: result3[d] }).then(fin => {
+                                    if (g === (result3.length - 1)) res("Echo")
+                                    g++
+                                }).catch(errv => { rej(errv) })
+                            }
+
+                        }).catch(errw => rej(errw));
                     }
                     c++
-                }).catch(err => res.json(err));
+                }).catch(err => rej(err));
             }
         }).catch(errt => rej(errt))
     })
@@ -444,7 +462,7 @@ funcionesDB.insetlistAbility = (obj) => {
                 });
             }
             else {
-                sqlite.all(Query.insertHainsertlistaHabilidades(usuario, habilidad), (err, rows) => {
+                sqlite.all(Query.insertlistaHabilidades(usuario, habilidad), (err, rows) => {
                     if (!err) {
                         res({ msj: "success" });
                     } else { rej({ msj: "error" }); }
@@ -538,14 +556,14 @@ funcionesDB.insertlistTool = (obj) => {
                 mariaDB.query(Query.insertlistaherramientas(usuario, herramienta), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: err }); }
                 });
             }
             else {
                 sqlite.all(Query.insertlistaherramientas(usuario, herramienta), (err, rows) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: err }); }
                 });
             }
         });
@@ -1911,6 +1929,49 @@ function insertintegrantesconrolesyactividades(proyecto, integrantes, practicas)
     })
 }
 
+
+
+function organizarhabilidades(array) {
+    return new Promise((res, rej) => {
+        buscarDB.obtenertodasHabilidades().then(habilidades => {
+            // console.log(array)
+            //  console.log(habilidades.API.length)
+            let obj = [];
+            for (let a = 0; a < array.length; a++) {
+                for (let z = 0; z < habilidades.API.length; z++) {
+
+                    // console.log(`${array[a]} ==  ${habilidades.API[z].habilidadtipo}`)
+                    if (array[a] === "desarrollo" && habilidades.API[z].habilidadtipo === "Desarrollo") {
+                        obj.push(habilidades.API[z].id)
+                    } else if (array[a] === "diseño" && habilidades.API[z].habilidadtipo === "Diseño") {
+                        obj.push(habilidades.API[z].id)
+                    }
+                }
+            }
+            console.log(obj)
+            let set = new Set(obj.map(JSON.stringify))
+            let arrSinDuplicaciones = Array.from(set).map(JSON.parse);
+            //  console.log(arrSinDuplicaciones)
+            res(arrSinDuplicaciones);
+
+
+        }).catch(err => rej(err))
+    })
+}
+
+function organizarherramientasparahabilidaes(herramienta, API) {
+    let habilidades = []
+    for (let a = 0; a < herramienta.length; a++) {
+        for (let b = 0; b < API.length; b++) {
+            if (herramienta[a] === API[b].id) {
+                habilidades.push(API[b].tipo)
+            }
+        }
+    }
+    let set = new Set(habilidades.map(JSON.stringify))
+    let arrSinDuplicaciones = Array.from(set).map(JSON.parse);
+    return arrSinDuplicaciones;
+}
 
 function buscartecnicaactividad(API, actividad) {
 

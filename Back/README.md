@@ -58,6 +58,11 @@ ruta escritorio:
 En esta version se terminaron en lo mas posible los metodos vitales
 para la ejecucion minima del proyecto 
 
+Las rutas con contenido automatico
+
+/insert/auto/roles
+/insert/auto/herramientasmetodologia
+/insert/auto/tecnicas
 para la ejecucion del servidor usa el comando en la capeta back
 comando
 ```sh
@@ -101,5 +106,4 @@ esta ruta permite agregar los idiomas en tu lista de idiomas
 se requiere de token para identificar al usuario
 
 /agregar/palabraclave
-
-
+esta agrega las palbras a traves de una lista de palbras que identifiquen a la persona
