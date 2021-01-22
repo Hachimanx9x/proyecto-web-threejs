@@ -200,9 +200,6 @@ rutas.get('/api/listaherramientas', async (req, res) => {
 rutas.get('/api/metodologias', async (req, res) => {
     buscarDB.obtenertodasMetodologias().then(respu => res.json(respu)).catch(err => res.json(err));
 });
-rutas.get('console.log("oinsert list integrante " + result19.msj);', async (req, res) => {
-    buscarDB.obtenertodasPracticas().then(respu => res.json(respu)).catch(err => res.json(err));
-});
 rutas.get('/api/practicas', async (req, res) => {
     buscarDB.obtenertodasPracticas().then(respu => res.json(respu)).catch(err => res.json(err));
 });
@@ -210,11 +207,9 @@ rutas.get('/api/listapracticas', async (req, res) => {
     buscarDB.obtenertodasListasPracticas().then(respu => res.json(respu)).catch(err => res.json(err));
 });
 rutas.get('/api/alfas', async (req, res) => {
-    buscarDB.obtenertodasPracticas().then(respu => res.json(respu)).catch(err => res.json(err));
-});
-rutas.get('/api/practicas', async (req, res) => {
     buscarDB.obtenertodasAlfas().then(respu => res.json(respu)).catch(err => res.json(err));
 });
+
 rutas.get('/api/listaalfas', async (req, res) => {
     buscarDB.obtenertodasListaAlfas().then(respu => res.json(respu)).catch(err => res.json(err));
 });

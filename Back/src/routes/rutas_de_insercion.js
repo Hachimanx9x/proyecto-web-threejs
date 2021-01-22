@@ -476,7 +476,7 @@ rutas.post('/insert/Keyword', (req, res) => {
   }
 });
 //---------------------------------------------------
-rutas.post('/insert/listlenguaje ', (req, res) => {
+rutas.post('/insert/listlenguaje', (req, res) => {
 
   const { user, idioma } = req.body;
   if (typeof user === 'string' && typeof idioma === 'number') {
@@ -708,7 +708,7 @@ rutas.post('/insert/Meeting', (req, res) => {
   }
 });
 //--------------------------------------------------------------
-rutas.post('/insert/Meeting', (req, res) => {
+rutas.post('/insert/listMeeting', (req, res) => {
   const { evento, reunion } = req.body;
   if (typeof evento === 'number'
     && typeof reunion === 'number'
@@ -811,12 +811,6 @@ rutas.post('/proyecto/insertarArchivo', (req, res) => {
   });
 });
 
-rutas.post('/proyecto/insertarArchivo2', (req, res) => {
-  console.log(req.body);
-  console.log(req.files);
-
-
-});
 
 //-------------------
 /*
