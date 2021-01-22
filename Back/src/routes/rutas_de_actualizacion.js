@@ -384,13 +384,7 @@ rutas.put('/update/deliverablestate', (req, res) => {
             .then(resul => res.json(resul)).catch(err => res.json(err))
     }
 });
-rutas.put('/update/deliverablestate', (req, res) => {
-    const { id, estado } = req.body;
-    if (typeof id === 'number' && typeof estado === 'string') {
-        actualizarDB.updatedeliverable(req.body)
-            .then(resul => res.json(resul)).catch(err => res.json(err))
-    }
-});
+
 rutas.put('/update/history', (req, res) => {
     const { id, descripcion } = req.body;
     if (typeof id === 'number' && typeof descripcion === 'string') {

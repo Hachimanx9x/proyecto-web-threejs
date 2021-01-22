@@ -195,13 +195,10 @@ rutas.post('/agregar/herramientas', proToken, (req, res) => {
     } else {
       const { herramienta } = req.body;
       if (Array.isArray(herramienta)) {
-        let c = 0;
-        for (let a = 0; a < herramienta.length; a++) {
-          insertDB.insertlistTool({ usuario: data.rows[0].id, herramienta: herramienta[a] }).then(resul => {
-            if (c === (idioma.length - 1)) { res.json(resul) }
-            c++
-          }).catch(err => res.json(err));
-        }
+        insertDB.agregarherramientas({ herramientas: herramienta, id: data.rows[0].id }).then(resul => {
+          res.json({ msj: "agregados" })
+        }).catch(err => res.json(err));
+
       } else {
         res.json({ msj: "herramienta no es un array" })
       }
@@ -479,7 +476,7 @@ rutas.post('/insert/Keyword', (req, res) => {
   }
 });
 //---------------------------------------------------
-rutas.post('/insert/listlenguaje ', (req, res) => {
+rutas.post('/insert/listlenguaje', (req, res) => {
 
   const { user, idioma } = req.body;
   if (typeof user === 'string' && typeof idioma === 'number') {
@@ -711,7 +708,7 @@ rutas.post('/insert/Meeting', (req, res) => {
   }
 });
 //--------------------------------------------------------------
-rutas.post('/insert/Meeting', (req, res) => {
+rutas.post('/insert/listMeeting', (req, res) => {
   const { evento, reunion } = req.body;
   if (typeof evento === 'number'
     && typeof reunion === 'number'
@@ -814,12 +811,6 @@ rutas.post('/proyecto/insertarArchivo', (req, res) => {
   });
 });
 
-rutas.post('/proyecto/insertarArchivo2', (req, res) => {
-  console.log(req.body);
-  console.log(req.files);
-
-
-});
 
 //-------------------
 /*

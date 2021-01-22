@@ -692,7 +692,36 @@ INSERT INTO herramientas (herramientanombre, herramientatipo, herramientadescrip
     "diseño", 
     "Es un sistema de gestión de contenidos ( en inglés, Content Management System o CMS) lanzado el 27 de mayo de 2003, enfocado a la creación de cualquier tipo de página web. Originalmente alcanzó una gran popularidad en la creación de blogs, para luego convertirse en una de las principales herramientas para la creación de páginas web comerciales",
     "wordpress-blue.svg");
-	
+-- /////////////////////////////	
+INSERT INTO herramientas (herramientanombre, herramientatipo, herramientadescripcion, herramientanombreIcono) VALUES 
+    ("Adobe  XD",
+    "diseño", 
+    "Es un editor de gráficos vectoriales desarrollado y publicado por Adobe Inc para diseñar y crear un prototipo de la experiencia del usuario para páginas web y aplicaciones móviles. El software está disponible para MacOS y Windows.",
+    "adobe-xd.svg");
+-- /////////////////////////////
+INSERT INTO herramientas (herramientanombre, herramientatipo, herramientadescripcion, herramientanombreIcono) VALUES 
+    ("Adobe Ilustrator",
+    "diseño", 
+    "Es un editor de gráficos vectoriales en forma de taller de arte que trabaja sobre un tablero de dibujo, conocido como «mesa de trabajo» y está destinado a la creación artística de dibujo y pintura para ilustración, para crear y diseñar imágenes, sirve para editar entre otras cosas (ilustración como rama del arte digital aplicado a la ilustración técnica o el diseño gráfico, entre otros).",
+    "adobe-illustrator-cc.svg");
+-- /////////////////////////////
+INSERT INTO herramientas (herramientanombre, herramientatipo, herramientadescripcion, herramientanombreIcono) VALUES 
+    ("Adobe Premiere",
+    "diseño", 
+    "Es un software de edición de video desarrollado por Adobe y publicado como parte de Adobe Creative Cloud. Está orientado a la edición de vídeos profesionales, mientras que su derivado, Adobe Premiere Elements, apunta al mercado de consumidores.",
+    "premiere-cc.svg");
+-- /////////////////////////////
+INSERT INTO herramientas (herramientanombre, herramientatipo, herramientadescripcion, herramientanombreIcono) VALUES 
+    ("Adobe Photoshop",
+    "diseño", 
+    "Es un editor de fotografías desarrollado por Adobe Systems Incorporated. Usado principalmente para el retoque de fotografías y gráficos, su nombre en español significa "taller de fotos". Es conocido mundialmente.",
+    "photoshop-cc.svg");
+-- /////////////////////////////
+INSERT INTO herramientas (herramientanombre, herramientatipo, herramientadescripcion, herramientanombreIcono) VALUES 
+    ("Adobe After Effects",
+    "diseño", 
+    "Es una aplicación que tiene forma de estudio destinado para la creación o aplicación en una composición, así como realización de gráficos profesionales en movimiento y efectos especiales, que desde sus raíces han consistido básicamente en la superposición de capas. Adobe After Effects es uno de los softwares basados en línea de tiempo más potentes del mercado junto con Autodesk Combustion y Eyeon Fusion.",
+    "after-effects-cc.svg");
 	
 
 

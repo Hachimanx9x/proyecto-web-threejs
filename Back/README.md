@@ -58,12 +58,37 @@ ruta escritorio:
 En esta version se terminaron en lo mas posible los metodos vitales
 para la ejecucion minima del proyecto 
 
+Las rutas con contenido automatico
+
+```sh
+/insert/auto/roles
+/insert/auto/herramientasmetodologia
+/insert/auto/tecnicas
+```
+
 para la ejecucion del servidor usa el comando en la capeta back
 comando
 ```sh
 yarn run dev
 ```
 ### rutas a usar 
+
+> rutas de busqueda de información
+```sh
+/login
+```
+esta ruta pide en el body un objeto de la siguiente estructura
+{ email, password}
+
+este devolvera un token con lo datos de ese momento del usuario
+```json
+"token": "llave eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb3dzIjpbeyJpZCI6MTIsImVtYWlsIjoiY29ycm9lOEBnbWFpbC5jb20iLCJjb250cmFzZW5hIjoiMTIzNDU2Nzg5IiwiZm90b3BlcmZpbCI6Im51bGwiLCJub21icmVhcmNoaXZvaG9qYWRldmlkYSI6Im51bGwiLCJhbm9zZGVleHBlcmllbmNpYSI6bnVsbCwibm9tYnJlIjoibm9tYnJlIHRlc3QxNiIsImRlc2NyaXBjaW9uIjoibnVsbCIsInBhaXMiOiJudWxsIiwiZWRhZCI6bnVsbCwiZ2l0aHViIjoibnVsbCIsImdpdGxhYiI6Im51bGwiLCJiaXRidWNrZXQiOiJudWxsIiwibGlua2VkaW4iOiJudWxsIn1dLCJpYXQiOjE2MTExODU4NDJ9.TWId6FOMQ0_TGyngDFHJF4Uuol0dqC0sLcCo2FRTuqY "
+```
+```sh
+/escritorio
+```
+este devolvera los datos de las actividades asginadas a la persona y del estado de los proyectos 
+
 
 esta ruta permite la creacion de un usuario 
 ```sh
@@ -79,27 +104,173 @@ este se debe poner los envios y peticiones especiales del usuario la estrutura d
 "authorization": "llave eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb3dzIjpbeyJpZCI6MTIsImVtYWlsIjoiY29ycm9lOEBnbWFpbC5jb20iLCJjb250cmFzZW5hIjoiMTIzNDU2Nzg5IiwiZm90b3BlcmZpbCI6Im51bGwiLCJub21icmVhcmNoaXZvaG9qYWRldmlkYSI6Im51bGwiLCJhbm9zZGVleHBlcmllbmNpYSI6bnVsbCwibm9tYnJlIjoibm9tYnJlIHRlc3QxNiIsImRlc2NyaXBjaW9uIjoibnVsbCIsInBhaXMiOiJudWxsIiwiZWRhZCI6bnVsbCwiZ2l0aHViIjoibnVsbCIsImdpdGxhYiI6Im51bGwiLCJiaXRidWNrZXQiOiJudWxsIiwibGlua2VkaW4iOiJudWxsIn1dLCJpYXQiOjE2MTExODU4NDJ9.TWId6FOMQ0_TGyngDFHJF4Uuol0dqC0sLcCo2FRTuqY "
 ```
 
-/login
-
-esta ruta pide en el body un objeto de la siguiente estructura
-{ email, password}
-
-este devolvera un token con lo datos de ese momento del usuario
-```json
-"token": "llave eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb3dzIjpbeyJpZCI6MTIsImVtYWlsIjoiY29ycm9lOEBnbWFpbC5jb20iLCJjb250cmFzZW5hIjoiMTIzNDU2Nzg5IiwiZm90b3BlcmZpbCI6Im51bGwiLCJub21icmVhcmNoaXZvaG9qYWRldmlkYSI6Im51bGwiLCJhbm9zZGVleHBlcmllbmNpYSI6bnVsbCwibm9tYnJlIjoibm9tYnJlIHRlc3QxNiIsImRlc2NyaXBjaW9uIjoibnVsbCIsInBhaXMiOiJudWxsIiwiZWRhZCI6bnVsbCwiZ2l0aHViIjoibnVsbCIsImdpdGxhYiI6Im51bGwiLCJiaXRidWNrZXQiOiJudWxsIiwibGlua2VkaW4iOiJudWxsIn1dLCJpYXQiOjE2MTExODU4NDJ9.TWId6FOMQ0_TGyngDFHJF4Uuol0dqC0sLcCo2FRTuqY "
-```
+```sh
 /actualizar/usuario
+```
 esta es la ruta de actualizacion que usa un token de este saca el id para saber que usaurio debe actualizar
 esto es dinamico y dependiendo de que parte de la estructura de datos este entrando  hara la actualizacion
 
  { email, password, experiencia, nombre, descripcion, pais, edad, github, gitlab, bitbucket, linkedin }
 
  asi mismo tambien se puede resibir dos archivos en variables foto o cv en caso de rebicirlos se actualizaran los archivos del usuario
-
+```sh
 /agregar/idioma
+```
 esta ruta permite agregar los idiomas en tu lista de idiomas 
 se requiere de token para identificar al usuario
-
+```sh
 /agregar/palabraclave
+```
+esta agrega las palbras a traves de una lista de palbras que identifiquen a la persona
 
 
+
+
+
+### rutas a usar de la api
+
+Esta devuelven un objeto con una array llamado API que contiene los objetos generales dentro de la base de datos, esto ayuda para el control actual de la información en todo momento siendo un método directo para la consulta de la información, esto fue usado durante la fase de testeo.
+
+>rutas de busqueda 
+
+```sh
+/api/idiomas                              //usuda en la parte final 
+/api/habilidades
+/api/herramientas                         //usuda en la parte final 
+/api/usuarios
+/api/palabrasclave
+/api/listaidiomas
+/api/contactos
+/api/listacontactos
+/api/listahabilidades
+/api/listaherramientas
+/api/metodologias
+/api/practicas
+/api/listapracticas
+/api/alfas
+/api/listapracticas
+/api/listaalfas
+/api/herramientasmetodologia               //usuda en la parte final 
+/api/tecnicas                              //usuda en la parte final 
+/api/actividades
+/api/roles
+/api/integrantes
+/api/listaactividades
+/api/entregables
+/api/listaentregables
+/api/listaherramientasmetodologia
+/api/listacontenidos
+/api/entregas
+/api/chats
+/api/historial
+/api/listachats
+/api/proyectos
+/api/reuniones
+/api/listareuniones
+/api/listaentregas
+/api/listaeventos
+/api/listaintegrantes
+```
+
+
+>rutas de eliminación
+
+```sh
+/delete/lenguaje
+/delete/habilidad
+/delete/herramientas
+/delete/usuario
+/delete/palabraclave
+/delete/listalenguajeuser
+/delete/contacto
+/delete/listacontactos
+/delete/listaherramientas
+/delete/practica
+/delete/listapractica
+/delete/alfas
+/delete/listalfas
+/delete/herramientasmetodologia
+/delete/actividad
+/delete/listarol
+/delete/integrante
+/delete/listaactividades
+/delete/contacto
+/delete/entregable
+/delete/listaerramientasmetogologia
+/delete/listacontactos
+/delete/historial
+/delete/listachat
+/delete/proyecto
+/delete/reunion
+/delete/listareuniones
+/delete/listaentregas
+/delete/listaintegrantes
+/delete/metodologia
+/                                             //se requiere codigo
+```
+>rutas de inserción
+
+```sh
+/insert/lenguaje             { nombre, nivel }
+/insert/user                 {email, contrasena, fotoperfil, nombrearchivohojadevida,anosdeexperiencia,nombre,descripcion,pais,edad,github,gitlab,bitbucket,  linkedin }
+/insert/Keyword              { user, palabra }
+/insert/listlenguaje         { user, idioma }
+/insert/Ability              { tipo, descripcion, nivel }
+/insert/ListAbility          { usuario, habilidad }
+/insert/tools                { nombre, tipo, descripcion, url_icono }
+/insert/listtools            { usuario, herramienta }
+/insert/metodology           { nombre, descripcion, consejo }
+/insert/history              { descripcion }
+/insert/proyect              { nombre, descripcion, estado, icon, banner, metodologia, historia }
+/insert/practice             { nombre, descripcion }
+/insert/role                 { titulo, descripcion, recomendacion }
+/insert/listrole             { practica, rol }
+/insert/member               { usuario, rol }
+/insert/listmember           { proyecto, integrante }
+/insert/Alpha                { nombre, descripcion, estado }
+/insert/listAlpha            { nombre, descripcion, estado }
+/insert/deliverable          { titulo, descripcion, estado, tipoArchivo, fechaEntrega, numeroRevisiones }
+/insert/technical            { titulo, descripcion, bibliografia }
+/insert/activity             { titulo, estado, descripcion, fechacreacion, fechaentrega, revision, tecnica }
+/insert/listactivity         { integrante, actividad }
+/insert/chat                 { archivo, fecha }
+/insert/listchat             { historial, chat }
+/insert/event                { fechacreacion }
+/insert/listevent            { historial, evento, integrante }
+/insert/Meeting              { titulo, fecha, hora, duracion, descripcion, vigente }
+/insert/listMeeting          { evento, reunion }
+/insert/delivery             { titulo, descripcion, nombrearchivoguardado, actividad, entragable }
+/insert/contenct             { nombre, nombrearchivo, descripcion, bibliografia }
+/insert/listcontent          { entregable, contenido, actividad }
+/insert/methodologyTool      { nombre, descripcion, bibliografia }
+/insert/listmethodologyTool  { entregable, herramientametodologia }
+/api/crearbucket             { bucket }
+/proyecto/insertarArchivo    { bucket }  { archivo }
+```
+
+>rutas de actualización 
+
+```sh
+/update/useremail            { email, id }
+/update/userpassword         { password, id }
+/update/userprofilepicture   { foto, id } 
+/update/usercv               { cv, id }
+/update/userexperience       { experiencia, id }
+/update/username             { nombre, id }
+/update/userdescription      { descripcion, id }
+/update/usercountry          { pais, id }
+/update/userage              { edad, id }
+/update/usergithub           { github, id }
+/update/userbitbucket        { bitbucket, id }
+/update/usergitlab           { gitlab, id }
+/update/userlinkedin         { linkedin, id }
+/update/user                 {id,email,password,experiencia,fotoperfil,nombrearchivohojadevida,nombre,descripcion, pais,edad,github,gitlab,bitbucket,linkedin}
+/update/activitystate        { id, estado } 
+/update/activitydeliverydate { id, fecha }
+/update/activityrevised      { id, revision }
+/update/memberrol            { id, rol }
+/update/contentfilename      { id, nombreArchivo }
+/update/deliverablestate     { id, estado }
+/update/history              { id, descripcion }
+
+```
