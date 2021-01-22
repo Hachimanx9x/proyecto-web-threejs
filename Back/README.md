@@ -60,9 +60,12 @@ para la ejecucion minima del proyecto
 
 Las rutas con contenido automatico
 
+```sh
 /insert/auto/roles
 /insert/auto/herramientasmetodologia
 /insert/auto/tecnicas
+```
+
 para la ejecucion del servidor usa el comando en la capeta back
 comando
 ```sh
@@ -83,9 +86,9 @@ este se debe poner los envios y peticiones especiales del usuario la estrutura d
 ```json
 "authorization": "llave eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb3dzIjpbeyJpZCI6MTIsImVtYWlsIjoiY29ycm9lOEBnbWFpbC5jb20iLCJjb250cmFzZW5hIjoiMTIzNDU2Nzg5IiwiZm90b3BlcmZpbCI6Im51bGwiLCJub21icmVhcmNoaXZvaG9qYWRldmlkYSI6Im51bGwiLCJhbm9zZGVleHBlcmllbmNpYSI6bnVsbCwibm9tYnJlIjoibm9tYnJlIHRlc3QxNiIsImRlc2NyaXBjaW9uIjoibnVsbCIsInBhaXMiOiJudWxsIiwiZWRhZCI6bnVsbCwiZ2l0aHViIjoibnVsbCIsImdpdGxhYiI6Im51bGwiLCJiaXRidWNrZXQiOiJudWxsIiwibGlua2VkaW4iOiJudWxsIn1dLCJpYXQiOjE2MTExODU4NDJ9.TWId6FOMQ0_TGyngDFHJF4Uuol0dqC0sLcCo2FRTuqY "
 ```
-
+```sh
 /login
-
+```
 esta ruta pide en el body un objeto de la siguiente estructura
 { email, password}
 
@@ -93,17 +96,21 @@ este devolvera un token con lo datos de ese momento del usuario
 ```json
 "token": "llave eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb3dzIjpbeyJpZCI6MTIsImVtYWlsIjoiY29ycm9lOEBnbWFpbC5jb20iLCJjb250cmFzZW5hIjoiMTIzNDU2Nzg5IiwiZm90b3BlcmZpbCI6Im51bGwiLCJub21icmVhcmNoaXZvaG9qYWRldmlkYSI6Im51bGwiLCJhbm9zZGVleHBlcmllbmNpYSI6bnVsbCwibm9tYnJlIjoibm9tYnJlIHRlc3QxNiIsImRlc2NyaXBjaW9uIjoibnVsbCIsInBhaXMiOiJudWxsIiwiZWRhZCI6bnVsbCwiZ2l0aHViIjoibnVsbCIsImdpdGxhYiI6Im51bGwiLCJiaXRidWNrZXQiOiJudWxsIiwibGlua2VkaW4iOiJudWxsIn1dLCJpYXQiOjE2MTExODU4NDJ9.TWId6FOMQ0_TGyngDFHJF4Uuol0dqC0sLcCo2FRTuqY "
 ```
+```sh
 /actualizar/usuario
+```
 esta es la ruta de actualizacion que usa un token de este saca el id para saber que usaurio debe actualizar
 esto es dinamico y dependiendo de que parte de la estructura de datos este entrando  hara la actualizacion
 
  { email, password, experiencia, nombre, descripcion, pais, edad, github, gitlab, bitbucket, linkedin }
 
  asi mismo tambien se puede resibir dos archivos en variables foto o cv en caso de rebicirlos se actualizaran los archivos del usuario
-
+```sh
 /agregar/idioma
+```
 esta ruta permite agregar los idiomas en tu lista de idiomas 
 se requiere de token para identificar al usuario
-
+```sh
 /agregar/palabraclave
+```
 esta agrega las palbras a traves de una lista de palbras que identifiquen a la persona
