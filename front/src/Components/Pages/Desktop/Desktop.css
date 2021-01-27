@@ -35,6 +35,10 @@
 	margin: 0.5rem auto;
 	font-size: 0.8rem;
 	border-width: 1px;
+	outline: none;
+}
+.o-btn-graph:focus {
+	outline: none;
 }
 @media only screen and (max-width: 1320px) {
 	.o-slider-container {

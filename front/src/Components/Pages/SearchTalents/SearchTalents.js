@@ -113,7 +113,7 @@ class SearchTalents extends Component {
                     </div>
                     <div className="o-card-talents-container w-100">
                         {this.state.talents.map((talent) => (
-                            <CardTalents key={talent.id} id={talent.id} job={talent.job} name={talent.name} description={talent.description} picture={talent.img} skills={talent.skills} />
+                            <CardTalents key={talent.id} talent={talent} />
                         ))}
                     </div>
 

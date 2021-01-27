@@ -43,7 +43,7 @@ const CardContacts = ({ contact }) => {
     return (
         <div>
             <Rodal width={300} height={200} animation={"fade"} visible={modal} onClose={() => setModal(!modal)}>
-                <h5 className="mt-5 mb-4">Agregar a {contact.name} a tus contactos?</h5>
+                <h5 className="mt-5 mb-4">Eliminar a {contact.name} de tus contactos?</h5>
                 <button className="btn btn-primary border-0 text-white font-weight-bold" onClick={deleteContact}>Agregar</button>
             </Rodal>
             <Fade show={show}>

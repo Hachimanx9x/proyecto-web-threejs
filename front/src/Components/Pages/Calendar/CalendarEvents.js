@@ -108,6 +108,11 @@ export default class CalendarEvents extends Component {
                             center: "title",
                             right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek"
                         }}
+                        eventClick={
+                            function (arg) {
+                                alert(arg.event.title);
+                            }
+                        }
                         plugins={[dayGridPlugin, timeGridPlugin, listPlugin, bootstrapPlugin]}
                         themeSystem={"bootstrap"}
                         events={this.state.events}

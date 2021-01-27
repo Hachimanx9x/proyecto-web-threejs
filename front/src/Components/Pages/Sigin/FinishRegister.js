@@ -99,7 +99,6 @@ export default function FinishRegister() {
                 setTest([...t]);
                 setSelected([...t]);
             }
-            console.log(skills);
         }
     }
     return (
@@ -168,7 +167,6 @@ export default function FinishRegister() {
                             if (!item) {
                                 setLanguages([...lang, selectedItem.cat]);
                             }
-                            console.log(userLanguages);
                         }}
                         onRemove={(selectedList, selectedItem) => {
                             const lang = userLanguages;
@@ -193,7 +191,6 @@ export default function FinishRegister() {
                             if (!item) {
                                 setKeyWords([...keyword, selectedItem.cat]);
                             }
-                            console.log(keywords);
                         }}
                         onRemove={(selectedList, selectedItem) => {
                             const keyword = userKeywords
@@ -269,14 +266,12 @@ export default function FinishRegister() {
                                 const skill = skills
                                 const item = skill.find(iterador => iterador.id === selectedItem.cat.id);
                                 const t = [...selected, { cat: selectedItem.cat, key: selectedItem.key }];
-                                console.log(test)
                                 if (!item) {
                                     setTest([...t]);
                                     setSelected([...t]);
 
                                     setSkills([...skills, { id: selectedItem.cat.id, icon: selectedItem.cat.icon, name: selectedItem.cat.name }]);
                                 }
-                                console.log(skills);
                             }}
                             onRemove={(selectedList, selectedItem) => { RemoveSkill(selectedItem.cat) }}
                             id="toolb"
