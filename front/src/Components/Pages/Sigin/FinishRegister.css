@@ -54,7 +54,8 @@
 	height: 5.5rem;
 	opacity: 0.6;
 }
-.o-register-container .md-outline input[type=text] + label {
+.o-register-container .md-outline input[type=text] + label,
+.o-register-container .md-outline textarea + label {
 	transform: translateY(-14px) scale(0.8);
 	background: #fff;
 	height: 1.6rem;
@@ -67,9 +68,19 @@
 	color: black;
 	position: absolute;
 }
-.o-register-container .md-outline input[type=text] {
+.o-register-container .md-outline input[type=text],
+.o-register-container .md-outline textarea {
 	border-color: #007bff;
 	border-bottom: 0.1px solid #007bff;
+}
+
+.o-register-container .md-outline textarea:focus + label {
+	color: #007bff;
+}
+.o-register-container .md-outline textarea:focus {
+	border-color: #007bff;
+	box-shadow: inset 0 0 0 1px #007bff;
+	border-bottom: 0.3px solid #007bff;
 }
 
 .o-f {
@@ -127,7 +138,7 @@
 .o-card-select-skill {
 	width: 7rem;
 	min-width: 7rem;
-	height: 8rem;
+	height: 7.8rem;
 	background-color: #fff;
 	border: 1px solid #0472ca;
 	padding: 0;
@@ -140,6 +151,10 @@
 	width: 5rem;
 	height: 5rem;
 	margin: 0.7rem auto auto auto;
+	outline: none;
+}
+.o-selected-skill-img::selection {
+	outline: none;
 }
 
 .o-x-btn {
