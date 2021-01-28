@@ -230,7 +230,40 @@ funcionesDB.agregarcontacto = (obj) => {
 }
 
 
-
+funcionesDB.crearreunion = (obj) => {
+    return new Promise((res, rej) => {
+        const { proyec, fecha, hora, duracion, descripcion, titulo } = obj
+        buscarDB.obtenerproyectoid({ id: proyec }).then(proyecto => {
+            let date = new Date()
+            funcionesDB.insertEvent({ fechacreacion: date }).then(resul => {
+                buscarDB.obtenertodasEventos().then(eventos => {
+                    let ultievento = eventos.API[eventos.API.length - 1];
+                    funcionesDB.insertListEvent({
+                        historial: proyecto.historia,
+                        evento: ultievento.id,
+                        integrante: null
+                    }).then(result => {
+                        funcionesDB.insertMeeting({
+                            titulo: titulo,
+                            fecha: fecha,
+                            hora: hora,
+                            duracion: duracion,
+                            descripcion: descripcion,
+                            vigente: true
+                        }).then(result => {
+                            buscarDB.obtenertodasReuniones().then(reuniones => {
+                                let ultireu = reuniones.API[reuniones.API.length - 1]
+                                funcionesDB.insertListMeeting({ evento: ultievento.id, reunion: ultireu.id }).then(result => {
+                                    res(result)
+                                }).catch(err6 => rej(err6))
+                            }).catch(err5 => rej(err5))
+                        }).catch(err4 => rej(err4))
+                    }).catch(err3 => rej(err3))
+                }).catch(err2 => rej(err2))
+            }).catch(err => rej(err))
+        }).catch(err0 => rej(err0))
+    })
+}
 
 
 /**
@@ -1575,6 +1608,26 @@ function enlistalfaspracti(practicas) {
 function asignaciondeactividaporrol(array, practicas, API) {
     let arraydef = []
     let num = 0
+    let actiyemp = []
+    let actiyemp2 = []
+    for (let a1 = 0; a1 < practicas.length; a1++) {
+        for (let b1 = 0; b1 < modelo.Practicas.length; b1++) {
+            if (practicas[a1] === modelo.Practicas[b1].nombre) {
+                for (let f1 = 0; f1 < modelo.Practicas[b1].Actividades.length; f1++) {
+                    actiyemp.push({
+                        titulo: modelo.Practicas[b1].Actividades[f1].titulo,
+                        estado: modelo.Practicas[b1].Actividades[f1].estado,
+                        descripcion: modelo.Practicas[b1].Actividades[f1].descripcion,
+                        fechacreacion: modelo.Practicas[b1].Actividades[f1].fechacreacion,
+                        fechaentrega: modelo.Practicas[b1].Actividades[f1].fechaentrega,
+                        revision: modelo.Practicas[b1].Actividades[f1].revision,
+                        tecnica: buscartecnicaactividad(API, modelo.Practicas[b1].Actividades[f1].titulo)
+                    })
+                }
+            }
+        }
+    }
+    let lider;
     for (let a = 0; a < practicas.length; a++) {
         for (let b = 0; b < modelo.Practicas.length; b++) {
             if (practicas[a] === modelo.Practicas[b].nombre) {
@@ -1594,10 +1647,20 @@ function asignaciondeactividaporrol(array, practicas, API) {
                                             revision: modelo.Practicas[b].Actividades[f].revision,
                                             tecnica: buscartecnicaactividad(API, modelo.Practicas[b].Actividades[f].titulo)
                                         });
+                                        actiyemp2.push({
+                                            titulo: modelo.Practicas[b].Actividades[f].titulo,
+                                            estado: modelo.Practicas[b].Actividades[f].estado,
+                                            descripcion: modelo.Practicas[b].Actividades[f].descripcion,
+                                            fechacreacion: modelo.Practicas[b].Actividades[f].fechacreacion,
+                                            fechaentrega: modelo.Practicas[b].Actividades[f].fechaentrega,
+                                            revision: modelo.Practicas[b].Actividades[f].revision,
+                                            tecnica: buscartecnicaactividad(API, modelo.Practicas[b].Actividades[f].titulo)
+                                        });
                                         num++;
                                     }
                                 }
                             }
+                            if (array[c].rol === "Arquitecto Experiencia Multimedia") { lider = array[c].integrante }
                         }
                     }
                     arraydef.push({ integrante: array[c].integrante, actividades: actividades });
@@ -1605,6 +1668,34 @@ function asignaciondeactividaporrol(array, practicas, API) {
             }
         }
     }
+
+    for (let z1 = 0; z1 < actiyemp2.length; z1++) {
+        for (let z2 = 0; z2 < actiyemp.length; z2++) {
+            if (actiyemp2[z1].titulo === actiyemp[z2].titulo) {
+                actiyemp.splice(z2, 1);
+            }
+        }
+    }
+    let g = 0;
+    for (let zz = 0; zz < arraydef.length; zz++) {
+        if (arraydef[zz].integrante == lider) {
+            g++
+        }
+    }
+    let gfin = 0;
+    for (let zz = 0; zz < arraydef.length; zz++) {
+        if (arraydef[zz].integrante == lider) {
+            if (gfin == (g - 1)) {
+                let tem = arraydef[zz].actividades;
+                arraydef[zz].actividades = tem.concat(actiyemp)
+                // console.log(arraydef[zz].actividades)
+            }
+            gfin++;
+        }
+    }
+
+    // console.log(lider)
+    num += actiyemp.length;
     return { user: arraydef, num };
 }
 function listaintegranteconroles(array) {
@@ -1895,6 +1986,7 @@ function insertintegrantesconrolesyactividades(proyecto, integrantes, practicas)
                             console.log(chalk.green("obtener integrantes con rol"))
                             buscarDB.obtenertodasTecnicas().then(tecnicas => {
                                 let dataActividades = asignaciondeactividaporrol(interol, practicas, tecnicas.API);
+
                                 crearcontenidos(dataActividades.num).then(result2 => {
                                     console.log(chalk.green(`contenidos creados ${dataActividades.num}`))
                                     buscarDB.obtenertodasContenidos().then(contendos => {
@@ -2081,7 +2173,7 @@ function buscartecnicaactividad(API, actividad) {
     }
     else if (actividad == "A21") {
         for (let a1 = 0; a1 < API.length; a1++) {
-            if (API[a1].tecnicatitulo == "Estructura de formulación para la misión del SMMV.") {
+            if (API[a1].tecnicatitulo == "Estructura para la formulación de la visión del SMMV") {
                 return API[a1].id
             }
         }

@@ -1,8 +1,9 @@
 const ex = require('express');
 const jwt = require('jsonwebtoken');
 const rutas = ex.Router();
-
+const env = require('../env')
 const buscarDB = require('../database/buscarDB');
+const { removeObject } = require('../ftp/peticiones');
 const ftpminio = require("../ftp/peticiones");
 const LLAVE = 'misecretos';
 
@@ -27,12 +28,22 @@ rutas.get('/escritorio', proToken, (req, res) => {
             //console.log(data)
             if (data.rows[0] != null || data.rows.length > 0) {
                 // console.log(data.rows);
-                buscarDB.obtenerEscritorioActividades(data).then(result => {
-                    //res.json(result)
-                    buscarDB.obtenerEscritorioProyectos(data).then(result2 => {
-                        res.json({ actividades: result.actividades, proyectos: result2.proyectos });
-                    }).catch(err2 => res.json(err2));
-                }).catch(err => res.json(err));
+                buscarDB.obtenerusuarioid({ id: data.rows[0].id }).then(usua => {
+                    buscarDB.obtenerEscritorioActividades(data).then(result => {
+                        //res.json(result)
+                        buscarDB.obtenerEscritorioProyectos(data).then(result2 => {
+                            res.json({
+                                actividades: result.actividades,
+                                proyectos: result2.proyectos,
+                                datos: {
+                                    nombre: usua.nombre,
+                                    foto: `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`
+                                }
+                            });
+                        }).catch(err2 => res.json(err2));
+                    }).catch(err => res.json(err));
+                }).catch(errud => removeObject(errud))
+
             } else {
                 console.log("Basio perro "); res.json({ estado: "no se encontro nada" });
             }
@@ -111,10 +122,14 @@ rutas.get('/proyectos/:id', proToken, (req, res) => {
 rutas.get('/proyecto/contenido/:buque/:name', (req, res) => {
 
     const { buque, name } = req.params;
-    console.log(req.params)
+    //  console.log(req.params)
     // const {id,name } = req.body;
+    if (name == "null" || name == null) {
+        res.json({ msj: "no existe" })
+    } else {
+        ftpminio.getFilesingle(buque, name, res);
+    }
 
-    ftpminio.getFilesingle(buque, name, res);
 
 
 });

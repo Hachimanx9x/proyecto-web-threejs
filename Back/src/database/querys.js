@@ -21,6 +21,9 @@ query.login = function (obj) {
 query.usuarioid = function (id) {
     return `SELECT * FROM usuarios WHERE id = ${id}; `
 }
+query.proyectoid = function (id) {
+    return `SELECT * FROM proyectos WHERE id = ${id}; `
+}
 query.obtenerEscritorioActividades = function (id) {
     return (` SELECT  
     usuarios.nombre,
@@ -447,6 +450,7 @@ query.obtenertodasProyectos = function () { return `SELECT * FROM proyectos ; `;
 query.obtenertodasReuniones = function () { return `SELECT * FROM reuniones ; `; }
 query.obtenertodasListaReuniones = function () { return `SELECT * FROM listareuniones ; `; }
 query.obtenertodasListaEntregas = function () { return `SELECT * FROM listaentregas ; `; }
+query.obtenertodasEventos = function () { return `SELECT * FROM eventos ; `; }
 query.obtenertodasListaEventos = function () { return `SELECT * FROM listaeventos ; `; }
 query.obtenertodasListaIntegrantes = function () { return `SELECT * FROM listaintegrantes ; `; }
 //-------------busquedas por tablas puntual
@@ -857,6 +861,11 @@ query.updatentrega = function (descripcion, titulo, nombrearchivo, id) {
     entregasdescripcion ="${descripcion}",
     entregasnombrearchivoguardado ="${nombrearchivo}"
     WHERE id = ${id}; `;
+}
+query.actualizaractividad = function (integrante, actividad) {
+    return `update listaactividades
+    set integrante = ${integrante}, actividad= ${actividad}
+    where  actividad= ${actividad};  `;
 }
 /**
  `7MM"""Yp,                                               

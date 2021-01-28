@@ -53,6 +53,7 @@ funcionesDB.obtenerToken = (body) => {
     });
 }
 
+
 funcionesDB.obtenerusuarioid = async (body) => {
     return new Promise((res, rej) => {
         const { id } = body
@@ -65,6 +66,26 @@ funcionesDB.obtenerusuarioid = async (body) => {
             }
             else {
                 sqlite.all(Query.usuarioid(id), (err, rows) => {
+                    if (!err) { res(rows[0]); } else { rej({ err }) }
+                });
+            }
+        })
+    });
+
+}
+
+funcionesDB.obtenerproyectoid = async (body) => {
+    return new Promise((res, rej) => {
+        const { id } = body
+        promesa.then(async (result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.proyectoid(id), async (err, rows) => {
+                    if (!err) { res(rows[0]); } else { rej({ err }) }
+                })
+            }
+            else {
+                sqlite.all(Query.proyectoid(id), (err, rows) => {
                     if (!err) { res(rows[0]); } else { rej({ err }) }
                 });
             }
@@ -337,6 +358,19 @@ funcionesDB.buscaractividadesproyecto = async (user, id) => {
         });
     });
 }
+/**
+ * 
+ _______              __                __                                     
+|       \            |  \              |  \                                    
+| $$$$$$$\  ______  _| $$_     ______  | $$____    ______    _______   ______  
+| $$  | $$ |      \|   $$ \   |      \ | $$    \  |      \  /       \ /      \ 
+| $$  | $$  \$$$$$$\\$$$$$$    \$$$$$$\| $$$$$$$\  \$$$$$$\|  $$$$$$$|  $$$$$$\
+| $$  | $$ /      $$ | $$ __  /      $$| $$  | $$ /      $$ \$$    \ | $$    $$
+| $$__/ $$|  $$$$$$$ | $$|  \|  $$$$$$$| $$__/ $$|  $$$$$$$ _\$$$$$$\| $$$$$$$$
+| $$    $$ \$$    $$  \$$  $$ \$$    $$| $$    $$ \$$    $$|       $$ \$$     \
+ \$$$$$$$   \$$$$$$$   \$$$$   \$$$$$$$ \$$$$$$$   \$$$$$$$ \$$$$$$$   \$$$$$$$
+ */
+//--------------------------------------------------------------
 funcionesDB.obtenerintegranteconrol = async (integrante) => {
     return new Promise((res, rej) => {
         promesa.then(async (result) => {
@@ -1124,6 +1158,28 @@ funcionesDB.obtenertodasListaEntregas = async () => {
             }
             else {
                 sqlite.all(Query.obtenertodasListaEntregas(), (err, rows) => {
+                    if (!err) {
+                        res({ API: rows });
+                    } else { rej(err) }
+                });
+            }
+        })
+    });
+}
+//---------------------------------------------------------
+funcionesDB.obtenertodasEventos = async () => {
+    return new Promise((res, rej) => {
+        promesa.then(async (result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                await mariaDB.query(Query.obtenertodasEventos(), async (err, rows) => {
+                    if (!err) {
+                        res({ API: rows });
+                    } else { rej(err) }
+                });
+            }
+            else {
+                sqlite.all(Query.obtenertodasEventos(), (err, rows) => {
                     if (!err) {
                         res({ API: rows });
                     } else { rej(err) }

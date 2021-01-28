@@ -26,6 +26,7 @@
     "jquery": "^3.5.1",
     "malihu-custom-scrollbar-plugin": "^3.1.5",
     "mdbreact": "^4.27.0",
+    "microphone-stream": "^5.1.0",
     "moment": "^2.29.1",
     "multiselect-react-dropdown": "^1.6.3",
     "popper.js": "^1.16.1",

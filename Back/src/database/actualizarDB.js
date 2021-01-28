@@ -70,6 +70,88 @@ funcionesDB.entregarentregable = (entregable, nombre) => {
         }).catch(err => rej(err))
     })
 }
+
+funcionesDB.actualizarusuario = (obj, id, foto, cv) => {
+    return new Promise((res, rej) => {
+        const { email,
+            password,
+            experiencia,
+            nombre,
+            descripcion,
+            pais,
+            edad,
+            github,
+            gitlab,
+            bitbucket,
+            linkedin } = obj
+        buscarDB.obtenerusuarioid({ id: id }).then(usuario => {
+            let correo = usuario.email;
+            if (email !== null || email !== undefined) { correo = email }
+            let contra = usuario.contrasena;
+            if (password !== null || password !== undefined) { contra = password }
+            let expi = usuario.anosdeexperiencia;
+            if (experiencia !== null || experiencia !== undefined) { expi = experiencia }
+            let fototem = usuario.fotoperfil;
+            if (foto !== null || foto !== undefined) { fototem = foto }
+            let cvtem = usuario.nombrearchivohojadevida;
+            if (cv !== null || cv !== undefined) { cvtem = cv }
+            let name = usuario.nombre;
+            if (nombre !== null && nombre !== undefined) { name = nombre }
+            let descr = usuario.descripcion;
+            if (descripcion !== null && descripcion !== undefined) { descr = descripcion }
+            let countr = usuario.pais;
+            if (pais !== null && pais !== undefined) { countr = pais }
+            let age = usuario.edad;
+            if (edad !== null && edad !== undefined) { age = edad }
+            let githubtem = usuario.github;
+            if (github !== null && github !== undefined) { githubtem = github }
+            let gitlabtem = usuario.github;
+            if (gitlab !== null && gitlab !== undefined) { gitlabtem = gitlab }
+            let bitbucketem = usuario.github;
+            if (bitbucket !== null && bitbucket !== undefined) { bitbucketem = bitbucket }
+            let linkedintem = usuario.linkedin;
+            if (linkedin !== null && linkedin !== undefined) { linkedintem = linkedin }
+            funcionesDB.updateuser({
+                id: usuario.id,
+                email: correo,
+                password: contra,
+                experiencia: expi,
+                fotoperfil: fototem,
+                nombrearchivohojadevida: cvtem,
+                nombre: name,
+                descripcion: descr,
+                pais: countr,
+                edad: age,
+                github: githubtem,
+                gitlab: gitlabtem,
+                bitbucket: bitbucketem,
+                linkedin: linkedintem
+            }).then(result => {
+                res({ msj: `actualizado usuario ${name}` });
+            }).catch(err => {
+                res(err)
+            })
+
+
+        }).catch(err => rej(err))
+    })
+}
+
+
+
+/**
+ * 
+ _______              __                __                                     
+|       \            |  \              |  \                                    
+| $$$$$$$\  ______  _| $$_     ______  | $$____    ______    _______   ______  
+| $$  | $$ |      \|   $$ \   |      \ | $$    \  |      \  /       \ /      \ 
+| $$  | $$  \$$$$$$\\$$$$$$    \$$$$$$\| $$$$$$$\  \$$$$$$\|  $$$$$$$|  $$$$$$\
+| $$  | $$ /      $$ | $$ __  /      $$| $$  | $$ /      $$ \$$    \ | $$    $$
+| $$__/ $$|  $$$$$$$ | $$|  \|  $$$$$$$| $$__/ $$|  $$$$$$$ _\$$$$$$\| $$$$$$$$
+| $$    $$ \$$    $$  \$$  $$ \$$    $$| $$    $$ \$$    $$|       $$ \$$     \
+ \$$$$$$$   \$$$$$$$   \$$$$   \$$$$$$$ \$$$$$$$   \$$$$$$$ \$$$$$$$   \$$$$$$$
+ */
+//--------------------------------------------------------------
 //----------------------------------------------------------------
 funcionesDB.updateDelivery = (obj) => {
     return new Promise((res, rej) => {
@@ -772,6 +854,29 @@ funcionesDB.updateproyecticon = (obj) => {
             }
             else {
                 sqlite.all(Query.updatproyectoicono(icono, id), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+        })
+    })
+}
+//----------------------------------------------------------------
+funcionesDB.updatelistactvity = (obj) => {
+    return new Promise((res, rej) => {
+        const { integrante, actividad } = obj;
+        promesa.then((result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                mariaDB.query(Query.actualizaractividad(integrante, actividad), (err) => {
+                    if (!err) {
+                        res({ msj: "success" });
+                    } else { rej({ msj: "error" }); }
+                });
+            }
+            else {
+                sqlite.all(Query.actualizaractividad(integrante, actividad), (err) => {
                     if (!err) {
                         res({ msj: "success" });
                     } else { rej({ msj: "error" }); }

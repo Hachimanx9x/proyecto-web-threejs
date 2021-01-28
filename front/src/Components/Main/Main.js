@@ -5,6 +5,7 @@ import SigIn from "../Pages/Sigin/SignIn2";
 import Loged from "../Pages/Loged/Dashboard";
 import Test from "../Pages/test/test";
 import Test3d from "../Pages/test/test3d";
+import Test3d2 from "../Pages/test/tes3dsimple";
 import TestFile from "../Pages/test/testfiles";
 import TestAxios from "../Pages/test/maxios";
 
@@ -35,6 +36,7 @@ class Main extends Component {
           <Route path="/Dashboard" component={Loged} />
           <Route exact path="/test" component={Test} />
           <Route exact path="/test3d" component={Test3d} />
+          <Route exact path="/test3dsimple" component={Test3d2} />
           <Route exact path="/testfile" component={TestFile} />
           <Route exact path="/axios" component={TestAxios} />
           {this.Redirect()}

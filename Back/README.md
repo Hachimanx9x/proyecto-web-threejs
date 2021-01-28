@@ -88,7 +88,74 @@ este devolvera un token con lo datos de ese momento del usuario
 /escritorio
 ```
 este devolvera los datos de las actividades asginadas a la persona y del estado de los proyectos 
+```json
+{
+    "actividades": [{
+            "proyecto": 120,
+            "usuario": "nombre test14",
+            "actividadid": 503,
+            "actividad": "A9",
+            "descripcion": "Defina las bases del diseño de una experiencia multimedia\n                    interactiva, a partir de la historia y el (los) problema(s)\n                    identificado(s), especificando los hitos de la historia en donde\n                    el Sistema Multimedia debe producir en el usuario una\n                    influencia cognitiva, emocional y sensorial.",
+            "estado": "asignada",
+            "entrega": "2021-01-23",
+            "contenido": {
+                "url": "http://localhost:3030/proyecto/contenido/proyecto120/null"
+            }
+        }],
+    "proyectos": [ { "idproyecto": 121,
+            "proyectonombre": "proyecto test2",
+            "practicas": [
+                {
+                    "practicanombre": "Sistema Multimedia mínimo viable",
+                    "alfas": [
+                        {
+                            "alfanombre": "Oportunidad",
+                            "alfaestado": "iniciado"
+                        },
+                        {
+                            "alfanombre": "Valor del sistema multimedia",
+                            "alfaestado": "iniciado"
+                        }
+                    ]
+                },
+                {
+                    "practicanombre": "Concepción de la experiencia multimedia",
+                    "alfas": [
+                        {
+                            "alfanombre": "Experiencia multimedia",
+                            "alfaestado": "iniciado"
+                        },
+                        {
+                            "alfanombre": "Diseño responsable",
+                            "alfaestado": "iniciado"
+                        }
+                    ]
+                }
+            ]
+        }],
+    "datos": {
+        "nombre": "nombre test16",
+        "foto": "http://localhost:3030/proyecto/contenido/usuario12/null"
+    }
+}
+```
 
+```sh
+/talentos
+```
+este devuelve a todos los usuarios que posean un herramientas asociadas, asi como lapbras clave
+```json
+```
+
+
+
+esta ruta te traera la informacion de los proyectos a los que pertenescan de manera los mas resumida posible
+```sh
+/proyectos
+```
+
+
+> rutas de inserción
 
 esta ruta permite la creacion de un usuario 
 ```sh

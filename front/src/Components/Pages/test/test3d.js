@@ -14,7 +14,8 @@ import { PointerLockControls } from "three/examples/jsm/controls/PointerLockCont
 import Detector from "../../../lib_externo/Detector";
 //charjs
 import { Chart } from "react-chartjs-2";
-
+//socket
+import io from "socket.io-client";
 
 //imagenes
 import posx from "../../../Logos/img/Bridge2/posx.jpg";
@@ -49,6 +50,9 @@ class Test3d extends Component {
     this.makeLabelCanvas = this.makeLabelCanvas.bind(this);
 
     this.state = {
+      player: null,
+      reunion: 1,
+      posicionplayer: { x: 0, y: 0, z: 0 },
       marksData: {
         labels: ["ruta1", "ruta2", "ruta3", "ruta4"],
         animation: false,
@@ -65,546 +69,574 @@ class Test3d extends Component {
             data: [54, 65, 60, 70],
           },
         ],
-      },
+      }
+
     };
   }
   componentDidMount() {
-    if (!Detector.webgl) Detector.addGetWebGLMessage();
-    //eventos
-    window.addEventListener("resize", this.updateDimensions);
-    document.addEventListener("mousedown", this.mouseEventsdown);
-    document.addEventListener("mouseup", this.mouseEventup);
-    //variables de entorno
-    this.camera = new THREE.PerspectiveCamera(
-      75,
-      window.innerWidth / window.innerHeight,
-      0.1,
-      50
-    );
-    this.camera.position.set(0, 0.9, 1.7);
-    this.velocity = new THREE.Vector3();
-    this.raycaster = new THREE.Raycaster();
-    this.mouse = new THREE.Vector2();
-    this.prevTime = performance.now();
-    this.estado = false;
-    this.estados_pantalla = { p0: true, p1: false };
-    this.objInteraccion = [];
-    this.objInteraccion0 = [];
-    this.objInteraccion1 = [];
-    this.objInteraccion2 = [];
-    this.objInteraccion3 = [];
-    //skybox
-    var entorno = new THREE.CubeTextureLoader().load([
-      posx,
-      negx,
-      posy,
-      negy,
-      posz,
-      negz,
-    ]);
+    //   console.log(this.state)
+    this.socket = io('http://localhost:3030/', {
+      reconnectionDelayMax: 10000,
+      auth: {
+        token: "123"
+      },
+      query: {
+        reunion: this.state.reunion
+      }
+    });
 
-    this.scene = new THREE.Scene();
-    this.scene.background = entorno;
-    this.scene.environment = entorno;
+    let promesadatosini = new Promise((res, rej) => {
+      this.socket.on('datos', obj => {
 
-    this.light = new THREE.HemisphereLight(0xbbbbff, 0x444422);
-    this.light.position.set(0, 1, 0);
-    this.scene.add(this.light);
-    //console.log(this.scene);
-    //video
-    this.video = document.createElement("video");
-    var source = document.createElement("source");
-    source.type = "video/mp4";
-    source.src = video1;
-    this.video.appendChild(source);
-    var texvideo = new THREE.VideoTexture(this.video);
-    var geovideo = new THREE.PlaneBufferGeometry(16, 9);
-    geovideo.scale(0.05, 0.05, 0.05);
+        this.setState({ posicionplayer: obj.posicion })
+        console.log(this.state.posicionplayer)
+        res(true)
+      });
+    })
 
-    var materialvideo = new THREE.MeshBasicMaterial({ map: texvideo });
-    this.meshvideo = new THREE.Mesh(geovideo, materialvideo);
-    this.meshvideo.position.set(0.7, 0.5, 0);
-    this.meshvideo.rotation.set(0, -Math.PI / 2, 0);
-    this.meshvideo.visible = false;
-    console.log(this.meshvideo);
-    this.scene.add(this.meshvideo);
-    // controles del video
+    promesadatosini.then(re => {
 
-    var geocaja = new THREE.BoxBufferGeometry(1, 1, 1);
-    var objectI1 = new THREE.Mesh(
-      geocaja,
-      new THREE.MeshBasicMaterial({
-        color: 0x4ff20e, opacity: 0.5,
-        transparent: true,
-      })
-    );
 
-    var objectI2 = new THREE.Mesh(
-      geocaja,
-      new THREE.MeshBasicMaterial({
-        color: 0xf2380e, opacity: 0.5,
-        transparent: true,
-      })
-    );
+      if (!Detector.webgl) Detector.addGetWebGLMessage();
+      //eventos
+      window.addEventListener("resize", this.updateDimensions);
+      document.addEventListener("mousedown", this.mouseEventsdown);
+      document.addEventListener("mouseup", this.mouseEventup);
+      //variables de entorno
+      this.camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        50
+      );
+      this.camera.position.set(0, 0.9, 1.7);
+      this.velocity = new THREE.Vector3();
+      this.raycaster = new THREE.Raycaster();
+      this.mouse = new THREE.Vector2();
+      this.prevTime = performance.now();
+      this.estado = false;
+      this.estados_pantalla = { p0: true, p1: false };
+      this.objInteraccion = [];
+      this.objInteraccion0 = [];
+      this.objInteraccion1 = [];
+      this.objInteraccion2 = [];
+      this.objInteraccion3 = [];
+      //skybox
+      var entorno = new THREE.CubeTextureLoader().load([
+        posx,
+        negx,
+        posy,
+        negy,
+        posz,
+        negz,
+      ]);
 
-    this.objInteraccion1.push(objectI1);
-    this.objInteraccion2.push(objectI2);
-    // ejemplo de grafica
-    this.canvasG = document.createElement("canvas");
-    this.canvasG.height = 1;
-    this.canvasG.width = 1;
-    this.canvasG.id = "cfeo";
+      this.scene = new THREE.Scene();
+      this.scene.background = entorno;
+      this.scene.environment = entorno;
 
-    document.body.appendChild(this.canvasG);
-    this.materialC = new THREE.MeshBasicMaterial();
-    this.objgrafico = new THREE.Object3D();
-    var mesh = new THREE.Mesh(
-      new THREE.PlaneBufferGeometry(1, 1),
-      this.materialC
-    );
-    var mesh2 = new THREE.Mesh(
-      new THREE.PlaneBufferGeometry(1, 1),
-      new THREE.MeshBasicMaterial({ color: 0xfffffff })
-    );
-    this.objgrafico.add(mesh);
-    this.objgrafico.add(mesh2);
-    this.objgrafico.rotation.set(-Math.PI / 2.25, 0, Math.PI / 18);
-    this.objgrafico.position.set(-0.1, 0.22, 0.8);
-    this.objgrafico.scale.set(0.2, 0.2, 0.2);
-    console.log("grafico");
-    console.log(this.objgrafico);
-    this.scene.add(this.objgrafico);
+      this.light = new THREE.HemisphereLight(0xbbbbff, 0x444422);
+      this.light.position.set(0, 1, 0);
+      this.scene.add(this.light);
+      //console.log(this.scene);
+      //video
+      this.video = document.createElement("video");
+      var source = document.createElement("source");
+      source.type = "video/mp4";
+      source.src = video1;
+      this.video.appendChild(source);
+      var texvideo = new THREE.VideoTexture(this.video);
+      var geovideo = new THREE.PlaneBufferGeometry(16, 9);
+      geovideo.scale(0.05, 0.05, 0.05);
 
-    /*
-    
-▄▀▀ █░░█ ▀█▀
-█░█ █░░█ ░█░
-░▀▀ ░▀▀░ ▀▀▀
-    */
-    this.GUIv2 = new THREE.Object3D(); ///const guiv2 = new THREE.Object3D();
+      var materialvideo = new THREE.MeshBasicMaterial({ map: texvideo });
+      this.meshvideo = new THREE.Mesh(geovideo, materialvideo);
+      this.meshvideo.position.set(0.7, 0.5, 0);
+      this.meshvideo.rotation.set(0, -Math.PI / 2, 0);
+      this.meshvideo.visible = false;
+      console.log(this.meshvideo);
+      this.scene.add(this.meshvideo);
+      // controles del video
 
-    this.fondos = {
-      fondo0: new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), new THREE.MeshBasicMaterial({ color: 0x2E9AFE, opacity: 0.5, transparent: true, })),
-      fondo1: new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), new THREE.MeshBasicMaterial({ color: 0x2E9AFE, opacity: 0.5, transparent: true, }))
-    }
-    this.btn_inter = {
-      inter0: new THREE.Mesh(new THREE.BoxBufferGeometry(1, 1, 1), new THREE.MeshBasicMaterial({ color: 0x61f20e, opacity: 0.5, transparent: true, })),
-      inter1: new THREE.Mesh(new THREE.BoxBufferGeometry(1, 1, 1), new THREE.MeshBasicMaterial({ color: 0x4ff20e, opacity: 0.5, transparent: true, })),
-      inter2: new THREE.Mesh(new THREE.BoxBufferGeometry(1, 1, 1), new THREE.MeshBasicMaterial({ color: 0xf2380e, opacity: 0.5, transparent: true, }))
-    }
-    this.pantallas = {
-      pantalla0: new THREE.Object3D(),
-      pantalla1: new THREE.Object3D()
-    }
-    this.letreros_Labels = {
-      titulo_pantalla1: this.makeLabelCanvas(32, "Pantalla1"),
-      titulo_pantalla2: this.makeLabelCanvas(32, "Pantalla2"),
-      boton_p1_r1: this.makeLabelCanvas(24, "Genesis"),
-      boton0_p2_r1: this.makeLabelCanvas(24, "video"),
-      boton1_p2_r1: this.makeLabelCanvas(24, "grafico"),
-    };
-    this.letrerostexture = {
-      titulo_pantalla1: new THREE.CanvasTexture(this.letreros_Labels.titulo_pantalla1),
-      titulo_pantalla2: new THREE.CanvasTexture(this.letreros_Labels.titulo_pantalla2),
-      boton_p1_r1: new THREE.CanvasTexture(this.letreros_Labels.boton_p1_r1),
-      boton0_p2_r1: new THREE.CanvasTexture(this.letreros_Labels.boton0_p2_r1),
-      boton1_p2_r1: new THREE.CanvasTexture(this.letreros_Labels.boton1_p2_r1),
-    };
+      var geocaja = new THREE.BoxBufferGeometry(1, 1, 1);
+      var objectI1 = new THREE.Mesh(
+        geocaja,
+        new THREE.MeshBasicMaterial({
+          color: 0x4ff20e, opacity: 0.5,
+          transparent: true,
+        })
+      );
 
-    //metodo poderoso encontrado por nestor :D
-    for (const property in this.letrerostexture) {
-      this.letrerostexture[property].minFilter = THREE.LinearFilter;
-      this.letrerostexture[property].wrapS = THREE.ClampToEdgeWrapping;
-      this.letrerostexture[property].wrapT = THREE.ClampToEdgeWrapping;
-    }
-    this.labelmaterials = {
-      titulo_pantalla1: new THREE.MeshBasicMaterial({ map: this.letrerostexture.titulo_pantalla1, side: THREE.DoubleSide, transparent: true, }),
-      titulo_pantalla2: new THREE.MeshBasicMaterial({ map: this.letrerostexture.titulo_pantalla2, side: THREE.DoubleSide, transparent: true }),
-      boton_p1_r1: new THREE.MeshBasicMaterial({ map: this.letrerostexture.boton_p1_r1, side: THREE.DoubleSide, transparent: true }),
-      boton0_p2_r1: new THREE.MeshBasicMaterial({ map: this.letrerostexture.boton0_p2_r1, side: THREE.DoubleSide, transparent: true }),
-      boton1_p2_r1: new THREE.MeshBasicMaterial({ map: this.letrerostexture.boton1_p2_r1, side: THREE.DoubleSide, transparent: true }),
-    }
-    this.labelGeo = {
-      titulo_pantalla1: new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), this.labelmaterials.titulo_pantalla1),
-      titulo_pantalla2: new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), this.labelmaterials.titulo_pantalla2),
-      boton_p1_r1: new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), this.labelmaterials.boton_p1_r1),
-      boton0_p2_r1: new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), this.labelmaterials.boton0_p2_r1),
-      boton1_p2_r1: new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), this.labelmaterials.boton1_p2_r1),
-    }
-    for (const property in this.labelGeo) {
-      this.labelGeo[property].scale.x = this.letreros_Labels[property].width * 0.001;
-      this.labelGeo[property].scale.y = this.letreros_Labels[property].height * 0.001;
-    }
+      var objectI2 = new THREE.Mesh(
+        geocaja,
+        new THREE.MeshBasicMaterial({
+          color: 0xf2380e, opacity: 0.5,
+          transparent: true,
+        })
+      );
 
-    var i0 = 0;
-    for (const property in this.pantallas) {
-      var i1 = 0;
-      for (const property1 in this.fondos) {
-        if (i1 === 0 && i0 === 0) {
+      this.objInteraccion1.push(objectI1);
+      this.objInteraccion2.push(objectI2);
+      // ejemplo de grafica
+      this.canvasG = document.createElement("canvas");
+      this.canvasG.height = 1;
+      this.canvasG.width = 1;
+      this.canvasG.id = "cfeo";
 
-          this.labelGeo.boton_p1_r1.position.set(this.labelGeo.titulo_pantalla1.position.x, this.labelGeo.titulo_pantalla1.position.y - 0.05, this.labelGeo.titulo_pantalla1.position.z)
-          this.objInteraccion.push(this.btn_inter.inter0);
-          this.btn_inter.inter0.scale.set(this.labelGeo.boton_p1_r1.scale.x, this.labelGeo.boton_p1_r1.scale.y, 0.005);
-          this.btn_inter.inter0.position.set(this.labelGeo.boton_p1_r1.position.x, this.labelGeo.boton_p1_r1.position.y, -0.005);
-          this.fondos[property1].scale.set(this.labelGeo.titulo_pantalla1.scale.x + 0.1, this.labelGeo.titulo_pantalla1.scale.x + 0.05);
-          this.fondos[property1].position.set(this.labelGeo.titulo_pantalla1.position.x + 0.05, this.labelGeo.titulo_pantalla1.position.y - 0.007, -0.1);
-          this.pantallas[property].add(this.labelGeo.titulo_pantalla1);
-          this.pantallas[property].add(this.labelGeo.boton_p1_r1);
-          this.pantallas[property].add(this.btn_inter.inter0);
-          this.pantallas[property].add(this.fondos[property1]);
-        } else if (i1 === 1 && i0 === 1) {
+      document.body.appendChild(this.canvasG);
+      this.materialC = new THREE.MeshBasicMaterial();
+      this.objgrafico = new THREE.Object3D();
+      var mesh = new THREE.Mesh(
+        new THREE.PlaneBufferGeometry(1, 1),
+        this.materialC
+      );
+      var mesh2 = new THREE.Mesh(
+        new THREE.PlaneBufferGeometry(1, 1),
+        new THREE.MeshBasicMaterial({ color: 0xfffffff })
+      );
+      this.objgrafico.add(mesh);
+      this.objgrafico.add(mesh2);
+      this.objgrafico.rotation.set(-Math.PI / 2.25, 0, Math.PI / 18);
+      this.objgrafico.position.set(-0.1, 0.22, 0.8);
+      this.objgrafico.scale.set(0.2, 0.2, 0.2);
+      console.log("grafico");
+      console.log(this.objgrafico);
+      this.scene.add(this.objgrafico);
 
-          this.labelGeo.boton0_p2_r1.position.set(this.labelGeo.titulo_pantalla2.position.x - 0.05, this.labelGeo.titulo_pantalla2.position.y - 0.05, this.labelGeo.titulo_pantalla2.position.z)
-          this.labelGeo.boton1_p2_r1.position.set(this.labelGeo.titulo_pantalla2.position.x + 0.05, this.labelGeo.titulo_pantalla2.position.y - 0.05, this.labelGeo.titulo_pantalla2.position.z)
-          this.objInteraccion0.push(this.labelGeo.boton0_p2_r1);
-          this.objInteraccion3.push(this.labelGeo.boton1_p2_r1);
-          /****************/
-          this.btn_inter.inter1.scale.set(this.labelGeo.boton0_p2_r1.scale.x, this.labelGeo.boton0_p2_r1.scale.y, 0.005);
-          this.btn_inter.inter1.position.set(this.labelGeo.boton0_p2_r1.position.x, this.labelGeo.boton0_p2_r1.position.y, -0.005)
-          this.btn_inter.inter2.scale.set(this.labelGeo.boton1_p2_r1.scale.x, this.labelGeo.boton1_p2_r1.scale.y, 0.005);
-          this.btn_inter.inter2.position.set(this.labelGeo.boton1_p2_r1.position.x, this.labelGeo.boton1_p2_r1.position.y, -0.005)
-          /****** */
-          this.fondos[property1].scale.set(this.labelGeo.titulo_pantalla2.scale.x + 0.2, this.labelGeo.titulo_pantalla2.scale.x + 0.05);
-          this.fondos[property1].position.set(this.labelGeo.titulo_pantalla2.position.x + 0.05, this.labelGeo.titulo_pantalla2.position.y - 0.007, -0.1);
-          this.pantallas[property].add(this.labelGeo.titulo_pantalla2);
-          this.pantallas[property].add(this.labelGeo.boton0_p2_r1);
-          this.pantallas[property].add(this.labelGeo.boton1_p2_r1);
-          this.pantallas[property].add(this.btn_inter.inter1);
-          this.pantallas[property].add(this.btn_inter.inter2);
-          this.pantallas[property].add(this.fondos[property1]);
-        }
-        i1 += 1;
+      /*
+      
+    ▄▀▀ █░░█ ▀█▀
+    █░█ █░░█ ░█░
+    ░▀▀ ░▀▀░ ▀▀▀
+      */
+      this.GUIv2 = new THREE.Object3D(); ///const guiv2 = new THREE.Object3D();
+
+      this.fondos = {
+        fondo0: new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), new THREE.MeshBasicMaterial({ color: 0x2E9AFE, opacity: 0.5, transparent: true, })),
+        fondo1: new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), new THREE.MeshBasicMaterial({ color: 0x2E9AFE, opacity: 0.5, transparent: true, }))
+      }
+      this.btn_inter = {
+        inter0: new THREE.Mesh(new THREE.BoxBufferGeometry(1, 1, 1), new THREE.MeshBasicMaterial({ color: 0x61f20e, opacity: 0.5, transparent: true, })),
+        inter1: new THREE.Mesh(new THREE.BoxBufferGeometry(1, 1, 1), new THREE.MeshBasicMaterial({ color: 0x4ff20e, opacity: 0.5, transparent: true, })),
+        inter2: new THREE.Mesh(new THREE.BoxBufferGeometry(1, 1, 1), new THREE.MeshBasicMaterial({ color: 0xf2380e, opacity: 0.5, transparent: true, }))
+      }
+      this.pantallas = {
+        pantalla0: new THREE.Object3D(),
+        pantalla1: new THREE.Object3D()
+      }
+      this.letreros_Labels = {
+        titulo_pantalla1: this.makeLabelCanvas(32, "Pantalla1"),
+        titulo_pantalla2: this.makeLabelCanvas(32, "Pantalla2"),
+        boton_p1_r1: this.makeLabelCanvas(24, "Genesis"),
+        boton0_p2_r1: this.makeLabelCanvas(24, "video"),
+        boton1_p2_r1: this.makeLabelCanvas(24, "grafico"),
+      };
+      this.letrerostexture = {
+        titulo_pantalla1: new THREE.CanvasTexture(this.letreros_Labels.titulo_pantalla1),
+        titulo_pantalla2: new THREE.CanvasTexture(this.letreros_Labels.titulo_pantalla2),
+        boton_p1_r1: new THREE.CanvasTexture(this.letreros_Labels.boton_p1_r1),
+        boton0_p2_r1: new THREE.CanvasTexture(this.letreros_Labels.boton0_p2_r1),
+        boton1_p2_r1: new THREE.CanvasTexture(this.letreros_Labels.boton1_p2_r1),
+      };
+
+      //metodo poderoso encontrado por nestor :D
+      for (const property in this.letrerostexture) {
+        this.letrerostexture[property].minFilter = THREE.LinearFilter;
+        this.letrerostexture[property].wrapS = THREE.ClampToEdgeWrapping;
+        this.letrerostexture[property].wrapT = THREE.ClampToEdgeWrapping;
+      }
+      this.labelmaterials = {
+        titulo_pantalla1: new THREE.MeshBasicMaterial({ map: this.letrerostexture.titulo_pantalla1, side: THREE.DoubleSide, transparent: true, }),
+        titulo_pantalla2: new THREE.MeshBasicMaterial({ map: this.letrerostexture.titulo_pantalla2, side: THREE.DoubleSide, transparent: true }),
+        boton_p1_r1: new THREE.MeshBasicMaterial({ map: this.letrerostexture.boton_p1_r1, side: THREE.DoubleSide, transparent: true }),
+        boton0_p2_r1: new THREE.MeshBasicMaterial({ map: this.letrerostexture.boton0_p2_r1, side: THREE.DoubleSide, transparent: true }),
+        boton1_p2_r1: new THREE.MeshBasicMaterial({ map: this.letrerostexture.boton1_p2_r1, side: THREE.DoubleSide, transparent: true }),
+      }
+      this.labelGeo = {
+        titulo_pantalla1: new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), this.labelmaterials.titulo_pantalla1),
+        titulo_pantalla2: new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), this.labelmaterials.titulo_pantalla2),
+        boton_p1_r1: new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), this.labelmaterials.boton_p1_r1),
+        boton0_p2_r1: new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), this.labelmaterials.boton0_p2_r1),
+        boton1_p2_r1: new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), this.labelmaterials.boton1_p2_r1),
+      }
+      for (const property in this.labelGeo) {
+        this.labelGeo[property].scale.x = this.letreros_Labels[property].width * 0.001;
+        this.labelGeo[property].scale.y = this.letreros_Labels[property].height * 0.001;
       }
 
-      i0 += 1;
-    }
+      var i0 = 0;
+      for (const property in this.pantallas) {
+        var i1 = 0;
+        for (const property1 in this.fondos) {
+          if (i1 === 0 && i0 === 0) {
 
-    for (const property in this.pantallas) {
-      this.GUIv2.add(this.pantallas[property]);
-    }
-    this.GUIv2.position.set(0.3, 0.33, 0.9); this.GUIv2.rotation.set(0, - Math.PI / 4, 0);
-    console.log("gui2");
-    console.log(this.GUIv2);
-    this.scene.add(this.GUIv2);
-    this.pantallas.pantalla0.visible = this.estados_pantalla.p0;
-    this.pantallas.pantalla1.visible = this.estados_pantalla.p1;
+            this.labelGeo.boton_p1_r1.position.set(this.labelGeo.titulo_pantalla1.position.x, this.labelGeo.titulo_pantalla1.position.y - 0.05, this.labelGeo.titulo_pantalla1.position.z)
+            this.objInteraccion.push(this.btn_inter.inter0);
+            this.btn_inter.inter0.scale.set(this.labelGeo.boton_p1_r1.scale.x, this.labelGeo.boton_p1_r1.scale.y, 0.005);
+            this.btn_inter.inter0.position.set(this.labelGeo.boton_p1_r1.position.x, this.labelGeo.boton_p1_r1.position.y, -0.005);
+            this.fondos[property1].scale.set(this.labelGeo.titulo_pantalla1.scale.x + 0.1, this.labelGeo.titulo_pantalla1.scale.x + 0.05);
+            this.fondos[property1].position.set(this.labelGeo.titulo_pantalla1.position.x + 0.05, this.labelGeo.titulo_pantalla1.position.y - 0.007, -0.1);
+            this.pantallas[property].add(this.labelGeo.titulo_pantalla1);
+            this.pantallas[property].add(this.labelGeo.boton_p1_r1);
+            this.pantallas[property].add(this.btn_inter.inter0);
+            this.pantallas[property].add(this.fondos[property1]);
+          } else if (i1 === 1 && i0 === 1) {
+
+            this.labelGeo.boton0_p2_r1.position.set(this.labelGeo.titulo_pantalla2.position.x - 0.05, this.labelGeo.titulo_pantalla2.position.y - 0.05, this.labelGeo.titulo_pantalla2.position.z)
+            this.labelGeo.boton1_p2_r1.position.set(this.labelGeo.titulo_pantalla2.position.x + 0.05, this.labelGeo.titulo_pantalla2.position.y - 0.05, this.labelGeo.titulo_pantalla2.position.z)
+            this.objInteraccion0.push(this.labelGeo.boton0_p2_r1);
+            this.objInteraccion3.push(this.labelGeo.boton1_p2_r1);
+            /****************/
+            this.btn_inter.inter1.scale.set(this.labelGeo.boton0_p2_r1.scale.x, this.labelGeo.boton0_p2_r1.scale.y, 0.005);
+            this.btn_inter.inter1.position.set(this.labelGeo.boton0_p2_r1.position.x, this.labelGeo.boton0_p2_r1.position.y, -0.005)
+            this.btn_inter.inter2.scale.set(this.labelGeo.boton1_p2_r1.scale.x, this.labelGeo.boton1_p2_r1.scale.y, 0.005);
+            this.btn_inter.inter2.position.set(this.labelGeo.boton1_p2_r1.position.x, this.labelGeo.boton1_p2_r1.position.y, -0.005)
+            /****** */
+            this.fondos[property1].scale.set(this.labelGeo.titulo_pantalla2.scale.x + 0.2, this.labelGeo.titulo_pantalla2.scale.x + 0.05);
+            this.fondos[property1].position.set(this.labelGeo.titulo_pantalla2.position.x + 0.05, this.labelGeo.titulo_pantalla2.position.y - 0.007, -0.1);
+            this.pantallas[property].add(this.labelGeo.titulo_pantalla2);
+            this.pantallas[property].add(this.labelGeo.boton0_p2_r1);
+            this.pantallas[property].add(this.labelGeo.boton1_p2_r1);
+            this.pantallas[property].add(this.btn_inter.inter1);
+            this.pantallas[property].add(this.btn_inter.inter2);
+            this.pantallas[property].add(this.fondos[property1]);
+          }
+          i1 += 1;
+        }
+
+        i0 += 1;
+      }
+
+      for (const property in this.pantallas) {
+        this.GUIv2.add(this.pantallas[property]);
+      }
+      this.GUIv2.position.set(0.3, 0.33, 0.9); this.GUIv2.rotation.set(0, - Math.PI / 4, 0);
+      console.log("gui2");
+      console.log(this.GUIv2);
+      this.scene.add(this.GUIv2);
+      this.pantallas.pantalla0.visible = this.estados_pantalla.p0;
+      this.pantallas.pantalla1.visible = this.estados_pantalla.p1;
 
 
-  
 
 
-    /*
-   ▄▀▀ █░░█ ▀█▀ . █▀▀ █▄░█ █▀▄
-   █░█ █░░█ ░█░ . █▀▀ █▀██ █░█
-   ░▀▀ ░▀▀░ ▀▀▀ . ▀▀▀ ▀░░▀ ▀▀░
-   
-       */
 
-    //---------------default------------------------
-    var geopiso = new THREE.PlaneBufferGeometry(2000, 2000, 100, 100);
-    geopiso.rotateX(-Math.PI / 2);
+      /*
+     ▄▀▀ █░░█ ▀█▀ . █▀▀ █▄░█ █▀▄
+     █░█ █░░█ ░█░ . █▀▀ █▀██ █░█
+     ░▀▀ ░▀▀░ ▀▀▀ . ▀▀▀ ▀░░▀ ▀▀░
+     
+         */
 
-    var pisodefault = new THREE.Mesh(
-      geopiso,
-      new THREE.MeshBasicMaterial({
-        vertexColors: true,
-        color: 0xfffffff,
-        opacity: 0.9,
-        transparent: true,
-      })
-    );
-    pisodefault.position.set(0, -0.3, 0);
-    this.scene.add(pisodefault);
-    //---------------------------------------------------- // rendering
-    this.renderer = new THREE.WebGLRenderer({ antialias: true });
-    this.renderer.gamaOutput = true;
-    // this.renderer.outputEncoding = THREE.sRGBEncoding;
-    this.renderer.setClearColor(0x000000, 0);
-    this.renderer.shadowMap.enabled = true;
-    this.renderer.shadowMap.type = THREE.BasicShadowMap;
-    this.renderer.setSize(this.mount.clientWidth, this.mount.clientHeight);
-    this.renderer.setPixelRatio(window.devicePixelRatio);
-    this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    this.renderer.toneMappingExposure = 1;
+      //---------------default------------------------
+      var geopiso = new THREE.PlaneBufferGeometry(2000, 2000, 100, 100);
+      geopiso.rotateX(-Math.PI / 2);
 
-    this.camera.aspect = this.mount.clientWidth / this.mount.clientHeight;
-    this.camera.updateProjectionMatrix();
-    //----------
-    //this.controls = new OrbitControls(this.camera,this.renderer.domElement);
-    //this.controls.target.set(0,0,0);
-    //this.controls.update();
-    this.controls = new PointerLockControls(this.camera, document.body);
-    // this.controls.lock();
-    //  this.controls.connect();
+      var pisodefault = new THREE.Mesh(
+        geopiso,
+        new THREE.MeshBasicMaterial({
+          vertexColors: true,
+          color: 0xfffffff,
+          opacity: 0.9,
+          transparent: true,
+        })
+      );
+      pisodefault.position.set(0, -0.3, 0);
+      this.scene.add(pisodefault);
+      //---------------------------------------------------- // rendering
+      this.renderer = new THREE.WebGLRenderer({ antialias: true });
+      this.renderer.gamaOutput = true;
+      // this.renderer.outputEncoding = THREE.sRGBEncoding;
+      this.renderer.setClearColor(0x000000, 0);
+      this.renderer.shadowMap.enabled = true;
+      this.renderer.shadowMap.type = THREE.BasicShadowMap;
+      this.renderer.setSize(this.mount.clientWidth, this.mount.clientHeight);
+      this.renderer.setPixelRatio(window.devicePixelRatio);
+      this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      this.renderer.toneMappingExposure = 1;
 
-    // this.controls.isLocked = true ;
-    console.log(this.controls.getObject());
+      this.camera.aspect = this.mount.clientWidth / this.mount.clientHeight;
+      this.camera.updateProjectionMatrix();
+      //----------
+      //this.controls = new OrbitControls(this.camera,this.renderer.domElement);
+      //this.controls.target.set(0,0,0);
+      //this.controls.update();
+      this.controls = new PointerLockControls(this.camera, document.body);
+      // this.controls.lock();
+      //  this.controls.connect();
 
-    this.controls.getObject().position.set(0, 0.3, 1);
+      // this.controls.isLocked = true ;
+      console.log(this.controls.getObject());
 
-    this.scene.add(this.controls.getObject());
-    //---------
-    var roughnessMipmapper = new RoughnessMipmapper(this.renderer);
-    //--------------------------------------------------------
-    var objmesa = new THREE.Object3D();
-    new GLTFLoader()
-      .setDRACOLoader(new DRACOLoader())
-      .load(modeloMesaurl, (gltf) => {
+      this.controls.getObject().position.set(this.state.posicionplayer.x, this.state.posicionplayer.y, this.state.posicionplayer.z);
+
+      this.scene.add(this.controls.getObject());
+      //---------
+      var roughnessMipmapper = new RoughnessMipmapper(this.renderer);
+      //--------------------------------------------------------
+      var objmesa = new THREE.Object3D();
+      new GLTFLoader()
+        .setDRACOLoader(new DRACOLoader())
+        .load(modeloMesaurl, (gltf) => {
+          gltf.scene.traverse((nino) => {
+            if (nino.isMesh) {
+              nino.material.envMap = this.entorno;
+              roughnessMipmapper.generateMipmaps(nino.material);
+            }
+          });
+          objmesa.add(gltf.scene);
+        });
+      objmesa.position.set(1, -0.3, -1.75);
+      objmesa.rotation.set(0, 0, 0);
+      objmesa.scale.set(1, 1, 1);
+      objmesa.castShadow = true;
+      objmesa.receiveShadow = true;
+      this.scene.add(objmesa);
+
+      var objpiso = new THREE.Object3D();
+      new GLTFLoader().load(modelopiso, (gltf) => {
         gltf.scene.traverse((nino) => {
           if (nino.isMesh) {
             nino.material.envMap = this.entorno;
-            roughnessMipmapper.generateMipmaps(nino.material);
           }
         });
-        objmesa.add(gltf.scene);
+        objpiso.add(gltf.scene);
       });
-    objmesa.position.set(1, -0.3, -1.75);
-    objmesa.rotation.set(0, 0, 0);
-    objmesa.scale.set(1, 1, 1);
-    objmesa.castShadow = true;
-    objmesa.receiveShadow = true;
-    this.scene.add(objmesa);
+      //-2.72,-0.3,-1.75, 0,0,0, 1,1,1)
+      objpiso.position.set(-2.72, -0.3, -1.75);
+      objpiso.rotation.set(0, 0, 0);
+      objpiso.scale.set(1, 1, 1);
+      this.scene.add(objpiso);
 
-    var objpiso = new THREE.Object3D();
-    new GLTFLoader().load(modelopiso, (gltf) => {
-      gltf.scene.traverse((nino) => {
-        if (nino.isMesh) {
-          nino.material.envMap = this.entorno;
+      var objluz = new THREE.Object3D();
+      new GLTFLoader().load(
+        modelluz,
+        (gltf) => {
+          gltf.scene.traverse((nino) => {
+            if (nino.isMesh) {
+              nino.material.envMap = this.entorno;
+            }
+          });
+          objluz.add(gltf.scene);
+        },
+        (xhr) => {
+          console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
+        },
+        (error) => {
+          console.log("An error happened");
         }
-      });
-      objpiso.add(gltf.scene);
-    });
-    //-2.72,-0.3,-1.75, 0,0,0, 1,1,1)
-    objpiso.position.set(-2.72, -0.3, -1.75);
-    objpiso.rotation.set(0, 0, 0);
-    objpiso.scale.set(1, 1, 1);
-    this.scene.add(objpiso);
+      );
+      //1,-0.3,-1.75, 0,0,0, 1,1,1
+      objluz.position.set(1, -0.3, -1.75);
+      objluz.rotation.set(0, 0, 0);
+      objluz.scale.set(1, 1, 1);
+      this.scene.add(objluz);
 
-    var objluz = new THREE.Object3D();
-    new GLTFLoader().load(
-      modelluz,
-      (gltf) => {
+      var objmueble = new THREE.Object3D();
+      new GLTFLoader().load(modelomueble1, (gltf) => {
         gltf.scene.traverse((nino) => {
           if (nino.isMesh) {
             nino.material.envMap = this.entorno;
           }
         });
-        objluz.add(gltf.scene);
-      },
-      (xhr) => {
-        console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
-      },
-      (error) => {
-        console.log("An error happened");
-      }
-    );
-    //1,-0.3,-1.75, 0,0,0, 1,1,1
-    objluz.position.set(1, -0.3, -1.75);
-    objluz.rotation.set(0, 0, 0);
-    objluz.scale.set(1, 1, 1);
-    this.scene.add(objluz);
-
-    var objmueble = new THREE.Object3D();
-    new GLTFLoader().load(modelomueble1, (gltf) => {
-      gltf.scene.traverse((nino) => {
-        if (nino.isMesh) {
-          nino.material.envMap = this.entorno;
-        }
+        objmueble.add(gltf.scene);
       });
-      objmueble.add(gltf.scene);
-    });
-    //1,-0.3,-1.75, 0,0,0, 1,1,1
-    objmueble.position.set(-0.33, -0.07, -0.9);
-    objmueble.rotation.set(0, 0, 0);
-    objmueble.scale.set(1, 1, 1);
-    objmueble.castShadow = true;
-    objmueble.receiveShadow = true;
-    console.log(objmueble);
-    this.scene.add(objmueble);
+      //1,-0.3,-1.75, 0,0,0, 1,1,1
+      objmueble.position.set(-0.33, -0.07, -0.9);
+      objmueble.rotation.set(0, 0, 0);
+      objmueble.scale.set(1, 1, 1);
+      objmueble.castShadow = true;
+      objmueble.receiveShadow = true;
+      console.log(objmueble);
+      this.scene.add(objmueble);
 
-    var objpared1 = new THREE.Object3D();
-    new GLTFLoader().load(modelopared, (gltf) => {
-      gltf.scene.traverse((nino) => {
-        if (nino.isMesh) {
-          nino.material.envMap = this.entorno;
-        }
+      var objpared1 = new THREE.Object3D();
+      new GLTFLoader().load(modelopared, (gltf) => {
+        gltf.scene.traverse((nino) => {
+          if (nino.isMesh) {
+            nino.material.envMap = this.entorno;
+          }
+        });
+        objpared1.add(gltf.scene);
       });
-      objpared1.add(gltf.scene);
-    });
-    //1,-0.25,-2, 0,0,0, 1,1,1
-    objpared1.position.set(1, -0.27, -2);
-    objpared1.rotation.set(0, 0, 0);
-    objpared1.scale.set(1, 1, 1);
+      //1,-0.25,-2, 0,0,0, 1,1,1
+      objpared1.position.set(1, -0.27, -2);
+      objpared1.rotation.set(0, 0, 0);
+      objpared1.scale.set(1, 1, 1);
 
-    this.scene.add(objpared1);
+      this.scene.add(objpared1);
 
-    var objpared2 = new THREE.Object3D();
-    new GLTFLoader().load(modelopared2, (gltf) => {
-      gltf.scene.traverse((nino) => {
-        if (nino.isMesh) {
-          nino.material.envMap = this.entorno;
-        }
+      var objpared2 = new THREE.Object3D();
+      new GLTFLoader().load(modelopared2, (gltf) => {
+        gltf.scene.traverse((nino) => {
+          if (nino.isMesh) {
+            nino.material.envMap = this.entorno;
+          }
+        });
+        objpared2.add(gltf.scene);
       });
-      objpared2.add(gltf.scene);
-    });
-    //1,6.04 ,-2, 0,0,0, 1,1,1
-    objpared2.position.set(1, 6.04, -2);
-    objpared2.rotation.set(0, 0, 0);
-    objpared2.scale.set(1, 1, 1);
-    this.scene.add(objpared2);
+      //1,6.04 ,-2, 0,0,0, 1,1,1
+      objpared2.position.set(1, 6.04, -2);
+      objpared2.rotation.set(0, 0, 0);
+      objpared2.scale.set(1, 1, 1);
+      this.scene.add(objpared2);
 
-    var objsilla1 = new THREE.Object3D();
-    new GLTFLoader().load(modelosilla, (gltf) => {
-      gltf.scene.traverse((nino) => {
-        if (nino.isMesh) {
-          nino.material.envMap = this.entorno;
-        }
+      var objsilla1 = new THREE.Object3D();
+      new GLTFLoader().load(modelosilla, (gltf) => {
+        gltf.scene.traverse((nino) => {
+          if (nino.isMesh) {
+            nino.material.envMap = this.entorno;
+          }
+        });
+        objsilla1.add(gltf.scene);
       });
-      objsilla1.add(gltf.scene);
-    });
-    objsilla1.position.set(1.32, -0.33, -1.7);
-    objsilla1.rotation.set(0, 0, 0);
-    objsilla1.scale.set(1, 1, 1);
-    this.scene.add(objsilla1);
+      objsilla1.position.set(1.32, -0.33, -1.7);
+      objsilla1.rotation.set(0, 0, 0);
+      objsilla1.scale.set(1, 1, 1);
+      this.scene.add(objsilla1);
 
-    var objsilla2 = new THREE.Object3D();
-    new GLTFLoader().load(modelosilla, (gltf) => {
-      gltf.scene.traverse((nino) => {
-        if (nino.isMesh) {
-          nino.material.envMap = this.entorno;
-        }
+      var objsilla2 = new THREE.Object3D();
+      new GLTFLoader().load(modelosilla, (gltf) => {
+        gltf.scene.traverse((nino) => {
+          if (nino.isMesh) {
+            nino.material.envMap = this.entorno;
+          }
+        });
+        objsilla2.add(gltf.scene);
       });
-      objsilla2.add(gltf.scene);
-    });
-    //sillas[1].rotation.y= Math.PI; sillas[1].position.x=-1.28; sillas[1].position.z=1.5;
-    objsilla2.position.set(-1.28, -0.33, 1.5);
-    objsilla2.rotation.set(0, Math.PI, 0);
-    objsilla2.scale.set(1, 1, 1);
-    this.scene.add(objsilla2);
+      //sillas[1].rotation.y= Math.PI; sillas[1].position.x=-1.28; sillas[1].position.z=1.5;
+      objsilla2.position.set(-1.28, -0.33, 1.5);
+      objsilla2.rotation.set(0, Math.PI, 0);
+      objsilla2.scale.set(1, 1, 1);
+      this.scene.add(objsilla2);
 
-    var objsilla3 = new THREE.Object3D();
-    new GLTFLoader().load(modelosilla, (gltf) => {
-      gltf.scene.traverse((nino) => {
-        if (nino.isMesh) {
-          nino.material.envMap = this.entorno;
-        }
+      var objsilla3 = new THREE.Object3D();
+      new GLTFLoader().load(modelosilla, (gltf) => {
+        gltf.scene.traverse((nino) => {
+          if (nino.isMesh) {
+            nino.material.envMap = this.entorno;
+          }
+        });
+        objsilla3.add(gltf.scene);
       });
-      objsilla3.add(gltf.scene);
-    });
-    //  sillas[2].rotation.y= Math.PI/2;sillas[2].position.x=-2.28;sillas[2].position.z=-1.4;
-    objsilla3.position.set(-2.28, -0.33, -1.4);
-    objsilla3.rotation.set(0, Math.PI / 2, 0);
-    objsilla3.scale.set(1, 1, 1);
-    this.scene.add(objsilla3);
+      //  sillas[2].rotation.y= Math.PI/2;sillas[2].position.x=-2.28;sillas[2].position.z=-1.4;
+      objsilla3.position.set(-2.28, -0.33, -1.4);
+      objsilla3.rotation.set(0, Math.PI / 2, 0);
+      objsilla3.scale.set(1, 1, 1);
+      this.scene.add(objsilla3);
 
-    var objsilla4 = new THREE.Object3D();
-    new GLTFLoader().load(modelosilla, (gltf) => {
-      gltf.scene.traverse((nino) => {
-        if (nino.isMesh) {
-          nino.material.envMap = this.entorno;
-        }
+      var objsilla4 = new THREE.Object3D();
+      new GLTFLoader().load(modelosilla, (gltf) => {
+        gltf.scene.traverse((nino) => {
+          if (nino.isMesh) {
+            nino.material.envMap = this.entorno;
+          }
+        });
+        objsilla4.add(gltf.scene);
       });
-      objsilla4.add(gltf.scene);
-    });
-    //  illas[4].rotation.y= Math.PI/2;sillas[4].position.x=-2.28;sillas[4].position.z=-2;
-    objsilla4.position.set(-2.28, -0.33, -2);
-    objsilla4.rotation.set(0, Math.PI / 2, 0);
-    objsilla4.scale.set(1, 1, 1);
-    this.scene.add(objsilla4);
+      //  illas[4].rotation.y= Math.PI/2;sillas[4].position.x=-2.28;sillas[4].position.z=-2;
+      objsilla4.position.set(-2.28, -0.33, -2);
+      objsilla4.rotation.set(0, Math.PI / 2, 0);
+      objsilla4.scale.set(1, 1, 1);
+      this.scene.add(objsilla4);
 
-    var objsilla5 = new THREE.Object3D();
-    new GLTFLoader().load(modelosilla, (gltf) => {
-      gltf.scene.traverse((nino) => {
-        if (nino.isMesh) {
-          nino.material.envMap = this.entorno;
-        }
+      var objsilla5 = new THREE.Object3D();
+      new GLTFLoader().load(modelosilla, (gltf) => {
+        gltf.scene.traverse((nino) => {
+          if (nino.isMesh) {
+            nino.material.envMap = this.entorno;
+          }
+        });
+        objsilla5.add(gltf.scene);
       });
-      objsilla5.add(gltf.scene);
-    });
-    // sillas[5].rotation.y = - Math.PI/2; sillas[5].position.x=2.28;sillas[5].position.z=1.2;
-    objsilla5.position.set(2.28, -0.33, 1.2);
-    objsilla5.rotation.set(0, -Math.PI / 2, 0);
-    objsilla5.scale.set(1, 1, 1);
-    this.scene.add(objsilla5);
+      // sillas[5].rotation.y = - Math.PI/2; sillas[5].position.x=2.28;sillas[5].position.z=1.2;
+      objsilla5.position.set(2.28, -0.33, 1.2);
+      objsilla5.rotation.set(0, -Math.PI / 2, 0);
+      objsilla5.scale.set(1, 1, 1);
+      this.scene.add(objsilla5);
 
-    var objsilla6 = new THREE.Object3D();
-    new GLTFLoader().load(modelosilla, (gltf) => {
-      gltf.scene.traverse((nino) => {
-        if (nino.isMesh) {
-          nino.material.envMap = this.entorno;
-        }
+      var objsilla6 = new THREE.Object3D();
+      new GLTFLoader().load(modelosilla, (gltf) => {
+        gltf.scene.traverse((nino) => {
+          if (nino.isMesh) {
+            nino.material.envMap = this.entorno;
+          }
+        });
+        objsilla6.add(gltf.scene);
       });
-      objsilla6.add(gltf.scene);
-    });
-    //sillas[6].rotation.y = - Math.PI/2; sillas[6].position.x=2.28;sillas[6].position.z=0.65;
-    objsilla6.position.set(2.28, -0.33, 0.65);
-    objsilla6.rotation.set(0, -Math.PI / 2, 0);
-    objsilla6.scale.set(1, 1, 1);
-    this.scene.add(objsilla6);
+      //sillas[6].rotation.y = - Math.PI/2; sillas[6].position.x=2.28;sillas[6].position.z=0.65;
+      objsilla6.position.set(2.28, -0.33, 0.65);
+      objsilla6.rotation.set(0, -Math.PI / 2, 0);
+      objsilla6.scale.set(1, 1, 1);
+      this.scene.add(objsilla6);
 
-    var objsilla7 = new THREE.Object3D();
-    new GLTFLoader().load(modelosilla, (gltf) => {
-      gltf.scene.traverse((nino) => {
-        if (nino.isMesh) {
-          nino.material.envMap = this.entorno;
-        }
+      var objsilla7 = new THREE.Object3D();
+      new GLTFLoader().load(modelosilla, (gltf) => {
+        gltf.scene.traverse((nino) => {
+          if (nino.isMesh) {
+            nino.material.envMap = this.entorno;
+          }
+        });
+        objsilla7.add(gltf.scene);
       });
-      objsilla7.add(gltf.scene);
-    });
-    //sillas[7].rotation.y = - Math.PI/2; sillas[7].position.x=2.28;sillas[7].position.z=1.8;
-    objsilla7.position.set(2.28, -0.33, 1.8);
-    objsilla7.rotation.set(0, -Math.PI / 2, 0);
-    objsilla7.scale.set(1, 1, 1);
-    this.scene.add(objsilla7);
+      //sillas[7].rotation.y = - Math.PI/2; sillas[7].position.x=2.28;sillas[7].position.z=1.8;
+      objsilla7.position.set(2.28, -0.33, 1.8);
+      objsilla7.rotation.set(0, -Math.PI / 2, 0);
+      objsilla7.scale.set(1, 1, 1);
+      this.scene.add(objsilla7);
 
-    var objsilla8 = new THREE.Object3D();
-    new GLTFLoader().load(modelosilla, (gltf) => {
-      gltf.scene.traverse((nino) => {
-        if (nino.isMesh) {
-          nino.material.envMap = this.entorno;
-        }
+      var objsilla8 = new THREE.Object3D();
+      new GLTFLoader().load(modelosilla, (gltf) => {
+        gltf.scene.traverse((nino) => {
+          if (nino.isMesh) {
+            nino.material.envMap = this.entorno;
+          }
+        });
+        objsilla8.add(gltf.scene);
       });
-      objsilla8.add(gltf.scene);
-    });
-    //sillas[3].rotation.y= Math.PI/2;sillas[3].position.x=-2.28;sillas[3].position.z=-0.7;
-    objsilla8.position.set(-2.28, -0.33, -0.7);
-    objsilla8.rotation.set(0, Math.PI / 2, 0);
-    objsilla8.scale.set(1, 1, 1);
-    this.scene.add(objsilla8);
+      //sillas[3].rotation.y= Math.PI/2;sillas[3].position.x=-2.28;sillas[3].position.z=-0.7;
+      objsilla8.position.set(-2.28, -0.33, -0.7);
+      objsilla8.rotation.set(0, Math.PI / 2, 0);
+      objsilla8.scale.set(1, 1, 1);
+      this.scene.add(objsilla8);
 
-    //-------------------------------------------------------- espejo
-    var geometry = new THREE.PlaneBufferGeometry(0.65, 1.93);
-    var verticalMirror = new Reflector(geometry, {
-      clipBias: 0.0005,
-      textureWidth: window.innerWidth * window.devicePixelRatio,
-      textureHeight: window.innerHeight * window.devicePixelRatio,
-      color: 0x889999,
-      recursion: 1,
-    });
-    verticalMirror.position.y = 0.177;
-    verticalMirror.position.x = 0.023;
-    verticalMirror.position.z = -0.047;
-    verticalMirror.rotation.x = -Math.PI / 2;
-    this.scene.add(verticalMirror);
-    var objectopasidad = new THREE.Mesh(
-      geometry,
-      new THREE.MeshBasicMaterial({
-        color: 0x0000000,
-        opacity: 0.9,
-        transparent: true,
-      })
-    );
-    objectopasidad.position.y = verticalMirror.position.y + 0.001;
-    objectopasidad.position.x = verticalMirror.position.x;
-    objectopasidad.position.z = verticalMirror.position.z;
-    objectopasidad.rotation.x = verticalMirror.rotation.x;
-    this.scene.add(objectopasidad);
+      //-------------------------------------------------------- espejo
+      var geometry = new THREE.PlaneBufferGeometry(0.65, 1.93);
+      var verticalMirror = new Reflector(geometry, {
+        clipBias: 0.0005,
+        textureWidth: window.innerWidth * window.devicePixelRatio,
+        textureHeight: window.innerHeight * window.devicePixelRatio,
+        color: 0x889999,
+        recursion: 1,
+      });
+      verticalMirror.position.y = 0.177;
+      verticalMirror.position.x = 0.023;
+      verticalMirror.position.z = -0.047;
+      verticalMirror.rotation.x = -Math.PI / 2;
+      this.scene.add(verticalMirror);
+      var objectopasidad = new THREE.Mesh(
+        geometry,
+        new THREE.MeshBasicMaterial({
+          color: 0x0000000,
+          opacity: 0.9,
+          transparent: true,
+        })
+      );
+      objectopasidad.position.y = verticalMirror.position.y + 0.001;
+      objectopasidad.position.x = verticalMirror.position.x;
+      objectopasidad.position.z = verticalMirror.position.z;
+      objectopasidad.rotation.x = verticalMirror.rotation.x;
+      this.scene.add(objectopasidad);
 
-    this.mount.appendChild(this.renderer.domElement);
-    this.animate();
+      this.mount.appendChild(this.renderer.domElement);
+      this.animate();
 
-    //zona de impresiones para pruevas
-    // console.log(this.materialC);
+      //zona de impresiones para pruevas
+      // console.log(this.materialC);
+    })
+
+
+
   } // fin del componentdidmount
   /*
     *

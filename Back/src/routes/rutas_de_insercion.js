@@ -410,7 +410,20 @@ rutas.post('/insert/auto/roles', (req, res) => {
   }).catch(err => res.json(err))
 })
 
+rutas.post('/crear/reunion', proToken, (req, res) => {
+  const { proyec, fecha, hora, duracion, descripcion, titulo } = req.body;
 
+  if (proyec != undefined &&
+    fecha != undefined &&
+    hora != undefined &&
+    duracion != undefined &&
+    descripcion != undefined &&
+    titulo != undefined) {
+    insertDB.crearreunion({ proyec, fecha, hora, duracion, descripcion, titulo }).then(resu => {
+      res.json(resu)
+    }).catch(err => res.json(err))
+  }
+})
 /**
       db      `7MM"""Mq. `7MMF'                                 mm    `7MM                       `7MM          
      ;MM:       MM   `MM.  MM                                   MM      MM                         MM          

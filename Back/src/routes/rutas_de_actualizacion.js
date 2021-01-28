@@ -4,6 +4,7 @@ const rutas = ex.Router();
 const jwt = require('jsonwebtoken');
 const actualizarDB = require('../database/actualizarDB');
 const buscarDB = require('../database/buscarDB');
+const insertDB = require('../database/insertarDB');
 const ftpminio = require("../ftp/peticiones");
 const chalk = require('chalk');
 const LLAVE = 'misecretos';
@@ -90,7 +91,7 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
         github,
         gitlab,
         bitbucket,
-        linkedin } = req.body;
+        linkedin, herramienta, palabra } = req.body;
 
     jwt.verify(req.token, LLAVE, (err, data) => {
         if (err) {
@@ -98,17 +99,10 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
         } else {
             if (data != {} || data !== {} || data !== null || data !== undefined) {
 
-                buscarDB.obtenerusuarioid({ id: data.rows[0].id }).then(result => {
-                    let datos = result;
-                    let bucket = `usuario${datos.id}`;
-                    if (email !== datos.email && email !== undefined) {
-                        actualizarDB.updateuseremail({ email: email, id: datos.id }).catch(err => console.log(err))
-                    }
-                    if (password !== datos.contrasena && password !== undefined) {
-                        actualizarDB.updateuserpassword({ password: password, id: datos.id }).catch(err => console.log(err))
-                    }
-                    if (req.files != null) {
-                        if (req.files.foto != null || req.files.foto != undefined) {
+                buscarDB.obtenerusuarioid({ id: data.rows[0].id }).then(datos => {
+                    let bucket = `usuario${data.rows[0].id}`
+                    if (req.files != null || req.files != undefined) {
+                        if (req.files.foto != null || req.files.foto != undefined && req.files.cv == null || req.files.cv == undefined) {
                             if (datos.fotoperfil != "null" || datos.fotoperfil != null) {
                                 ftpminio.removeObject(bucket, datos.fotoperfil).then(result => {
                                     req.files.foto.mv(__dirname + '/tmp/' + req.files.foto.name, (err) => {
@@ -122,8 +116,32 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
 
                                             ftpminio.putFile(bucket, req.files.foto.name, path.join(__dirname, `/tmp/${req.files.foto.name}`), metaData)
                                                 .then(resul => {
-                                                    actualizarDB.updateuserprofilephoto({ foto: req.files.foto.name, id: datos.id })
-                                                        .catch(err => console.log(err))
+                                                    actualizarDB.actualizarusuario({
+                                                        email,
+                                                        password,
+                                                        experiencia,
+                                                        nombre,
+                                                        descripcion,
+                                                        pais,
+                                                        edad,
+                                                        github,
+                                                        gitlab,
+                                                        bitbucket,
+                                                        linkedin
+                                                    }, data.rows[0].id, req.files.foto.name, null).then(result => {
+                                                        let c = 0;
+                                                        for (let a = 0; a < palabra.length; a++) {
+                                                            insertDB.insertKeyword({ user: data.rows[0].id, palabra: palabra[a] }).then(result => {
+                                                                if (c === (palabra.length - 1)) {
+                                                                    insertDB.agregarherramientas({ herramientas: herramienta, id: data.rows[0].id }).then(resul => {
+                                                                        res.json({ msj: "agregados" })
+                                                                    }).catch(err => res.json(err));
+                                                                }
+                                                                c++
+                                                            }).catch(err => res.json(err))
+                                                        }
+
+                                                    }).catch(err2 => res.json(err2))
                                                 }).catch(err => res.json(err));
                                         } else {
                                             console.log(err)
@@ -133,13 +151,69 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
                             } else {
                                 ftpminio.putFile(bucket, req.files.foto.name, path.join(__dirname, `/tmp/${req.files.foto.name}`), metaData)
                                     .then(resul => {
-                                        actualizarDB.updateuserprofilephoto({ foto: req.files.foto.name, id: datos.id })
-                                            .catch(err => console.log(err))
+                                        actualizarDB.actualizarusuario({
+                                            email,
+                                            password,
+                                            experiencia,
+                                            nombre,
+                                            descripcion,
+                                            pais,
+                                            edad,
+                                            github,
+                                            gitlab,
+                                            bitbucket,
+                                            linkedin
+                                        }, data.rows[0].id, req.files.foto.name, null).then(result => {
+                                            res.json(result)
+                                        }).catch(err2 => res.json(err2))
                                     }).catch(err => res.json(err));
                             }
-                        }
-                        if (req.files.cv !== null || req.files.cv !== undefined) {
-                            ftpminio.removeObject(bucket, datos.nombrearchivohojadevida).then(result => {
+                        } else if (req.files.cv !== null || req.files.cv !== undefined && req.files.foto == null || req.files.foto == undefined) {
+                            if (datos.nombrearchivohojadevida != "null" || datos.nombrearchivohojadevida != null) {
+                                ftpminio.removeObject(bucket, datos.nombrearchivohojadevida).then(result => {
+                                    req.files.cv.mv(__dirname + '/tmp/' + req.files.cv.name, (err) => {
+                                        if (!err) {
+                                            var metaData = {
+                                                'Content-Type': `${req.files.cv.mimetype}`,
+                                                'size': req.files.cv.size,
+                                                'X-Amz-Meta-Testing': 1234,
+                                                'example': 5678
+                                            }
+
+                                            ftpminio.putFile(bucket, req.files.cv.name, path.join(__dirname, `/tmp/${req.files.cv.name}`), metaData)
+                                                .then(resul => {
+                                                    actualizarDB.actualizarusuario({
+                                                        email,
+                                                        password,
+                                                        experiencia,
+                                                        nombre,
+                                                        descripcion,
+                                                        pais,
+                                                        edad,
+                                                        github,
+                                                        gitlab,
+                                                        bitbucket,
+                                                        linkedin
+                                                    }, data.rows[0].id, null, req.files.cv.name).then(result => {
+                                                        let c = 0;
+                                                        for (let a = 0; a < palabra.length; a++) {
+                                                            insertDB.insertKeyword({ user: data.rows[0].id, palabra: palabra[a] }).then(result => {
+                                                                if (c === (palabra.length - 1)) {
+                                                                    insertDB.agregarherramientas({ herramientas: herramienta, id: data.rows[0].id }).then(resul => {
+                                                                        res.json({ msj: "agregados" })
+                                                                    }).catch(err => res.json(err));
+                                                                }
+                                                                c++
+                                                            }).catch(err => res.json(err))
+                                                        }
+                                                    }).catch(err2 => res.json(err2))
+                                                }).catch(err => res.json(err));
+                                        } else {
+                                            console.log(err)
+                                        }
+                                    });
+                                }).catch(err => res.json(err));
+                            } else {
                                 req.files.cv.mv(__dirname + '/tmp/' + req.files.cv.name, (err) => {
                                     if (!err) {
                                         var metaData = {
@@ -149,52 +223,249 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
                                             'example': 5678
                                         }
 
-                                        ftpminio.putFile(bucket, req.cv.foto.name, path.join(__dirname, `/tmp/${req.files.cv.name}`), metaData)
+                                        ftpminio.putFile(bucket, req.files.cv.name, path.join(__dirname, `/tmp/${req.files.cv.name}`), metaData)
                                             .then(resul => {
-                                                actualizarDB.updateusercv({ cv: req.files.cv.name, id: datos.id })
-                                                    .catch(err => console.log(err))
+                                                actualizarDB.actualizarusuario({
+                                                    email,
+                                                    password,
+                                                    experiencia,
+                                                    nombre,
+                                                    descripcion,
+                                                    pais,
+                                                    edad,
+                                                    github,
+                                                    gitlab,
+                                                    bitbucket,
+                                                    linkedin
+                                                }, data.rows[0].id, null, req.files.cv.name).then(result => {
+                                                    let c = 0;
+                                                    for (let a = 0; a < palabra.length; a++) {
+                                                        insertDB.insertKeyword({ user: data.rows[0].id, palabra: palabra[a] }).then(result => {
+                                                            if (c === (palabra.length - 1)) {
+                                                                insertDB.agregarherramientas({ herramientas: herramienta, id: data.rows[0].id }).then(resul => {
+                                                                    res.json({ msj: "agregados" })
+                                                                }).catch(err => res.json(err));
+                                                            }
+                                                            c++
+                                                        }).catch(err => res.json(err))
+                                                    }
+                                                }).catch(err2 => res.json(err2))
                                             }).catch(err => res.json(err));
                                     } else {
                                         console.log(err)
                                     }
                                 });
-                            })
+                            }
+
+                        } else if (req.files.cv !== null || req.files.cv !== undefined && req.files.foto !== null || req.files.foto !== undefined) {
+                            if (datos.fotoperfil != "null" || datos.fotoperfil != null && datos.nombrearchivohojadevida != "null" || datos.nombrearchivohojadevida != null) {
+                                ftpminio.removeObject(bucket, datos.nombrearchivohojadevida).then(result => {
+                                    ftpminio.removeObject(bucket, datos.fotoperfil).then(result2 => {
+                                        req.files.foto.mv(__dirname + '/tmp/' + req.files.foto.name, (err) => {
+                                            if (!err) {
+                                                var metaData1 = {
+                                                    'Content-Type': `${req.files.foto.mimetype}`,
+                                                    'size': req.files.foto.size,
+                                                    'X-Amz-Meta-Testing': 1234,
+                                                    'example': 5678
+                                                }
+
+                                                ftpminio.putFile(bucket, req.files.foto.name, path.join(__dirname, `/tmp/${req.files.foto.name}`), metaData1)
+                                                    .then(resul => {
+                                                        req.files.cv.mv(__dirname + '/tmp/' + req.files.cv.name, (err) => {
+                                                            if (!err) {
+                                                                var metaData = {
+                                                                    'Content-Type': `${req.files.cv.mimetype}`,
+                                                                    'size': req.files.cv.size,
+                                                                    'X-Amz-Meta-Testing': 1234,
+                                                                    'example': 5678
+                                                                }
+
+                                                                ftpminio.putFile(bucket, req.files.cv.name, path.join(__dirname, `/tmp/${req.files.cv.name}`), metaData)
+                                                                    .then(resul => {
+                                                                        actualizarDB.actualizarusuario({
+                                                                            email,
+                                                                            password,
+                                                                            experiencia,
+                                                                            nombre,
+                                                                            descripcion,
+                                                                            pais,
+                                                                            edad,
+                                                                            github,
+                                                                            gitlab,
+                                                                            bitbucket,
+                                                                            linkedin
+                                                                        }, data.rows[0].id, req.files.foto.name, req.files.cv.name).then(result => {
+                                                                            let c = 0;
+                                                                            for (let a = 0; a < palabra.length; a++) {
+                                                                                insertDB.insertKeyword({ user: data.rows[0].id, palabra: palabra[a] }).then(result => {
+                                                                                    if (c === (palabra.length - 1)) {
+                                                                                        insertDB.agregarherramientas({ herramientas: herramienta, id: data.rows[0].id }).then(resul => {
+                                                                                            res.json({ msj: "agregados" })
+                                                                                        }).catch(err => res.json(err));
+                                                                                    }
+                                                                                    c++
+                                                                                }).catch(err => res.json(err))
+                                                                            }
+                                                                        }).catch(err2 => res.json(err2))
+                                                                    }).catch(err => res.json(err));
+                                                            } else {
+                                                                console.log(err)
+                                                            }
+                                                        });
+
+                                                    }).catch(err => res.json(err));
+                                            } else {
+                                                console.log(err)
+                                            }
+                                        });
+                                    }).catch(err2 => res.json(err2));
+                                }).catch(err => res.json(err));
+                            }
+                            else {
+                                req.files.foto.mv(__dirname + '/tmp/' + req.files.foto.name, (err) => {
+                                    if (!err) {
+                                        var metaData1 = {
+                                            'Content-Type': `${req.files.foto.mimetype}`,
+                                            'size': req.files.foto.size,
+                                            'X-Amz-Meta-Testing': 1234,
+                                            'example': 5678
+                                        }
+
+                                        ftpminio.putFile(bucket, req.files.foto.name, path.join(__dirname, `/tmp/${req.files.foto.name}`), metaData1)
+                                            .then(resul => {
+                                                req.files.cv.mv(__dirname + '/tmp/' + req.files.cv.name, (err) => {
+                                                    if (!err) {
+                                                        var metaData = {
+                                                            'Content-Type': `${req.files.cv.mimetype}`,
+                                                            'size': req.files.cv.size,
+                                                            'X-Amz-Meta-Testing': 1234,
+                                                            'example': 5678
+                                                        }
+
+                                                        ftpminio.putFile(bucket, req.files.cv.name, path.join(__dirname, `/tmp/${req.files.cv.name}`), metaData)
+                                                            .then(resul => {
+                                                                actualizarDB.actualizarusuario({
+                                                                    email,
+                                                                    password,
+                                                                    experiencia,
+                                                                    nombre,
+                                                                    descripcion,
+                                                                    pais,
+                                                                    edad,
+                                                                    github,
+                                                                    gitlab,
+                                                                    bitbucket,
+                                                                    linkedin
+                                                                }, data.rows[0].id, req.files.foto.name, req.files.cv.name).then(result => {
+                                                                    let c = 0;
+                                                                    for (let a = 0; a < palabra.length; a++) {
+                                                                        insertDB.insertKeyword({ user: data.rows[0].id, palabra: palabra[a] }).then(result => {
+                                                                            if (c === (palabra.length - 1)) {
+                                                                                insertDB.agregarherramientas({ herramientas: herramienta, id: data.rows[0].id }).then(resul => {
+                                                                                    res.json({ msj: "agregados" })
+                                                                                }).catch(err => res.json(err));
+                                                                            }
+                                                                            c++
+                                                                        }).catch(err => res.json(err))
+                                                                    }
+                                                                }).catch(err2 => res.json(err2))
+                                                            }).catch(err => res.json(err));
+                                                    } else {
+                                                        console.log(err)
+                                                    }
+                                                });
+
+                                            }).catch(err => res.json(err));
+                                    } else {
+                                        console.log(err)
+                                    }
+                                });
+                            }
+
+                        } else {
+                            req.files.cv.mv(__dirname + '/tmp/' + req.files.cv.name, (err) => {
+                                if (!err) {
+                                    var metaData = {
+                                        'Content-Type': `${req.files.cv.mimetype}`,
+                                        'size': req.files.cv.size,
+                                        'X-Amz-Meta-Testing': 1234,
+                                        'example': 5678
+                                    }
+
+                                    ftpminio.putFile(bucket, req.files.cv.name, path.join(__dirname, `/tmp/${req.files.cv.name}`), metaData)
+                                        .then(resul => {
+                                            actualizarDB.actualizarusuario({
+                                                email,
+                                                password,
+                                                experiencia,
+                                                nombre,
+                                                descripcion,
+                                                pais,
+                                                edad,
+                                                github,
+                                                gitlab,
+                                                bitbucket,
+                                                linkedin
+                                            }, data.rows[0].id, null, req.files.cv.name).then(result => {
+                                                let c = 0;
+                                                for (let a = 0; a < palabra.length; a++) {
+                                                    insertDB.insertKeyword({ user: data.rows[0].id, palabra: palabra[a] }).then(result => {
+                                                        if (c === (palabra.length - 1)) {
+                                                            insertDB.agregarherramientas({ herramientas: herramienta, id: data.rows[0].id }).then(resul => {
+                                                                res.json({ msj: "agregados" })
+                                                            }).catch(err => res.json(err));
+                                                        }
+                                                        c++
+                                                    }).catch(err => res.json(err))
+                                                }
+                                            }).catch(err2 => res.json(err2))
+                                        }).catch(err => res.json(err));
+                                } else {
+                                    console.log(err)
+                                }
+                            });
                         }
+                    } else {
+                        actualizarDB.actualizarusuario({
+                            email,
+                            password,
+                            experiencia,
+                            nombre,
+                            descripcion,
+                            pais,
+                            edad,
+                            github,
+                            gitlab,
+                            bitbucket,
+                            linkedin
+                        }, data.rows[0].id, null, null).then(result => {
+                            let c = 0;
+                            for (let a = 0; a < palabra.length; a++) {
+                                insertDB.insertKeyword({ user: data.rows[0].id, palabra: palabra[a] }).then(result => {
+                                    if (c === (palabra.length - 1)) {
+                                        insertDB.agregarherramientas({ herramientas: herramienta, id: data.rows[0].id }).then(resul => {
+                                            res.json({ msj: "agregados" })
+                                        }).catch(err => res.json(err));
+                                    }
+                                    c++
+                                }).catch(err => res.json(err))
+                            }
+                        }).catch(err => res.json(err))
                     }
-                    if (experiencia !== datos.anosdeexperiencia && experiencia !== undefined) {
-                        actualizarDB.updateuserexperience({ experiencia: experiencia, id: datos.id })
-                            .catch(err => console.log(err))
-                    }
-                    if (nombre !== datos.nombre && nombre !== undefined) {
-                        actualizarDB.updateusername({ nombre: nombre, id: datos.id }).catch(err => console.log(err))
-                    }
-                    if (descripcion !== datos.descripcion && descripcion !== undefined && descripcion !== '') {
-                        actualizarDB.updateuserdescription({ descrip: descripcion, id: datos.id }).catch(err => console.log(err))
-                    }
-                    if (pais !== datos.pais && pais !== undefined) {
-                        actualizarDB.updateusercountry({ pais: pais, id: datos.id }).catch(err => console.log(err))
-                    }
-                    if (edad !== datos.edad && edad !== undefined) {
-                        actualizarDB.updateuserage({ edad: edad, id: datos.id }).catch(err => console.log(err))
-                    }
-                    if (github !== datos.github && github !== undefined) {
-                        actualizarDB.updateusergithub({ github: github, id: datos.id }).catch(err => console.log(err))
-                    }
-                    if (gitlab !== datos.gitlab && gitlab !== undefined) {
-                        actualizarDB.updateusergitlab({ gitlab: gitlab, id: datos.id }).catch(err => console.log(err))
-                    }
-                    if (bitbucket !== datos.bitbucket && bitbucket !== undefined) {
-                        actualizarDB.updateuserbitbucket({ bitbucket: bitbucket, id: datos.id }).catch(err => console.log(err))
-                    }
-                    if (linkedin !== datos.linkedin && linkedin !== undefined) {
-                        actualizarDB.updateuseremail({ linkedin: linkedin, id: datos.id }).catch(err => console.log(err))
-                    }
-                    res.json({ msj: "echo funciono no se " })
+
                 }).catch(err => console.log(err))
             }
         }
     });
 });
+
+rutas.put('/reasignar/actividad', proToken, (req, res) => {
+    const { actividad, integrante } = req.body;
+    actualizarDB.updatelistactvity({ actividad, integrante }).then(result => {
+        res.json(result);
+    }).catch(err => res.json(err))
+})
 /**
       db      `7MM"""Mq. `7MMF'                                 mm    `7MM                       `7MM          
      ;MM:       MM   `MM.  MM                                   MM      MM                         MM          

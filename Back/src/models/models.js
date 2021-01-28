@@ -133,7 +133,7 @@ module.exports = {
                     para la generación de la propuesta de diseño de la
                     experiencia multimedia, y las especificaciones del
                     diseño responsable (ver matriz 2). `,
-                    actividades: ["A8", "A9", "A18", "A19"]
+                    actividades: ["A8", "A9", "A11", "A18", "A19"]
                 },
                 {
                     nombre: "Arquitecto de producción de contenidos",
@@ -663,7 +663,7 @@ module.exports = {
                     concebidas para la experiencia multimedia interactiva.
                     `,
                     actividades: ["A16", "A22"]
-                },
+                }
             ],
             Herramientas: [
                 {
@@ -935,6 +935,29 @@ module.exports = {
                     descripcion: "-Realice una reunión de lluvia de ideas, en donde el equipo de trabajo discuta sobre: *Posibles métodos que un adversario puede utilizar para vulnerar el sistema y afectar la experiencia multimedia. *Motivaciones que tiene para llevar a cabo un ataque que exponga la seguridad del Sistema Multimedia. *Recursos que potencialmente podría utilizar para vulnerar el Sistema Multimedia. *Analice sobre el impacto directo o indirecto que podría tener el Sistema Multimedia en el bienestar emocional o mental de las personas y el impacto que puede producir en los individuos, la vulneración de su seguridad. -Consulte sobre otros métodos, motivaciones y recursos que puedan existir, con otros interesados, así como usuarios clave, clientes potenciales e interesados indirectos. -Discuta los resultados obtenidos con el equipo de trabajo.",
                     bibliografia: ""
                 },
+                {
+                    titulo: "Matriz de proposición de valor",
+                    descripcion: `Corresponde a la matriz que permite llevar a cabo, la
+                    realización del análisis de proposición de valor del
+                    Sistema Multimedia mínimo viable (ver matriz 11).  `,
+                    bibliografia: ``
+                },
+                {
+                    titulo: "Estructura para la formulación de la visión del SMMV",
+                    descripcion: `Corresponde al modelo de estructura gramatical que
+                    se sugiere, para llevar a cabo la realización de la
+                    formulación de la visión del Sistema Multimedia
+                    mínimo viable (ver tabla 14).`,
+                    bibliografia: ``
+                },
+                {
+                    titulo: "Canvas de SMMV",
+                    descripcion: `Se trata de la estructura adaptada para la realización
+                    del modelo Canvas para el Sistema Multimedia
+                    mínimo viable (ver figura 12) y la descripción de sus
+                    diferentes componentes constitutivos (ver tabla 15). `,
+                    bibliografia: ``
+                }
             ],
             contenidos: [
                 { nombre: "", nombrearchivo: "", descripcion: "", bibliografia: "" },
