@@ -1,7 +1,8 @@
 const http = require('./httpx');
 const io = require('socket.io')(http);
 
-let rooms = []
+
+//al iniciar una conexion en hilo de envio de datos
 io.on('connection', function (socket) {
   console.log(`usuario ${socket.id}`);
 

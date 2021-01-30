@@ -96,6 +96,7 @@ class Test extends Component {
             // (This actually just creates a new DataView - the underlying audio data is not copied or modified.)
             var raw = MicrophoneStream.toRaw(chunk);
             if (this.state.escuchar) {
+
                 this.socket.emit('audio', raw)
             }
 
@@ -150,6 +151,8 @@ class Test extends Component {
         );
     }
 }
+
+
 
 export default Test;
 
