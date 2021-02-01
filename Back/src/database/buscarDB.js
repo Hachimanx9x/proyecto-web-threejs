@@ -3,6 +3,7 @@ const promesa = require('../database');
 const Query = require('./querys');
 const LLAVE = 'misecretos';
 const env = require('../env');
+const model = require('../models/models')
 const chalk = require('chalk');
 const funcionesDB = () => {
     console.log("funciones de la base de datos")
@@ -235,7 +236,7 @@ funcionesDB.buscarProyecto = async (idp) => {
             if (vDB) {
                 await mariaDB.query(Query.buscarProyecto(idp), (err, rows) => {
                     if (!err) {
-                        res({ data: rows });
+                        res({ proyectos: ordeninfoproyect(rows) });
                     } else {
                         rej({ err })
                     }
@@ -243,7 +244,7 @@ funcionesDB.buscarProyecto = async (idp) => {
             } else {
                 sqlite.all(Query.buscarProyecto(idp), (err, rows) => {
                     if (!err) {
-                        res({ proyectos: rows });
+                        res({ proyectos: ordeninfoproyect(rows) });
                     } else {
                         rej({ err })
                     }
@@ -322,6 +323,28 @@ funcionesDB.buscareventoscalendario = async (idUser) => {
         });
     });
 }
+funcionesDB.buscareventoscalendarioproyecto = async (proyecto) => {
+    return new Promise((res, rej) => {
+
+        promesa.then(async (result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                await mariaDB.query(Query.obtenercalendarioproyecto(proyecto), (err, rows, fields) => {
+                    if (!err) {
+                        res(organizarcalendario(rows))
+
+                    } else { rej(err) }
+                });
+            } else {
+                sqlite.all(Query.obtenercalendarioproyecto(proyecto), (err, rows) => {
+                    if (!err) {
+                        res(organizarcalendario(rows))
+                    } else { rej(err) }
+                });
+            }
+        });
+    });
+}
 funcionesDB.buscaractividadesproyecto = async (user, id) => {
     return new Promise((res, rej) => {
         //console.log(idUser)
@@ -334,8 +357,8 @@ funcionesDB.buscaractividadesproyecto = async (user, id) => {
                         await mariaDB.query(Query.obtenerproyectoentregablescompleto(id), (err2, rows2) => {
                             if (!err) {
                                 res({
-                                    actividades: actividadespro(user, rows),
-                                    entregables: rows2
+                                    actividades: actividadespro(user, rows, id),
+                                    entregables: entregablepro(rows2)
                                 });
 
                             } else { rej(err2) }
@@ -345,11 +368,11 @@ funcionesDB.buscaractividadesproyecto = async (user, id) => {
             } else {
                 sqlite.all(Query.obtenerproyectosactividadescompleto(id), (err, rows) => {
                     if (!err) {
-                        sqlite.all(Query.obtenerproyectosactividadescompleto(id), (err, rows2) => {
+                        sqlite.all(Query.obtenerproyectoentregablescompleto(id), (err, rows2) => {
                             if (!err) {
                                 res({
-                                    actividades: actividadespro(user, rows),
-                                    entregables: rows2
+                                    actividades: actividadespro(user, rows, id),
+                                    entregables: entregablepro(rows2)
                                 })
                             } else { rej(err2) }
                         });
@@ -1529,88 +1552,20 @@ function ponercontenidoenactividades(array) {
 }
 function organizarcalendario(array) {
     let arraydef = [];
-    let proyectoid;
-    let reunionid;
-    let actividadid;
-    let entregaid;
-    let reuniones = [];
-    let actividades = [];
-    let entregas = [];
 
-    for (let i = 0; i < array.length; i++) {
-        if (proyectoid != array[i].proyectoid) {
-            proyectoid = array[i].proyectoid;
-            arraydef.push({
-                proyectoid,
-                reuniones,
-                actividades,
-                entregas
-            })
-        }
-    }
-    for (let i = 0; i < arraydef.length; i++) {
-        for (let j = 0; j < array.length; j++) {
-            if (arraydef[i].proyectoid == array[j].proyectoid) {
-                if (reunionid != array[j].reunionid) {
-                    reunionid = array[j].reunionid
-                    arraydef[i].reuniones.push({
-                        reunionid,
-                        titulo: array[j].reuniontitulo,
-                        descripcion: array[j].reuniondescripcion,
-                        fecha: array[j].reunionfecha,
-                        hora: array[j].reunionhora,
-                        duracion: array[j].reuniondurancion,
-                        vigente: array[j].vigente
-                    })
-                }
-            }
-        }
-    }
-    for (let i = 0; i < arraydef.length; i++) {
-        var temparra = []
-        for (let j = 0; j < array.length; j++) {
-            if (arraydef[i].proyectoid == array[j].proyectoid) {
-                if (actividadid != array[j].actividadesid) {
-                    actividadid = array[j].actividadesid
-                    temparra.push({
-                        actividadid,
-                        titulo: array[j].actividadtitulo,
-                        descripcion: array[j].actividaddescripcion,
-                        fechaentrega: array[j].actividadfechaentrega,
-                        estado: array[j].actividadestado
-                    })
-                }
-            }
-        }
-        let l = 1;
-        for (let k = 0; k < temparra.length; k++) {
-            for (l; l < temparra.length; l++) {
-                if (temparra[k].actividadid == temparra[l].actividadid) {
-                    temparra.splice(l, 1);
-                }
-            }
-            l++;
-        }
-        arraydef[i].actividades = temparra;
-        temparra = [];
-    }
+    for (let a = 0; a < array.length; a++) {
+        arraydef.push({
+            proyecto: array[a].proyectoid,
+            pronombre: array[a].proyectonombre,
+            reunion: array[a].reunionid,
+            titulo: array[a].reuniontitulo,
+            fecha: array[a].reunionfecha,
+            hora: array[a].reunionhora,
+            duracion: array[a].reuniondurancion,
+            descripcion: array[a].reuniondescripcion,
+            vigente: array[a].vigente
 
-
-    for (let i = 0; i < arraydef.length; i++) {
-        for (let j = 0; j < array.length; j++) {
-            if (arraydef[i].proyectoid == array[j].proyectoid) {
-                if (entregaid != array[j].entregaid) {
-                    entregaid = array[j].entregaid
-                    arraydef[i].entregas.push({
-                        entregaid,
-                        titulo: array[j].entregatitulo,
-                        descripcion: array[j].entregadescripcion,
-                        fechaentrega: array[j].entregafechaEntrega,
-                        estado: array[j].entregaestado
-                    })
-                }
-            }
-        }
+        });
     }
     return arraydef;
 }
@@ -1712,10 +1667,10 @@ function filtarinfo(array) {
     return arraydef;
 }
 
-function actividadespro(user, array) {
-    let arraydef = [];
-
+function actividadespro(user, array, id) {
+    let arraydef = []
     for (let a = 0; a < array.length; a++) {
+        // console.log(array[a].userid)
         if (user.id === array[a].userid) {
             arraydef.push({
                 actividadid: array[a].actid,
@@ -1727,7 +1682,7 @@ function actividadespro(user, array) {
                 estado: array[a].actividadestado,
                 fechaentrega: array[a].actividadfechaentrega,
                 tecnica: array[a].tecnicatitulo,
-                contenido: array[a].contenidonombrearchivo,
+                contenido: `${env.host}/proyecto/contenido/proyecto${id}/${array[a].contenidonombrearchivo}`,
                 entregar: true
             })
         } else {
@@ -1741,11 +1696,29 @@ function actividadespro(user, array) {
                 estado: array[a].actividadestado,
                 fechaentrega: array[a].actividadfechaentrega,
                 tecnica: array[a].tecnicatitulo,
-                contenido: array[a].contenidonombrearchivo,
+                contenido: `${env.host}/proyecto/contenido/proyecto${id}/${array[a].contenidonombrearchivo}`,
                 entregar: false
             })
         }
 
+    }
+    return arraydef;
+}
+
+function entregablepro(array) {
+    let arraydef = []
+    for (let a = 0; a < array.length; a++) {
+        arraydef.push({
+            id: array[a].entrid,
+            nombre: array[a].entregatitulo,
+            descripcion: array[a].entregadescripcion,
+            estado: array[a].entregaestado,
+            tipoactivo: array[a].entregatipoArchivo,
+            fechaentrega: array[a].entregafechaEntrega,
+            revisiones: array[a].entreganumeroRevisiones,
+            contenido: `${env.host}/proyecto/contenido/proyecto${array[a].proid}/${array[a].contenidonombrearchivo}`
+
+        })
     }
     return arraydef;
 }
@@ -1763,5 +1736,96 @@ function ponerurlherramientas(array) {
     return arraydef;
 }
 
+
+function ordeninfoproyect(rows) {
+    let objdef = {
+        idproyecto: null,
+        nombre: null,
+        descripcion: null,
+        estado: null,
+        icono: null,
+        banner: null,
+        integrantes: [],
+        actividades: [],
+        entregable: [],
+        practicas: []
+
+    }
+
+    for (let a = 0; a < rows.length; a++) {
+        objdef.idproyecto = rows[a].idproyecto;
+        objdef.nombre = rows[a].proyectonombre;
+        objdef.descripcion = rows[a].proyectodescripcion;
+        objdef.estado = rows[a].proyectoestado;
+        objdef.icono = `${env.host}/proyecto/contenido/proyecto${rows[a].idproyecto}/${rows[a].proyectoicon}`;
+        objdef.banner = `${env.host}/proyecto/contenido/proyecto${rows[a].idproyecto}/${rows[a].proyectobanner}`;
+        objdef.integrantes.push({ id: rows[a].interid, nombre: rows[a].nombre, rol: rows[a].roltitulo });
+        objdef.actividades.push({ id: rows[a].actiid, nombre: rows[a].actividadtitulo, estado: rows[a].actividadestado });
+        objdef.entregable.push({ id: rows[a].entreid, estado: rows[a].entregaestado });
+        objdef.practicas.push({
+            nombre: rows[a].practicanombre, alfa: {
+                nombre: rows[a].alfanombre, estado: rows[a].alfaestado
+            }
+        })
+    }
+    let set0 = new Set(objdef.integrantes.map(JSON.stringify))
+    objdef.integrantes = Array.from(set0).map(JSON.parse);
+
+    let set1 = new Set(objdef.actividades.map(JSON.stringify))
+    objdef.actividades = Array.from(set1).map(JSON.parse);
+
+    let set2 = new Set(objdef.entregable.map(JSON.stringify))
+    objdef.entregable = Array.from(set2).map(JSON.parse);
+
+    let practicas = []
+    let alfas = []
+    for (let b = 0; b < objdef.practicas.length; b++) {
+        practicas.push({ nombre: objdef.practicas[b].nombre, alfas, tasa: 0 });
+    }
+    let set3 = new Set(practicas.map(JSON.stringify))
+    practicas = Array.from(set3).map(JSON.parse);
+
+    for (let c = 0; c < practicas.length; c++) {
+        for (let b = 0; b < objdef.practicas.length; b++) {
+            if (practicas[c].nombre === objdef.practicas[b].nombre) {
+                practicas[c].alfas.push(objdef.practicas[b].alfa)
+            }
+            if (practicas[c].nombre === "Sistema Multimedia mínimo viable") {
+                practicas[c].alfas.push({
+                    nombre: "Oportunidad", estado: objdef.practicas[b].alfa.estado
+                })
+            }
+        }
+        let set4 = new Set(practicas[c].alfas.map(JSON.stringify))
+        practicas[c].alfas = Array.from(set4).map(JSON.parse);
+    }
+
+    for (let c = 0; c < practicas.length; c++) {
+        let tasatem = 0; let acti = 0
+        for (let d = 0; d < model.Practicas.length; d++) {
+            if (practicas[c].nombre === model.Practicas[d].nombre) {
+                acti = model.Practicas[d].Actividades.length
+                for (let e = 0; e < model.Practicas[d].Actividades.length; e++) {
+                    for (let f = 0; f < objdef.actividades.length; f++) {
+                        if (model.Practicas[d].Actividades[e].titulo === objdef.actividades[f].nombre) {
+                            if (objdef.actividades[f].estado !== "asignada") {
+                                tasatem++
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        practicas[c].tasa = (tasatem / acti) * 100;
+    }
+
+
+
+    objdef.practicas = practicas;
+
+
+
+    return objdef;
+}
 //-------------------
 module.exports = funcionesDB;

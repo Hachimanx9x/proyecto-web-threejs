@@ -90,44 +90,51 @@ WHERE usuarios.id = ${id}
 }
 
 query.obtenercalendario = function (id) {
-    return `SELECT 
-
+    return `
+    SELECT
     proyectos.id AS "proyectoid",
+    proyectos.proyectonombre,
     reuniones.id AS "reunionid",
     reuniones.reuniontitulo,
     reuniones.reunionfecha,
     reuniones.reunionhora,
     reuniones.reuniondurancion,
     reuniones.reuniondescripcion,
-    reuniones.vigente,
-    actividades.id AS "actividadesid",
-    actividades.actividadtitulo,
-    actividades.actividaddescripcion,
-    actividades.actividadfechaentrega,
-    actividades.actividadestado,
-    entregables.id AS "entregaid",
-    entregables.entregatitulo,
-    entregables.entregadescripcion,
-    entregables.entregaestado,
-    entregables.entregafechaEntrega
+    reuniones.vigente
+    
     FROM usuarios
     JOIN integrantes ON usuarios.id = integrantes.usuario
-    JOIN listaeventos ON integrantes.id = listaeventos.integrante
-    JOIN historiales ON listaeventos.historial = historiales.id
-    JOIN proyectos ON historiales.id = proyectos.historia
-    JOIN eventos ON listaeventos.evento = eventos.id
-    JOIN listareuniones ON eventos.id = listareuniones.reunion
-    JOIN reuniones ON listareuniones.reunion = reuniones.id
-    JOIN listaactividades ON integrantes.id = listaactividades.integrante
-    JOIN actividades ON listaactividades.actividad = actividades.id
-    JOIN metodologias ON proyectos.metodologia = metodologias.id
-    JOIN listapracticas ON metodologias.id = listapracticas.metodologia
-    JOIN practicas ON listapracticas.practica = practicas.id
-    JOIN listaalfas ON practicas.id = listaalfas.practica
-    JOIN alfas ON listaalfas.alfa = alfas.id
-    JOIN listaentregables ON alfas.id = listaentregables.alfa
-    JOIN entregables ON  listaentregables.entregable = entregables.id
+JOIN listaintegrantes ON integrantes.id = listaintegrantes.integrante
+JOIN proyectos ON   listaintegrantes.proyecto = proyectos.id
+join historiales on proyectos.historia = historiales.id
+join listaeventos on historiales.id = listaeventos.historial
+join eventos on listaeventos.evento = eventos.id
+join listareuniones on eventos.id = listareuniones.evento
+join reuniones on listareuniones.reunion = reuniones.id
     WHERE usuarios.id=${id}; `;
+}
+query.obtenercalendarioproyecto = function (id) {
+    return `
+    SELECT 
+
+    proyectos.id AS "proyectoid",
+	proyectos.proyectonombre,
+    reuniones.id AS "reunionid",
+    reuniones.reuniontitulo,
+    reuniones.reunionfecha,
+    reuniones.reunionhora,
+    reuniones.reuniondurancion,
+    reuniones.reuniondescripcion,
+    reuniones.vigente
+    
+
+from proyectos
+join historiales on proyectos.historia = historiales.id
+join listaeventos on historiales.id = listaeventos.historial
+join eventos on listaeventos.evento = eventos.id
+join listareuniones on eventos.id = listareuniones.evento
+join reuniones on listareuniones.reunion = reuniones.id
+    WHERE proyectos.id=${id}; `;
 }
 query.buscarProyecto = function (id) {
     return (`SELECT 
@@ -137,12 +144,16 @@ query.buscarProyecto = function (id) {
     proyectos.proyectoestado,
     proyectos.proyectoicon,
     proyectos.proyectobanner,
+	integrantes.id AS "interid",
 	usuarios.nombre,
 	roles.roltitulo,
+    actividades.id AS "actiid",
+    actividades.actividadtitulo,
 	actividades.actividadestado,
 	practicas.practicanombre,
 	alfas.alfanombre,
 	alfas.alfaestado,
+	entregables.id AS "entreid",
 	entregables.entregaestado
 FROM usuarios
 JOIN integrantes ON usuarios.id = integrantes.usuario
@@ -158,8 +169,10 @@ join listapracticas on metodologias.id = listapracticas.metodologia
 	join alfas on listaalfas.alfa = alfas.id
 	join listaentregables on alfas.id = listaentregables.alfa
 	join entregables on listaentregables.entregable = entregables.id
-WHERE proyectos.id = ${id};   `);
+WHERE proyectos.id = ${id}; `);
 }
+
+
 
 query.buscarintegrantesproyecto = function (id) {
     return (`SELECT 
@@ -659,7 +672,7 @@ query.insertreunion = function (titulo, fecha, hora, duracion, descripcion, vige
     ); `;
 }
 query.insertlistreunion = function (evento, reunion) {
-    return `INSERT INTO listaeventos (evento,reunion ) VALUES (${evento},${reunion});`;
+    return `INSERT INTO listareuniones (evento,reunion ) VALUES (${evento},${reunion});`;
 }
 query.insertentrega = function (titulo, descripcion, nombrearchivoguardado, actividad, entragable) {
     return `INSERT INTO entregas (entregastitulo ,entregasdescripcion,entregasnombrearchivoguardado ,actividad ,entragable ) VALUES (

@@ -255,7 +255,145 @@ esta ruta te traera la informacion de los proyectos a los que pertenescan de man
     ]
 }
 ```
+este carga el proyecto en concreto del quel usuario pertenece
+```sh
+/proyectos/:id
+```
+```json
+{
+    "proyectos": {
+        "idproyecto": 168,
+        "nombre": "proyecto test2",
+        "descripcion": "cualquier cosa esta bien",
+        "estado": "iniciado",
+        "icono": "http://localhost:3030/proyecto/contenido/proyecto168/null",
+        "banner": "http://localhost:3030/proyecto/contenido/proyecto168/null",
+        "integrantes": [
+            {
+                "id": 504,
+                "nombre": "nombre test14",
+                "rol": "Arquitecto Experiencia Multimedia"
+            },
+            {
+                "id": 502,
+                "nombre": "nombre test12",
+                "rol": "Arquitecto de información"
+            }
+        ],
+        "actividades": [
+            {
+                "id": 1171,
+                "nombre": "A8",
+                "estado": "asignada"
+            },
+            {
+                "id": 1180,
+                "nombre": "A9",
+                "estado": "asignada"
+            }
+        ],
+        "entregable": [
+            {
+                "id": 458,
+                "estado": "asignado"
+            },
+            {
+                "id": 459,
+                "estado": "asignado"
+            }
+        ],
+        "practicas": [
+            {
+                "nombre": "Concepción de la experiencia multimedia",
+                "alfas": [
+                    {
+                        "nombre": "Experiencia multimedia",
+                        "estado": "iniciado"
+                    },
+                    {
+                        "nombre": "Diseño responsable",
+                        "estado": "iniciado"
+                    }
+                ],
+                "tasa": 0
+            },
+            {
+                "nombre": "Sistema Multimedia mínimo viable",
+                "alfas": [
+                    {
+                        "nombre": "Oportunidad",
+                        "estado": "iniciado"
+                    },
+                    {
+                        "nombre": "Valor del sistema multimedia",
+                        "estado": "iniciado"
+                    }
+                ],
+                "tasa": 0
+            }
+        ]
+    }
+}
+```
 
+este carga las actividades y entregables del proyecto
+```sh
+/proyecto/actividades/:id
+```
+```json
+{
+    "actividades": [
+        {
+            "actividadid": 1171,
+            "titulo": "A8",
+            "descripcion": "Diseñe la estructura y el flujo (narrativo, temporal, de\n                        eventos) de la historia a desarrollarse a partir del problema\n                        que desea resolverse, describiendo los acontecimientos que\n                        narra, los personajes que participan, el tiempo en el que se\n                        desarrolla y el espacio en el que suceden dichos\n                        acontecimientos.",
+            "revisiones": 0,
+            "nombre": "nombre test14",
+            "rol": "Arquitecto Experiencia Multimedia",
+            "estado": "asignada",
+            "fechaentrega": "2021-01-23",
+            "tecnica": "Video como apoyo a la etnografía",
+            "contenido": "http://localhost:3030/proyecto/contenido/proyecto168/null",
+            "entregar": false
+        },
+        {
+            "actividadid": 1180,
+            "titulo": "A9",
+            "descripcion": "Defina las bases del diseño de una experiencia multimedia\n                    interactiva, a partir de la historia y el (los) problema(s)\n                    identificado(s), especificando los hitos de la historia en donde\n                    el Sistema Multimedia debe producir en el usuario una\n                    influencia cognitiva, emocional y sensorial.",
+            "revisiones": 0,
+            "nombre": "nombre test14",
+            "rol": "Arquitecto Experiencia Multimedia",
+            "estado": "asignada",
+            "fechaentrega": "2021-01-23",
+            "tecnica": "Producción de metáforas y analogías",
+            "contenido": "http://localhost:3030/proyecto/contenido/proyecto168/null",
+            "entregar": false
+        }
+    ],
+    "entregables": [
+        {
+            "id": 460,
+            "nombre": "Análisis de viabilidad del Sistema Multimedia",
+            "descripcion": "Es un documento en donde se consigna un análisis\n                    sobre la necesidad de los diferentes tipos de recursos\n                    y de riesgos, a la luz de la aplicación de diferentes\n                    técnicas, que permiten hacer un análisis de viabilidad\n                    en torno al desarrollo del Sistema Multimedia. \n                    ",
+            "estado": "asignado",
+            "tipoactivo": "documento",
+            "fechaentrega": "2021-01-23",
+            "revisiones": 0,
+            "contenido": "http://localhost:3030/proyecto/contenido/proyecto168/null"
+        },
+        {
+            "id": 461,
+            "nombre": "Proposición de valor del Sistema Multimedia",
+            "descripcion": "Consiste en el documento que especifica el análisis\n                    para la proposición de valor del Sistema Multimedia.",
+            "estado": "asignado",
+            "tipoactivo": "documento",
+            "fechaentrega": "2021-01-23",
+            "revisiones": 0,
+            "contenido": "http://localhost:3030/proyecto/contenido/proyecto168/null"
+        }
+    ]
+}
+```
 esta ruta devuelve todos los contactos del usuario
 ```sh
 /contactos
@@ -274,6 +412,43 @@ esta ruta devuelve todos los contactos del usuario
     ]
 }
 ```
+esta ruta trea todas las reuniones del usuario relacionadas a un proyecto en que el hace parte
+```sh
+/calendario
+```
+```json
+[
+    {
+        "proyecto": 168,
+        "pronombre": "proyecto test2",
+        "reunion": 7,
+        "titulo": "test titulo",
+        "fecha": "02-02-2021",
+        "hora": "15:00",
+        "duracion": 2,
+        "descripcion": "test",
+        "vigente": 1
+    }
+]
+```
+esta ruta trae las reuniones de un proyecto en concreto
+```sh
+/calendario/:id
+```
+```json
+[
+    {
+        "proyecto": 168,
+        "pronombre": "proyecto test2",
+        "reunion": 7,
+        "titulo": "test titulo",
+        "fecha": "02-02-2021",
+        "hora": "15:00",
+        "duracion": 2,
+        "descripcion": "test",
+        "vigente": 1
+    }
+]
 
 > rutas de inserción
 

@@ -134,19 +134,6 @@ rutas.get('/proyecto/contenido/:buque/:name', (req, res) => {
 
 });
 
-rutas.get('/proyecto/listado/:id', async (req, res) => {
-    /*
-     if(buscarDB.buscarProyecto(req.params)){
-         
-     }*/
-    //  console.log(req.params);
-    const { id } = req.params;
-    //const {user} = req.body; 
-    // const {id,name } = req.body;
-
-    ftpminio.listObjects(id).then(result => res.json(result)).catch(err => res.json(err));
-});
-
 rutas.get('/proyecto/actividades/:id', proToken, (req, res) => {
 
     const { id } = req.params;
@@ -165,6 +152,19 @@ rutas.get('/proyecto/actividades/:id', proToken, (req, res) => {
 
 });
 
+rutas.get('/proyecto/listado/:id', async (req, res) => {
+    /*
+     if(buscarDB.buscarProyecto(req.params)){
+         
+     }*/
+    //  console.log(req.params);
+    const { id } = req.params;
+    //const {user} = req.body; 
+    // const {id,name } = req.body;
+
+    ftpminio.listObjects(id).then(result => res.json(result)).catch(err => res.json(err));
+});
+
 
 
 rutas.get('/calendario', proToken, (req, res) => {
@@ -174,7 +174,12 @@ rutas.get('/calendario', proToken, (req, res) => {
     });
 });
 
-
+rutas.get('/calendarios/:id', proToken, (req, res) => {
+    jwt.verify(req.token, LLAVE, async (err, data) => {
+        const { id } = req.params
+        await buscarDB.buscareventoscalendarioproyecto(id).then(respu => res.json(respu)).catch(err => res.json(err));
+    });
+});
 //-----------seccion de la api
 rutas.get('/api/idiomas', async (req, res) => {
     buscarDB.obtenertodasIdiomas().then(respu => res.json(respu)).catch(err => res.json(err));

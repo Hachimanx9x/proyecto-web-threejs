@@ -1070,14 +1070,14 @@ funcionesDB.insertEvent = (obj) => {
                 mariaDB.query(Query.inserteventos(fechacreacion), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: err }); }
                 });
             }
             else {
                 sqlite.all(Query.inserteventos(fechacreacion), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: err }); }
                 });
             }
         });
@@ -1116,14 +1116,14 @@ funcionesDB.insertMeeting = (obj) => {
                 mariaDB.query(Query.insertreunion(titulo, fecha, hora, duracion, descripcion, vigente), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: err }); }
                 });
             }
             else {
                 sqlite.all(Query.insertreunion(titulo, fecha, hora, duracion, descripcion, vigente), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: err }); }
                 });
             }
         });
@@ -1133,20 +1133,22 @@ funcionesDB.insertMeeting = (obj) => {
 funcionesDB.insertListMeeting = (obj) => {
     return new Promise((res, rej) => {
         const { evento, reunion } = obj;
+
         promesa.then((result) => {
             const { mariaDB, sqlite, vDB } = result;
+
             if (vDB) {
                 mariaDB.query(Query.insertlistreunion(evento, reunion), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: err }); }
                 });
             }
             else {
                 sqlite.all(Query.insertlistreunion(evento, reunion), (err) => {
                     if (!err) {
                         res({ msj: "success" });
-                    } else { rej({ msj: "error" }); }
+                    } else { rej({ msj: err }); }
                 });
             }
         });
