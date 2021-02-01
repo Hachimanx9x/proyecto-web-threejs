@@ -145,8 +145,86 @@ este devolvera los datos de las actividades asginadas a la persona y del estado 
 ```
 este devuelve a todos los usuarios que posean un herramientas asociadas, asi como lapbras clave
 ```json
+{
+    "data": [
+        {
+            "userid": 12,
+            "nombre": "nombre test16",
+            "descripcion": "null",
+            "herramientas": [
+                {
+                    "nombre": "Reactjs",
+                    "descripcion": "Es una biblioteca Javascript de código abierto diseñada para crear interfaces de usuario con el objetivo de facilitar el desarrollo de aplicaciones en una sola página. Es mantenido por Facebook y la comunidad de software libre. En el proyecto hay más de mil desarrolladores libres. ",
+                    "icono": "reactjs-icon.svg"
+                },
+                {
+                    "nombre": "Adobe Ilustrator",
+                    "descripcion": "Es un editor de gráficos vectoriales en forma de taller de arte que trabaja sobre un tablero de dibujo, conocido como «mesa de trabajo» y está destinado a la creación artística de dibujo y pintura para ilustración, para crear y diseñar imágenes, sirve para editar entre otras cosas (ilustración como rama del arte digital aplicado a la ilustración técnica o el diseño gráfico, entre otros).",
+                    "icono": "adobe-illustrator-cc.svg"
+                }               
+            ],
+            "palabras": [
+                "perro"
+            ]
+        }
+    ]
+}
 ```
 
+esta ruta devuelve los datos de un usuario buscado de manera que se puede ver de una manera mas amplia cuales son las caracterisitcas del usuario
+el :id es el id del usuario que se entrega en el apartado de talentos
+```sh
+/talentos/:id
+```
+
+```json
+[
+    {
+        "id": 12,
+        "nombre": "nombre test16",
+        "descripcion": "null",
+        "fotoperfil": "null",
+        "experiencia": null,
+        "cv": "http://localhost:3030/proyecto/contenido/usuario12/null",
+        "pais": "null",
+        "github": "null",
+        "gitlab": "null",
+        "bitbucket": "null",
+        "linkedin": "null",
+        "palabras": [
+            "perro"
+        ],
+        "herramientas": [
+            {
+                "id": 1,
+                "nombre": "Reactjs",
+                "descripcion": "Es una biblioteca Javascript de código abierto diseñada para crear interfaces de usuario con el objetivo de facilitar el desarrollo de aplicaciones en una sola página. Es mantenido por Facebook y la comunidad de software libre. En el proyecto hay más de mil desarrolladores libres. ",
+                "icono": "reactjs-icon.svg"
+            },
+            {
+                "id": 32,
+                "nombre": "Adobe Ilustrator",
+                "descripcion": "Es un editor de gráficos vectoriales en forma de taller de arte que trabaja sobre un tablero de dibujo, conocido como «mesa de trabajo» y está destinado a la creación artística de dibujo y pintura para ilustración, para crear y diseñar imágenes, sirve para editar entre otras cosas (ilustración como rama del arte digital aplicado a la ilustración técnica o el diseño gráfico, entre otros).",
+                "icono": "adobe-illustrator-cc.svg"
+            }
+        ],
+        "habilidades": [
+            {
+                "id": 1,
+                "tipo": "Diseño",
+                "descripcion": "Abstrae correctamente elementos gráficos",
+                "nivel": "medio"
+            }
+        ]
+    }
+]
+```
+
+
+hace lo mismo que la ruta talentos pero solo con un usaurio en concreto
+```sh
+/usuarios/:id
+```
 
 
 esta ruta te traera la informacion de los proyectos a los que pertenescan de manera los mas resumida posible
@@ -154,6 +232,48 @@ esta ruta te traera la informacion de los proyectos a los que pertenescan de man
 /proyectos
 ```
 
+```json
+{
+    "proyectos": [
+        {
+            "idproyecto": 120,
+            "pronombre": "proyecto test2",
+            "prodescripcion": "cualquier cosa esta bien",
+            "estado": "iniciado",
+            "icono": "http://localhost:3030/proyecto/contenido/proyecto120/null",
+            "banner": "http://localhost:3030//proyecto/contenido/proyecto120/null"
+        },
+        {
+            "idproyecto": 121,
+            "pronombre": "proyecto test2",
+            "prodescripcion": "cualquier cosa esta bien",
+            "estado": "iniciado",
+            "icono": "http://localhost:3030/proyecto/contenido/proyecto121/null",
+            "banner": "http://localhost:3030//proyecto/contenido/proyecto121/null"
+        },
+        
+    ]
+}
+```
+
+esta ruta devuelve todos los contactos del usuario
+```sh
+/contactos
+```
+```json
+{
+    "contactos": [
+        {
+            "iduser": 5,
+            "nombre": "nombre test11",
+            "palabras": [
+                "test"
+            ],
+            "preferencia": 0
+        }
+    ]
+}
+```
 
 > rutas de inserción
 

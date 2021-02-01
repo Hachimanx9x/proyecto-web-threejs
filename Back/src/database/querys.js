@@ -131,17 +131,34 @@ query.obtenercalendario = function (id) {
 }
 query.buscarProyecto = function (id) {
     return (`SELECT 
-    proyectos.id,
+    proyectos.id AS "idproyecto",
     proyectos.proyectonombre,
     proyectos.proyectodescripcion,
     proyectos.proyectoestado,
     proyectos.proyectoicon,
-    proyectos.proyectobanner
+    proyectos.proyectobanner,
+	usuarios.nombre,
+	roles.roltitulo,
+	actividades.actividadestado,
+	practicas.practicanombre,
+	alfas.alfanombre,
+	alfas.alfaestado,
+	entregables.entregaestado
 FROM usuarios
 JOIN integrantes ON usuarios.id = integrantes.usuario
+join roles on integrantes.rol = roles.id
 JOIN listaintegrantes ON integrantes.id = listaintegrantes.integrante
+JOIN listaactividades ON integrantes.id = listaactividades.integrante
+ JOIN actividades ON listaactividades.actividad = actividades.id
 JOIN proyectos ON   listaintegrantes.proyecto = proyectos.id
-WHERE proyectos.id = ${id}  `);
+join metodologias on  proyectos.metodologia = metodologias.id
+join listapracticas on metodologias.id = listapracticas.metodologia
+	join practicas on listapracticas.practica = practicas.id
+	join listaalfas on practicas.id = listaalfas.practica
+	join alfas on listaalfas.alfa = alfas.id
+	join listaentregables on alfas.id = listaentregables.alfa
+	join entregables on listaentregables.entregable = entregables.id
+WHERE proyectos.id = ${id};   `);
 }
 
 query.buscarintegrantesproyecto = function (id) {

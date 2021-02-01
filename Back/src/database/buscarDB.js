@@ -228,6 +228,7 @@ funcionesDB.obtenerProyecto = async (body) => {
 }
 
 funcionesDB.buscarProyecto = async (idp) => {
+
     return new Promise((res, rej) => {
         promesa.then(async (result) => {
             const { mariaDB, sqlite, vDB } = result;
@@ -240,7 +241,7 @@ funcionesDB.buscarProyecto = async (idp) => {
                     }
                 });
             } else {
-                sqlite.all(Query.obtenerProyecto(idp), (err, rows) => {
+                sqlite.all(Query.buscarProyecto(idp), (err, rows) => {
                     if (!err) {
                         res({ proyectos: rows });
                     } else {
@@ -1429,8 +1430,10 @@ function rearmas(idUser, rows) {
                 }
             }
         }
-        defarray[i].herramientas = Array.from(new Set(herramientemp));
 
+        //  defarray[i].herramientas = Array.from(new Set(herramientemp));
+        let set4 = new Set(herramientemp.map(JSON.stringify))
+        defarray[i].herramientas = Array.from(set4).map(JSON.parse);
         herramientemp = [];
     }
     var palabratemp; var palaarray = [];
@@ -1642,6 +1645,7 @@ function filtarinfo(array) {
             })
         }
     }
+
     let tb; let temb = 1
     for (let a = 0; a < arraydef.length; a++) {
         tb = temb;
@@ -1652,6 +1656,8 @@ function filtarinfo(array) {
         }
         temb++;
     }
+
+
     for (let a = 0; a < arraydef.length; a++) {
         for (let b = 0; b < array.length; b++) {
             if (arraydef[a].id === array[b].userid) {
@@ -1662,16 +1668,8 @@ function filtarinfo(array) {
                 }
             }
         }
-        let d = 1; let temnum = 1;
-        for (let c = 0; c < arraydef[a].palabras.length; c++) {
-            d = temnum;
-            for (d; d < arraydef[a].palabras.length; d++) {
-                if (arraydef[a].palabras[c] == arraydef[a].palabras[d]) {
-                    arraydef[a].palabras.splice(d, 1);
-                }
-            }
-            temnum++;
-        }
+        let set0 = new Set(arraydef[a].palabras.map(JSON.stringify))
+        arraydef[a].palabras = Array.from(set0).map(JSON.parse);
     }
     for (let a = 0; a < arraydef.length; a++) {
         for (let b = 0; b < array.length; b++) {
@@ -1687,21 +1685,10 @@ function filtarinfo(array) {
                 }
             }
         }
-        let d = 1; let temnum = 1;
+        let set1 = new Set(arraydef[a].herramientas.map(JSON.stringify))
+        arraydef[a].herramientas = Array.from(set1).map(JSON.parse);
 
-        for (let c = 0; c < arraydef[a].herramientas.length; c++) {
-            d = temnum;
-            for (d; d < arraydef[a].herramientas.length; d++) {
-                if (arraydef[a].herramientas[c].id == arraydef[a].herramientas[d].id) {
-                    console.log(c + " | " + d)
-                    console.log(arraydef[a].herramientas[c].id + " | " + arraydef[a].herramientas[d].id);
-                    arraydef[a].herramientas.splice(d, 1);
 
-                }
-
-            }
-            temnum++;
-        }
     }
     for (let a = 0; a < arraydef.length; a++) {
         for (let b = 0; b < array.length; b++) {
@@ -1717,16 +1704,10 @@ function filtarinfo(array) {
                 }
             }
         }
+        let set2 = new Set(arraydef[a].habilidades.map(JSON.stringify))
+        arraydef[a].habilidades = Array.from(set2).map(JSON.parse);
         let d = 1; let temnum = 1;
-        for (let c = 0; c < arraydef[a].habilidades.length; c++) {
-            d = temnum;
-            for (d; d < arraydef[a].habilidades.length; d++) {
-                if (arraydef[a].habilidades[c].id == arraydef[a].habilidades[d].id) {
-                    arraydef[a].habilidades.splice(d, 1);
-                }
-            }
-            temnum++;
-        }
+
     }
     return arraydef;
 }
