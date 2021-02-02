@@ -449,7 +449,7 @@ esta ruta trae las reuniones de un proyecto en concreto
         "vigente": 1
     }
 ]
-
+```
 > rutas de inserción
 
 esta ruta permite la creacion de un usuario 
@@ -457,14 +457,81 @@ esta ruta permite la creacion de un usuario
 /create/usuario
 ```
 este pide un objeto con la siguiente estructura
-
-{ email, password, nombre}
+```json
+{ "email":"email@gmail.com", "password":"123asd", "nombre": "nombretest"}
+```
 
 donde todos son de tipo string devolviendo en string que en una variable token
 este se debe poner los envios y peticiones especiales del usuario la estrutura de este header es 
 ```json
 "authorization": "llave eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb3dzIjpbeyJpZCI6MTIsImVtYWlsIjoiY29ycm9lOEBnbWFpbC5jb20iLCJjb250cmFzZW5hIjoiMTIzNDU2Nzg5IiwiZm90b3BlcmZpbCI6Im51bGwiLCJub21icmVhcmNoaXZvaG9qYWRldmlkYSI6Im51bGwiLCJhbm9zZGVleHBlcmllbmNpYSI6bnVsbCwibm9tYnJlIjoibm9tYnJlIHRlc3QxNiIsImRlc2NyaXBjaW9uIjoibnVsbCIsInBhaXMiOiJudWxsIiwiZWRhZCI6bnVsbCwiZ2l0aHViIjoibnVsbCIsImdpdGxhYiI6Im51bGwiLCJiaXRidWNrZXQiOiJudWxsIiwibGlua2VkaW4iOiJudWxsIn1dLCJpYXQiOjE2MTExODU4NDJ9.TWId6FOMQ0_TGyngDFHJF4Uuol0dqC0sLcCo2FRTuqY "
 ```
+```sh
+/agregar/contacto
+```
+este pide un objeto con la siguiente estructura agregado al usaurio que 
+quiere gragar y si espreferente o no 
+```json
+{ "usuario":1, "preferencia": true }
+```
+
+```sh
+/agregar/idioma
+```
+esta ruta permite agregar los idiomas en tu lista de idiomas 
+se requiere de token para identificar al usuario
+y se manden las id de los idiomas
+```json 
+{ "idioma":[1,3] }
+```
+```sh
+/agregar/palabraclave
+```
+esta agrega las palbras a traves de una lista de palbras que identifiquen a la persona
+```json
+{ "palabra":"palabra"}
+```
+```sh
+/agregar/herramientas
+```
+este pide un objeto con la siguiente estructura
+```json
+{ "herramienta":[1,3]}
+```
+
+```sh
+/create/proyecto
+```
+este pide un objeto con la siguiente estructura
+```json
+ {
+          "nombre":"tes proyecto",
+          "descripcion": "descripcion test",
+          "practica":["nmombre practica1 ","nmombre practica2"],
+          "integrantes": [1,2]
+        }
+```
+```sh
+/crear/reunion
+```
+este pide un objeto con la siguiente estructura
+```json
+ { "proyec":168, "fecha":"02-02-02021", "hora":"15:00", "duracion":2, "descripcion":"test descripcion", "titulo":"test titulo" }
+```
+```sh
+/insert/auto/tecnicas
+```
+Esta ruta es automatic carga su contenido a travez de el archivo modelo
+```sh
+/insert/auto/herramientasmetodologia
+```
+Esta ruta es automatic carga su contenido a travez de el archivo modelo
+```sh
+/insert/auto/roles
+```
+Esta ruta es automatic carga su contenido a travez de el archivo modelo
+
+> rutas de actualizacion de datos
 
 ```sh
 /actualizar/usuario
@@ -472,21 +539,20 @@ este se debe poner los envios y peticiones especiales del usuario la estrutura d
 esta es la ruta de actualizacion que usa un token de este saca el id para saber que usaurio debe actualizar
 esto es dinamico y dependiendo de que parte de la estructura de datos este entrando  hara la actualizacion
 
- { email, password, experiencia, nombre, descripcion, pais, edad, github, gitlab, bitbucket, linkedin }
-
+```json
+ { "email":"email@gmail.com",
+    "password":"123456789", 
+    "experiencia": 1, 
+    "nombre":"nombre 2 ", 
+    "descripcion":"descripcion usuario", 
+    "pais":"pais usuario", 
+    "edad":20, 
+    "github":"link", 
+    "gitlab":"link", 
+    "bitbucket":"link", 
+    "linkedin":"link" }
+```
  asi mismo tambien se puede resibir dos archivos en variables foto o cv en caso de rebicirlos se actualizaran los archivos del usuario
-```sh
-/agregar/idioma
-```
-esta ruta permite agregar los idiomas en tu lista de idiomas 
-se requiere de token para identificar al usuario
-```sh
-/agregar/palabraclave
-```
-esta agrega las palbras a traves de una lista de palbras que identifiquen a la persona
-
-
-
 
 
 ### rutas a usar de la api
