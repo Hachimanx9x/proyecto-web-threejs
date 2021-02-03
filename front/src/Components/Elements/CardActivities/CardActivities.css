@@ -3,6 +3,7 @@
   padding: 0.8rem 0.4rem;
   border-radius: 0.3rem;
   margin-right: 4rem;
+  position: relative;
 }
 
 .o-activity {
@@ -12,8 +13,8 @@
   margin: 0.8rem 0 0 1.5rem;
   position: absolute;
   padding: 0;
-  left: 0;
-  top: 0;
+  left: -40px;
+  top: -28px;
   border-radius: 100%;
   padding: 5px;
 }
@@ -72,7 +73,7 @@
 }
 .o-tecnique-select select {
   padding: 2px 7px;
-  background: #28a745;
+  background: #4fa77b;
   color: #fff;
   border-radius: 1rem;
   width: 9rem;
@@ -144,6 +145,10 @@
   height: 2rem;
   pointer-events: none;
 }
+
+.o-info-deliver {
+  background-color: #4fa77b;
+}
 @media only screen and (max-width: 1320px) {
   .o-info-activity {
     padding: 0 1rem;
@@ -176,6 +181,7 @@
   }
   .sd {
     width: 110px;
+    margin-left: 1rem;
   }
   .o-tecnique-select select {
     width: 6rem;

@@ -14,7 +14,7 @@ import "./CardActivities.css";
 function CardActivities(props) {
   return (
     <div
-      className="o-card z-depth-1 m-0 mt-1 mb-1 p-0 bg-white"
+      className="o-card z-depth-1 m-0 mt-4 p-0 bg-white"
       style={{ maxWidth: "50rem", minWidth: "24rem" }}
     >
       <div className="d-flex p-4">
@@ -47,8 +47,12 @@ function CardActivities(props) {
           <small>Estado: </small>
           <div className="o-state-activity ml-2 mr-2">Entregada</div>
           <FontAwesomeIcon
-            style={{ border: "1px solid #007E33", fontSize: "1.5rem" }}
-            className="bg-success text-white border-success rounded-circle"
+            style={{
+              border: "1px solid #4fa77b",
+              fontSize: "1.5rem",
+              background: "#4fa77b",
+            }}
+            className="text-white rounded-circle"
             icon={faSmileBeam}
           />
         </div>
@@ -66,7 +70,7 @@ function CardActivities(props) {
           </div>
         </div>
       </div>
-      <div className="d-flex justify-content-around bg-success p-2 text-white o-info-deliver">
+      <div className="d-flex justify-content-around p-2 text-white o-info-deliver">
         <div className=" col-xs-4 col-sm-4">
           <p>Técnica a usar:</p>
           <div style={{ position: "relative" }}>
@@ -96,7 +100,7 @@ function CardActivities(props) {
           </form>
         </div>
         <div className=" col-xs-4 col-sm-4">
-          <p>Número de revisiones:</p>
+          <p>Revisiones hechas:</p>
           <input
             type="text"
             className="bg-transparent rounded-pill text-white pl-2"
