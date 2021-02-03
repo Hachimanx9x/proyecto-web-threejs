@@ -466,15 +466,6 @@ rutas.put('/reasignar/actividad', proToken, (req, res) => {
         res.json(result);
     }).catch(err => res.json(err))
 })
-/**
-      db      `7MM"""Mq. `7MMF'                                 mm    `7MM                       `7MM          
-     ;MM:       MM   `MM.  MM                                   MM      MM                         MM          
-    ,V^MM.      MM   ,M9   MM      `7MMpMMMb.pMMMb.   .gP"Ya  mmMMmm    MMpMMMb.   ,pW"Wq.    ,M""bMM  ,pP"Ybd 
-   ,M  `MM      MMmmdM9    MM        MM    MM    MM  ,M'   Yb   MM      MM    MM  6W'   `Wb ,AP    MM  8I   `" 
-   AbmmmqMA     MM         MM        MM    MM    MM  8M""""""   MM      MM    MM  8M     M8 8MI    MM  `YMMMa. 
-  A'     VML    MM         MM        MM    MM    MM  YM.    ,   MM      MM    MM  YA.   ,A9 `Mb    MM  L.   I8 
-.AMA.   .AMMA..JMML.     .JMML.    .JMML  JMML  JMML. `Mbmmd'   `Mbmo .JMML  JMML. `Ybmd9'   `Wbmd"MML.M9mmmP' 
- */
 
 rutas.put('/update/lenguaje', proToken, (req, res) => {
     const { id, nombre, nivel } = req.body;
@@ -502,6 +493,17 @@ rutas.put('/update/lenguaje', proToken, (req, res) => {
         }
     }).catch(err => res.json(err));
 });
+/**
+      db      `7MM"""Mq. `7MMF'                                 mm    `7MM                       `7MM          
+     ;MM:       MM   `MM.  MM                                   MM      MM                         MM          
+    ,V^MM.      MM   ,M9   MM      `7MMpMMMb.pMMMb.   .gP"Ya  mmMMmm    MMpMMMb.   ,pW"Wq.    ,M""bMM  ,pP"Ybd 
+   ,M  `MM      MMmmdM9    MM        MM    MM    MM  ,M'   Yb   MM      MM    MM  6W'   `Wb ,AP    MM  8I   `" 
+   AbmmmqMA     MM         MM        MM    MM    MM  8M""""""   MM      MM    MM  8M     M8 8MI    MM  `YMMMa. 
+  A'     VML    MM         MM        MM    MM    MM  YM.    ,   MM      MM    MM  YA.   ,A9 `Mb    MM  L.   I8 
+.AMA.   .AMMA..JMML.     .JMML.    .JMML  JMML  JMML. `Mbmmd'   `Mbmo .JMML  JMML. `Ybmd9'   `Wbmd"MML.M9mmmP' 
+ */
+
+
 
 rutas.put('/update/useremail', (req, res) => {
     const { email, id } = req.body;

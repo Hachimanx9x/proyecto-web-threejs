@@ -534,6 +534,27 @@ Esta ruta es automatic carga su contenido a travez de el archivo modelo
 > rutas de actualizacion de datos
 
 ```sh
+/entrega/actividad
+```
+esta ruta resive la actividad que es la id de la actividad y un archivo
+```json
+{ "actividad": 1  }
+{
+    "archivo":"file"
+}
+```
+```sh
+/entrega/entregable
+```
+esta ruta resive la entregable que es la id del entregable y un archivo
+```json
+{ "actividad": 1  }
+{
+    "archivo":"file"
+}
+```
+
+```sh
 /actualizar/usuario
 ```
 esta es la ruta de actualizacion que usa un token de este saca el id para saber que usaurio debe actualizar
@@ -551,9 +572,40 @@ esto es dinamico y dependiendo de que parte de la estructura de datos este entra
     "gitlab":"link", 
     "bitbucket":"link", 
     "linkedin":"link" }
+{
+    "foto": "file foto de perfil",
+    "cv": "hoja de vida "
+}
+
 ```
  asi mismo tambien se puede resibir dos archivos en variables foto o cv en caso de rebicirlos se actualizaran los archivos del usuario
 
+```sh
+/actualizar/usuario
+```
+esta ruta reasigna la una actividad a un integrante en especifico
+
+```json
+ { "actividad": 1, "integrante": 12 }
+```
+> rutas de eliminación
+
+```sh
+/eliminar/proyecto
+```
+esta ruta elimina el proyecto con todos sus archivos
+
+```json
+{ "proyecto":1 }
+```
+```sh
+/
+```
+esta ruta todo el contenido del a base de datos pero requiere un codigo
+
+```json
+{ "codigo":1234 }
+```
 
 ### rutas a usar de la api
 
