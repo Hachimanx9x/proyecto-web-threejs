@@ -1,0 +1,183 @@
+.o-activity-description {
+  border: 1px solid #4fa77b;
+  padding: 0.8rem 0.4rem;
+  border-radius: 0.3rem;
+  margin-right: 4rem;
+}
+
+.o-activity {
+  font-size: 0.8rem;
+  color: white;
+  background: #4fa77b;
+  margin: 0.8rem 0 0 1.5rem;
+  position: absolute;
+  padding: 0;
+  left: 0;
+  top: 0;
+  border-radius: 100%;
+  padding: 5px;
+}
+
+.o-activity-user {
+  width: 2.2rem;
+  height: 2.2rem;
+  margin: 0 1rem;
+}
+
+.o-state-activity {
+  border-radius: 0.4rem;
+  border: 1px solid #4fa77b;
+  color: #4fa77b;
+  background-color: #d5eadf;
+  height: 1.4rem;
+  font-size: 0.8rem;
+  padding: 2px 4px;
+  width: 5rem;
+}
+
+.o-info-activity {
+  padding: 0 3rem;
+  justify-content: center;
+}
+
+.o-activity-user-container {
+  min-width: 17rem;
+  max-width: 17rem;
+}
+
+.o-tecnique-select {
+  position: absolute;
+  top: 0;
+  border: 1px solid white;
+}
+.o-tecnique-select::before {
+  content: "\f107";
+  font-family: "FontAwesome";
+  position: absolute;
+  border-radius: 100%;
+  top: 0;
+  margin: -1px -1px 0 0;
+  right: 0;
+  width: 1.8rem;
+  height: 1.8rem;
+  text-align: center;
+  line-height: 30px;
+  pointer-events: none;
+  color: #4fa77b;
+  font-size: 25px;
+  background: #fff;
+}
+.o-tecnique-select:hover::before {
+  background: rgb(223, 221, 221);
+}
+.o-tecnique-select select {
+  padding: 2px 7px;
+  background: #28a745;
+  color: #fff;
+  border-radius: 1rem;
+  width: 9rem;
+  height: 1.6rem;
+  border: 0;
+  font-size: 0.6rem;
+  -webkit-appearance: button;
+  outline: none;
+}
+
+.sd-container {
+  position: relative;
+  float: left;
+}
+
+.sd {
+  outline: none;
+  padding: 5px 10px;
+  height: 30px;
+  width: 150px;
+  border-radius: 1rem;
+  border: 1px solid white;
+  background-color: transparent;
+  color: #fff;
+  font-size: 11px;
+}
+
+.open-button {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 25px;
+  height: 25px;
+  background: transparent;
+  pointer-events: none;
+}
+
+.sd::-webkit-calendar-picker-indicator {
+  opacity: 0;
+}
+.open-button button {
+  border: none;
+  background: transparent;
+  color: #fff;
+}
+
+.o-btn-activity {
+  height: 2rem;
+  width: 10rem;
+  border: 2px solid #4fa77b;
+  padding: 0 1rem 0 0;
+  font-size: 11px;
+  position: relative;
+}
+.o-icon-activity-container {
+  width: 2rem;
+  height: 2rem;
+  background-color: #4fa77b;
+  position: absolute;
+  font-size: 1rem;
+  top: -2px;
+  right: -2px;
+}
+.o-icon-activity {
+  color: white;
+  position: absolute;
+  left: 12px;
+  width: 2rem;
+  height: 2rem;
+  pointer-events: none;
+}
+@media only screen and (max-width: 1320px) {
+  .o-info-activity {
+    padding: 0 1rem;
+    justify-content: center;
+  }
+  .o-activity-description {
+    margin: 0 2rem 0 0;
+  }
+  .o-info-deliver {
+    min-height: 8rem;
+  }
+  .o-tecnique-select select {
+    width: 7rem;
+  }
+}
+@media only screen and (max-width: 590px) {
+  .o-activity-description {
+    margin: 0 1rem 0 0;
+  }
+  .o-info-activity {
+    padding: 0;
+    justify-content: space-around;
+  }
+  .o-activity-user {
+    margin: 0;
+  }
+  .o-activity-user-container {
+    min-width: 14rem;
+    max-width: 14rem;
+  }
+  .sd {
+    width: 110px;
+  }
+  .o-tecnique-select select {
+    width: 6rem;
+  }
+}
