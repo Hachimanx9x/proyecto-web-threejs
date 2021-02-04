@@ -22,7 +22,6 @@
     "drei": "^1.5.7",
     "fullcalendar": "^5.3.2",
     "jquery": "^3.5.1",
-    "malihu-custom-scrollbar-plugin": "^3.1.5",
     "mdbreact": "^4.27.0",
     "microphone-stream": "^5.1.0",
     "moment": "^2.29.1",

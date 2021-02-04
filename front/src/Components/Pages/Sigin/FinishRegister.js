@@ -6,6 +6,7 @@ import { Multiselect } from "multiselect-react-dropdown";
 
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "axios";
 
 export default function FinishRegister() {
     const [picture, setPicture] = useState(null);
@@ -87,7 +88,7 @@ export default function FinishRegister() {
 
     const RemoveSkill = (selectedItem) => {
         if (selectedItem !== undefined) {
-            const skill = skills
+            const skill = skills; 
             const item = skill.find(iterador => iterador.id === selectedItem.id);
             const t = test;
             const t2 = selected;
@@ -101,6 +102,37 @@ export default function FinishRegister() {
             }
         }
     }
+
+    const updateUserDate = () => {
+    const nullData = null;
+    const fullname = name + " " + lastname;
+    try {
+      const { data } = await Axios.put(
+        `actualizar/usuario`,
+        { nullData,
+        nullData, 
+        years, 
+        fullname, 
+        description, 
+        country, 
+        nullData, 
+        github, 
+        gitlab, 
+        bitbucket, 
+        linkedin
+        },
+        {
+            picture,
+            cvpicture
+        }
+        );
+        
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+    }
+    
     return (
         <div className="o-register-container">
             <div className="bg-white rounded row p-2" style={{ height: "auto" }}>
@@ -297,19 +329,10 @@ export default function FinishRegister() {
                 </div>
 
                 <div className="col-xs-12 col-sm-12 d-flex justify-content-end">
-                    <button className="btn mt-2 bg-primary z-depth-0 text-white">Guardar</button>
+                    <button onClick={updateUserDate} className="btn mt-2 bg-primary z-depth-0 text-white">Guardar</button>
                 </div>
             </div>
 
         </div>
     )
-}
-
-/*
-
- <div className="o-box">
-                        <select>
-                            <option>Seleccione el número de años</option>
-                        </select>
-                    </div>
-*/
+};
