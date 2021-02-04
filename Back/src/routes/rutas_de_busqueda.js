@@ -30,17 +30,21 @@ rutas.get('/escritorio', proToken, (req, res) => {
                 // console.log(data.rows);
                 buscarDB.obtenerusuarioid({ id: data.rows[0].id }).then(usua => {
                     buscarDB.obtenerEscritorioActividades(data).then(result => {
-                        //res.json(result)
-                        buscarDB.obtenerEscritorioProyectos(data).then(result2 => {
-                            res.json({
-                                actividades: result.actividades,
-                                proyectos: result2.proyectos,
-                                datos: {
-                                    nombre: usua.nombre,
-                                    foto: `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`
-                                }
-                            });
-                        }).catch(err2 => res.json(err2));
+                        buscarDB.buscartalentogeneral2(data.rows[0].id).then(talento => {
+
+                            buscarDB.obtenerEscritorioProyectos(data).then(result2 => {
+                                res.json({
+                                    actividades: result.actividades,
+                                    proyectos: result2.proyectos,
+                                    datos: {
+                                        nombre: usua.nombre,
+                                        foto: `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`,
+                                        herramientas: talento.data[0].herramientas,
+                                        palabras: talento.data[0].palabras
+                                    }
+                                });
+                            }).catch(err2 => res.json(err2));
+                        }).catch(err3 => res.json(err3));
                     }).catch(err => res.json(err));
                 }).catch(errud => removeObject(errud))
 

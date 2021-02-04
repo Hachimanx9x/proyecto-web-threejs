@@ -186,26 +186,36 @@ export default function FinishRegister() {
         const nullData = null;
         const fullname = name + " " + lastname;
         try {
+            const datform = new FormData();
+            datform.append("email", nullData);
+            datform.append("password", nullData);
+            datform.append("experiencia", years);
+            datform.append("nombre", fullname);
+            datform.append("descripcion", description);
+            datform.append("pais", country);
+            datform.append("edad", nullData);
+            datform.append("github", github);
+            datform.append("gitlab", gitlab);
+            datform.append("bitbucket", bitbucket);
+            datform.append("linkedin", linkedin);
+            datform.append("herramienta", skills);
+            datform.append("palabra", userKeywords);
+            datform.append("idiomas", userLanguages);
+            datform.append("foto", picture);
+            datform.append("cv", cvpicture);
             const { data } = await axios.put(
                 `actualizar/usuario`,
-                {
-                    nullData,
-                    nullData,
-                    years,
-                    fullname,
-                    description,
-                    country,
-                    nullData,
-                    github,
-                    gitlab,
-                    bitbucket,
-                    linkedin,
-                },
-                {
-                    picture,
-                    cvpicture,
+                datform
+            ).then(respuesta => {
+                if (respuesta.statusText === "OK") {
+                    console.log(respuesta.data);
+                } else {
+                    console.log("error fatal")
                 }
-            );
+
+            }).catch(error => {
+                console.error(error);
+            });
 
             console.log(data);
         } catch (error) {

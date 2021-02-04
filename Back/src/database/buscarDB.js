@@ -277,6 +277,31 @@ funcionesDB.buscartalentogeneral = async (idUser) => {
         });
     });
 }
+
+funcionesDB.buscartalentogeneral2 = async (idUser) => {
+    return new Promise((res, rej) => {
+        promesa.then(async (result) => {
+            const { mariaDB, sqlite, vDB } = result;
+            if (vDB) {
+                await mariaDB.query(Query.buscartalentos(), (err, rows, fields) => {
+                    if (!err) {
+                        const data = rearmas2(idUser, rows)
+                        res({ data });
+
+                    } else { rej(err) }
+                });
+            } else {
+                sqlite.all(Query.buscartalentos(), (err, rows) => {
+                    if (!err) {
+
+                        const data = rearmas2(idUser, rows)
+                        res({ data });
+                    } else { rej(err) }
+                });
+            }
+        });
+    });
+}
 funcionesDB.buscarusuariocontatelento = async (idp) => {
     return new Promise((res, rej) => {
         promesa.then(async (result) => {
@@ -1417,6 +1442,73 @@ function rearmas(idUser, rows) {
     for (var i = 0; i < rows.length; i++) {
         // console.log(rows[i].id);
         if (rows[i].id !== idUser) {
+            array[cont] = rows[i];
+            cont += 1;
+        }
+    }
+    var tempid;
+    var defarray = [];
+    var model = {
+        userid: null,
+        nombre: null,
+        descripcion: null,
+        herramientas: [],
+        palabras: []
+    }
+    for (var i = 0; i < array.length; i++) {
+        if (tempid != array[i].id) {
+            tempid = array[i].id;
+            model.userid = tempid
+            model.nombre = array[i].nombre;
+            model.descripcion = array[i].descripcion;
+            defarray.push(model);
+        }
+    }
+    var herramientatemp, herramientemp = [];
+    for (var i = 0; i < defarray.length; i++) {
+        for (var j = 0; j < array.length; j++) {
+            if (defarray[i].userid === array[j].id) {
+                if (herramientatemp != array[j].herramientanombre) {
+                    herramientatemp = array[j].herramientanombre
+                    herramientemp.push({
+                        nombre: array[j].herramientanombre,
+                        descripcion: array[j].herramientadescripcion,
+                        icono: array[j].herramientanombreIcono
+                    })
+                }
+            }
+        }
+
+        //  defarray[i].herramientas = Array.from(new Set(herramientemp));
+        let set4 = new Set(herramientemp.map(JSON.stringify))
+        defarray[i].herramientas = Array.from(set4).map(JSON.parse);
+        herramientemp = [];
+    }
+    var palabratemp; var palaarray = [];
+    for (var i = 0; i < defarray.length; i++) {
+        for (var j = 0; j < array.length; j++) {
+            if (defarray[i].userid === array[j].id) {
+                if (palabratemp != array[j].palabra) {
+                    palaarray.push(array[j].palabra)
+                    palabratemp = array[j].palabra;
+                }
+            }
+        }
+
+        defarray[i].palabras = Array.from(new Set(palaarray));
+        palaarray = [];
+    }
+    // console.log(defarray); 
+    return defarray;
+}
+function rearmas2(idUser, rows) {
+    //   console.log(idUser);
+    //console.log(rows);
+    var array = [];
+    var cont = 0;
+    for (var i = 0; i < rows.length; i++) {
+        // console.log(rows[i].id);
+        if (rows[i].id === idUser) {
             array[cont] = rows[i];
             cont += 1;
         }

@@ -91,7 +91,10 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
         github,
         gitlab,
         bitbucket,
-        linkedin, herramienta, palabra } = req.body;
+        linkedin,
+        herramienta,
+        palabra,
+        idiomas } = req.body;
 
     jwt.verify(req.token, LLAVE, (err, data) => {
         if (err) {
@@ -134,7 +137,15 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
                                                             insertDB.insertKeyword({ user: data.rows[0].id, palabra: palabra[a] }).then(result => {
                                                                 if (c === (palabra.length - 1)) {
                                                                     insertDB.agregarherramientas({ herramientas: herramienta, id: data.rows[0].id }).then(resul => {
-                                                                        res.json({ msj: "agregados" })
+                                                                        let d = 0;
+                                                                        for (let a = 0; a < idioma.length; a++) {
+                                                                            insertDB.insertlistlenguaje({ user: data.rows[0].id, idioma: idiomas[a] }).then((result) => {
+                                                                                if (d === (idiomas.length - 1)) {
+                                                                                    res.json({ msj: "agregados" })
+                                                                                }
+                                                                                d++
+                                                                            }).catch(err => res.json(err));
+                                                                        }
                                                                     }).catch(err => res.json(err));
                                                                 }
                                                                 c++
@@ -164,7 +175,25 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
                                             bitbucket,
                                             linkedin
                                         }, data.rows[0].id, req.files.foto.name, null).then(result => {
-                                            res.json(result)
+                                            let c = 0;
+                                            for (let a = 0; a < palabra.length; a++) {
+                                                insertDB.insertKeyword({ user: data.rows[0].id, palabra: palabra[a] }).then(result => {
+                                                    if (c === (palabra.length - 1)) {
+                                                        insertDB.agregarherramientas({ herramientas: herramienta, id: data.rows[0].id }).then(resul => {
+                                                            let d = 0;
+                                                            for (let a = 0; a < idioma.length; a++) {
+                                                                insertDB.insertlistlenguaje({ user: data.rows[0].id, idioma: idiomas[a] }).then((result) => {
+                                                                    if (d === (idiomas.length - 1)) {
+                                                                        res.json({ msj: "agregados" })
+                                                                    }
+                                                                    d++
+                                                                }).catch(err => res.json(err));
+                                                            }
+                                                        }).catch(err => res.json(err));
+                                                    }
+                                                    c++
+                                                }).catch(err => res.json(err))
+                                            }
                                         }).catch(err2 => res.json(err2))
                                     }).catch(err => res.json(err));
                             }
@@ -200,7 +229,15 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
                                                             insertDB.insertKeyword({ user: data.rows[0].id, palabra: palabra[a] }).then(result => {
                                                                 if (c === (palabra.length - 1)) {
                                                                     insertDB.agregarherramientas({ herramientas: herramienta, id: data.rows[0].id }).then(resul => {
-                                                                        res.json({ msj: "agregados" })
+                                                                        let d = 0;
+                                                                        for (let a = 0; a < idioma.length; a++) {
+                                                                            insertDB.insertlistlenguaje({ user: data.rows[0].id, idioma: idiomas[a] }).then((result) => {
+                                                                                if (d === (idiomas.length - 1)) {
+                                                                                    res.json({ msj: "agregados" })
+                                                                                }
+                                                                                d++
+                                                                            }).catch(err => res.json(err));
+                                                                        }
                                                                     }).catch(err => res.json(err));
                                                                 }
                                                                 c++
@@ -243,7 +280,15 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
                                                         insertDB.insertKeyword({ user: data.rows[0].id, palabra: palabra[a] }).then(result => {
                                                             if (c === (palabra.length - 1)) {
                                                                 insertDB.agregarherramientas({ herramientas: herramienta, id: data.rows[0].id }).then(resul => {
-                                                                    res.json({ msj: "agregados" })
+                                                                    let d = 0;
+                                                                    for (let a = 0; a < idioma.length; a++) {
+                                                                        insertDB.insertlistlenguaje({ user: data.rows[0].id, idioma: idiomas[a] }).then((result) => {
+                                                                            if (d === (idiomas.length - 1)) {
+                                                                                res.json({ msj: "agregados" })
+                                                                            }
+                                                                            d++
+                                                                        }).catch(err => res.json(err));
+                                                                    }
                                                                 }).catch(err => res.json(err));
                                                             }
                                                             c++
@@ -301,7 +346,15 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
                                                                                 insertDB.insertKeyword({ user: data.rows[0].id, palabra: palabra[a] }).then(result => {
                                                                                     if (c === (palabra.length - 1)) {
                                                                                         insertDB.agregarherramientas({ herramientas: herramienta, id: data.rows[0].id }).then(resul => {
-                                                                                            res.json({ msj: "agregados" })
+                                                                                            let d = 0;
+                                                                                            for (let a = 0; a < idioma.length; a++) {
+                                                                                                insertDB.insertlistlenguaje({ user: data.rows[0].id, idioma: idiomas[a] }).then((result) => {
+                                                                                                    if (d === (idiomas.length - 1)) {
+                                                                                                        res.json({ msj: "agregados" })
+                                                                                                    }
+                                                                                                    d++
+                                                                                                }).catch(err => res.json(err));
+                                                                                            }
                                                                                         }).catch(err => res.json(err));
                                                                                     }
                                                                                     c++
@@ -363,7 +416,15 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
                                                                         insertDB.insertKeyword({ user: data.rows[0].id, palabra: palabra[a] }).then(result => {
                                                                             if (c === (palabra.length - 1)) {
                                                                                 insertDB.agregarherramientas({ herramientas: herramienta, id: data.rows[0].id }).then(resul => {
-                                                                                    res.json({ msj: "agregados" })
+                                                                                    let d = 0;
+                                                                                    for (let a = 0; a < idioma.length; a++) {
+                                                                                        insertDB.insertlistlenguaje({ user: data.rows[0].id, idioma: idiomas[a] }).then((result) => {
+                                                                                            if (d === (idiomas.length - 1)) {
+                                                                                                res.json({ msj: "agregados" })
+                                                                                            }
+                                                                                            d++
+                                                                                        }).catch(err => res.json(err));
+                                                                                    }
                                                                                 }).catch(err => res.json(err));
                                                                             }
                                                                             c++
@@ -413,7 +474,15 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
                                                     insertDB.insertKeyword({ user: data.rows[0].id, palabra: palabra[a] }).then(result => {
                                                         if (c === (palabra.length - 1)) {
                                                             insertDB.agregarherramientas({ herramientas: herramienta, id: data.rows[0].id }).then(resul => {
-                                                                res.json({ msj: "agregados" })
+                                                                let d = 0;
+                                                                for (let a = 0; a < idioma.length; a++) {
+                                                                    insertDB.insertlistlenguaje({ user: data.rows[0].id, idioma: idiomas[a] }).then((result) => {
+                                                                        if (d === (idiomas.length - 1)) {
+                                                                            res.json({ msj: "agregados" })
+                                                                        }
+                                                                        d++
+                                                                    }).catch(err => res.json(err));
+                                                                }
                                                             }).catch(err => res.json(err));
                                                         }
                                                         c++
@@ -445,7 +514,15 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
                                 insertDB.insertKeyword({ user: data.rows[0].id, palabra: palabra[a] }).then(result => {
                                     if (c === (palabra.length - 1)) {
                                         insertDB.agregarherramientas({ herramientas: herramienta, id: data.rows[0].id }).then(resul => {
-                                            res.json({ msj: "agregados" })
+                                            let d = 0;
+                                            for (let a = 0; a < idioma.length; a++) {
+                                                insertDB.insertlistlenguaje({ user: data.rows[0].id, idioma: idiomas[a] }).then((result) => {
+                                                    if (d === (idiomas.length - 1)) {
+                                                        res.json({ msj: "agregados" })
+                                                    }
+                                                    d++
+                                                }).catch(err => res.json(err));
+                                            }
                                         }).catch(err => res.json(err));
                                     }
                                     c++

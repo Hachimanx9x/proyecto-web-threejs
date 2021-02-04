@@ -546,20 +546,15 @@ Esta ruta es automatic carga su contenido a travez de el archivo modelo
 ```
 esta ruta resive la actividad que es la id de la actividad y un archivo
 ```json
-{ "actividad": 1  }
-{
-    "archivo":"file"
-}
+{ "actividad": 1 ,"archivo":"file" }
+
 ```
 ```sh
 /entrega/entregable
 ```
 esta ruta resive la entregable que es la id del entregable y un archivo
 ```json
-{ "actividad": 1  }
-{
-    "archivo":"file"
-}
+{ "actividad": 1,"archivo":"file"  }
 ```
 
 ```sh
@@ -579,11 +574,13 @@ esto es dinamico y dependiendo de que parte de la estructura de datos este entra
     "github":"link", 
     "gitlab":"link", 
     "bitbucket":"link", 
-    "linkedin":"link", "herramienta":[1,2,3], "palabra":["test1","test2"] }
-{
-    "foto": "file foto de perfil",
-    "cv": "hoja de vida "
-}
+    "linkedin":"link",
+     "herramienta":[1,2,3], 
+     "palabra":["test1","test2"],
+     "idiomas":[1,2,3],
+     "foto": "file foto de perfil",
+    "cv": "hoja de vida  file" }
+
 
 ```
  asi mismo tambien se puede resibir dos archivos en variables foto o cv en caso de rebicirlos se actualizaran los archivos del usuario
@@ -659,8 +656,46 @@ Esta devuelven un objeto con una array llamado API que contiene los objetos gene
 /api/listaeventos
 /api/listaintegrantes
 ```
+```json 
+// /api/idiomas   
+{
+    "API": [
+        {
+            "id": 1,
+            "idiomanombre": "Ingles",
+            "idiomanivel": "A1 Beginner"
+        },
+        {
+            "id": 2,
+            "idiomanombre": "Ingles",
+            "idiomanivel": "A2 Elementary"
+        }
+    ]
+}
 
+```
+```json 
+// /api/herramientas       
+{
+    "API": [
+        {
+            "id": 1,
+            "nombre": "Reactjs",
+            "tipo": "desarrollo",
+            "descripcion": "Es una biblioteca Javascript de código abierto diseñada para crear interfaces de usuario con el objetivo de facilitar el desarrollo de aplicaciones en una sola página. Es mantenido por Facebook y la comunidad de software libre. En el proyecto hay más de mil desarrolladores libres. ",
+            "icono": "http://localhost:3030/proyecto/contenido/default/reactjs-icon.svg"
+        },
+        {
+            "id": 2,
+            "nombre": "Angularjs",
+            "tipo": "desarrollo",
+            "descripcion": "Es un framework de JavaScript de código abierto, mantenido por Google, que se utiliza para crear y mantener aplicaciones web de una sola página. Su objetivo es aumentar las aplicaciones basadas en navegador con capacidad de Modelo Vista Controlador (MVC), en un esfuerzo para hacer que el desarrollo y las pruebas sean más fáciles.",
+            "icono": "http://localhost:3030/proyecto/contenido/default/angular-icon.svg"
+        }
+    ]
+}
 
+```
 >rutas de eliminación
 
 ```sh
