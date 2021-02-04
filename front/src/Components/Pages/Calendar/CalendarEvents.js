@@ -27,7 +27,7 @@ export default class CalendarEvents extends Component {
   constructor(props) {
     super(props);
     this.handleDayClick = this.handleDayClick.bind(this);
-    this.bruh = this.bruh.bind(this);
+    this.createEvent = this.createEvent.bind(this);
     this.state = {
       events: [
         {
@@ -76,10 +76,10 @@ export default class CalendarEvents extends Component {
     const date = this.state.selectedDate;
     console.log(date);
   }
-  bruh() {
-    this.props.history.push("/Dashboard/Calendar/CreateEvent");
+  createEvent() {
     if (this.state.selectedDate != null) {
       console.log(this.state.selectedDate.toLocaleDateString());
+      this.props.history.push("/Dashboard/Calendar/CreateEvent");
     } else {
       console.log("Nay and gg");
     }
@@ -126,7 +126,7 @@ export default class CalendarEvents extends Component {
                   height: "1.5rem",
                 }}
                 type="button"
-                onClick={this.bruh}
+                onClick={this.createEvent}
               >
                 <FontAwesomeIcon icon={faPlus} />
               </button>
