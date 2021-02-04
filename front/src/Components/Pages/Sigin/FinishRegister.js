@@ -71,25 +71,25 @@ export default function FinishRegister() {
           Axios.get(`http://localhost:3030/api/herramientas`),
           Axios.get(`http://localhost:3030/api/idiomas`),
         ]).then((response) => {
-          for (let i = 0; i < response[0].API.length; i++) {
-            tools.push[
+          for (let i = 0; i < response[0].data.API.length; i++) {
+            tools.push(
               {
                 cat: {
-                  id: response[0].API[i].id,
-                  icon: response[0].API[i].icono,
-                  name: response[0].API[i].nombre,
+                  id: response[0].data.API[i].id,
+                  icon: response[0].data.API[i].icono,
+                  name: response[0].data.API[i].nombre,
                 },
-                key: response[0].API[i].nombre,
+                key: response[0].data.API[i].nombre,
               }
-            ];
+            );
           }
-          for (let i = 0; i < response[1].API.length; i++) {
-            languages.push[
+          for (let i = 0; i < response[1].data.API.length; i++) {
+            languages.push(
               {
-                cat: response[1].API[i].id,
-                key: response[1].API[i].idiomanombre,
+                cat: response[1].data.API[i].id,
+                key: response[1].data.API[i].idiomanombre,
               }
-            ];
+            );
           }
         });
       } catch (error) {
