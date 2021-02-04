@@ -168,7 +168,10 @@ class CreateProject extends Component {
         <div className="col-xs-12 col-sm-8 o-project-creation-section">
           <div className="d-flex justify-content-between mb-2">
             <h4 className="mb-3 pl-4">Creación del projecto</h4>
-            <button className="z-depth-0 border-0 btn btn-primary font-weight-bold">
+            <button
+              className="z-depth-0 border-0 btn btn-primary font-weight-bold"
+              style={{ width: "7rem", height: "2.3rem" }}
+            >
               Guardar
             </button>
           </div>
@@ -178,10 +181,14 @@ class CreateProject extends Component {
               <small>Icono del proyecto</small>
               <div className="inputWrapper rounded-pill mb-3">
                 <img
-                  src={ProjectIcon}
+                  src={
+                    this.state.projectIcon === null
+                      ? ProjectIcon
+                      : URL.createObjectURL(this.state.projectIcon)
+                  }
                   alt={"icon"}
                   className="rounded-circle"
-                  style={{ width: "3rem" }}
+                  style={{ width: "3rem", height: "3rem" }}
                 />
                 <p className="cyan-text o-icon-input-text">
                   Subir icono
@@ -193,13 +200,21 @@ class CreateProject extends Component {
                 <input
                   className="fileInput rounded-pill"
                   type="file"
-                  name="file1"
+                  name="projectIcon"
+                  onChange={(event) => {
+                    const file = event.target.files[0];
+                    this.setState({ projectIcon: file });
+                  }}
                 />
               </div>
               <small>Portada del proyecto</small>
               <div className="o-project-form">
                 <img
-                  src={ProjectPicture}
+                  src={
+                    this.state.projectPicture === null
+                      ? ProjectPicture
+                      : URL.createObjectURL(this.state.projectPicture)
+                  }
                   className="o-picture-project"
                   alt="project"
                 />
@@ -221,7 +236,11 @@ class CreateProject extends Component {
                   <input
                     className="fileInput rounded-pill"
                     type="file"
-                    name="file1"
+                    name="projectPicture"
+                    onChange={(event) => {
+                      const file = event.target.files[0];
+                      this.setState({ projectPicture: file });
+                    }}
                   />
                 </div>
               </div>

@@ -116,7 +116,7 @@ function CardActivities(props) {
         </div>
       </div>
       <div className="d-flex justify-content-end p-2">
-        <button className="rounded-pill o-btn-activity bg-white text-success">
+        <button className="rounded-pill o-btn-activity text-success">
           Subir documento
           <div className="o-icon-activity-container rounded-circle">
             <FontAwesomeIcon
@@ -125,7 +125,7 @@ function CardActivities(props) {
             />
           </div>
         </button>
-        <button className="ml-3 rounded-pill o-btn-activity bg-white text-success">
+        <button className="ml-3 rounded-pill o-btn-activity text-success">
           Descargar documento
           <div className="o-icon-activity-container rounded-circle">
             <FontAwesomeIcon
