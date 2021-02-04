@@ -1,14 +1,17 @@
 import React, { useState } from "react";
-import "./FinishRegister.css";
+import { useHistory } from "react-router-dom";
 import User from "../../../Logos/user-icon.png";
 import { MDBInput } from "mdbreact";
 import { Multiselect } from "multiselect-react-dropdown";
-
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 
+import "./FinishRegister.css";
+
+
 export default function FinishRegister() {
+    const history = useHistory();
     const [picture, setPicture] = useState(null);
     const [description, setDescription] = useState();
     const [country, setCountry] = useState();
@@ -127,7 +130,8 @@ export default function FinishRegister() {
         }
         );
         
-      console.log(data);
+        console.log(data);
+        
     } catch (error) {
       console.log(error);
     }

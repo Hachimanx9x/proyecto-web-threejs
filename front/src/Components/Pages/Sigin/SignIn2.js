@@ -10,7 +10,7 @@ import "mdbreact/dist/css/mdb.css";
 class SigIn extends Component {
   constructor() {
     super();
-    this.state = { nombre: "", email: "", password: "", confirmpassword: "" };
+    this.state = { name: "", email: "", password: "", confirmpassword: "" };
     this.RegisterFunction = this.RegisterFunction.bind(this);
 
     this.httpInstance = axios.create({
@@ -32,14 +32,14 @@ class SigIn extends Component {
   }
 
   RegisterFunction = () => {
-    const { email, password, nombre } = this.state;
+    const { email, password, name } = this.state;
 
     //------
     this.httpInstance
       .post("/create/usuario", {
         email,
         password,
-        nombre,
+        name,
       })
       .then((respuesta) => {
         if (respuesta.statusText === "OK") {
@@ -76,7 +76,7 @@ class SigIn extends Component {
                 <label className="font-weight-bold text-info">Nombre</label>
                 <MDBInput
                   onChange={(event) => {
-                    this.setState({ nombre: event.target.value });
+                    this.setState({ name: event.target.value });
                   }}
                   label="Nombre"
                   className="o-sigin-input text-white"
