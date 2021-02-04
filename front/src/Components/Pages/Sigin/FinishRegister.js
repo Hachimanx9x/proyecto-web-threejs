@@ -72,6 +72,7 @@ export default function FinishRegister() {
     { key: "Diseñador UI", cat: "Diseñador UI" },
     { key: "Diseñador UX", cat: "Diseñador UX" },
   ];
+
   const tools = [
     {
       cat: {
