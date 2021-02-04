@@ -1,0 +1,24 @@
+.o-activities-col {
+  max-height: 40rem;
+  overflow-y: auto;
+}
+
+.o-text-alfa-state {
+  position: absolute;
+  color: #4285f4;
+  top: 50px;
+  font-size: 1.4rem;
+  right: 108px;
+}
+.o-activities-col::-webkit-scrollbar {
+  width: 6px;
+  background-color: #e0e0e0;
+}
+.o-activities-col::-webkit-scrollbar-thumb {
+  background: #4285f4;
+  border-radius: 3px;
+}
+
+.o-activities-col::-webkit-scrollbar-thumb:hover {
+  background: #3a4c99;
+}

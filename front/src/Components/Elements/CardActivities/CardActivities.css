@@ -127,6 +127,7 @@
   padding: 0 1rem 0 0;
   font-size: 11px;
   position: relative;
+  background-color: #fff;
 }
 .o-icon-activity-container {
   width: 2rem;
@@ -148,6 +149,12 @@
 
 .o-info-deliver {
   background-color: #4fa77b;
+}
+.o-btn-activity:focus {
+  outline: none;
+}
+.o-btn-activity:hover {
+  background-color: rgb(238, 229, 229);
 }
 @media only screen and (max-width: 1320px) {
   .o-info-activity {
