@@ -32,14 +32,14 @@ class SigIn extends Component {
   }
 
   RegisterFunction = () => {
-    const { email, password, name } = this.state;
+    const { email, password, nombre } = this.state;
 
     //------
     this.httpInstance
       .post("/create/usuario", {
         email,
         password,
-        name,
+        nombre,
       })
       .then((respuesta) => {
         if (respuesta.statusText === "OK") {
@@ -76,7 +76,7 @@ class SigIn extends Component {
                 <label className="font-weight-bold text-info">Nombre</label>
                 <MDBInput
                   onChange={(event) => {
-                    this.setState({ name: event.target.value });
+                    this.setState({ nombre: event.target.value });
                   }}
                   label="Nombre"
                   className="o-sigin-input text-white"
