@@ -579,7 +579,7 @@ esto es dinamico y dependiendo de que parte de la estructura de datos este entra
     "github":"link", 
     "gitlab":"link", 
     "bitbucket":"link", 
-    "linkedin":"link" }
+    "linkedin":"link", "herramienta":[1,2,3], "palabra":["test1","test2"] }
 {
     "foto": "file foto de perfil",
     "cv": "hoja de vida "
