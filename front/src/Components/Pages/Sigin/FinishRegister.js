@@ -82,7 +82,7 @@ export default function FinishRegister() {
               },
               key: response[0].data.API[i].nombre,
             });
-            setTools([...tools]);
+            setToolist([...tools]);
           }
           for (let i = 0; i < response[1].data.API.length; i++) {
             languages.push({
