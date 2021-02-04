@@ -28,6 +28,9 @@ export default function FinishRegister() {
   const [test, setTest] = useState([]);
   const [selected, setSelected] = useState([]);
 
+  const [languageslist, setLanguageslist] = useState([]);
+  const [toolist, setToolist] = useState([]);
+
   const countries = [
     { key: "Alemania", cat: "Alemania" },
     { key: "Brasil", cat: "Brasil" },
@@ -49,7 +52,6 @@ export default function FinishRegister() {
     { key: "4 años", cat: 4 },
     { key: "5 años", cat: 5 },
   ];
-  const languages = [];
 
   const keywords = [
     { key: "Desarrollador Web", cat: "Desarrollador Web" },
@@ -62,8 +64,6 @@ export default function FinishRegister() {
     { key: "Diseñador UX", cat: "Diseñador UX" },
   ];
 
-  const tools = [];
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -71,25 +71,25 @@ export default function FinishRegister() {
           Axios.get(`http://localhost:3030/api/herramientas`),
           Axios.get(`http://localhost:3030/api/idiomas`),
         ]).then((response) => {
+          const tools = [];
+          const languages = [];
           for (let i = 0; i < response[0].data.API.length; i++) {
-            tools.push(
-              {
-                cat: {
-                  id: response[0].data.API[i].id,
-                  icon: response[0].data.API[i].icono,
-                  name: response[0].data.API[i].nombre,
-                },
-                key: response[0].data.API[i].nombre,
-              }
-            );
+            tools.push({
+              cat: {
+                id: response[0].data.API[i].id,
+                icon: response[0].data.API[i].icono,
+                name: response[0].data.API[i].nombre,
+              },
+              key: response[0].data.API[i].nombre,
+            });
+            setTools([...tools]);
           }
           for (let i = 0; i < response[1].data.API.length; i++) {
-            languages.push(
-              {
-                cat: response[1].data.API[i].id,
-                key: response[1].data.API[i].idiomanombre,
-              }
-            );
+            languages.push({
+              cat: response[1].data.API[i].id,
+              key: response[1].data.API[i].idiomanombre,
+            });
+            setLanguageslist([...languages]);
           }
         });
       } catch (error) {
@@ -258,7 +258,7 @@ export default function FinishRegister() {
           />
           <small>Idiomas</small>
           <Multiselect
-            options={languages}
+            options={languageslist}
             displayValue="key"
             closeOnSelect={false}
             placeholder="Selecciona tus idiomas"
@@ -428,7 +428,7 @@ export default function FinishRegister() {
             <small style={{ fontSize: "0.6rem" }}>Tipo</small>
             <hr className="bg-primary mt-0 mb-3" />
             <Multiselect
-              options={tools}
+              options={toolist}
               displayValue="key"
               closeOnSelect={false}
               selectedValues={selected.length % 2 === 0 ? selected : selected}
