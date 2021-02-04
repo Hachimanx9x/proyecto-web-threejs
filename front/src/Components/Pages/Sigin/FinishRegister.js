@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import User from "../../../Logos/user-icon.png";
 import { MDBInput } from "mdbreact";
@@ -164,13 +164,13 @@ export default function FinishRegister() {
     },
   ];
 
-  /*
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         Axios.all([
-          Axios.get(`/api/herramientas`),
-          Axios.get(`/api/idiomas`),
+          Axios.get(`http://localhost:3030/api/herramientas`),
+          Axios.get(`http://localhost:3030/api/idiomas`),
         ]).then((response) => {
           console.log(response);
         });
@@ -181,7 +181,7 @@ export default function FinishRegister() {
 
     fetchData();
   }, []);
-*/
+
   const RemoveSkill = (selectedItem) => {
     if (selectedItem !== undefined) {
       const skill = skills;
@@ -220,7 +220,7 @@ export default function FinishRegister() {
       datform.append("idiomas", userLanguages);
       datform.append("foto", picture);
       datform.append("cv", cvpicture);
-      const { data } = await Axios.put(`actualizar/usuario`, datform)
+      const { data } = await Axios.put(`http://localhost:3030/actualizar/usuario`, datform)
         .then((respuesta) => {
           if (respuesta.statusText === "OK") {
             console.log(respuesta.data);
