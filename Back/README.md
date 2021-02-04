@@ -508,7 +508,15 @@ este pide un objeto con la siguiente estructura
           "nombre":"tes proyecto",
           "descripcion": "descripcion test",
           "practica":["nmombre practica1 ","nmombre practica2"],
-          "integrantes": [1,2]
+          "integrantes": [ {
+            "user":7,
+            "rol":"Arquitecto de producción de contenidos"
+        },
+        {
+            "user":6,
+            "rol":"Arquitecto de información"
+        }]
+         
         }
 ```
 ```sh
