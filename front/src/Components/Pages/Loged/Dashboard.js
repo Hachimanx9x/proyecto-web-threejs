@@ -14,9 +14,7 @@ class Dashboard extends Component {
     }
   }
 
-  componentDidMount() {
 
-  }
   /*
   async componentWillMount() {
     const token = localStorage.getItem("login");
