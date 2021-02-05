@@ -123,6 +123,10 @@ export default function FinishRegister() {
   const updateUserDate = async () => {
     const nullData = null;
     const fullname = name + " " + lastname;
+    const skillsdi = [];
+    for (let i = 0; i < skills.length; i++) {
+      skillsdi.push(skills.id);
+    }
     try {
       const datform = new FormData();
       datform.append("email", nullData);
@@ -136,7 +140,7 @@ export default function FinishRegister() {
       datform.append("gitlab", gitlab);
       datform.append("bitbucket", bitbucket);
       datform.append("linkedin", linkedin);
-      datform.append("herramienta", skills);
+      datform.append("herramienta", skillsdi);
       datform.append("palabra", userKeywords);
       datform.append("idiomas", userLanguages);
       datform.append("foto", picture);
