@@ -87,7 +87,10 @@ export default function FinishRegister() {
           for (let i = 0; i < response[1].data.API.length; i++) {
             languages.push({
               cat: response[1].data.API[i].id,
-              key: response[1].data.API[i].idiomanombre,
+              key:
+                response[1].data.API[i].idiomanombre +
+                " " +
+                response[1].data.API[i].idiomanivel,
             });
             setLanguageslist([...languages]);
           }
