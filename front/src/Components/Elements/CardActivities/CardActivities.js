@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
+//import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAngleDoubleDown,
@@ -139,6 +139,6 @@ function CardActivities(props) {
   );
 }
 
-CardActivities.propTypes = {};
+//CardActivities.propTypes = {};
 
 export default CardActivities;
