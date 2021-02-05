@@ -110,11 +110,13 @@ este devolvera los datos de las actividades asginadas a la persona y del estado 
                     "alfas": [
                         {
                             "alfanombre": "Oportunidad",
-                            "alfaestado": "iniciado"
+                            "alfaestado": "iniciado",
+                            "porcentaje": 0
                         },
                         {
                             "alfanombre": "Valor del sistema multimedia",
-                            "alfaestado": "iniciado"
+                            "alfaestado": "iniciado",
+                            "porcentaje": 0
                         }
                     ]
                 },
@@ -123,11 +125,13 @@ este devolvera los datos de las actividades asginadas a la persona y del estado 
                     "alfas": [
                         {
                             "alfanombre": "Experiencia multimedia",
-                            "alfaestado": "iniciado"
+                            "alfaestado": "iniciado",
+                            "porcentaje": 0
                         },
                         {
                             "alfanombre": "Diseño responsable",
-                            "alfaestado": "iniciado"
+                            "alfaestado": "iniciado",
+                            "porcentaje": 0
                         }
                     ]
                 }

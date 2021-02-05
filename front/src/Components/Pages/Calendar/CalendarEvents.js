@@ -19,7 +19,7 @@ import DayPicker from "react-day-picker";
 import MomentLocaleUtils from "react-day-picker/moment";
 
 import "moment/locale/es.js";
-
+import axios from 'axios';
 import "./Calendar.css";
 require("moment/locale/es.js");
 
@@ -69,6 +69,45 @@ export default class CalendarEvents extends Component {
        
         console.log(this.state.colors);
     }*/
+
+  componentDidMount() {
+    const token = localStorage.getItem("login");
+    const obj = JSON.parse(token);
+    const tokensito = obj.token;
+    const httpInstance = axios.create({
+      baseURL: "http://localhost:3030/",
+      timeout: 1000,
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `llave ${tokensito}`,
+      },
+    }); //
+
+    httpInstance.interceptors.response.use(null, (error) => {
+      const expectedError =
+        error.response &&
+        error.response.status >= 400 &&
+        error.response.status < 500;
+      if (!expectedError) {
+        // Loggear mensaje de error a un servicio como Sentry
+        // Mostrar error genérico al usuario
+        return Promise.reject(error);
+      }
+    });
+    //------
+    httpInstance
+      .get("calendario")
+      .then((respuesta) => {
+        if (respuesta.statusText === "OK") {
+          console.log(respuesta.data);
+        } else {
+          console.log("error fatal");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
   handleDayClick(day, { selected }) {
     this.setState({
       selectedDate: selected ? undefined : day,

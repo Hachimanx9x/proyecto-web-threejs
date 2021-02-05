@@ -1417,9 +1417,29 @@ function rearmarProyectosescri(array) {
                     if (alfanombre != array[k].alfanombre) {
                         // console.log("cambio");
                         //  console.log(arraydef[i].practicas[j].practicanombre);
+                        let temp = 0
+
+                        if (array[k].practicanombre == "Sistema Multimedia mínimo viable") {
+                            if (array[k].alfanombre == "Oportunidad" || array[k].alfanombre == "Valor del sistema multimedia") {
+                                if (array[k].alfaestado == "iniciado") { temp = 0 }
+                                if (array[k].alfaestado == "Alcanzable") { temp = 25 }
+                                if (array[k].alfaestado == "Diferenciado") { temp = 50 }
+                                if (array[k].alfaestado == "Visionado") { temp = 75 }
+                                if (array[k].alfaestado == "Definido") { temp = 100 }
+                            }
+                        }
+                        if (array[k].practicanombre == "Concepción de la experiencia multimedia") {
+                            if (array[k].alfanombre == "Experiencia multimedia" || array[k].alfanombre == "Diseño responsable") {
+                                if (array[k].alfaestado == "iniciado") { temp = 0 }
+                                if (array[k].alfaestado == "Identificado") { temp = 25 }
+                                if (array[k].alfaestado == "Comprendido") { temp = 50 }
+                                if (array[k].alfaestado == "Acordado") { temp = 75 }
+                                if (array[k].alfaestado == "Concebido") { temp = 100 }
+                            }
+                        }
                         alfanombre = array[k].alfanombre;
                         alfaestado = array[k].alfaestado;
-                        alfastemp.push({ alfanombre, alfaestado });
+                        alfastemp.push({ alfanombre, alfaestado, porcentaje: temp });
                         // arraydef[i].practicas[j].alfas.push({ alfanombre, alfaestado })
                     }
                 }
@@ -1437,33 +1457,38 @@ function rearmarProyectosescri(array) {
 function rearmas(idUser, rows) {
     //   console.log(idUser);
     //console.log(rows);
+
+
     var array = [];
-    var cont = 0;
+
     for (var i = 0; i < rows.length; i++) {
         // console.log(rows[i].id);
         if (rows[i].id !== idUser) {
-            array[cont] = rows[i];
-            cont += 1;
+            //   console.log(`${rows[i].id} || ${idUser}`)
+            array.push(rows[i])
         }
     }
+
     var tempid;
     var defarray = [];
-    var model = {
-        userid: null,
-        nombre: null,
-        descripcion: null,
-        herramientas: [],
-        palabras: []
-    }
+
     for (var i = 0; i < array.length; i++) {
-        if (tempid != array[i].id) {
-            tempid = array[i].id;
-            model.userid = tempid
-            model.nombre = array[i].nombre;
-            model.descripcion = array[i].descripcion;
-            defarray.push(model);
-        }
+
+        model.userid = array[i].id
+        model.nombre = array[i].nombre;
+        model.descripcion = array[i].descripcion;
+        defarray.push({
+            userid: array[i].id,
+            nombre: array[i].nombre,
+            descripcion: array[i].descripcion,
+            herramientas: [],
+            palabras: []
+        });
+
     }
+    let setx = new Set(defarray.map(JSON.stringify))
+    defarray = Array.from(setx).map(JSON.parse);
+    //console.log(model)
     var herramientatemp, herramientemp = [];
     for (var i = 0; i < defarray.length; i++) {
         for (var j = 0; j < array.length; j++) {

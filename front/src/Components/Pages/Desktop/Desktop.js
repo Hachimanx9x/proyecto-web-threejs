@@ -79,7 +79,7 @@ class Desktop extends Component {
       .get("escritorio")
       .then((respuesta) => {
         if (respuesta.statusText === "OK") {
-          console.log(respuesta);
+          console.log(respuesta.data);
         } else {
           console.log("error fatal");
         }

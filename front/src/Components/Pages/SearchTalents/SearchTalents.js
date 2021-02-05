@@ -4,7 +4,7 @@ import CardTalents from "../../Elements/CardTalents/CardTalents";
 import User from "../../../Logos/user-icon.png";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import axios from 'axios';
 
 class SearchTalents extends Component {
 
@@ -22,7 +22,7 @@ class SearchTalents extends Component {
                     { skill: "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg" },
                     { skill: "https://www.vectorlogo.zone/logos/angular/angular-icon.svg" },
                     { skill: "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg" },
-                    { skill: "https://cdn.worldvectorlogo.com/logos/javascript.svg" }, 
+                    { skill: "https://cdn.worldvectorlogo.com/logos/javascript.svg" },
                     { skill: "https://www.vectorlogo.zone/logos/nodejs/nodejs-icon.svg" },
                     { skill: "https://www.vectorlogo.zone/logos/w3_html5/w3_html5-icon.svg" },
                     { skill: "https://raw.githubusercontent.com/devicons/devicon/ac557d6ff33ff370a5db99f97aeab35ea5c67fbd/icons/css3/css3-original.svg" },
@@ -41,47 +41,84 @@ class SearchTalents extends Component {
 
                 ]
             },
-                {
-                    id: "2",
-                    name: "Andrés David Londoño",
-                    description: "Ingeniero multimedia. Desarrollador web. Senior en tecnologías para desarrollo fronend y backend con experiencia en desarrollo de aplicaciones web y móviles",
-                    job: "Desarrollador Web",
-                    img: User,
-                    skills: [
-                        { skill: "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg" },
-                        { skill: "https://www.vectorlogo.zone/logos/angular/angular-icon.svg" },
-                        { skill: "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg" },
-                        { skill: "https://www.vectorlogo.zone/logos/nodejs/nodejs-icon.svg" },
-                        { skill: "https://www.vectorlogo.zone/logos/w3_html5/w3_html5-icon.svg" },
-                        { skill: "https://raw.githubusercontent.com/devicons/devicon/ac557d6ff33ff370a5db99f97aeab35ea5c67fbd/icons/css3/css3-original.svg" },
-                        { skill: "https://www.vectorlogo.zone/logos/php/php-icon.svg" },
-                        { skill: "https://www.vectorlogo.zone/logos/flutterio/flutterio-icon.svg" },
-                        { skill: "https://cdn.worldvectorlogo.com/logos/mysql-7.svg" },
-                        { skill: "https://www.vectorlogo.zone/logos/golang/golang-official.svg" },
-                        { skill: "https://www.vectorlogo.zone/logos/graphql/graphql-icon.svg" },
-                        { skill: "https://www.vectorlogo.zone/logos/typescriptlang/typescriptlang-icon.svg" },
-                        { skill: "https://www.vectorlogo.zone/logos/jquery/jquery-icon.svg" },
-                        { skill: "https://www.vectorlogo.zone/logos/getbootstrap/getbootstrap-icon.svg" },
-                        { skill: "https://www.vectorlogo.zone/logos/python/python-icon.svg" },
-                        { skill: "https://www.vectorlogo.zone/logos/djangoproject/djangoproject-icon.svg" },
-                        { skill: "https://www.vectorlogo.zone/logos/mongodb/mongodb-icon.svg"},
-                        { skill: "https://cdn.worldvectorlogo.com/logos/dotnet.svg" },
-                        { skill: "https://www.vectorlogo.zone/logos/sqlite/sqlite-icon.svg" },
-                        { skill: "https://cdn.worldvectorlogo.com/logos/redux.svg" },
-                        { skill: "https://cdn.worldvectorlogo.com/logos/android.svg" },
-                        { skill: "https://www.vectorlogo.zone/logos/ionicframework/ionicframework-icon.svg" },
-                        { skill: "https://cdn.worldvectorlogo.com/logos/c--4.svg" },
-                        { skill: "https://cdn.worldvectorlogo.com/logos/c.svg" },
-                        { skill: "https://cdn.worldvectorlogo.com/logos/c-2975.svg" },
-                        { skill: "https://cdn.worldvectorlogo.com/logos/java-14.svg" },
-                        { skill: "https://cdn.worldvectorlogo.com/logos/wordpress-blue.svg" },
+            {
+                id: "2",
+                name: "Andrés David Londoño",
+                description: "Ingeniero multimedia. Desarrollador web. Senior en tecnologías para desarrollo fronend y backend con experiencia en desarrollo de aplicaciones web y móviles",
+                job: "Desarrollador Web",
+                img: User,
+                skills: [
+                    { skill: "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg" },
+                    { skill: "https://www.vectorlogo.zone/logos/angular/angular-icon.svg" },
+                    { skill: "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg" },
+                    { skill: "https://www.vectorlogo.zone/logos/nodejs/nodejs-icon.svg" },
+                    { skill: "https://www.vectorlogo.zone/logos/w3_html5/w3_html5-icon.svg" },
+                    { skill: "https://raw.githubusercontent.com/devicons/devicon/ac557d6ff33ff370a5db99f97aeab35ea5c67fbd/icons/css3/css3-original.svg" },
+                    { skill: "https://www.vectorlogo.zone/logos/php/php-icon.svg" },
+                    { skill: "https://www.vectorlogo.zone/logos/flutterio/flutterio-icon.svg" },
+                    { skill: "https://cdn.worldvectorlogo.com/logos/mysql-7.svg" },
+                    { skill: "https://www.vectorlogo.zone/logos/golang/golang-official.svg" },
+                    { skill: "https://www.vectorlogo.zone/logos/graphql/graphql-icon.svg" },
+                    { skill: "https://www.vectorlogo.zone/logos/typescriptlang/typescriptlang-icon.svg" },
+                    { skill: "https://www.vectorlogo.zone/logos/jquery/jquery-icon.svg" },
+                    { skill: "https://www.vectorlogo.zone/logos/getbootstrap/getbootstrap-icon.svg" },
+                    { skill: "https://www.vectorlogo.zone/logos/python/python-icon.svg" },
+                    { skill: "https://www.vectorlogo.zone/logos/djangoproject/djangoproject-icon.svg" },
+                    { skill: "https://www.vectorlogo.zone/logos/mongodb/mongodb-icon.svg" },
+                    { skill: "https://cdn.worldvectorlogo.com/logos/dotnet.svg" },
+                    { skill: "https://www.vectorlogo.zone/logos/sqlite/sqlite-icon.svg" },
+                    { skill: "https://cdn.worldvectorlogo.com/logos/redux.svg" },
+                    { skill: "https://cdn.worldvectorlogo.com/logos/android.svg" },
+                    { skill: "https://www.vectorlogo.zone/logos/ionicframework/ionicframework-icon.svg" },
+                    { skill: "https://cdn.worldvectorlogo.com/logos/c--4.svg" },
+                    { skill: "https://cdn.worldvectorlogo.com/logos/c.svg" },
+                    { skill: "https://cdn.worldvectorlogo.com/logos/c-2975.svg" },
+                    { skill: "https://cdn.worldvectorlogo.com/logos/java-14.svg" },
+                    { skill: "https://cdn.worldvectorlogo.com/logos/wordpress-blue.svg" },
 
-                    ]
-                }]
+                ]
+            }]
         }
     }
 
-   
+    componentDidMount() {
+        const token = localStorage.getItem("login");
+        const obj = JSON.parse(token);
+        const tokensito = obj.token;
+        const httpInstance = axios.create({
+            baseURL: "http://localhost:3030/",
+            timeout: 1000,
+            headers: {
+                "Content-Type": "application/json",
+                authorization: `llave ${tokensito}`,
+            },
+        }); //
+
+        httpInstance.interceptors.response.use(null, (error) => {
+            const expectedError =
+                error.response &&
+                error.response.status >= 400 &&
+                error.response.status < 500;
+            if (!expectedError) {
+                // Loggear mensaje de error a un servicio como Sentry
+                // Mostrar error genérico al usuario
+                return Promise.reject(error);
+            }
+        });
+        //------
+        httpInstance
+            .get("talentos")
+            .then((respuesta) => {
+                if (respuesta.statusText === "OK") {
+                    console.log(respuesta.data);
+                } else {
+                    console.log("error fatal");
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
 
     selectFilter = (filter) => {
         this.setState({ filter: filter });
@@ -105,7 +142,7 @@ class SearchTalents extends Component {
                                     </select>
                                 </label>
                             </div>
-                            <input type="text" className="form-control m-0 o-talents-search-input" placeholder="Buscar.."  aria-label="Palabra clave" />
+                            <input type="text" className="form-control m-0 o-talents-search-input" placeholder="Buscar.." aria-label="Palabra clave" />
                             <div className="input-group-append">
                                 <button className="btn btn-primary text-white m-0 z-depth-0 o-talent-search-btn border-0" type="button"><FontAwesomeIcon icon={faSearch} /></button>
                             </div>
