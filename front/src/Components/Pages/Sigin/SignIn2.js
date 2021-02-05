@@ -31,7 +31,8 @@ class SigIn extends Component {
     });
   }
 
-  RegisterFunction = () => {
+  RegisterFunction = (e) => {
+    e.preventDefault();
     const { email, password, nombre } = this.state;
 
     //------
@@ -143,8 +144,7 @@ class SigIn extends Component {
               <div className="col-6">
                 <button
                   className=" blue accent-4 z-depth-0 text-light ml-0 mr-0 mt-4 font-weight-bold o-button"
-                  type="button"
-                  onClick={this.RegisterFunction}
+                  type="submit"
                 >
                   REGISTRARSE
                 </button>

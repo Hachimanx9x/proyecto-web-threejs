@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
 import User from "../../../Logos/user-icon.png";
 import { MDBInput } from "mdbreact";
 import { Multiselect } from "multiselect-react-dropdown";
@@ -9,8 +8,7 @@ import Axios from "axios";
 
 import "./FinishRegister.css";
 
-export default function FinishRegister() {
-  // const history = useHistory();
+export default function FinishRegister(props) {
   const [picture, setPicture] = useState(null);
   const [description, setDescription] = useState();
   const [country, setCountry] = useState();
@@ -159,11 +157,8 @@ export default function FinishRegister() {
         options
       );
       console.log(data);
-      localStorage.setItem(
-        "login",
-        ""
-      );
-      window.location.reload()
+      localStorage.setItem("login", "");
+      props.history.push("/Login");
     } catch (error) {
       console.log(error);
     }

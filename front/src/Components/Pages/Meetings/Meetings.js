@@ -5,7 +5,7 @@ import Room from "../../../Logos/Meet.png";
 import User from "../../../Logos/user-icon.png";
 import "./Meetings.css";
 
-export default function Meetings() {
+export default function Meetings(props) {
   const members = [
     {
       name: "Juan",
@@ -36,6 +36,9 @@ export default function Meetings() {
       pic: User,
     },
   ];
+  function handleClick() {
+    props.history.push("/Dashboard/Desktop");
+  }
   return (
     <div className="o-blue-container pb-4 h-75 rounded">
       <div className="h-100 bg-white">
@@ -62,7 +65,10 @@ export default function Meetings() {
                 </div>
               ))}
             </div>
-            <button className="btn bg-primary text-white z-depth-0 pl-4 pr-4">
+            <button
+              className="btn bg-primary text-white z-depth-0 pl-4 pr-4"
+              onClick={handleClick}
+            >
               Ingresar
             </button>
           </div>

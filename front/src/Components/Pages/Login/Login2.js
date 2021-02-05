@@ -12,11 +12,10 @@ class Login extends Component {
     super(props);
     this.state = { email: "", password: "", rememberMe: "" };
     this.LoginFunction = this.LoginFunction.bind(this);
-
-
   }
 
-  LoginFunction = () => {
+  LoginFunction = (e) => {
+    e.preventDefault();
     this.httpInstance = axios.create({
       baseURL: "http://localhost:3030/",
       timeout: 1000,
@@ -128,8 +127,7 @@ class Login extends Component {
               <div className="col-6">
                 <button
                   className=" blue accent-4 z-depth-0 text-light ml-0 mr-0 mt-4 font-weight-bold o-button"
-                  type="button"
-                  onClick={this.LoginFunction}
+                  type="submit"
                 >
                   INGRESAR
                 </button>
