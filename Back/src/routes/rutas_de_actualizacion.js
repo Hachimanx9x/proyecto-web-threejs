@@ -780,7 +780,7 @@ rutas.put('/update/history', (req, res) => {
  */
 function proToken(req, res, next) {
     const header = req.headers['authorization'];
-    //  console.log(header);
+    // console.log(header);
     if (typeof header !== 'undefined') {
         const portador = header.split(" ");
         const portadorToken = portador[1];
