@@ -81,7 +81,7 @@ rutas.put('/entrega/entregable', proToken, (req, res) => {
 
 
 rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
-    const { email,
+    let { email,
         password,
         experiencia,
         nombre,
@@ -95,6 +95,23 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
         herramienta,
         palabra,
         idiomas } = req.body;
+    let herraas = herramienta.split(",");
+    let palatem = palabra.split(",");
+    let idiotemop = idiomas.split(",");
+    let her = []; let pal = []; let idip = [];
+    for (let a = 0; a < herraas.length; a++) {
+        her.push(parseInt(herraas[a], 10));
+    }
+    for (let a = 0; a < palatem.length; a++) {
+        pal.push(parseInt(palatem[a], 10));
+    }
+    for (let a = 0; a < idiotemop.length; a++) {
+        idip.push(parseInt(idiotemop[a], 10));
+    }
+    herramienta = her; palabra = pal; idiomas = idip;
+
+    experiencia = parseInt(experiencia, 10)
+
 
     jwt.verify(req.token, LLAVE, (err, data) => {
         if (err) {
@@ -105,7 +122,9 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
                 buscarDB.obtenerusuarioid({ id: data.rows[0].id }).then(datos => {
                     let bucket = `usuario${data.rows[0].id}`
                     if (req.files != null || req.files != undefined) {
-                        if (req.files.foto != null || req.files.foto != undefined && req.files.cv == null || req.files.cv == undefined) {
+
+                        if (req.files.foto != null || req.files.foto != undefined && req.files.cv === null || req.files.cv === undefined) {
+                            console.log("solo foto")
                             if (datos.fotoperfil != "null" || datos.fotoperfil != null) {
                                 ftpminio.removeObject(bucket, datos.fotoperfil).then(result => {
                                     req.files.foto.mv(__dirname + '/tmp/' + req.files.foto.name, (err) => {
@@ -132,13 +151,16 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
                                                         bitbucket,
                                                         linkedin
                                                     }, data.rows[0].id, req.files.foto.name, null).then(result => {
+
                                                         let c = 0;
                                                         for (let a = 0; a < palabra.length; a++) {
                                                             insertDB.insertKeyword({ user: data.rows[0].id, palabra: palabra[a] }).then(result => {
+
                                                                 if (c === (palabra.length - 1)) {
                                                                     insertDB.agregarherramientas({ herramientas: herramienta, id: data.rows[0].id }).then(resul => {
+                                                                        console.log("herramientas");
                                                                         let d = 0;
-                                                                        for (let a = 0; a < idioma.length; a++) {
+                                                                        for (let a = 0; a < idiomas.length; a++) {
                                                                             insertDB.insertlistlenguaje({ user: data.rows[0].id, idioma: idiomas[a] }).then((result) => {
                                                                                 if (d === (idiomas.length - 1)) {
                                                                                     res.json({ msj: "agregados" })
@@ -181,8 +203,8 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
                                                     if (c === (palabra.length - 1)) {
                                                         insertDB.agregarherramientas({ herramientas: herramienta, id: data.rows[0].id }).then(resul => {
                                                             let d = 0;
-                                                            for (let a = 0; a < idioma.length; a++) {
-                                                                insertDB.insertlistlenguaje({ user: data.rows[0].id, idioma: idiomas[a] }).then((result) => {
+                                                            for (let b = 0; b < idiomas.length; b++) {
+                                                                insertDB.insertlistlenguaje({ user: data.rows[0].id, idioma: idiomas[b] }).then((result) => {
                                                                     if (d === (idiomas.length - 1)) {
                                                                         res.json({ msj: "agregados" })
                                                                     }
@@ -230,7 +252,7 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
                                                                 if (c === (palabra.length - 1)) {
                                                                     insertDB.agregarherramientas({ herramientas: herramienta, id: data.rows[0].id }).then(resul => {
                                                                         let d = 0;
-                                                                        for (let a = 0; a < idioma.length; a++) {
+                                                                        for (let a = 0; a < idiomas.length; a++) {
                                                                             insertDB.insertlistlenguaje({ user: data.rows[0].id, idioma: idiomas[a] }).then((result) => {
                                                                                 if (d === (idiomas.length - 1)) {
                                                                                     res.json({ msj: "agregados" })
@@ -281,7 +303,7 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
                                                             if (c === (palabra.length - 1)) {
                                                                 insertDB.agregarherramientas({ herramientas: herramienta, id: data.rows[0].id }).then(resul => {
                                                                     let d = 0;
-                                                                    for (let a = 0; a < idioma.length; a++) {
+                                                                    for (let a = 0; a < idiomas.length; a++) {
                                                                         insertDB.insertlistlenguaje({ user: data.rows[0].id, idioma: idiomas[a] }).then((result) => {
                                                                             if (d === (idiomas.length - 1)) {
                                                                                 res.json({ msj: "agregados" })
@@ -347,7 +369,7 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
                                                                                     if (c === (palabra.length - 1)) {
                                                                                         insertDB.agregarherramientas({ herramientas: herramienta, id: data.rows[0].id }).then(resul => {
                                                                                             let d = 0;
-                                                                                            for (let a = 0; a < idioma.length; a++) {
+                                                                                            for (let a = 0; a < idiomas.length; a++) {
                                                                                                 insertDB.insertlistlenguaje({ user: data.rows[0].id, idioma: idiomas[a] }).then((result) => {
                                                                                                     if (d === (idiomas.length - 1)) {
                                                                                                         res.json({ msj: "agregados" })
@@ -417,7 +439,7 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
                                                                             if (c === (palabra.length - 1)) {
                                                                                 insertDB.agregarherramientas({ herramientas: herramienta, id: data.rows[0].id }).then(resul => {
                                                                                     let d = 0;
-                                                                                    for (let a = 0; a < idioma.length; a++) {
+                                                                                    for (let a = 0; a < idiomas.length; a++) {
                                                                                         insertDB.insertlistlenguaje({ user: data.rows[0].id, idioma: idiomas[a] }).then((result) => {
                                                                                             if (d === (idiomas.length - 1)) {
                                                                                                 res.json({ msj: "agregados" })
@@ -475,7 +497,7 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
                                                         if (c === (palabra.length - 1)) {
                                                             insertDB.agregarherramientas({ herramientas: herramienta, id: data.rows[0].id }).then(resul => {
                                                                 let d = 0;
-                                                                for (let a = 0; a < idioma.length; a++) {
+                                                                for (let a = 0; a < idiomas.length; a++) {
                                                                     insertDB.insertlistlenguaje({ user: data.rows[0].id, idioma: idiomas[a] }).then((result) => {
                                                                         if (d === (idiomas.length - 1)) {
                                                                             res.json({ msj: "agregados" })
@@ -515,7 +537,7 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
                                     if (c === (palabra.length - 1)) {
                                         insertDB.agregarherramientas({ herramientas: herramienta, id: data.rows[0].id }).then(resul => {
                                             let d = 0;
-                                            for (let a = 0; a < idioma.length; a++) {
+                                            for (let a = 0; a < idiomas.length; a++) {
                                                 insertDB.insertlistlenguaje({ user: data.rows[0].id, idioma: idiomas[a] }).then((result) => {
                                                     if (d === (idiomas.length - 1)) {
                                                         res.json({ msj: "agregados" })
@@ -753,7 +775,7 @@ rutas.put('/update/history', (req, res) => {
  */
 function proToken(req, res, next) {
     const header = req.headers['authorization'];
-    //console.log(header); 
+    //  console.log(header);
     if (typeof header !== 'undefined') {
         const portador = header.split(" ");
         const portadorToken = portador[1];

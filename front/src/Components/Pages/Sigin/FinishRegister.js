@@ -27,7 +27,7 @@ export default function FinishRegister() {
   const [userKeywords, setKeyWords] = useState([]);
   const [test, setTest] = useState([]);
   const [selected, setSelected] = useState([]);
-
+  const token = localStorage.getItem("login");
   const [languageslist, setLanguageslist] = useState([]);
   const [toolist, setToolist] = useState([]);
 
@@ -125,7 +125,7 @@ export default function FinishRegister() {
     const fullname = name + " " + lastname;
     const skillsdi = [];
     for (let i = 0; i < skills.length; i++) {
-      skillsdi.push(skills.id);
+      skillsdi.push(skills[i].id);
     }
     try {
       const datform = new FormData();
@@ -145,18 +145,26 @@ export default function FinishRegister() {
       datform.append("idiomas", userLanguages);
       datform.append("foto", picture);
       datform.append("cv", cvpicture);
+      console.log(skillsdi)
+      const obj = JSON.parse(token);
+      const tokensito = obj.token;
+      const options = {
+        headers: { "authorization": `llave ${tokensito}` },
+      };
+
       const { data } = await Axios.put(
         `http://localhost:3030/actualizar/usuario`,
-        datform
+        datform,
+        options
+
       )
         .then((respuesta) => {
           if (respuesta.statusText === "OK") {
-            console.log(respuesta.data);
+            console.log(respuesta);
           } else {
             console.log("error fatal");
           }
-        })
-        .catch((error) => {
+        }).catch((error) => {
           console.error(error);
         });
 

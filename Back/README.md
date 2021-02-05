@@ -580,8 +580,6 @@ esto es dinamico y dependiendo de que parte de la estructura de datos este entra
      "idiomas":[1,2,3],
      "foto": "file foto de perfil",
     "cv": "hoja de vida  file" }
-
-
 ```
  asi mismo tambien se puede resibir dos archivos en variables foto o cv en caso de rebicirlos se actualizaran los archivos del usuario
 
