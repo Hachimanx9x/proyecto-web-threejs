@@ -1,7 +1,17 @@
 import React, { Component } from "react";
 import SideToggler from "./SideToggler";
-import axios from "axios";
+//import axios from "axios";
 class Dashboard extends Component {
+  constructor(props) {
+    const token = localStorage.getItem("login");
+    //console.log("el token es => "+  token);
+
+    if (token === null || token === undefined || token === "") {
+      //El metodo de redireccionamiento.
+      this.props.history.push("/Login");
+    }
+  }
+  /*
   async componentWillMount() {
     const token = localStorage.getItem("login");
     //console.log("el token es => "+  token);
@@ -65,7 +75,7 @@ class Dashboard extends Component {
       
          });
     */
-    /*   
+  /*   
      await  fetch("http://localhost:3030/proyectos", {
            mode: 'no-cors',
            method: "GET",
@@ -84,7 +94,6 @@ class Dashboard extends Component {
          
        }
    */
-  }
 
   render() {
     return <SideToggler />;
