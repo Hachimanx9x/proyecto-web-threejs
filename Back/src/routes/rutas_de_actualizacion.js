@@ -103,7 +103,7 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
         her.push(parseInt(herraas[a], 10));
     }
     for (let a = 0; a < palatem.length; a++) {
-        pal.push(parseInt(palatem[a], 10));
+        pal.push(palatem[a]);
     }
     for (let a = 0; a < idiotemop.length; a++) {
         idip.push(parseInt(idiotemop[a], 10));

@@ -76,10 +76,10 @@ class Desktop extends Component {
     });
     //------
     httpInstance
-      .get("proyectos")
+      .get("escritorio")
       .then((respuesta) => {
         if (respuesta.statusText === "OK") {
-          console.log(respuesta.data);
+          console.log(respuesta);
         } else {
           console.log("error fatal");
         }
