@@ -10,6 +10,7 @@ import Axios from "axios";
 import "./FinishRegister.css";
 
 export default function FinishRegister() {
+  const history = useHistory();
   const [picture, setPicture] = useState(null);
   const [description, setDescription] = useState();
   const [country, setCountry] = useState();
@@ -158,6 +159,7 @@ export default function FinishRegister() {
         options
       );
       console.log(data);
+      history.push("/Dashboard/Desktop");
     } catch (error) {
       console.log(error);
     }
