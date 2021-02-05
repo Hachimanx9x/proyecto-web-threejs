@@ -145,29 +145,18 @@ export default function FinishRegister() {
       datform.append("idiomas", userLanguages);
       datform.append("foto", picture);
       datform.append("cv", cvpicture);
-      console.log(skillsdi)
+      console.log(skillsdi);
       const obj = JSON.parse(token);
       const tokensito = obj.token;
       const options = {
-        headers: { "authorization": `llave ${tokensito}` },
+        headers: { authorization: `llave ${tokensito}` },
       };
 
       const { data } = await Axios.put(
         `http://localhost:3030/actualizar/usuario`,
         datform,
         options
-
-      )
-        .then((respuesta) => {
-          if (respuesta.statusText === "OK") {
-            console.log(respuesta);
-          } else {
-            console.log("error fatal");
-          }
-        }).catch((error) => {
-          console.error(error);
-        });
-
+      );
       console.log(data);
     } catch (error) {
       console.log(error);
