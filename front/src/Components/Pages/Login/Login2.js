@@ -13,6 +13,10 @@ class Login extends Component {
     this.state = { email: "", password: "", rememberMe: "" };
     this.LoginFunction = this.LoginFunction.bind(this);
 
+
+  }
+
+  LoginFunction = () => {
     this.httpInstance = axios.create({
       baseURL: "http://localhost:3030/",
       timeout: 1000,
@@ -29,9 +33,6 @@ class Login extends Component {
         return Promise.reject(error);
       }
     });
-  }
-
-  LoginFunction = () => {
     const { email, password } = this.state;
     this.httpInstance
       .post("login", { email, password })
@@ -127,7 +128,7 @@ class Login extends Component {
               <div className="col-6">
                 <button
                   className=" blue accent-4 z-depth-0 text-light ml-0 mr-0 mt-4 font-weight-bold o-button"
-                  type="submit"
+                  type="button"
                   onClick={this.LoginFunction}
                 >
                   INGRESAR

@@ -86,31 +86,31 @@ funcionesDB.actualizarusuario = (obj, id, foto, cv) => {
             linkedin } = obj
         buscarDB.obtenerusuarioid({ id: id }).then(usuario => {
             let correo = usuario.email;
-            if (email !== null || email !== "null" || email !== undefined) { correo = email }
+            if (email !== null && email !== "null" && email !== undefined) { correo = email }
             let contra = usuario.contrasena;
-            if (password !== null || password !== "null" || password !== undefined) { contra = password }
+            if (password !== null && password !== "null" && password !== undefined) { contra = password }
             let expi = usuario.anosdeexperiencia;
-            if (experiencia !== null || experiencia !== "null" || experiencia !== undefined) { expi = experiencia }
+            if (experiencia !== null && experiencia !== "null" && experiencia !== undefined) { expi = experiencia }
             let fototem = usuario.fotoperfil;
-            if (foto !== null || foto !== undefined) { fototem = foto }
+            if (foto !== null && foto !== undefined) { fototem = foto }
             let cvtem = usuario.nombrearchivohojadevida;
-            if (cv !== null || cv !== undefined) { cvtem = cv }
+            if (cv !== null && cv !== undefined) { cvtem = cv }
             let name = usuario.nombre;
-            if (nombre !== null || nombre !== "null" || nombre !== undefined) { name = nombre }
+            if (nombre !== null && nombre !== "null" && nombre !== " " && nombre !== undefined) { name = nombre }
             let descr = usuario.descripcion;
-            if (descripcion !== null || descripcion !== "null" || descripcion !== undefined) { descr = descripcion }
+            if (descripcion !== null && descripcion !== "null" && descripcion !== undefined) { descr = descripcion }
             let countr = usuario.pais;
-            if (pais !== null || pais !== "null" || pais !== undefined) { countr = pais }
+            if (pais !== null && pais !== "null" && pais !== undefined) { countr = pais }
             let age = usuario.edad;
-            if (edad !== null || edad !== "null" || edad !== undefined) { age = edad }
+            if (edad !== null && edad !== "null" && edad !== undefined) { age = edad }
             let githubtem = usuario.github;
-            if (github !== null || github !== "null" || github !== "" || github !== undefined) { githubtem = github }
+            if (github !== null && github !== "null" && github !== "" && github !== undefined) { githubtem = github }
             let gitlabtem = usuario.github;
-            if (gitlab !== null || gitlab !== "null" || gitlab !== "" || gitlab !== undefined) { gitlabtem = gitlab }
+            if (gitlab !== null && gitlab !== "null" && gitlab !== "" && gitlab !== undefined) { gitlabtem = gitlab }
             let bitbucketem = usuario.github;
-            if (bitbucket !== null || bitbucket !== "null" || bitbucket !== "" || bitbucket !== undefined) { bitbucketem = bitbucket }
+            if (bitbucket !== null && bitbucket !== "null" && bitbucket !== "" && bitbucket !== undefined) { bitbucketem = bitbucket }
             let linkedintem = usuario.linkedin;
-            if (linkedin !== null || linkedin !== "null" || linkedin !== "" || linkedin !== undefined) { linkedintem = linkedin }
+            if (linkedin !== null && linkedin !== "null" && linkedin !== "" && linkedin !== undefined) { linkedintem = linkedin }
             funcionesDB.updateuser({
                 id: usuario.id,
                 email: correo,

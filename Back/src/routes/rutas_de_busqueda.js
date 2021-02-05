@@ -10,7 +10,7 @@ const LLAVE = 'misecretos';
 
 
 rutas.post('/login', (req, res) => {
-    //    console.log("body", req.body); 
+    console.log("body", req.body);
     const { email, password } = req.body
     if (typeof email === 'string' && typeof password === 'string') {
         buscarDB.obtenerToken(req.body).then(resul => res.json(resul)).catch(err => res.json(err));

@@ -122,9 +122,12 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
                 buscarDB.obtenerusuarioid({ id: data.rows[0].id }).then(datos => {
                     let bucket = `usuario${data.rows[0].id}`
                     if (req.files != null || req.files != undefined) {
-
-                        if (req.files.foto != null || req.files.foto != undefined && req.files.cv === null || req.files.cv === undefined) {
-                            console.log("solo foto")
+                        let a = false, b = false;
+                        if (req.files.foto != null || req.files.foto != undefined || req.files.foto != "") { a = true }
+                        if (req.files.cv != null || req.files.cv === undefined || req.files.foto != "") { b = true }
+                        console.log(`${a} + ${b} `)
+                        if (a === true && b === false) {
+                            console.log("una foto")
                             if (datos.fotoperfil != "null" || datos.fotoperfil != null) {
                                 ftpminio.removeObject(bucket, datos.fotoperfil).then(result => {
                                     req.files.foto.mv(__dirname + '/tmp/' + req.files.foto.name, (err) => {
@@ -158,7 +161,7 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
 
                                                                 if (c === (palabra.length - 1)) {
                                                                     insertDB.agregarherramientas({ herramientas: herramienta, id: data.rows[0].id }).then(resul => {
-                                                                        console.log("herramientas");
+
                                                                         let d = 0;
                                                                         for (let a = 0; a < idiomas.length; a++) {
                                                                             insertDB.insertlistlenguaje({ user: data.rows[0].id, idioma: idiomas[a] }).then((result) => {
@@ -219,7 +222,8 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
                                         }).catch(err2 => res.json(err2))
                                     }).catch(err => res.json(err));
                             }
-                        } else if (req.files.cv !== null || req.files.cv !== undefined && req.files.foto == null || req.files.foto == undefined) {
+                        } else if (a === false && b === true) {
+                            console.log("cv")
                             if (datos.nombrearchivohojadevida != "null" || datos.nombrearchivohojadevida != null) {
                                 ftpminio.removeObject(bucket, datos.nombrearchivohojadevida).then(result => {
                                     req.files.cv.mv(__dirname + '/tmp/' + req.files.cv.name, (err) => {
@@ -324,7 +328,8 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
                                 });
                             }
 
-                        } else if (req.files.cv !== null || req.files.cv !== undefined && req.files.foto !== null || req.files.foto !== undefined) {
+                        } else if (a === true && b === true) {
+                            console.log("los dos")
                             if (datos.fotoperfil != "null" || datos.fotoperfil != null && datos.nombrearchivohojadevida != "null" || datos.nombrearchivohojadevida != null) {
                                 ftpminio.removeObject(bucket, datos.nombrearchivohojadevida).then(result => {
                                     ftpminio.removeObject(bucket, datos.fotoperfil).then(result2 => {
