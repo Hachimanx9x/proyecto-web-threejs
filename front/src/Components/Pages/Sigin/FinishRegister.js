@@ -158,7 +158,7 @@ export default function FinishRegister(props) {
       );
       console.log(data);
       localStorage.setItem("login", "");
-      props.history.push("/Login");
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }
