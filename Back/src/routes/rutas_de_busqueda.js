@@ -25,8 +25,8 @@ rutas.get('/escritorio', proToken, (req, res) => {
         if (err) {
             res.sendStatus(403);
         } else {
-            //console.log(data)
-            if (data.rows[0] != null || data.rows.length > 0) {
+            console.log(data)
+            if (data.rows[0] != null && data.rows.length > 0) {
                 // console.log(data.rows);
                 buscarDB.obtenerusuarioid({ id: data.rows[0].id }).then(usua => {
                     buscarDB.obtenerEscritorioActividades(data).then(result => {

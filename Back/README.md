@@ -135,7 +135,17 @@ este devolvera los datos de las actividades asginadas a la persona y del estado 
         }],
     "datos": {
         "nombre": "nombre test16",
-        "foto": "http://localhost:3030/proyecto/contenido/usuario12/null"
+        "foto": "http://localhost:3030/proyecto/contenido/usuario12/null",
+         "herramientas": [
+            {
+                "nombre": "Reactjs",
+                "descripcion": "Es una biblioteca Javascript de código abierto diseñada para crear interfaces de usuario con el objetivo de facilitar el desarrollo de aplicaciones en una sola página. Es mantenido por Facebook y la comunidad de software libre. En el proyecto hay más de mil desarrolladores libres. ",
+                "icono": "reactjs-icon.svg"
+            }
+        ],
+        "palabras": [
+            "PErro"
+        ]
     }
 }
 ```

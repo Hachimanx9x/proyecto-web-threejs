@@ -5,6 +5,7 @@ import Carousel from "react-elastic-carousel";
 import ProjectPicture from "../../../ilustracion-equipo-de-trabajo.jpg";
 import { MDBNotification } from "mdbreact";
 import { Radar, defaults } from "react-chartjs-2";
+import axios from 'axios';
 defaults.global.legend.display = false;
 
 class Desktop extends Component {
