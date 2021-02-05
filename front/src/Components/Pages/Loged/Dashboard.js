@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import SideToggler from "./SideToggler";
-import axios from 'axios';
+import axios from "axios";
 class Dashboard extends Component {
-
   async componentWillMount() {
     const token = localStorage.getItem("login");
-    //console.log("el token es => "+  token); 
+    //console.log("el token es => "+  token);
 
     if (token === null || token === undefined || token === "") {
       //El metodo de redireccionamiento.
@@ -16,38 +15,37 @@ class Dashboard extends Component {
       const httpInstance = axios.create({
         baseURL: "http://localhost:3030/",
         timeout: 1000,
-        headers: { 'Content-Type': 'application/json', 'authorization': `llave ${tokensito}` }
-      });//
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `llave ${tokensito}`,
+        },
+      }); //
 
-      httpInstance.interceptors.response.use(null, error => {
-        const expectedError = error.response && error.response.status >= 400 && error.response.status < 500;
+      httpInstance.interceptors.response.use(null, (error) => {
+        const expectedError =
+          error.response &&
+          error.response.status >= 400 &&
+          error.response.status < 500;
         if (!expectedError) {
           // Loggear mensaje de error a un servicio como Sentry
           // Mostrar error genérico al usuario
           return Promise.reject(error);
         }
-      }
-      );
+      });
       //------
-      httpInstance.get('proyectos').then(respuesta => {
-        if (respuesta.statusText === "OK") {
-          console.log(respuesta.data);
-
-        } else {
-          console.log("error fatal")
-        }
-
-      }).catch(error => {
-        console.error(error);
-      })
-
-
-    }//fin del else
-
-
-
-
-
+      httpInstance
+        .get("proyectos")
+        .then((respuesta) => {
+          if (respuesta.statusText === "OK") {
+            console.log(respuesta.data);
+          } else {
+            console.log("error fatal");
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } //fin del else
 
     /*
           let myHeaders = new Headers();
@@ -86,7 +84,6 @@ class Dashboard extends Component {
          
        }
    */
-
   }
 
   render() {

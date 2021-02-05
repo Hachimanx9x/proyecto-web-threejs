@@ -127,7 +127,8 @@ class Login extends Component {
               <div className="col-6">
                 <button
                   className=" blue accent-4 z-depth-0 text-light ml-0 mr-0 mt-4 font-weight-bold o-button"
-                  type="submit"
+                  type="button"
+                  onClick={this.LoginFunction}
                 >
                   INGRESAR
                 </button>
