@@ -1,0 +1,163 @@
+.o-updates-container {
+	height: 30rem;
+	overflow-y: auto;
+	width: 100%;
+	padding: 0 0.7rem;
+	scrollbar-color: #4285f4 white;
+	scrollbar-width: thin;
+}
+
+.o-updates-section {
+	min-width: 40rem;
+}
+
+.o-slider-img {
+	min-width: 20rem;
+	width: 18rem;
+	height: 6rem;
+}
+.o-slider-img:focus {
+	outline: none;
+}
+.o-slider-container {
+	min-width: 20rem;
+	height: auto;
+}
+.o-blue-container .chartjs-render-monitor {
+	margin: 1rem 0 0 -1.5rem;
+	width: 20rem !important;
+	height: 15rem !important;
+	font-size: 0.1rem !important;
+}
+.o-btn-graph {
+	width: 80%;
+	height: 2rem;
+	margin: 0.5rem auto;
+	font-size: 0.8rem;
+	border-width: 1px;
+	outline: none;
+}
+.o-btn-graph:focus {
+	outline: none;
+}
+@media only screen and (max-width: 1320px) {
+	.o-slider-container {
+		min-width: 10rem;
+	}
+	.o-blue-container .chartjs-render-monitor {
+		margin: 1rem 0 0 -2rem;
+		width: 15rem !important;
+		height: 15rem !important;
+	}
+	.o-btn-graph {
+		font-size: 1rem;
+	}
+}
+@media only screen and (max-width: 1166px) {
+	.o-slider-container {
+		min-width: 40rem;
+		margin: 0;
+	}
+	.o-blue-container .chartjs-render-monitor {
+		margin: 3rem 0 0 0;
+		width: 100% !important;
+		height: auto !important;
+	}
+	.o-slider-img {
+		min-width: 100%;
+		width: 18rem;
+		height: 10rem;
+	}
+}
+@media only screen and (max-width: 800px) {
+	.o-updates-section {
+		min-width: 35rem;
+	}
+	.o-slider-container {
+		min-width: 35rem;
+	}
+}
+
+@media only screen and (max-width: 700px) {
+	.o-updates-section {
+		width: 40rem;
+		min-width: 31rem;
+	}
+	.o-slider-container {
+		width: 40rem;
+		min-width: 31rem;
+	}
+}
+@media only screen and (max-width: 590px) {
+	.o-updates-section {
+		min-width: auto;
+		margin: 0;
+	}
+	.o-slider-container {
+		min-width: auto;
+		margin: 1rem 0 0 0;
+	}
+	.o-blue-container .chartjs-render-monitor {
+		margin: 3rem 0 0 0;
+		width: 100% !important;
+		height: auto !important;
+	}
+	.o-btn-graph {
+		font-size: 0.7rem;
+	}
+}
+
+.o-updates-container::-webkit-scrollbar {
+	width: 8px;
+	margin-left: 1rem;
+	background-color: white;
+}
+
+.o-updates-container::-webkit-scrollbar-thumb {
+	background: #4285f4;
+	border-radius: 3px;
+}
+
+.o-updates-container::-webkit-scrollbar-thumb:hover {
+	background: #3a4c99;
+}
+
+/* square buttons */
+.o-blue-container .rec.rec-arrow {
+	border-radius: 0;
+	line-height: 35px;
+	min-width: 2rem;
+	height: 2rem;
+	font-size: 1rem;
+	margin-top: 1rem;
+	padding-bottom: 1rem;
+}
+/* round buttons on hover */
+.o-blue-container .rec.rec-arrow:hover {
+	border-radius: 50%;
+	background-color: #4285f4;
+	color: white;
+}
+/* Add custom color and remove border on slider buttons while focused */
+.o-blue-container .rec.rec-arrow:focus {
+	background-color: #4285f4;
+	border-color: none;
+	outline: none;
+	border: 0rem;
+}
+/* hide disabled buttons */
+.rec.rec-arrow:disabled {
+	visibility: hidden;
+}
+/* disable default outline on focused items */
+/* add custom outline on focused items */
+.rec-carousel-item:focus {
+	outline: none;
+	box-shadow: inset 0 0 1px 1px lightgrey;
+}
+/*Add custom color to the slider's controls */
+.o-blue-container .rec.rec-dot_active {
+	background-color: #7ba9f3;
+	border-color: #4285f4;
+	box-shadow: 0 0 1px 3px #4285f4;
+}

@@ -1,0 +1,32 @@
+.o-card-select-skill {
+	width: 7rem;
+	height: 8rem;
+	background-color: #fff;
+	border: 1px solid #0472ca;
+	padding: 0;
+	margin: 0.5rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+}
+.o-selected-skill-img {
+	width: 5rem;
+	height: 5rem;
+	margin: 0.7rem auto auto auto;
+}
+
+.o-x-btn {
+	width: 1.5rem;
+	height: 1.4rem;
+	font-size: 1.5rem;
+	color: red;
+	background: white;
+	margin: 3.1rem 0 0 6.1rem;
+	position: absolute;
+	padding: 0;
+	top: 0;
+}
+
+.o-x-btn:hover {
+	color: rgb(182, 5, 5);
+}

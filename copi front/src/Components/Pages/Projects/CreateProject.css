@@ -1,0 +1,174 @@
+.o-project-creation-section {
+  background-color: #eef7fc;
+  height: 100vh;
+  height: 100%;
+  min-width: 50rem;
+  padding: 2rem;
+  margin: 0.5rem;
+  border-radius: 1rem;
+}
+.o-project-basic-info {
+  padding: 1rem;
+  border-radius: 1rem;
+}
+.o-member-selection-container {
+  display: flex;
+  width: 100%;
+  height: 20rem;
+  padding: 2rem;
+  overflow-x: auto;
+  scrollbar-color: #4285f4 rgb(240, 238, 238);
+  scrollbar-width: auto;
+}
+
+.o-member-selection-container::-webkit-scrollbar {
+  height: 8px;
+  background-color: #e0e0e0;
+}
+.o-member-selection-container::-webkit-scrollbar-thumb {
+  background: #4285f4;
+  border-radius: 3px;
+}
+
+.o-member-selection-container::-webkit-scrollbar-thumb:hover {
+  background: #3a4c99;
+}
+.inputWrapper {
+  height: 3rem;
+  width: 15rem;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  /*Using a background color, but you can use a background image to represent a button*/
+  background-color: #ddf;
+}
+.inputWrapper:hover {
+  background-color: rgb(195, 195, 207);
+}
+.fileInput {
+  cursor: pointer;
+  height: 100%;
+  width: 100%;
+  padding-bottom: 4rem;
+  position: absolute;
+  z-index: 99;
+  justify-self: center;
+  /*This makes the button huge. If you want a bigger button, increase the font size*/
+  /*Opacity settings for all browsers*/
+  opacity: 0;
+  -moz-opacity: 0;
+  filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0);
+}
+.o-project-creation-section .md-outline input[type="text"] + label,
+.o-project-creation-section .md-outline textarea + label {
+  transform: translateY(-14px) scale(0.8);
+  background: #fff;
+  height: 1.6rem;
+  left: 1px;
+  padding-left: 5px;
+  padding-bottom: 0px;
+  padding-right: 5px;
+  margin-left: 0.5rem;
+  font-size: 0.8rem;
+  color: black;
+  position: absolute;
+}
+.o-project-creation-section .md-outline input[type="text"],
+.o-project-creation-section .md-outline textarea {
+  border-color: #007bff;
+  border-bottom: 0.1px solid #007bff;
+}
+.o-project-creation-section .md-outline textarea:focus + label {
+  color: #007bff;
+}
+.o-project-creation-section .md-outline textarea:focus {
+  border-color: #007bff;
+  box-shadow: inset 0 0 0 1px #007bff;
+  border-bottom: 0.1px solid #007bff;
+}
+.o-project-creation-section .md-outline textarea {
+  height: 10rem;
+}
+
+.o-picture-project {
+  width: 100%;
+  max-height: 9rem;
+  position: absolute;
+}
+.o-project-form {
+  height: 10rem;
+}
+
+.o-icon-input-text {
+  left: 8.1rem;
+  top: 0.7rem;
+  font-size: 1rem;
+  position: absolute;
+}
+.o-inputWrapper-btn {
+  width: 7.5rem;
+  height: 2.3rem;
+  top: 6rem;
+  left: 8rem;
+}
+.o-practice-container {
+  max-width: 15rem;
+  min-width: 15rem;
+}
+.o-btn-partices {
+  padding: 0.3rem;
+}
+@media only screen and (max-width: 800px) {
+  .o-project-creation-section {
+    min-width: 45rem;
+  }
+
+  .inputWrapper {
+    width: 10rem;
+  }
+  .o-icon-input-text {
+    left: 3.1rem;
+  }
+  .o-inputWrapper-btn {
+    width: 7rem;
+    height: 2rem;
+    top: 4.3rem;
+    left: 5.8rem;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .o-project-creation-section {
+    width: 45rem;
+    min-width: 38rem;
+  }
+  .o-inputWrapper-btn {
+    width: 6rem;
+    font-size: 0.8rem;
+    top: 3.5rem;
+    left: 3.8rem;
+  }
+}
+@media only screen and (max-width: 590px) {
+  .o-project-creation-section {
+    min-width: 100%;
+    margin: 0;
+  }
+  .inputWrapper {
+    width: 100%;
+  }
+  .o-inputWrapper-btn {
+    width: 7.5rem;
+    height: 2.3rem;
+    top: 7.4rem;
+    left: 11rem;
+  }
+  .o-icon-input-text {
+    left: 9.3rem;
+    top: 13px;
+    font-size: 0.9rem;
+  }
+  .o-practice-container {
+    min-width: 100%;
+  }
+}

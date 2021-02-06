@@ -12,6 +12,7 @@ class Dashboard extends Component {
       //El metodo de redireccionamiento.
       this.props.history.push("/Login");
     }
+
   }
 
 
