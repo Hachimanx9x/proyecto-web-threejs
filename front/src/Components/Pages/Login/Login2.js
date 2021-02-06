@@ -14,14 +14,14 @@ class Login extends Component {
     this.LoginFunction = this.LoginFunction.bind(this);
   }
 
-  LoginFunction = (e) => {
+  LoginFunction = async (e) => {
     e.preventDefault();
-    this.httpInstance = axios.create({
+    const httpInstance = axios.create({
       baseURL: "http://localhost:3030/",
       timeout: 1000,
       headers: { "Content-Type": "application/json" },
     });
-    this.httpInstance.interceptors.response.use(null, (error) => {
+    httpInstance.interceptors.response.use(null, (error) => {
       const expectedError =
         error.response &&
         error.response.status >= 400 &&
@@ -33,7 +33,7 @@ class Login extends Component {
       }
     });
     const { email, password } = this.state;
-    this.httpInstance
+    await httpInstance
       .post("login", { email, password })
       .then((respuesta) => {
         if (respuesta.statusText === "OK") {
@@ -127,8 +127,7 @@ class Login extends Component {
               <div className="col-6">
                 <button
                   className=" blue accent-4 z-depth-0 text-light ml-0 mr-0 mt-4 font-weight-bold o-button"
-                  type="button"
-                  onClick={this.LoginFunction}
+                  type="submit"
                 >
                   INGRESAR
                 </button>

@@ -83,7 +83,6 @@ class Desktop extends Component {
               itemsToShow={1}
               onChange={(currentItem) => {
                 const item = currentItem;
-                alert(item.item.alt);
               }}
             >
               <a href="https://www.google.com">

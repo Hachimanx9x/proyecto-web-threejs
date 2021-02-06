@@ -12,13 +12,16 @@ class SigIn extends Component {
     super();
     this.state = { name: "", email: "", password: "", confirmpassword: "" };
     this.RegisterFunction = this.RegisterFunction.bind(this);
+  }
 
-    this.httpInstance = axios.create({
+  RegisterFunction = async (e) => {
+    e.preventDefault();
+    const httpInstance = axios.create({
       baseURL: "http://localhost:3030/",
       timeout: 1000,
       headers: { "Content-Type": "application/json" },
     });
-    this.httpInstance.interceptors.response.use(null, (error) => {
+    httpInstance.interceptors.response.use(null, (error) => {
       const expectedError =
         error.response &&
         error.response.status >= 400 &&
@@ -29,14 +32,10 @@ class SigIn extends Component {
         return Promise.reject(error);
       }
     });
-  }
-
-  RegisterFunction = (e) => {
-    e.preventDefault();
     const { email, password, nombre } = this.state;
 
     //------
-    this.httpInstance
+    await httpInstance
       .post("/create/usuario", {
         email,
         password,
@@ -144,8 +143,7 @@ class SigIn extends Component {
               <div className="col-6">
                 <button
                   className=" blue accent-4 z-depth-0 text-light ml-0 mr-0 mt-4 font-weight-bold o-button"
-                  type="button"
-                  onClick={this.RegisterFunction}
+                  type="submit"
                 >
                   REGISTRARSE
                 </button>

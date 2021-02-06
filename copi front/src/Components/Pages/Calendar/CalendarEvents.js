@@ -85,7 +85,7 @@ export default class CalendarEvents extends Component {
               right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek",
             }}
             eventClick={function (arg) {
-              alert(arg.event.title);
+              this.props.history.push("/Dashboard/Meetings");
             }}
             plugins={[
               dayGridPlugin,
