@@ -37,7 +37,7 @@ export default function Meetings(props) {
     },
   ];
   function handleClick() {
-    props.history.push("/Dashboard/Desktop");
+    props.history.push("/test3d");
   }
   return (
     <div className="o-blue-container pb-4 h-75 rounded">

@@ -5,7 +5,6 @@ import { Multiselect } from "multiselect-react-dropdown";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-
 import "./FinishRegister.css";
 
 export default function FinishRegister(props) {
@@ -26,10 +25,142 @@ export default function FinishRegister(props) {
   const [userKeywords, setKeyWords] = useState([]);
   const [test, setTest] = useState([]);
   const [selected, setSelected] = useState([]);
-  const token = localStorage.getItem("login");
-  const [languageslist, setLanguageslist] = useState([]);
-  const [toolist, setToolist] = useState([]);
 
+  const countries = [
+    { key: "Alemania", cat: "Alemania" },
+    { key: "Brasil", cat: "Brasil" },
+    { key: "China", cat: "China" },
+    { key: "Colombia", cat: "Colombia" },
+    { key: "España", cat: "España" },
+    { key: "Francia", cat: "Francia" },
+    { key: "Italia", cat: "Italia" },
+    { key: "Japón", cat: "Japón" },
+    { key: "Korea", cat: "Korea" },
+    { key: "Rusia", cat: "Rusia" },
+    { key: "Suecia", cat: "Suecia" },
+  ];
+  const yearsList = [
+    { key: "0 años", cat: 0 },
+    { key: "1 año", cat: 1 },
+    { key: "2 años", cat: 2 },
+    { key: "3 años", cat: 3 },
+    { key: "4 años", cat: 4 },
+    { key: "5 años", cat: 5 },
+  ];
+  const languages = [
+    { key: "Inglés", cat: "Inglés" },
+    { key: "Español", cat: "Español" },
+    { key: "Alemán", cat: "Alemán" },
+    { key: "Francés", cat: "Francés" },
+    { key: "Russo", cat: "Russo" },
+    { key: "Japonés", cat: "Japonés" },
+    { key: "Italiano", cat: "Italiano" },
+    { key: "Sueco", cat: "Sueco" },
+    { key: "Chino", cat: "Chino" },
+    { key: "Koreano", cat: "Koreano" },
+    { key: "Portugués", cat: "Portugués" },
+  ];
+  const keywords = [
+    { key: "Desarrollador Web", cat: "Desarrollador Web" },
+    { key: "Desarrollador Frontend", cat: "Desarrollador Frontend" },
+    { key: "Desarrollador Móvil", cat: "Desarrollador Móvil" },
+    { key: "Desarrollador Backend", cat: "Desarrollador Backend" },
+    { key: "Desarrollador FullStack", cat: "Desarrollador FullStack" },
+    { key: "Diseñador Gráfico", cat: "Diseñador Gráfico" },
+    { key: "Diseñador UI", cat: "Diseñador UI" },
+    { key: "Diseñador UX", cat: "Diseñador UX" },
+  ];
+  const tools = [
+    {
+      cat: {
+        id: "1",
+        icon: "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg",
+        name: "React JS",
+      },
+      key: "React js",
+    },
+    {
+      cat: {
+        id: "2",
+        icon: "https://www.vectorlogo.zone/logos/angular/angular-icon.svg",
+        name: "Angular",
+      },
+      key: "Angular",
+    },
+    {
+      cat: {
+        id: "3",
+        icon: "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg",
+        name: "Vue JS",
+      },
+      key: "Vue js",
+    },
+    {
+      cat: {
+        id: "4",
+        icon: "https://www.vectorlogo.zone/logos/nodejs/nodejs-icon.svg",
+        name: "Node JS",
+      },
+      key: "Node js",
+    },
+    {
+      cat: {
+        id: "5",
+        icon: "https://www.vectorlogo.zone/logos/python/python-icon.svg",
+        name: "Python",
+      },
+      key: "Python",
+    },
+    {
+      cat: {
+        id: "7",
+        icon: "https://www.vectorlogo.zone/logos/php/php-icon.svg",
+        name: "PHP",
+      },
+      key: "PHP",
+    },
+    {
+      cat: {
+        id: "8",
+        icon: "https://www.vectorlogo.zone/logos/flutterio/flutterio-icon.svg",
+        name: "Flutter",
+      },
+      key: "Flutter",
+    },
+    {
+      cat: {
+        id: "9",
+        icon: "https://cdn.worldvectorlogo.com/logos/mysql-7.svg",
+        name: "MySQL",
+      },
+      key: "MySQL",
+    },
+    {
+      cat: {
+        id: "10",
+        icon: "https://www.vectorlogo.zone/logos/golang/golang-official.svg",
+        name: "Golang",
+      },
+      key: "Golang",
+    },
+    {
+      cat: {
+        id: "11",
+        icon: "https://www.vectorlogo.zone/logos/graphql/graphql-icon.svg",
+        name: "GraphQL",
+      },
+      key: "GraphQL",
+    },
+    {
+      cat: {
+        id: "12",
+        icon:
+          "https://www.vectorlogo.zone/logos/typescriptlang/typescriptlang-icon.svg",
+        name: "TypeScript",
+      },
+      key: "TypeScript",
+    },
+  ];
   const countries = [
     { key: "Alemania", cat: "Alemania" },
     { key: "Brasil", cat: "Brasil" },
@@ -63,8 +194,6 @@ export default function FinishRegister(props) {
     { key: "Diseñador UX", cat: "Diseñador UX" },
   ];
 
-
-
   const RemoveSkill = (selectedItem) => {
     if (selectedItem !== undefined) {
       const skill = skills;
@@ -81,7 +210,6 @@ export default function FinishRegister(props) {
       }
     }
   };
-
 
   return (
     <div className="o-register-container">
@@ -352,7 +480,7 @@ export default function FinishRegister(props) {
             <small style={{ fontSize: "0.6rem" }}>Tipo</small>
             <hr className="bg-primary mt-0 mb-3" />
             <Multiselect
-              options={toolist}
+              options={tools}
               displayValue="key"
               closeOnSelect={false}
               selectedValues={selected.length % 2 === 0 ? selected : selected}
@@ -382,7 +510,7 @@ export default function FinishRegister(props) {
               onRemove={(selectedList, selectedItem) => {
                 RemoveSkill(selectedItem.cat);
               }}
-              id="toolb"
+              id="sb"
               hidePlaceholder={true}
               placeholder="Selecciona...."
             />
@@ -415,10 +543,7 @@ export default function FinishRegister(props) {
         </div>
 
         <div className="col-xs-12 col-sm-12 d-flex justify-content-end">
-          <a
-          href="/login"
-            className="btn mt-2 bg-primary z-depth-0 text-white"
-          >
+          <a href="/login" className="btn mt-2 bg-primary z-depth-0 text-white">
             Guardar
           </a>
         </div>

@@ -12,73 +12,178 @@ class SearchTalents extends Component {
         super(props);
         this.selectFilter = this.selectFilter.bind(this);
         this.state = {
-            keyWord: "", modal: false, filter: "", talents: [{
-                id: "1",
-                name: "Juan Carlos Hurtado",
-                description: "Ingeniero multimedia. Desarrollador FullStack con experiencia en desarrollo de aplicaciones web y móviles",
-                job: "Desarrollador FullStack",
-                img: User,
-                skills: [
-                    { skill: "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg" },
-                    { skill: "https://www.vectorlogo.zone/logos/angular/angular-icon.svg" },
-                    { skill: "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg" },
-                    { skill: "https://cdn.worldvectorlogo.com/logos/javascript.svg" },
-                    { skill: "https://www.vectorlogo.zone/logos/nodejs/nodejs-icon.svg" },
-                    { skill: "https://www.vectorlogo.zone/logos/w3_html5/w3_html5-icon.svg" },
-                    { skill: "https://raw.githubusercontent.com/devicons/devicon/ac557d6ff33ff370a5db99f97aeab35ea5c67fbd/icons/css3/css3-original.svg" },
-                    { skill: "https://www.vectorlogo.zone/logos/php/php-icon.svg" },
-                    { skill: "https://www.vectorlogo.zone/logos/flutterio/flutterio-icon.svg" },
-                    { skill: "https://cdn.worldvectorlogo.com/logos/mysql-7.svg" },
-                    { skill: "https://www.vectorlogo.zone/logos/golang/golang-official.svg" },
-                    { skill: "https://www.vectorlogo.zone/logos/graphql/graphql-icon.svg" },
-                    { skill: "https://www.vectorlogo.zone/logos/typescriptlang/typescriptlang-icon.svg" },
-                    { skill: "https://cdn.worldvectorlogo.com/logos/laravel-2.svg" },
-                    { skill: "https://www.vectorlogo.zone/logos/jquery/jquery-icon.svg" },
-                    { skill: "https://www.vectorlogo.zone/logos/getbootstrap/getbootstrap-icon.svg" },
-                    { skill: "https://cdn.worldvectorlogo.com/logos/material-ui-1.svg" },
-                    { skill: "https://cdn.worldvectorlogo.com/logos/rails.svg" },
-                    { skill: "https://cdn.worldvectorlogo.com/logos/figma-1.svg" },
-
-                ]
+          keyWord: "",
+          modal: false,
+          filter: "",
+          talents: [
+            {
+              id: "1",
+              name: "Juan Carlos Hurtado",
+              description:
+                "Ingeniero multimedia. Desarrollador FullStack con experiencia en desarrollo de aplicaciones web y móviles",
+              job: "Desarrollador FullStack",
+              img: User,
+              skills: [
+                {
+                  skill:
+                    "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg",
+                },
+                {
+                  skill:
+                    "https://www.vectorlogo.zone/logos/angular/angular-icon.svg",
+                },
+                {
+                  skill:
+                    "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg",
+                },
+                {
+                  skill: "https://cdn.worldvectorlogo.com/logos/javascript.svg",
+                },
+                {
+                  skill:
+                    "https://www.vectorlogo.zone/logos/nodejs/nodejs-icon.svg",
+                },
+                {
+                  skill:
+                    "https://www.vectorlogo.zone/logos/w3_html5/w3_html5-icon.svg",
+                },
+                {
+                  skill:
+                    "https://raw.githubusercontent.com/devicons/devicon/ac557d6ff33ff370a5db99f97aeab35ea5c67fbd/icons/css3/css3-original.svg",
+                },
+                { skill: "https://www.vectorlogo.zone/logos/php/php-icon.svg" },
+                {
+                  skill:
+                    "https://www.vectorlogo.zone/logos/flutterio/flutterio-icon.svg",
+                },
+                { skill: "https://cdn.worldvectorlogo.com/logos/mysql-7.svg" },
+                {
+                  skill:
+                    "https://www.vectorlogo.zone/logos/golang/golang-official.svg",
+                },
+                {
+                  skill:
+                    "https://www.vectorlogo.zone/logos/graphql/graphql-icon.svg",
+                },
+                {
+                  skill:
+                    "https://www.vectorlogo.zone/logos/typescriptlang/typescriptlang-icon.svg",
+                },
+                {
+                  skill: "https://cdn.worldvectorlogo.com/logos/laravel-2.svg",
+                },
+                {
+                  skill:
+                    "https://www.vectorlogo.zone/logos/jquery/jquery-icon.svg",
+                },
+                {
+                  skill:
+                    "https://www.vectorlogo.zone/logos/getbootstrap/getbootstrap-icon.svg",
+                },
+                {
+                  skill:
+                    "https://cdn.worldvectorlogo.com/logos/material-ui-1.svg",
+                },
+                { skill: "https://cdn.worldvectorlogo.com/logos/rails.svg" },
+                {
+                  skill:
+                    "https://www.vectorlogo.zone/logos/figma/figma-icon.svg",
+                },
+              ],
             },
             {
-                id: "2",
-                name: "Andrés David Londoño",
-                description: "Ingeniero multimedia. Desarrollador web. Senior en tecnologías para desarrollo fronend y backend con experiencia en desarrollo de aplicaciones web y móviles",
-                job: "Desarrollador Web",
-                img: User,
-                skills: [
-                    { skill: "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg" },
-                    { skill: "https://www.vectorlogo.zone/logos/angular/angular-icon.svg" },
-                    { skill: "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg" },
-                    { skill: "https://www.vectorlogo.zone/logos/nodejs/nodejs-icon.svg" },
-                    { skill: "https://www.vectorlogo.zone/logos/w3_html5/w3_html5-icon.svg" },
-                    { skill: "https://raw.githubusercontent.com/devicons/devicon/ac557d6ff33ff370a5db99f97aeab35ea5c67fbd/icons/css3/css3-original.svg" },
-                    { skill: "https://www.vectorlogo.zone/logos/php/php-icon.svg" },
-                    { skill: "https://www.vectorlogo.zone/logos/flutterio/flutterio-icon.svg" },
-                    { skill: "https://cdn.worldvectorlogo.com/logos/mysql-7.svg" },
-                    { skill: "https://www.vectorlogo.zone/logos/golang/golang-official.svg" },
-                    { skill: "https://www.vectorlogo.zone/logos/graphql/graphql-icon.svg" },
-                    { skill: "https://www.vectorlogo.zone/logos/typescriptlang/typescriptlang-icon.svg" },
-                    { skill: "https://www.vectorlogo.zone/logos/jquery/jquery-icon.svg" },
-                    { skill: "https://www.vectorlogo.zone/logos/getbootstrap/getbootstrap-icon.svg" },
-                    { skill: "https://www.vectorlogo.zone/logos/python/python-icon.svg" },
-                    { skill: "https://www.vectorlogo.zone/logos/djangoproject/djangoproject-icon.svg" },
-                    { skill: "https://www.vectorlogo.zone/logos/mongodb/mongodb-icon.svg" },
-                    { skill: "https://cdn.worldvectorlogo.com/logos/dotnet.svg" },
-                    { skill: "https://www.vectorlogo.zone/logos/sqlite/sqlite-icon.svg" },
-                    { skill: "https://cdn.worldvectorlogo.com/logos/redux.svg" },
-                    { skill: "https://cdn.worldvectorlogo.com/logos/android.svg" },
-                    { skill: "https://www.vectorlogo.zone/logos/ionicframework/ionicframework-icon.svg" },
-                    { skill: "https://cdn.worldvectorlogo.com/logos/c--4.svg" },
-                    { skill: "https://cdn.worldvectorlogo.com/logos/c.svg" },
-                    { skill: "https://cdn.worldvectorlogo.com/logos/c-2975.svg" },
-                    { skill: "https://cdn.worldvectorlogo.com/logos/java-14.svg" },
-                    { skill: "https://cdn.worldvectorlogo.com/logos/wordpress-blue.svg" },
-
-                ]
-            }]
-        }
+              id: "2",
+              name: "Andrés David Londoño",
+              description:
+                "Ingeniero multimedia. Desarrollador web. Senior en tecnologías para desarrollo fronend y backend con experiencia en desarrollo de aplicaciones web y móviles",
+              job: "Desarrollador Web",
+              img: User,
+              skills: [
+                {
+                  skill:
+                    "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg",
+                },
+                {
+                  skill:
+                    "https://www.vectorlogo.zone/logos/angular/angular-icon.svg",
+                },
+                {
+                  skill:
+                    "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg",
+                },
+                {
+                  skill:
+                    "https://www.vectorlogo.zone/logos/nodejs/nodejs-icon.svg",
+                },
+                {
+                  skill:
+                    "https://www.vectorlogo.zone/logos/w3_html5/w3_html5-icon.svg",
+                },
+                {
+                  skill:
+                    "https://raw.githubusercontent.com/devicons/devicon/ac557d6ff33ff370a5db99f97aeab35ea5c67fbd/icons/css3/css3-original.svg",
+                },
+                { skill: "https://www.vectorlogo.zone/logos/php/php-icon.svg" },
+                {
+                  skill:
+                    "https://www.vectorlogo.zone/logos/flutterio/flutterio-icon.svg",
+                },
+                { skill: "https://cdn.worldvectorlogo.com/logos/mysql-7.svg" },
+                {
+                  skill:
+                    "https://www.vectorlogo.zone/logos/golang/golang-official.svg",
+                },
+                {
+                  skill:
+                    "https://www.vectorlogo.zone/logos/graphql/graphql-icon.svg",
+                },
+                {
+                  skill:
+                    "https://www.vectorlogo.zone/logos/typescriptlang/typescriptlang-icon.svg",
+                },
+                {
+                  skill:
+                    "https://www.vectorlogo.zone/logos/jquery/jquery-icon.svg",
+                },
+                {
+                  skill:
+                    "https://www.vectorlogo.zone/logos/getbootstrap/getbootstrap-icon.svg",
+                },
+                {
+                  skill:
+                    "https://www.vectorlogo.zone/logos/python/python-icon.svg",
+                },
+                {
+                  skill:
+                    "https://www.vectorlogo.zone/logos/djangoproject/djangoproject-icon.svg",
+                },
+                {
+                  skill:
+                    "https://www.vectorlogo.zone/logos/mongodb/mongodb-icon.svg",
+                },
+                { skill: "https://cdn.worldvectorlogo.com/logos/dotnet.svg" },
+                {
+                  skill:
+                    "https://www.vectorlogo.zone/logos/sqlite/sqlite-icon.svg",
+                },
+                { skill: "https://cdn.worldvectorlogo.com/logos/redux.svg" },
+                { skill: "https://cdn.worldvectorlogo.com/logos/android.svg" },
+                {
+                  skill:
+                    "https://www.vectorlogo.zone/logos/ionicframework/ionicframework-icon.svg",
+                },
+                { skill: "https://cdn.worldvectorlogo.com/logos/c--4.svg" },
+                { skill: "https://cdn.worldvectorlogo.com/logos/c.svg" },
+                { skill: "https://cdn.worldvectorlogo.com/logos/c-2975.svg" },
+                { skill: "https://cdn.worldvectorlogo.com/logos/java-14.svg" },
+                {
+                  skill:
+                    "https://cdn.worldvectorlogo.com/logos/wordpress-blue.svg",
+                },
+              ],
+            },
+          ],
+        };
     }
 
     componentDidMount() {
