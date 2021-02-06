@@ -10,7 +10,7 @@ class Dashboard extends Component {
     //   console.log(temp)
     if (token === null || token === undefined || token === "" || token === {} || temp === "{}") {
       //El metodo de redireccionamiento.
-      this.props.history.push("/Login");
+  //    this.props.history.push("/Login");
     }
 
   }
@@ -65,22 +65,22 @@ class Dashboard extends Component {
     /*
           let myHeaders = new Headers();
           myHeaders.append("authorization", `llave ${tokensito}`);
-          
+
           const requestOptions = {
             mode: 'no-cors',
             method: 'GET',
             headers: myHeaders,
             redirect: 'follow'
           };
-          
+
          await fetch("http://localhost:3030/proyectos", requestOptions)
          .then(response => response.json())
          .then(data =>{
-           console.log(data); 
-      
+           console.log(data);
+
          });
     */
-  /*   
+  /*
      await  fetch("http://localhost:3030/proyectos", {
            mode: 'no-cors',
            method: "GET",
@@ -93,10 +93,10 @@ class Dashboard extends Component {
              console.log(result); //falta mapear el resultado
            });
          });
-   
-         
-   
-         
+
+
+
+
        }
    */
 

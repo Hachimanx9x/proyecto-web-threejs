@@ -16,6 +16,7 @@ class Login extends Component {
 
   LoginFunction = (e) => {
     e.preventDefault();
+      this.props.history.push("/Dashboard/Desktop");
     this.httpInstance = axios.create({
       baseURL: "http://localhost:3030/",
       timeout: 1000,

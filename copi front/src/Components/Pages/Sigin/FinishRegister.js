@@ -47,7 +47,7 @@ export default function FinishRegister(props) {
     { key: "4 años", cat: 4 },
     { key: "5 años", cat: 5 },
   ];
-  const languages = [
+  const languageslist = [
     { key: "Inglés", cat: "Inglés" },
     { key: "Español", cat: "Español" },
     { key: "Alemán", cat: "Alemán" },
@@ -161,7 +161,7 @@ export default function FinishRegister(props) {
       key: "TypeScript",
     },
   ];
-  const countries = [
+ countries = [
     { key: "Alemania", cat: "Alemania" },
     { key: "Brasil", cat: "Brasil" },
     { key: "China", cat: "China" },
@@ -174,7 +174,7 @@ export default function FinishRegister(props) {
     { key: "Rusia", cat: "Rusia" },
     { key: "Suecia", cat: "Suecia" },
   ];
-  const yearsList = [
+   yearsList = [
     { key: "0 años", cat: 0 },
     { key: "1 año", cat: 1 },
     { key: "2 años", cat: 2 },
@@ -183,7 +183,7 @@ export default function FinishRegister(props) {
     { key: "5 años", cat: 5 },
   ];
 
-  const keywords = [
+   keywords = [
     { key: "Desarrollador Web", cat: "Desarrollador Web" },
     { key: "Desarrollador Frontend", cat: "Desarrollador Frontend" },
     { key: "Desarrollador Móvil", cat: "Desarrollador Móvil" },
