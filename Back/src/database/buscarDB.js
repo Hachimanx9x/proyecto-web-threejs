@@ -1650,6 +1650,7 @@ function ponercontenidoenactividades(array) {
     var acttemp;
     for (var i = 0; i < array.length; i++) {
         if (acttemp != array[i].actividadtitulo) {
+
             arraydef.push({
                 proyecto: array[i].id,
                 usuario: array[i].nombre,
@@ -1659,7 +1660,7 @@ function ponercontenidoenactividades(array) {
                 estado: array[i].actividadestado,
                 entrega: array[i].actividadfechaentrega,
                 contenido: {
-                    nombre: array[i].contenidonombre,
+                    nombre: array[i].contenidonombrearchivo,
                     url: `${env.host}/proyecto/contenido/proyecto${array[i].id}/${array[i].contenidonombrearchivo}`
                 }
             })

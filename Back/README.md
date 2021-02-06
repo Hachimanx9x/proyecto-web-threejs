@@ -99,6 +99,7 @@ este devolvera los datos de las actividades asginadas a la persona y del estado 
             "estado": "asignada",
             "entrega": "2021-01-23",
             "contenido": {
+                "nombre":"null"
                 "url": "http://localhost:3030/proyecto/contenido/proyecto120/null"
             }
         }],
