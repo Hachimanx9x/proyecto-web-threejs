@@ -84,7 +84,7 @@ export default class CalendarEvents extends Component {
               center: "title",
               right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek",
             }}
-            eventClick={function (arg) {
+            eventClick={() => {
               this.props.history.push("/Dashboard/Meetings");
             }}
             plugins={[

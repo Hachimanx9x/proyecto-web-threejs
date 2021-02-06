@@ -8,30 +8,38 @@ import "./Meetings.css";
 export default function Meetings(props) {
   const members = [
     {
+      id: 1,
       name: "Juan",
       pic: User,
     },
     {
+      id: 2,
       name: "Juan",
       pic: User,
     },
     {
+      id: 3,
       name: "Juan",
       pic: User,
     },
     {
+      id: 4,
+      name: "Juan",
+      pic: User,
+    },
+
+    {
+      id: 5,
       name: "Juan",
       pic: User,
     },
     {
+      id: 6,
       name: "Juan",
       pic: User,
     },
     {
-      name: "Juan",
-      pic: User,
-    },
-    {
+      id: 7,
       name: "Juan",
       pic: User,
     },
@@ -55,7 +63,7 @@ export default function Meetings(props) {
             <p>Ingresa a la reunión</p>
             <div className="o-member-list">
               {members.map((member) => (
-                <div className="d-flex flex-column text-center">
+                <div key={member.id} className="d-flex flex-column text-center">
                   <img
                     src={member.pic}
                     alt="Member list"

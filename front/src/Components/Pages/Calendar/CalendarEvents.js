@@ -19,7 +19,7 @@ import DayPicker from "react-day-picker";
 import MomentLocaleUtils from "react-day-picker/moment";
 
 import "moment/locale/es.js";
-import axios from 'axios';
+import axios from "axios";
 import "./Calendar.css";
 require("moment/locale/es.js");
 
@@ -137,8 +137,8 @@ export default class CalendarEvents extends Component {
               center: "title",
               right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek",
             }}
-            eventClick={function (arg) {
-              alert(arg.event.title);
+            eventClick={() => {
+              this.props.history.push("/Dashboard/Meetings");
             }}
             plugins={[
               dayGridPlugin,
