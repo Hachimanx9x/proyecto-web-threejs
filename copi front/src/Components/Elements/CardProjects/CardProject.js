@@ -50,7 +50,7 @@ const CardProject = ({ title, description, image }) => {
         <button
           style={{ fontSize: "0.6rem" }}
           className={
-            (titleconfirmation != title ? "disabled" : "") +
+            (titleconfirmation !== title ? "disabled" : "") +
             " btn btn-danger btn-block border-0 text-white mt-2"
           }
           onClick={deleteProject}
