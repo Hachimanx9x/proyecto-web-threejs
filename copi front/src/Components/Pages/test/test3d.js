@@ -16,7 +16,8 @@ import Detector from "../../../lib_externo/Detector";
 import { Chart } from "react-chartjs-2";
 //socket
 import io from "socket.io-client";
-
+//importaciones propias de componentes
+import Button3d  from './script/buttons'
 //imagenes
 import posx from "../../../Logos/img/Bridge2/posx.jpg";
 import negx from "../../../Logos/img/Bridge2/negx.jpg";
@@ -109,6 +110,10 @@ class Test3d extends Component {
     this.objInteraccion1 = [];
     this.objInteraccion2 = [];
     this.objInteraccion3 = [];
+    this.menuopciones={
+      salir:[],
+      microfono:[]
+    };
     //skybox
     var entorno = new THREE.CubeTextureLoader().load([
       posx,
@@ -192,7 +197,7 @@ class Test3d extends Component {
     this.scene.add(this.objgrafico);
 
     /*
-    
+
   ▄▀▀ █░░█ ▀█▀
   █░█ █░░█ ░█░
   ░▀▀ ░▀▀░ ▀▀▀
@@ -301,6 +306,22 @@ class Test3d extends Component {
     this.GUIv2.position.set(0.3, 0.33, 0.9); this.GUIv2.rotation.set(0, - Math.PI / 4, 0);
     console.log("gui2");
     console.log(this.GUIv2);
+
+
+    let bu = new Button3d(
+      0.005,
+      0xf2380e,
+      1,
+      true ,
+      {size : 32 ,text: " Salir " },
+      {x:0.03 , y : 0.03 } ,
+      {x:0, y:0, z :0}
+    ).button
+    console.log("//---------- button")
+    let buttonobj = bu.obj
+    buttonobj.position.set(0.15,0.185,0.93);    buttonobj.rotation.x = -Math.PI/2
+     this.menuopciones.salir = bu.Interaction;
+       this.scene.add(bu.obj);
     this.scene.add(this.GUIv2);
     this.pantallas.pantalla0.visible = this.estados_pantalla.p0;
     this.pantallas.pantalla1.visible = this.estados_pantalla.p1;
@@ -313,7 +334,7 @@ class Test3d extends Component {
    ▄▀▀ █░░█ ▀█▀ . █▀▀ █▄░█ █▀▄
    █░█ █░░█ ░█░ . █▀▀ █▀██ █░█
    ░▀▀ ░▀▀░ ▀▀▀ . ▀▀▀ ▀░░▀ ▀▀░
-   
+
        */
 
     //---------------default------------------------
@@ -626,18 +647,18 @@ class Test3d extends Component {
     *
     *
     * *
-    * 
+    *
     * *
     * *
-    * 
+    *
     fin del metodo componentdidmount
     *
     *
     * *
-    * 
+    *
     * *
-    * 
-    *     
+    *
+    *
     */
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimensions);
@@ -649,18 +670,18 @@ class Test3d extends Component {
     *
     *
     * *
-    * 
+    *
     * *
     * *
-    * 
+    *
     fin del metodo componentWillUnmount
     *
     *
     * *
-    * 
+    *
     * *
-    * 
-    *     
+    *
+    *
     */
   animate() {
     requestAnimationFrame(this.animate);
@@ -696,18 +717,18 @@ class Test3d extends Component {
     *
     *
     * *
-    * 
+    *
     * *
     * *
-    * 
+    *
     fin del metodo componentWillUnmount
     *
     *
     * *
-    * 
+    *
     * *
-    * 
-    *     
+    *
+    *
     */
   mouseEventsdown = (event) => {
     /*    this.setState({
@@ -729,6 +750,7 @@ class Test3d extends Component {
     var intersect = this.raycaster.intersectObjects(this.objInteraccion);
     var intersect0 = this.raycaster.intersectObjects(this.objInteraccion0);
     var intersect3 = this.raycaster.intersectObjects(this.objInteraccion3);
+    let intersect4 = this.raycaster.intersectObjects(this.menuopciones.salir);
     if (intersectsplay.length > 0) {
       // this.video.play();
       //this.meshvideo.visible = true;
@@ -737,8 +759,7 @@ class Test3d extends Component {
         //this.video.pause();
         //   this.meshvideo.visible = false;
         //    this.setupCanvasDrawing();
-      } else
-        if (intersect0.length > 0 && this.estados_pantalla.p1) {
+      } else if (intersect0.length > 0 && this.estados_pantalla.p1) {
           console.log("video play")
           this.video.play();
           this.meshvideo.visible = true;
@@ -756,6 +777,9 @@ class Test3d extends Component {
               this.video.pause();
               this.meshvideo.visible = false;
               this.setupCanvasDrawing();
+            }else if(intersect4.length > 0){
+              console.log("salir")
+              window.location.href="/Dashboard/Calendar"
             }
 
     this.estado = true;
@@ -774,18 +798,18 @@ class Test3d extends Component {
     *
     *
     * *
-    * 
+    *
     * *
     * *
-    * 
+    *
     fin del metodo componentWillUnmount
     *
     *
     * *
-    * 
+    *
     * *
-    * 
-    *     
+    *
+    *
     */
   setupCanvasDrawing = () => {
     console.log("nuevo material");
@@ -802,17 +826,17 @@ class Test3d extends Component {
     *
     *
     * *
-    * 
+    *
     * *
     * *
-    * 
+    *
     fin del metodo setupCanvasDrawing
     *
     *
     * *
-    * 
+    *
     * *
-    * 
+    *
     *  */
   makeLabelCanvas = (size, name) => {
     const borderSize = 2;
@@ -829,7 +853,7 @@ class Test3d extends Component {
     // necesidad de establecer la fuente de nuevo después de cambiar el tamaño del lienzo
     ctx.font = font;
     ctx.textBaseline = 'top';
-    //color : white , blue, black 
+    //color : white , blue, black
     ctx.fillStyle = 'transparent';
     ctx.fillRect(0, 0, width, height);
     ctx.fillStyle = 'black';

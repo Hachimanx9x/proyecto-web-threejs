@@ -73,12 +73,12 @@ export default function Meetings(props) {
                 </div>
               ))}
             </div>
-            <button
+            <a
               className="btn bg-primary text-white z-depth-0 pl-4 pr-4"
-              onClick={handleClick}
+              href="/test3d"
             >
               Ingresar
-            </button>
+            </a>
           </div>
         </div>
       </div>
