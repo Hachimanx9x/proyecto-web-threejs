@@ -1,11 +1,15 @@
-import React from "react";
-import { faMicrophone } from "@fortawesome/free-solid-svg-icons";
+import React, { useState } from "react";
+import {
+  faMicrophone,
+  faMicrophoneSlash,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Room from "../../../Logos/Meet.png";
 import User from "../../../Logos/user-icon.png";
 import "./Meetings.css";
 
 export default function Meetings(props) {
+  const [muted, setMuted] = useState(false);
   const members = [
     {
       id: 1,
@@ -44,9 +48,6 @@ export default function Meetings(props) {
       pic: User,
     },
   ];
-  function handleClick() {
-    props.history.push("/Dashboard/Desktop");
-  }
   return (
     <div className="o-blue-container pb-4 h-75 rounded">
       <div className="h-100 bg-white">
@@ -54,8 +55,14 @@ export default function Meetings(props) {
           <div className="col-xs-12 col-sm-6 mb-3">
             <p>Reunión de socialización de avances</p>
             <div className="o-picture-meeting-container">
-              <button className="btn rounded-circle o-btn-mic z-depth-0 bg-primary text-white">
-                <FontAwesomeIcon icon={faMicrophone} />
+              <button
+                style={{ width: "2.3rem", height: "2.3rem" }}
+                onClick={() => setMuted(!muted)}
+                className="btn rounded-circle o-btn-mic p-0 z-depth-0 bg-primary text-white"
+              >
+                <FontAwesomeIcon
+                  icon={muted ? faMicrophoneSlash : faMicrophone}
+                />
               </button>
             </div>
           </div>
@@ -73,12 +80,12 @@ export default function Meetings(props) {
                 </div>
               ))}
             </div>
-            <button
+            <a
               className="btn bg-primary text-white z-depth-0 pl-4 pr-4"
-              onClick={handleClick}
+              href="/test3d"
             >
               Ingresar
-            </button>
+            </a>
           </div>
         </div>
       </div>
