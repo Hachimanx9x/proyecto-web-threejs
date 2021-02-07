@@ -14,6 +14,9 @@ import { PointerLockControls } from "three/examples/jsm/controls/PointerLockCont
 import Detector from "../../../lib_externo/Detector";
 //charjs
 import { Chart } from "react-chartjs-2";
+import Rodal from "rodal";
+import "rodal/lib/rodal.css";
+import ContentCard from "./script/cardsvote"
 //socket
 import io from "socket.io-client";
 //importaciones propias de componentes
@@ -49,9 +52,25 @@ class Test3d extends Component {
 
     this.setupCanvasDrawing = this.setupCanvasDrawing.bind(this);
     this.makeLabelCanvas = this.makeLabelCanvas.bind(this);
-
+    this.funcionvotacion = this.funcionvotacion.bind(this)
     this.state = {
       player: null,
+      votaciones : false,
+      practica:
+        {
+          nombre:"practica 1 ",
+          estadoActual :"iniciado",
+          estaoevaluar:"identificado",
+          preguntas :[
+    {texto:"se a identificado tensiones de valor entre interesados", estado : false},
+    {texto:"se a identificado posibles usos mal intencionados del Sistema Multimedia", estado : false},
+    {texto:"se a identificado patrones que afectan el Sistema Multimedia", estado : false},
+    {texto:"se a identificado leyes y normatividades que influyen en la solución", estado : false},
+    {texto:"se a identificado aspectos culturales, sociales y cognitivos que influyen en la comunidad objeto de análisis", estado : false}
+  ]
+        }
+
+      ,
       reunion: 1,
       posicionplayer: { x: 0, y: 0.3, z: 1 },
       marksData: {
@@ -112,7 +131,7 @@ class Test3d extends Component {
     this.objInteraccion3 = [];
     this.menuopciones={
       salir:[],
-      microfono:[]
+      votacion:[]
     };
     //skybox
     var entorno = new THREE.CubeTextureLoader().load([
@@ -317,11 +336,24 @@ class Test3d extends Component {
       {x:0.03 , y : 0.03 } ,
       {x:0, y:0, z :0}
     ).button
+    let bu2 = new Button3d(
+      0.005,
+      0x81e219,
+      1,
+      true ,
+      {size : 32 ,text: " votar " },
+      {x:0.03 , y : 0.03 } ,
+      {x:0, y:0, z :0}
+    ).button
+
+
     console.log("//---------- button")
-    let buttonobj = bu.obj
-    buttonobj.position.set(0.15,0.185,0.93);    buttonobj.rotation.x = -Math.PI/2
-     this.menuopciones.salir = bu.Interaction;
-       this.scene.add(bu.obj);
+
+     bu.obj.position.set(0.1,0.185,0.93);  bu.obj.rotation.x = -Math.PI/2
+        bu2.obj.position.set(0,0.185,0.93);  bu2.obj.rotation.x = -Math.PI/2
+     this.menuopciones.salir = bu.Interaction;this.menuopciones.votacion = bu2.Interaction;
+
+       this.scene.add(bu.obj); this.scene.add(bu2.obj);
     this.scene.add(this.GUIv2);
     this.pantallas.pantalla0.visible = this.estados_pantalla.p0;
     this.pantallas.pantalla1.visible = this.estados_pantalla.p1;
@@ -751,20 +783,21 @@ class Test3d extends Component {
     var intersect0 = this.raycaster.intersectObjects(this.objInteraccion0);
     var intersect3 = this.raycaster.intersectObjects(this.objInteraccion3);
     let intersect4 = this.raycaster.intersectObjects(this.menuopciones.salir);
-    if (intersectsplay.length > 0) {
+      let intersect5 = this.raycaster.intersectObjects(this.menuopciones.votacion);
+    if (intersectsplay.length > 0 && !this.state.votaciones) {
       // this.video.play();
       //this.meshvideo.visible = true;
     } else
-      if (intersectspause.length > 0) {
+      if (intersectspause.length > 0 && !this.state.votaciones) {
         //this.video.pause();
         //   this.meshvideo.visible = false;
         //    this.setupCanvasDrawing();
-      } else if (intersect0.length > 0 && this.estados_pantalla.p1) {
+      } else if (intersect0.length > 0 && this.estados_pantalla.p1 && !this.state.votaciones) {
           console.log("video play")
           this.video.play();
           this.meshvideo.visible = true;
         } else
-          if (intersect.length > 0 && this.estados_pantalla.p0) {
+          if (intersect.length > 0 && this.estados_pantalla.p0 && !this.state.votaciones) {
             console.log("primera pantalal fuera")
             this.estados_pantalla.p0 = false;
             this.pantallas.pantalla0.visible = this.estados_pantalla.p0;
@@ -772,14 +805,19 @@ class Test3d extends Component {
             this.pantallas.pantalla1.visible = this.estados_pantalla.p1;
           }
           else
-            if (intersect3.length > 0 && this.estados_pantalla.p1) {
+            if (intersect3.length > 0 && this.estados_pantalla.p1 && !this.state.votaciones) {
               console.log("video pausado")
               this.video.pause();
               this.meshvideo.visible = false;
               this.setupCanvasDrawing();
-            }else if(intersect4.length > 0){
+            }else if(intersect4.length > 0 && !this.state.votaciones){
               console.log("salir")
-              window.location.href="/Dashboard/Calendar"
+              window.location.href="/Dashboard/Desktop"
+            }else if(intersect5.length > 0 && !this.state.votaciones){
+
+              this.setState({votaciones:true })
+              console.log("votacion")
+
             }
 
     this.estado = true;
@@ -861,11 +899,35 @@ class Test3d extends Component {
 
     return ctx.canvas;
   }
+
+  /****/
+funcionvotacion=()=>{
+  this.setState({votaciones: false})
+}
+
   render() {
+    let custo ={
+      padding :"0"
+      , borderTopLeftRadius : "0.5rem",borderTopRightRadius : "0.5rem"
+    }
+
+
     return (
       <div className="test3d">
+
+    <Rodal
+      width={300}
+      height={420}
+      animation={"fade"}
+      visible={this.state.votaciones}
+      onClose={() => this.setState({votaciones: false})}
+      customStyles = {custo}
+    >
+    <ContentCard obj = {this.state.practica} voto ={this.funcionvotacion}   />
+
+    </Rodal>
         <div
-          style={{ width: "100vw", height: "50.1vw" }}
+          style={{ width: "100vw", height: "50.1vw", pointerEvents:"none" }}
           id="boardCanvas"
           ref={(mount) => {
             this.mount = mount;
@@ -877,7 +939,7 @@ class Test3d extends Component {
 }
 
 export default Test3d;
-
+    /*  <div className={(this.state.votaciones ? "": "invisible ") +"tarjetas position-absolute h-100 w-100 "} style={{display: "grid", placeItems:"center" , zIndex:"2",background:"rgba(0,0,0,0.7)"  }}>tarjeta</div>*/
 /*
                                   ,;;;;;;,
                                 ,;;;'""`;;\
