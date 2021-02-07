@@ -5,7 +5,7 @@ import Carousel from "react-elastic-carousel";
 import ProjectPicture from "../../../ilustracion-equipo-de-trabajo.jpg";
 import { MDBNotification } from "mdbreact";
 import { Radar, defaults } from "react-chartjs-2";
-import axios from 'axios';
+import axios from "axios";
 defaults.global.legend.display = false;
 
 class Desktop extends Component {
@@ -115,7 +115,10 @@ class Desktop extends Component {
             ))}
           </div>
         </div>
-        <div className="col-12 col-sm-3 ml-1 o-blue-container o-slider-container">
+        <div
+          className="col-12 col-sm-3 ml-1 o-blue-container o-slider-container"
+          style={{ minWidth: "17rem" }}
+        >
           <div className="bg-white rounded p-0 pr-1 pl-1 mb-2 mt-2">
             <Carousel
               itemsToShow={1}
@@ -152,6 +155,7 @@ class Desktop extends Component {
           <div className="bg-white rounded p-1 mb-2 mt-2 text-center">
             <Radar data={data} />
             <button
+              style={{ fontSize: "0.7rem" }}
               onClick={() => {
                 this.setState({
                   bgcolor: "#CFEC92",
@@ -164,6 +168,7 @@ class Desktop extends Component {
               Sistema multimedia mínimo viable
             </button>
             <button
+              style={{ fontSize: "0.7rem" }}
               onClick={() => {
                 this.setState({
                   bgcolor: "#eaea91",
