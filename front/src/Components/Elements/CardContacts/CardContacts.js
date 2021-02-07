@@ -56,7 +56,7 @@ const CardContacts = ({ contact }) => {
           className="btn btn-primary border-0 text-white font-weight-bold"
           onClick={deleteContact}
         >
-          Agregar
+          Eliminar
         </button>
       </Rodal>
       <Fade show={show}>
