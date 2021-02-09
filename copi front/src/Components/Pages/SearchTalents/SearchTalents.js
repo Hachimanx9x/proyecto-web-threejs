@@ -19,7 +19,11 @@ class SearchTalents extends Component {
           name: "Juan Carlos Hurtado",
           description:
             "Ingeniero multimedia. Desarrollador FullStack con experiencia en desarrollo de aplicaciones web y móviles",
-          job: "Desarrollador FullStack",
+          jobs: [
+            "Desarrollador Frontend",
+            "Desarrollador Backend",
+            "Desarrollador FullStack",
+          ],
           img: User,
           skills: [
             {
@@ -48,7 +52,10 @@ class SearchTalents extends Component {
               skill:
                 "https://www.vectorlogo.zone/logos/flutterio/flutterio-icon.svg",
             },
-            { skill: "https://cdn.worldvectorlogo.com/logos/mysql-7.svg" },
+            {
+              skill:
+                "https://www.vectorlogo.zone/logos/mysql/mysql-official.svg",
+            },
             {
               skill:
                 "https://www.vectorlogo.zone/logos/golang/golang-official.svg",
@@ -81,7 +88,7 @@ class SearchTalents extends Component {
           name: "Andrés David Londoño",
           description:
             "Ingeniero multimedia. Desarrollador web. Senior en tecnologías para desarrollo fronend y backend con experiencia en desarrollo de aplicaciones web y móviles",
-          job: "Desarrollador Web",
+          jobs: ["Desarrollador Web", "Ui designer", "Desarrollador FullStack"],
           img: User,
           skills: [
             {
@@ -109,7 +116,10 @@ class SearchTalents extends Component {
               skill:
                 "https://www.vectorlogo.zone/logos/flutterio/flutterio-icon.svg",
             },
-            { skill: "https://cdn.worldvectorlogo.com/logos/mysql-7.svg" },
+            {
+              skill:
+                "https://www.vectorlogo.zone/logos/mysql/mysql-official.svg",
+            },
             {
               skill:
                 "https://www.vectorlogo.zone/logos/golang/golang-official.svg",

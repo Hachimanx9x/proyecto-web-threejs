@@ -26,6 +26,7 @@ const CardContacts = ({ contact }) => {
 
   const contactrol = (somejob) => {
     let style = "";
+    const joblist = ["other-job-1", "other-job-2", "other-job-3"];
     const rol = somejob.toLowerCase();
     if (rol === "desarrollador web") {
       style = "web-developer";
@@ -33,6 +34,8 @@ const CardContacts = ({ contact }) => {
       style = "fullstack-developer";
     } else if (rol === "ui designer") {
       style = "ui-designer";
+    } else {
+      style = joblist[Math.floor(Math.random() * joblist.length)];
     }
     return style;
   };

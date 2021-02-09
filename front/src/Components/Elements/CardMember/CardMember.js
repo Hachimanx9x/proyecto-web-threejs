@@ -55,7 +55,7 @@ const CardMember = ({ member, remove, add, change }) => {
           className="btn btn-primary border-0 text-white font-weight-bold"
           onClick={deleteMember}
         >
-          Agregar
+          Eliminar
         </button>
       </Rodal>
       <Fade show={show}>
