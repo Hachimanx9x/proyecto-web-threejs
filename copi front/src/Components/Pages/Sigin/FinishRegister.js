@@ -161,38 +161,6 @@ export default function FinishRegister(props) {
       key: "TypeScript",
     },
   ];
-  countries = [
-    { key: "Alemania", cat: "Alemania" },
-    { key: "Brasil", cat: "Brasil" },
-    { key: "China", cat: "China" },
-    { key: "Colombia", cat: "Colombia" },
-    { key: "España", cat: "España" },
-    { key: "Francia", cat: "Francia" },
-    { key: "Italia", cat: "Italia" },
-    { key: "Japón", cat: "Japón" },
-    { key: "Korea", cat: "Korea" },
-    { key: "Rusia", cat: "Rusia" },
-    { key: "Suecia", cat: "Suecia" },
-  ];
-  yearsList = [
-    { key: "0 años", cat: 0 },
-    { key: "1 año", cat: 1 },
-    { key: "2 años", cat: 2 },
-    { key: "3 años", cat: 3 },
-    { key: "4 años", cat: 4 },
-    { key: "5 años", cat: 5 },
-  ];
-
-  keywords = [
-    { key: "Desarrollador Web", cat: "Desarrollador Web" },
-    { key: "Desarrollador Frontend", cat: "Desarrollador Frontend" },
-    { key: "Desarrollador Móvil", cat: "Desarrollador Móvil" },
-    { key: "Desarrollador Backend", cat: "Desarrollador Backend" },
-    { key: "Desarrollador FullStack", cat: "Desarrollador FullStack" },
-    { key: "Diseñador Gráfico", cat: "Diseñador Gráfico" },
-    { key: "Diseñador UI", cat: "Diseñador UI" },
-    { key: "Diseñador UX", cat: "Diseñador UX" },
-  ];
 
   const RemoveSkill = (selectedItem) => {
     if (selectedItem !== undefined) {

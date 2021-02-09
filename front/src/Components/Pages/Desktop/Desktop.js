@@ -152,7 +152,7 @@ class Desktop extends Component {
               />
             </Carousel>
           </div>
-          <div className="bg-white rounded p-1 mb-2 mt-2 text-center">
+          <div className="bg-white rounded p-1 mb-2 mt-2 text-center d-flex flex-column justify-content-center">
             <Radar data={data} />
             <button
               style={{ fontSize: "0.7rem" }}
