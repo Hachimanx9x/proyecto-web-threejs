@@ -126,7 +126,7 @@ rutas.get('/proyectos/:id', proToken, (req, res) => {
 rutas.get('/proyecto/contenido/:buque/:name', (req, res) => {
 
     const { buque, name } = req.params;
-    //  console.log(req.params)
+    //console.log(req.params)
     // const {id,name } = req.body;
     if (name == "null" || name == null) {
         res.json({ msj: "no existe" })

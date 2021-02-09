@@ -1,12 +1,6 @@
 import React, { Component } from "react";
 //libreria 3d
 import * as THREE from "three/build/three.module";
-//libreria para cargar modelos 3d
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
-//libreria para efectos de entorno
-import { RoughnessMipmapper } from "three/examples/jsm/utils/RoughnessMipmapper";
-import { Reflector } from "three/examples/jsm/objects/Reflector";
 //libreria para los controles
 //import {OrbitControls} from "three/examples/jsm/controls/OrbitControls" ;
 import { PointerLockControls } from "three/examples/jsm/controls/PointerLockControls";

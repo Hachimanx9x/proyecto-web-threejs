@@ -10,7 +10,7 @@ peticiones.getFilesingle = async (bucket, namefile, res) => {
 
   await minio.fGetObject(bucket, namefile, path.join(__dirname, `../routes/tmp/${namefile}`), function (e) {
     if (e) {
-      return console.log(e)
+      return res.json(e)
     }
     //console.log('done')
     const r = fs.createReadStream(path.join(__dirname, `../routes/tmp/${namefile}`)) //llamamos el archivo para el envio 
