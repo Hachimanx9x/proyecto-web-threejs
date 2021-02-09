@@ -16,49 +16,12 @@ class Login extends Component {
 
   LoginFunction = (e) => {
     e.preventDefault();
-      this.props.history.push("/Dashboard/Desktop");
-    this.httpInstance = axios.create({
-      baseURL: "http://localhost:3030/",
-      timeout: 1000,
-      headers: { "Content-Type": "application/json" },
-    });
-    this.httpInstance.interceptors.response.use(null, (error) => {
-      const expectedError =
-        error.response &&
-        error.response.status >= 400 &&
-        error.response.status < 500;
-      if (!expectedError) {
-        // Loggear mensaje de error a un servicio como Sentry
-        // Mostrar error genérico al usuario
-        return Promise.reject(error);
-      }
-    });
-    const { email, password } = this.state;
-    this.httpInstance
-      .post("login", { email, password })
-      .then((respuesta) => {
-        if (respuesta.statusText === "OK") {
-          console.log(respuesta.data);
-          localStorage.setItem(
-            "login",
-            JSON.stringify({
-              token: respuesta.data.token,
-            })
-          );
-
-          this.props.history.push("/Dashboard/Desktop");
-        } else {
-          console.log("error fatal");
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    this.props.history.push("/Dashboard/Desktop");
   };
 
   render() {
     return (
-      <div className="container-fluid o-login-container h-100">
+      <div className="container-fluid o-login-container h-100 pb-4 pb-sm-0">
         <div className="o-login-form">
           <h3 className="text-white m-0">El mejor lugar</h3>
           <h3 className="text-white m-0">Para tu trabajar con tu equipo</h3>

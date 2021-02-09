@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import CardProject from "../../Elements/CardProjects/CardProject";
 import projectPNG from "../../../project.PNG";
 import illustration from "../../../ilustracion-equipo-de-trabajo.jpg";
-import axios from 'axios';
+import axios from "axios";
 class Projects extends Component {
   componentDidMount() {
     const token = localStorage.getItem("login");
@@ -44,22 +44,28 @@ class Projects extends Component {
   }
   render() {
     return (
-      <div>
-        {" "}
+      <div className="mb-3 mb-sm-0 pb-5 pb-sm-0">
         <h4>Proyectos</h4>
         <div className="row">
           <div className="card m-3 o-card-project">
             <div className="card-header bg-transparent o-card-project-title">
               Proyectos
             </div>
-            <img className="card-img o-card-project-image" alt="baseImage" src={projectPNG} />
+            <img
+              className="card-img o-card-project-image"
+              alt="baseImage"
+              src={projectPNG}
+            />
             <div className="card-body o-card-description">
               <p className="card-text o-card-description-text">
                 Espacio para la creación de un nuevo proyecto.
               </p>
             </div>
             <div className="card-footer bg-transparent border-transparent">
-              <a href="/Dashboard/Projects/CreateProject" className="btn btn-primary border-0 z-depth-0 p-2 btn-sm o-card-project-button">
+              <a
+                href="/Dashboard/Projects/CreateProject"
+                className="btn btn-primary border-0 z-depth-0 p-2 btn-sm o-card-project-button"
+              >
                 Crear
               </a>
             </div>

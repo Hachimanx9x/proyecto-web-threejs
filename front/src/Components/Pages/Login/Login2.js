@@ -57,11 +57,11 @@ class Login extends Component {
 
   render() {
     return (
-      <div className="container-fluid o-login-container h-100">
+      <div className="container-fluid o-login-container h-100 pb-4 pb-sm-0">
         <div className="o-login-form">
           <h3 className="text-white m-0">El mejor lugar</h3>
           <h3 className="text-white m-0">Para tu trabajar con tu equipo</h3>
-          <p className="mt-2 mb-8 text-white font-weight-bold ">
+          <p className="mt-2 text-white font-weight-bold ">
             Bienvenido, por favor ingresa con tu cuenta
           </p>
           <form onSubmit={this.LoginFunction}>

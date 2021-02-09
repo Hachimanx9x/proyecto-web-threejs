@@ -6,8 +6,7 @@ import illustration from "../../../ilustracion-equipo-de-trabajo.jpg";
 class Projects extends Component {
   render() {
     return (
-      <div>
-        {" "}
+      <div className="mb-3 mb-sm-0 pb-5 pb-sm-0">
         <h4>Proyectos</h4>
         <div className="row">
           <div className="card m-3 o-card-project">

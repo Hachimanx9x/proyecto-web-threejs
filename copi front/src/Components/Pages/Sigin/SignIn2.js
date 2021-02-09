@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { MDBInput } from "mdbreact";
-import axios from "axios";
 import "./SignIn2.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
@@ -12,59 +11,16 @@ class SigIn extends Component {
     super();
     this.state = { name: "", email: "", password: "", confirmpassword: "" };
     this.RegisterFunction = this.RegisterFunction.bind(this);
-
-    this.httpInstance = axios.create({
-      baseURL: "http://localhost:3030/",
-      timeout: 1000,
-      headers: { "Content-Type": "application/json" },
-    });
-    this.httpInstance.interceptors.response.use(null, (error) => {
-      const expectedError =
-        error.response &&
-        error.response.status >= 400 &&
-        error.response.status < 500;
-      if (!expectedError) {
-        // Loggear mensaje de error a un servicio como Sentry
-        // Mostrar error genérico al usuario
-        return Promise.reject(error);
-      }
-    });
   }
 
   RegisterFunction = (e) => {
     e.preventDefault();
-    const { email, password, nombre } = this.state;
-
-    //------
-    this.httpInstance
-      .post("/create/usuario", {
-        email,
-        password,
-        nombre,
-      })
-      .then((respuesta) => {
-        if (respuesta.statusText === "OK") {
-          console.log(respuesta.data);
-          localStorage.setItem(
-            "login",
-            JSON.stringify({
-              token: respuesta.data.token,
-            })
-          );
-
-          this.props.history.push("/Dashboard/FinishRegister");
-        } else {
-          console.log("error fatal");
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    this.props.history.push("/Dashboard/FinishRegister");
   };
 
   render() {
     return (
-      <div className="container-fluid o-sigin-container h-100">
+      <div className="container-fluid o-sigin-container h-100 pb-4 pb-sm-0">
         <div className="o-sigin-form">
           <form onSubmit={this.RegisterFunction}>
             <h3 className="text-white m-0">El mejor lugar</h3>
@@ -144,8 +100,7 @@ class SigIn extends Component {
               <div className="col-6">
                 <button
                   className=" blue accent-4 z-depth-0 text-light ml-0 mr-0 mt-4 font-weight-bold o-button"
-                  type="button"
-                  onClick={this.RegisterFunction}
+                  type="submit"
                 >
                   REGISTRARSE
                 </button>

@@ -76,7 +76,7 @@ export default class CalendarEvents extends Component {
   }
   render() {
     return (
-      <div className="row">
+      <div className="row mb-3 mb-sm-0 pb-5 pb-sm-0">
         <div className="col-12 col-sm-8 o-calendar-container  text-center">
           <FullCalendar
             headerToolbar={{
