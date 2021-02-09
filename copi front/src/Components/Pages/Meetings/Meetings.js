@@ -4,7 +4,6 @@ import {
   faMicrophoneSlash,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Room from "../../../Logos/Meet.png";
 import User from "../../../Logos/user-icon.png";
 import "./Meetings.css";
 

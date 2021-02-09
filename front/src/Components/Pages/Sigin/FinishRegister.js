@@ -268,6 +268,7 @@ export default function FinishRegister(props) {
             closeOnSelect={false}
             placeholder="Selecciona tus idiomas"
             hidePlaceholder={true}
+            selectionLimit="2"
             id="languageT"
             onSelect={(selectedList, selectedItem) => {
               const lang = userLanguages;
@@ -294,6 +295,7 @@ export default function FinishRegister(props) {
           <Multiselect
             options={keywords}
             displayValue="key"
+            selectionLimit="4"
             placeholder="Selecciona...."
             hidePlaceholder={true}
             id="keyWorkdb"
@@ -436,6 +438,7 @@ export default function FinishRegister(props) {
               options={toolist}
               displayValue="key"
               closeOnSelect={false}
+              selectionLimit="7"
               selectedValues={selected.length % 2 === 0 ? selected : selected}
               onSelect={(selectedList, selectedItem) => {
                 const skill = skills;

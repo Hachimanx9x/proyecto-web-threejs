@@ -161,7 +161,7 @@ export default function FinishRegister(props) {
       key: "TypeScript",
     },
   ];
- countries = [
+  countries = [
     { key: "Alemania", cat: "Alemania" },
     { key: "Brasil", cat: "Brasil" },
     { key: "China", cat: "China" },
@@ -174,7 +174,7 @@ export default function FinishRegister(props) {
     { key: "Rusia", cat: "Rusia" },
     { key: "Suecia", cat: "Suecia" },
   ];
-   yearsList = [
+  yearsList = [
     { key: "0 años", cat: 0 },
     { key: "1 año", cat: 1 },
     { key: "2 años", cat: 2 },
@@ -183,7 +183,7 @@ export default function FinishRegister(props) {
     { key: "5 años", cat: 5 },
   ];
 
-   keywords = [
+  keywords = [
     { key: "Desarrollador Web", cat: "Desarrollador Web" },
     { key: "Desarrollador Frontend", cat: "Desarrollador Frontend" },
     { key: "Desarrollador Móvil", cat: "Desarrollador Móvil" },
@@ -315,6 +315,7 @@ export default function FinishRegister(props) {
             closeOnSelect={false}
             placeholder="Selecciona tus idiomas"
             hidePlaceholder={true}
+            selectionLimit="2"
             id="languageT"
             onSelect={(selectedList, selectedItem) => {
               const lang = userLanguages;
@@ -341,6 +342,7 @@ export default function FinishRegister(props) {
           <Multiselect
             options={keywords}
             displayValue="key"
+            selectionLimit="4"
             placeholder="Selecciona...."
             hidePlaceholder={true}
             id="keyWorkdb"
@@ -481,6 +483,7 @@ export default function FinishRegister(props) {
             <hr className="bg-primary mt-0 mb-3" />
             <Multiselect
               options={tools}
+              selectionLimit="7"
               displayValue="key"
               closeOnSelect={false}
               selectedValues={selected.length % 2 === 0 ? selected : selected}
