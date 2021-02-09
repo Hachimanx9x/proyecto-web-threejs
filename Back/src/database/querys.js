@@ -228,6 +228,7 @@ query.buscartalentos = function () {
     return ` SELECT 
     usuarios.id,
     usuarios.nombre,
+    usuarios.fotoperfil,
     usuarios.descripcion,
     palabrasclave.palabra,
     herramientas.herramientanombre,

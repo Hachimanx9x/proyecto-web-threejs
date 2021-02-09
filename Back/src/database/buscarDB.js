@@ -1474,12 +1474,10 @@ function rearmas(idUser, rows) {
 
     for (var i = 0; i < array.length; i++) {
 
-        model.userid = array[i].id
-        model.nombre = array[i].nombre;
-        model.descripcion = array[i].descripcion;
         defarray.push({
             userid: array[i].id,
             nombre: array[i].nombre,
+            foto: `${env.host}/proyecto/contenido/usuario${array[i].id}/${array[i].fotoperfil}`,
             descripcion: array[i].descripcion,
             herramientas: [],
             palabras: []

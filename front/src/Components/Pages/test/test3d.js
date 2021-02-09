@@ -16,7 +16,12 @@ import Detector from "../../../lib_externo/Detector";
 import { Chart } from "react-chartjs-2";
 //socket
 import io from "socket.io-client";
-
+import Button3d from './script/buttons'
+import Rodal from "rodal";
+import "rodal/lib/rodal.css";
+import ContentCard from "./script/cardvote"
+import CargarObj from "./script/CargarObjGltf"
+import Mirror from "./script/mirror"
 //imagenes
 import posx from "../../../Logos/img/Bridge2/posx.jpg";
 import negx from "../../../Logos/img/Bridge2/negx.jpg";
@@ -48,10 +53,24 @@ class Test3d extends Component {
 
     this.setupCanvasDrawing = this.setupCanvasDrawing.bind(this);
     this.makeLabelCanvas = this.makeLabelCanvas.bind(this);
-
+    this.funcionvotacion = this.funcionvotacion.bind(this)
     this.state = {
       player: null,
       reunion: 1,
+      votaciones: false,
+      practica:
+      {
+        nombre: "practica 1 ",
+        estadoActual: "iniciado",
+        estaoevaluar: "identificado",
+        preguntas: [
+          { texto: "se a identificado tensiones de valor entre interesados", estado: false },
+          { texto: "se a identificado posibles usos mal intencionados del Sistema Multimedia", estado: false },
+          { texto: "se a identificado patrones que afectan el Sistema Multimedia", estado: false },
+          { texto: "se a identificado leyes y normatividades que influyen en la solución", estado: false },
+          { texto: "se a identificado aspectos culturales, sociales y cognitivos que influyen en la comunidad objeto de análisis", estado: false }
+        ]
+      },
       posicionplayer: { x: 0, y: 0.3, z: 1 },
       marksData: {
         labels: ["ruta1", "ruta2", "ruta3", "ruta4"],
@@ -109,6 +128,10 @@ class Test3d extends Component {
     this.objInteraccion1 = [];
     this.objInteraccion2 = [];
     this.objInteraccion3 = [];
+    this.menuopciones = {
+      salir: [],
+      votacion: []
+    };
     //skybox
     var entorno = new THREE.CubeTextureLoader().load([
       posx,
@@ -301,7 +324,34 @@ class Test3d extends Component {
     this.GUIv2.position.set(0.3, 0.33, 0.9); this.GUIv2.rotation.set(0, - Math.PI / 4, 0);
     console.log("gui2");
     console.log(this.GUIv2);
+
+    let bu = new Button3d(
+      0.005,
+      0xf2380e,
+      1,
+      true,
+      { size: 32, text: " Salir " },
+      { x: 0.03, y: 0.03 },
+      { x: 0, y: 0, z: 0 }
+    ).button
+    let bu2 = new Button3d(
+      0.005,
+      0x81e219,
+      1,
+      true,
+      { size: 32, text: " votar " },
+      { x: 0.03, y: 0.03 },
+      { x: 0, y: 0, z: 0 }
+    ).button
+    console.log("//---------- button")
+    bu.obj.position.set(0.1, 0.185, 0.93); bu.obj.rotation.x = -Math.PI / 2
+    bu2.obj.position.set(0, 0.185, 0.93); bu2.obj.rotation.x = -Math.PI / 2
+    this.menuopciones.salir = bu.Interaction; this.menuopciones.votacion = bu2.Interaction;
+
+    this.scene.add(bu.obj); this.scene.add(bu2.obj);
     this.scene.add(this.GUIv2);
+
+
     this.pantallas.pantalla0.visible = this.estados_pantalla.p0;
     this.pantallas.pantalla1.visible = this.estados_pantalla.p1;
 
@@ -354,273 +404,55 @@ class Test3d extends Component {
     //  this.controls.connect();
 
     // this.controls.isLocked = true ;
-    console.log(this.controls.getObject());
+    //  console.log(this.controls.getObject());
 
-    this.controls.getObject().position.set(this.state.posicionplayer.x, this.state.posicionplayer.y, this.state.posicionplayer.z);
+
 
     this.scene.add(this.controls.getObject());
     //---------
-    var roughnessMipmapper = new RoughnessMipmapper(this.renderer);
-    //--------------------------------------------------------
-    var objmesa = new THREE.Object3D();
-    new GLTFLoader()
-      .setDRACOLoader(new DRACOLoader())
-      .load(modeloMesaurl, (gltf) => {
-        gltf.scene.traverse((nino) => {
-          if (nino.isMesh) {
-            nino.material.envMap = this.entorno;
-            roughnessMipmapper.generateMipmaps(nino.material);
-          }
-        });
-        objmesa.add(gltf.scene);
-      });
-    objmesa.position.set(1, -0.3, -1.75);
-    objmesa.rotation.set(0, 0, 0);
-    objmesa.scale.set(1, 1, 1);
-    objmesa.castShadow = true;
-    objmesa.receiveShadow = true;
-    this.scene.add(objmesa);
 
-    var objpiso = new THREE.Object3D();
-    new GLTFLoader().load(modelopiso, (gltf) => {
-      gltf.scene.traverse((nino) => {
-        if (nino.isMesh) {
-          nino.material.envMap = this.entorno;
-        }
-      });
-      objpiso.add(gltf.scene);
-    });
-    //-2.72,-0.3,-1.75, 0,0,0, 1,1,1)
-    objpiso.position.set(-2.72, -0.3, -1.75);
-    objpiso.rotation.set(0, 0, 0);
-    objpiso.scale.set(1, 1, 1);
-    this.scene.add(objpiso);
 
-    var objluz = new THREE.Object3D();
-    new GLTFLoader().load(
-      modelluz,
-      (gltf) => {
-        gltf.scene.traverse((nino) => {
-          if (nino.isMesh) {
-            nino.material.envMap = this.entorno;
-          }
-        });
-        objluz.add(gltf.scene);
-      },
-      (xhr) => {
-        console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
-      },
-      (error) => {
-        console.log("An error happened");
-      }
+    this.scene.add(new CargarObj(
+      this.entorno,    //se carga el entorno por los reflejos 
+      modeloMesaurl,  //le mando el modelo en gltf
+      "mesa", //el nombre del objeto
+      { x: 1, y: -0.3, z: -1.75 }, // posicion
+      { x: 0, y: 0, z: 0 },  // rotacion
+      { x: 1, y: 1, z: 1 }).obj //escala
     );
-    //1,-0.3,-1.75, 0,0,0, 1,1,1
-    objluz.position.set(1, -0.3, -1.75);
-    objluz.rotation.set(0, 0, 0);
-    objluz.scale.set(1, 1, 1);
-    this.scene.add(objluz);
 
-    var objmueble = new THREE.Object3D();
-    new GLTFLoader().load(modelomueble1, (gltf) => {
-      gltf.scene.traverse((nino) => {
-        if (nino.isMesh) {
-          nino.material.envMap = this.entorno;
-        }
-      });
-      objmueble.add(gltf.scene);
-    });
-    //1,-0.3,-1.75, 0,0,0, 1,1,1
-    objmueble.position.set(-0.33, -0.07, -0.9);
-    objmueble.rotation.set(0, 0, 0);
-    objmueble.scale.set(1, 1, 1);
-    objmueble.castShadow = true;
-    objmueble.receiveShadow = true;
-    console.log(objmueble);
-    this.scene.add(objmueble);
+    this.scene.add(new CargarObj(this.entorno, modelopiso, "piso", { x: -2.72, y: -0.3, z: -1.75 }, { x: 0, y: 0, z: 0 }, { x: 1, y: 1, z: 1 }).obj);
+    this.scene.add(new CargarObj(this.entorno, modelluz, "luz", { x: 1, y: -0.3, z: -1.75 }, { x: 0, y: 0, z: 0 }, { x: 1, y: 1, z: 1 }).obj);
+    this.scene.add(new CargarObj(this.entorno, modelomueble1, "muble", { x: -0.33, y: -0.07, z: -0.9 }, { x: 0, y: 0, z: 0 }, { x: 1, y: 1, z: 1 }).obj);
+    this.scene.add(new CargarObj(this.entorno, modelopared, "pared1", { x: 1, y: -0.27, z: -2 }, { x: 0, y: 0, z: 0 }, { x: 1, y: 1, z: 1 }).obj);
+    this.scene.add(new CargarObj(this.entorno, modelopared2, "pared2", { x: 1, y: 6.04, z: -2 }, { x: 0, y: 0, z: 0 }, { x: 1, y: 1, z: 1 }).obj);
+    this.scene.add(new CargarObj(this.entorno, modelosilla, "silla1", { x: 1.32, y: -0.33, z: -1.7 }, { x: 0, y: 0, z: 0 }, { x: 1, y: 1, z: 1 }).obj);
+    this.scene.add(new CargarObj(this.entorno, modelosilla, "silla2", { x: -1.28, y: -0.33, z: 1.5 }, { x: 0, y: Math.PI, z: 0 }, { x: 1, y: 1, z: 1 }).obj);
+    this.scene.add(new CargarObj(this.entorno, modelosilla, "silla3", { x: -2.28, y: -0.33, z: -1.4 }, { x: 0, y: Math.PI / 2, z: 0 }, { x: 1, y: 1, z: 1 }).obj);
+    this.scene.add(new CargarObj(this.entorno, modelosilla, "silla4", { x: -2.28, y: -0.33, z: -2 }, { x: 0, y: Math.PI / 2, z: 0 }, { x: 1, y: 1, z: 1 }).obj);
+    this.scene.add(new CargarObj(this.entorno, modelosilla, "silla5", { x: 2.28, y: -0.33, z: 1.2 }, { x: 0, y: -Math.PI / 2, z: 0 }, { x: 1, y: 1, z: 1 }).obj);
+    this.scene.add(new CargarObj(this.entorno, modelosilla, "silla6", { x: 2.28, y: -0.33, z: 0.65 }, { x: 0, y: -Math.PI / 2, z: 0 }, { x: 1, y: 1, z: 1 }).obj);
+    this.scene.add(new CargarObj(this.entorno, modelosilla, "silla7", { x: 2.28, y: -0.33, z: 1.8 }, { x: 0, y: -Math.PI / 2, z: 0 }, { x: 1, y: 1, z: 1 }).obj);
+    this.scene.add(new CargarObj(this.entorno, modelosilla, "silla8", { x: -2.28, y: -0.33, z: -0.7 }, { x: 0, y: Math.PI / 2, z: 0 }, { x: 1, y: 1, z: 1 }).obj);
 
-    var objpared1 = new THREE.Object3D();
-    new GLTFLoader().load(modelopared, (gltf) => {
-      gltf.scene.traverse((nino) => {
-        if (nino.isMesh) {
-          nino.material.envMap = this.entorno;
-        }
-      });
-      objpared1.add(gltf.scene);
-    });
-    //1,-0.25,-2, 0,0,0, 1,1,1
-    objpared1.position.set(1, -0.27, -2);
-    objpared1.rotation.set(0, 0, 0);
-    objpared1.scale.set(1, 1, 1);
-
-    this.scene.add(objpared1);
-
-    var objpared2 = new THREE.Object3D();
-    new GLTFLoader().load(modelopared2, (gltf) => {
-      gltf.scene.traverse((nino) => {
-        if (nino.isMesh) {
-          nino.material.envMap = this.entorno;
-        }
-      });
-      objpared2.add(gltf.scene);
-    });
-    //1,6.04 ,-2, 0,0,0, 1,1,1
-    objpared2.position.set(1, 6.04, -2);
-    objpared2.rotation.set(0, 0, 0);
-    objpared2.scale.set(1, 1, 1);
-    this.scene.add(objpared2);
-
-    var objsilla1 = new THREE.Object3D();
-    new GLTFLoader().load(modelosilla, (gltf) => {
-      gltf.scene.traverse((nino) => {
-        if (nino.isMesh) {
-          nino.material.envMap = this.entorno;
-        }
-      });
-      objsilla1.add(gltf.scene);
-    });
-    objsilla1.position.set(1.32, -0.33, -1.7);
-    objsilla1.rotation.set(0, 0, 0);
-    objsilla1.scale.set(1, 1, 1);
-    this.scene.add(objsilla1);
-
-    var objsilla2 = new THREE.Object3D();
-    new GLTFLoader().load(modelosilla, (gltf) => {
-      gltf.scene.traverse((nino) => {
-        if (nino.isMesh) {
-          nino.material.envMap = this.entorno;
-        }
-      });
-      objsilla2.add(gltf.scene);
-    });
-    //sillas[1].rotation.y= Math.PI; sillas[1].position.x=-1.28; sillas[1].position.z=1.5;
-    objsilla2.position.set(-1.28, -0.33, 1.5);
-    objsilla2.rotation.set(0, Math.PI, 0);
-    objsilla2.scale.set(1, 1, 1);
-    this.scene.add(objsilla2);
-
-    var objsilla3 = new THREE.Object3D();
-    new GLTFLoader().load(modelosilla, (gltf) => {
-      gltf.scene.traverse((nino) => {
-        if (nino.isMesh) {
-          nino.material.envMap = this.entorno;
-        }
-      });
-      objsilla3.add(gltf.scene);
-    });
-    //  sillas[2].rotation.y= Math.PI/2;sillas[2].position.x=-2.28;sillas[2].position.z=-1.4;
-    objsilla3.position.set(-2.28, -0.33, -1.4);
-    objsilla3.rotation.set(0, Math.PI / 2, 0);
-    objsilla3.scale.set(1, 1, 1);
-    this.scene.add(objsilla3);
-
-    var objsilla4 = new THREE.Object3D();
-    new GLTFLoader().load(modelosilla, (gltf) => {
-      gltf.scene.traverse((nino) => {
-        if (nino.isMesh) {
-          nino.material.envMap = this.entorno;
-        }
-      });
-      objsilla4.add(gltf.scene);
-    });
-    //  illas[4].rotation.y= Math.PI/2;sillas[4].position.x=-2.28;sillas[4].position.z=-2;
-    objsilla4.position.set(-2.28, -0.33, -2);
-    objsilla4.rotation.set(0, Math.PI / 2, 0);
-    objsilla4.scale.set(1, 1, 1);
-    this.scene.add(objsilla4);
-
-    var objsilla5 = new THREE.Object3D();
-    new GLTFLoader().load(modelosilla, (gltf) => {
-      gltf.scene.traverse((nino) => {
-        if (nino.isMesh) {
-          nino.material.envMap = this.entorno;
-        }
-      });
-      objsilla5.add(gltf.scene);
-    });
-    // sillas[5].rotation.y = - Math.PI/2; sillas[5].position.x=2.28;sillas[5].position.z=1.2;
-    objsilla5.position.set(2.28, -0.33, 1.2);
-    objsilla5.rotation.set(0, -Math.PI / 2, 0);
-    objsilla5.scale.set(1, 1, 1);
-    this.scene.add(objsilla5);
-
-    var objsilla6 = new THREE.Object3D();
-    new GLTFLoader().load(modelosilla, (gltf) => {
-      gltf.scene.traverse((nino) => {
-        if (nino.isMesh) {
-          nino.material.envMap = this.entorno;
-        }
-      });
-      objsilla6.add(gltf.scene);
-    });
-    //sillas[6].rotation.y = - Math.PI/2; sillas[6].position.x=2.28;sillas[6].position.z=0.65;
-    objsilla6.position.set(2.28, -0.33, 0.65);
-    objsilla6.rotation.set(0, -Math.PI / 2, 0);
-    objsilla6.scale.set(1, 1, 1);
-    this.scene.add(objsilla6);
-
-    var objsilla7 = new THREE.Object3D();
-    new GLTFLoader().load(modelosilla, (gltf) => {
-      gltf.scene.traverse((nino) => {
-        if (nino.isMesh) {
-          nino.material.envMap = this.entorno;
-        }
-      });
-      objsilla7.add(gltf.scene);
-    });
-    //sillas[7].rotation.y = - Math.PI/2; sillas[7].position.x=2.28;sillas[7].position.z=1.8;
-    objsilla7.position.set(2.28, -0.33, 1.8);
-    objsilla7.rotation.set(0, -Math.PI / 2, 0);
-    objsilla7.scale.set(1, 1, 1);
-    this.scene.add(objsilla7);
-
-    var objsilla8 = new THREE.Object3D();
-    new GLTFLoader().load(modelosilla, (gltf) => {
-      gltf.scene.traverse((nino) => {
-        if (nino.isMesh) {
-          nino.material.envMap = this.entorno;
-        }
-      });
-      objsilla8.add(gltf.scene);
-    });
-    //sillas[3].rotation.y= Math.PI/2;sillas[3].position.x=-2.28;sillas[3].position.z=-0.7;
-    objsilla8.position.set(-2.28, -0.33, -0.7);
-    objsilla8.rotation.set(0, Math.PI / 2, 0);
-    objsilla8.scale.set(1, 1, 1);
-    this.scene.add(objsilla8);
 
     //-------------------------------------------------------- espejo
-    var geometry = new THREE.PlaneBufferGeometry(0.65, 1.93);
-    var verticalMirror = new Reflector(geometry, {
-      clipBias: 0.0005,
-      textureWidth: window.innerWidth * window.devicePixelRatio,
-      textureHeight: window.innerHeight * window.devicePixelRatio,
-      color: 0x889999,
-      recursion: 1,
-    });
-    verticalMirror.position.y = 0.177;
-    verticalMirror.position.x = 0.023;
-    verticalMirror.position.z = -0.047;
-    verticalMirror.rotation.x = -Math.PI / 2;
-    this.scene.add(verticalMirror);
-    var objectopasidad = new THREE.Mesh(
-      geometry,
-      new THREE.MeshBasicMaterial({
-        color: 0x0000000,
-        opacity: 0.9,
-        transparent: true,
-      })
-    );
-    objectopasidad.position.y = verticalMirror.position.y + 0.001;
-    objectopasidad.position.x = verticalMirror.position.x;
-    objectopasidad.position.z = verticalMirror.position.z;
-    objectopasidad.rotation.x = verticalMirror.rotation.x;
-    this.scene.add(objectopasidad);
+    //0.177 0.023 -0.047
+    let espejo = new Mirror(
+      0.65, 1.93,
+      window.innerWidth * window.devicePixelRatio,
+      window.innerHeight * window.devicePixelRatio,
+      0x0000000,
+      0.9,
+      { x: 0.023, y: 0.177, z: -0.047 },
+      { x: -Math.PI / 2, y: 0, z: 0 }
+    ).obj
+    this.scene.add(espejo.mirror); this.scene.add(espejo.filter);
+
 
     this.mount.appendChild(this.renderer.domElement);
     this.animate();
 
-    //zona de impresiones para pruevas
-    // console.log(this.materialC);
   } // fin del componentdidmount
   /*
     *
@@ -664,7 +496,7 @@ class Test3d extends Component {
     */
   animate() {
     requestAnimationFrame(this.animate);
-
+    this.controls.getObject().position.set(this.state.posicionplayer.x, this.state.posicionplayer.y, this.state.posicionplayer.z);
     var time = performance.now();
 
     var delta = (time - this.prevTime) / 1000;
@@ -692,23 +524,7 @@ class Test3d extends Component {
       this.renderer.render(this.scene, this.camera);
     }
   }
-  /*
-    *
-    *
-    * *
-    * 
-    * *
-    * *
-    * 
-    fin del metodo componentWillUnmount
-    *
-    *
-    * *
-    * 
-    * *
-    * 
-    *     
-    */
+
   mouseEventsdown = (event) => {
     /*    this.setState({
           x: event.clientX,
@@ -717,7 +533,7 @@ class Test3d extends Component {
     // console.log(event);
     event.preventDefault();
     console.log("clic");
-    // this.video.play();
+
     this.mouse.x =
       (event.clientX / this.renderer.domElement.clientWidth) * 2 - 1;
     this.mouse.y =
@@ -728,6 +544,8 @@ class Test3d extends Component {
     var intersectspause = this.raycaster.intersectObjects(this.objInteraccion2);
     var intersect = this.raycaster.intersectObjects(this.objInteraccion);
     var intersect0 = this.raycaster.intersectObjects(this.objInteraccion0);
+    let intersect4 = this.raycaster.intersectObjects(this.menuopciones.salir);
+    let intersect5 = this.raycaster.intersectObjects(this.menuopciones.votacion);
     var intersect3 = this.raycaster.intersectObjects(this.objInteraccion3);
     if (intersectsplay.length > 0) {
       // this.video.play();
@@ -756,37 +574,27 @@ class Test3d extends Component {
               this.video.pause();
               this.meshvideo.visible = false;
               this.setupCanvasDrawing();
+
+            } else if (intersect4.length > 0 && !this.state.votaciones) {
+              console.log("salir")
+              window.location.href = "/Dashboard/Desktop"
+            } else if (intersect5.length > 0 && !this.state.votaciones) {
+
+              this.setState({ votaciones: true })
+              console.log("votacion")
+
             }
 
     this.estado = true;
   };
   mouseEventup = (event) => {
-    /*    this.setState({
-        x: event.clientX,
-        y: event.clientY
-      }); */
+
     // console.log(event);
     this.estado = false;
     // this.video.pause();
     console.log("no clic");
   };
-  /*
-    *
-    *
-    * *
-    * 
-    * *
-    * *
-    * 
-    fin del metodo componentWillUnmount
-    *
-    *
-    * *
-    * 
-    * *
-    * 
-    *     
-    */
+
   setupCanvasDrawing = () => {
     console.log("nuevo material");
     var drawingCanvas = this.canvasG;
@@ -798,22 +606,7 @@ class Test3d extends Component {
 
     this.materialC.transparent = true;
   };
-  /*
-    *
-    *
-    * *
-    * 
-    * *
-    * *
-    * 
-    fin del metodo setupCanvasDrawing
-    *
-    *
-    * *
-    * 
-    * *
-    * 
-    *  */
+
   makeLabelCanvas = (size, name) => {
     const borderSize = 2;
     const ctx = document.createElement('canvas').getContext('2d');
@@ -837,9 +630,28 @@ class Test3d extends Component {
 
     return ctx.canvas;
   }
+
+  funcionvotacion = () => {
+    this.setState({ votaciones: false })
+  }
   render() {
+    let custo = {
+      padding: "0"
+      , borderTopLeftRadius: "0.5rem", borderTopRightRadius: "0.5rem"
+    }
     return (
       <div className="test3d">
+        <Rodal
+          width={300}
+          height={420}
+          animation={"fade"}
+          visible={this.state.votaciones}
+          onClose={() => this.setState({ votaciones: false })}
+          customStyles={custo}
+        >
+          <ContentCard obj={this.state.practica} voto={this.funcionvotacion} />
+
+        </Rodal>
         <div
           style={{ width: "100vw", height: "50.1vw" }}
           id="boardCanvas"
