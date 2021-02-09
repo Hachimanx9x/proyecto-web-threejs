@@ -50,17 +50,20 @@ class SearchTalents extends Component {
       .then((respuesta) => {
         if (respuesta.statusText === "OK") {
           for (let i = 0; i < respuesta.data.data.length; i++) {
+            const picture = respuesta.data.data[i].foto.split("/");
+            const talentpicture =
+              picture[6] !== "null" ? respuesta.data.data[i].foto : User;
             const talentdescription =
-              respuesta.data.data[i].description !== null &&
-              respuesta.data.data[i].description !== "null"
-                ? respuesta.data.data[i].description
+              respuesta.data.data[i].descripcion !== null &&
+              respuesta.data.data[i].descripcion !== "null"
+                ? respuesta.data.data[i].descripcion
                 : "Sin descripción";
             talentslist.push({
               id: respuesta.data.data[i].userid,
               name: respuesta.data.data[i].nombre,
               description: talentdescription,
               jobs: respuesta.data.data[i].palabras,
-              img: User,
+              img: talentpicture,
               skills: respuesta.data.data[i].herramientas,
             });
             this.setState({ talents: [...talentslist] });
