@@ -597,9 +597,16 @@ esto es dinamico y dependiendo de que parte de la estructura de datos este entra
     "cv": "hoja de vida  file" }
 ```
  asi mismo tambien se puede resibir dos archivos en variables foto o cv en caso de rebicirlos se actualizaran los archivos del usuario
+```sh
+/update/contacto
+```
+esla id del contacto a a gregar
+```json
+{ "preferencias": true, "id":2 } 
+```
 
 ```sh
-/actualizar/usuario
+/actualizar/actividad
 ```
 esta ruta reasigna la una actividad a un integrante en especifico
 

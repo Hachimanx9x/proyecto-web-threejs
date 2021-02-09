@@ -597,6 +597,23 @@ rutas.put('/update/lenguaje', proToken, (req, res) => {
         }
     }).catch(err => res.json(err));
 });
+rutas.put('/update/contacto', proToken, (req, res) => {
+    let { id, preferences } = req.body;
+
+    if (typeof id === "string") { id = parseInt(id, 10) }
+    if (typeof preferences === "string") {
+        if (preferences === "true") { preferences = true }
+        else if (preferences === "false") { preferences = false }
+
+    }
+
+
+    if (typeof id == "number" && typeof preferences === "boolean") {
+        actualizarDB.updatecontact({ preferencias: preferences, id }).then(result => { res.json(result) }).catch(err => { res.json(err) })
+    }
+})
+
+
 /**
       db      `7MM"""Mq. `7MMF'                                 mm    `7MM                       `7MM          
      ;MM:       MM   `MM.  MM                                   MM      MM                         MM          
@@ -606,6 +623,8 @@ rutas.put('/update/lenguaje', proToken, (req, res) => {
   A'     VML    MM         MM        MM    MM    MM  YM.    ,   MM      MM    MM  YA.   ,A9 `Mb    MM  L.   I8 
 .AMA.   .AMMA..JMML.     .JMML.    .JMML  JMML  JMML. `Mbmmd'   `Mbmo .JMML  JMML. `Ybmd9'   `Wbmd"MML.M9mmmP' 
  */
+
+
 
 
 

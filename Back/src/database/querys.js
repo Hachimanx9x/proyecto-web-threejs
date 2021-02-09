@@ -244,6 +244,8 @@ query.buscarcontactosusuario = function (id) {
     return `SELECT 
     usuarios.id,
     usuarios.nombre,
+    usuarios.descripcion, 
+    usuarios.fotoperfil,
     palabrasclave.palabra,
     contactos.preferencias
     FROM usuarios
