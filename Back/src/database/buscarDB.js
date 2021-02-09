@@ -1602,6 +1602,8 @@ function rearmarcontactos(array) {
             arraydef.push({
                 iduser: array[i].id,
                 nombre: array[i].nombre,
+                descripcion: array[i].descripcion,
+                foto: `${env.host}/proyecto/contenido/usuario${array[i].id}/${array[i].fotoperfil}`,
                 palabras,
                 preferencia: array[i].preferencias
             })
