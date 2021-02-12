@@ -16,9 +16,9 @@ export default function ProjectView() {
   const [projectPicture, setProjectPicture] = useState(null);
   const [projectName, setProjectName] = useState("");
   const [projectDescription, setProjectDescription] = useState("");
-  const [projectMembers, setProjectMembers] = useState([]);
   const [projectPractices, setProjectPractices] = useState("");
   const [modal, setModal] = useState(false);
+  const [confirmationmodal, setConfirmationmodal] = useState(false);
   const [windowWidth, setWindowWidth] = useState(null);
   const [members, setMembers] = useState([]);
   const [contacts, setContacts] = useState([]);
@@ -36,13 +36,13 @@ export default function ProjectView() {
     /*
      * Add an resizable method to get the current viewport dimensions for responsive issues.
      */
-    document.addEventListener("click", handleClick);
+    document.addEventListener("click", handleResize);
     /*
      * Removes the method before the component is unmounted.
      */
 
     return function cleanup() {
-      document.removeEventListener("click", handleClick);
+      document.removeEventListener("click", handleResize);
     };
   }, []);
   /*
@@ -106,12 +106,40 @@ export default function ProjectView() {
           ))}
         </div>
       </Rodal>
+      <Rodal
+        width={300}
+        height={160}
+        animation={"fade"}
+        visible={this.state.confirmationModal}
+        onClose={() => this.setState({ confirmationModal: false })}
+      >
+        <div>
+          <h4 className="mt-3">Guardar cambios?</h4>
+          <div className="d-flex justify-content-between p-2">
+            <button
+              className="z-depth-0 border-primary btn border-primary text-primary font-weight-bold"
+              type="submit"
+              onClick={() => this.setState({ confirmationModal: false })}
+            >
+              Cancelar
+            </button>
+            <button
+              className="z-depth-0 border-0 btn btn-primary font-weight-bold"
+              type="button"
+              onClick={() => this.props.history.push("Dashboard/projects")}
+            >
+              Guardar
+            </button>
+          </div>
+        </div>
+      </Rodal>
       <div className="col-xs-12 col-sm-8 o-project-creation-section">
         <div className="d-flex justify-content-between mb-2">
           <h4 className="mb-3 pl-4">Creación del projecto</h4>
           <button
             className="z-depth-0 border-0 btn btn-primary font-weight-bold"
             style={{ width: "7rem", height: "2.3rem" }}
+            onClick={() => setConfirmationmodal(true)}
           >
             Guardar
           </button>
@@ -186,15 +214,25 @@ export default function ProjectView() {
               </div>
             </div>
           </div>
-          <div className="col-xs-12 col-sm-4">
-            <MDBInput type="text" label="Nombre del proyecto" outline />
+          <div className="col-xs-12 p-0 pl-sm-4 col-sm-4">
+            <MDBInput
+              type="text"
+              label="Nombre del proyecto *"
+              value={projectName}
+              onChange={(e) => setProjectName(e.target.value)}
+              outline
+              required
+            />
           </div>
           <div className="col-xs-12 col-sm-4">
             <MDBInput
               type="textarea"
-              label="Descripción del proyecto"
+              label="Descripción del proyecto *"
               className="rounded"
               outline
+              value={projectDescription}
+              onChange={(e) => setProjectDescription(e.target.value)}
+              required
             />
           </div>
         </div>
@@ -230,7 +268,7 @@ export default function ProjectView() {
         </div>
       </div>
       <div className="col-xs-12 col-sm-4 o-blue-container o-practice-container">
-        <h4 className="mb-3">Practicas para concebir la pre-producción</h4>
+        <h4 className="mb-3">Prácticas para concebir la pre-producción *</h4>
         <div className="bg-white rounded mb-2 p-2">
           <p className="text-warning">Concebir la experiencia multimedia</p>
           <div className="d-flex justify-content-between">
@@ -242,7 +280,7 @@ export default function ProjectView() {
               href="Documentation"
               className="o-btn-partices rounded btn-warning text-white z-depth-0"
             >
-              Mas información
+              Más información
             </a>
           </div>
         </div>
@@ -257,7 +295,7 @@ export default function ProjectView() {
               href="Documentation"
               className="o-btn-partices rounded bg-success text-white z-depth-0"
             >
-              Mas información
+              Más información
             </a>
           </div>
         </div>

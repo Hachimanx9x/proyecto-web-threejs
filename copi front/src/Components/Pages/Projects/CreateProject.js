@@ -17,6 +17,7 @@ class CreateProject extends Component {
     this.removeMember = this.removeMember.bind(this);
     this.addMember = this.addMember.bind(this);
     this.changeRol = this.changeRol.bind(this);
+    this.handleInput = this.handleInput.bind(this);
 
     this.state = {
       projectIcon: null,
@@ -26,6 +27,7 @@ class CreateProject extends Component {
       projectMembers: [],
       projectPractices: "",
       modal: false,
+      confirmationModal: false,
       windowWidth: window.innerWidth,
       members: [],
       contacts: [
@@ -149,6 +151,16 @@ class CreateProject extends Component {
     }
     console.log(this.state.members);
   }
+  handleInput = (name, e) => {
+    if (name === "projectIcon" || name === "projectPicture") {
+      this.setState({ [name]: e.target.files[0] });
+    } else {
+      this.setState({ [name]: e.target.value });
+    }
+  };
+  submitHandler = (e) => {
+    e.preventDefault();
+  };
   render() {
     return (
       <div className="row mb-3 mb-sm-0 pb-5 pb-sm-0">
@@ -165,162 +177,200 @@ class CreateProject extends Component {
             ))}
           </div>
         </Rodal>
-        <div className="col-xs-12 col-sm-8 o-project-creation-section">
-          <div className="d-flex justify-content-between mb-2">
-            <h4 className="mb-3 pl-4">Creación del projecto</h4>
-            <button
-              className="z-depth-0 border-0 btn btn-primary font-weight-bold"
-              style={{ width: "7rem", height: "2.3rem" }}
-            >
-              Guardar
-            </button>
+        <Rodal
+          width={300}
+          height={160}
+          animation={"fade"}
+          visible={this.state.confirmationModal}
+          onClose={() => this.setState({ confirmationModal: false })}
+        >
+          <div>
+            <h4 className="mt-3">Confirmación de creación de proyecto</h4>
+            <div className="d-flex justify-content-between p-2">
+              <button
+                className="z-depth-0 border-primary btn border-primary text-primary font-weight-bold"
+                type="submit"
+                onClick={() => this.setState({ confirmationModal: false })}
+              >
+                Cancelar
+              </button>
+              <button
+                className="z-depth-0 border-0 btn btn-primary font-weight-bold"
+                type="button"
+                onClick={() => this.props.history.push("Dashboard/projects")}
+              >
+                Crear
+              </button>
+            </div>
           </div>
+        </Rodal>
+        <form className="row" onSubmit={this.submitHandler}>
+          <div className="col-xs-12 col-sm-8 o-project-creation-section">
+            <div className="d-flex justify-content-between mb-2">
+              <h4 className="mb-3 pl-4">Creación del projecto</h4>
+              <button
+                className="z-depth-0 border-0 btn btn-primary font-weight-bold"
+                style={{ width: "7rem", height: "2.3rem" }}
+                type="button"
+                onClick={() => this.setState({ confirmationModal: true })}
+              >
+                Guardar
+              </button>
+            </div>
 
-          <div className="row bg-white o-project-basic-info">
-            <div className="col-xs-12 col-sm-4">
-              <small>Icono del proyecto</small>
-              <div className="inputWrapper rounded-pill mb-3">
-                <img
-                  src={
-                    this.state.projectIcon === null
-                      ? ProjectIcon
-                      : URL.createObjectURL(this.state.projectIcon)
-                  }
-                  alt={"icon"}
-                  className="rounded-circle"
-                  style={{ width: "3rem", height: "3rem" }}
-                />
-                <p className="cyan-text o-icon-input-text">
-                  Subir icono
-                  <FontAwesomeIcon
-                    className="text-secondary ml-2"
-                    icon={faAngleDoubleUp}
+            <div className="row bg-white o-project-basic-info">
+              <div className="col-xs-12 col-sm-4">
+                <small>Icono del proyecto</small>
+                <div className="inputWrapper rounded-pill mb-3">
+                  <img
+                    src={
+                      this.state.projectIcon === null
+                        ? ProjectIcon
+                        : URL.createObjectURL(this.state.projectIcon)
+                    }
+                    alt={"icon"}
+                    className="rounded-circle"
+                    style={{ width: "3rem", height: "3rem" }}
                   />
-                </p>
-                <input
-                  className="fileInput rounded-pill"
-                  type="file"
-                  name="projectIcon"
-                  onChange={(event) => {
-                    const file = event.target.files[0];
-                    this.setState({ projectIcon: file });
-                  }}
-                />
-              </div>
-              <small>Portada del proyecto</small>
-              <div className="o-project-form">
-                <img
-                  src={
-                    this.state.projectPicture === null
-                      ? ProjectPicture
-                      : URL.createObjectURL(this.state.projectPicture)
-                  }
-                  className="o-picture-project"
-                  alt="project"
-                />
-                <div className="inputWrapper o-inputWrapper-btn rounded-pill mb-3">
-                  <small
-                    className="cyan-text"
-                    style={{
-                      left: "1.4rem",
-                      top: "0.6rem",
-                      position: "absolute",
-                    }}
-                  >
+                  <p className="cyan-text o-icon-input-text">
                     Subir icono
                     <FontAwesomeIcon
                       className="text-secondary ml-2"
                       icon={faAngleDoubleUp}
                     />
-                  </small>
+                  </p>
                   <input
                     className="fileInput rounded-pill"
                     type="file"
-                    name="projectPicture"
+                    name="projectIcon"
                     onChange={(event) => {
-                      const file = event.target.files[0];
-                      this.setState({ projectPicture: file });
+                      this.handleInputdleInput("projectIcon", event);
                     }}
                   />
                 </div>
+                <small>Portada del proyecto</small>
+                <div className="o-project-form">
+                  <img
+                    src={
+                      this.state.projectPicture === null
+                        ? ProjectPicture
+                        : URL.createObjectURL(this.state.projectPicture)
+                    }
+                    className="o-picture-project"
+                    alt="project"
+                  />
+                  <div className="inputWrapper o-inputWrapper-btn rounded-pill mb-3">
+                    <small
+                      className="cyan-text"
+                      style={{
+                        left: "1.4rem",
+                        top: "0.6rem",
+                        position: "absolute",
+                      }}
+                    >
+                      Subir icono
+                      <FontAwesomeIcon
+                        className="text-secondary ml-2"
+                        icon={faAngleDoubleUp}
+                      />
+                    </small>
+                    <input
+                      className="fileInput rounded-pill"
+                      type="file"
+                      name="projectPicture"
+                      onChange={(event) => {
+                        this.handleInput("projectPicture", event);
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="col-xs-12 p-0 pl-sm-4 col-sm-4">
+                <MDBInput
+                  type="text"
+                  label="Nombre del proyecto"
+                  outline
+                  required
+                  onChange={(e) => this.handleInput("projectName", e)}
+                />
+              </div>
+              <div className="col-xs-12 col-sm-4">
+                <MDBInput
+                  onChange={(e) => this.handleInput("projectDescription", e)}
+                  type="textarea"
+                  label="Descripción del proyecto"
+                  className="rounded"
+                  outline
+                  required
+                />
               </div>
             </div>
-            <div className="col-xs-12 col-sm-4">
-              <MDBInput type="text" label="Nombre del proyecto" outline />
-            </div>
-            <div className="col-xs-12 col-sm-4">
-              <MDBInput
-                type="textarea"
-                label="Descripción del proyecto"
-                className="rounded"
-                outline
-              />
-            </div>
-          </div>
-          <div
-            className="row bg-white mt-4 flex-column"
-            style={{ borderRadius: "1rem" }}
-          >
-            <div className="d-flex justify-content-between">
-              <h6 className="m-3 pl-4">Integrantes del proyecto</h6>
-              <button
-                onClick={this.showContacts}
-                className="z-depth-0 border-0 btn btn-primary font-weight-bold m-3"
-              >
-                Agregar
-              </button>
-            </div>
-            <div className="o-member-selection-container">
-              {this.state.members.length === 0 ? (
-                <p className="text-secondary m-auto">
-                  No hay miembros seleccionados
-                </p>
-              ) : (
-                this.state.members.map((member, i) => (
-                  <CardMember
-                    remove={this.removeMember}
-                    change={this.changeRol}
-                    key={i}
-                    member={member}
-                  />
-                ))
-              )}
+            <div
+              className="row bg-white mt-4 flex-column"
+              style={{ borderRadius: "1rem" }}
+            >
+              <div className="d-flex justify-content-between">
+                <small className="m-3 pl-4">Integrantes del proyecto</small>
+                <button
+                  onClick={this.showContacts}
+                  type="button"
+                  className="z-depth-0 border-0 btn btn-primary font-weight-bold m-3"
+                >
+                  Agregar
+                </button>
+              </div>
+              <div className="o-member-selection-container">
+                {this.state.members.length === 0 ? (
+                  <p className="text-secondary m-auto">
+                    No hay miembros seleccionados
+                  </p>
+                ) : (
+                  this.state.members.map((member, i) => (
+                    <CardMember
+                      remove={this.removeMember}
+                      change={this.changeRol}
+                      key={i}
+                      member={member}
+                    />
+                  ))
+                )}
+              </div>
             </div>
           </div>
-        </div>
-        <div className="col-xs-12 col-sm-4 o-blue-container o-practice-container">
-          <h4 className="mb-3">Practicas para concebir la pre-producción</h4>
-          <div className="bg-white rounded mb-2 p-2">
-            <p className="text-warning">Concebir la experiencia multimedia</p>
-            <div className="d-flex justify-content-between">
-              <input
-                type="checkbox"
-                className="bg-warning mt-2 rounded border-warning"
-              />
-              <a
-                href="Documentation"
-                className="o-btn-partices rounded btn-warning text-white z-depth-0"
-              >
-                Mas información
-              </a>
+          <div className="col-xs-12 col-sm-4 o-blue-container o-practice-container">
+            <h4 className="mb-3">Practicas para concebir la pre-producción</h4>
+            <div className="bg-white rounded mb-2 p-2">
+              <p className="text-warning">Concebir la experiencia multimedia</p>
+              <div className="d-flex justify-content-between">
+                <input
+                  type="checkbox"
+                  className="bg-warning mt-2 rounded border-warning"
+                />
+                <a
+                  href="Documentation"
+                  className="o-btn-partices rounded btn-warning text-white z-depth-0"
+                >
+                  Mas información
+                </a>
+              </div>
+            </div>
+            <div className="bg-white rounded p-2">
+              <p className="text-success">Sistema multimedia mínimo viable</p>
+              <div className="d-flex justify-content-between">
+                <input
+                  type="checkbox"
+                  className="bg-warning mt-2 rounded border-warning"
+                />
+                <a
+                  href="Documentation"
+                  className="o-btn-partices rounded bg-success text-white z-depth-0"
+                >
+                  Mas información
+                </a>
+              </div>
             </div>
           </div>
-          <div className="bg-white rounded p-2">
-            <p className="text-success">Sistema multimedia mínimo viable</p>
-            <div className="d-flex justify-content-between">
-              <input
-                type="checkbox"
-                className="bg-warning mt-2 rounded border-warning"
-              />
-              <a
-                href="Documentation"
-                className="o-btn-partices rounded bg-success text-white z-depth-0"
-              >
-                Mas información
-              </a>
-            </div>
-          </div>
-        </div>
+        </form>
       </div>
     );
   }

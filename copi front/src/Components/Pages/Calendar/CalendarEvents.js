@@ -36,38 +36,58 @@ export default class CalendarEvents extends Component {
         },
         {
           title: "Reunión avances",
-          start: new Date("2020-11-11 11:15:00"),
-          end: new Date("2020-11-11 11:30:00"),
+          start: new Date("2021-02-11 12:22"),
+          end: new Date("2021-02-13 13:42"),
         },
         {
           title: "Computación",
-          start: new Date("2020-11-15 12:22:00"),
-          end: new Date("2020-11-15 13:42:00"),
+          start: new Date("2021-02-21 12:22"),
+          end: new Date("2021-02-23 13:42"),
         },
         {
           title: "Reunión avances",
-          start: new Date("2020/11/18 12:22:00"),
-          end: new Date("2020/11/18 13:42:00"),
+          start: new Date("2021/02/18 12:22:00"),
+          end: new Date("2021/02/18 13:42:00"),
         },
       ],
       selectedDate: null,
       colors: [],
+      error: false,
+      fetched: false,
     };
+  }
+
+  componentDidMount() {
+    let temcolors = [];
+    let temvents = [];
+    for (let i = 0; i < this.state.events.length; i++) {
+      const color = "#" + Math.floor(Math.random() * 16777215).toString(16);
+      temcolors.push(color);
+      temvents.push({
+        title: this.state.events[i].title,
+        start: this.state.events[i].start,
+        end: this.state.events[i].end,
+        color: color,
+      });
+    }
+    this.setState({ colors: temcolors, fetched: true, events: temvents });
   }
 
   handleDayClick(day, { selected }) {
     this.setState({
       selectedDate: selected ? undefined : day,
     });
+    localStorage.setItem("date", this.state.selectedDate);
     const date = this.state.selectedDate;
     console.log(date);
   }
+
   createEvent() {
     if (this.state.selectedDate != null) {
       console.log(this.state.selectedDate.toLocaleDateString());
       this.props.history.push("/Dashboard/Calendar/CreateEvent");
     } else {
-      console.log("Nay and gg");
+      this.setState({ error: true });
     }
   }
   getRandomColor() {
@@ -75,35 +95,34 @@ export default class CalendarEvents extends Component {
     return color;
   }
   render() {
-    return (
-      <div className="row mb-3 mb-sm-0 pb-5 pb-sm-0">
-        <div className="col-12 col-sm-8 o-calendar-container  text-center">
-          <FullCalendar
-            headerToolbar={{
-              left: "prev,next,today",
-              center: "title",
-              right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek",
-            }}
-            eventClick={() => {
-              this.props.history.push("/Dashboard/Meetings");
-            }}
-            plugins={[
-              dayGridPlugin,
-              timeGridPlugin,
-              listPlugin,
-              bootstrapPlugin,
-            ]}
-            themeSystem={"bootstrap"}
-            events={this.state.events}
-            locale={esLocale}
-          />
-        </div>
-        <div className="col-12 col-sm-3 o-picker-cont ml-1 o-blue-container">
-          <div className="row bg-white o-create-event-container  mr-1 ml-1 ">
-            <div className="col-12 col-sm-8 ">
-              <p className="text-primary ">Crear evento</p>
-            </div>
-            <div className="col text-right m-0 p-0 ">
+    if (this.state.fetched) {
+      return (
+        <div className="row mb-3 mb-sm-0 pb-5 pb-sm-0">
+          <div className="col-12 col-sm-8 o-calendar-container  text-center">
+            <FullCalendar
+              headerToolbar={{
+                left: "prev,next,today",
+                center: "title",
+                right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek",
+              }}
+              eventClick={() => {
+                this.props.history.push("/Dashboard/Meetings");
+              }}
+              plugins={[
+                dayGridPlugin,
+                timeGridPlugin,
+                listPlugin,
+                bootstrapPlugin,
+              ]}
+              themeSystem={"bootstrap"}
+              events={this.state.events}
+              locale={esLocale}
+            />
+          </div>
+          <div className="col-12 col-sm-3 o-picker-cont ml-1 o-blue-container">
+            <div className="d-flex justify-content-between bg-white o-create-event-container  mr-1 ml-1 ">
+              <p className="text-primary ml-4">Crear evento</p>
+
               <button
                 className="m-0 bg-primary rounded-circle text-white"
                 style={{
@@ -117,45 +136,54 @@ export default class CalendarEvents extends Component {
                 <FontAwesomeIcon icon={faPlus} />
               </button>
             </div>
-          </div>
 
-          <div className="o-date-picker-container text-center">
-            <DayPicker
-              localeUtils={MomentLocaleUtils}
-              className="o-date-picker-container"
-              onDayClick={this.handleDayClick}
-              selectedDays={this.state.selectedDate}
-              locale="es"
-              todayButton="Hoy"
-              modifiers={{
-                foo: new Date(),
-              }}
-              onTodayButtonClick={(day, modifiers) =>
-                console.log(day, modifiers)
-              }
-            />
-          </div>
-          <p className="o-text-events">Eventos programados</p>
-          <div className="o-date-picker-container">
-            <p>
-              <FontAwesomeIcon
-                icon={faSquare}
-                color={this.getRandomColor()}
-                className="mr-2"
+            <div
+              className="o-date-picker-container text-center "
+              style={this.state.error ? { border: "1px solid red" } : {}}
+            >
+              <DayPicker
+                localeUtils={MomentLocaleUtils}
+                className="o-date-picker-container"
+                onDayClick={this.handleDayClick}
+                selectedDays={this.state.selectedDate}
+                locale="es"
+                todayButton="Hoy"
+                modifiers={{
+                  foo: new Date(),
+                }}
+                onTodayButtonClick={(day, modifiers) =>
+                  this.setState({
+                    selectedDate: day,
+                  })
+                }
               />
-              Reunión avances
-            </p>
-            <p>
-              <FontAwesomeIcon
-                icon={faSquare}
-                color={this.getRandomColor()}
-                className="mr-2"
-              />
-              Computación
-            </p>
+              <small
+                className={
+                  (this.state.error ? "" : "invisible ") +
+                  "text-danger font-weight-bold"
+                }
+              >
+                Selecciona una fecha
+              </small>
+            </div>
+            <p className="o-text-events">Eventos programados</p>
+            <div className="o-date-picker-container">
+              {this.state.events.map((event, i) => (
+                <p key={i}>
+                  <FontAwesomeIcon
+                    icon={faSquare}
+                    color={this.state.colors[i]}
+                    className="mr-2"
+                  />
+                  {event.title}
+                </p>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return <div>Cargando....</div>;
+    }
   }
 }

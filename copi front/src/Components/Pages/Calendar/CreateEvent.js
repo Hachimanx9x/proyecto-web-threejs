@@ -15,6 +15,8 @@ require("moment/locale/es.js");
 class CreateEvents extends Component {
   constructor(props) {
     super(props);
+    this.handleDayClick = this.handleDayClick.bind(this);
+
     this.state = {
       selectedDate: null,
       colors: [],
@@ -23,6 +25,14 @@ class CreateEvents extends Component {
   getRandomColor() {
     const color = "#" + Math.floor(Math.random() * 16777215).toString(16);
     return color;
+  }
+  handleDayClick(day, { selected }) {
+    this.setState({
+      selectedDate: selected ? undefined : day,
+    });
+    localStorage.setItem("date", this.state.selectedDate);
+    const date = this.state.selectedDate;
+    console.log(date);
   }
   render() {
     return (
@@ -44,27 +54,6 @@ class CreateEvents extends Component {
               >
                 Guardar
               </button>
-            </div>
-          </div>
-
-          <div className="form-row mr-2 ml-2  bg-white p-0 ">
-            <div className="ml-4 row">
-              <div className="form-check mr-4 ">
-                <input type="checkbox" className="form-check-input o-check" />
-                <label className="form-check-label">Repetir cada día</label>
-              </div>
-              <div className="form-check mr-4">
-                <input type="checkbox" className="form-check-input o-check" />
-                <label className="form-check-label">Repetir cada semana</label>
-              </div>
-              <div className="form-check mr-4">
-                <input type="checkbox" className="form-check-input o-check" />
-                <label className="form-check-label">Repetir cada mes</label>
-              </div>
-              <div className="form-check mr-4">
-                <input type="checkbox" className="form-check-input o-check" />
-                <label className="form-check-label">Repetir cada año</label>
-              </div>
             </div>
           </div>
 
@@ -146,32 +135,6 @@ class CreateEvents extends Component {
                   Three
                 </option>
               </select>
-            </div>
-          </div>
-
-          <div className=" row ml-2 mr-2 mt-2 bg-white p-2 rounded">
-            <div className="row col-12">
-              <p className="ml-3 ">Integrantes del evento</p>
-            </div>
-            <div className="row col-12">
-              <div className=" col-12 col-sm-6">
-                <input
-                  type="text"
-                  className="form-control bg-transparen mt-2 ml-4 o-project-text-select "
-                  id="userPassword"
-                  aria-label="Large"
-                  placeholder="Agregar integrante"
-                />
-              </div>
-              <div className="col">
-                <input
-                  type="text"
-                  className="form-control bg-transparen mt-2 ml-4 o-project-text-select "
-                  id="userPassword"
-                  aria-label="Large"
-                  placeholder="Agregar rol"
-                />
-              </div>
             </div>
           </div>
         </div>
