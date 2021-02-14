@@ -4,6 +4,11 @@ module.exports = {
     consejo: "No sacar la información de wikipedia, hace uso de fuentes confiables",
     Practicas: [
         {
+
+            nombre: "Concepción de la experiencia multimedia",
+            descripcion: `Con el uso de esta práctica se plantea el poder diseñar de una 
+            manera concreta todos los elementos que hacen parte de la experiencia multimedia
+             propias del sistema así como relación todos sus elementos `,
             Estados: [
                 {
                     nombre: "Identificado",
@@ -43,10 +48,6 @@ module.exports = {
                 experiencia multimedia. `
                 }
             ],
-            nombre: "Concepción de la experiencia multimedia",
-            descripcion: `Con el uso de esta práctica se plantea el poder diseñar de una 
-            manera concreta todos los elementos que hacen parte de la experiencia multimedia
-             propias del sistema así como relación todos sus elementos `,
             alfas: [
                 {
                     nombre: "Experiencia multimedia",
@@ -281,7 +282,9 @@ module.exports = {
                     fechacreacion: "2021-01-11",
                     fechaentrega: "2021-01-23",
                     revision: 0,
-                    tecnica: 1
+                    tecnica: 1,
+                    listecncias: ["Video como apoyo a la etnografía", "Definición de personas",
+                        "Producción de metáforas y analogías", "Generación de Storyboards"]
                 },
                 {
                     titulo: "A9",
@@ -294,7 +297,9 @@ module.exports = {
                     fechacreacion: "2021-01-11",
                     fechaentrega: "2021-01-23",
                     revision: 0,
-                    tecnica: 1
+                    tecnica: 1,
+                    listecncias: ["Producción de metáforas y analogías", "Generación de Storyboards",
+                        "Mapa de experiencias convincentes", "Diseñe el journey map para la experiencia"]
                 },
                 {
                     titulo: "A10",
@@ -308,7 +313,10 @@ module.exports = {
                     fechacreacion: "2021-01-11",
                     fechaentrega: "2021-01-23",
                     revision: 0,
-                    tecnica: 1
+                    tecnica: 1,
+                    listecncias: ["Generación de Storyboards",
+                        "Matriz para la definición preliminar del tipo de medios digitales",
+                        "Diseñe el journey map para la experiencia"]
                 },
                 {
                     titulo: "A11",
@@ -320,7 +328,11 @@ module.exports = {
                     fechacreacion: "2021-01-11",
                     fechaentrega: "2021-01-23",
                     revision: 0,
-                    tecnica: 1
+                    tecnica: 1,
+                    listecncias: ["Producción de metáforas y analogías",
+                        "Análisis clasificación de información",
+                        "Diseño para la estructura de contenidos e información",
+                        "Wireframes", "Diseñe el journey map para la experiencia"]
                 },
                 {
                     titulo: "A12",
@@ -333,7 +345,10 @@ module.exports = {
                     fechacreacion: "2021-01-11",
                     fechaentrega: "2021-01-23",
                     revision: 0,
-                    tecnica: 1
+                    tecnica: 1,
+                    listecncias: ["Wireframes",
+                        "Matriz de agrupamiento asimétrico entre percepciones sensoriales,modalidades de interacción y medios digitales.",
+                        "Diseñe el journey map para la experiencia"]
                 },
                 {
                     titulo: "A14",
@@ -342,7 +357,9 @@ module.exports = {
                     fechacreacion: "2021-01-11",
                     fechaentrega: "2021-01-23",
                     revision: 0,
-                    tecnica: 1
+                    tecnica: 1,
+                    listecncias: ["Simulación de experiencia", "Análisis de respuestas de usuarios",
+                        "Prototipos de comportamiento", "Prototipos de conceptos"]
                 },
                 {
                     titulo: "A17",
@@ -353,7 +370,8 @@ module.exports = {
                     fechacreacion: "2021-01-11",
                     fechaentrega: "2021-01-23",
                     revision: 0,
-                    tecnica: 1
+                    tecnica: 1,
+                    listecncias: ["Identificación de políticas y normativas"]
                 },
                 {
                     titulo: "A18",
@@ -364,7 +382,8 @@ module.exports = {
                     fechacreacion: "2021-01-11",
                     fechaentrega: "2021-01-23",
                     revision: 0,
-                    tecnica: 1
+                    tecnica: 1,
+                    listecncias: ["Uso no dirigido"]
                 },
                 {
                     titulo: "A19",
@@ -376,7 +395,9 @@ module.exports = {
                     fechacreacion: "2021-01-11",
                     fechaentrega: "2021-01-23",
                     revision: 0,
-                    tecnica: 1
+                    tecnica: 1,
+                    listecncias: ["Análisis de respuestas de usuarios",
+                        "Identificación de patrones", "Base de datos de observaciones del usuario"]
                 }
             ],
             Tecnicas: [
@@ -406,7 +427,7 @@ module.exports = {
                     bibliografia: ""
                 },
                 {
-                    titulo: "Matriz para la definición preliminar del tipo de medios digitales.",
+                    titulo: "Matriz para la definición preliminar del tipo de medios digitales",
                     descripcion: "-En el eje horizontal defina los diferentes tipos de medios digitales y en el eje vertical relacione los puntos definidos en la historia de la experiencia, en donde se desplegará contenido multimedia.  -En los puntos de intersección de la matriz defina conceptos favorables y desfavorables para el uso de cada medio digital, en cada uno de los hitos definidos en la historia. Defina para cada medio digital y cada hito un peso de 1 a 100. -Selección de los medios digitales para la potencial producción del contenido multimedia",
                     bibliografia: ""
                 },
@@ -492,6 +513,9 @@ module.exports = {
         },
 
         {
+
+            nombre: "Sistema Multimedia mínimo viable",
+            descripcion: `Define el minimo producto viable para la entrega ante el cliente`,
             Estados: [
                 {
                     nombre: "Identificado",
@@ -531,8 +555,6 @@ module.exports = {
             experiencia multimedia. `
                 }
             ],
-            nombre: "Sistema Multimedia mínimo viable",
-            descripcion: `Define el minimo producto viable para la entrega ante el cliente`,
             alfas: [
                 {
                     nombre: "Oportunidad",
@@ -773,7 +795,10 @@ module.exports = {
                     fechacreacion: "2021-01-11",
                     fechaentrega: "2021-01-23",
                     revision: 0,
-                    tecnica: 1
+                    tecnica: 1,
+                    listecncias: ["Análisis DOFA",
+                        "Análisis de desglose de riesgos asociada al desarrollo del Sistema Multimedia",
+                        "Análisis para la identificación de riesgos"]
                 },
                 {
                     titulo: "A5",
@@ -784,7 +809,8 @@ module.exports = {
                     fechacreacion: "2021-01-11",
                     fechaentrega: "2021-01-23",
                     revision: 0,
-                    tecnica: 1
+                    tecnica: 1,
+                    listecncias: ["Identificación análoga de los recursos", "Identificación ascendente de recursos"]
                 },
                 {
                     titulo: "A6",
@@ -795,7 +821,10 @@ module.exports = {
                     fechacreacion: "2021-01-11",
                     fechaentrega: "2021-01-23",
                     revision: 0,
-                    tecnica: 1
+                    tecnica: 1,
+                    listecncias: ["Análisis para la identificación de riesgos",
+                        "Identificación análoga de los recursos",
+                        "Identificación ascendente de recursos", "Generación de Canvas"]
                 },
                 {
                     titulo: "A13",
@@ -807,7 +836,9 @@ module.exports = {
                     fechacreacion: "2021-01-11",
                     fechaentrega: "2021-01-23",
                     revision: 0,
-                    tecnica: 1
+                    tecnica: 1,
+                    listecncias: ["Análisis para la definición preliminar de tecnologías Software",
+                        "Análisis para la definición preliminar de tecnologías Hardware"]
                 },
                 {
                     titulo: "A16",
@@ -819,7 +850,9 @@ module.exports = {
                     fechacreacion: "2021-01-11",
                     fechaentrega: "2021-01-23",
                     revision: 0,
-                    tecnica: 1
+                    tecnica: 1,
+                    listecncias: ["Uso no dirigido",
+                        "Identificación de los métodos, motivaciones y recursos del adversario e impacto del sistema en las personas."]
                 },
                 {
                     titulo: "A20",
@@ -831,7 +864,8 @@ module.exports = {
                     fechacreacion: "2021-01-11",
                     fechaentrega: "2021-01-23",
                     revision: 0,
-                    tecnica: 1
+                    tecnica: 1,
+                    listecncias: ["Matriz de proposición de valor"]
                 },
                 {
                     titulo: "A21",
@@ -849,7 +883,8 @@ module.exports = {
                     fechacreacion: "2021-01-11",
                     fechaentrega: "2021-01-23",
                     revision: 0,
-                    tecnica: 1
+                    tecnica: 1,
+                    listecncias: ["Estructura para la formulación de la visión del SMMV"]
                 },
                 {
                     titulo: "A22",
@@ -871,7 +906,8 @@ module.exports = {
                     fechacreacion: "2021-01-11",
                     fechaentrega: "2021-01-23",
                     revision: 0,
-                    tecnica: 1
+                    tecnica: 1,
+                    listecncias: ["Canvas de SMMV"]
                 }
             ],
             Tecnicas: [
@@ -900,16 +936,7 @@ module.exports = {
                     descripcion: "-Efectúe una Estructura de Desglose de Trabajo preliminar, que permita identificar los paquetes preliminares de trabajo, necesarios para la realización de la experiencia y relacionados con el desarrollo de la solución. -Efectúe de manera ascendente, un análisis de los recursos necesarios (tecnológico, humano, materiales, espacios físicos, entre otros) para llevar a cabo la realización de cada paquete de trabajo. -Analice los resultados de esta estimación ascendente de recursos con la estimación análoga, con su equipo de trabajo y valide su viabilidad junto con los patrocinadores.",
                     bibliografia: ""
                 },
-                {
-                    titulo: "Identificación análoga de los recursos",
-                    descripcion: "",
-                    bibliografia: ""
-                },
-                {
-                    titulo: "Identificación ascendente de recursos",
-                    descripcion: "",
-                    bibliografia: ""
-                },
+
                 {
                     titulo: "Generación de Canvas",
                     descripcion: "Defina el segmento de clientes/usuarios de la experiencia multimedia. Piense en: *Para quién estará creando valor la experiencia multimedia. *Quiénes serían los clientes/usuarios más importantes. -Defina la propuesta o hipótesis de valor. Si aplicó la técnica Análisis de Valor , ya cuenta con la hipótesis de valor definida. En caso contrario, piense en: *El valor que la experiencia multimedia le estará entregando a sus clientes. *El problema que se resolverá. *La necesidad que va a satisfacerse. *El tipo de experiencia que se ofrece. -Defina los canales en cómo se va a llevar y a distribuir la experiencia multimedia a sus clientes/usuarios. *Mediante qué canales puede llegarse a clientes/usuarios. *Qué canal funciona mejor para la experiencia multimedia a ofrecerse. *Cuáles serían los canales más rentables.",
@@ -937,25 +964,67 @@ module.exports = {
                 },
                 {
                     titulo: "Matriz de proposición de valor",
-                    descripcion: `Corresponde a la matriz que permite llevar a cabo, la
-                    realización del análisis de proposición de valor del
-                    Sistema Multimedia mínimo viable (ver matriz 11).  `,
+                    descripcion: `-Identifique los aportes de valor de la solución que se concibe, en el Plan para el Desarrollo del Sistema Multimedia.
+                    -Identifique al menos, dos soluciones
+                    existentes similares a la solución que
+                    actualmente se concibe (no necesariamente
+                    deben ser sistemas multimedia), y que sean
+                    utilizadas en el sector objetivo.
+                    -Construya una matriz de proposición de valor,
+                    en donde se especifique por columnas:
+                    *La propuesta de valor de la solución, desde
+                    un análisis en tres escenarios: lo que el
+                    Sistema Multimedia debe tener, lo que el
+                    Sistema Multimedia debe ofrecer, las delicias
+                    ofrecidas por el Sistema Multimedia (Tenga en
+                    cuenta el PDSM).
+                    *Las dos soluciones escogidas para análisis.
+                    *La solución basada en el Sistema Multimedia
+                    que se concibe.
+                    *Una descripción en función del análisis que
+                    desea realizarse.
+                    -Una vez desarrollada la matriz, discuta los
+                    resultados con clientes, patrocinadores y potenciales usuarios, así como con su equipo
+                    de trabajo, contrastándolo con el PDSM.
+                    -Realice los ajustes que los interesados
+                    acuerden como necesarios.`,
                     bibliografia: ``
                 },
                 {
                     titulo: "Estructura para la formulación de la visión del SMMV",
-                    descripcion: `Corresponde al modelo de estructura gramatical que
-                    se sugiere, para llevar a cabo la realización de la
-                    formulación de la visión del Sistema Multimedia
-                    mínimo viable (ver tabla 14).`,
+                    descripcion: `-A partir de la proposición de valor, genere un espacio para lluvia de ideas con los interesados.
+                    -Escoja diferentes ideas y estructúrelas a partir
+                    de una serie de conectores y conceptos,
+                    asegurándose hacer explícita la diferenciación
+                    de valor en torno a la propuesta que se
+                    concibe, en contraste con las existentes.
+                    -Analice los resultados obtenidos, junto a los
+                    interesados y realice los ajustes acordados.`,
                     bibliografia: ``
                 },
                 {
                     titulo: "Canvas de SMMV",
-                    descripcion: `Se trata de la estructura adaptada para la realización
-                    del modelo Canvas para el Sistema Multimedia
-                    mínimo viable (ver figura 12) y la descripción de sus
-                    diferentes componentes constitutivos (ver tabla 15). `,
+                    descripcion: `-Genere una estructura tipo Canvas con los
+                    siguientes elementos y organizaciones:
+                    *En la parte superior ubique: Visón del SMMV,
+                    Experiencia multimedia, Interesados,
+                    Oportunidad, Valores Humanos, Problema y
+                    Riesgos.
+                    *En la parte inferior ubique: contenido
+                    multimedia, percepciones sensoriales y
+                    modalidades de interacción.
+                    -Realice un análisis en cada uno de los
+                    elementos anteriormente descritos,  comenzando con los de la parte superior y
+                    luego hacia los de la parte inferior.
+                    -Para la realización del análisis, utilice el PDSM
+                    y la proposición de valor del Sistema
+                    Multimedia, a partir de los cuales se
+                    fundamenta el modelo Canvas para el SMMV.
+                    -Evalúe el resultado del modelo Canvas para el
+                    SMMV y discútalo con los interesados.
+                    -Realice los ajustes al modelo Canvas del
+                    SMMV en función de la retroalimentación de
+                    los interesados.`,
                     bibliografia: ``
                 }
             ],
