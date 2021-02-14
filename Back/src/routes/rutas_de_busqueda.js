@@ -7,7 +7,7 @@ const { removeObject } = require('../ftp/peticiones');
 const ftpminio = require("../ftp/peticiones");
 const LLAVE = 'misecretos';
 
-
+const model = require('../models/models')
 
 rutas.post('/login', (req, res) => {
     console.log("body", req.body);
@@ -184,6 +184,16 @@ rutas.get('/calendarios/:id', proToken, (req, res) => {
         await buscarDB.buscareventoscalendarioproyecto(id).then(respu => res.json(respu)).catch(err => res.json(err));
     });
 });
+rutas.get('/metodologia/:name', (req, res) => {
+    const { name } = req.params
+    if (name === "CEM") {
+        res.json(reordenar("Concepción de la experiencia multimedia"))
+    } else if (name === "SMMV") {
+        res.json(reordenar("Sistema Multimedia mínimo viable"))
+    } else {
+        res.json({ datos: null })
+    }
+});
 //-----------seccion de la api
 rutas.get('/api/idiomas', async (req, res) => {
     buscarDB.obtenertodasIdiomas().then(respu => res.json(respu)).catch(err => res.json(err));
@@ -323,7 +333,145 @@ function proToken(req, res, next) {
         res.sendStatus(403);
     }
 }
+function reordenar(name) {
+    let objdef;
+    let alfas = [], entregables = [], actividades = [], roles = [];
+    for (let a = 0; a < model.Practicas.length; a++) {
+        if (name === model.Practicas[a].nombre) {
+            objdef = {
+                nombre: model.Practicas[a].nombre,
+                descripcion: model.Practicas[a].descripcion,
+                alfas,
+                entregables,
+                actividades,
+                roles
+            }
+        }
+    }
 
+
+    for (let a = 0; a < model.Practicas.length; a++) {
+        if (objdef.nombre === model.Practicas[a].nombre) {
+            for (let b = 0; b < model.Practicas[a].alfas.length; b++) {
+                objdef.alfas.push({
+                    nombre: model.Practicas[a].alfas[b].nombre,
+                    descripcion: model.Practicas[a].alfas[b].descripcion,
+                    estados: model.Practicas[a].Estados
+                })
+            }
+        }
+    }
+
+    for (let a = 0; a < model.Practicas.length; a++) {
+        if (objdef.nombre === model.Practicas[a].nombre) {
+            for (let b = 0; b < model.Practicas[a].Actividades.length; b++) {
+                let tecnicas = []
+                for (let c = 0; c < model.Practicas[a].Actividades[b].listecncias.length; c++) {
+                    for (let d = 0; d < model.Practicas[a].Tecnicas.length; d++) {
+                        if (model.Practicas[a].Actividades[b].listecncias[c] === model.Practicas[a].Tecnicas[d].titulo) {
+                            tecnicas.push({
+                                titulo: model.Practicas[a].Tecnicas[d].titulo,
+                                descripcion: model.Practicas[a].Tecnicas[d].descripcion,
+                                bibliografia: model.Practicas[a].Tecnicas[d].bibliografia
+                            })
+                        }
+                    }
+                }
+                objdef.actividades.push({
+                    titulo: model.Practicas[a].Actividades[b].titulo,
+                    descripcion: model.Practicas[a].Actividades[b].descripcion,
+                    tecnicas
+                })
+            }
+        }
+    }
+    for (let a = 0; a < model.Practicas.length; a++) {
+        if (objdef.nombre === model.Practicas[a].nombre) {
+            for (let b = 0; b < model.Practicas[a].Entregables.length; b++) {
+                let herramientas = []
+                for (let c = 0; c < model.Practicas[a].Entregables[b].Herramientas.length; c++) {
+                    for (let d = 0; d < model.Practicas[a].Herramientas.length; d++) {
+                        if (model.Practicas[a].Entregables[b].Herramientas[c] === model.Practicas[a].Herramientas[d].nombre) {
+                            herramientas.push({
+                                titulo: model.Practicas[a].Herramientas[d].nombre,
+                                descripcion: model.Practicas[a].Herramientas[d].descripcion,
+                                bibliografia: model.Practicas[a].Herramientas[d].bibliografia
+                            })
+                        }
+                    }
+                }
+                objdef.entregables.push({
+                    titulo: model.Practicas[a].Entregables[b].entregatitulo,
+                    descripcion: model.Practicas[a].Entregables[b].entregadescripcion,
+                    herramientas
+                })
+            }
+        }
+    }
+    for (let a = 0; a < model.Practicas.length; a++) {
+        if (objdef.nombre === model.Practicas[a].nombre) {
+            for (let b = 0; b < model.Practicas[a].Roles.length; b++) {
+                if (model.Practicas[a].Roles[b].nombre === "Arquitecto Experiencia Multimedia") {
+                    objdef.roles.push({
+                        nombre: model.Practicas[a].Roles[b].nombre,
+                        descripcion: model.Practicas[a].Roles[b].descripcion,
+                        perfiles: ["Ing multimedia", "Diseñador", "Diseñador UX"]
+                    })
+                }
+                else if (model.Practicas[a].Roles[b].nombre === "Arquitecto de producción de contenidos") {
+                    objdef.roles.push({
+                        nombre: model.Practicas[a].Roles[b].nombre,
+                        descripcion: model.Practicas[a].Roles[b].descripcion,
+                        perfiles: ["Diseñador", "Diseñador UX", "Diseñador UI"]
+                    })
+                }
+                else if (model.Practicas[a].Roles[b].nombre === "Arquitecto de información") {
+                    objdef.roles.push({
+                        nombre: model.Practicas[a].Roles[b].nombre,
+                        descripcion: model.Practicas[a].Roles[b].descripcion,
+                        perfiles: ["Diseñador", "Ing multimedia", "Diseñador UI"]
+                    })
+                }
+                else if (model.Practicas[a].Roles[b].nombre === "Arquitecto de pruebas") {
+                    objdef.roles.push({
+                        nombre: model.Practicas[a].Roles[b].nombre,
+                        descripcion: model.Practicas[a].Roles[b].descripcion,
+                        perfiles: ["Diseñador", "Ing multimedia", "Diseñador UX"]
+                    })
+                }
+                else if (model.Practicas[a].Roles[b].nombre === "Arquitecto de Hardware/Software") {
+                    objdef.roles.push({
+                        nombre: model.Practicas[a].Roles[b].nombre,
+                        descripcion: model.Practicas[a].Roles[b].descripcion,
+                        perfiles: ["Ing Sistemas", "Ing informatico", "Ing multimedia"]
+                    })
+                }
+                else if (model.Practicas[a].Roles[b].nombre === "Arquitecto de información") {
+                    objdef.roles.push({
+                        nombre: model.Practicas[a].Roles[b].nombre,
+                        descripcion: model.Practicas[a].Roles[b].descripcion,
+                        perfiles: ["Diseñador", "Ing informatico", "Ing multimedia"]
+                    })
+                }
+                else if (model.Practicas[a].Roles[b].nombre === "Diseñador Audiovisual") {
+                    objdef.roles.push({
+                        nombre: model.Practicas[a].Roles[b].nombre,
+                        descripcion: model.Practicas[a].Roles[b].descripcion,
+                        perfiles: ["Diseñador", "Diseñador UX", "Ing multimedia"]
+                    })
+                }
+                else if (model.Practicas[a].Roles[b].nombre === "Diseñador de Concepto y Storyboard") {
+                    objdef.roles.push({
+                        nombre: model.Practicas[a].Roles[b].nombre,
+                        descripcion: model.Practicas[a].Roles[b].descripcion,
+                        perfiles: ["Diseñador", "Diseñador UI", "Ing multimedia"]
+                    })
+                }
+            }
+        }
+    }
+    return objdef;
+}
 
 
 /*
