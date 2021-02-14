@@ -37,7 +37,7 @@ export default class CalendarEvents extends Component {
         },
         {
           title: "Reunión avances",
-          start: new Date("2021-02-11 12:22"),
+          start: new Date("2021/02/11 12:22"),
           end: new Date("2021-02-13 13:42"),
         },
         {
@@ -114,14 +114,11 @@ export default class CalendarEvents extends Component {
     this.setState({
       selectedDate: selected ? undefined : day,
     });
-    localStorage.setItem("date", this.state.selectedDate);
-    const date = this.state.selectedDate;
-    console.log(date);
   }
 
   createEvent() {
     if (this.state.selectedDate != null) {
-      console.log(this.state.selectedDate.toLocaleDateString());
+      localStorage.setItem("date", this.state.selectedDate);
       this.props.history.push("/Dashboard/Calendar/CreateEvent");
     } else {
       this.setState({ error: true });
@@ -184,6 +181,7 @@ export default class CalendarEvents extends Component {
                 onDayClick={this.handleDayClick}
                 selectedDays={this.state.selectedDate}
                 locale="es"
+                disabledDays={{ before: moment().toDate() }}
                 todayButton="Hoy"
                 modifiers={{
                   foo: new Date(),

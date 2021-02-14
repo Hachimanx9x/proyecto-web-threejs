@@ -26,6 +26,10 @@
   margin: 0rem 0rem 0.5rem 0rem;
 }
 
+.o-create-event-container button:focus {
+  outline: none;
+}
+
 .o-blue-container {
   background-color: #eef7fc;
   height: 100vh;
@@ -89,12 +93,8 @@
 }
 
 .o-hour-text {
-  font-size: 0.8rem;
-}
-
-.o-project-text-select {
-  width: 100%;
-  height: 2rem;
+  font-size: 11px;
+  font-family: Roboto;
 }
 
 .o-check:checked {
@@ -104,6 +104,44 @@
 
 .DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
   background-color: #2962ff;
+}
+
+.o-create-select {
+  position: absolute;
+  top: -5px;
+}
+
+.o-create-select select {
+  background: #fff;
+  padding: 0;
+  border-radius: 1rem;
+  max-width: auto;
+  height: 1.4rem;
+  border: 1px solid #007bff;
+  font-size: 0.6rem;
+  -webkit-appearance: button;
+  outline: none;
+}
+
+.o-create-select::before {
+  content: "\f078";
+  font-family: "FontAwesome";
+  position: absolute;
+  border-radius: 100%;
+  top: 0;
+  margin-top: 3px;
+  right: 0;
+  width: 1.4rem;
+  height: 1.4rem;
+  text-align: center;
+  line-height: 25px;
+  pointer-events: none;
+  color: #fff;
+  font-size: 15px;
+  background: #007ce0;
+}
+.o-create-select:hover::before {
+  background: #0472ca;
 }
 
 @media only screen and (max-width: 1380px) {

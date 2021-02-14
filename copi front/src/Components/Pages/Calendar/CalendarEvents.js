@@ -147,6 +147,7 @@ export default class CalendarEvents extends Component {
                 onDayClick={this.handleDayClick}
                 selectedDays={this.state.selectedDate}
                 locale="es"
+                disabledDays={{ before: moment().toDate() }}
                 todayButton="Hoy"
                 modifiers={{
                   foo: new Date(),

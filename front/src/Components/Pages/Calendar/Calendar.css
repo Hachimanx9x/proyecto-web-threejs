@@ -6,7 +6,7 @@
   border-radius: 1rem;
   width: 100%;
   margin: 0;
-  padding: 0.5rem;
+  padding: 0;
   min-height: 15rem;
 }
 .o-date-picker-container:focus,
@@ -26,10 +26,12 @@
   margin: 0rem 0rem 0.5rem 0rem;
 }
 
+.o-create-event-container button:focus {
+  outline: none;
+}
+
 .o-blue-container {
   background-color: #eef7fc;
-  height: 100vh;
-  height: 100%;
   padding: 1rem;
   margin: 0.5rem;
   border-radius: 1rem;
@@ -59,27 +61,27 @@
   box-shadow: none;
 }
 
-.o-blue-container .md-form label {
-  transform: translateY(-14px) scale(0.8) !important;
+.o-blue-container .md-outline input[type="text"] + label,
+.o-blue-container .md-outline textarea + label {
+  transform: translateY(-14px) scale(0.8);
   background: #fff;
   height: 1.6rem;
-  left: 1px !important;
-  padding-left: 5px !important;
-  padding-bottom: 0px !important;
-  padding-right: 5px !important;
-  margin-left: 0.5rem !important;
-  font-size: 1.3rem;
+  left: 1px;
+  padding-left: 5px;
+  padding-bottom: 0px;
+  padding-right: 5px;
+  margin-left: 0.5rem;
+  font-size: 0.8rem;
   color: black;
-  position: absolute !important;
+  position: absolute;
 }
-
-.o-blue-container .md-form input {
-  padding-top: 0.5rem !important;
-  font-size: 0.9rem;
+.o-blue-container .md-outline textarea:focus + label {
+  color: #007bff;
 }
-.o-blue-container .md-form textarea {
-  padding-top: 0.5rem !important;
-  font-size: 0.9rem;
+.o-blue-container .md-outline textarea:focus {
+  border-color: #007bff;
+  box-shadow: inset 0 0 0 1px #007bff;
+  border-bottom: 0.3px solid #007bff;
 }
 
 .o-project-select {
@@ -89,12 +91,8 @@
 }
 
 .o-hour-text {
-  font-size: 0.8rem;
-}
-
-.o-project-text-select {
-  width: 100%;
-  height: 2rem;
+  font-size: 11px;
+  font-family: Roboto;
 }
 
 .o-check:checked {
@@ -106,6 +104,86 @@
   background-color: #2962ff;
 }
 
+.o-create-select {
+  position: absolute;
+  top: -5px;
+}
+
+.o-create-select select {
+  background: #fff;
+  padding: 0;
+  border-radius: 1rem;
+  max-width: 10rem;
+  height: 1.4rem;
+  border: 1px solid #007bff;
+  font-size: 0.6rem;
+  -webkit-appearance: button;
+  outline: none;
+}
+
+.o-create-select::before {
+  content: "\f078";
+  font-family: "FontAwesome";
+  position: absolute;
+  border-radius: 100%;
+  top: 0;
+  margin-top: 3px;
+  right: 0;
+  width: 1.4rem;
+  height: 1.4rem;
+  text-align: center;
+  line-height: 25px;
+  pointer-events: none;
+  color: #fff;
+  font-size: 15px;
+  background: #007ce0;
+}
+.o-create-select:hover::before {
+  background: #0472ca;
+}
+
+.o-clock-container {
+  position: relative;
+  float: left;
+}
+
+.o-clock {
+  outline: none;
+  padding: 5px 10px;
+  height: 1.5rem;
+  width: 10rem;
+  border-radius: 1rem;
+  border: 1px solid #007bff;
+  font-size: 11px;
+}
+
+.o-open-clock-button {
+  position: absolute;
+  top: 2px;
+  right: 0px;
+  width: 25px;
+  height: 1.5rem;
+  background: transparent;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.o-clock::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  width: 1rem;
+  height: 1.3rem;
+  position: absolute;
+  margin-left: 1rem;
+  right: 0px;
+  z-index: 99;
+  background: red;
+}
+.o-open-clock-button button {
+  border: none;
+  background: transparent;
+  margin-left: 4px;
+  color: #fff;
+}
 @media only screen and (max-width: 1380px) {
   .o-date-picker-container {
     width: 100%;
@@ -127,6 +205,7 @@
   .o-picker-cont {
     min-width: 20rem;
     margin: 0;
+    padding: 0;
   }
 }
 
@@ -146,5 +225,11 @@
   }
   .o-create-event-container-form {
     margin: 1rem 0;
+  }
+}
+@media only screen and (max-width: 590px) {
+  .o-blue-container {
+    padding: 0;
+    margin: 0;
   }
 }
