@@ -10,14 +10,22 @@ import DayPicker from "react-day-picker";
 import MomentLocaleUtils from "react-day-picker/moment";
 
 import "moment/locale/es.js";
+import Rodal from "rodal";
+import SuccessAnimation from "../../Elements/SuccessAnimation/SuccessAnimation";
 require("moment/locale/es.js");
 
 class CreateEvents extends Component {
   constructor(props) {
     super(props);
+    this.handleValidation = this.handleValidation.bind(this);
     this.handleResize = this.handleResize.bind(this);
+    this.handleInput = this.handleInput.bind(this);
+    this.createEvent = this.createEvent.bind(this);
+
     this.state = {
       selectedDate: null,
+      confirmationModal: false,
+      project: "",
       eventTitle: "",
       eventDescription: "",
       eventStart: null,
@@ -25,18 +33,85 @@ class CreateEvents extends Component {
       colors: [],
       fetched: false,
       windowWidth: window.innerWidth,
+      titleIsValid: true,
+      hourIsValid: true,
+      projectIsValid: true,
+      errorHour: "",
+      confirmation: false,
     };
   }
   getRandomColor() {
     const color = "#" + Math.floor(Math.random() * 16777215).toString(16);
     return color;
   }
+  /*
+   *Function to create the event. Looks if every required field is correctly filled and send the http request to the server.
+   */
+  createEvent = async () => {
+    await this.handleValidation();
+    const hour = this.state.hourIsValid;
+    const titleValid = this.state.titleIsValid;
+    const project = this.state.projectIsValid;
+    if (hour & project & titleValid) {
+      this.setState({ confirmation: true });
+      setTimeout(() => {
+        this.setState({ confirmationModal: false });
+        this.props.history.push("/Dashboard/Calendar");
+      }, 1200);
+    } else {
+      this.setState({ confirmationModal: false });
+    }
+  };
+
+  /*
+   *Function used to validate each requiered Fields.
+   */
+  handleValidation = () => {
+    const title = this.state.eventTitle;
+    const startEvent =
+      this.state.eventStart !== null ? this.state.eventStart.split(":") : null;
+    const endEvent =
+      this.state.eventEnd !== null ? this.state.eventEnd.split(":") : null;
+    console.log(title + " " + startEvent + " " + endEvent);
+    if (title.trim() === "") {
+      this.setState({ titleIsValid: false });
+    } else {
+      this.setState({ titleIsValid: true });
+    }
+    if (this.state.project === "") {
+      this.setState({ projectIsValid: false });
+    } else {
+      this.setState({ projectIsValid: true });
+    }
+    if (startEvent === null || endEvent === null) {
+      this.setState({ errorHour: "Campos requeridos", hourIsValid: false });
+    } else if (parseInt(startEvent[0]) > parseInt(endEvent[0])) {
+      this.setState({
+        errorHour: "Rangos de hora inválidos",
+        hourIsValid: false,
+      });
+    } else if (parseInt(startEvent[0]) === parseInt(endEvent[0])) {
+      if (parseInt(startEvent[1]) >= parseInt(endEvent[1])) {
+        this.setState({
+          errorHour: "Rangos de hora inválidos",
+          hourIsValid: false,
+        });
+      } else {
+        this.setState({
+          hourIsValid: true,
+        });
+      }
+    } else {
+      this.setState({
+        hourIsValid: true,
+      });
+    }
+  };
   handleResize = (e) => {
     this.setState({ windowWidth: window.innerWidth });
   };
   /*
    * Add an resizable method to get the current viewport dimensions for responsive issues.
-   * F
    */
   componentDidMount() {
     window.addEventListener("resize", this.handleResize);
@@ -52,10 +127,60 @@ class CreateEvents extends Component {
   componentWillUnmount() {
     window.removeEventListener("rezise", this.handleResize);
   }
+  handleInput = (name, e) => {
+    if (name === "confirmationModal") {
+      this.setState({ [name]: e });
+    } else {
+      this.setState({ [name]: e.target.value });
+    }
+  };
   render() {
     if (this.state.fetched) {
       return (
         <div className="o-blue-container p-2 mb-4 mb-sm-0 pb-5 pb-sm-3">
+          <Rodal
+            width={300}
+            height={160}
+            animation={"fade"}
+            visible={this.state.confirmationModal}
+            onClose={() => this.handleInput("confirmationModal", false)}
+          >
+            {!this.state.confirmation ? (
+              <div>
+                <h5 className="mt-5 mb-2">¿Crear evento?</h5>
+                <div className="d-flex justify-content-between p-2">
+                  <button
+                    className="z-depth-0 border-primary btn border-primary text-primary font-weight-bold"
+                    type="button"
+                    style={{
+                      width: "7.2rem",
+                      fontSize: "0.8rem",
+                      height: "2.5rem",
+                    }}
+                    onClick={() => this.handleInput("confirmationModal", false)}
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    className="z-depth-0 border-0 btn btn-primary font-weight-bold"
+                    type="button"
+                    style={{
+                      width: "7.2rem",
+                      fontSize: "0.8rem",
+                      height: "2.5rem",
+                    }}
+                    onClick={() => this.createEvent()}
+                  >
+                    Crear
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div>
+                <SuccessAnimation />
+              </div>
+            )}
+          </Rodal>
           <div className="row p-0 p-sm-2 pl-sm-4 mb-sm-0 m-0">
             <div
               className="col-12 col-xs-12 bg-white rounded col-sm-8 mb-2 mt-2 o-create-event-container-form"
@@ -65,28 +190,46 @@ class CreateEvents extends Component {
                 <button
                   type="button"
                   className="btn btn-sm z-depth-0 btn-primary ml-0 mr-0 mt-4 text-light"
+                  onClick={() => this.handleInput("confirmationModal", true)}
                 >
                   Guardar
                 </button>
               </div>
 
-              <div className="p-0 pl-sm-4 pr-sm-4 m-0 mr-sm-2 ml-sm-2">
+              <div className="p-0  pl-sm-4 pr-sm-4 m-0 d-flex flex-column position-relative  mr-sm-2 ml-sm-2">
                 <MDBInput
-                  className="m-0 mr-0"
+                  className={
+                    (!this.state.titleIsValid
+                      ? "is-invalid border-danger "
+                      : "") + "m-0  mr-0"
+                  }
                   label="Título de la reunión"
                   outline
+                  onChange={(e) => this.handleInput("eventTitle", e)}
                 />
+                <span
+                  className={
+                    (!this.state.titleIsValid ? "visible " : "invisible ") +
+                    "position-absolute o-hour-text pt-0 mt-0 text-danger m-0 mr-sm-4"
+                  }
+                  style={{ right: "0", bottom: "0" }}
+                >
+                  Campo requerido
+                </span>
               </div>
 
               <div className="row mt-0 ml-2 mr-2 p-2 rounded justify-content-between">
-                <div className="col-sm-4 mt-1 mt-sm-0 mr-1">
+                <div className="col-sm-4 mt-1 mb-2 mb-sm-0 mt-sm-0 mr-1 position-relative">
                   <small className="o-hour-text m-0 mb-2">
                     Proyecto asociado
                   </small>
-                  <div className="position-relative mt-1 mb-0 mb-sm-4">
+                  <div className="position-relative mt-1 mb-2 mb-sm-4">
                     <div className="o-create-select">
-                      <select>
-                        <option hidden>Creación de entorno web</option>
+                      <select onChange={(e) => this.handleInput("project", e)}>
+                        <option hidden>Seleccione</option>
+                        <option value="Creación de entorno web">
+                          Creación de entorno web
+                        </option>
                         <option value="Arquitecto de experiencia multimedia">
                           Arquitecto de experiencia multimedia
                         </option>
@@ -99,23 +242,38 @@ class CreateEvents extends Component {
                       </select>
                     </div>
                   </div>
+                  <span
+                    className={
+                      (!this.state.projectIsValid ? "visible" : "invisible") +
+                      " position-absolute o-hour-text pt-0 mt-0 text-danger m-0 mr-sm-4"
+                    }
+                    style={
+                      this.state.windowWidth < 590
+                        ? { right: "55px", bottom: "-35px" }
+                        : { right: "40px", bottom: "-20px" }
+                    }
+                  >
+                    Campo requerido
+                  </span>
                 </div>
                 <div
-                  className="col-sm-4 mt-4 mt-sm-0"
+                  className="col-sm-4 mt-4 mb-2 mb-sm-0 mt-sm-0 position-relative"
                   style={{ minWidth: "14rem", maxWidth: "14rem" }}
                 >
                   <small className="o-hour-text m-0">
                     Hora de inicio de la reunión
                   </small>
-                  <div className="position-relative bg-warning">
+                  <div className="position-relative bg-warning ">
                     <div className="o-clock-container">
                       <input
-                        className="o-clock"
+                        className={
+                          (!this.state.hourIsValid ? "border-danger " : "") +
+                          "o-clock"
+                        }
                         type="time"
                         name="selected_date"
                         onChange={(e) => {
-                          this.setState({ eventStart: e.target.value });
-                          console.log(this.state.eventStart);
+                          this.handleInput("eventStart", e);
                         }}
                       />
                       <span className="o-open-clock-button">
@@ -127,26 +285,42 @@ class CreateEvents extends Component {
                               borderRadius: "50%",
                               background: "#007bff",
                             }}
+                            className={
+                              !this.state.hourIsValid
+                                ? "bg-danger border-danger"
+                                : ""
+                            }
                           />
                         </button>
                       </span>
                     </div>
                   </div>
+                  <span
+                    className={
+                      (!this.state.hourIsValid ? "visible " : "invisible ") +
+                      "position-absolute o-hour-text pt-0 mt-0 text-danger m-0 mr-sm-4"
+                    }
+                    style={{ right: "25px", bottom: "-20px" }}
+                  >
+                    {this.state.errorHour}
+                  </span>
                 </div>
 
-                <div className="col-sm-4 mt-1 mt-sm-0">
+                <div className="col-sm-4 mt-1 mt-sm-0 position-relative">
                   <small className="o-hour-text m-0">
                     Hora de finalización de la reunión
                   </small>
                   <div className="postition-relative">
                     <div className="o-clock-container">
                       <input
-                        className="o-clock"
+                        className={
+                          (!this.state.hourIsValid ? "border-danger " : "") +
+                          "o-clock"
+                        }
                         type="time"
                         name="selected_date"
                         onChange={(e) => {
-                          this.setState({ eventEnd: e.target.value });
-                          console.log(this.state.eventEnd);
+                          this.handleInput("eventEnd", e);
                         }}
                       />
                       <span className="o-open-clock-button">
@@ -158,11 +332,29 @@ class CreateEvents extends Component {
                               borderRadius: "50%",
                               background: "#007bff",
                             }}
+                            className={
+                              !this.state.hourIsValid
+                                ? "bg-danger border-danger"
+                                : ""
+                            }
                           />
                         </button>
                       </span>
                     </div>
                   </div>
+                  <span
+                    className={
+                      (!this.state.hourIsValid ? "visible " : "invisible ") +
+                      "position-absolute o-hour-text pt-0 mt-0 text-danger m-0 mr-sm-4"
+                    }
+                    style={
+                      this.state.windowWidth < 590
+                        ? { right: "60px", bottom: "-20px" }
+                        : { right: "40px", bottom: "-20px" }
+                    }
+                  >
+                    {this.state.errorHour}
+                  </span>
                 </div>
               </div>
 
@@ -172,6 +364,7 @@ class CreateEvents extends Component {
                     type="textarea"
                     className="m-0 mr-0 rounded"
                     label="Descripción de la reunión"
+                    onChange={(e) => this.handleInput("eventDescription", e)}
                     outline
                   />
                 </div>
