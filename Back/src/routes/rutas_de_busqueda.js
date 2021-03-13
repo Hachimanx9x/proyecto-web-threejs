@@ -13,7 +13,22 @@ rutas.post('/login', (req, res) => {
     console.log("body", req.body);
     const { email, password } = req.body
     if (typeof email === 'string' && typeof password === 'string') {
-        buscarDB.obtenerToken(req.body).then(resul => res.json(resul)).catch(err => res.json(err));
+        buscarDB.obtenerToken(req.body).then(resul => res.json(resul)).catch(err => {
+            buscarDB.obtenertodasUsuarios().then(result2 => {
+                const { API } = result2;
+                let encontrado = false;
+                for (let a = 0; a < API.length; a++) { if (API[a].email === email) { encontrado = true } }
+
+
+                if (encontrado) {
+                    res.json(err)
+                } else {
+                    res.json({ msj: "Correo no registrado" })
+                }
+
+            }).catch(err2 => res.json({ msj: "error servidor" }))
+
+        });
     }
 
 });

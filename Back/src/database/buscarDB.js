@@ -35,8 +35,8 @@ funcionesDB.obtenerToken = (body) => {
                     sqlite.all(Query.login(body), (err, rows) => {
                         if (!err) {
                             // console.log(rows);
-                            if (rows[0] == null || rows.length == 0) {
-                                console.log("error en los datos ")
+                            if (rows[0] === null || rows.length === 0) {
+                                // console.log("error en los datos ")
                                 rej({ respuesta: "no encontrado" });
                             } else {
                                 //console.log(rows); 
