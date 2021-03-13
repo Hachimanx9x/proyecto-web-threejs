@@ -1,0 +1,71 @@
+.o-navbar {
+  height: 3rem;
+  padding-left: 40rem;
+  padding-right: 20rem;
+}
+.navbar img {
+  width: 10rem;
+}
+.o-navbar-item {
+  height: 3rem;
+  text-align: center;
+  width: 6.8rem;
+}
+.o-navbar .o-navbar-btn {
+  text-align: center;
+  padding: 0;
+  color: white;
+  font-size: 14px;
+  height: 100%;
+  margin: 0;
+  text-transform: unset;
+}
+
+.o-navbar-item:hover {
+  background: #203768;
+  color: #3bccf6;
+  border-bottom: 5px solid #3bccf6;
+  transition: 0.2s;
+}
+
+.o-navbar .o-navbar-btn:hover {
+  color: #3bccf6;
+  font-weight: bold;
+}
+.o-navbar-btn:active,
+.o-navbar-btn.active.focus,
+.o-navbar-btn.active:focus,
+.o-navbar-btn.focus,
+.o-navbar-btn:active.focus,
+.o-navbar-btn:active:focus,
+.o-navbar-btn:focus {
+  border-style: outset;
+  outline: none;
+  box-shadow: none;
+  color: #3bccf6;
+}
+a.active .o-navbar-btn {
+  color: #3bccf6;
+  font-weight: bold;
+}
+a.active .o-navbar-item {
+  background: #203768;
+  border-bottom: 5px solid #3bccf6;
+}
+
+@media only screen and (max-width: 590px) {
+  .navbar-collapse {
+    width: 100%;
+    text-align: center;
+    background-color: #203768;
+  }
+  .navbar {
+    height: 4rem;
+    padding: 0;
+  }
+  .o-navbar-item {
+    height: 3rem;
+    text-align: center;
+    width: 100%;
+  }
+}

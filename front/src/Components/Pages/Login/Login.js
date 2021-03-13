@@ -1,67 +1,69 @@
 import React, { Component } from "react";
-import axios from 'axios';
+import axios from "axios";
 import "./Login.css";
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import 'bootstrap-css-only/css/bootstrap.min.css';
-import 'mdbreact/dist/css/mdb.css';
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import "bootstrap-css-only/css/bootstrap.min.css";
+import "mdbreact/dist/css/mdb.css";
+import Navbar from "../../Elements/Navbar/Navbar";
 
 class Login extends Component {
   constructor() {
     super();
     this.state = { correo: "", password: "", login: false, store: null };
-    this.loginfun = this.loginfun.bind(this)
+    this.loginfun = this.loginfun.bind(this);
   }
-  
-  componentWillMount(){
-    this.httpInstance = axios.create( {
-      baseURL:"http://localhost:3030/",
+
+  componentWillMount() {
+    this.httpInstance = axios.create({
+      baseURL: "http://localhost:3030/",
       timeout: 1000,
-      headers: {'Content-Type': 'application/json'}
-  });
- this.httpInstance.interceptors.response.use(null, error => {
-    const expectedError = error.response && error.response.status >= 400 && error.response.status < 500;
-    if (!expectedError) {
+      headers: { "Content-Type": "application/json" },
+    });
+    this.httpInstance.interceptors.response.use(null, (error) => {
+      const expectedError =
+        error.response &&
+        error.response.status >= 400 &&
+        error.response.status < 500;
+      if (!expectedError) {
         // Loggear mensaje de error a un servicio como Sentry
         // Mostrar error genérico al usuario
         return Promise.reject(error);
-    }
-  }
-);
-
+      }
+    });
   }
 
-  loginfun =  () => {
-   
-    const { correo, password } = this.state; 
-    console.log(`El correo es ${correo} y la contraseña es ${password}`);  
+  loginfun = () => {
+    const { correo, password } = this.state;
+    console.log(`El correo es ${correo} y la contraseña es ${password}`);
 
- 
-  //------
-  this.httpInstance.post('login',{ correo, password }).then(respuesta => {
-    if(respuesta.statusText === "OK" ){
-      console.log(respuesta.data);
-      localStorage.setItem(
-        "login",
-        JSON.stringify({
-          token: respuesta.data.token,
-        })
-      );
-      
-      this.props.history.push("/Dashboard/Desktop");
-    }else{
-      console.log("error fatal")
-    }
-    
-}).catch(error => {
-    console.error(error);
-})
+    //------
+    this.httpInstance
+      .post("login", { correo, password })
+      .then((respuesta) => {
+        if (respuesta.statusText === "OK") {
+          console.log(respuesta.data);
+          localStorage.setItem(
+            "login",
+            JSON.stringify({
+              token: respuesta.data.token,
+            })
+          );
 
-
-  };//fin de login fun 
+          this.props.history.push("/Dashboard/Desktop");
+        } else {
+          console.log("error fatal");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }; //fin de login fun
 
   render() {
     return (
       <div className="o-big-container">
+        <Navbar />
+
         <div className="o-login">
           <form>
             <h3 className="text-white m-0">El mejor lugar</h3>
@@ -112,7 +114,10 @@ class Login extends Component {
                 </label>
               </div>
               <div className="col-sm ml-5">
-                <a className="text-info font-weight-bold " href="/PasswordRecovering">
+                <a
+                  className="text-info font-weight-bold "
+                  href="/PasswordRecovering"
+                >
                   Olvidaste tu contraseña?
                 </a>
               </div>
@@ -248,5 +253,3 @@ axios(config)
     .catch(error => console.log('error', error));
 
 */
-
- 

@@ -1,16 +1,17 @@
 import React, { Component } from "react";
+import Navbar from "../../Elements/Navbar/Navbar";
 import "./SignIn.css";
 
 class SigIn extends Component {
   constructor() {
     super();
-    this.state = { name: "", email: "", password: "", confirmpassword:"" };
+    this.state = { name: "", email: "", password: "", confirmpassword: "" };
   }
-
 
   render() {
     return (
       <div className="o-big-container">
+        <Navbar />
         <div className="o-sigIn">
           <form>
             <h3 className="text-white m-0">El mejor lugar</h3>
@@ -20,7 +21,10 @@ class SigIn extends Component {
             </p>
             <div className="row">
               <div className="form-group col-md-12 input-group-lg">
-                <label htmlFor="userName" className="font-weight-bold text-info">
+                <label
+                  htmlFor="userName"
+                  className="font-weight-bold text-info"
+                >
                   Nombre
                 </label>
                 <input
@@ -48,7 +52,10 @@ class SigIn extends Component {
             </div>
             <div className="row">
               <div className="form-group col-md-12 input-group-lg">
-                <label htmlFor="password" className="font-weight-bold text-info">
+                <label
+                  htmlFor="password"
+                  className="font-weight-bold text-info"
+                >
                   Contraseña
                 </label>
                 <input
@@ -62,7 +69,10 @@ class SigIn extends Component {
             </div>
             <div className="row">
               <div className="form-group col-md-12 input-group-lg">
-                <label htmlFor="password" className="font-weight-bold text-info">
+                <label
+                  htmlFor="password"
+                  className="font-weight-bold text-info"
+                >
                   Confirmar Contraseña
                 </label>
                 <input

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "./Desktop.css";
 import CardDesktop from "../../Elements/CardDesktop/CardDesktop";
-import Carousel from "react-elastic-carousel";
 import ProjectPicture from "../../../ilustracion-equipo-de-trabajo.jpg";
 import { MDBNotification } from "mdbreact";
 import { Radar, defaults } from "react-chartjs-2";
@@ -119,39 +118,7 @@ class Desktop extends Component {
           className="col-12 col-sm-3 ml-1 o-blue-container o-slider-container"
           style={{ minWidth: "17rem" }}
         >
-          <div className="bg-white rounded p-0 pr-1 pl-1 mb-2 mt-2">
-            <Carousel
-              itemsToShow={1}
-              onChange={(currentItem) => {
-                const item = currentItem;
-                alert(item.item.alt);
-              }}
-            >
-              <a href="https://www.google.com">
-                <img
-                  src={ProjectPicture}
-                  alt="project logo"
-                  key="your mom"
-                  className="o-slider-img"
-                />
-              </a>
-              <img
-                src={ProjectPicture}
-                alt="project logo"
-                className="o-slider-img"
-              />
-              <img
-                src={ProjectPicture}
-                alt="project logo"
-                className="o-slider-img"
-              />
-              <img
-                src={ProjectPicture}
-                alt="project logo"
-                className="o-slider-img"
-              />
-            </Carousel>
-          </div>
+          <div className="bg-white rounded p-0 pr-1 pl-1 mb-2 mt-2"></div>
           <div className="bg-white rounded p-1 mb-2 mt-2 text-center d-flex flex-column justify-content-center">
             <Radar data={data} />
             <button
