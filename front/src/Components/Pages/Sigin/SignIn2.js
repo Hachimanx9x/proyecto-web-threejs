@@ -11,55 +11,161 @@ import Navbar from "../../Elements/Navbar/Navbar";
 class SigIn extends Component {
   constructor() {
     super();
-    this.state = { name: "", email: "", password: "", confirmpassword: "" };
-    this.RegisterFunction = this.RegisterFunction.bind(this);
-  }
+    this.state = {
+      name: "",
+      email: "",
+      password: "",
+      confirmpassword: "",
+      validName: true,
+      validEmail: true,
+      validpassword: true,
+      validpasswordConfirmation: true,
 
+      emailMessage: "",
+      passwordMessage: "",
+      passwordMessageConfirmation: "",
+      nameMessage: "",
+    };
+    this.RegisterFunction = this.RegisterFunction.bind(this);
+    this.handleValidation = this.handleValidation.bind(this);
+  }
+  handleValidation = () => {
+    const { name, email, password, confirmpassword } = this.state;
+    const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    const letters = /^[a-z][a-z\s]*$/;
+
+    //Validaciones del nombre.
+    if (name.trim() === "") {
+      this.setState({
+        validName: false,
+        nameMessage:
+          "El nombre es requerido. Por favor ingresa tu nombre completo",
+      });
+    } else if (!name.match(letters)) {
+      this.setState({
+        validName: false,
+        nameMessage: "El nombre solo debe contener letras.",
+      });
+    } else {
+      this.setState({
+        validName: true,
+      });
+    }
+    //Validaciones del correo.
+    if (email.trim() === "") {
+      this.setState({
+        validEmail: false,
+        emailMessage:
+          "Por favor ingresa una dirección de correo. Ej: correo@dominio.com",
+      });
+    } else if (!validEmail) {
+      this.setState({
+        validEmail: false,
+        emailMessage:
+          "Correo inválido. Debe contener un signo '@' y un dominio después del signo. Ej: correo@dominio.com",
+      });
+    } else {
+      this.setState({
+        validEmail: true,
+      });
+    }
+    //Validaciones de la contraseña.
+    if (password.trim() === "") {
+      this.setState({
+        validpassword: false,
+        passwordMessage: "La contraseña es requerida.",
+      });
+    } else if (password.trim().length < 6) {
+      this.setState({
+        validpassword: false,
+        passwordMessage: "La contraseña debe tener al menos 6 caracteres.",
+      });
+    } else {
+      this.setState({
+        validpassword: true,
+      });
+    }
+    if (confirmpassword.trim() === "") {
+      this.setState({
+        validpasswordConfirmation: false,
+        passwordMessageConfirmation: "La contraseña es requerida.",
+      });
+    }
+    if (
+      confirmpassword.trim() !== "" &&
+      password.trim() !== "" &&
+      password === confirmpassword
+    ) {
+      this.setState({
+        validpassword: true,
+        validpasswordConfirmation: true,
+      });
+    } else if (
+      confirmpassword.trim() !== "" &&
+      password.trim() !== "" &&
+      password !== confirmpassword
+    ) {
+      this.setState({
+        validpassword: false,
+        passwordMessage: "La contraseñas no coinciden.",
+        validpasswordConfirmation: false,
+        passwordMessageConfirmation: "La contraseñas no coinciden.",
+      });
+    }
+  };
   RegisterFunction = async (e) => {
     e.preventDefault();
-    const httpInstance = axios.create({
-      baseURL: "http://localhost:3030/",
-      timeout: 1000,
-      headers: { "Content-Type": "application/json" },
-    });
-    httpInstance.interceptors.response.use(null, (error) => {
-      const expectedError =
-        error.response &&
-        error.response.status >= 400 &&
-        error.response.status < 500;
-      if (!expectedError) {
-        // Loggear mensaje de error a un servicio como Sentry
-        // Mostrar error genérico al usuario
-        return Promise.reject(error);
-      }
-    });
-    const { email, password, nombre } = this.state;
 
-    //------
-    await httpInstance
-      .post("/create/usuario", {
-        email,
-        password,
-        nombre,
-      })
-      .then((respuesta) => {
-        if (respuesta.statusText === "OK") {
-          console.log(respuesta.data);
-          localStorage.setItem(
-            "login",
-            JSON.stringify({
-              token: respuesta.data.token,
-            })
-          );
-
-          this.props.history.push("/Dashboard/FinishRegister");
-        } else {
-          console.log("error fatal");
-        }
-      })
-      .catch((error) => {
-        console.error(error);
+    await this.handleValidation();
+    if (
+      this.state.validEmail &&
+      this.state.validpassword &&
+      this.state.validName
+    ) {
+      const httpInstance = axios.create({
+        baseURL: "http://localhost:3030/",
+        timeout: 1000,
+        headers: { "Content-Type": "application/json" },
       });
+      httpInstance.interceptors.response.use(null, (error) => {
+        const expectedError =
+          error.response &&
+          error.response.status >= 400 &&
+          error.response.status < 500;
+        if (!expectedError) {
+          // Loggear mensaje de error a un servicio como Sentry
+          // Mostrar error genérico al usuario
+          return Promise.reject(error);
+        }
+      });
+      const { email, password, nombre } = this.state;
+
+      //------
+      await httpInstance
+        .post("/create/usuario", {
+          email,
+          password,
+          nombre,
+        })
+        .then((respuesta) => {
+          if (respuesta.statusText === "OK") {
+            console.log(respuesta.data);
+            localStorage.setItem(
+              "login",
+              JSON.stringify({
+                token: respuesta.data.token,
+              })
+            );
+
+            this.props.history.push("/Dashboard/FinishRegister");
+          } else {
+            console.log("error fatal");
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
   };
 
   render() {
@@ -67,51 +173,113 @@ class SigIn extends Component {
       <div className="container-fluid o-sigin-container h-100 pb-4 pb-sm-0">
         <Navbar />
         <div className="o-sigin-form m-0 mt-sm-5">
-          <form onSubmit={this.RegisterFunction}>
+          <form className="position-relative" onSubmit={this.RegisterFunction}>
             <h3 className="text-white m-0">El mejor lugar</h3>
             <h3 className="text-white m-0">Para tu trabajar con tu equipo</h3>
             <p className="mt-2 text-white font-weight-bold ">
               Bienvenido, por favor registrate
             </p>
-            <MDBInput
-              onChange={(event) => {
-                this.setState({ nombre: event.target.value });
-              }}
-              label="Nombre"
-              className="o-sigin-input text-white"
-              type="text"
-              icon="user"
-            />
-
-            <MDBInput
-              onChange={(event) => {
-                this.setState({ email: event.target.value });
-              }}
-              label="Correo"
-              className="o-sigin-input mt-5 text-white"
-              type="email"
-              icon="envelope"
-            />
-            <MDBInput
-              onChange={(event) => {
-                this.setState({ password: event.target.value });
-              }}
-              label="Contraseña"
-              className="o-sigin-input mt-5 text-white"
-              type="password"
-              icon="lock"
-            />
-
-            <MDBInput
-              onChange={(event) => {
-                this.setState({ confirmpassword: event.target.value });
-              }}
-              label="Confirmar contraseña"
-              className="o-sigin-input mt-5 text-white"
-              type="password"
-              icon="lock"
-            />
-            <div className="form-row">
+            <div className={this.state.validName ? "" : "o-sigin-error"}>
+              <MDBInput
+                onChange={(event) => {
+                  this.setState({ name: event.target.value });
+                }}
+                label="Nombre"
+                className={
+                  (this.state.validName ? "" : "is-invalid ") +
+                  "o-sigin-input mt-5 text-white"
+                }
+                type="text"
+                icon="user"
+              />
+            </div>
+            <div className="row position-absolute m-0 justify-content-end w-100">
+              <small
+                className={
+                  this.state.validName ? "invisible" : "text-danger error-text"
+                }
+              >
+                {this.state.nameMessage}
+              </small>
+            </div>
+            <div className={this.state.validEmail ? "" : "o-sigin-error"}>
+              <MDBInput
+                onChange={(event) => {
+                  this.setState({ email: event.target.value });
+                }}
+                label="Correo"
+                className={
+                  (this.state.validEmail ? "" : "is-invalid ") +
+                  "o-sigin-input mt-5 text-white"
+                }
+                type="text"
+                icon="envelope"
+              />
+            </div>
+            <div className="row position-absolute m-0 justify-content-end w-100">
+              <small
+                className={
+                  this.state.validEmail ? "invisible" : "text-danger error-text"
+                }
+              >
+                {this.state.emailMessage}
+              </small>
+            </div>
+            <div className={this.state.validpassword ? "" : "o-sigin-error"}>
+              <MDBInput
+                onChange={(event) => {
+                  this.setState({ password: event.target.value });
+                }}
+                label="Contraseña"
+                className={
+                  (this.state.validEmail ? "" : "is-invalid ") +
+                  "o-sigin-input mt-5 text-white"
+                }
+                type="password"
+                icon="lock"
+              />
+            </div>
+            <div className="row position-absolute m-0 justify-content-end w-100">
+              <small
+                className={
+                  this.state.validpassword
+                    ? "invisible"
+                    : "text-danger error-text"
+                }
+              >
+                {this.state.passwordMessage}
+              </small>
+            </div>
+            <div
+              className={
+                this.state.validpasswordConfirmation ? "" : "o-sigin-error"
+              }
+            >
+              <MDBInput
+                onChange={(event) => {
+                  this.setState({ confirmpassword: event.target.value });
+                }}
+                label="Confirmar contraseña"
+                className={
+                  (this.state.validpasswordConfirmation ? "" : "is-invalid ") +
+                  "o-sigin-input mt-5 text-white"
+                }
+                type="password"
+                icon="lock"
+              />
+            </div>
+            <div className="row position-absolute m-0 justify-content-end w-100">
+              <small
+                className={
+                  this.state.validpasswordConfirmation
+                    ? "invisible"
+                    : "text-danger error-text"
+                }
+              >
+                {this.state.passwordMessageConfirmation}
+              </small>
+            </div>
+            <div className="form-row mt-4">
               <div className="col-12 ">
                 <a
                   className="text-info o-sigin-text font-weight-bold "

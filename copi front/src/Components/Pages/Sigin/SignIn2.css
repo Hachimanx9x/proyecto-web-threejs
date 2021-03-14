@@ -24,9 +24,10 @@
   margin-bottom: 0;
 }
 .o-sigin-error .md-form input[type="password"]:not(.browser-default),
-.o-sigin-error .md-form input[type="email"]:not(.browser-default) {
+.o-sigin-error .md-form input[type="text"]:not(.browser-default) {
   border-bottom: 1px solid #dc3545;
 }
+
 .o-sigin-container .md-form .fa-lock,
 .o-sigin-container .md-form .fa-envelope,
 .o-sigin-container .md-form .fa-user {
@@ -38,7 +39,11 @@
 .o-sigin-container .md-form .fa-envelope.active {
   color: #4285f4;
 }
-
+.o-sigin-error .md-form .fa-lock,
+.o-sigin-error .md-form .fa-envelope,
+.o-sigin-error .md-form .fa-user {
+  color: #dc3545;
+}
 .o-button {
   font-size: 1rem;
   padding: 1rem;

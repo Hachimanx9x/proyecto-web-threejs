@@ -6,63 +6,129 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
+import Navbar from "../../Elements/Navbar/Navbar";
 
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = { email: "", password: "", rememberMe: "" };
+    this.state = {
+      email: "",
+      password: "",
+      rememberMe: "",
+      validEmail: true,
+      validpassword: true,
+      emailMessage: "",
+      passwordMessage: "",
+    };
     this.LoginFunction = this.LoginFunction.bind(this);
+    this.handleValidation = this.handleValidation.bind(this);
   }
 
-  LoginFunction = (e) => {
+  handleValidation = () => {
+    const { email, password } = this.state;
+    const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    if (email.trim() === "") {
+      this.setState({
+        validEmail: false,
+        emailMessage:
+          "Por favor ingresa una dirección de correo. Ej: correo@dominio.com",
+      });
+    } else if (!validEmail) {
+      this.setState({
+        validEmail: false,
+        emailMessage:
+          "Correo inválido. Debe contener un signo '@' y un dominio después del signo. Ej: correo@dominio.com",
+      });
+    } else {
+      this.setState({
+        validEmail: true,
+      });
+    }
+    if (password.trim() === "") {
+      this.setState({
+        validpassword: false,
+        passwordMessage: "La contraseña es requerida.",
+      });
+    } else if (password.trim().length < 6) {
+      this.setState({
+        validpassword: false,
+        passwordMessage: "La contraseña debe tener al menos 6 caracteres.",
+      });
+    } else {
+      this.setState({
+        validpassword: true,
+      });
+    }
+  };
+
+  LoginFunction = async (e) => {
     e.preventDefault();
-    this.props.history.push("/Dashboard/Desktop");
+    await this.handleValidation();
+    if (this.state.validEmail && this.state.validpassword) {
+      this.props.history.push("/Dashboard/Desktop");
+    }
   };
 
   render() {
     return (
       <div className="container-fluid o-login-container h-100 pb-4 pb-sm-0">
+        <Navbar />
         <div className="o-login-form">
-          <h3 className="text-white m-0">El mejor lugar</h3>
+          <h3 className="text-white m-0 mt-4 mt-sm-0">El mejor lugar</h3>
           <h3 className="text-white m-0">Para tu trabajar con tu equipo</h3>
-          <p className="mt-2 mb-8 text-white font-weight-bold ">
+          <p className="mt-2 text-white font-weight-bold ">
             Bienvenido, por favor ingresa con tu cuenta
           </p>
-          <form onSubmit={this.LoginFunction}>
-            <div className="row">
-              <div className="form-group col-md-12 input-group-lg">
-                <label htmlFor="useName" className="font-weight-bold text-info">
-                  Correo
-                </label>
-                <MDBInput
-                  onChange={(event) => {
-                    this.setState({ email: event.target.value });
-                  }}
-                  label="Correo"
-                  className="o-login-input text-white"
-                  type="email"
-                  icon="envelope"
-                />
-              </div>
+          <form className="position-relative" onSubmit={this.LoginFunction}>
+            <div className={this.state.validEmail ? "" : "o-login-error"}>
+              <MDBInput
+                onChange={(event) => {
+                  this.setState({ email: event.target.value });
+                }}
+                label="Correo"
+                className={
+                  (this.state.validEmail ? "" : "is-invalid ") +
+                  "o-login-input mt-5 text-white"
+                }
+                type="text"
+                icon="envelope"
+              />
             </div>
-            <div className="row">
-              <div className="form-group col-md-12 input-group-lg">
-                <label htmlFor="useName" className="font-weight-bold text-info">
-                  Contraseña
-                </label>
-                <MDBInput
-                  onChange={(event) => {
-                    this.setState({ password: event.target.value });
-                  }}
-                  label="Contraseña"
-                  className="o-login-input text-white"
-                  type="password"
-                  icon="lock"
-                />
-              </div>
+            <div className="row position-absolute m-0 justify-content-end w-100">
+              <small
+                className={
+                  this.state.validEmail ? "invisible" : "text-danger error-text"
+                }
+              >
+                {this.state.emailMessage}
+              </small>
             </div>
-
-            <div className="form-row">
+            <div className={this.state.validpassword ? "" : "o-login-error"}>
+              <MDBInput
+                onChange={(event) => {
+                  this.setState({ password: event.target.value });
+                }}
+                label="Contraseña"
+                className={
+                  (this.state.validpassword ? "" : "is-invalid ") +
+                  "o-login-input mt-5 text-white"
+                }
+                type="password"
+                icon="lock"
+              />
+            </div>
+            <div className="row position-absolute m-0 justify-content-end w-100">
+              <small
+                className={
+                  this.state.validpassword
+                    ? "invisible"
+                    : "text-danger error-text"
+                }
+              >
+                {this.state.passwordMessage}
+              </small>
+            </div>
+            <div className="form-row mt-5">
               <div className="form-check col-6">
                 <div className="custom-control custom-checkbox">
                   <input
@@ -90,9 +156,8 @@ class Login extends Component {
             <div className="row ml-1">
               <div className="col-6">
                 <button
-                  className=" blue accent-4 z-depth-0 text-light ml-0 mr-0 mt-4 font-weight-bold o-button"
-                  type="button"
-                  onClick={this.LoginFunction}
+                  className=" bg-primary z-depth-0 text-light ml-0 mr-0 mt-4 font-weight-bold o-button"
+                  type="submit"
                 >
                   INGRESAR
                 </button>
