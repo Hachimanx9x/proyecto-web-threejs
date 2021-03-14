@@ -40,7 +40,7 @@ class SigIn extends Component {
         nameMessage:
           "El nombre es requerido. Por favor ingresa tu nombre completo",
       });
-    } else if (!name.match(letters)) {
+    } else if (!name.toLocaleLowerCase().match(letters)) {
       this.setState({
         validName: false,
         nameMessage: "El nombre solo debe contener letras.",
