@@ -1,0 +1,44 @@
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+.o-landing {
+  overflow-y: auto;
+  width: 100%;
+  height: 100%;
+  scrollbar-color: #6d6d7d #202528;
+  scrollbar-highlight-color: #a1a1b5;
+  scrollbar-width: thin;
+}
+header {
+  background: no-repeat;
+  background-image: url("../../../Logos/Group102.png");
+  background-position: 90% 38%;
+  background-origin: content-box;
+  background-size: 30vw auto;
+  background-color: #202a5b;
+  width: 100%;
+  height: 80%;
+}
+
+.o-landing::-webkit-scrollbar {
+  width: 16px;
+  position: absolute;
+  z-index: 3;
+  background-color: #202528;
+}
+.o-landing::-webkit-scrollbar-thumb {
+  background: #6d6d7d;
+  border-radius: 3px;
+}
+
+.o-landing::-webkit-scrollbar-thumb:hover {
+  background: #a1a1b5;
+}
+
+.o-landing-title {
+  width: 50vh;
+  min-width: 40rem;
+  padding: 7rem 0rem 0rem 7rem;
+}

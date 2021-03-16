@@ -159,7 +159,7 @@ class Login extends Component {
                   className=" bg-primary z-depth-0 text-light ml-0 mr-0 mt-4 font-weight-bold o-button"
                   type="submit"
                 >
-                  INGRESAR
+                  Ingresar
                 </button>
               </div>
               <div className="col-6 d-flex justify-content-end">
@@ -168,7 +168,7 @@ class Login extends Component {
                   href="/Signin"
                   role="button"
                 >
-                  REGISTRARSE
+                  Registrarse
                 </a>
               </div>
             </div>

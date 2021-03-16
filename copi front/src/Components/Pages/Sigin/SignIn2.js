@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { MDBInput } from "mdbreact";
+import axios from "axios";
 import "./SignIn2.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
@@ -144,7 +145,7 @@ class SigIn extends Component {
                 label="Nombre"
                 className={
                   (this.state.validName ? "" : "is-invalid ") +
-                  "o-sigin-input mt-5 text-white"
+                  "o-sigin-input mt-4 mt-sm-5 text-white"
                 }
                 type="text"
                 icon="user"
@@ -167,7 +168,7 @@ class SigIn extends Component {
                 label="Correo"
                 className={
                   (this.state.validEmail ? "" : "is-invalid ") +
-                  "o-sigin-input mt-5 text-white"
+                  "o-sigin-input  mt-4 mt-sm-5  text-white"
                 }
                 type="text"
                 icon="envelope"
@@ -190,7 +191,7 @@ class SigIn extends Component {
                 label="Contraseña"
                 className={
                   (this.state.validEmail ? "" : "is-invalid ") +
-                  "o-sigin-input mt-5 text-white"
+                  "o-sigin-input  mt-4 mt-sm-5  text-white"
                 }
                 type="password"
                 icon="lock"
@@ -219,7 +220,7 @@ class SigIn extends Component {
                 label="Confirmar contraseña"
                 className={
                   (this.state.validpasswordConfirmation ? "" : "is-invalid ") +
-                  "o-sigin-input mt-5 text-white"
+                  "o-sigin-input  mt-4 mt-sm-5  text-white"
                 }
                 type="password"
                 icon="lock"
@@ -252,7 +253,7 @@ class SigIn extends Component {
                   className=" blue accent-4 z-depth-0 text-light ml-0 mr-0 mt-2 font-weight-bold o-button"
                   type="submit"
                 >
-                  REGISTRARSE
+                  Registrarse
                 </button>
               </div>
               <div className="col-6 d-flex justify-content-end">
@@ -261,7 +262,7 @@ class SigIn extends Component {
                   href="/Login"
                   role="button"
                 >
-                  CANCELAR
+                  Cancelar
                 </a>
               </div>
             </div>

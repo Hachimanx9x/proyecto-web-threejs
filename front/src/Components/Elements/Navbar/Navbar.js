@@ -41,12 +41,14 @@ export default function Navbar() {
 
   return (
     <nav
-      className="navbar mt-1 fixed-top shadow-none navbar-expand-sm o-navbar  rounded"
+      className="navbar  sticky-top shadow-none navbar-expand-sm o-navbar"
       style={
-        size.width > 590 ? { padding: "0 10rem" } : { padding: "0 0 0 1rem" }
+        size.width > 590
+          ? { padding: "1rem 10rem 1rem 10rem" }
+          : { padding: "0 0 0 1rem" }
       }
     >
-      <a href="#">
+      <a href="/Home">
         <img src={Logo} alt="Softmedia" />
       </a>
 
