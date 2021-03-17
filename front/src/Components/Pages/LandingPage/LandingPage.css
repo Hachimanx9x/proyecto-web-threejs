@@ -104,7 +104,7 @@ header h1 {
 }
 
 #third-section {
-  max-width: 1050px;
+  max-width: 1040px;
   background-color: #e7f1f7;
   border-radius: 22px;
   margin: 0 auto;
@@ -155,6 +155,17 @@ header h1 {
 #third-section .card p {
   margin: 0.5rem;
   font-weight: 500;
+}
+
+.reveal {
+  position: relative;
+  transform: translateY(150px);
+  opacity: 0;
+  transition: all 1s ease;
+}
+.reveal.active {
+  transform: translateY(0);
+  opacity: 1;
 }
 @media only screen and (max-width: 720px) {
   .o-landing-title {

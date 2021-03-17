@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../../Elements/Navbar/Navbar";
 import "./LandingPage.css";
 import Landing1 from "../../../Logos/landing_1.svg";
@@ -12,6 +12,37 @@ import Practice4 from "../../../Logos/landing_8.svg";
 import Bars from "../../../Logos/landing_9.svg";
 
 export default function LandingPage() {
+  const [Sections, setSections] = useState([
+    { Section: false },
+    { Section: false },
+    { Section: false },
+  ]);
+  function reveal() {
+    const reveals = document.querySelectorAll(".reveal");
+    const sect = Sections;
+
+    for (let i = 0; i < reveals.length; i++) {
+      let windowHeight = window.innerHeight;
+      let revealtop = reveals[i].getBoundingClientRect().top;
+      const revealPoint = 150;
+
+      if (revealtop < windowHeight - revealPoint && !sect[i].Section) {
+        sect[i].Section = true;
+
+        setSections([...sect]);
+      }
+    }
+  }
+  useEffect(() => {
+    const interval = setInterval(() => {
+      window.addEventListener("scroll", reveal, { passive: true });
+      reveal();
+    }, 500);
+
+    reveal();
+    return () => window.removeEventListener("scroll", reveal);
+  }, []);
+
   const infoPage = [
     {
       title: "Misión",
@@ -79,7 +110,12 @@ export default function LandingPage() {
             Registrarse
           </a>
         </div>
-        <div className="o-header-card card">
+        <div
+          className={
+            "reveal " +
+            (Sections[0].Section ? "active o-header-card card " : "")
+          }
+        >
           <div className="o-landing-card-title ">
             <h3>
               Construye el mejor sistema multimedia apoyándote con guías y
@@ -98,7 +134,17 @@ export default function LandingPage() {
           </div>
         </div>
       </header>
-      <section className="o-card-section">
+      {/*
+      className={
+            "reveal " +
+            (Sections[0].Section ? "active o-header-card card " : "")
+          }
+      */}
+      <section
+        className={
+          "reveal" + (Sections[1].Section ? " active o-card-section" : "")
+        }
+      >
         {infoPage.map((info, i) => (
           <div className="card" key={i}>
             <img src={info.icon} alt="Information" />
@@ -107,7 +153,10 @@ export default function LandingPage() {
           </div>
         ))}
       </section>
-      <section id="third-section">
+      <section
+        id="third-section"
+        className={"reveal" + (Sections[2].Section ? " active" : "")}
+      >
         <h3 className="font-weight-bol">Metodología empleada en Softmedia</h3>
         <div className="d-flex ">
           <p>

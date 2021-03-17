@@ -3,6 +3,9 @@ body {
   padding: 0;
   overflow-x: hidden;
 }
+* {
+  font-family: "Roboto";
+}
 .o-landing {
   overflow-y: auto;
   width: 100%;
@@ -11,17 +14,44 @@ body {
   scrollbar-highlight-color: #a1a1b5;
   scrollbar-width: thin;
 }
+
+.o-landing p {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.o-landing .o-landing-title p {
+  font-size: 12px;
+  font-weight: 400;
+}
 header {
   background: no-repeat;
   background-image: url("../../../Logos/Group102.png");
   background-position: 90% 38%;
   background-origin: content-box;
-  background-size: 30vw auto;
+  background-size: 25vw auto;
   background-color: #202a5b;
   width: 100%;
   height: 80%;
 }
 
+.o-header-card {
+  max-width: 1140px;
+  align-content: center;
+  display: flex;
+  margin: 8rem auto 0 auto;
+  text-align: justify;
+  justify-content: space-around;
+  flex-direction: row;
+  padding: 12px;
+}
+header img {
+  width: 95%;
+  margin: 0 0 0 1rem;
+}
+.o-landing-card-title {
+  width: 90%;
+}
 .o-landing::-webkit-scrollbar {
   width: 16px;
   position: absolute;
@@ -36,9 +66,148 @@ header {
 .o-landing::-webkit-scrollbar-thumb:hover {
   background: #a1a1b5;
 }
-
+header h1 {
+  font-weight: bold;
+}
 .o-landing-title {
-  width: 50vh;
+  width: 50%;
   min-width: 40rem;
-  padding: 7rem 0rem 0rem 7rem;
+  padding: 9rem 0rem 0rem 7rem;
+}
+
+.o-landing-card-title h3 {
+  color: #202a5b;
+}
+.o-card-section {
+  max-width: 1140px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 7rem auto 0 auto;
+}
+
+.o-card-section h3 {
+  color: #202a5b;
+}
+
+.o-card-section .card {
+  width: 19rem;
+  margin: 1rem auto;
+  text-align: justify;
+  padding: 0.8rem;
+}
+.o-card-section .card h3 {
+  text-align: center;
+}
+.o-card-section .card img {
+  height: 8rem;
+}
+
+#third-section {
+  max-width: 1040px;
+  background-color: #e7f1f7;
+  border-radius: 22px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: justify;
+}
+#third-section .d-flex p,
+#third-section .d-flex img {
+  width: 50%;
+}
+#third-section img {
+  float: right;
+  height: 8rem;
+}
+#third-section h3 {
+  font-weight: bold;
+}
+#third-section p {
+  font-weight: 400;
+}
+
+.o-practices-info-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.o-practices-info-cards .card {
+  width: 13rem;
+  margin: 1rem auto;
+  padding: 0;
+  overflow: hidden;
+  text-align: justify;
+}
+
+.o-practices-info-cards h6 {
+  text-align: center;
+  font-weight: bold;
+  color: #202a5b;
+  margin: 1rem 0;
+}
+#third-section .card img {
+  height: 7rem;
+  width: 100%;
+  margin: 0;
+  padding: 1rem;
+  background-color: #138dfb;
+}
+#third-section .card p {
+  margin: 0.5rem;
+  font-weight: 500;
+}
+
+.reveal {
+  position: relative;
+  transform: translateY(150px);
+  opacity: 0;
+  transition: all 1s ease;
+}
+.reveal.active {
+  transform: translateY(0);
+  opacity: 1;
+}
+@media only screen and (max-width: 720px) {
+  .o-landing-title {
+    min-width: 30rem;
+  }
+  header h1 {
+    font-size: 36px;
+    font-weight: normal;
+    text-align: justify;
+  }
+  #third-section .d-flex {
+    flex-wrap: wrap;
+  }
+  #third-section .d-flex p,
+  #third-section .d-flex img {
+    width: 100%;
+    height: auto;
+    float: none;
+  }
+}
+@media only screen and (max-width: 590px) {
+  .o-header-card {
+    flex-wrap: wrap;
+  }
+  .o-landing::-webkit-scrollbar {
+    width: 6px;
+  }
+  .o-landing-title {
+    padding: 1rem 1rem 0rem 1rem;
+    text-align: center;
+    min-width: 20rem;
+  }
+  header {
+    height: 60%;
+    background: #202a5b;
+  }
+  header h1 {
+    font-size: 32px;
+    font-weight: normal;
+    text-align: justify;
+  }
+  .o-card-section {
+    margin: 23rem auto 0 auto;
+  }
 }
