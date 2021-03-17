@@ -4,19 +4,22 @@ import { MDBInput } from "mdbreact";
 import { Multiselect } from "multiselect-react-dropdown";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Rodal from "rodal";
+
 import Axios from "axios";
 
 import "./FinishRegister.css";
+import SuccessAnimation from "../../Elements/SuccessAnimation/SuccessAnimation";
 
 export default function FinishRegister(props) {
   const [picture, setPicture] = useState(null);
   const [description, setDescription] = useState();
-  const [country, setCountry] = useState();
+  const [country, setCountry] = useState(null);
   const [name, setName] = useState("");
   const [lastname, setLastname] = useState("");
   const [cv, setCv] = useState("");
   const [cvpicture, setCvpicture] = useState(null);
-  const [years, setYears] = useState();
+  const [years, setYears] = useState(null);
   const [linkedin, setLinkedin] = useState("");
   const [github, setGithub] = useState("");
   const [gitlab, setGitlab] = useState("");
@@ -24,12 +27,25 @@ export default function FinishRegister(props) {
   const [skills, setSkills] = useState([]);
   const [userLanguages, setLanguages] = useState([]);
   const [userKeywords, setKeyWords] = useState([]);
+
   const [test, setTest] = useState([]);
   const [selected, setSelected] = useState([]);
+
+  const [confirmation, setConfirmation] = useState(false);
+  const [modal, setModal] = useState(false);
   const token = localStorage.getItem("login");
   const [languageslist, setLanguageslist] = useState([]);
   const [toolist, setToolist] = useState([]);
-
+  const [errorList, setErrorList] = useState({
+    validName: true,
+    nameMessage: ".",
+    validLastName: true,
+    lastnameMessage: " ",
+    validYears: true,
+    validLang: true,
+    validWords: true,
+    validSkills: true,
+  });
   const countries = [
     { key: "Alemania", cat: "Alemania" },
     { key: "Brasil", cat: "Brasil" },
@@ -119,6 +135,50 @@ export default function FinishRegister(props) {
     }
   };
 
+  async function handleValidation() {
+    const letters = /^[a-z][a-z\s]*$/;
+    const errors = errorList;
+    //First name validation.
+    if (name.trim() === "") {
+      errors.validName = false;
+      errors.nameMessage = "Por favor ingresa tu nombre";
+    } else if (!name.toLocaleLowerCase().match(letters)) {
+      errors.validName = false;
+      errors.nameMessage = "El apellido solo debe contener letras.";
+    } else {
+      errors.validName = true;
+    }
+
+    //Last name validations.
+    if (lastname.trim() === "") {
+      errors.validLastName = false;
+      errors.lastnameMessage = "Por favor ingresa tu nombre";
+    } else if (!lastname.toLocaleLowerCase().match(letters)) {
+      errors.validLastName = false;
+      errors.lastnameMessage = "El apellido solo debe contener letras.";
+    } else {
+      errors.lastnameMessage = true;
+    }
+
+    //Skills validation
+    skills.length === 0
+      ? (errors.validSkills = false)
+      : (errors.validSkills = true);
+    //Languages validation
+    userLanguages.length === 0
+      ? (errors.validLang = false)
+      : (errors.validLang = true);
+    //Years validation
+    years === null ? (errors.validYears = false) : (errors.validYears = true);
+    //Years validation
+    userKeywords.length === 0
+      ? (errors.validWords = false)
+      : (errors.validWords = true);
+
+    setErrorList(errors);
+    console.log(errors);
+  }
+
   const updateUserDate = async () => {
     const nullData = null;
     const fullname = name + " " + lastname;
@@ -126,47 +186,111 @@ export default function FinishRegister(props) {
     for (let i = 0; i < skills.length; i++) {
       skillsdi.push(skills[i].id);
     }
-    try {
-      const datform = new FormData();
-      datform.append("email", nullData);
-      datform.append("password", nullData);
-      datform.append("experiencia", years);
-      datform.append("nombre", fullname);
-      datform.append("descripcion", description);
-      datform.append("pais", country);
-      datform.append("edad", nullData);
-      datform.append("github", github);
-      datform.append("gitlab", gitlab);
-      datform.append("bitbucket", bitbucket);
-      datform.append("linkedin", linkedin);
-      datform.append("herramienta", skillsdi);
-      datform.append("palabra", userKeywords);
-      datform.append("idiomas", userLanguages);
-      datform.append("foto", picture);
-      datform.append("cv", cvpicture);
-      console.log(skillsdi);
-      const obj = JSON.parse(token);
-      const tokensito = obj.token;
-      const options = {
-        headers: { authorization: `llave ${tokensito}` },
-      };
+    const errors = errorList;
+    console.log(errors);
+    await handleValidation();
+    if (
+      errors.validSkills &&
+      errors.validWords &&
+      errors.validYears &&
+      errors.validName &&
+      errors.validLastName &&
+      errors.validLang
+    ) {
+      try {
+        const datform = new FormData();
+        datform.append("email", nullData);
+        datform.append("password", nullData);
+        datform.append("experiencia", years);
+        datform.append("nombre", fullname);
+        datform.append("descripcion", description);
+        datform.append("pais", country);
+        datform.append("edad", nullData);
+        datform.append("github", github);
+        datform.append("gitlab", gitlab);
+        datform.append("bitbucket", bitbucket);
+        datform.append("linkedin", linkedin);
+        datform.append("herramienta", skillsdi);
+        datform.append("palabra", userKeywords);
+        datform.append("idiomas", userLanguages);
+        datform.append("foto", picture);
+        datform.append("cv", cvpicture);
+        console.log(skillsdi);
+        const obj = JSON.parse(token);
+        const tokensito = obj.token;
+        const options = {
+          headers: { authorization: `llave ${tokensito}` },
+        };
 
-      const { data } = await Axios.put(
-        `http://localhost:3030/actualizar/usuario`,
-        datform,
-        options
-      );
-      console.log(data);
-      localStorage.setItem("login", "");
-      window.location.reload();
-    } catch (error) {
-      console.log(error);
+        const { data } = await Axios.put(
+          `http://localhost:3030/actualizar/usuario`,
+          datform,
+          options
+        );
+        console.log(data);
+        localStorage.setItem("login", "");
+      } catch (error) {
+        console.log(error);
+      }
+      setConfirmation(true);
+      setTimeout(() => {
+        setModal(false);
+        window.location.reload();
+      }, 1200);
+    } else {
+      setModal(false);
     }
   };
 
   return (
     <div className="o-register-container">
-      <div className="bg-white rounded row p-2" style={{ height: "auto" }}>
+      <Rodal
+        width={300}
+        height={160}
+        animation={"fade"}
+        visible={modal}
+        onClose={() => setModal(false)}
+      >
+        {!confirmation ? (
+          <div>
+            <h5 className="mt-5 mb-2">¿Guardar cambios?</h5>
+            <div className="d-flex justify-content-between p-2">
+              <button
+                className="z-depth-0 border-primary btn border-primary text-primary font-weight-bold"
+                type="button"
+                style={{
+                  width: "7.2rem",
+                  fontSize: "0.8rem",
+                  height: "2.5rem",
+                }}
+                onClick={() => setModal(false)}
+              >
+                Cancelar
+              </button>
+              <button
+                className="z-depth-0 border-0 btn btn-primary font-weight-bold"
+                type="button"
+                style={{
+                  width: "7.2rem",
+                  fontSize: "0.8rem",
+                  height: "2.5rem",
+                }}
+                onClick={updateUserDate}
+              >
+                Guardar
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div>
+            <SuccessAnimation />
+          </div>
+        )}
+      </Rodal>
+      <div
+        className="bg-white rounded row  p-2 pb-0 pl-0"
+        style={{ height: "auto", boxSizing: "border-box" }}
+      >
         <div className="col-xs-12 col-sm-3 text-center o-col">
           <p>Foto perfil</p>
           <img
@@ -189,23 +313,44 @@ export default function FinishRegister(props) {
           </div>
         </div>
         <div className="col-xs-12 col-sm-3 o-col">
-          <p>Nombre Completo</p>
+          <p>
+            Nombre Completo <strong className="text-danger">*</strong>
+          </p>
           <MDBInput
             type="text"
+            className={!errorList.validName ? "is-invalid border-danger" : ""}
             label="Nombres"
             onChange={(e) => {
               setName(e.target.value);
             }}
             outline
           />
+          <p
+            className={
+              (!errorList.validName ? "" : "invisible ") + "o-text-error mb-2"
+            }
+          >
+            {errorList.nameMessage}
+          </p>
+
           <MDBInput
             type="text"
             label="Apellidos"
+            className={
+              !errorList.validLastName ? "is-invalid border-danger" : ""
+            }
             onChange={(e) => {
               setLastname(e.target.value);
             }}
             outline
           />
+          <p
+            className={
+              (!errorList.validLastName ? "" : "invisible ") + "o-text-error"
+            }
+          >
+            {errorList.lastnameMessage}
+          </p>
         </div>
         <div className="col-xs-12 col-sm-3 o-col">
           <p>Hoja de vida</p>
@@ -217,7 +362,10 @@ export default function FinishRegister(props) {
             }}
             outline
           />
-          <div className="row bg-primary p-0 m-0" style={{ height: "2.3rem" }}>
+          <div
+            className="row bg-primary p-0 m-0 mt-4"
+            style={{ height: "2.3rem" }}
+          >
             <div className="col-xs-6 col-sm-6 p-0 m-0 o-up-btn bg-primary ">
               <div className="inputWrapper m-0 bg-primary">
                 <p className="text-white o-icon-input-text">Subir foto</p>
@@ -246,30 +394,60 @@ export default function FinishRegister(props) {
             </div>
           </div>
         </div>
-        <div className="col-xs-12 col-sm-3 o-col mb-4 pb-5">
-          <p>Años de experiencia</p>
-          <Multiselect
-            options={yearsList}
-            displayValue="key"
-            singleSelect
-            closeOnSelect={false}
-            onSelect={(selectedList, selectedItem) => {
-              const year = selectedItem.cat;
-              setYears(year);
-            }}
-            id="years"
-            hidePlaceholder={true}
-            placeholder="Selecciona...."
-          />
-          <small>Idiomas</small>
+        <div className="col-xs-12 col-sm-3 o-col mb-0 pb-0 p-2 ">
+          <p>
+            Años de experiencia <strong className="text-danger">*</strong>
+          </p>
+          <div className="position-relative">
+            <div
+              className={
+                (!errorList.validYears ? "border-danger" : "") +
+                " o-single-select m-0 p-0"
+              }
+            >
+              <select
+                onChange={(e) => setYears(e.target.value)}
+                className={!errorList.validYears ? "border-danger" : ""}
+              >
+                <option hidden>Seleccione</option>
+                {yearsList.map((year) => (
+                  <option key={year.cat} value={year.cat}>
+                    {year.key}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <p
+            className={
+              (!errorList.validYears ? "" : "invisible ") +
+              "o-text-error mt-5 pt-1"
+            }
+          >
+            Campo requerido
+          </p>
+
+          <p className="mt-0 mb-0 pb-0">
+            Idiomas <strong className="text-danger">*</strong>
+          </p>
           <Multiselect
             options={languageslist}
             displayValue="key"
             closeOnSelect={false}
+            style={
+              !errorList.validLang
+                ? {
+                    searchBox: {
+                      border: "1px solid #ff2020",
+                    },
+                  }
+                : {}
+            }
             placeholder="Selecciona tus idiomas"
             hidePlaceholder={true}
             selectionLimit="2"
             id="languageT"
+            showArrow={true}
             onSelect={(selectedList, selectedItem) => {
               const lang = userLanguages;
               const item = lang.find(
@@ -290,14 +468,32 @@ export default function FinishRegister(props) {
               }
             }}
           />
-
-          <small>Palabras clave</small>
+          <p
+            className={
+              (!errorList.validLang ? "" : "invisible ") + "o-text-error"
+            }
+          >
+            Seleccione al menos un idioma
+          </p>
+          <p className=" mb-0 p-0">
+            Palabras clave <strong className="text-danger">*</strong>
+          </p>
           <Multiselect
+            showArrow
             options={keywords}
             displayValue="key"
-            selectionLimit="4"
+            selectionLimit="3"
             placeholder="Selecciona...."
             hidePlaceholder={true}
+            style={
+              !errorList.validWords
+                ? {
+                    searchBox: {
+                      border: "1px solid #ff2020",
+                    },
+                  }
+                : {}
+            }
             id="keyWorkdb"
             onSelect={(selectedList, selectedItem) => {
               const keyword = userKeywords;
@@ -319,8 +515,17 @@ export default function FinishRegister(props) {
               }
             }}
           />
+          <p
+            className={
+              (errorList.validWords ? "invisible " : "visible ") +
+              "o-text-error"
+            }
+          >
+            Seleccione al menos una palabra clave
+          </p>
         </div>
       </div>
+
       <div
         className="bg-white rounded mt-3 row text-center p-2"
         style={{ height: "auto" }}
@@ -395,7 +600,22 @@ export default function FinishRegister(props) {
         <div className="col-xs-12 col-sm-12">
           <p>Datos adicionales</p>
         </div>
-        <div className="col-xs-12 col-sm-8">
+        <div className="col-xs-12 col-sm-4 text-justify">
+          <p>País</p>
+          <div className="position-relative">
+            <div className="o-single-select m-0 p-0">
+              <select onChange={(e) => setCountry(e.target.value)}>
+                <option hidden>Seleccione</option>
+                {countries.map((country) => (
+                  <option key={country.cat} value={country.cat}>
+                    {country.key}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+        </div>
+        <div className="col-xs-12 col-sm-8 text-justify">
           <p>Descripción</p>
           <MDBInput
             type="textarea"
@@ -407,37 +627,31 @@ export default function FinishRegister(props) {
             outline
           />
         </div>
-        <div className="col-xs-12 col-sm-4">
-          <p>País</p>
-          <Multiselect
-            options={countries}
-            displayValue="key"
-            singleSelect
-            closeOnSelect={false}
-            onSelect={(selectedList, selectedItem) => {
-              const temcountry = selectedItem.cat;
-              setCountry(temcountry);
-            }}
-            id="country"
-            hidePlaceholder={true}
-            placeholder="Selecciona...."
-          />
-        </div>
       </div>
 
       <div
-        className="bg-white rounded mt-3 row text-center p-2"
+        className="bg-white rounded mt-3 row text-justify p-2"
         style={{ height: "auto" }}
       >
-        <div className="col-xs-12 col-sm-4 text-center  o-skills-select">
-          <p>Habilidades</p>
+        <div className="col-xs-12 col-sm-4  o-skills-select">
+          <p>
+            Habilidades <strong className="text-danger">*</strong>
+          </p>
           <div className="p-0 pl-3 pr-3 rounded o-list-skill-cont">
-            <small style={{ fontSize: "0.6rem" }}>Tipo</small>
-            <hr className="bg-primary mt-0 mb-3" />
             <Multiselect
               options={toolist}
               displayValue="key"
               closeOnSelect={false}
+              showArrow={true}
+              style={
+                !errorList.validSkills
+                  ? {
+                      searchBox: {
+                        border: "1px solid #ff2020",
+                      },
+                    }
+                  : {}
+              }
               selectionLimit="7"
               selectedValues={selected.length % 2 === 0 ? selected : selected}
               onSelect={(selectedList, selectedItem) => {
@@ -470,10 +684,17 @@ export default function FinishRegister(props) {
               hidePlaceholder={true}
               placeholder="Selecciona...."
             />
+            <p
+              className={
+                (!errorList.validSkills ? "" : "invisible ") + "o-text-error"
+              }
+            >
+              Seleccione al menos una habilidad
+            </p>
           </div>
         </div>
-        <div className="col-xs-12 o-col col-sm-9">
-          <p>Herramientas</p>
+        <div className="col-xs-12 o-col col-sm-8">
+          <p>Herramientas Seleccionadas</p>
           <div className="rounded p-2 pt-3 d-flex o-skill-list-cnt">
             {skills.map((skill) => (
               <div key={skill.id} className="o-card-select-skill rounded">
@@ -500,7 +721,7 @@ export default function FinishRegister(props) {
 
         <div className="col-xs-12 col-sm-12 d-flex justify-content-end">
           <button
-            onClick={updateUserDate}
+            onClick={() => setModal(true)}
             className="btn mt-2 bg-primary z-depth-0 text-white"
           >
             Guardar

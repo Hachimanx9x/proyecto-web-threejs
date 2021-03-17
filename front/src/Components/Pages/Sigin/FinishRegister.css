@@ -56,6 +56,7 @@
   height: 5.5rem;
 }
 .o-accounts-link {
+  margin-bottom: 12px;
   width: 5.5rem;
   height: 5.5rem;
   opacity: 0.6;
@@ -79,6 +80,9 @@
   border-color: #007bff;
   border-bottom: 0.1px solid #007bff;
 }
+.o-register-container .md-outline {
+  margin: 0;
+}
 
 .o-register-container .md-outline textarea:focus + label {
   color: #007bff;
@@ -93,45 +97,9 @@
   max-width: auto;
 }
 
-.o-box {
-  position: absolute;
-  margin-top: 1.5rem;
-}
-
-.o-box select {
-  background: #fff;
-  padding: 0;
-  border-radius: 5px;
-  width: 250px;
-  height: 2.3rem;
-  border: 1px solid #007bff;
-  font-size: 0.9rem;
-  -webkit-appearance: button;
-  outline: none;
-}
-
-.o-box::before {
-  content: "\f0dd";
-  font-family: "FontAwesome";
-  position: absolute;
-  border-radius: 0 5px 5px 0;
-  top: 0;
-  right: 0;
-  width: 2.5rem;
-  height: 2.3rem;
-  text-align: center;
-  line-height: 25px;
-  pointer-events: none;
-  color: #fff;
-  font-size: 28px;
-  background: #007ce0;
-}
-.o-box:hover::before {
-  background: #0472ca;
-}
 .o-skills-select {
   min-width: 18rem;
-  max-width: 18rem;
+  max-width: auto;
 }
 .o-skills-select .o-box {
   width: 15.6rem;
@@ -194,6 +162,70 @@
     padding-bottom: 2rem;
   }
 }
+
+.o-single-select {
+  position: absolute;
+  top: -5px;
+  width: 100%;
+}
+
+.o-single-select select {
+  background: #fff;
+  padding: 0;
+  border-radius: 0.2rem;
+  width: 100%;
+  height: 2.4rem;
+  border: 1px solid #007bff;
+  font-size: 0.8rem;
+  -webkit-appearance: button;
+  outline: none;
+}
+
+.o-single-select::before {
+  content: "\f078";
+  font-family: "FontAwesome";
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-top-right-radius: 0.2rem;
+  border-bottom-right-radius: 0.2rem;
+  width: 2.4rem;
+  height: 2.4rem;
+  text-align: center;
+  line-height: 34px;
+  pointer-events: none;
+  color: #fff;
+  font-size: 15px;
+  background: #007ce0;
+}
+.o-single-select.border-danger::before {
+  content: "\f078";
+  font-family: "FontAwesome";
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-top-right-radius: 0.2rem;
+  border-bottom-right-radius: 0.2rem;
+  width: 2.4rem;
+  height: 2.4rem;
+  text-align: center;
+  line-height: 34px;
+  pointer-events: none;
+  color: #fff;
+  font-size: 15px;
+  background: #ff2020;
+}
+.o-select:hover::before {
+  background: #0472ca;
+}
+
+.o-text-error {
+  font-size: 11px;
+  color: #f00;
+  margin: 0;
+  padding: 0;
+  text-align: end;
+}
 @media only screen and (max-width: 890px) {
   .o-col {
     padding-bottom: 2rem;
@@ -215,10 +247,12 @@
     min-width: 17rem;
   }
   .o-f {
-    max-width: 11.5rem;
+    max-width: 50%;
+    min-width: 50%;
   }
   .o-up-btn {
-    max-width: 9rem;
+    max-width: 50%;
+    min-width: 50%;
   }
 }
 

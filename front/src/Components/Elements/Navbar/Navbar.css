@@ -7,7 +7,7 @@
 .navbar img {
   width: 10rem;
 }
-.o-navbar-item {
+.o-navbar .o-navbar-item {
   height: 3rem;
   text-align: center;
   width: 6.8rem;
@@ -22,7 +22,7 @@
   text-transform: unset;
 }
 
-.o-navbar-item:hover {
+.o-navbar .o-navbar-item:hover {
   background: #203768;
   color: #3bccf6;
   border-bottom: 5px solid #3bccf6;
@@ -55,7 +55,7 @@ a.active .o-navbar-item {
 }
 
 @media only screen and (max-width: 590px) {
-  .navbar-collapse {
+  .o-navbar .navbar-collapse {
     width: 100%;
     text-align: center;
     background-color: #203768;
@@ -64,7 +64,7 @@ a.active .o-navbar-item {
     height: 4rem;
     padding: 0;
   }
-  .o-navbar-item {
+  .o-navbar .o-navbar-item {
     height: 3rem;
     text-align: center;
     width: 100%;

@@ -3,17 +3,24 @@ import SideToggler from "./SideToggler";
 //import axios from "axios";
 class Dashboard extends Component {
   constructor(props) {
-    super(props)
+    super(
+      props
+    ); /*
     const token = localStorage.getItem("login");
     // console.log("el token es => " + token);
-    let temp = `${token}`
-    //   console.log(temp)
-    if (token === null || token === undefined || token === "" || token === {} || temp === "{}") {
+    let temp = `${token}`;
+    //   console.log(temp)/*
+    if (
+      token === null ||
+      token === undefined ||
+      token === "" ||
+      token === {} ||
+      temp === "{}"
+    ) {
       //El metodo de redireccionamiento.
-      this.props.history.push("/Login");
-    }
+     this.props.history.push("/Login");
+    }*/
   }
-
 
   /*
   async componentWillMount() {
