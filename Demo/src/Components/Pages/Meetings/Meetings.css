@@ -1,0 +1,48 @@
+.o-meet-member-pic {
+  width: 6rem;
+  height: 6rem;
+  margin: 1rem;
+}
+
+.o-picture-meeting-container {
+  width: 100%;
+  height: 14rem;
+  background-image: url("../../../Logos/Meet.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #464646;
+  text-align: center;
+}
+
+.o-member-list {
+  display: flex;
+  height: 11rem;
+  overflow-x: auto;
+  scrollbar-color: #4285f4 white;
+  scrollbar-width: thin;
+}
+
+.o-member-list::-webkit-scrollbar {
+  height: 8px;
+  background-color: #e0e0e0;
+}
+.o-member-list::-webkit-scrollbar-thumb {
+  background: #4285f4;
+  border-radius: 3px;
+}
+
+.o-member-list::-webkit-scrollbar-thumb:hover {
+  background: #3a4c99;
+}
+
+.o-btn-mic {
+  position: absolute;
+  bottom: 0;
+  margin: 0 0 0.3rem 0;
+}
+@media only screen and (max-width: 590px) {
+  .o-picture-meeting-container {
+    height: 10rem;
+  }
+}

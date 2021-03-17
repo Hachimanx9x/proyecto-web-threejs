@@ -1,0 +1,70 @@
+.o-sigin-container {
+  background: no-repeat;
+  background-image: url("../../../Logos/Group102.png");
+  background-position: 90% 38%;
+  background-origin: content-box;
+  background-size: 30vw auto;
+  background-color: #202a5b;
+  overflow-y: auto;
+}
+
+.o-sigin-form {
+  max-width: 50vw;
+  padding: 0rem 0rem 0rem 5rem;
+  min-width: 40rem;
+}
+.o-sigin-text {
+  font-size: 1rem;
+}
+
+.o-sigin-input {
+  color: white;
+}
+.o-sigin-form .md-form {
+  margin-bottom: 0;
+}
+.o-sigin-error .md-form input[type="password"]:not(.browser-default),
+.o-sigin-error .md-form input[type="text"]:not(.browser-default) {
+  border-bottom: 1px solid #dc3545;
+}
+
+.o-sigin-container .md-form .fa-lock,
+.o-sigin-container .md-form .fa-envelope,
+.o-sigin-container .md-form .fa-user {
+  color: white;
+}
+
+.o-sigin-container .md-form .fa-lock.active,
+.o-sigin-container .md-form .fa-user.active,
+.o-sigin-container .md-form .fa-envelope.active {
+  color: #4285f4;
+}
+.o-sigin-error .md-form .fa-lock,
+.o-sigin-error .md-form .fa-envelope,
+.o-sigin-error .md-form .fa-user {
+  color: #dc3545;
+}
+.o-button {
+  font-size: 1rem;
+  padding: 1rem;
+  border-radius: 0.3rem;
+  width: 9rem;
+  border: none;
+}
+@media only screen and (max-width: 720px) {
+  .o-sigin-container {
+    background: #202a5b;
+  }
+  .o-sigin-form {
+    padding: 0rem 1rem 0rem 1rem;
+    min-width: 20rem;
+  }
+  .o-button {
+    font-size: 0.8rem;
+    border-radius: 0.3rem;
+    padding: 0.7rem;
+    width: 7rem;
+    text-align: center;
+    border: none;
+  }
+}
