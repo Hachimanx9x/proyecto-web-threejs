@@ -48,7 +48,7 @@ class Desktop extends Component {
         },
       ],
     };
-  }
+  } /*
   componentDidMount() {
     const token = localStorage.getItem("login");
     const obj = JSON.parse(token);
@@ -86,7 +86,7 @@ class Desktop extends Component {
       .catch((error) => {
         console.error(error);
       });
-  }
+  }*/
   render() {
     //#bc8a01 eaea91
     const data = {

@@ -2,10 +2,13 @@
   background-color: #eef7fc;
   height: 100vh;
   height: 100%;
-  min-width: 50rem;
-  padding: 2rem;
+  width: 100%;
+  padding: 1rem 2rem;
   margin: 0.5rem;
   border-radius: 1rem;
+}
+.o-project-creation-section p {
+  font-weight: 500;
 }
 .o-project-basic-info {
   padding: 1rem;
@@ -35,7 +38,8 @@
 }
 .inputWrapper {
   height: 3rem;
-  width: 15rem;
+  width: 100%;
+  max-width: 20rem;
   overflow: hidden;
   position: relative;
   cursor: pointer;
@@ -70,8 +74,11 @@
   padding-right: 5px;
   margin-left: 0.5rem;
   font-size: 0.8rem;
-  color: black;
+  color: #007bff;
   position: absolute;
+}
+.o-project-creation-section .md-outline {
+  margin-bottom: 0;
 }
 .o-project-creation-section .md-outline input[type="text"],
 .o-project-creation-section .md-outline textarea {
@@ -92,24 +99,33 @@
 
 .o-picture-project {
   width: 100%;
-  max-height: 9rem;
+  height: 100%;
   position: absolute;
 }
 .o-project-form {
   height: 10rem;
+  position: relative;
 }
 
 .o-icon-input-text {
-  left: 8.1rem;
+  right: 0rem;
   top: 0.7rem;
+  margin: auto 12px auto auto;
   font-size: 1rem;
   position: absolute;
 }
 .o-inputWrapper-btn {
-  width: 7.5rem;
+  margin: auto 0 0 auto;
+  position: relative;
+  width: 8rem;
   height: 2.3rem;
-  top: 6rem;
-  left: 8rem;
+}
+.o-inputWrapper-btn p {
+  margin: 8px 0 12px 12px;
+}
+.o-inputWrapper-btn input {
+  position: absolute;
+  top: 0;
 }
 .o-practice-container {
   max-width: 15rem;
@@ -128,13 +144,19 @@
   }
   .o-icon-input-text {
     left: 3.1rem;
+    font-size: 14px;
+    margin: auto 0;
   }
   .o-inputWrapper-btn {
     width: 7rem;
     height: 2rem;
-    top: 4.3rem;
-    left: 5.8rem;
   }
+}
+
+#Practices-section .card {
+  width: 18rem;
+  margin: 0 1rem;
+  height: 7rem;
 }
 
 @media only screen and (max-width: 700px) {
@@ -145,13 +167,12 @@
   .o-inputWrapper-btn {
     width: 6rem;
     font-size: 0.8rem;
-    top: 3.5rem;
-    left: 3.8rem;
   }
 }
 @media only screen and (max-width: 590px) {
   .o-project-creation-section {
     min-width: 100%;
+    padding: 1rem;
     margin: 0;
   }
   .inputWrapper {
@@ -160,15 +181,26 @@
   .o-inputWrapper-btn {
     width: 7.5rem;
     height: 2.3rem;
-    top: 7.4rem;
-    left: 11rem;
+  }
+
+  .o-inputWrapper-btn p {
+    margin: 12px 0 12px 20px;
   }
   .o-icon-input-text {
-    left: 9.3rem;
-    top: 13px;
+    left: 6.5rem;
+    top: 14px;
     font-size: 0.9rem;
   }
   .o-practice-container {
     min-width: 100%;
+  }
+  .o-member-selection-container {
+    padding: 0;
+  }
+  #Practices-section .card {
+    width: 90%;
+    height: 9rem;
+
+    margin: 0;
   }
 }

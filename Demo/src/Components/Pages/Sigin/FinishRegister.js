@@ -312,14 +312,15 @@ export default function FinishRegister(props) {
           </div>
         )}
       </Rodal>
-      <div
+      {/* Name, cv, languages, years of experience and keywords section  */}
+      <section
         className="bg-white rounded row  p-2 pb-0 pl-0"
         style={{ height: "auto", boxSizing: "border-box" }}
       >
         <div className="col-xs-12 col-sm-3 text-center o-col">
           <p>Foto perfil</p>
           <img
-            src={picture === null ? User : URL.createObjectURL(picture)}
+            src={picture === null ? User : picture}
             alt={"User profile"}
             className="o-user-register-pic rounded-circle"
           />
@@ -330,9 +331,20 @@ export default function FinishRegister(props) {
               type="file"
               name="file1"
               accept="image/*"
-              onChange={(event) => {
-                const file = event.target.files[0];
-                setPicture(file);
+              onChange={(e) => {
+                const reader = new FileReader();
+                try {
+                  reader.onload = () => {
+                    if (reader.readyState === 2) {
+                      setPicture(reader.result);
+                    }
+                  };
+                  reader.readAsDataURL(e.target.files[0]);
+                } catch (error) {
+                  console.log(
+                    "Error en la subida del archivo. Probablemente archivo abortado."
+                  );
+                }
               }}
             />
           </div>
@@ -398,8 +410,21 @@ export default function FinishRegister(props) {
                   className="fileInput rounded-pill"
                   type="file"
                   name="file1"
+                  accept="image/*"
                   onChange={(e) => {
-                    setCvpicture(e.target.files[0]);
+                    const reader = new FileReader();
+                    try {
+                      reader.onload = () => {
+                        if (reader.readyState === 2) {
+                          setCvpicture(reader.result);
+                        }
+                      };
+                      reader.readAsDataURL(e.target.files[0]);
+                    } catch (error) {
+                      console.log(
+                        "Error en la subida del archivo. Probablemente archivo abortado."
+                      );
+                    }
                   }}
                 />
               </div>
@@ -549,9 +574,9 @@ export default function FinishRegister(props) {
             Seleccione al menos una palabra clave
           </p>
         </div>
-      </div>
-
-      <div
+      </section>
+      {/* Country and description section */}
+      <section
         className="bg-white rounded mt-3 row text-center p-2"
         style={{ height: "auto" }}
       >
@@ -617,8 +642,9 @@ export default function FinishRegister(props) {
             outline
           />
         </div>
-      </div>
-      <div
+      </section>
+      {/* Skills section */}
+      <section
         className="bg-white rounded mt-3 row text-center p-2"
         style={{ height: "auto" }}
       >
@@ -652,7 +678,7 @@ export default function FinishRegister(props) {
             outline
           />
         </div>
-      </div>
+      </section>
 
       <div
         className="bg-white rounded mt-3 row text-justify p-2"

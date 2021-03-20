@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import "rodal/lib/rodal.css";
 import "./CardMember.css";
 
-const CardMember = ({ member, remove, add, change }) => {
+const CardMember = ({ member, remove, add, change, rols }) => {
   const [show, setShow] = useState(true);
   const [modal, setModal] = useState(false);
 
@@ -112,15 +112,15 @@ const CardMember = ({ member, remove, add, change }) => {
               <div className="o-rol-select">
                 <select onChange={(e) => change(member, e.target.value)}>
                   <option hidden>Rol del proyecto</option>
-                  <option value="Arquitecto de experiencia multimedia">
-                    Arquitecto de experiencia multimedia
-                  </option>
-                  <option value="Arquitecto Software">
-                    Arquitecto Software
-                  </option>
-                  <option value="Arquitecto Hardware">
-                    Arquitecto Hardware
-                  </option>
+                  {rols.length > 0 ? (
+                    rols.map((rol, i) => (
+                      <option key={i} value={rol.rol}>
+                        {rol.rol}
+                      </option>
+                    ))
+                  ) : (
+                    <option>Selecciona una práctica</option>
+                  )}
                 </select>
               </div>
             </>

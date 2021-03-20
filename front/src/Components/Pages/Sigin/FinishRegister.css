@@ -40,8 +40,15 @@
 }
 
 .o-register-container .o-icon-input-text {
-  left: 1.6rem;
-  top: 0.4rem;
+  margin: 0 auto;
+  top: 6px;
+  font-size: 0.9rem;
+  position: relative;
+  text-decoration: none;
+}
+.o-up-btn .o-icon-input-text {
+  left: 1.7rem;
+  top: 0.5rem;
   font-size: 0.9rem;
   position: absolute;
   text-decoration: none;

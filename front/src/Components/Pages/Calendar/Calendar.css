@@ -148,6 +148,7 @@
 }
 
 .o-clock {
+  text-align: center;
   outline: none;
   padding: 5px 10px;
   height: 1.5rem;
