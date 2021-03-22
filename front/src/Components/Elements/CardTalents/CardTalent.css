@@ -1,7 +1,7 @@
 /*Styles for image of the user*/
 .o-talent-picture {
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
 }
 
 /*General styles for every job that an user can have.*/
@@ -70,7 +70,7 @@
     margin-left: 1rem;
   }
   .o-talent-picture {
-    max-width: 4rem;
+    max-width: 5rem;
     height: 4rem;
     margin-left: 3rem;
   }

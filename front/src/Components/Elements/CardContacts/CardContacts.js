@@ -10,18 +10,17 @@ import { Link } from "react-router-dom";
 import "rodal/lib/rodal.css";
 import "./CardContacts.css";
 
-const CardContacts = ({ contact }) => {
+const CardContacts = ({ contact, changefavorite, deleteContact }) => {
   const [show, setShow] = useState(true);
-  const [isfavorite, setfavorite] = useState(contact.favorite);
   const [modal, setModal] = useState(false);
   const deleteConfirmation = () => {
     setModal(!modal);
-    console.log(contact.id);
   };
 
-  const deleteContact = () => {
+  const deleteContacts = () => {
     setShow(!show);
     setModal(false);
+    deleteContact(contact);
   };
 
   const contactrol = (somejob) => {
@@ -40,9 +39,6 @@ const CardContacts = ({ contact }) => {
     return style;
   };
 
-  const changefavorite = () => {
-    setfavorite(!isfavorite);
-  };
   return (
     <div>
       <Rodal
@@ -55,12 +51,21 @@ const CardContacts = ({ contact }) => {
         <h5 className="mt-5 mb-4">
           Eliminar a {contact.name} de tus contactos?
         </h5>
-        <button
-          className="btn btn-primary border-0 text-white font-weight-bold"
-          onClick={deleteContact}
-        >
-          Eliminar
-        </button>
+        <div className="d-flex justify-content-between">
+          <button
+            type="button"
+            onClick={() => setModal(!modal)}
+            className="btn z-depth-0 border-primary text-primary font-weight-bold"
+          >
+            Cancelar
+          </button>
+          <button
+            className="btn btn-primary border-0 text-white font-weight-bold"
+            onClick={deleteContacts}
+          >
+            Eliminar
+          </button>
+        </div>
       </Rodal>
       <Fade show={show}>
         <div className="card p-3 rounded z-depth-0 border-0 mt-3">
@@ -72,7 +77,7 @@ const CardContacts = ({ contact }) => {
                   onClick={changefavorite}
                 >
                   <FontAwesomeIcon
-                    color={isfavorite ? "#4285F4" : "#9e9e9e"}
+                    color={contact.favorite ? "#4285F4" : "#9e9e9e"}
                     className="o-talent-favorite-icon"
                     icon={faHeart}
                   />
@@ -90,15 +95,23 @@ const CardContacts = ({ contact }) => {
             <div className="col-12 col-sm-6">
               <div className="o-text-info-contact">
                 <h3>{contact.name}</h3>
-                <p style={{ fontSize: "0.8rem", color: "#757575" }}>
+                <p
+                  className="text-justify"
+                  style={{ fontSize: "0.8rem", color: "#757575" }}
+                >
                   {contact.description}
                 </p>
-                <div
-                  className={
-                    contactrol(contact.job) + " rounded-pill o-job-contact"
-                  }
-                >
-                  <p>{contact.job}</p>
+                <div className="w-100 d-flex justify-content-around flex-wrap">
+                  {contact.jobs.map((job, i) => (
+                    <div
+                      key={i}
+                      className={
+                        contactrol(job) + " rounded-pill o-job-contact"
+                      }
+                    >
+                      <p>{job}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -128,10 +141,10 @@ const CardContacts = ({ contact }) => {
             <div className="col-12 col-sm-1 o-hide-this">
               <span
                 className="btn ml-2 mr-1 p-0 z-depth-0 "
-                onClick={changefavorite}
+                onClick={() => changefavorite(contact)}
               >
                 <FontAwesomeIcon
-                  color={isfavorite ? "#4285F4" : "#9e9e9e"}
+                  color={contact.favorite ? "#4285F4" : "#9e9e9e"}
                   className="o-talent-favorite-icon"
                   icon={faHeart}
                 />

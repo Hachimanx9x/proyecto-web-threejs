@@ -1,69 +1,135 @@
+.o-contact-talents {
+  width: 100%;
+  height: 80%;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
 .o-bg-blue {
-	background-color: #eef7fc;
-	border-radius: 1.8rem;
-	padding: 0.6rem 0.2rem 0.4rem 0.2rem;
-	max-width: 40rem;
-	margin: 0rem;
-	justify-self: flex-end;
+  background-color: #eef7fc;
+  border-radius: 1rem;
+  padding: 0.5rem 1rem;
+  min-width: 50%;
+  max-width: 50rem;
+  margin: 0rem;
+  justify-self: flex-end;
 }
 
 .o-rounded-input {
-	border-radius: 1rem;
-	height: 2.5rem;
+  border-radius: 1rem;
+  height: 2rem;
 }
 
 .o-keyword-btn {
-	border-radius: 2.5rem;
-	height: 2.5rem;
+  border-radius: 2rem;
+  height: 2rem;
 }
-.o-card-talents-container {
-	background-color: #eef7fc;
-	border-radius: 0.5rem;
-	padding: 1rem 1rem;
-	margin: 1rem;
+.o-icon-filter-2 {
+  color: white;
+  stroke: #4285f4;
+  stroke-width: 40px;
+}
+.o-icon-filter {
+  color: #4285f4;
+  stroke: #fff;
+  stroke-width: 40px;
+}
+.o-card-contacts-container {
+  background-color: #eef7fc;
+  border-radius: 0.5rem;
+  height: 55vh;
+  overflow-y: auto;
+  scrollbar-color: #4285f4 white;
+  scrollbar-width: thin;
+  padding: 1rem 1rem;
+  margin: 1rem;
+}
+.o-card-contacts-container::-webkit-scrollbar {
+  width: 8px;
+  margin-left: 1rem;
+  background-color: white;
+}
+.o-card-contacts-container::-webkit-scrollbar-thumb {
+  background: #4285f4;
+  border-radius: 3px;
 }
 
+.o-card-contacts-container::-webkit-scrollbar-thumb:hover {
+  background: #3a4c99;
+}
 .o-talent-icon {
-	width: 100px;
+  width: 100px;
 }
 
 .o-talent-favorite-icon {
-	font-size: 1.3rem;
-	margin: 0;
+  font-size: 1.3rem;
+  margin: 0;
 }
 
 .o-contacts-filter {
-	width: 100%;
-	height: 2.5rem;
+  width: 100%;
+  padding: 0;
+  height: 2rem;
+}
+
+#SearchBar,
+#Switch,
+#FavoriteButton {
+  width: 30%;
+  margin: 0 auto;
 }
 
 @media only screen and (max-width: 980px) {
-	.o-contacts-filter {
-		font-size: 0.4rem;
-	}
-	.o-bg-blue {
-		margin: 0.3rem 0.3rem auto 0rem;
-		width: 100%;
-	}
+  .o-contacts-filter {
+    font-size: 0.4rem;
+  }
+  .o-bg-blue {
+    margin: 0.3rem 0.3rem auto 0rem;
+    width: 100%;
+  }
 
-	.o-talent-icon {
-		max-width: 5rem;
-	}
+  .o-talent-icon {
+    max-width: 5rem;
+  }
 
-	.o-card-talents-container {
-		padding: 0.8rem;
-	}
+  .o-card-contacts-container {
+    padding: 0.8rem;
+  }
 }
 
-@media only screen and (max-width: 575px) {
-	.o-bg-blue {
-		min-width: 15rem;
-		padding: 0.5rem;
-		margin: 1rem 0rem;
-	}
+@media only screen and (max-width: 590px) {
+  .o-contact-talents {
+    height: 100vh;
+    margin-bottom: 18rem;
+  }
+  .o-bg-blue {
+    min-width: 15rem;
+    padding: 0.8rem;
+    margin: 1rem 0rem;
+  }
 
-	.o-card-talents-container {
-		margin: 0.2rem;
-		padding: 1rem;
-	}
+  .o-card-contacts-container {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    padding: 1rem;
+  }
+  #Switch {
+    width: 70%;
+  }
+  #FavoriteButton {
+    width: 30%;
+  }
+  #FavoriteButton button {
+    width: 100%;
+    font-size: 0.6rem;
+    padding: 0;
+    height: 2rem;
+  }
+  #SearchBar {
+    width: 100%;
+  }
+  #SearchBar p {
+    display: none;
+  }
 }

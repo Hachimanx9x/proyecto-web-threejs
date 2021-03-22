@@ -17,32 +17,33 @@ export default function LandingPage() {
     { Section: false },
     { Section: false },
   ]);
-  function reveal() {
-    const reveals = document.querySelectorAll(".reveal");
-    const sect = Sections;
 
-    for (let i = 0; i < reveals.length; i++) {
-      let windowHeight = window.innerHeight;
-      let revealtop = reveals[i].getBoundingClientRect().top;
-      const revealPoint = 150;
+  useEffect(() => {
+    function reveal() {
+      const reveals = document.querySelectorAll(".reveal");
+      const sect = Sections;
 
-      if (revealtop < windowHeight - revealPoint && !sect[i].Section) {
-        sect[i].Section = true;
+      for (let i = 0; i < reveals.length; i++) {
+        let windowHeight = window.innerHeight;
+        let revealtop = reveals[i].getBoundingClientRect().top;
+        const revealPoint = 150;
 
-        setSections([...sect]);
+        if (revealtop < windowHeight - revealPoint && !sect[i].Section) {
+          sect[i].Section = true;
+
+          setSections([...sect]);
+        }
       }
     }
-  }
-  useEffect(() => {
-    const interval = setInterval(() => {
+    let interval = setInterval(() => {
       window.addEventListener("scroll", reveal, { passive: true });
       reveal();
+      console.log("uwu");
     }, 500);
-
-    reveal();
-    return () => window.removeEventListener("scroll", reveal);
-  }, []);
-
+    return () => {
+      clearInterval(interval);
+    };
+  }, [Sections]);
   const infoPage = [
     {
       title: "Misión",
