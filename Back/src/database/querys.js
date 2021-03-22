@@ -247,17 +247,23 @@ query.buscarcontactosusuario = function (id) {
     usuarios.descripcion, 
     usuarios.fotoperfil,
     palabrasclave.palabra,
-    contactos.preferencias
+    contactos.preferencias,
+    herramientas.id AS "herrid",
+	herramientas.herramientanombre,
+	herramientas.herramientadescripcion,
+	herramientas.herramientanombreIcono
     FROM usuarios
     JOIN contactos ON usuarios.id = contactos.contactousuario
     JOIN palabrasclave ON usuarios.id = palabrasclave.pcusuario
+	JOIN listaherramientas ON usuarios.id = listaherramientas.usuario
+	JOIN herramientas ON listaherramientas.herramientausada= herramientas.id
     WHERE contactos.id IN (
     SELECT 
     listacontactos.contacto
     FROM usuarios
     JOIN listacontactos ON usuarios.id = listacontactos.usuario
     WHERE usuarios.id=${id}
-    ) ; `;
+    ) ;`;
 }
 query.buscarcontactosusuariotalento = function (id) {
     return `SELECT 
