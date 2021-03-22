@@ -3,7 +3,6 @@ import "./CardTalent.css";
 import PropTypes from "prop-types";
 import Fade from "../../Fade/Fade";
 import Rodal from "rodal";
-import Axios from "axios";
 import "rodal/lib/rodal.css";
 
 const CardTalents = ({ talent, addTalent }) => {
@@ -125,7 +124,7 @@ const CardTalents = ({ talent, addTalent }) => {
                   {talent.skills.map((skill, i) => (
                     <img
                       key={i}
-                      src={skill.skill}
+                      src={skill}
                       className="o-talent-skills ml-2 mr-2"
                       alt="skill"
                     />

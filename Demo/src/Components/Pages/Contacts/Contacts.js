@@ -30,24 +30,17 @@ class Contacts extends Component {
             "Desarrollador Backend",
           ],
           urlimage: User,
-          name: "Juan Carlos",
+          name: "Accel",
           description:
             "Programador e ingeniero multimedia con experiencia en entorno web",
           favorite: false,
           skills: [
-            {
-              skill:
-                "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg",
-            },
-            {
-              skill:
-                "https://www.vectorlogo.zone/logos/angular/angular-icon.svg",
-            },
-            { skill: "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg" },
-            {
-              skill:
-                "https://upload.vectorlogo.zone/logos/javascript/images/239ec8a4-163e-4792-83b6-3f6d96911757.svg",
-            },
+            "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg",
+
+            "https://www.vectorlogo.zone/logos/angular/angular-icon.svg",
+
+            "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg",
+            "https://upload.vectorlogo.zone/logos/javascript/images/239ec8a4-163e-4792-83b6-3f6d96911757.svg",
           ],
         },
         {
@@ -59,19 +52,14 @@ class Contacts extends Component {
             "Programador e ingeniero multimedia con experiencia en entorno web",
           favorite: true,
           skills: [
-            {
-              skill:
-                "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg",
-            },
-            {
-              skill:
-                "https://www.vectorlogo.zone/logos/angular/angular-icon.svg",
-            },
-            { skill: "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg" },
-            {
-              skill:
-                "https://upload.vectorlogo.zone/logos/javascript/images/239ec8a4-163e-4792-83b6-3f6d96911757.svg",
-            },
+            "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg",
+            ,
+            "https://www.vectorlogo.zone/logos/angular/angular-icon.svg",
+            ,
+            "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg",
+
+            "https://upload.vectorlogo.zone/logos/javascript/images/239ec8a4-163e-4792-83b6-3f6d96911757.svg",
+            ,
           ],
         },
       ],
@@ -88,64 +76,42 @@ class Contacts extends Component {
           ],
           img: User,
           skills: [
-            {
-              skill:
-                "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg",
-            },
-            {
-              skill:
-                "https://www.vectorlogo.zone/logos/angular/angular-icon.svg",
-            },
-            { skill: "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg" },
-            {
-              skill:
-                "https://upload.vectorlogo.zone/logos/javascript/images/239ec8a4-163e-4792-83b6-3f6d96911757.svg",
-            },
-            {
-              skill: "https://www.vectorlogo.zone/logos/nodejs/nodejs-icon.svg",
-            },
-            {
-              skill:
-                "https://www.vectorlogo.zone/logos/w3_html5/w3_html5-icon.svg",
-            },
-            {
-              skill:
-                "https://raw.githubusercontent.com/devicons/devicon/ac557d6ff33ff370a5db99f97aeab35ea5c67fbd/icons/css3/css3-original.svg",
-            },
-            { skill: "https://www.vectorlogo.zone/logos/php/php-icon.svg" },
-            {
-              skill:
-                "https://www.vectorlogo.zone/logos/flutterio/flutterio-icon.svg",
-            },
-            {
-              skill:
-                "https://www.vectorlogo.zone/logos/mysql/mysql-official.svg",
-            },
-            {
-              skill:
-                "https://www.vectorlogo.zone/logos/golang/golang-official.svg",
-            },
-            {
-              skill:
-                "https://www.vectorlogo.zone/logos/graphql/graphql-icon.svg",
-            },
-            {
-              skill:
-                "https://www.vectorlogo.zone/logos/typescriptlang/typescriptlang-icon.svg",
-            },
-            { skill: "https://cdn.worldvectorlogo.com/logos/laravel-2.svg" },
-            {
-              skill: "https://www.vectorlogo.zone/logos/jquery/jquery-icon.svg",
-            },
-            {
-              skill:
-                "https://www.vectorlogo.zone/logos/getbootstrap/getbootstrap-icon.svg",
-            },
-            {
-              skill: "https://cdn.worldvectorlogo.com/logos/material-ui-1.svg",
-            },
-            { skill: "https://cdn.worldvectorlogo.com/logos/rails.svg" },
-            { skill: "https://cdn.worldvectorlogo.com/logos/figma-1.svg" },
+            "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg",
+
+            "https://www.vectorlogo.zone/logos/angular/angular-icon.svg",
+
+            "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg",
+
+            "https://upload.vectorlogo.zone/logos/javascript/images/239ec8a4-163e-4792-83b6-3f6d96911757.svg",
+
+            "https://www.vectorlogo.zone/logos/nodejs/nodejs-icon.svg",
+
+            "https://www.vectorlogo.zone/logos/w3_html5/w3_html5-icon.svg",
+
+            "https://raw.githubusercontent.com/devicons/devicon/ac557d6ff33ff370a5db99f97aeab35ea5c67fbd/icons/css3/css3-original.svg",
+
+            "https://www.vectorlogo.zone/logos/php/php-icon.svg",
+
+            "https://www.vectorlogo.zone/logos/flutterio/flutterio-icon.svg",
+
+            "https://www.vectorlogo.zone/logos/mysql/mysql-official.svg",
+
+            "https://www.vectorlogo.zone/logos/golang/golang-official.svg",
+
+            "https://www.vectorlogo.zone/logos/graphql/graphql-icon.svg",
+
+            "https://www.vectorlogo.zone/logos/typescriptlang/typescriptlang-icon.svg",
+
+            "https://cdn.worldvectorlogo.com/logos/laravel-2.svg",
+
+            "https://www.vectorlogo.zone/logos/jquery/jquery-icon.svg",
+
+            "https://www.vectorlogo.zone/logos/getbootstrap/getbootstrap-icon.svg",
+
+            "https://cdn.worldvectorlogo.com/logos/material-ui-1.svg",
+
+            "https://cdn.worldvectorlogo.com/logos/rails.svg",
+            "https://cdn.worldvectorlogo.com/logos/figma-1.svg",
           ],
         },
         {
@@ -156,82 +122,55 @@ class Contacts extends Component {
           jobs: ["Desarrollador Web", "Ui designer", "Desarrollador FullStack"],
           img: User,
           skills: [
-            {
-              skill:
-                "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg",
-            },
-            {
-              skill:
-                "https://www.vectorlogo.zone/logos/angular/angular-icon.svg",
-            },
-            { skill: "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg" },
-            {
-              skill: "https://www.vectorlogo.zone/logos/nodejs/nodejs-icon.svg",
-            },
-            {
-              skill:
-                "https://www.vectorlogo.zone/logos/w3_html5/w3_html5-icon.svg",
-            },
-            {
-              skill:
-                "https://raw.githubusercontent.com/devicons/devicon/ac557d6ff33ff370a5db99f97aeab35ea5c67fbd/icons/css3/css3-original.svg",
-            },
-            { skill: "https://www.vectorlogo.zone/logos/php/php-icon.svg" },
-            {
-              skill:
-                "https://www.vectorlogo.zone/logos/flutterio/flutterio-icon.svg",
-            },
-            {
-              skill:
-                "https://www.vectorlogo.zone/logos/mysql/mysql-official.svg",
-            },
-            {
-              skill:
-                "https://www.vectorlogo.zone/logos/golang/golang-official.svg",
-            },
-            {
-              skill:
-                "https://www.vectorlogo.zone/logos/graphql/graphql-icon.svg",
-            },
-            {
-              skill:
-                "https://www.vectorlogo.zone/logos/typescriptlang/typescriptlang-icon.svg",
-            },
-            {
-              skill: "https://www.vectorlogo.zone/logos/jquery/jquery-icon.svg",
-            },
-            {
-              skill:
-                "https://www.vectorlogo.zone/logos/getbootstrap/getbootstrap-icon.svg",
-            },
-            {
-              skill: "https://www.vectorlogo.zone/logos/python/python-icon.svg",
-            },
-            {
-              skill:
-                "https://www.vectorlogo.zone/logos/djangoproject/djangoproject-icon.svg",
-            },
-            {
-              skill:
-                "https://www.vectorlogo.zone/logos/mongodb/mongodb-icon.svg",
-            },
-            { skill: "https://cdn.worldvectorlogo.com/logos/dotnet.svg" },
-            {
-              skill: "https://www.vectorlogo.zone/logos/sqlite/sqlite-icon.svg",
-            },
-            { skill: "https://cdn.worldvectorlogo.com/logos/redux.svg" },
-            { skill: "https://cdn.worldvectorlogo.com/logos/android.svg" },
-            {
-              skill:
-                "https://www.vectorlogo.zone/logos/ionicframework/ionicframework-icon.svg",
-            },
-            { skill: "https://cdn.worldvectorlogo.com/logos/c--4.svg" },
-            { skill: "https://cdn.worldvectorlogo.com/logos/c.svg" },
-            { skill: "https://cdn.worldvectorlogo.com/logos/c-2975.svg" },
-            { skill: "https://cdn.worldvectorlogo.com/logos/java-14.svg" },
-            {
-              skill: "https://cdn.worldvectorlogo.com/logos/wordpress-blue.svg",
-            },
+            "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg",
+
+            "https://www.vectorlogo.zone/logos/angular/angular-icon.svg",
+
+            "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg",
+
+            "https://www.vectorlogo.zone/logos/nodejs/nodejs-icon.svg",
+
+            "https://www.vectorlogo.zone/logos/w3_html5/w3_html5-icon.svg",
+
+            "https://raw.githubusercontent.com/devicons/devicon/ac557d6ff33ff370a5db99f97aeab35ea5c67fbd/icons/css3/css3-original.svg",
+
+            "https://www.vectorlogo.zone/logos/php/php-icon.svg",
+
+            "https://www.vectorlogo.zone/logos/flutterio/flutterio-icon.svg",
+
+            "https://www.vectorlogo.zone/logos/mysql/mysql-official.svg",
+
+            "https://www.vectorlogo.zone/logos/golang/golang-official.svg",
+
+            "https://www.vectorlogo.zone/logos/graphql/graphql-icon.svg",
+
+            "https://www.vectorlogo.zone/logos/typescriptlang/typescriptlang-icon.svg",
+
+            "https://www.vectorlogo.zone/logos/jquery/jquery-icon.svg",
+
+            "https://www.vectorlogo.zone/logos/getbootstrap/getbootstrap-icon.svg",
+
+            "https://www.vectorlogo.zone/logos/python/python-icon.svg",
+
+            "https://www.vectorlogo.zone/logos/djangoproject/djangoproject-icon.svg",
+
+            "https://www.vectorlogo.zone/logos/mongodb/mongodb-icon.svg",
+
+            "https://cdn.worldvectorlogo.com/logos/dotnet.svg",
+
+            "https://www.vectorlogo.zone/logos/sqlite/sqlite-icon.svg",
+
+            "https://cdn.worldvectorlogo.com/logos/redux.svg",
+            "https://cdn.worldvectorlogo.com/logos/android.svg",
+
+            "https://www.vectorlogo.zone/logos/ionicframework/ionicframework-icon.svg",
+
+            "https://cdn.worldvectorlogo.com/logos/c--4.svg",
+            "https://cdn.worldvectorlogo.com/logos/c.svg",
+            "https://cdn.worldvectorlogo.com/logos/c-2975.svg",
+            "https://cdn.worldvectorlogo.com/logos/java-14.svg",
+
+            "https://cdn.worldvectorlogo.com/logos/wordpress-blue.svg",
           ],
         },
       ],
@@ -244,24 +183,19 @@ class Contacts extends Component {
             "Desarrollador Backend",
           ],
           urlimage: User,
-          name: "Juan Carlos",
+          name: "Accel",
           description:
             "Programador e ingeniero multimedia con experiencia en entorno web",
           favorite: false,
           skills: [
-            {
-              skill:
-                "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg",
-            },
-            {
-              skill:
-                "https://www.vectorlogo.zone/logos/angular/angular-icon.svg",
-            },
-            { skill: "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg" },
-            {
-              skill:
-                "https://upload.vectorlogo.zone/logos/javascript/images/239ec8a4-163e-4792-83b6-3f6d96911757.svg",
-            },
+            "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg",
+
+            "https://www.vectorlogo.zone/logos/angular/angular-icon.svg",
+
+            "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg",
+
+            "https://upload.vectorlogo.zone/logos/javascript/images/239ec8a4-163e-4792-83b6-3f6d96911757.svg",
+            ,
           ],
         },
         {
@@ -273,19 +207,12 @@ class Contacts extends Component {
             "Programador e ingeniero multimedia con experiencia en entorno web",
           favorite: true,
           skills: [
-            {
-              skill:
-                "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg",
-            },
-            {
-              skill:
-                "https://www.vectorlogo.zone/logos/angular/angular-icon.svg",
-            },
-            { skill: "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg" },
-            {
-              skill:
-                "https://upload.vectorlogo.zone/logos/javascript/images/239ec8a4-163e-4792-83b6-3f6d96911757.svg",
-            },
+            "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg",
+
+            "https://www.vectorlogo.zone/logos/angular/angular-icon.svg",
+            "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg",
+
+            "https://upload.vectorlogo.zone/logos/javascript/images/239ec8a4-163e-4792-83b6-3f6d96911757.svg",
           ],
         },
       ],
@@ -360,7 +287,9 @@ class Contacts extends Component {
   }
   deleteContact = async (contact) => {
     const { talents, contacts } = this.state;
+    const token = localStorage.getItem("login");
     const item = contacts.find((iterador) => iterador.id === contact.id);
+    const item2 = contacts.findIndex((iterador) => iterador.id === contact.id);
 
     if (item) {
       talents.push({
@@ -369,28 +298,29 @@ class Contacts extends Component {
         description: item.description,
         jobs: item.jobs,
         img: item.urlimage,
-        skills: [...item.skills],
+        skills: item.skills,
       });
-      contacts.splice(item, 1);
+      contacts.splice(item2, 1);
+    }
 
-      if (contacts.length === 0) {
+    if (contacts.length === 0) {
+      setTimeout(() => {
         this.setState({
           show: [...contacts],
-          contacts: [...contacts],
-          talents: [...talents],
         });
-      } else {
-        this.setState({
-          contacts: [...contacts],
-          talents: [...talents],
-        });
-      }
+      }, 1000);
     }
+    this.setState({
+      contacts: [...contacts],
+      talents: [...talents],
+    });
   };
 
   addTalent = async (talent) => {
     const { talents, contacts } = this.state;
+    const token = localStorage.getItem("login");
     const item = talents.find((iterador) => iterador.id === talent.id);
+    const item2 = talents.findIndex((iterador) => iterador.id === talent.id);
 
     if (item) {
       contacts.push({
@@ -400,24 +330,23 @@ class Contacts extends Component {
         name: item.name,
         description: item.description,
         favorite: false,
-        skills: [...item.skills],
+        skills: item.skills,
       });
-
-      talents.splice(item, 1);
-
-      if (talents.length === 0) {
-        this.setState({
-          show: [...talents],
-          talents: [...talents],
-          contacts: [...contacts],
-        });
-      } else {
-        this.setState({
-          contacts: [...contacts],
-          talents: [...talents],
-        });
-      }
+      talents.splice(item2, 1);
     }
+
+    if (talents.length === 0) {
+      setTimeout(() => {
+        this.setState({
+          show: [...contacts],
+        });
+      }, 1000);
+    }
+    this.setState({
+      talents: [...talents],
+      contacts: [...contacts],
+      show: [...talents],
+    });
   };
   render() {
     const options = [

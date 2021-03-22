@@ -103,7 +103,7 @@ const CardTalents = ({ talent, addTalent }) => {
                   {talent.skills.map((skill, i) => (
                     <img
                       key={i}
-                      src={skill.skill}
+                      src={skill}
                       className="o-talent-skills ml-2 mr-2"
                       alt="skill"
                     />
