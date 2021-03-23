@@ -6,13 +6,13 @@
 
 /*General styles for every job that an user can have.*/
 .o-job-talent {
-  margin: 0.5rem 0rem 0rem 0rem;
-  padding: 0.05rem 0.8rem;
-  max-width: 10rem;
+  width: 10rem;
   max-height: 1.2rem;
   font-size: 0.7rem;
   text-align: center;
   justify-content: center;
+
+  margin: 1px;
   font-weight: bolder;
 }
 
@@ -95,7 +95,10 @@
     margin: 0;
   }
   .o-job-talent {
-    max-width: 100%;
+    max-width: 46%;
+    max-height: auto;
+    font-size: 10px;
+    margin: 4px 1px;
   }
   .o-talent-skills {
     width: 1.4rem;

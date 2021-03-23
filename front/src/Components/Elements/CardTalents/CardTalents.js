@@ -106,7 +106,8 @@ const CardTalents = ({ talent, addTalent }) => {
                       <div
                         key={i}
                         className={
-                          contactrol(job) + " rounded-pill o-job-talent ml-2"
+                          contactrol(job) +
+                          " rounded-pill o-job-talent ml-0 ml-sm-2"
                         }
                       >
                         <p>{job}</p>
