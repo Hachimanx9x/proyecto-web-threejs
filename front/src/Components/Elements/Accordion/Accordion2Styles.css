@@ -11,36 +11,48 @@
 }
 
 .accordion {
-
   margin: 18px auto;
-  
+
   display: flex;
   flex-direction: column;
 }
 
 .accordion.icon {
   margin-left: auto;
-  transition: transform 0.4s ease;
+  transition: transform 2s ease;
+}
+.o-icon-collapse {
+  height: 2.5rem;
+  border-radius: 50%;
 }
 .rotate {
-  transform: rotate(90deg);
+  transform: rotate(0);
+  transition: transform 1s ease;
 }
 
 .rotated {
   transform: rotate(-90deg);
+  transition: transform 1s ease;
 }
 .accordionHeading {
-  background-color: #eee;
+  background-color: #fff;
+  height: 3rem;
   color: #444;
   cursor: pointer;
   display: flex;
   align-items: center;
-  border: none;
   outline: none;
   transition: background-color 0.6s ease;
   border-radius: 4px;
-  margin: 0.5rem 0rem 0rem 0rem;
+  margin: 0.5rem 0;
+  padding: 0.5rem 1rem;
   border: none;
+}
+
+.accordionHeading:focus {
+  outline: none;
+  border: 1px solid #4285f4;
+  background-color: #ccc;
 }
 .accordionHeading:hover,
 .accordionHeading:active {
@@ -62,19 +74,26 @@
 }
 
 .accordionContent {
- background-color: white;
-  max-height: 0;
-  transition: max-height 0.4s ease;
-  display: flex;
+  background-color: white;
+  width: 100%;
+  height: 0;
+  visibility: hidden;
   overflow: hidden;
-  
+  transition: all 0.6s ease;
+
+  column-gap: 1rem;
+  column-rule: 1px solid #ddd8d8;
+  column-width: 400px;
 }
 
 .accordionContent.show {
-  max-height: 500px;
-  
-  overflow-y: scroll;
-  transition: max-height 0.3s ease;
+  visibility: visible;
+  height: 300px;
+  width: 100%;
+  columns: 2;
+  overflow: hidden;
+
+  transition: all 0.6s ease;
 }
 
 .accordionContent p {
@@ -82,15 +101,37 @@
   line-height: 1.6;
 }
 
-.accordionContent::-webkit-scrollbar{
+.accordionContent::-webkit-scrollbar {
   width: 5px;
 }
 .accordionContent::-webkit-scrollbar-thumb {
-  
   background: #5466b3;
   border-radius: 10px;
 }
 
 .accordionContent:-webkit-scrollbar-thumb:hover {
   background: #3a4c99;
+}
+
+@media only screen and (max-width: 800px) {
+  .accordionContent {
+    display: flex;
+    flex-wrap: wrap;
+    column-width: 300px;
+  }
+  .accordionContent.show {
+    height: 500px;
+    max-height: 500px;
+  }
+}
+
+@media only screen and (max-width: 590px) {
+  .accordionContent {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .accordionContent.show {
+    height: 500px;
+    max-height: 500px;
+  }
 }

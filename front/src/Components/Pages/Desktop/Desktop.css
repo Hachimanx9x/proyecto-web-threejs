@@ -1,163 +1,194 @@
 .o-updates-container {
-	height: 30rem;
-	overflow-y: auto;
-	width: 100%;
-	padding: 0 0.7rem;
-	scrollbar-color: #4285f4 white;
-	scrollbar-width: thin;
+  height: 70vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+  padding: 0 0.7rem;
+  scrollbar-color: #4285f4 white;
+  scrollbar-width: thin;
+}
+.o-updates-container input {
+  max-width: 40rem;
 }
 
+.o-updates-container button {
+  margin: 0 auto 0 0;
+}
 .o-updates-section {
-	min-width: 40rem;
+  max-height: 0;
+  padding: 0 1rem;
+  overflow-y: auto;
+  transition: all 0.6s ease;
 }
-
-.o-slider-img {
-	min-width: 20rem;
-	width: 18rem;
-	height: 6rem;
-}
-.o-slider-img:focus {
-	outline: none;
-}
-.o-slider-container {
-	min-width: 20rem;
-	height: auto;
+.accordionContent.show .o-updates-section {
+  max-height: 290px;
+  transition: all 1.2s ease;
 }
 .o-blue-container .chartjs-render-monitor {
-	margin: 1rem 0 0 -1.5rem;
-	width: 20rem !important;
-	height: 15rem !important;
-	font-size: 0.1rem !important;
+  margin: 1rem 0 0 -1.5rem;
+  width: 20rem !important;
+  height: 15rem !important;
+  font-size: 0.1rem !important;
 }
-.o-btn-graph {
-	width: 80%;
-	height: 2rem;
-	margin: 0.5rem auto;
-	font-size: 0.8rem;
-	border-width: 1px;
-	outline: none;
+.o-project-update-img {
+  width: 13rem;
+  display: block;
+  height: 8rem;
+  margin: 0 auto 0.5rem auto;
 }
-.o-btn-graph:focus {
-	outline: none;
+
+.o-collapse-column {
+  height: 290px;
+  margin: 0;
+  padding: 0;
+  columns: 2;
+  column-width: 125px;
+  column-rule: 1px solid #ddd8d8;
+  transition: all 0.6s ease;
+  overflow: auto;
+}
+.o-collapse-column small {
+  display: block;
+  text-align: justify;
+  height: 6rem;
+  font-size: 11px;
+}
+.o-collapse-column button {
+  margin: auto auto 0 auto;
+  padding: 0.6rem 1.5rem;
+  display: block;
+  bottom: 0;
+}
+.o-grahpcart-project {
+  height: auto;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+.o-grahpcart-project p {
+  left: 0;
+  right: 0;
+}
+
+.o-text-chart {
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 97px;
+  color: #4fa77b;
+}
+.o-blue-container .chartjs-render-monitor {
+  margin: 3rem auto auto auto;
+  width: 15rem !important;
+  height: auto !important;
 }
 @media only screen and (max-width: 1320px) {
-	.o-slider-container {
-		min-width: 10rem;
-	}
-	.o-blue-container .chartjs-render-monitor {
-		margin: 1rem 0 0 -2rem;
-		width: 15rem !important;
-		height: 15rem !important;
-	}
-	.o-btn-graph {
-		font-size: 1rem;
-	}
+  .o-text-chart {
+    left: 26px;
+  }
 }
 @media only screen and (max-width: 1166px) {
-	.o-slider-container {
-		min-width: 40rem;
-		margin: 0;
-	}
-	.o-blue-container .chartjs-render-monitor {
-		margin: 3rem 0 0 0;
-		width: 100% !important;
-		height: auto !important;
-	}
-	.o-slider-img {
-		min-width: 100%;
-		width: 18rem;
-		height: 10rem;
-	}
+  .o-blue-container .chartjs-render-monitor {
+    margin: 3rem 0 0 0;
+    width: 100% !important;
+    min-width: 10rem;
+    height: auto !important;
+  }
+
+  .o-text-chart {
+    left: 10px;
+    top: 90px;
+  }
+}
+@media only screen and (max-width: 950px) {
+  .o-text-chart {
+    top: 80px;
+  }
 }
 @media only screen and (max-width: 800px) {
-	.o-updates-section {
-		min-width: 35rem;
-	}
-	.o-slider-container {
-		min-width: 35rem;
-	}
+  .o-updates-section {
+    min-width: 35rem;
+  }
+  .o-project-update-img {
+    width: auto;
+    height: 5rem;
+  }
+  .o-collapse-column {
+    padding: 0 0.5rem;
+    border-top: 3px solid #ddd8d8;
+    column-rule: 3px solid #ddd8d8;
+  }
+  .o-collapse-column small {
+    font-size: 10px;
+    height: 4rem;
+  }
+  .o-grahpcart-project p {
+    left: 0;
+    right: 0;
+    font-size: 12px;
+  }
+  .o-text-chart {
+    top: 100px;
+  }
 }
 
 @media only screen and (max-width: 700px) {
-	.o-updates-section {
-		width: 40rem;
-		min-width: 31rem;
-	}
-	.o-slider-container {
-		width: 40rem;
-		min-width: 31rem;
-	}
+  .o-updates-section {
+    width: 40rem;
+    min-width: 31rem;
+  }
 }
 @media only screen and (max-width: 590px) {
-	.o-updates-section {
-		min-width: auto;
-		margin: 0;
-	}
-	.o-slider-container {
-		min-width: auto;
-		margin: 1rem 0 0 0;
-	}
-	.o-blue-container .chartjs-render-monitor {
-		margin: 3rem 0 0 0;
-		width: 100% !important;
-		height: auto !important;
-	}
-	.o-btn-graph {
-		font-size: 0.7rem;
-	}
+  .o-updates-section {
+    min-width: auto;
+    height: 15rem;
+    margin: 0;
+  }
+  .o-blue-container .chartjs-render-monitor {
+    margin: 3rem 0 0 0;
+    width: 100% !important;
+    height: auto !important;
+  }
+  .o-project-update-img {
+    width: auto;
+    height: 4rem;
+  }
+  .o-collapse-column {
+    padding: 0 0.5rem;
+  }
+  .o-collapse-column small {
+    font-size: 9px;
+  }
+  .o-text-chart {
+    left: 10px;
+    top: 90px;
+  }
+}
+@media only screen and (max-width: 420px) {
+  .o-text-chart {
+    top: 75px;
+  }
+}
+@media only screen and (max-width: 390px) {
+  .o-text-chart {
+    left: 35px;
+    top: 75px;
+  }
+}
+.o-updates-container::-webkit-scrollbar,
+.o-updates-section::-webkit-scrollbar {
+  width: 8px;
+  background-color: white;
 }
 
-.o-updates-container::-webkit-scrollbar {
-	width: 8px;
-	margin-left: 1rem;
-	background-color: white;
+.o-updates-container::-webkit-scrollbar-thumb,
+.o-updates-section::-webkit-scrollbar-thumb {
+  background: #4285f4;
+  border-radius: 3px;
 }
 
-.o-updates-container::-webkit-scrollbar-thumb {
-	background: #4285f4;
-	border-radius: 3px;
-}
-
-.o-updates-container::-webkit-scrollbar-thumb:hover {
-	background: #3a4c99;
-}
-
-/* square buttons */
-.o-blue-container .rec.rec-arrow {
-	border-radius: 0;
-	line-height: 35px;
-	min-width: 2rem;
-	height: 2rem;
-	font-size: 1rem;
-	margin-top: 1rem;
-	padding-bottom: 1rem;
-}
-/* round buttons on hover */
-.o-blue-container .rec.rec-arrow:hover {
-	border-radius: 50%;
-	background-color: #4285f4;
-	color: white;
-}
-/* Add custom color and remove border on slider buttons while focused */
-.o-blue-container .rec.rec-arrow:focus {
-	background-color: #4285f4;
-	border-color: none;
-	outline: none;
-	border: 0rem;
-}
-/* hide disabled buttons */
-.rec.rec-arrow:disabled {
-	visibility: hidden;
-}
-/* disable default outline on focused items */
-/* add custom outline on focused items */
-.rec-carousel-item:focus {
-	outline: none;
-	box-shadow: inset 0 0 1px 1px lightgrey;
-}
-/*Add custom color to the slider's controls */
-.o-blue-container .rec.rec-dot_active {
-	background-color: #7ba9f3;
-	border-color: #4285f4;
-	box-shadow: 0 0 1px 3px #4285f4;
+.o-updates-container::-webkit-scrollbar-thumb:hover,
+.o-updates-section::-webkit-scrollbar-thumb:hover {
+  background: #3a4c99;
 }
