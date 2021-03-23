@@ -207,13 +207,12 @@ export default function Desktop() {
               <div className="o-updates-section">
                 {project.updates.map((update, i) => (
                   <CardDesktop update={update} key={i} />
-                ))}{" "}
+                ))}
               </div>
 
               <div className="o-collapse-column text-center">
                 <div className="h-100">
                   <div className="o-grahpcart-project">
-                    {" "}
                     <p className="position-absolute">
                       Prácticas completadas en un:
                     </p>
@@ -222,7 +221,6 @@ export default function Desktop() {
                   </div>
                 </div>
                 <div className="h-100">
-                  {" "}
                   <img
                     src={project.image}
                     alt="Project"
@@ -231,7 +229,7 @@ export default function Desktop() {
                   <small>{project.description}</small>
                   <a
                     className="mt-auto mb-0 m-auto btn btn-primary m-0 border-0 text-capitalize  text-white z-depth-0 text-capitalize"
-                    href={`/Dashboard/Desktop/${project.id}`}
+                    href={`/Dashboard/Projects/${project.id}`}
                   >
                     Ingresar
                   </a>
