@@ -11,6 +11,8 @@ defaults.global.legend.display = false;
 
 export default function Desktop() {
   const [active, setActive] = useState();
+  const [keyWord, setKeyWord] = useState("");
+
   const data = {
     labels: ["Completado", "Faltante"],
     datasets: [
@@ -143,6 +145,22 @@ export default function Desktop() {
       ],
     },
   ]);
+  const [show, setShow] = useState([...projects]);
+  function search() {
+    const array = [];
+    if (keyWord.trim() !== "") {
+      for (let i = 0; i < projects.length; i++) {
+        const project = projects[i];
+        const contain = project.title
+          .toLocaleLowerCase()
+          .includes(keyWord.toLocaleLowerCase());
+        contain ? array.push(project) : console.log("D :");
+      }
+      setShow([...array]);
+    } else {
+      setShow([...projects]);
+    }
+  }
   return (
     <div className="container-fluid mb-5 mb-sm-0 pb-5 pb-sm-0 m-0 p-0">
       <h4 className="mb-3 pl-4">Actualizaciones</h4>
@@ -162,57 +180,63 @@ export default function Desktop() {
             className="form-control"
             placeholder="Buscar proyecto"
             aria-label="Buscar proyecto"
+            onChange={(e) => setKeyWord(e.target.value)}
           />
           <div className="input-group-append">
             <button
               className="btn btn-primary text-white z-depth-0"
               type="button"
+              onClick={search}
             >
               <FontAwesomeIcon icon={faSearch} />
             </button>
           </div>
         </section>
-        {projects.map((project, i) => (
-          <Accordion2
-            title={project.title}
-            active={active}
-            icon={project.icon}
-            projectId={project.id}
-            setActive={setActive}
-            key={i}
-          >
-            <div className="o-updates-section">
-              {project.updates.map((update, i) => (
-                <CardDesktop update={update} key={i} />
-              ))}{" "}
-            </div>
+        {show.lenght !== 0 ? (
+          show.map((project, i) => (
+            <Accordion2
+              title={project.title}
+              active={active}
+              icon={project.icon}
+              projectId={project.id}
+              setActive={setActive}
+              key={i}
+            >
+              <div className="o-updates-section">
+                {project.updates.map((update, i) => (
+                  <CardDesktop update={update} key={i} />
+                ))}{" "}
+              </div>
 
-            <div className="o-collapse-column text-center">
-              <div className="h-100">
-                <div className="o-grahpcart-project">
+              <div className="o-collapse-column text-center">
+                <div className="h-100">
+                  <div className="o-grahpcart-project">
+                    {" "}
+                    <p className="position-absolute">
+                      Prácticas completadas en un:
+                    </p>
+                    <Doughnut data={data} />
+                    <p className="o-text-chart">60%</p>
+                  </div>
+                </div>
+                <div className="h-100">
                   {" "}
-                  <p className="position-absolute">
-                    Prácticas completadas en un:
-                  </p>
-                  <Doughnut data={data} />
-                  <p className="o-text-chart">60%</p>
+                  <img
+                    src={project.image}
+                    alt="Project"
+                    className="o-project-update-img"
+                  />
+                  <small>{project.description}</small>
+                  <button className="mt-auto mb-0 m-auto btn btn-primary m-0 border-0 text-capitalize  text-white z-depth-0 text-capitalize">
+                    Ingresar
+                  </button>
                 </div>
               </div>
-              <div className="h-100">
-                {" "}
-                <img
-                  src={project.image}
-                  alt="Project"
-                  className="o-project-update-img"
-                />
-                <small>{project.description}</small>
-                <button className="mt-auto mb-0 m-auto btn btn-primary m-0 border-0 text-capitalize  text-white z-depth-0 text-capitalize">
-                  Ingresar
-                </button>
-              </div>
-            </div>
-          </Accordion2>
-        ))}
+            </Accordion2>
+          ))
+        ) : (
+          <p className="m-auto">No tienes ningún proyecto</p>
+        )}
       </div>
     </div>
   );
