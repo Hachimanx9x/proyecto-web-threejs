@@ -54,13 +54,12 @@ class Contacts extends Component {
           favorite: true,
           skills: [
             "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg",
-            ,
+
             "https://www.vectorlogo.zone/logos/angular/angular-icon.svg",
-            ,
+
             "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg",
 
             "https://upload.vectorlogo.zone/logos/javascript/images/239ec8a4-163e-4792-83b6-3f6d96911757.svg",
-            ,
           ],
         },
       ],
@@ -196,7 +195,6 @@ class Contacts extends Component {
             "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg",
 
             "https://upload.vectorlogo.zone/logos/javascript/images/239ec8a4-163e-4792-83b6-3f6d96911757.svg",
-            ,
           ],
         },
         {

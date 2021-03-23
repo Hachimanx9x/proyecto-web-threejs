@@ -1,11 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
 import SideToggler from "./SideToggler";
 //import axios from "axios";
-class Dashboard extends Component {
-  constructor(props) {
-    super(
-      props
-    ); /*
+export default function Dashboard() {
+  /*
     const token = localStorage.getItem("login");
     // console.log("el token es => " + token);
     let temp = `${token}`;
@@ -20,7 +17,6 @@ class Dashboard extends Component {
       //El metodo de redireccionamiento.
      this.props.history.push("/Login");
     }*/
-  }
 
   /*
   async componentWillMount() {
@@ -106,9 +102,5 @@ class Dashboard extends Component {
        }
    */
 
-  render() {
-    return <SideToggler />;
-  }
+  return <SideToggler />;
 }
-
-export default Dashboard;
