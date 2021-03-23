@@ -22,7 +22,7 @@ funcionesDB.obtenerToken = (body) => {
                             // console.log(rows);
                             if (rows[0] == null || rows.length == 0) {
                                 console.log("error en los datos ")
-                                rej({ respuesta: "no encontrado" });
+                                rej({ respuesta: "Contraseña o correo equivocados" });
                             } else {
                                 //console.log(rows); 
                                 const token = jwt.sign({ rows }, LLAVE);
@@ -37,7 +37,7 @@ funcionesDB.obtenerToken = (body) => {
                             // console.log(rows);
                             if (rows[0] === null || rows.length === 0) {
                                 // console.log("error en los datos ")
-                                rej({ respuesta: "no encontrado" });
+                                rej({ respuesta: "Contraseña o correo equivocados" });
                             } else {
                                 //console.log(rows); 
                                 const token = jwt.sign({ rows }, LLAVE);
@@ -1592,10 +1592,11 @@ function rearmas2(idUser, rows) {
     return defarray;
 }
 function rearmarcontactos(array) {
-    var arraydef = [];
-    var iduser;
-    var palabras = [];
-
+    let arraydef = [];
+    let iduser;
+    let palabras = [];
+    let herramientas = [];
+    // console.log(array)
     for (var i = 0; i < array.length; i++) {
         if (iduser != array[i].id) {
 
@@ -1605,6 +1606,7 @@ function rearmarcontactos(array) {
                 descripcion: array[i].descripcion,
                 foto: `${env.host}/proyecto/contenido/usuario${array[i].id}/${array[i].fotoperfil}`,
                 palabras,
+                herramientas,
                 preferencia: array[i].preferencias
             })
             iduser = array[i].id
@@ -1620,9 +1622,29 @@ function rearmarcontactos(array) {
                 }
             }
         }
-        arraydef[i].palabras = temparray;
+        arraydef[i].palabras = quitarduplicados(temparray);
         temparray = [];
     }
+    for (let i = 0; i < arraydef.length; i++) {
+        let herramientatem; let tempherra = [];
+        for (let j = 0; j < array.length; j++) {
+            if (arraydef[i].iduser == array[j].id) {
+                if (herramientatem !== array[j].herrid) {
+                    tempherra.push({
+                        id: array[j].herrid,
+                        nombre: array[j].herramientanombre,
+                        descripcion: array[j].herramientadescripcion,
+                        icono: array[j].herramientanombreIcono
+                    })
+                    herramientatem = array[j].herrid;
+                }
+            }
+        }
+        arraydef[i].herramientas = quitarduplicados(tempherra);
+        tempherra = [];
+    }
+
+
     // console.log(arraydef);
     return arraydef;
 }
@@ -1848,7 +1870,7 @@ function ponerurlherramientas(array) {
             nombre: array[a].herramientanombre,
             tipo: array[a].herramientatipo,
             descripcion: array[a].herramientadescripcion,
-            icono: `${env.host}/proyecto/contenido/default/${array[a].herramientanombreIcono}`
+            icono: array[a].herramientanombreIcono
         })
     }
     return arraydef;
@@ -1944,6 +1966,10 @@ function ordeninfoproyect(rows) {
 
 
     return objdef;
+}
+function quitarduplicados(array) {
+
+    return Array.from(new Set(array.map(JSON.stringify))).map(JSON.parse);
 }
 //-------------------
 module.exports = funcionesDB;

@@ -421,6 +421,20 @@ esta ruta devuelve todos los contactos del usuario
             "nombre": "nombre test11",
             "palabras": [
                 "test"
+            ],,
+            "herramientas": [
+                {
+                    "id": 1,
+                    "nombre": "Reactjs",
+                    "descripcion": "Es una biblioteca Javascript de código abierto diseñada para crear interfaces de usuario con el objetivo de facilitar el desarrollo de aplicaciones en una sola página. Es mantenido por Facebook y la comunidad de software libre. En el proyecto hay más de mil desarrolladores libres. ",
+                    "icono": "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg"
+                },
+                {
+                    "id": 32,
+                    "nombre": "Adobe Ilustrator",
+                    "descripcion": "Es un editor de gráficos vectoriales en forma de taller de arte que trabaja sobre un tablero de dibujo, conocido como «mesa de trabajo» y está destinado a la creación artística de dibujo y pintura para ilustración, para crear y diseñar imágenes, sirve para editar entre otras cosas (ilustración como rama del arte digital aplicado a la ilustración técnica o el diseño gráfico, entre otros).",
+                    "icono": "https://cdn.worldvectorlogo.com/logos/adobe-illustrator-cc.svg"
+                }
             ],
             "preferencia": 0
         }
@@ -703,14 +717,14 @@ Esta devuelven un objeto con una array llamado API que contiene los objetos gene
             "nombre": "Reactjs",
             "tipo": "desarrollo",
             "descripcion": "Es una biblioteca Javascript de código abierto diseñada para crear interfaces de usuario con el objetivo de facilitar el desarrollo de aplicaciones en una sola página. Es mantenido por Facebook y la comunidad de software libre. En el proyecto hay más de mil desarrolladores libres. ",
-            "icono": "http://localhost:3030/proyecto/contenido/default/reactjs-icon.svg"
+            "icono": "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg"
         },
         {
             "id": 2,
             "nombre": "Angularjs",
             "tipo": "desarrollo",
             "descripcion": "Es un framework de JavaScript de código abierto, mantenido por Google, que se utiliza para crear y mantener aplicaciones web de una sola página. Su objetivo es aumentar las aplicaciones basadas en navegador con capacidad de Modelo Vista Controlador (MVC), en un esfuerzo para hacer que el desarrollo y las pruebas sean más fáciles.",
-            "icono": "http://localhost:3030/proyecto/contenido/default/angular-icon.svg"
+            "icono": "https://www.vectorlogo.zone/logos/angular/angular-icon.svg"
         }
     ]
 }
