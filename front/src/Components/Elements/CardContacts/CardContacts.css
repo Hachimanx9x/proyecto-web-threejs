@@ -25,7 +25,6 @@
   font-size: 0.7rem;
   text-align: center;
   justify-content: center;
-
   margin: 0px 1px;
   font-weight: bolder;
 }
@@ -71,6 +70,9 @@
   border: 1px solid #827717;
 }
 @media only screen and (max-width: 980px) {
+  .o-job-contact {
+    margin: 4px 1px;
+  }
   .o-search-talents-btn {
     font-size: 0.3rem;
   }
