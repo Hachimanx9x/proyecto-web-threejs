@@ -427,7 +427,6 @@ class Contacts extends Component {
     this.setState({
       talents: [...talents],
       contacts: [...contacts],
-      show: [...talents],
     });
     try {
       const obj = JSON.parse(token);
