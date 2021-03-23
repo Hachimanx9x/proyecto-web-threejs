@@ -167,12 +167,13 @@ export default function Desktop() {
 
       <div className="o-blue-container o-updates-container">
         <div className="mt-3 mb-0 d-flex justify-content-end">
-          <button
+          <a
             className="btn btn-primary m-0 border-0 text-capitalize  text-white z-depth-0"
             type="button"
+            href="/Dashboard/Projects/CreateProject"
           >
             Crear proyecto
-          </button>
+          </a>
         </div>
         <section className="d-flex justify-content-center input-group mt-2 pt-1">
           <input
@@ -227,9 +228,12 @@ export default function Desktop() {
                     className="o-project-update-img"
                   />
                   <small>{project.description}</small>
-                  <button className="mt-auto mb-0 m-auto btn btn-primary m-0 border-0 text-capitalize  text-white z-depth-0 text-capitalize">
+                  <a
+                    className="mt-auto mb-0 m-auto btn btn-primary m-0 border-0 text-capitalize  text-white z-depth-0 text-capitalize"
+                    href={`/Dashboard/Desktop/${project.id}`}
+                  >
                     Ingresar
-                  </button>
+                  </a>
                 </div>
               </div>
             </Accordion2>

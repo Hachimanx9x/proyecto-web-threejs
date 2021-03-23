@@ -2,13 +2,11 @@ import React from "react";
 import classNames from "classnames";
 import "./Content.css";
 import { Switch, Route, Redirect } from "react-router-dom";
-import Projects from "../../Pages/Projects/Projects";
 import Topbar from "./Topbar";
 import Documentation from "../../Pages/Documentation/Documentation";
 import Doc2 from "../../Pages/Documentation/Doc2";
 import Loged from "../../Pages/Loged/Dashboard";
 import CreateProject from "../../Pages/Projects/CreateProject";
-import SearchTalents from "../../Pages/SearchTalents/SearchTalents";
 import Contacts from "../../Pages/Contacts/Contacts";
 import CalendarEvents from "../../Pages/Calendar/CalendarEvents";
 import CreateEvent from "../../Pages/Calendar/CreateEvent";
@@ -26,8 +24,9 @@ const Content = ({ sidebarIsOpen, toggleSidebar }) => (
   >
     <Topbar toggleSidebar={toggleSidebar} />
     <Switch>
-      <Route exact path="/Dashboard/Desktop" component={Desktop} />
-      <Route exact path="/Dashboard/Projects" component={Projects} />
+      <Route exact path="/Dashboard/Projects" component={Desktop} />
+      <Route exact path="/Dashboard/Projects/:id" component={Desktop} />
+
       <Route
         exact
         path="/Dashboard/Projects/CreateProject"
@@ -44,7 +43,6 @@ const Content = ({ sidebarIsOpen, toggleSidebar }) => (
         component={Documentation}
       />
       <Route exact path="/Dashboard/Contacts" component={Contacts} />
-      <Route exact path="/Dashboard/SearchTalents" component={SearchTalents} />
       <Route exact path="Dashboard" component={Loged} />
       <Route exact path="/Dashboard/Projects/Documentation2" component={Doc2} />
       <Route exact path="/Dashboard/Calendar" component={CalendarEvents} />
@@ -53,26 +51,10 @@ const Content = ({ sidebarIsOpen, toggleSidebar }) => (
         path="/Dashboard/Calendar/CreateEvent"
         component={CreateEvent}
       />
-      <Route
-        exact
-        path="/Dashboard/SearchTalents/ContactProfile"
-        component={ContactProfile}
-      />
-      <Route
-        path="/Dashboard/Contacts/:contactName"
-        render={(props) => (
-          <ContactProfile {...props} link={`/Dashboard/Contacts`} />
-        )}
-      />
-      <Route
-        path="/Dashboard/Talents/:talentName"
-        render={(props) => (
-          <ContactProfile {...props} link={`/Dashboard/SearchTalents`} />
-        )}
-      />
+      <Route exact path="/Dashboard/Contacts/:id" component={ContactProfile} />
       <Route exact path="/Dashboard/Meetings" component={Meetings} />
       <Route exact path="/Dashboard/Activities" component={Activities} />
-      <Redirect to="/Dashboard/Desktop" />
+      <Redirect to="/Dashboard/Projects" />
     </Switch>
   </div>
 );

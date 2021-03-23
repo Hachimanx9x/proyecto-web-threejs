@@ -17,7 +17,7 @@ class Main extends Component {
     if (token == null || token === undefined) {
       return <Redirect to="/Home" />;
     } else {
-      return <Redirect to="/Dashboard/Desktop" />;
+      return <Redirect to="/Dashboard/Projects" />;
     }
   }
   render() {
