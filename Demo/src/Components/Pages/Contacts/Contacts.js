@@ -89,29 +89,6 @@ class Contacts extends Component {
             "https://www.vectorlogo.zone/logos/w3_html5/w3_html5-icon.svg",
 
             "https://raw.githubusercontent.com/devicons/devicon/ac557d6ff33ff370a5db99f97aeab35ea5c67fbd/icons/css3/css3-original.svg",
-
-            "https://www.vectorlogo.zone/logos/php/php-icon.svg",
-
-            "https://www.vectorlogo.zone/logos/flutterio/flutterio-icon.svg",
-
-            "https://www.vectorlogo.zone/logos/mysql/mysql-official.svg",
-
-            "https://www.vectorlogo.zone/logos/golang/golang-official.svg",
-
-            "https://www.vectorlogo.zone/logos/graphql/graphql-icon.svg",
-
-            "https://www.vectorlogo.zone/logos/typescriptlang/typescriptlang-icon.svg",
-
-            "https://cdn.worldvectorlogo.com/logos/laravel-2.svg",
-
-            "https://www.vectorlogo.zone/logos/jquery/jquery-icon.svg",
-
-            "https://www.vectorlogo.zone/logos/getbootstrap/getbootstrap-icon.svg",
-
-            "https://cdn.worldvectorlogo.com/logos/material-ui-1.svg",
-
-            "https://cdn.worldvectorlogo.com/logos/rails.svg",
-            "https://cdn.worldvectorlogo.com/logos/figma-1.svg",
           ],
         },
         {
@@ -135,42 +112,6 @@ class Contacts extends Component {
             "https://raw.githubusercontent.com/devicons/devicon/ac557d6ff33ff370a5db99f97aeab35ea5c67fbd/icons/css3/css3-original.svg",
 
             "https://www.vectorlogo.zone/logos/php/php-icon.svg",
-
-            "https://www.vectorlogo.zone/logos/flutterio/flutterio-icon.svg",
-
-            "https://www.vectorlogo.zone/logos/mysql/mysql-official.svg",
-
-            "https://www.vectorlogo.zone/logos/golang/golang-official.svg",
-
-            "https://www.vectorlogo.zone/logos/graphql/graphql-icon.svg",
-
-            "https://www.vectorlogo.zone/logos/typescriptlang/typescriptlang-icon.svg",
-
-            "https://www.vectorlogo.zone/logos/jquery/jquery-icon.svg",
-
-            "https://www.vectorlogo.zone/logos/getbootstrap/getbootstrap-icon.svg",
-
-            "https://www.vectorlogo.zone/logos/python/python-icon.svg",
-
-            "https://www.vectorlogo.zone/logos/djangoproject/djangoproject-icon.svg",
-
-            "https://www.vectorlogo.zone/logos/mongodb/mongodb-icon.svg",
-
-            "https://cdn.worldvectorlogo.com/logos/dotnet.svg",
-
-            "https://www.vectorlogo.zone/logos/sqlite/sqlite-icon.svg",
-
-            "https://cdn.worldvectorlogo.com/logos/redux.svg",
-            "https://cdn.worldvectorlogo.com/logos/android.svg",
-
-            "https://www.vectorlogo.zone/logos/ionicframework/ionicframework-icon.svg",
-
-            "https://cdn.worldvectorlogo.com/logos/c--4.svg",
-            "https://cdn.worldvectorlogo.com/logos/c.svg",
-            "https://cdn.worldvectorlogo.com/logos/c-2975.svg",
-            "https://cdn.worldvectorlogo.com/logos/java-14.svg",
-
-            "https://cdn.worldvectorlogo.com/logos/wordpress-blue.svg",
           ],
         },
       ],
