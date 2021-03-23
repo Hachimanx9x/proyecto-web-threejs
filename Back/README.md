@@ -479,6 +479,152 @@ esta ruta trae las reuniones de un proyecto en concreto
     }
 ]
 ```
+
+esta ruta trae la documentación
+```sh
+//metodologia/:name   //  CEM || SMMV
+```
+```json
+{
+    "nombre": "Concepción de la experiencia multimedia",
+    "descripcion": "Con el uso de esta práctica se plantea el poder diseñar de una \n            manera concreta todos los elementos que hacen parte de la experiencia multimedia\n             propias del sistema así como relación todos sus elementos ",
+    "alfas": [
+        {
+            "nombre": "Experiencia multimedia",
+            "descripcion": "define los elementos de valor dentro de la experiencia a ofrecer así mismo ofrece diferentes, métodos para un concepción acertada.",
+            "estados": [
+                {
+                    "nombre": "Identificado",
+                    "descripcion": "Se han identificado una serie de factores\n            críticos para el diseño responsable del Sistema\n            Multimedia, que afectan a sus interesados (usuarios,\n            clientes, interesados indirectos): tensiones de valor\n            entre interesados, posibles usos mal intencionados del\n            Sistema Multimedia, patrones que afectan el Sistema\n            Multimedia, leyes y normatividades que influyen en la\n            solución, aspectos culturales, sociales y cognitivos que\n            influyen en la comunidad objeto de análisis."
+                },
+                {
+                    "nombre": "Comprendido",
+                    "descripcion": "El equipo de trabajo y los interesados\n            (usuarios, clientes y otros interesados) tienen un\n            entendimiento común del significado y alcance de los\n            factores clave que son críticos para el diseño\n            responsable del Sistema Multimedia, y la manera en\n            cómo influyen en la experiencia multimedia. "
+                },
+                {
+                    "nombre": "Acordado",
+                    "descripcion": "El equipo de trabajo y los interesados,\n            identifican de manera conjunta, la necesidad de\n            concebir ideas de diseño que mitiguen los factores\n            adversos y potencien los factores favorables que creen\n            valor en torno al diseño responsable."
+                },
+                {
+                    "nombre": "Concebido",
+                    "descripcion": "El equipo de trabajo y los interesados,\n                coinciden en que la concepción de la solución\n                propuesta para el diseño responsable es la adecuada\n                para atender los factores que influyen en la\n                experiencia multimedia. "
+                }
+            ]
+        },
+        {
+            "nombre": "Diseño responsable",
+            "descripcion": "En este apartado se estará haciendo uso de la experiencia ofrecida y los posibles efectos positivos o negativos que se puede tener sobre el usuarios.",
+            "estados": [
+                {
+                    "nombre": "Identificado",
+                    "descripcion": "Se han identificado una serie de factores\n            críticos para el diseño responsable del Sistema\n            Multimedia, que afectan a sus interesados (usuarios,\n            clientes, interesados indirectos): tensiones de valor\n            entre interesados, posibles usos mal intencionados del\n            Sistema Multimedia, patrones que afectan el Sistema\n            Multimedia, leyes y normatividades que influyen en la\n            solución, aspectos culturales, sociales y cognitivos que\n            influyen en la comunidad objeto de análisis."
+                },
+                {
+                    "nombre": "Comprendido",
+                    "descripcion": "El equipo de trabajo y los interesados\n            (usuarios, clientes y otros interesados) tienen un\n            entendimiento común del significado y alcance de los\n            factores clave que son críticos para el diseño\n            responsable del Sistema Multimedia, y la manera en\n            cómo influyen en la experiencia multimedia. "
+                },
+                {
+                    "nombre": "Acordado",
+                    "descripcion": "El equipo de trabajo y los interesados,\n            identifican de manera conjunta, la necesidad de\n            concebir ideas de diseño que mitiguen los factores\n            adversos y potencien los factores favorables que creen\n            valor en torno al diseño responsable."
+                },
+                {
+                    "nombre": "Concebido",
+                    "descripcion": "El equipo de trabajo y los interesados,\n                coinciden en que la concepción de la solución\n                propuesta para el diseño responsable es la adecuada\n                para atender los factores que influyen en la\n                experiencia multimedia. "
+                }
+            ]
+        }
+    ],
+    "entregables": [
+        {
+            "titulo": "Propuesta de diseño de la Experiencia Multimedia",
+            "descripcion": "Consiste en un documento en donde se especifica:\n                    -El universo narrativo y la historia en la cual se inscribe\n                    la experiencia multimedia. \n                    Elemento Tipo Descripción\n                    -Las metáforas y analogías que se han estimado\n                    necesarias para expresar la historia en la cual se\n                    inscribe la experiencia multimedia.\n                    -Los personajes que intervienen en la historia, así\n                    como sus atributos físicos y emocionales.\n                    -Los medios digitales que se estiman necesarios para la\n                    representación de la experiencia multimedia\n                    interactiva.",
+            "herramientas": [
+                {
+                    "titulo": "Boceto de Storyboards",
+                    "descripcion": "Corresponde los diferentes bocetos que recrean los\n                    Storyboards que expresan la historia en la cual se\n                    inscribe la experiencia multimedia (ver matriz 5). ",
+                    "bibliografia": ""
+                },
+                {
+                    "titulo": "Bosquejos de metáforas y analogías",
+                    "descripcion": "Son los bosquejos producidos en torno a la\n                    representación de diferentes elementos\n                    pertenecientes al universo narrativo, y con asociación\n                    a otros elementos del mundo real, en el cual tiene\n                    lugar la historia en la que se inscribe la experiencia\n                    multimedia (ver matriz 5). ",
+                    "bibliografia": ""
+                }
+            ]
+        },
+        {
+            "titulo": "Especificaciones del diseño responsable",
+            "descripcion": "Este documento especifica los siguientes factores\n                    relacionados con el diseño responsable:\n                    -La especificación de las potenciales tensiones de valor\n                    que pueden producirse entre diferentes interesados, y\n                    las posibles estrategias para su neutralización y\n                    gestión.\n                    - Un listado en donde se especifican potenciales usos\n                    de la solución, con propósitos diferentes a los\n                    concebidos por sus diseñadores, así como las posibles\n                    estrategias para reducir la probabilidad sobre este tipo\n                    de escenarios.\n                    -La especificación de las leyes y normativas con alto\n                    potencial de influir en el Sistema Multimedia y el\n                    despliegue de su experiencia multimedia, y los\n                    mecanismos para monitorear y controlar su\n                    cumplimiento. ",
+            "herramientas": [
+                {
+                    "titulo": "Kit de tarjetas de previsión",
+                    "descripcion": "Es un kit de tarjetas, para la realización de diferente\n                    tipo de análisis, en este caso, permite identificar\n                    tensiones de valor, posibles usos futuros del Sistema\n                    Multimedia, y usos diferentes para los cuales fue\n                    concebido (ver matriz 6). ",
+                    "bibliografia": ""
+                },
+                {
+                    "titulo": "Reunión lluvia de ideas leyes y normatividades",
+                    "descripcion": "Consiste en espacios de trabajo que facilitan el análisis,\n                    identificación y discusión sobre aspectos legales y\n                    normativos, que pueden influyen en la concepción de\n                    la experiencia multimedia, así como en el desarrollo\n                    del Sistema Multimedia (ver matriz 6). ",
+                    "bibliografia": ""
+                }
+            ]
+        }
+    ],
+    "actividades": [
+        {
+            "titulo": "A8",
+            "descripcion": "Diseñe la estructura y el flujo (narrativo, temporal, de\n                        eventos) de la historia a desarrollarse a partir del problema\n                        que desea resolverse, describiendo los acontecimientos que\n                        narra, los personajes que participan, el tiempo en el que se\n                        desarrolla y el espacio en el que suceden dichos\n                        acontecimientos.",
+            "tecnicas": [
+                {
+                    "titulo": "Video como apoyo a la etnografía",
+                    "descripcion": "-Defina aquello que debe filmarse. -Determine quién llevará a cabo la filmación. -Realice la gestión necesaria para obtener los permisos de filmación. -Realice el video. -Analice y recopile información del video.",
+                    "bibliografia": ""
+                },
+                {
+                    "titulo": "Definición de personas",
+                    "descripcion": "-Genere una lista de usuarios potenciales y sus atributos relevantes alrededor de la experiencia multimedia. -Defina un número finito y controlable de tipos de usuario. -Cree personas asociadas a los tipos de usuario, asociándole los atributos definidos con anterioridad (nombre, edad, género, profesión, gustos, intereses, etc.). -Construya un perfil visual para cadapersona, que sea altamente visual y rápido de leer, asociándole sus atributos, anécdotas y citas para cada uno.",
+                    "bibliografia": ""
+                }
+            ]
+        },
+        {
+            "titulo": "A9",
+            "descripcion": "Defina las bases del diseño de una experiencia multimedia\n                    interactiva, a partir de la historia y el (los) problema(s)\n                    identificado(s), especificando los hitos de la historia en donde\n                    el Sistema Multimedia debe producir en el usuario una\n                    influencia cognitiva, emocional y sensorial.",
+            "tecnicas": [
+                {
+                    "titulo": "Producción de metáforas y analogías",
+                    "descripcion": "-Determine el punto de partida para el uso de metáforas y analogías. -Identifique las mejores metáforas y analogías para el desarrollo de la historia y su implementación en la experiencia. *Analogía directa (objetos reales). *Analogía de fantasía (objetos que no existen pero que pueden ser imaginables). *Analogía simbólica (compare aspectos del concepto, con aspectos de otro diferente).  *Analogía personal (relacionarse así mismo con el concepto, poniéndose en una situación determinada). -Genere los conceptos por cada metáfora y analogía producida. -Documente, discuta y mejore los conceptos. Discuta cómo deberían ser evaluados y desarrollados a futuro. Conserve los prototipos de baja fidelidad de las metáforas y analogías producidas.",
+                    "bibliografia": ""
+                },
+                {
+                    "titulo": "Generación de Storyboards",
+                    "descripcion": "-Defina con claridad la solución que se desea ilustrar. -Cree los personajes y describa sus experiencias. -Trace el viaje a través de situaciones imaginadas y defina puntos en el mapa en donde el usuario se encontrará con contenido multimedia, percepciones sensoriales, opciones de interacción con la experiencia. -Ilustre los escenarios con un storyboard marco a marco, desarrollando las narrativas en cada uno, utilizando bocetos. -Comparta la historia con los demás interesados y utilice su retroalimentación para refinar conceptos y demás aspectos como el tipo de contenido multimedia a utilizar, así como las percepciones, cognición o posibilidades de interacción que desean influirse en cada uno de los puntos del mapa. -Conserve los prototipos de baja fidelidad del storyboard producido.",
+                    "bibliografia": ""
+                }
+            ]
+        }
+           
+    ],
+    "roles": [
+        {
+            "nombre": "Arquitecto Experiencia Multimedia",
+            "descripcion": "Consiste en el rol que hace parte del equipo de\n                    Arquitectos, responsable de llevar a cabo la realización\n                    de las actividades A8, A9 y A12, A18 y A19 necesarios\n                    para la generación de la propuesta de diseño de la\n                    experiencia multimedia, y las especificaciones del\n                    diseño responsable (ver matriz 2). ",
+            "perfiles": [
+                "Ing multimedia",
+                "Diseñador",
+                "Diseñador UX"
+            ]
+        },
+        {
+            "nombre": "Arquitecto de producción de contenidos",
+            "descripcion": "Consiste en el rol que hace parte del equipo de\n                    Arquitectos, responsable de llevar a cabo la realización\n                    de la actividad A10, para la definición de los contenidos\n                    multimedia, su estructura y la concepción de las\n                    ambientaciones necesarias para su despliegue, como\n                    elementos clave de la propuesta de diseño de la\n                    experiencia multimedia (ver matriz 2).",
+            "perfiles": [
+                "Diseñador",
+                "Diseñador UX",
+                "Diseñador UI"
+            ]
+        }
+    ]
+}
+```
 > rutas de inserción
 
 esta ruta permite la creacion de un usuario 
