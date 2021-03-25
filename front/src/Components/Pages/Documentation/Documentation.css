@@ -1,0 +1,66 @@
+.o-divider {
+  margin-top: 4rem;
+  height: 3px;
+  box-sizing: border-box;
+  background-color: rgb(202, 202, 202);
+}
+
+.o-btn-return:hover {
+  background: rgba(66, 180, 229, 0.3);
+}
+.o-btn-return:focus {
+  outline: none;
+}
+.o-btn-return span {
+  margin: auto 3px auto 0;
+}
+
+#CardRolesSection {
+  background-color: #eef7fc;
+  max-width: 20%;
+  position: relative;
+  min-width: 18rem;
+  max-height: 1700px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 1rem 0 0 0;
+  border-radius: 16px;
+  margin: 0;
+}
+#CardRolesSection h6 {
+  font-size: 16px;
+  font-weight: 400;
+}
+#CardDocSection {
+  max-width: 75%;
+}
+
+@media only screen and (max-width: 1430px) {
+  #CardRolesSection {
+    min-width: 16rem;
+  }
+  #CardDocSection {
+    max-width: 65%;
+  }
+}
+@media only screen and (max-width: 1010px) {
+  #CardRolesSection {
+    min-width: 100%;
+    flex-direction: row;
+    height: auto;
+    justify-content: center;
+    padding: 4rem 1rem 1rem 1rem;
+    margin-bottom: 6rem;
+  }
+  #CardRolesSection h6 {
+    position: absolute;
+    top: 20px;
+    left: 30px;
+  }
+  #CardDocSection {
+    max-width: 100%;
+  }
+}

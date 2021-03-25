@@ -17,6 +17,8 @@ import Desktop from "../../Pages/Desktop/Desktop";
 import FinishRegister from "../../Pages/Sigin/FinishRegister";
 import Meetings from "../../Pages/Meetings/Meetings";
 import Activities from "../../Pages/Activities/Activities";
+import DocSMMV from "../../Pages/Documentation/DocSMMV";
+import DocCEM from "../../Pages/Documentation/DocCEM";
 
 const Content = ({ sidebarIsOpen, toggleSidebar }) => (
   <div
@@ -32,6 +34,16 @@ const Content = ({ sidebarIsOpen, toggleSidebar }) => (
         exact
         path="/Dashboard/Projects/CreateProject"
         component={CreateProject}
+      />{" "}
+      <Route
+        exact
+        path="/Dashboard/Projects/DocumentationSMMV"
+        component={DocSMMV}
+      />
+      <Route
+        exact
+        path="/Dashboard/Projects/DocumentationCEM"
+        component={DocCEM}
       />
       <Route exact path="/Dashboard/Projects/:id" component={CreateProject} />
       <Route exact path="/Dashboard/Activities" component={Activities} />
