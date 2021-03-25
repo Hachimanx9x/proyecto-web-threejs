@@ -116,17 +116,11 @@ const CardContacts = ({ contact, changefavorite, deleteContact }) => {
               </div>
             </div>
             <div className="col-12 col-sm-3">
-              <Link
-                to={{
-                  pathname: "/Dashboard/Contacts/" + contact.name,
-                  contact: contact,
-                }}
-              >
+              <Link to={`/Dashboard/Contacts/${contact.id}`}>
                 <button
                   type="button"
                   className="btn btn-primary z-depth-0 border-0 text-white font-weight-bold o-search-talents-btn"
                 >
-                  {" "}
                   Contactar
                 </button>
               </Link>

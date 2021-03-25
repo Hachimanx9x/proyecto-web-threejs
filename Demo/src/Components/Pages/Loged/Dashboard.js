@@ -3,9 +3,9 @@ import SideToggler from "./SideToggler";
 
 export default function Dashboard() {
   const token = localStorage.getItem("login");
-  // console.log("el token es => " + token);
   let temp = `${token}`;
-  //   console.log(temp)
+  const history = useHistory();
+
   if (
     token === null ||
     token === undefined ||
@@ -14,7 +14,7 @@ export default function Dashboard() {
     temp === "{}"
   ) {
     //El metodo de redireccionamiento.
-    //    this.props.history.push("/Login");
+    history.push("/Login");
   }
 
   return <SideToggler />;

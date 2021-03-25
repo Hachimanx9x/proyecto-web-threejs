@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import Fade from "../../Fade/Fade";
 import Rodal from "rodal";
 import "rodal/lib/rodal.css";
+import { Link } from "react-router-dom";
 
 const CardTalents = ({ talent, addTalent }) => {
   const [show, setShow] = useState(true);
@@ -141,12 +142,14 @@ const CardTalents = ({ talent, addTalent }) => {
               />
             </div>
             <div className="col-12 col-sm-3">
-              <button
-                type="button"
-                className="btn z-depth-0 border-primary text-primary font-weight-bold  o-search-talents-btn"
-              >
-                Perfil
-              </button>
+              <Link to={`/Dashboard/Contacts/${talent.id}`}>
+                <button
+                  type="button"
+                  className="btn z-depth-0 border-primary text-primary font-weight-bold  o-search-talents-btn"
+                >
+                  Perfil
+                </button>
+              </Link>
               <button
                 onClick={addConfirmation}
                 type="button"
