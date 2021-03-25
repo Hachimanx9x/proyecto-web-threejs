@@ -51,3 +51,13 @@
 .o-rol-select:hover::before {
   background: #0472ca;
 }
+
+.o-member-contact {
+  width: 9rem;
+  max-height: 1.2rem;
+  font-size: 0.7rem;
+  text-align: center;
+  justify-content: center;
+  margin: 0px 1px;
+  font-weight: bolder;
+}

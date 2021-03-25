@@ -371,7 +371,7 @@ class CreateProject extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-xs-12 p-0 pl-sm-4 col-sm-4 position-relative">
+            <div className="col-xs-12 p-0 pl-sm-4 col-sm-8 position-relative">
               <MDBInput
                 type="text"
                 className={
@@ -387,20 +387,21 @@ class CreateProject extends Component {
                 required
                 onChange={(e) => this.handleInput("projectName", e)}
               />
-              <p
-                className={
-                  (this.state.errors.name ? "" : "invisible ") + "o-text-error"
-                }
-              >
-                Campo requerido.
-              </p>
-            </div>
-            <div className="col-xs-12 col-sm-4">
+              <div className="position-relative" style={{ maxWidth: "20rem" }}>
+                <p
+                  className={
+                    (this.state.errors.name ? "" : "invisible ") +
+                    "o-text-error"
+                  }
+                >
+                  Campo requerido.
+                </p>
+              </div>
               <MDBInput
                 onChange={(e) => this.handleInput("projectDescription", e)}
                 type="textarea"
                 label="Descripción del proyecto"
-                className="rounded"
+                className="rounded pt-3 pt-sm-2"
                 outline
                 required
               />

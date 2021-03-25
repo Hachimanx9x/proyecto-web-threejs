@@ -84,6 +84,11 @@
 .o-project-creation-section .md-outline textarea {
   border-color: #007bff;
   border-bottom: 0.1px solid #007bff;
+  font-size: 10px;
+  min-height: 2rem;
+}
+.o-project-creation-section .md-outline input[type="text"] {
+  max-width: 20rem;
 }
 .o-project-creation-section .md-outline textarea:focus + label {
   color: #007bff;
@@ -95,6 +100,8 @@
 }
 .o-project-creation-section .md-outline textarea {
   height: 10rem;
+  padding-top: 120px;
+  box-shadow: border-box;
 }
 
 .o-picture-project {

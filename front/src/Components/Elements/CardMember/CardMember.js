@@ -73,7 +73,7 @@ const CardMember = ({ member, remove, add, change, rols }) => {
               <div
                 key={i}
                 className={
-                  memberRol(rol.rol) + " rounded-pill mt-1 o-job-contact"
+                  memberRol(rol.rol) + " rounded-pill mt-1 o-member-contact"
                 }
               >
                 <p>{rol.rol}</p>
