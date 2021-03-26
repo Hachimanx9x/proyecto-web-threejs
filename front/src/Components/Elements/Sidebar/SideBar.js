@@ -17,20 +17,30 @@ const deleteUser = () => {
   console.log(localStorage.getItem("login"));
 };
 const SideBar = ({ isOpen, toggle }) => {
+  const token = localStorage.getItem("login");
+
   return (
     <div id="sidebar" className={classNames("sidebar", { "is-open": isOpen })}>
       <div className="sidebar-header">
         <span color="info" onClick={toggle} style={{ color: "#fff" }}>
           &times;
         </span>
-        <NavLink to="/Dashboard/Projects">
+
+        <NavLink
+          to="/Dashboard/Projects"
+          className={token === "registrandose" ? "disabled" : ""}
+        >
           {" "}
           <img src={Logo} alt="Softmedia" className="text-center" />
         </NavLink>
       </div>
       <div className="side-menu">
         <div className="list-unstyled pb-3">
-          <NavLink activeClassName="active" to="/Dashboard/Projects">
+          <NavLink
+            activeClassName="active"
+            className={token === "registrandose" ? "disabled" : ""}
+            to="/Dashboard/Projects"
+          >
             <div className="nav-item">
               <li tag={Link} to={"/Dashboard/Projects"}>
                 <button className="btn z-depth-0 o-link-btn font-weight-bold text-capitalize">
@@ -41,7 +51,11 @@ const SideBar = ({ isOpen, toggle }) => {
             </div>
           </NavLink>
 
-          <NavLink activeClassName="active" to="/Dashboard/Contacts">
+          <NavLink
+            activeClassName="active"
+            to="/Dashboard/Contacts"
+            className={token === "registrandose" ? "disabled" : ""}
+          >
             <div className="nav-item">
               <li tag={Link} to={"/Dashboard/Contacts"}>
                 <button className="btn z-depth-0 o-link-btn font-weight-bold text-capitalize">
@@ -52,17 +66,20 @@ const SideBar = ({ isOpen, toggle }) => {
             </div>
           </NavLink>
 
-          <NavLink activeClassName="active" to="/Dashboard/Calendar">
+          <NavLink
+            activeClassName="active"
+            to="/Dashboard/Calendar"
+            className={token === "registrandose" ? "disabled" : ""}
+          >
             <div className="nav-item">
               <li tag={Link} to={"/Dashboard/Calendar"}>
                 <button className="btn z-depth-0 o-link-btn font-weight-bold text-capitalize">
                   <FontAwesomeIcon icon={faCalendarAlt} className="mr-2" />
-                  {"   "}Calendario
+                  {"   "} Calendario
                 </button>
               </li>
             </div>
           </NavLink>
-
           <div className="nav-item">
             <li tag={Link} to={"/Login"}>
               <a

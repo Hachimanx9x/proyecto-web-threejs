@@ -86,6 +86,9 @@ a.active .nav-item {
   border-left: 5px solid #3bccf6;
   width: 100%;
 }
+.disabled .o-link-btn {
+  color: gray;
+}
 
 .nav-item {
   height: 2.5rem;

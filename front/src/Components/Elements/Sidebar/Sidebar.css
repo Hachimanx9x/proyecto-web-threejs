@@ -87,6 +87,9 @@ a.active .nav-item {
   width: 100%;
 }
 
+.disabled .o-link-btn {
+  color: gray;
+}
 .nav-item {
   height: 2.5rem;
   box-shadow: none;
