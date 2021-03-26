@@ -200,6 +200,7 @@ export default function Desktop() {
               active={active}
               icon={project.icon}
               projectId={project.id}
+              number={project.updates.length}
               setActive={setActive}
               key={i}
             >
