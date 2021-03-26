@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import Fade from "../../Fade/Fade";
 import Rodal from "rodal";
 import "rodal/lib/rodal.css";
+import { Link } from "react-router-dom";
 
 const CardTalents = ({ talent, addTalent }) => {
   const [show, setShow] = useState(true);
