@@ -1,92 +1,71 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import User from "../../../Logos/user-icon.png";
 import { MDBInput } from "mdbreact";
 import { Multiselect } from "multiselect-react-dropdown";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Rodal from "rodal";
+
+import Axios from "axios";
 
 import "./FinishRegister.css";
-
-import Rodal from "rodal";
 import SuccessAnimation from "../../Elements/SuccessAnimation/SuccessAnimation";
 
-export default function FinishRegister(props) {
+export default function ViewProfile(props) {
   const [picture, setPicture] = useState(null);
-  const [description, setDescription] = useState();
-  const [country, setCountry] = useState();
-  const [name, setName] = useState("");
-  const [lastname, setLastname] = useState("");
+  const [description, setDescription] = useState(
+    "Desarrollador MERN/FullStack. Maneja herramientas como Reactjs, Node JS, Apollo, GraphQl entre otros."
+  );
+  const [country, setCountry] = useState("Colombia");
+  const [name, setName] = useState("Accel");
+  const [lastname, setLastname] = useState("Zero");
   const [cv, setCv] = useState("");
   const [cvpicture, setCvpicture] = useState(null);
-  const [years, setYears] = useState();
+  const [years, setYears] = useState({ key: "0 años", cat: 0 });
   const [linkedin, setLinkedin] = useState("");
   const [github, setGithub] = useState("");
   const [gitlab, setGitlab] = useState("");
   const [bitbucket, setBitbucket] = useState("");
-  const [skills, setSkills] = useState([]);
+  const [skills, setSkills] = useState([
+    {
+      id: "1",
+      icon: "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg",
+      name: "React JS",
+    },
+    {
+      id: "2",
+      icon: "https://www.vectorlogo.zone/logos/angular/angular-icon.svg",
+      name: "Angular",
+    },
+    {
+      id: "3",
+      icon: "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg",
+      name: "Vue JS",
+    },
+    {
+      id: "4",
+      icon: "https://www.vectorlogo.zone/logos/nodejs/nodejs-icon.svg",
+      name: "Node JS",
+    },
+  ]);
   const [userLanguages, setLanguages] = useState([]);
-  const [userKeywords, setKeyWords] = useState([]);
-  const [test, setTest] = useState([]);
-  const [selected, setSelected] = useState([]);
-
-  const [confirmation, setConfirmation] = useState(false);
-  const [modal, setModal] = useState(false);
-
-  const [errorList, setErrorList] = useState({
-    validName: true,
-    nameMessage: ".",
-    validLastName: true,
-    lastnameMessage: " ",
-    validYears: true,
-    validLang: true,
-    validWords: true,
-    validSkills: true,
-  });
-  const countries = [
-    { key: "Alemania", cat: "Alemania" },
-    { key: "Brasil", cat: "Brasil" },
-    { key: "China", cat: "China" },
-    { key: "Colombia", cat: "Colombia" },
-    { key: "España", cat: "España" },
-    { key: "Francia", cat: "Francia" },
-    { key: "Italia", cat: "Italia" },
-    { key: "Japón", cat: "Japón" },
-    { key: "Korea", cat: "Korea" },
-    { key: "Rusia", cat: "Rusia" },
-    { key: "Suecia", cat: "Suecia" },
-  ];
-  const yearsList = [
-    { key: "0 años", cat: 0 },
-    { key: "1 año", cat: 1 },
-    { key: "2 años", cat: 2 },
-    { key: "3 años", cat: 3 },
-    { key: "4 años", cat: 4 },
-    { key: "5 años", cat: 5 },
-  ];
-  const languageslist = [
-    { key: "Inglés", cat: "Inglés" },
-    { key: "Español", cat: "Español" },
-    { key: "Alemán", cat: "Alemán" },
-    { key: "Francés", cat: "Francés" },
-    { key: "Russo", cat: "Russo" },
-    { key: "Japonés", cat: "Japonés" },
-    { key: "Italiano", cat: "Italiano" },
-    { key: "Sueco", cat: "Sueco" },
-    { key: "Chino", cat: "Chino" },
-    { key: "Koreano", cat: "Koreano" },
-    { key: "Portugués", cat: "Portugués" },
-  ];
-  const keywords = [
+  const [userKeywords, setKeyWords] = useState([
     { key: "Desarrollador Web", cat: "Desarrollador Web" },
     { key: "Desarrollador Frontend", cat: "Desarrollador Frontend" },
     { key: "Desarrollador Móvil", cat: "Desarrollador Móvil" },
-    { key: "Desarrollador Backend", cat: "Desarrollador Backend" },
-    { key: "Desarrollador FullStack", cat: "Desarrollador FullStack" },
-    { key: "Diseñador Gráfico", cat: "Diseñador Gráfico" },
-    { key: "Diseñador UI", cat: "Diseñador UI" },
-    { key: "Diseñador UX", cat: "Diseñador UX" },
-  ];
-  const toolist = [
+  ]);
+
+  const [selectedLang, setSelectedLang] = useState([
+    {
+      key: "Inglés",
+      cat: "Inglés",
+    },
+  ]);
+  const [selectedKey, setSelectedKey] = useState([
+    { key: "Desarrollador Web", cat: "Desarrollador Web" },
+    { key: "Desarrollador Frontend", cat: "Desarrollador Frontend" },
+  ]);
+  const [test, setTest] = useState([
     {
       cat: {
         id: "1",
@@ -119,64 +98,128 @@ export default function FinishRegister(props) {
       },
       key: "Node js",
     },
+  ]);
+  const [selected, setSelected] = useState([
     {
       cat: {
-        id: "5",
-        icon: "https://www.vectorlogo.zone/logos/python/python-icon.svg",
-        name: "Python",
+        id: "1",
+        icon: "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg",
+        name: "React JS",
       },
-      key: "Python",
+      key: "React js",
     },
     {
       cat: {
-        id: "7",
-        icon: "https://www.vectorlogo.zone/logos/php/php-icon.svg",
-        name: "PHP",
+        id: "2",
+        icon: "https://www.vectorlogo.zone/logos/angular/angular-icon.svg",
+        name: "Angular",
       },
-      key: "PHP",
+      key: "Angular",
     },
     {
       cat: {
-        id: "8",
-        icon: "https://www.vectorlogo.zone/logos/flutterio/flutterio-icon.svg",
-        name: "Flutter",
+        id: "3",
+        icon: "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg",
+        name: "Vue JS",
       },
-      key: "Flutter",
+      key: "Vue js",
     },
     {
       cat: {
-        id: "9",
-        icon: "https://cdn.worldvectorlogo.com/logos/mysql-7.svg",
-        name: "MySQL",
+        id: "4",
+        icon: "https://www.vectorlogo.zone/logos/nodejs/nodejs-icon.svg",
+        name: "Node JS",
       },
-      key: "MySQL",
+      key: "Node js",
     },
-    {
-      cat: {
-        id: "10",
-        icon: "https://www.vectorlogo.zone/logos/golang/golang-official.svg",
-        name: "Golang",
-      },
-      key: "Golang",
-    },
-    {
-      cat: {
-        id: "11",
-        icon: "https://www.vectorlogo.zone/logos/graphql/graphql-icon.svg",
-        name: "GraphQL",
-      },
-      key: "GraphQL",
-    },
-    {
-      cat: {
-        id: "12",
-        icon:
-          "https://www.vectorlogo.zone/logos/typescriptlang/typescriptlang-icon.svg",
-        name: "TypeScript",
-      },
-      key: "TypeScript",
-    },
+  ]);
+
+  const [confirmation, setConfirmation] = useState(false);
+  const [modal, setModal] = useState(false);
+  const token = localStorage.getItem("login");
+  const [languageslist, setLanguageslist] = useState([]);
+  const [toolist, setToolist] = useState([]);
+  const [errorList, setErrorList] = useState({
+    validName: true,
+    nameMessage: ".",
+    validLastName: true,
+    lastnameMessage: " ",
+    validYears: true,
+    validLang: true,
+    validWords: true,
+    validSkills: true,
+  });
+  const countries = [
+    { key: "Alemania", cat: "Alemania" },
+    { key: "Brasil", cat: "Brasil" },
+    { key: "China", cat: "China" },
+    { key: "Colombia", cat: "Colombia" },
+    { key: "España", cat: "España" },
+    { key: "Francia", cat: "Francia" },
+    { key: "Italia", cat: "Italia" },
+    { key: "Japón", cat: "Japón" },
+    { key: "Korea", cat: "Korea" },
+    { key: "Rusia", cat: "Rusia" },
+    { key: "Suecia", cat: "Suecia" },
   ];
+  const yearsList = [
+    { key: "0 años", cat: 0 },
+    { key: "1 año", cat: 1 },
+    { key: "2 años", cat: 2 },
+    { key: "3 años", cat: 3 },
+    { key: "4 años", cat: 4 },
+    { key: "5 años", cat: 5 },
+  ];
+
+  const keywords = [
+    { key: "Desarrollador Web", cat: "Desarrollador Web" },
+    { key: "Desarrollador Frontend", cat: "Desarrollador Frontend" },
+    { key: "Desarrollador Móvil", cat: "Desarrollador Móvil" },
+    { key: "Desarrollador Backend", cat: "Desarrollador Backend" },
+    { key: "Desarrollador FullStack", cat: "Desarrollador FullStack" },
+    { key: "Diseñador Gráfico", cat: "Diseñador Gráfico" },
+    { key: "Diseñador UI", cat: "Diseñador UI" },
+    { key: "Diseñador UX", cat: "Diseñador UX" },
+  ];
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        Axios.all([
+          Axios.get(`http://localhost:3030/api/herramientas`),
+          Axios.get(`http://localhost:3030/api/idiomas`),
+        ]).then((response) => {
+          const tools = [];
+          const languages = [];
+          for (let i = 0; i < response[0].data.API.length; i++) {
+            tools.push({
+              cat: {
+                id: response[0].data.API[i].id,
+                icon: response[0].data.API[i].icono,
+                name: response[0].data.API[i].nombre,
+              },
+              key: response[0].data.API[i].nombre,
+            });
+            setToolist([...tools]);
+          }
+          for (let i = 0; i < response[1].data.API.length; i++) {
+            languages.push({
+              cat: response[1].data.API[i].id,
+              key:
+                response[1].data.API[i].idiomanombre +
+                " " +
+                response[1].data.API[i].idiomanivel,
+            });
+            setLanguageslist([...languages]);
+          }
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const RemoveSkill = (selectedItem) => {
     if (selectedItem !== undefined) {
@@ -257,6 +300,41 @@ export default function FinishRegister(props) {
       errors.validLastName &&
       errors.validLang
     ) {
+      try {
+        const datform = new FormData();
+        datform.append("email", nullData);
+        datform.append("password", nullData);
+        datform.append("experiencia", years);
+        datform.append("nombre", fullname);
+        datform.append("descripcion", description);
+        datform.append("pais", country);
+        datform.append("edad", nullData);
+        datform.append("github", github);
+        datform.append("gitlab", gitlab);
+        datform.append("bitbucket", bitbucket);
+        datform.append("linkedin", linkedin);
+        datform.append("herramienta", skillsdi);
+        datform.append("palabra", userKeywords);
+        datform.append("idiomas", userLanguages);
+        datform.append("foto", picture);
+        datform.append("cv", cvpicture);
+        console.log(skillsdi);
+        const obj = JSON.parse(token);
+        const tokensito = obj.token;
+        const options = {
+          headers: { authorization: `llave ${tokensito}` },
+        };
+
+        const { data } = await Axios.put(
+          `http://localhost:3030/actualizar/usuario`,
+          datform,
+          options
+        );
+        console.log(data);
+        localStorage.setItem("login", "");
+      } catch (error) {
+        console.log(error);
+      }
       setConfirmation(true);
       setTimeout(() => {
         setModal(false);
@@ -357,6 +435,7 @@ export default function FinishRegister(props) {
             type="text"
             className={!errorList.validName ? "is-invalid border-danger" : ""}
             label="Nombres"
+            value={name}
             onChange={(e) => {
               setName(e.target.value);
             }}
@@ -373,6 +452,7 @@ export default function FinishRegister(props) {
           <MDBInput
             type="text"
             label="Apellidos"
+            value={lastname}
             className={
               !errorList.validLastName ? "is-invalid border-danger" : ""
             }
@@ -459,7 +539,9 @@ export default function FinishRegister(props) {
                 onChange={(e) => setYears(e.target.value)}
                 className={!errorList.validYears ? "border-danger" : ""}
               >
-                <option hidden>Seleccione</option>
+                <option value={years.cat} selected>
+                  {years.key}
+                </option>
                 {yearsList.map((year) => (
                   <option key={year.cat} value={year.cat}>
                     {year.key}
@@ -484,6 +566,7 @@ export default function FinishRegister(props) {
             options={languageslist}
             displayValue="key"
             closeOnSelect={false}
+            selectedValues={selectedLang}
             style={
               !errorList.validLang
                 ? {
@@ -534,6 +617,7 @@ export default function FinishRegister(props) {
             displayValue="key"
             selectionLimit="3"
             placeholder="Selecciona...."
+            selectedValues={selectedKey}
             hidePlaceholder={true}
             style={
               !errorList.validWords
@@ -591,6 +675,7 @@ export default function FinishRegister(props) {
           <MDBInput
             type="text"
             label="URL/Bitbucket"
+            value={bitbucket}
             onChange={(e) => {
               setBitbucket(e.target.value);
             }}
@@ -606,6 +691,7 @@ export default function FinishRegister(props) {
           <MDBInput
             type="text"
             label="URL/LinkedIn"
+            value={linkedin}
             onChange={(e) => {
               setLinkedin(e.target.value);
             }}
@@ -621,6 +707,7 @@ export default function FinishRegister(props) {
           <MDBInput
             type="text"
             label="URL/GitLab"
+            value={gitlab}
             onChange={(e) => {
               setGitlab(e.target.value);
             }}
@@ -636,6 +723,7 @@ export default function FinishRegister(props) {
           <MDBInput
             type="text"
             label="URL/GitHub"
+            value={github}
             onChange={(e) => {
               setGithub(e.target.value);
             }}
@@ -656,7 +744,7 @@ export default function FinishRegister(props) {
           <div className="position-relative">
             <div className="o-single-select m-0 p-0">
               <select onChange={(e) => setCountry(e.target.value)}>
-                <option hidden>Seleccione</option>
+                <option selected>{country}</option>
                 {countries.map((country) => (
                   <option key={country.cat} value={country.cat}>
                     {country.key}
@@ -670,6 +758,7 @@ export default function FinishRegister(props) {
           <p>Descripción</p>
           <MDBInput
             type="textarea"
+            value={description}
             label="Descripción"
             className="rounded"
             onChange={(e) => {

@@ -2,19 +2,18 @@ import React from "react";
 import classNames from "classnames";
 import "./Content.css";
 import { Switch, Route, Redirect } from "react-router-dom";
-import Projects from "../../Pages/Projects/Projects";
 import Topbar from "./Topbar";
 import Documentation from "../../Pages/Documentation/Documentation";
 import Doc2 from "../../Pages/Documentation/Doc2";
 import Loged from "../../Pages/Loged/Dashboard";
 import CreateProject from "../../Pages/Projects/CreateProject";
-import SearchTalents from "../../Pages/SearchTalents/SearchTalents";
 import Contacts from "../../Pages/Contacts/Contacts";
 import CalendarEvents from "../../Pages/Calendar/CalendarEvents";
 import CreateEvent from "../../Pages/Calendar/CreateEvent";
 import ContactProfile from "../../Pages/ContactProfile/ContactProfile";
 import Desktop from "../../Pages/Desktop/Desktop";
 import FinishRegister from "../../Pages/Sigin/FinishRegister";
+import ViewProfile from "../../Pages/Sigin/ViewProfile";
 import Meetings from "../../Pages/Meetings/Meetings";
 import Activities from "../../Pages/Activities/Activities";
 import DocSMMV from "../../Pages/Documentation/DocSMMV";
@@ -72,6 +71,7 @@ const Content = ({ sidebarIsOpen, toggleSidebar }) => (
         path="/Dashboard/FinishRegister"
         component={FinishRegister}
       />
+      <Route exact path="/Dashboard/infoUser" component={ViewProfile} />
       <Redirect to="/Dashboard/Projects" />
     </Switch>
   </div>

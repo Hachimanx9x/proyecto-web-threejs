@@ -1,47 +1,142 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import User from "../../../Logos/user-icon.png";
 import { MDBInput } from "mdbreact";
 import { Multiselect } from "multiselect-react-dropdown";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Rodal from "rodal";
+
+import Axios from "axios";
 
 import "./FinishRegister.css";
-
-import Rodal from "rodal";
 import SuccessAnimation from "../../Elements/SuccessAnimation/SuccessAnimation";
 
-export default function FinishRegister(props) {
+export default function ViewProfile(props) {
   const [picture, setPicture] = useState(null);
-  const [description, setDescription] = useState();
-  const [country, setCountry] = useState();
-  const [name, setName] = useState("");
-  const [lastname, setLastname] = useState("");
+  const [description, setDescription] = useState(
+    "Desarrollador MERN/FullStack. Maneja herramientas como Reactjs, Node JS, Apollo, GraphQl entre otros."
+  );
+  const [country, setCountry] = useState("Colombia");
+  const [name, setName] = useState("Accel");
+  const [lastname, setLastname] = useState("Zero");
   const [cv, setCv] = useState("");
   const [cvpicture, setCvpicture] = useState(null);
-  const [years, setYears] = useState();
+  const [years, setYears] = useState({ key: "0 años", cat: 0 });
   const [linkedin, setLinkedin] = useState("");
   const [github, setGithub] = useState("");
   const [gitlab, setGitlab] = useState("");
   const [bitbucket, setBitbucket] = useState("");
-  const [skills, setSkills] = useState([]);
+  const [skills, setSkills] = useState([
+    {
+      id: "1",
+      icon: "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg",
+      name: "React JS",
+    },
+    {
+      id: "2",
+      icon: "https://www.vectorlogo.zone/logos/angular/angular-icon.svg",
+      name: "Angular",
+    },
+    {
+      id: "3",
+      icon: "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg",
+      name: "Vue JS",
+    },
+    {
+      id: "4",
+      icon: "https://www.vectorlogo.zone/logos/nodejs/nodejs-icon.svg",
+      name: "Node JS",
+    },
+  ]);
   const [userLanguages, setLanguages] = useState([]);
-  const [userKeywords, setKeyWords] = useState([]);
-  const [test, setTest] = useState([]);
-  const [selected, setSelected] = useState([]);
+  const [userKeywords, setKeyWords] = useState([
+    { key: "Desarrollador Web", cat: "Desarrollador Web" },
+    { key: "Desarrollador Frontend", cat: "Desarrollador Frontend" },
+    { key: "Desarrollador Móvil", cat: "Desarrollador Móvil" },
+  ]);
+
+  const [selectedLang, setSelectedLang] = useState([
+    {
+      key: "Inglés",
+      cat: "Inglés",
+    },
+  ]);
+  const [selectedKey, setSelectedKey] = useState([
+    { key: "Desarrollador Web", cat: "Desarrollador Web" },
+    { key: "Desarrollador Frontend", cat: "Desarrollador Frontend" },
+  ]);
+  const [test, setTest] = useState([
+    {
+      cat: {
+        id: "1",
+        icon: "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg",
+        name: "React JS",
+      },
+      key: "React js",
+    },
+    {
+      cat: {
+        id: "2",
+        icon: "https://www.vectorlogo.zone/logos/angular/angular-icon.svg",
+        name: "Angular",
+      },
+      key: "Angular",
+    },
+    {
+      cat: {
+        id: "3",
+        icon: "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg",
+        name: "Vue JS",
+      },
+      key: "Vue js",
+    },
+    {
+      cat: {
+        id: "4",
+        icon: "https://www.vectorlogo.zone/logos/nodejs/nodejs-icon.svg",
+        name: "Node JS",
+      },
+      key: "Node js",
+    },
+  ]);
+  const [selected, setSelected] = useState([
+    {
+      cat: {
+        id: "1",
+        icon: "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg",
+        name: "React JS",
+      },
+      key: "React js",
+    },
+    {
+      cat: {
+        id: "2",
+        icon: "https://www.vectorlogo.zone/logos/angular/angular-icon.svg",
+        name: "Angular",
+      },
+      key: "Angular",
+    },
+    {
+      cat: {
+        id: "3",
+        icon: "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg",
+        name: "Vue JS",
+      },
+      key: "Vue js",
+    },
+    {
+      cat: {
+        id: "4",
+        icon: "https://www.vectorlogo.zone/logos/nodejs/nodejs-icon.svg",
+        name: "Node JS",
+      },
+      key: "Node js",
+    },
+  ]);
 
   const [confirmation, setConfirmation] = useState(false);
   const [modal, setModal] = useState(false);
-
-  const [errorList, setErrorList] = useState({
-    validName: true,
-    nameMessage: ".",
-    validLastName: true,
-    lastnameMessage: " ",
-    validYears: true,
-    validLang: true,
-    validWords: true,
-    validSkills: true,
-  });
+  const token = localStorage.getItem("login");
   const countries = [
     { key: "Alemania", cat: "Alemania" },
     { key: "Brasil", cat: "Brasil" },
@@ -177,7 +272,6 @@ export default function FinishRegister(props) {
       key: "TypeScript",
     },
   ];
-
   const RemoveSkill = (selectedItem) => {
     if (selectedItem !== undefined) {
       const skill = skills;
@@ -257,6 +351,41 @@ export default function FinishRegister(props) {
       errors.validLastName &&
       errors.validLang
     ) {
+      try {
+        const datform = new FormData();
+        datform.append("email", nullData);
+        datform.append("password", nullData);
+        datform.append("experiencia", years);
+        datform.append("nombre", fullname);
+        datform.append("descripcion", description);
+        datform.append("pais", country);
+        datform.append("edad", nullData);
+        datform.append("github", github);
+        datform.append("gitlab", gitlab);
+        datform.append("bitbucket", bitbucket);
+        datform.append("linkedin", linkedin);
+        datform.append("herramienta", skillsdi);
+        datform.append("palabra", userKeywords);
+        datform.append("idiomas", userLanguages);
+        datform.append("foto", picture);
+        datform.append("cv", cvpicture);
+        console.log(skillsdi);
+        const obj = JSON.parse(token);
+        const tokensito = obj.token;
+        const options = {
+          headers: { authorization: `llave ${tokensito}` },
+        };
+
+        const { data } = await Axios.put(
+          `http://localhost:3030/actualizar/usuario`,
+          datform,
+          options
+        );
+        console.log(data);
+        localStorage.setItem("login", "");
+      } catch (error) {
+        console.log(error);
+      }
       setConfirmation(true);
       setTimeout(() => {
         setModal(false);
@@ -357,6 +486,7 @@ export default function FinishRegister(props) {
             type="text"
             className={!errorList.validName ? "is-invalid border-danger" : ""}
             label="Nombres"
+            value={name}
             onChange={(e) => {
               setName(e.target.value);
             }}
@@ -373,6 +503,7 @@ export default function FinishRegister(props) {
           <MDBInput
             type="text"
             label="Apellidos"
+            value={lastname}
             className={
               !errorList.validLastName ? "is-invalid border-danger" : ""
             }
@@ -459,7 +590,9 @@ export default function FinishRegister(props) {
                 onChange={(e) => setYears(e.target.value)}
                 className={!errorList.validYears ? "border-danger" : ""}
               >
-                <option hidden>Seleccione</option>
+                <option value={years.cat} selected>
+                  {years.key}
+                </option>
                 {yearsList.map((year) => (
                   <option key={year.cat} value={year.cat}>
                     {year.key}
@@ -484,6 +617,7 @@ export default function FinishRegister(props) {
             options={languageslist}
             displayValue="key"
             closeOnSelect={false}
+            selectedValues={selectedLang}
             style={
               !errorList.validLang
                 ? {
@@ -534,6 +668,7 @@ export default function FinishRegister(props) {
             displayValue="key"
             selectionLimit="3"
             placeholder="Selecciona...."
+            selectedValues={selectedKey}
             hidePlaceholder={true}
             style={
               !errorList.validWords
@@ -591,6 +726,7 @@ export default function FinishRegister(props) {
           <MDBInput
             type="text"
             label="URL/Bitbucket"
+            value={bitbucket}
             onChange={(e) => {
               setBitbucket(e.target.value);
             }}
@@ -606,6 +742,7 @@ export default function FinishRegister(props) {
           <MDBInput
             type="text"
             label="URL/LinkedIn"
+            value={linkedin}
             onChange={(e) => {
               setLinkedin(e.target.value);
             }}
@@ -621,6 +758,7 @@ export default function FinishRegister(props) {
           <MDBInput
             type="text"
             label="URL/GitLab"
+            value={gitlab}
             onChange={(e) => {
               setGitlab(e.target.value);
             }}
@@ -636,6 +774,7 @@ export default function FinishRegister(props) {
           <MDBInput
             type="text"
             label="URL/GitHub"
+            value={github}
             onChange={(e) => {
               setGithub(e.target.value);
             }}
@@ -656,7 +795,7 @@ export default function FinishRegister(props) {
           <div className="position-relative">
             <div className="o-single-select m-0 p-0">
               <select onChange={(e) => setCountry(e.target.value)}>
-                <option hidden>Seleccione</option>
+                <option selected>{country}</option>
                 {countries.map((country) => (
                   <option key={country.cat} value={country.cat}>
                     {country.key}
@@ -670,6 +809,7 @@ export default function FinishRegister(props) {
           <p>Descripción</p>
           <MDBInput
             type="textarea"
+            value={description}
             label="Descripción"
             className="rounded"
             onChange={(e) => {
