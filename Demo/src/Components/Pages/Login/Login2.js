@@ -65,7 +65,20 @@ class Login extends Component {
     e.preventDefault();
     await this.handleValidation();
     if (this.state.validEmail && this.state.validpassword) {
-      this.props.history.push("/Dashboard/Desktop");
+      if (
+        this.state.email === "correo@gmail.com" &&
+        this.state.password === "securePassword"
+      ) {
+        localStorage.setItem("login", "logeado");
+        this.props.history.push("/Dashboard/Desktop");
+      } else {
+        this.setState({
+          validEmail: false,
+          validpassword: false,
+          emailMessage: "Correo o contraseña inválido",
+          passwordMessage: "Correo o contraseña inválido",
+        });
+      }
     }
   };
 
