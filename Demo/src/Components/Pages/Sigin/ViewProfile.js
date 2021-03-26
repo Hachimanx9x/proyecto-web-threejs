@@ -137,6 +137,18 @@ export default function ViewProfile(props) {
   const [confirmation, setConfirmation] = useState(false);
   const [modal, setModal] = useState(false);
   const token = localStorage.getItem("login");
+  const [languageslist, setLanguageslist] = useState([]);
+  const [toolist, setToolist] = useState([]);
+  const [errorList, setErrorList] = useState({
+    validName: true,
+    nameMessage: ".",
+    validLastName: true,
+    lastnameMessage: " ",
+    validYears: true,
+    validLang: true,
+    validWords: true,
+    validSkills: true,
+  });
   const countries = [
     { key: "Alemania", cat: "Alemania" },
     { key: "Brasil", cat: "Brasil" },
@@ -158,19 +170,7 @@ export default function ViewProfile(props) {
     { key: "4 años", cat: 4 },
     { key: "5 años", cat: 5 },
   ];
-  const languageslist = [
-    { key: "Inglés", cat: "Inglés" },
-    { key: "Español", cat: "Español" },
-    { key: "Alemán", cat: "Alemán" },
-    { key: "Francés", cat: "Francés" },
-    { key: "Russo", cat: "Russo" },
-    { key: "Japonés", cat: "Japonés" },
-    { key: "Italiano", cat: "Italiano" },
-    { key: "Sueco", cat: "Sueco" },
-    { key: "Chino", cat: "Chino" },
-    { key: "Koreano", cat: "Koreano" },
-    { key: "Portugués", cat: "Portugués" },
-  ];
+
   const keywords = [
     { key: "Desarrollador Web", cat: "Desarrollador Web" },
     { key: "Desarrollador Frontend", cat: "Desarrollador Frontend" },
@@ -181,97 +181,46 @@ export default function ViewProfile(props) {
     { key: "Diseñador UI", cat: "Diseñador UI" },
     { key: "Diseñador UX", cat: "Diseñador UX" },
   ];
-  const toolist = [
-    {
-      cat: {
-        id: "1",
-        icon: "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg",
-        name: "React JS",
-      },
-      key: "React js",
-    },
-    {
-      cat: {
-        id: "2",
-        icon: "https://www.vectorlogo.zone/logos/angular/angular-icon.svg",
-        name: "Angular",
-      },
-      key: "Angular",
-    },
-    {
-      cat: {
-        id: "3",
-        icon: "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg",
-        name: "Vue JS",
-      },
-      key: "Vue js",
-    },
-    {
-      cat: {
-        id: "4",
-        icon: "https://www.vectorlogo.zone/logos/nodejs/nodejs-icon.svg",
-        name: "Node JS",
-      },
-      key: "Node js",
-    },
-    {
-      cat: {
-        id: "5",
-        icon: "https://www.vectorlogo.zone/logos/python/python-icon.svg",
-        name: "Python",
-      },
-      key: "Python",
-    },
-    {
-      cat: {
-        id: "7",
-        icon: "https://www.vectorlogo.zone/logos/php/php-icon.svg",
-        name: "PHP",
-      },
-      key: "PHP",
-    },
-    {
-      cat: {
-        id: "8",
-        icon: "https://www.vectorlogo.zone/logos/flutterio/flutterio-icon.svg",
-        name: "Flutter",
-      },
-      key: "Flutter",
-    },
-    {
-      cat: {
-        id: "9",
-        icon: "https://cdn.worldvectorlogo.com/logos/mysql-7.svg",
-        name: "MySQL",
-      },
-      key: "MySQL",
-    },
-    {
-      cat: {
-        id: "10",
-        icon: "https://www.vectorlogo.zone/logos/golang/golang-official.svg",
-        name: "Golang",
-      },
-      key: "Golang",
-    },
-    {
-      cat: {
-        id: "11",
-        icon: "https://www.vectorlogo.zone/logos/graphql/graphql-icon.svg",
-        name: "GraphQL",
-      },
-      key: "GraphQL",
-    },
-    {
-      cat: {
-        id: "12",
-        icon:
-          "https://www.vectorlogo.zone/logos/typescriptlang/typescriptlang-icon.svg",
-        name: "TypeScript",
-      },
-      key: "TypeScript",
-    },
-  ];
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        Axios.all([
+          Axios.get(`http://localhost:3030/api/herramientas`),
+          Axios.get(`http://localhost:3030/api/idiomas`),
+        ]).then((response) => {
+          const tools = [];
+          const languages = [];
+          for (let i = 0; i < response[0].data.API.length; i++) {
+            tools.push({
+              cat: {
+                id: response[0].data.API[i].id,
+                icon: response[0].data.API[i].icono,
+                name: response[0].data.API[i].nombre,
+              },
+              key: response[0].data.API[i].nombre,
+            });
+            setToolist([...tools]);
+          }
+          for (let i = 0; i < response[1].data.API.length; i++) {
+            languages.push({
+              cat: response[1].data.API[i].id,
+              key:
+                response[1].data.API[i].idiomanombre +
+                " " +
+                response[1].data.API[i].idiomanivel,
+            });
+            setLanguageslist([...languages]);
+          }
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const RemoveSkill = (selectedItem) => {
     if (selectedItem !== undefined) {
       const skill = skills;
