@@ -19,6 +19,7 @@ import Meetings from "../../Pages/Meetings/Meetings";
 import Activities from "../../Pages/Activities/Activities";
 import DocSMMV from "../../Pages/Documentation/DocSMMV";
 import DocCEM from "../../Pages/Documentation/DocCEM";
+import ProjectView from "../../Pages/Projects/ProjectView";
 
 const Content = ({ sidebarIsOpen, toggleSidebar }) => (
   <div
@@ -30,6 +31,11 @@ const Content = ({ sidebarIsOpen, toggleSidebar }) => (
     <Switch>
       <Route exact path="Dashboard" component={Loged} />
       <Route exact path="/Dashboard/Projects" component={Desktop} />
+      <Route
+        exact
+        path="/Dashboard/Projects/Activities"
+        component={Activities}
+      />
       <Route
         exact
         path="/Dashboard/Projects/CreateProject"
@@ -45,8 +51,7 @@ const Content = ({ sidebarIsOpen, toggleSidebar }) => (
         path="/Dashboard/Projects/DocumentationCEM"
         component={DocCEM}
       />
-      <Route exact path="/Dashboard/Projects/:id" component={CreateProject} />
-      <Route exact path="/Dashboard/Activities" component={Activities} />
+      <Route exact path="/Dashboard/Projects/:id" component={ProjectView} />
       <Route exact path="/Dashboard/Contacts" component={Contacts} />
       <Route exact path="/Dashboard/Contacts/:id" component={ContactProfile} />
       <Route exact path="/Dashboard/Calendar" component={CalendarEvents} />

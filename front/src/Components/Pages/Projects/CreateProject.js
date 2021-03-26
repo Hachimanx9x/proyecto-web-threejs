@@ -262,7 +262,7 @@ class CreateProject extends Component {
   };
   render() {
     return (
-      <div className="row mb-3 mb-sm-0 pb-5 pb-sm-0">
+      <div className="row mb-3 mb-sm-0 pb-5 pb-sm-0 w-100">
         <Rodal
           width={this.state.windowWidth < 600 ? 400 : 1000}
           height={350}

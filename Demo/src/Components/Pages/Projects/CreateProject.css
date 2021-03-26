@@ -141,6 +141,74 @@
 .o-btn-partices {
   padding: 0.3rem;
 }
+
+.o-meetings-calendar {
+  background: #e8f8ff;
+  border: 1px solid #0d8cc2;
+  border-radius: 6px;
+  padding: 5px;
+  margin: 4px auto;
+  min-width: 12rem;
+  color: #40b4e5;
+}
+
+.o-meetings-calendar p {
+  font-size: 10px;
+  margin: 0 auto 4px auto;
+  color: #0d8cc2;
+}
+.o-meetings-calendar small {
+  font-size: 10px;
+}
+
+.o-smmv-practice {
+  background: #a7e1c4;
+}
+
+.o-smmv-practice .card {
+  padding: 5px 10px;
+  box-sizing: border-box;
+  background: #4fa77b;
+  max-width: 200px;
+  align-items: center;
+  box-shadow: none;
+  border-radius: 2px;
+  border: none;
+  margin: 20px auto;
+}
+.o-smmv-practice p {
+  color: #4fa77b;
+  font-weight: 400;
+  font-size: 14px;
+  margin: 10px auto 0 auto;
+}
+
+.o-cem-practice {
+  background: #f8db84;
+}
+.o-cem-practice .card {
+  background: #d0a114;
+  padding: 5px 10px;
+  box-sizing: border-box;
+  max-width: 200px;
+  align-items: center;
+  box-shadow: none;
+  border-radius: 2px;
+  border: none;
+  margin: 20px auto;
+}
+.o-cem-practice p {
+  color: #d0a114;
+  font-weight: 400;
+  margin: 10px auto 0 auto;
+}
+.o-text-practice-chart {
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 40px;
+  color: #4fa77b;
+}
 @media only screen and (max-width: 800px) {
   .o-project-creation-section {
     min-width: 45rem;
@@ -177,6 +245,10 @@
   }
 }
 @media only screen and (max-width: 590px) {
+  .o-grahpcart-project .o-text-practice-chart {
+    font-size: 18px;
+    top: 50px;
+  }
   .o-project-creation-section {
     min-width: 100%;
     padding: 1rem;

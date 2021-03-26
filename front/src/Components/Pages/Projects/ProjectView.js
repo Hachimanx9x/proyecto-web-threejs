@@ -1,305 +1,535 @@
-import React, { useState } from "react";
+import React, { Component } from "react";
 import { MDBInput } from "mdbreact";
 import User from "../../../Logos/user-icon.png";
 import ProjectIcon from "../../../Logos/project.png";
 import ProjectPicture from "../../../ilustracion-equipo-de-trabajo.jpg";
 import CardMember from "../../Elements/CardMember/CardMember";
-import { faAngleDoubleUp } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Rodal from "rodal";
+import { defaults, Doughnut } from "react-chartjs-2";
 
 import "rodal/lib/rodal.css";
 import "./CreateProject.css";
+import Rodal from "rodal";
 
-export default function ProjectView() {
-  const [projectIcon, setProjectIcon] = useState(null);
-  const [projectPicture, setProjectPicture] = useState(null);
-  const [projectName, setProjectName] = useState("");
-  const [projectDescription, setProjectDescription] = useState("");
-  const [projectPractices, setProjectPractices] = useState("");
-  const [modal, setModal] = useState(false);
-  const [confirmationmodal, setConfirmationmodal] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(null);
-  const [members, setMembers] = useState([]);
-  const [contacts, setContacts] = useState([]);
+defaults.global.legend.display = false;
 
-  const handleResize = (e) => {
-    setWindowWidth(window.innerWidth);
-  };
-  /*
-   * Shows the modal with the list of contacts.
-   */
-  const showContacts = () => {
-    setModal(true);
-  };
-  useEffect(() => {
-    /*
-     * Add an resizable method to get the current viewport dimensions for responsive issues.
-     */
-    document.addEventListener("click", handleResize);
-    /*
-     * Removes the method before the component is unmounted.
-     */
+class ProjectView extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      projectIcon: null,
+      projectPicture: null,
+      projectName: "Creacion de un entorno 3d para el trabajo colaborativo",
+      projectDescription:
+        "Este es un proyecto que reune a un grupo de desarrolladores para la creación de un entrono virtual colaborativo que permitirá implementa una metodología ágil.",
+      projectPractices: {
+        smmv: false,
+        cem: false,
+      },
+      modal: false,
+      titleConfirmarion: "",
+      windowWidth: window.innerWidth,
+      members: [
+        {
+          id: 1,
+          name: "Saitama",
+          urlimage: User,
+          rols: [
+            { rol: "desarrollador web" },
+            { rol: "desarrollador fullstack" },
+            { rol: "ui designer" },
+          ],
+          selectedRol: "Arquitecto de Pruebas",
+        },
+        {
+          id: 2,
+          name: "Tatsumi",
+          urlimage: User,
+          rols: [
+            { rol: "desarrollador web" },
+            { rol: "desarrollador fullstack" },
+            { rol: "ui designer" },
+          ],
+          selectedRol: "Arquitecto Sw/Hw",
+        },
+        {
+          id: 3,
+          name: "Saber",
+          urlimage: User,
 
-    return function cleanup() {
-      document.removeEventListener("click", handleResize);
+          rols: [
+            { rol: "desarrollador web" },
+            { rol: "desarrollador fullstack" },
+            { rol: "ui designer" },
+          ],
+          selectedRol: "Diseñador de producto",
+        },
+        {
+          id: 4,
+          name: "Accel",
+          urlimage: User,
+          rols: [
+            { rol: "desarrollador web" },
+            { rol: "desarrollador fullstack" },
+            { rol: "ui designer" },
+          ],
+          selectedRol: "Arquitecto de Información",
+        },
+        {
+          id: 5,
+          name: "Hachiman",
+          urlimage: User,
+          rols: [
+            { rol: "desarrollador web" },
+            { rol: "desarrollador fullstack" },
+            { rol: "ui designer" },
+          ],
+          selectedRol: "Arquitecto de Experiencia Multimedia",
+        },
+      ],
+
+      contacts: [
+        {
+          id: 1,
+          name: "Saitama",
+          urlimage: User,
+          rols: [
+            { rol: "desarrollador web" },
+            { rol: "desarrollador fullstack" },
+            { rol: "ui designer" },
+          ],
+        },
+        {
+          id: 2,
+          name: "Tatsumi",
+          urlimage: User,
+          rols: [
+            { rol: "desarrollador web" },
+            { rol: "desarrollador fullstack" },
+            { rol: "ui designer" },
+          ],
+        },
+        {
+          id: 3,
+          name: "Saber",
+          urlimage: User,
+
+          rols: [
+            { rol: "desarrollador web" },
+            { rol: "desarrollador fullstack" },
+            { rol: "ui designer" },
+          ],
+        },
+        {
+          id: 4,
+          name: "Accel",
+          urlimage: User,
+          rols: [
+            { rol: "desarrollador web" },
+            { rol: "desarrollador fullstack" },
+            { rol: "ui designer" },
+          ],
+        },
+        {
+          id: 5,
+          name: "Hachiman",
+          urlimage: User,
+          rols: [
+            { rol: "desarrollador web" },
+            { rol: "desarrollador fullstack" },
+            { rol: "ui designer" },
+          ],
+        },
+      ],
     };
-  }, []);
-  /*
-   * Recieves an object of the member.
-   * Stores the current array of members in a temporal variable.
-   * Looks if the member exist in the array of selected members by searching for the id.
-   * Removes the member and set the state.
-   */
-  const removeMember = (member) => {
-    const memberslist = members;
-    const item = memberslist.find((iterador) => iterador.id === member.id);
-    if (item) {
-      memberslist.splice(item, 1);
-      setMembers([...memberslist]);
-    }
-    console.log(members);
-  };
-  /*
-   * Recieves an object of the member.
-   * Stores the current array of members in a temporal variable.
-   * Looks if the member exist in the array of selected members by searching for the id so the member is not duplicated.
-   * Adds the member and set the state.
-   */
-  const addMember = (member) => {
-    const memberslist = members;
-    const item = memberslist.find((iterador) => iterador.id === member.id);
-    if (!item) {
-      memberslist.push({ ...memberslist, selectedrol: "" });
-      setMembers([...memberslist]);
-    }
-    console.log(members);
-  };
-
-  /*
-   * Recieves an object of the member and the selected rol.
-   * Stores the current array of members in a temporal variable.
-   * Looks if the member exist in the array of selected members by searching for the id.
-   * Updates the rol in the array and set the state.
-   */
-  const changeRol = (member, rol) => {
-    const memberslist = members;
-    const item = members.find((iterador) => iterador.id === member.id);
-    if (item) {
-      item.selectedrol = rol;
-      setMembers([...memberslist]);
-    }
-    console.log(members);
-  };
-  return (
-    <div className="row">
-      <Rodal
-        width={windowWidth < 600 ? 400 : 1000}
-        height={350}
-        animation={"fade"}
-        visible={modal}
-        onClose={() => setModal(false)}
-      >
-        <div className="o-member-selection-container">
-          {contacts.map((contact, i) => (
-            <CardMember key={i} add={addMember} member={contact} />
-          ))}
-        </div>
-      </Rodal>
-      <Rodal
-        width={300}
-        height={160}
-        animation={"fade"}
-        visible={this.state.confirmationModal}
-        onClose={() => this.setState({ confirmationModal: false })}
-      >
-        <div>
-          <h4 className="mt-3">Guardar cambios?</h4>
-          <div className="d-flex justify-content-between p-2">
-            <button
-              className="z-depth-0 border-primary btn border-primary text-primary font-weight-bold"
-              type="submit"
-              onClick={() => this.setState({ confirmationModal: false })}
-            >
-              Cancelar
-            </button>
-            <button
-              className="z-depth-0 border-0 btn btn-primary font-weight-bold"
-              type="button"
-              onClick={() => this.props.history.push("Dashboard/projects")}
-            >
-              Guardar
-            </button>
-          </div>
-        </div>
-      </Rodal>
-      <div className="col-xs-12 col-sm-8 o-project-creation-section">
-        <div className="d-flex justify-content-between mb-2">
-          <h4 className="mb-3 pl-4">Creación del projecto</h4>
+  }
+  render() {
+    const data = {
+      labels: ["Completado", "Faltante"],
+      datasets: [
+        {
+          data: [60, 40],
+          backgroundColor: ["#4fa77b", "#ddd8d8"],
+          hoverBackgroundColor: ["#3c8862", "rgb(238, 229, 229)"],
+        },
+      ],
+    };
+    const data2 = {
+      labels: ["Completado", "Faltante"],
+      datasets: [
+        {
+          data: [60, 40],
+          backgroundColor: ["#D0A114", "#ddd8d8"],
+          hoverBackgroundColor: ["#957411", "rgb(238, 229, 229)"],
+        },
+      ],
+    };
+    return (
+      <div className="row mb-3 mb-sm-0 pb-5 pb-sm-0 w-100">
+        <Rodal
+          width={300}
+          height={420}
+          animation={"fade"}
+          visible={this.state.modal}
+          onClose={() => this.setState({ modal: false })}
+        >
+          <p className="text-center mt-4" style={{ fontSize: "0.9rem" }}>
+            Confirmación de abandono de proyecto
+          </p>
+          <p className="mt-2 mb-4 text-justify" style={{ fontSize: "0.9rem" }}>
+            El abandonar un proyecto no se puede
+            <strong className="text-danger"> deshacer</strong>. Esto eliminará
+            permanentemente su participación en el proyecto
+            <strong className="text-danger"> {this.state.projectName}</strong>,
+            el abandonar el proyecto puede incurrir en problemas legales
+            definidos por el método de contratación al ingresar el proyecto.
+          </p>
+          <p style={{ fontSize: "0.9rem" }} className="mt-2">
+            Escriba "{this.state.projectName}" para confirmar.
+          </p>
+          <input
+            value={this.state.titleConfirmarion}
+            style={{ fontSize: "0.9rem" }}
+            className="text-danger w-100"
+            onChange={(e) => {
+              this.setState({ modal: e.target.value });
+            }}
+          />
           <button
-            className="z-depth-0 border-0 btn btn-primary font-weight-bold"
-            style={{ width: "7rem", height: "2.3rem" }}
-            onClick={() => setConfirmationmodal(true)}
+            style={{ fontSize: "0.6rem" }}
+            className={
+              (this.state.titleConfirmarion !== this.state.projectName
+                ? "disabled"
+                : "") + " btn btn-danger btn-block border-0 text-white mt-2"
+            }
           >
-            Guardar
+            <small>
+              Lo entiendo y me hago cargo responsable de las consecuencias.
+              Abandonar el proyecto.
+            </small>
           </button>
-        </div>
+        </Rodal>
 
-        <div className="row bg-white o-project-basic-info">
-          <div className="col-xs-12 col-sm-4">
-            <small>Icono del proyecto</small>
-            <div className="inputWrapper rounded-pill mb-3">
+        <div className="o-project-creation-section">
+          <section className="row bg-white o-project-basic-info">
+            <div className="col-xs-12 col-sm-4">
+              <p>Icono del proyecto</p>
               <img
                 src={
-                  projectIcon === null
+                  this.state.projectIcon === null
                     ? ProjectIcon
-                    : URL.createObjectURL(projectIcon)
+                    : this.state.projectIcon
                 }
                 alt={"icon"}
                 className="rounded-circle"
-                style={{ width: "3rem" }}
+                style={{ width: "3rem", height: "3rem" }}
               />
-              <p className="cyan-text o-icon-input-text">
-                Subir icono
-                <FontAwesomeIcon
-                  className="text-secondary ml-2"
-                  icon={faAngleDoubleUp}
-                />
-              </p>
-              <input
-                className="fileInput rounded-pill"
-                type="file"
-                name="projectIcon"
-                onChange={(event) => {
-                  const file = event.target.files[0];
-                  setProjectIcon(file);
-                }}
-              />
-            </div>
-            <small>Portada del proyecto</small>
-            <div className="o-project-form">
-              <img
-                src={
-                  projectPicture === null
-                    ? ProjectPicture
-                    : URL.createObjectURL(projectPicture)
-                }
-                className="o-picture-project"
-                alt="project"
-              />
-              <div className="inputWrapper o-inputWrapper-btn rounded-pill mb-3">
-                <small
-                  className="cyan-text"
-                  style={{
-                    left: "1.4rem",
-                    top: "0.6rem",
-                    position: "absolute",
-                  }}
-                >
-                  Subir icono
-                  <FontAwesomeIcon
-                    className="text-secondary ml-2"
-                    icon={faAngleDoubleUp}
-                  />
-                </small>
-                <input
-                  className="fileInput rounded-pill"
-                  type="file"
-                  name="projectPicture"
-                  onChange={(event) => {
-                    const file = event.target.files[0];
-                    setProjectPicture(file);
-                  }}
+              <p>Banner del proyecto</p>
+              <div className="o-project-form d-flex justify-content-end">
+                <img
+                  src={
+                    this.state.projectPicture === null
+                      ? ProjectPicture
+                      : this.state.projectPicture
+                  }
+                  className="o-picture-project"
+                  alt="project"
                 />
               </div>
             </div>
-          </div>
-          <div className="col-xs-12 p-0 pl-sm-4 col-sm-4">
-            <MDBInput
-              type="text"
-              label="Nombre del proyecto *"
-              value={projectName}
-              onChange={(e) => setProjectName(e.target.value)}
-              outline
-              required
-            />
-          </div>
-          <div className="col-xs-12 col-sm-4">
-            <MDBInput
-              type="textarea"
-              label="Descripción del proyecto *"
-              className="rounded"
-              outline
-              value={projectDescription}
-              onChange={(e) => setProjectDescription(e.target.value)}
-              required
-            />
-          </div>
-        </div>
-        <div
-          className="row bg-white mt-4 flex-column"
-          style={{ borderRadius: "1rem" }}
-        >
-          <div className="d-flex justify-content-between">
-            <h6 className="m-3 pl-4">Integrantes del proyecto</h6>
-            <button
-              onClick={showContacts}
-              className="z-depth-0 border-0 btn btn-primary font-weight-bold m-3"
-            >
-              Agregar
-            </button>
-          </div>
-          <div className="o-member-selection-container">
-            {members.length === 0 ? (
-              <p className="text-secondary m-auto">
-                No hay miembros seleccionados
-              </p>
-            ) : (
-              members.map((member, i) => (
-                <CardMember
-                  remove={removeMember}
-                  change={changeRol}
-                  key={i}
-                  member={member}
-                />
-              ))
-            )}
-          </div>
+            <div className="col-xs-12 p-0 pl-sm-4 col-sm-8 position-relative">
+              <MDBInput
+                type="text"
+                label={<span>Nombre del proyecto </span>}
+                value={this.state.projectName}
+                outline
+                required
+                disabled
+              />
+
+              <MDBInput
+                type="textarea"
+                value={this.state.projectDescription}
+                label="Descripción del proyecto"
+                className="rounded pt-3 pt-sm-2"
+                disabled
+                outline
+              />
+            </div>
+          </section>
+          <section
+            className="row bg-white mt-4 flex-column"
+            style={{ borderRadius: "1rem" }}
+          >
+            <div className="d-flex justify-content-between">
+              <p className="m-3 pl-1 pl-sm-4">Integrantes del proyecto</p>
+            </div>
+            <div className="o-member-selection-container">
+              {this.state.members.map((member, i) => (
+                <CardMember readOnly={true} key={i} member={member} />
+              ))}
+            </div>
+          </section>
+          <section
+            id="Practices-section"
+            className="row bg-white mt-4 flex-column"
+            style={{ borderRadius: "1rem" }}
+          >
+            <p className="m-3 pl-1 pl-sm-4 w-100">
+              Prácticas para concebir la pre-producción
+            </p>
+            <div className="o-smmv-practice d-flex flex-wrap w-100 mb-3">
+              <div className="col-12 col-sm-6">
+                <div className="bg-white w-100 p-1 m-2 text-center">
+                  <p className="m-0">Sistema multimedia mínimo viable</p>
+                </div>
+                <div className="d-flex flex-wrap justify-content-between">
+                  <div className="card " style={{ margin: "10px auto" }}>
+                    <p className="text-white text-center ">Oportunidad</p>
+                    <div
+                      style={{
+                        height: "15px",
+                        width: "50px",
+                        background: "rgba(255,255,255,0.2)",
+                        border: "1px solid white",
+                      }}
+                      className="rounded text-center d-flex flex-column justify-content-center text-white"
+                    >
+                      <small style={{ fontSize: "10px" }}>Alfa</small>
+                    </div>
+                    <div className="rounded bg-white d-flex  w-100 m-2 p-2 mt-1">
+                      <small className="mr-2">Estado:</small>
+                      <div
+                        style={{
+                          height: "20px",
+                          width: "80px",
+                          background: "#4fa77b33",
+                          border: "1px solid #4fa77b",
+                          color: "#4fa77b",
+                        }}
+                        className="rounded text-center d-flex flex-column justify-content-center"
+                      >
+                        <small>Identificada</small>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="card" style={{ margin: "10px auto" }}>
+                    <p className="text-white text-center ">Valor del SM</p>
+                    <div
+                      style={{
+                        height: "15px",
+                        width: "50px",
+                        background: "rgba(255,255,255,0.2)",
+                        border: "1px solid white",
+                      }}
+                      className="rounded text-center d-flex flex-column justify-content-center text-white"
+                    >
+                      <small style={{ fontSize: "10px" }}>Sub-Alfa</small>
+                    </div>
+                    <div className="rounded bg-white d-flex w-100 m-2 p-2 mt-1">
+                      <small className="mr-2">Estado:</small>
+                      <div
+                        style={{
+                          height: "20px",
+                          width: "80px",
+                          background: "#4fa77b33",
+                          border: "1px solid #4fa77b",
+                          color: "#4fa77b",
+                        }}
+                        className="rounded text-center d-flex flex-column justify-content-center"
+                      >
+                        <small>Identificada</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-12 col-sm-3" style={{ minWidth: "15rem" }}>
+                <div className="bg-white w-100 p-1 m-2 text-center">
+                  <p className="m-0">Tasa de cumplimiento</p>
+                </div>
+                <div className="o-grahpcart-project text-center">
+                  <Doughnut data={data} />
+                  <p className="o-text-practice-chart">60%</p>
+                </div>
+              </div>
+              <div
+                className="col-12 col-sm-3 d-flex flex-column justify-content-between"
+                style={{ lineHeight: "16px" }}
+              >
+                <div className="bg-white w-100 p-1 m-2 text-center">
+                  <p className="m-0">Información general de la práctica</p>
+                </div>
+                <small className="text-justify" style={{ fontSize: "10px" }}>
+                  El propósito de esta práctica es poder generar y plasmar los
+                  elementos visuales e interactivos mínimos para poder
+                  transmitir una correcta experiencia a los usuarios.
+                </small>
+                <div className="d-flex justify-content-end">
+                  <a
+                    className="btn text-white mr-2 z-depth-0 text-capitalize"
+                    style={{ background: "#4FA77B", fontSize: "12px" }}
+                    href="/Dashboard/Projects/Activities"
+                  >
+                    Estado Actividades
+                  </a>
+                  <a
+                    className="btn text-white mr-2 z-depth-0 text-capitalize"
+                    style={{ background: "#4FA77B", fontSize: "12px" }}
+                    href="/Dashboard/Projects/DocumentationSMMV"
+                  >
+                    Información
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div className="o-cem-practice d-flex flex-wrap w-100 mb-3">
+              <div className="col-12 col-sm-6">
+                <div className="bg-white w-100 p-1 m-2 text-center">
+                  <p className="m-0">Sistema multimedia mínimo viable</p>
+                </div>
+                <div className="d-flex flex-wrap justify-content-between">
+                  <div className="card " style={{ margin: "10px auto" }}>
+                    <p className="text-white text-center ">Oportunidad</p>
+                    <div
+                      style={{
+                        height: "15px",
+                        width: "50px",
+                        background: "rgba(255,255,255,0.2)",
+                        border: "1px solid white",
+                      }}
+                      className="rounded text-center d-flex flex-column justify-content-center text-white"
+                    >
+                      <small style={{ fontSize: "10px" }}>Alfa</small>
+                    </div>
+                    <div className="rounded bg-white d-flex  w-100 m-2 p-2 mt-1">
+                      <small className="mr-2">Estado:</small>
+                      <div
+                        style={{
+                          height: "20px",
+                          width: "80px",
+                          background: "#d0a11433",
+                          border: "1px solid #d0a114",
+                          color: "#d0a114",
+                        }}
+                        className="rounded text-center d-flex flex-column justify-content-center"
+                      >
+                        <small>Identificada</small>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="card" style={{ margin: "10px auto" }}>
+                    <p className="text-white text-center ">Valor del SM</p>
+                    <div
+                      style={{
+                        height: "15px",
+                        width: "50px",
+                        background: "rgba(255,255,255,0.2)",
+                        border: "1px solid white",
+                      }}
+                      className="rounded text-center d-flex flex-column justify-content-center text-white"
+                    >
+                      <small style={{ fontSize: "10px" }}>Sub-Alfa</small>
+                    </div>
+                    <div className="rounded bg-white d-flex w-100 m-2 p-2 mt-1">
+                      <small className="mr-2">Estado:</small>
+                      <div
+                        style={{
+                          height: "20px",
+                          width: "80px",
+                          background: "#d0a11433",
+                          border: "1px solid #d0a114",
+                          color: "#d0a114",
+                        }}
+                        className="rounded text-center d-flex flex-column justify-content-center"
+                      >
+                        <small>Identificada</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-12 col-sm-3" style={{ minWidth: "15rem" }}>
+                <div className="bg-white w-100 p-1 m-2 text-center">
+                  <p className="m-0">Tasa de cumplimiento</p>
+                </div>
+                <div className="o-grahpcart-project text-center">
+                  <Doughnut data={data2} />
+                  <p className="o-text-practice-chart">60%</p>
+                </div>
+              </div>
+              <div
+                className="col-12 col-sm-3 d-flex flex-column justify-content-between"
+                style={{ lineHeight: "16px" }}
+              >
+                <div className="bg-white w-100 p-1 m-2 text-center">
+                  <p className="m-0">Información general de la práctica</p>
+                </div>
+                <small className="text-justify" style={{ fontSize: "10px" }}>
+                  El propósito de esta práctica es poder generar y plasmar los
+                  elementos visuales e interactivos mínimos para poder
+                  transmitir una correcta experiencia a los usuarios.
+                </small>
+                <div className="d-flex justify-content-end">
+                  <a
+                    className="btn text-white mr-2 z-depth-0 text-capitalize"
+                    style={{ background: "#D0A114", fontSize: "12px" }}
+                    href="/Dashboard/Projects/Activities"
+                  >
+                    Estado Actividades
+                  </a>
+                  <a
+                    className="btn text-white mr-2 z-depth-0 text-capitalize"
+                    style={{ background: "#D0A114", fontSize: "12px" }}
+                    href="/Dashboard/Projects/DocumentationCEM"
+                  >
+                    Información
+                  </a>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section
+            className="row bg-white mt-4 flex-column"
+            style={{ borderRadius: "1rem" }}
+          >
+            {" "}
+            <p className="m-3 pl-1 pl-sm-4 w-100">Calendario de reuniones</p>
+            <div className="d-flex flex-wrap p-1 pb-3 pl-sm-3 pr-sm-3 mt-2">
+              <div className="o-meetings-calendar">
+                <p>Reunión de avances de oportunidad</p>
+                <div className="d-flex justify-content-between">
+                  <small>09:00 AM - 10:00 AM</small>
+                  <small>27 / 04 / 2020</small>
+                </div>
+              </div>{" "}
+              <div className="o-meetings-calendar">
+                <p>Reunión de avances de oportunidad</p>
+                <div className="d-flex justify-content-between">
+                  <small>09:00 AM - 10:00 AM</small>
+                  <small>27 / 04 / 2020</small>
+                </div>
+              </div>{" "}
+              <div className="o-meetings-calendar">
+                <p>Reunión de avances de oportunidad</p>
+                <div className="d-flex justify-content-between">
+                  <small>09:00 AM - 10:00 AM</small>
+                  <small>27 / 04 / 2020</small>
+                </div>
+              </div>
+            </div>
+            <div className="d-flex justify-content-end">
+              <a
+                href="/Dashboard/Calendar"
+                className="btn z-depth-0 text-capitalize btn-primary bg-primary"
+              >
+                Más información
+              </a>
+            </div>
+          </section>
         </div>
       </div>
-      <div className="col-xs-12 col-sm-4 o-blue-container o-practice-container">
-        <h4 className="mb-3">Prácticas para concebir la pre-producción *</h4>
-        <div className="bg-white rounded mb-2 p-2">
-          <p className="text-warning">Concebir la experiencia multimedia</p>
-          <div className="d-flex justify-content-between">
-            <input
-              type="checkbox"
-              className="bg-warning mt-2 rounded border-warning"
-            />
-            <a
-              href="Documentation"
-              className="o-btn-partices rounded btn-warning text-white z-depth-0"
-            >
-              Más información
-            </a>
-          </div>
-        </div>
-        <div className="bg-white rounded p-2">
-          <p className="text-success">Sistema multimedia mínimo viable</p>
-          <div className="d-flex justify-content-between">
-            <input
-              type="checkbox"
-              className="bg-warning mt-2 rounded border-warning"
-            />
-            <a
-              href="Documentation"
-              className="o-btn-partices rounded bg-success text-white z-depth-0"
-            >
-              Más información
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+    );
+  }
 }
+
+export default ProjectView;

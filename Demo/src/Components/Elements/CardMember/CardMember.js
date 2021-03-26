@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import "rodal/lib/rodal.css";
 import "./CardMember.css";
 
-const CardMember = ({ member, remove, add, change, rols }) => {
+const CardMember = ({ member, remove, add, change, rols, readOnly }) => {
   const [show, setShow] = useState(true);
   const [modal, setModal] = useState(false);
 
@@ -80,7 +80,21 @@ const CardMember = ({ member, remove, add, change, rols }) => {
               </div>
             ))}
           </div>
-          {remove === null || remove === undefined ? (
+          {readOnly ? (
+            <input
+              type="text"
+              className="mt-3 font-weight-bold rounded-pill text-center"
+              style={{
+                fontSize: "8px",
+                color: "white",
+                height: "1.6rem",
+                background: "#007bff",
+                border: "1px solid #007bff",
+              }}
+              readOnly
+              value={member.selectedRol}
+            />
+          ) : remove === null || remove === undefined ? (
             <button
               className="z-depth-0 btn-block border-0 btn btn-primary font-weight-bold m-0"
               onClick={addMember}
@@ -88,7 +102,7 @@ const CardMember = ({ member, remove, add, change, rols }) => {
               Agregar
             </button>
           ) : (
-            <>
+            <div>
               <div className="d-flex justify-content-between">
                 <button
                   className="bg-transparent border-0"
@@ -123,7 +137,7 @@ const CardMember = ({ member, remove, add, change, rols }) => {
                   )}
                 </select>
               </div>
-            </>
+            </div>
           )}
         </div>
       </Fade>
