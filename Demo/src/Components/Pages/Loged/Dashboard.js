@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router";
 import SideToggler from "./SideToggler";
 
 export default function Dashboard() {
