@@ -4,7 +4,10 @@
   box-sizing: border-box;
   background-color: rgb(202, 202, 202);
 }
-
+.o-btn-return {
+  width: 5rem;
+  height: 3rem;
+}
 .o-btn-return:hover {
   background: rgba(66, 180, 229, 0.3);
 }

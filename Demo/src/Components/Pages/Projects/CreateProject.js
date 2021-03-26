@@ -437,7 +437,7 @@ class CreateProject extends Component {
                     onChange={(e) => this.handleInput("cem", e)}
                   />
                   <a
-                    href="Documentation"
+                    href="DocumentationCEM"
                     className="o-btn-partices rounded btn-warning text-white z-depth-0"
                   >
                     Más información
@@ -453,7 +453,7 @@ class CreateProject extends Component {
                     onChange={(e) => this.handleInput("smmv", e)}
                   />
                   <a
-                    href="Documentation"
+                    href="DocumentationSMMV"
                     className="o-btn-partices rounded bg-success text-white z-depth-0"
                   >
                     Más información

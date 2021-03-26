@@ -1,5 +1,4 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 import Alpha from "../../../Logos/alpha_icon.svg";
 import Deliverable from "../../../Logos/deliverable_icon.svg";
 import Activity from "../../../Logos/activity_icon.svg";
@@ -9,17 +8,19 @@ import "./Documentation.css";
 import CardRole from "../../Elements/CardRole/CardRole";
 import { CEM } from "./CEM";
 export default function DocCEM() {
-  let history = useHistory();
   const items = CEM;
 
   return (
     <div className="h-100 w-100">
-      <button className="o-btn-return" onClick={() => history.goBack()}>
-        <span>
-          <img src={arrow} alt="Arrow button" />
-        </span>
-        Regresar
-      </button>
+      <a href="javascript:history.back()" className="text-decoration-none">
+        {" "}
+        <button className="o-btn-return">
+          <span>
+            <img src={arrow} alt="Arrow button" />
+          </span>
+          Regresar
+        </button>
+      </a>
       <div className="row">
         <section id="CardDocSection">
           <p>

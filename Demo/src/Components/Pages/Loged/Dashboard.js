@@ -1,22 +1,25 @@
-import React from "react";
-import { useHistory } from "react-router";
+import React, { Component } from "react";
+
 import SideToggler from "./SideToggler";
 
-export default function Dashboard() {
-  const token = localStorage.getItem("login");
-  let temp = `${token}`;
-  const history = useHistory();
-
-  if (
-    token === null ||
-    token === undefined ||
-    token === "" ||
-    token === {} ||
-    temp === "{}"
-  ) {
-    //El metodo de redireccionamiento.
-    history.push("/Login");
+class Dashboard extends Component {
+  constructor(props) {
+    super(props);
+    const token = localStorage.getItem("login");
+    let temp = `${token}`;
+    if (
+      token === null ||
+      token === undefined ||
+      token === "" ||
+      token === {} ||
+      temp === "{}"
+    ) {
+      this.props.history.push("/Login");
+    }
   }
-
-  return <SideToggler />;
+  render() {
+    return <SideToggler />;
+  }
 }
+
+export default Dashboard;

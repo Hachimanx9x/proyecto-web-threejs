@@ -123,7 +123,7 @@ const CardTalents = ({ talent, addTalent }) => {
               <Link to={`/Dashboard/Contacts/${talent.id}`}>
                 <button
                   type="button"
-                  className="btn btn-primary z-depth-0 border-0 text-white font-weight-bold o-search-talents-btn"
+                  className="btn z-depth-0 border-primary text-primary font-weight-bold  o-search-talents-btn"
                 >
                   Perfil
                 </button>
