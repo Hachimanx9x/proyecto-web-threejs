@@ -122,6 +122,7 @@ class SigIn extends Component {
       this.state.validpassword &&
       this.state.validName
     ) {
+      localStorage.setItem("login", "registrandose");
       this.props.history.push("/Dashboard/FinishRegister");
     }
   };

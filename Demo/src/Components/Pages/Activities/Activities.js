@@ -2,10 +2,11 @@ import React from "react";
 import CardActivities from "../../Elements/CardActivities/CardActivities";
 import CardDeliverables from "../../Elements/CardDeliverables/CardDeliverables";
 import { Doughnut } from "react-chartjs-2";
+import arrow from "../../../Logos/arrow.svg";
 
 import "./Activities.css";
 
-export default function Activities() {
+export default function Activities(props) {
   const data = {
     labels: ["Completado", "Faltante"],
     datasets: [
@@ -18,6 +19,12 @@ export default function Activities() {
   };
   return (
     <div className="w-100 mb-5 mb-sm-1 pb-5 pb-sm-1">
+      <button className="o-btn-return" onClick={() => props.history.goBack()}>
+        <span>
+          <img src={arrow} alt="Arrow button" />
+        </span>
+        Regresar
+      </button>
       <div className="d-flex justify-content-between p-1">
         <p>Proyecto creación de entornos 3d</p>
         <button className="btn mt-2 bg-primary z-depth-0 text-white">

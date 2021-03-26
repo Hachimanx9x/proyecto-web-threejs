@@ -71,7 +71,9 @@
   padding: 0;
   height: 2rem;
 }
-
+.o-contacts-filter label {
+  padding-top: 7px;
+}
 #SearchBar,
 #Switch,
 #FavoriteButton {

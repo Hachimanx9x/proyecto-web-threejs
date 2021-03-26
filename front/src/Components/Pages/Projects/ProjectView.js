@@ -142,6 +142,18 @@ class ProjectView extends Component {
       ],
     };
   }
+  handleResize = (e) => {
+    this.setState({ windowWidth: window.innerWidth });
+  };
+  /*
+   * Add an resizable method to get the current viewport dimensions for responsive issues.
+   */
+  componentDidMount = () => {
+    window.addEventListener("resize", this.handleResize);
+  };
+  componentWillUnmount = () => {
+    window.removeEventListener("resize", this.handleResize);
+  };
   render() {
     const data = {
       labels: ["Completado", "Faltante"],
@@ -277,7 +289,7 @@ class ProjectView extends Component {
             <p className="m-3 pl-1 pl-sm-4 w-100">
               Prácticas para concebir la pre-producción
             </p>
-            <div className="o-smmv-practice d-flex flex-wrap w-100 mb-3">
+            <div className="o-smmv-practice d-flex flex-wrap justify-content-center w-100 mb-3">
               <div className="col-12 col-sm-6">
                 <div className="bg-white w-100 p-1 m-2 text-center">
                   <p className="m-0">Sistema multimedia mínimo viable</p>
@@ -353,8 +365,11 @@ class ProjectView extends Component {
                 </div>
               </div>
               <div
-                className="col-12 col-sm-3 d-flex flex-column justify-content-between"
-                style={{ lineHeight: "16px" }}
+                className={
+                  "col-12 d-flex flex-column justify-content-between " +
+                  (this.state.windowWidth < 1300 ? "col-sm-12 " : "col-sm-3 ")
+                }
+                style={{ lineHeight: "16px", minWidth: "auto" }}
               >
                 <div className="bg-white w-100 p-1 m-2 text-center">
                   <p className="m-0">Información general de la práctica</p>
@@ -370,7 +385,7 @@ class ProjectView extends Component {
                     style={{ background: "#4FA77B", fontSize: "12px" }}
                     href="/Dashboard/Projects/Activities"
                   >
-                    Estado Actividades
+                    Actividades
                   </a>
                   <a
                     className="btn text-white mr-2 z-depth-0 text-capitalize"
@@ -382,7 +397,7 @@ class ProjectView extends Component {
                 </div>
               </div>
             </div>
-            <div className="o-cem-practice d-flex flex-wrap w-100 mb-3">
+            <div className="o-cem-practice d-flex justify-content-center flex-wrap w-100 mb-3">
               <div className="col-12 col-sm-6">
                 <div className="bg-white w-100 p-1 m-2 text-center">
                   <p className="m-0">Sistema multimedia mínimo viable</p>
@@ -458,8 +473,11 @@ class ProjectView extends Component {
                 </div>
               </div>
               <div
-                className="col-12 col-sm-3 d-flex flex-column justify-content-between"
-                style={{ lineHeight: "16px" }}
+                className={
+                  "col-12 d-flex flex-column justify-content-between " +
+                  (this.state.windowWidth < 1300 ? "col-sm-12 " : "col-sm-3 ")
+                }
+                style={{ lineHeight: "16px", minWidth: "auto" }}
               >
                 <div className="bg-white w-100 p-1 m-2 text-center">
                   <p className="m-0">Información general de la práctica</p>
@@ -475,7 +493,7 @@ class ProjectView extends Component {
                     style={{ background: "#D0A114", fontSize: "12px" }}
                     href="/Dashboard/Projects/Activities"
                   >
-                    Estado Actividades
+                    Actividades
                   </a>
                   <a
                     className="btn text-white mr-2 z-depth-0 text-capitalize"
@@ -517,7 +535,7 @@ class ProjectView extends Component {
                 </div>
               </div>
             </div>
-            <div className="d-flex justify-content-end">
+            <div className="d-flex justify-content-end pr-4">
               <a
                 href="/Dashboard/Calendar"
                 className="btn z-depth-0 text-capitalize btn-primary bg-primary"
