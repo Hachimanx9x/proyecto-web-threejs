@@ -84,7 +84,7 @@ export default class CalendarEvents extends Component {
 
   createEvent() {
     if (this.state.selectedDate != null) {
-      console.log(this.state.selectedDate.toLocaleDateString());
+      localStorage.setItem("date", this.state.selectedDate);
       this.props.history.push("/Dashboard/Calendar/CreateEvent");
     } else {
       this.setState({ error: true });
