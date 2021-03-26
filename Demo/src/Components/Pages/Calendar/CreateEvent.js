@@ -38,12 +38,23 @@ class CreateEvents extends Component {
       projectIsValid: true,
       errorHour: "",
       confirmation: false,
+      colors: [],
+      events: [
+        "Reunión avances",
+        "Presentación final",
+        "Entrevistas",
+        "Creación de entorno",
+      ],
     };
   }
-  getRandomColor() {
-    const color = "#" + Math.floor(Math.random() * 16777215).toString(16);
-    return color;
-  }
+  componentDidMount = () => {
+    let temcolors = [];
+    for (let i = 0; i < this.state.events.length; i++) {
+      const color = "#" + Math.floor(Math.random() * 16777215).toString(16);
+      temcolors.push(color);
+    }
+    this.setState({ colors: [...temcolors], fetched: true });
+  };
   /*
    *Function to create the event. Looks if every required field is correctly filled and send the http request to the server.
    */
@@ -385,22 +396,16 @@ class CreateEvents extends Component {
 
               <div className="o-date-picker-container rounded mt-2 p-4 d-flex flex-column">
                 <p>Eventos programados para el mismo día</p>
-                <small className="mt-2 mb-2">
-                  <FontAwesomeIcon
-                    icon={faSquare}
-                    color={this.getRandomColor()}
-                    className="mr-2"
-                  />
-                  Reunión avances
-                </small>
-                <small className="mt-2 mb-2">
-                  <FontAwesomeIcon
-                    icon={faSquare}
-                    color={this.getRandomColor()}
-                    className="mr-2"
-                  />
-                  Computación
-                </small>
+                {this.state.events.map((event, i) => (
+                  <p key={i}>
+                    <FontAwesomeIcon
+                      icon={faSquare}
+                      color={this.state.colors[i]}
+                      className="mr-2"
+                    />
+                    {event}
+                  </p>
+                ))}
               </div>
             </div>
           </div>

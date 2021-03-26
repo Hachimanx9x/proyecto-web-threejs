@@ -39,7 +39,7 @@ export default function LandingPage() {
       window.addEventListener("scroll", reveal, { passive: true });
       reveal();
       console.log("uwu");
-    }, 500);
+    }, 300);
     return () => {
       clearInterval(interval);
     };
@@ -111,12 +111,8 @@ export default function LandingPage() {
             Registrarse
           </a>
         </div>
-        <div
-          className={
-            "reveal " +
-            (Sections[0].Section ? "active o-header-card card " : "")
-          }
-        >
+        <div className="reveal active"></div>
+        <div className=" o-header-card card ">
           <div className="o-landing-card-title ">
             <h3>
               Construye el mejor sistema multimedia apoyándote con guías y

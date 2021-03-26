@@ -3,12 +3,10 @@ import "./ContactProfile.css";
 import { MDBInput } from "mdbreact";
 import User from "../../../Logos/user-icon.png";
 import arrow from "../../../Logos/arrow.svg";
-import { useHistory } from "react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
 
 export default function ContactProfile() {
-  const history = useHistory();
   const [keywords, setKeywords] = useState([]);
   useEffect(() => {
     function fetching() {
@@ -89,12 +87,15 @@ export default function ContactProfile() {
    *   */
   return (
     <div>
-      <button className="o-btn-return" onClick={() => history.goBack()}>
-        <span>
-          <img src={arrow} alt="Arrow button" />
-        </span>
-        Regresar
-      </button>
+      <a href="javascript:history.back()" className="text-decoration-none">
+        {" "}
+        <button className="o-btn-return">
+          <span>
+            <img src={arrow} alt="Arrow button" />
+          </span>
+          Regresar
+        </button>
+      </a>
       <div className="o-blue-container o-blue-container-2">
         <div className="o-talent-intro">
           <div className="col-12 col-sm-4 mt-4 mt-sm-0 justify-content-center align-items-center d-flex">

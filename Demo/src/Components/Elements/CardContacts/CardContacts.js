@@ -27,15 +27,42 @@ const CardContacts = ({ contact, changefavorite, deleteContact }) => {
     let style = "";
     const joblist = ["other-job-1", "other-job-2", "other-job-3"];
     const rol = somejob.toLowerCase();
-    if (rol === "desarrollador web") {
+    if (
+      rol === "programador" ||
+      rol === "ing multimedia" ||
+      rol === "analista de datos" ||
+      rol === "desarrollador frontend"
+    ) {
       style = "web-developer";
-    } else if (rol === "desarrollador fullstack") {
+    } else if (
+      rol === "diseñador gráfico" ||
+      rol === "diseñador ui" ||
+      rol === "animadores 2d"
+    ) {
       style = "fullstack-developer";
-    } else if (rol === "ui designer") {
+    } else if (
+      rol === "animador 3d" ||
+      rol === "modelador 3d" ||
+      rol === "gestor de hardware" ||
+      rol === "desarrollador backend"
+    ) {
       style = "ui-designer";
+    } else if (
+      rol === "gestor de software" ||
+      rol === "diseñador de producto" ||
+      rol === "diseñador de fotografía"
+    ) {
+      style = "other-job-1";
+    } else if (
+      rol === "productor audiovisual" ||
+      rol === "ilustrador" ||
+      rol === "gestor de proyectos"
+    ) {
+      style = "other-job-2";
     } else {
-      style = joblist[Math.floor(Math.random() * joblist.length)];
+      style = "other-job-3";
     }
+
     return style;
   };
 

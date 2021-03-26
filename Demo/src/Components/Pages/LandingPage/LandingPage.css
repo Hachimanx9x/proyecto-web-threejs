@@ -24,7 +24,7 @@ body {
   font-size: 12px;
   font-weight: 400;
 }
-header {
+.o-landing header {
   background: no-repeat;
   background-image: url("../../../Logos/Group102.png");
   background-position: 90% 38%;
@@ -198,11 +198,11 @@ header h1 {
     text-align: center;
     min-width: 20rem;
   }
-  header {
+  .o-landing header {
     height: 60%;
     background: #202a5b;
   }
-  header h1 {
+  .o-landing header h1 {
     font-size: 32px;
     font-weight: normal;
     text-align: justify;

@@ -1,25 +1,19 @@
-import React, { Component } from "react";
+import React from "react";
 
 import SideToggler from "./SideToggler";
 
-class Dashboard extends Component {
-  constructor(props) {
-    super(props);
-    const token = localStorage.getItem("login");
-    let temp = `${token}`;
-    if (
-      token === null ||
-      token === undefined ||
-      token === "" ||
-      token === {} ||
-      temp === "{}"
-    ) {
-      this.props.history.push("/Login");
-    }
+export default function Dashboard(props) {
+  const token = localStorage.getItem("login");
+  let temp = `${token}`;
+  if (
+    token === null ||
+    token === undefined ||
+    token === "" ||
+    token === {} ||
+    temp === "{}"
+  ) {
+    props.history.push("/Login");
   }
-  render() {
-    return <SideToggler />;
-  }
-}
 
-export default Dashboard;
+  return <SideToggler />;
+}

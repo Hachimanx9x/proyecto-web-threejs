@@ -25,7 +25,7 @@ class Contacts extends Component {
         {
           id: "1",
           jobs: [
-            "Desarrollador FullStack",
+            "Progamador",
             "Desarrollador Frontend",
             "Desarrollador Backend",
           ],
@@ -45,7 +45,7 @@ class Contacts extends Component {
         },
         {
           id: "2",
-          jobs: ["Ui designer", "Diseñador gráfico", "Diseñador Web"],
+          jobs: ["diseñador ui", "Diseñador gráfico", "programador"],
           urlimage: User,
           name: "Juan Carlos",
           description:
@@ -69,11 +69,7 @@ class Contacts extends Component {
           name: "Juan Carlos Hurtado",
           description:
             "Ingeniero multimedia. Desarrollador FullStack con experiencia en desarrollo de aplicaciones web y móviles",
-          jobs: [
-            "Desarrollador Frontend",
-            "Desarrollador Backend",
-            "Desarrollador FullStack",
-          ],
+          jobs: ["ing multimedia", "animador 3d", "ilustrador"],
           img: User,
           skills: [
             "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg",
@@ -96,7 +92,7 @@ class Contacts extends Component {
           name: "Andrés David Londoño",
           description:
             "Ingeniero multimedia. Desarrollador web. Senior en tecnologías para desarrollo fronend y backend con experiencia en desarrollo de aplicaciones web y móviles",
-          jobs: ["Desarrollador Web", "Ui designer", "Desarrollador FullStack"],
+          jobs: ["Desarrollador Móvil", "analista de datos"],
           img: User,
           skills: [
             "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg",
@@ -119,7 +115,7 @@ class Contacts extends Component {
         {
           id: "1",
           jobs: [
-            "Desarrollador FullStack",
+            "Progamador",
             "Desarrollador Frontend",
             "Desarrollador Backend",
           ],
@@ -134,14 +130,12 @@ class Contacts extends Component {
             "https://www.vectorlogo.zone/logos/angular/angular-icon.svg",
 
             "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg",
-
             "https://upload.vectorlogo.zone/logos/javascript/images/239ec8a4-163e-4792-83b6-3f6d96911757.svg",
-            ,
           ],
         },
         {
           id: "2",
-          jobs: ["Ui designer", "Diseñador gráfico", "Diseñador Web"],
+          jobs: ["diseñador ui", "Diseñador gráfico", "programador"],
           urlimage: User,
           name: "Juan Carlos",
           description:
@@ -149,11 +143,13 @@ class Contacts extends Component {
           favorite: true,
           skills: [
             "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg",
-
+            ,
             "https://www.vectorlogo.zone/logos/angular/angular-icon.svg",
+            ,
             "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg",
 
             "https://upload.vectorlogo.zone/logos/javascript/images/239ec8a4-163e-4792-83b6-3f6d96911757.svg",
+            ,
           ],
         },
       ],

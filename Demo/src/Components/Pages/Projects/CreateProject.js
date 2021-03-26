@@ -209,7 +209,6 @@ class CreateProject extends Component {
       if (this.state.projectPractices.cem && this.state.projectPractices.smmv) {
         this.setState({
           rols: [
-            { rol: "Arquitecto de Experiencia Multimedia" },
             { rol: "Arquitecto de Información" },
             { rol: "Arquitecto de Pruebas" },
             { rol: "Arquitecto de Producción de contenidos" },
@@ -221,7 +220,6 @@ class CreateProject extends Component {
       } else if (this.state.projectPractices.cem) {
         this.setState({
           rols: [
-            { rol: "Arquitecto de Experiencia Multimedia" },
             { rol: "Arquitecto de Información" },
             { rol: "Arquitecto de Pruebas" },
             { rol: "Arquitecto de Producción de contenidos" },
@@ -230,7 +228,6 @@ class CreateProject extends Component {
       } else if (this.state.projectPractices.smmv) {
         this.setState({
           rols: [
-            { rol: "Arquitecto de Experiencia Multimedia" },
             { rol: "Arquitecto de Información" },
             { rol: "Diseñador Audiovisual" },
             { rol: "Diseñador de concepto y Storyboard" },
