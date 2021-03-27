@@ -202,6 +202,7 @@ export default function Desktop() {
               icon={project.icon}
               projectId={project.id}
               setActive={setActive}
+              number={project.updates.length}
               key={i}
             >
               <div className="o-updates-section">

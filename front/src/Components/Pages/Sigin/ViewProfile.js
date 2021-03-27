@@ -330,15 +330,13 @@ export default function ViewProfile(props) {
           datform,
           options
         );
-        console.log(data);
-        localStorage.setItem("login", "");
       } catch (error) {
         console.log(error);
       }
       setConfirmation(true);
       setTimeout(() => {
         setModal(false);
-        window.location.reload();
+        props.history.push("/Dashboard/Projects");
       }, 1200);
     } else {
       setModal(false);

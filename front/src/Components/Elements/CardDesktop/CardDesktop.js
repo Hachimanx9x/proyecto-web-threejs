@@ -29,7 +29,6 @@ const CardDesktop = ({ update }) => {
     <div className="bg-white o-desktop-card">
       <div className="d-flex">
         <h4>{update.userName}</h4>
-        <div className="ml-2 rounded-pill new-update">Nuevo</div>
       </div>
       <div className="mt-2 mb-2">
         <FontAwesomeIcon className="mr-2 cyan-text" icon={faFileAlt} />

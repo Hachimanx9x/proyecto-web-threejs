@@ -1,6 +1,6 @@
 .o-contact-talents {
   width: 100%;
-  height: 80%;
+  height: auto;
   padding: 0;
   margin: 0;
   box-sizing: border-box;
@@ -37,12 +37,13 @@
 .o-card-contacts-container {
   background-color: #eef7fc;
   border-radius: 0.5rem;
-  height: 55vh;
+  height: calc(100vh - 310px);
   overflow-y: auto;
   scrollbar-color: #4285f4 white;
   scrollbar-width: thin;
   padding: 1rem 1rem;
-  margin: 1rem;
+  box-sizing: border-box;
+  margin: 1rem 1rem 0 0;
 }
 .o-card-contacts-container::-webkit-scrollbar {
   width: 8px;

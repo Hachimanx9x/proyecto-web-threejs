@@ -101,6 +101,19 @@
   line-height: 1.6;
 }
 
+.new-update {
+  min-width: 90px;
+  height: 1.4rem;
+  padding: 1px 4px;
+  margin-top: 3px;
+  font-size: 0.7rem;
+  text-align: center;
+  justify-content: center;
+  font-weight: bolder;
+  background-color: #ffd0d4;
+  color: #f14352;
+  border: 3px solid #fb9ba3;
+}
 .accordionContent::-webkit-scrollbar {
   width: 5px;
 }
@@ -114,6 +127,11 @@
 }
 
 @media only screen and (max-width: 800px) {
+  .new-update {
+    min-width: 4rem;
+    font-size: 10px;
+  }
+
   .accordionContent {
     display: flex;
     flex-wrap: wrap;
@@ -133,5 +151,14 @@
   .accordionContent.show {
     height: 500px;
     max-height: 500px;
+  }
+  .accordionHeading {
+    height: 4rem;
+  }
+  .accordionHeading p {
+    font-size: 10px;
+  }
+  .new-update {
+    display: none;
   }
 }

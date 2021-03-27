@@ -257,9 +257,11 @@ export default function FinishRegister(props) {
       errors.validLastName &&
       errors.validLang
     ) {
+      localStorage.setItem("login", "");
       setConfirmation(true);
       setTimeout(() => {
         setModal(false);
+
         window.location.reload();
       }, 1200);
     } else {

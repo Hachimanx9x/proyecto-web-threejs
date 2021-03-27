@@ -137,6 +137,18 @@ export default function ViewProfile(props) {
   const [confirmation, setConfirmation] = useState(false);
   const [modal, setModal] = useState(false);
   const token = localStorage.getItem("login");
+  const [languageslist, setLanguageslist] = useState([]);
+  const [toolist, setToolist] = useState([]);
+  const [errorList, setErrorList] = useState({
+    validName: true,
+    nameMessage: ".",
+    validLastName: true,
+    lastnameMessage: " ",
+    validYears: true,
+    validLang: true,
+    validWords: true,
+    validSkills: true,
+  });
   const countries = [
     { key: "Alemania", cat: "Alemania" },
     { key: "Brasil", cat: "Brasil" },
@@ -158,19 +170,7 @@ export default function ViewProfile(props) {
     { key: "4 años", cat: 4 },
     { key: "5 años", cat: 5 },
   ];
-  const languageslist = [
-    { key: "Inglés", cat: "Inglés" },
-    { key: "Español", cat: "Español" },
-    { key: "Alemán", cat: "Alemán" },
-    { key: "Francés", cat: "Francés" },
-    { key: "Russo", cat: "Russo" },
-    { key: "Japonés", cat: "Japonés" },
-    { key: "Italiano", cat: "Italiano" },
-    { key: "Sueco", cat: "Sueco" },
-    { key: "Chino", cat: "Chino" },
-    { key: "Koreano", cat: "Koreano" },
-    { key: "Portugués", cat: "Portugués" },
-  ];
+
   const keywords = [
     { key: "Desarrollador Web", cat: "Desarrollador Web" },
     { key: "Desarrollador Frontend", cat: "Desarrollador Frontend" },
@@ -181,97 +181,7 @@ export default function ViewProfile(props) {
     { key: "Diseñador UI", cat: "Diseñador UI" },
     { key: "Diseñador UX", cat: "Diseñador UX" },
   ];
-  const toolist = [
-    {
-      cat: {
-        id: "1",
-        icon: "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg",
-        name: "React JS",
-      },
-      key: "React js",
-    },
-    {
-      cat: {
-        id: "2",
-        icon: "https://www.vectorlogo.zone/logos/angular/angular-icon.svg",
-        name: "Angular",
-      },
-      key: "Angular",
-    },
-    {
-      cat: {
-        id: "3",
-        icon: "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg",
-        name: "Vue JS",
-      },
-      key: "Vue js",
-    },
-    {
-      cat: {
-        id: "4",
-        icon: "https://www.vectorlogo.zone/logos/nodejs/nodejs-icon.svg",
-        name: "Node JS",
-      },
-      key: "Node js",
-    },
-    {
-      cat: {
-        id: "5",
-        icon: "https://www.vectorlogo.zone/logos/python/python-icon.svg",
-        name: "Python",
-      },
-      key: "Python",
-    },
-    {
-      cat: {
-        id: "7",
-        icon: "https://www.vectorlogo.zone/logos/php/php-icon.svg",
-        name: "PHP",
-      },
-      key: "PHP",
-    },
-    {
-      cat: {
-        id: "8",
-        icon: "https://www.vectorlogo.zone/logos/flutterio/flutterio-icon.svg",
-        name: "Flutter",
-      },
-      key: "Flutter",
-    },
-    {
-      cat: {
-        id: "9",
-        icon: "https://cdn.worldvectorlogo.com/logos/mysql-7.svg",
-        name: "MySQL",
-      },
-      key: "MySQL",
-    },
-    {
-      cat: {
-        id: "10",
-        icon: "https://www.vectorlogo.zone/logos/golang/golang-official.svg",
-        name: "Golang",
-      },
-      key: "Golang",
-    },
-    {
-      cat: {
-        id: "11",
-        icon: "https://www.vectorlogo.zone/logos/graphql/graphql-icon.svg",
-        name: "GraphQL",
-      },
-      key: "GraphQL",
-    },
-    {
-      cat: {
-        id: "12",
-        icon:
-          "https://www.vectorlogo.zone/logos/typescriptlang/typescriptlang-icon.svg",
-        name: "TypeScript",
-      },
-      key: "TypeScript",
-    },
-  ];
+
   const RemoveSkill = (selectedItem) => {
     if (selectedItem !== undefined) {
       const skill = skills;
@@ -351,45 +261,10 @@ export default function ViewProfile(props) {
       errors.validLastName &&
       errors.validLang
     ) {
-      try {
-        const datform = new FormData();
-        datform.append("email", nullData);
-        datform.append("password", nullData);
-        datform.append("experiencia", years);
-        datform.append("nombre", fullname);
-        datform.append("descripcion", description);
-        datform.append("pais", country);
-        datform.append("edad", nullData);
-        datform.append("github", github);
-        datform.append("gitlab", gitlab);
-        datform.append("bitbucket", bitbucket);
-        datform.append("linkedin", linkedin);
-        datform.append("herramienta", skillsdi);
-        datform.append("palabra", userKeywords);
-        datform.append("idiomas", userLanguages);
-        datform.append("foto", picture);
-        datform.append("cv", cvpicture);
-        console.log(skillsdi);
-        const obj = JSON.parse(token);
-        const tokensito = obj.token;
-        const options = {
-          headers: { authorization: `llave ${tokensito}` },
-        };
-
-        const { data } = await Axios.put(
-          `http://localhost:3030/actualizar/usuario`,
-          datform,
-          options
-        );
-        console.log(data);
-        localStorage.setItem("login", "");
-      } catch (error) {
-        console.log(error);
-      }
       setConfirmation(true);
       setTimeout(() => {
         setModal(false);
-        window.location.reload();
+        props.history.push("/Dashboard/Projects");
       }, 1200);
     } else {
       setModal(false);
