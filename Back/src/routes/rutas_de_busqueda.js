@@ -38,8 +38,66 @@ rutas.post("/login", (req, res) => {
       });
   }
 });
-
 rutas.get("/escritorio", proToken, (req, res) => {
+  jwt.verify(req.token, LLAVE, (err, data) => {
+    if (err) {
+      res.sendStatus(403);
+    }
+    if (data.rows[0] != null && data.rows.length > 0) {
+      buscarDB
+        .obtenerusuarioid({ id: data.rows[0].id })
+        .then((usua) => {
+          buscarDB
+            .buscartalentogeneral2(data.rows[0].id)
+            .then((talento) => {
+              if (talento.data.length < 1) {
+                buscarDB
+                  .obtenerEscritorioProyectos(data)
+                  .then((pro) => {
+                    buscarDB
+                      .obteneractientreproyectos(pro.proyectos)
+                      .then((def) => {
+                        res.json({
+                          proyectos: def,
+                          datos: {
+                            nombre: usua.nombre,
+                            foto: `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`,
+                            herramientas: [],
+                            palabras: [],
+                          },
+                        });
+                      })
+                      .catch((dererro) => res.json(dererro));
+                  })
+                  .catch((err2) => res.json(err2));
+              }
+              buscarDB
+                .obtenerEscritorioProyectos(data)
+                .then((pro) => {
+                  buscarDB
+                    .obteneractientreproyectos(pro.proyectos)
+                    .then((def) => {
+                      res.json({
+                        proyectos: def,
+                        datos: {
+                          nombre: usua.nombre,
+                          foto: `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`,
+                          herramientas: talento.data[0].herramientas,
+                          palabras: talento.data[0].palabras,
+                        },
+                      });
+                    })
+                    .catch((dererro) => res.json(dererro));
+                })
+                .catch((err2) => res.json(err2));
+            })
+            .catch((talenerr) => res.json(talenerr));
+        })
+        .catch((usererr) => res.json(usererr));
+    }
+  });
+});
+rutas.get("/escritoriox", proToken, (req, res) => {
   // console.log("hola /escritorio")
   jwt.verify(req.token, LLAVE, (err, data) => {
     if (err) {
@@ -57,6 +115,24 @@ rutas.get("/escritorio", proToken, (req, res) => {
                 buscarDB
                   .buscartalentogeneral2(data.rows[0].id)
                   .then((talento) => {
+                    console.log(talento);
+                    if (talento.data.length < 1) {
+                      buscarDB
+                        .obtenerEscritorioProyectos(data)
+                        .then((result2) => {
+                          res.json({
+                            actividades: result.actividades,
+                            proyectos: result2.proyectos,
+                            datos: {
+                              nombre: usua.nombre,
+                              foto: `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`,
+                              herramientas: [],
+                              palabras: [],
+                            },
+                          });
+                        })
+                        .catch((err2) => res.json(err2));
+                    }
                     buscarDB
                       .obtenerEscritorioProyectos(data)
                       .then((result2) => {

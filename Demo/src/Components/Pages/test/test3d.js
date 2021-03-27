@@ -1,12 +1,6 @@
 import React, { Component } from "react";
 //libreria 3d
 import * as THREE from "three/build/three.module";
-//libreria para cargar modelos 3d
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
-//libreria para efectos de entorno
-import { RoughnessMipmapper } from "three/examples/jsm/utils/RoughnessMipmapper";
-import { Reflector } from "three/examples/jsm/objects/Reflector";
 //libreria para los controles
 //import {OrbitControls} from "three/examples/jsm/controls/OrbitControls" ;
 import { PointerLockControls } from "three/examples/jsm/controls/PointerLockControls";
@@ -14,13 +8,16 @@ import { PointerLockControls } from "three/examples/jsm/controls/PointerLockCont
 import Detector from "../../../lib_externo/Detector";
 //charjs
 import { Chart } from "react-chartjs-2";
-import Rodal from "rodal";
-import "rodal/lib/rodal.css";
-import ContentCard from "./script/cardsvote"
 //socket
 import io from "socket.io-client";
-//importaciones propias de componentes
-import Button3d  from './script/buttons'
+import Button3d from "./script/buttons";
+import Rodal from "rodal";
+import "rodal/lib/rodal.css";
+import ContentCard from "./script/cardvote";
+import User from "../../../Logos/user-icon.png";
+import Navvote from "./script/navresult";
+import CargarObj from "./script/CargarObjGltf";
+import Mirror from "./script/mirror";
 //imagenes
 import posx from "../../../Logos/img/Bridge2/posx.jpg";
 import negx from "../../../Logos/img/Bridge2/negx.jpg";
@@ -52,26 +49,54 @@ class Test3d extends Component {
 
     this.setupCanvasDrawing = this.setupCanvasDrawing.bind(this);
     this.makeLabelCanvas = this.makeLabelCanvas.bind(this);
-    this.funcionvotacion = this.funcionvotacion.bind(this)
+    this.funcionvotacion = this.funcionvotacion.bind(this);
+    this.funcdis = this.funcdis.bind(this);
+    this.funcvolvervoto = this.funcvolvervoto.bind(this);
+    this.funcalert = this.funcalert.bind(this);
     this.state = {
       player: null,
-      votaciones : false,
-      practica:
-        {
-          nombre:"practica 1 ",
-          estadoActual :"iniciado",
-          estaoevaluar:"identificado",
-          preguntas :[
-    {texto:"se a identificado tensiones de valor entre interesados", estado : false},
-    {texto:"se a identificado posibles usos mal intencionados del Sistema Multimedia", estado : false},
-    {texto:"se a identificado patrones que afectan el Sistema Multimedia", estado : false},
-    {texto:"se a identificado leyes y normatividades que influyen en la solución", estado : false},
-    {texto:"se a identificado aspectos culturales, sociales y cognitivos que influyen en la comunidad objeto de análisis", estado : false}
-  ]
-        }
-
-      ,
       reunion: 1,
+      votaciones: false,
+      resultados: false,
+      results: [
+        { name: "nombre 1 ", img: User, voto: true },
+        { name: "nombre 1 ", img: User, voto: false },
+        { name: "nombre 1 ", img: User, voto: true },
+        { name: "nombre 1 ", img: User, voto: true },
+        { name: "nombre 1 ", img: User, voto: false },
+        { name: "nombre 1 ", img: User, voto: true },
+      ],
+      practica: {
+        nombre: "practica 1 ",
+        estadoActual: "iniciado",
+        estaoevaluar: "identificado",
+        preguntas: [
+          {
+            texto: "se a identificado tensiones de valor entre interesados",
+            estado: false,
+          },
+          {
+            texto:
+              "se a identificado posibles usos mal intencionados del Sistema Multimedia",
+            estado: false,
+          },
+          {
+            texto:
+              "se a identificado patrones que afectan el Sistema Multimedia",
+            estado: false,
+          },
+          {
+            texto:
+              "se a identificado leyes y normatividades que influyen en la solución",
+            estado: false,
+          },
+          {
+            texto:
+              "se a identificado aspectos culturales, sociales y cognitivos que influyen en la comunidad objeto de análisis",
+            estado: false,
+          },
+        ],
+      },
       posicionplayer: { x: 0, y: 0.3, z: 1 },
       marksData: {
         labels: ["ruta1", "ruta2", "ruta3", "ruta4"],
@@ -89,20 +114,19 @@ class Test3d extends Component {
             data: [54, 65, 60, 70],
           },
         ],
-      }
-
+      },
     };
   }
   componentDidMount() {
     //   console.log(this.state)
-    this.socket = io('http://localhost:3030/', {
+    this.socket = io("http://localhost:3030/", {
       reconnectionDelayMax: 10000,
       auth: {
-        token: "123"
+        token: "123",
       },
       query: {
-        reunion: this.state.reunion
-      }
+        reunion: this.state.reunion,
+      },
     });
 
     if (!Detector.webgl) Detector.addGetWebGLMessage();
@@ -129,9 +153,9 @@ class Test3d extends Component {
     this.objInteraccion1 = [];
     this.objInteraccion2 = [];
     this.objInteraccion3 = [];
-    this.menuopciones={
-      salir:[],
-      votacion:[]
+    this.menuopciones = {
+      salir: [],
+      votacion: [],
     };
     //skybox
     var entorno = new THREE.CubeTextureLoader().load([
@@ -174,7 +198,8 @@ class Test3d extends Component {
     var objectI1 = new THREE.Mesh(
       geocaja,
       new THREE.MeshBasicMaterial({
-        color: 0x4ff20e, opacity: 0.5,
+        color: 0x4ff20e,
+        opacity: 0.5,
         transparent: true,
       })
     );
@@ -182,7 +207,8 @@ class Test3d extends Component {
     var objectI2 = new THREE.Mesh(
       geocaja,
       new THREE.MeshBasicMaterial({
-        color: 0xf2380e, opacity: 0.5,
+        color: 0xf2380e,
+        opacity: 0.5,
         transparent: true,
       })
     );
@@ -216,7 +242,7 @@ class Test3d extends Component {
     this.scene.add(this.objgrafico);
 
     /*
-
+    
   ▄▀▀ █░░█ ▀█▀
   █░█ █░░█ ░█░
   ░▀▀ ░▀▀░ ▀▀▀
@@ -224,18 +250,53 @@ class Test3d extends Component {
     this.GUIv2 = new THREE.Object3D(); ///const guiv2 = new THREE.Object3D();
 
     this.fondos = {
-      fondo0: new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), new THREE.MeshBasicMaterial({ color: 0x2E9AFE, opacity: 0.5, transparent: true, })),
-      fondo1: new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), new THREE.MeshBasicMaterial({ color: 0x2E9AFE, opacity: 0.5, transparent: true, }))
-    }
+      fondo0: new THREE.Mesh(
+        new THREE.PlaneBufferGeometry(1, 1),
+        new THREE.MeshBasicMaterial({
+          color: 0x2e9afe,
+          opacity: 0.5,
+          transparent: true,
+        })
+      ),
+      fondo1: new THREE.Mesh(
+        new THREE.PlaneBufferGeometry(1, 1),
+        new THREE.MeshBasicMaterial({
+          color: 0x2e9afe,
+          opacity: 0.5,
+          transparent: true,
+        })
+      ),
+    };
     this.btn_inter = {
-      inter0: new THREE.Mesh(new THREE.BoxBufferGeometry(1, 1, 1), new THREE.MeshBasicMaterial({ color: 0x61f20e, opacity: 0.5, transparent: true, })),
-      inter1: new THREE.Mesh(new THREE.BoxBufferGeometry(1, 1, 1), new THREE.MeshBasicMaterial({ color: 0x4ff20e, opacity: 0.5, transparent: true, })),
-      inter2: new THREE.Mesh(new THREE.BoxBufferGeometry(1, 1, 1), new THREE.MeshBasicMaterial({ color: 0xf2380e, opacity: 0.5, transparent: true, }))
-    }
+      inter0: new THREE.Mesh(
+        new THREE.BoxBufferGeometry(1, 1, 1),
+        new THREE.MeshBasicMaterial({
+          color: 0x61f20e,
+          opacity: 0.5,
+          transparent: true,
+        })
+      ),
+      inter1: new THREE.Mesh(
+        new THREE.BoxBufferGeometry(1, 1, 1),
+        new THREE.MeshBasicMaterial({
+          color: 0x4ff20e,
+          opacity: 0.5,
+          transparent: true,
+        })
+      ),
+      inter2: new THREE.Mesh(
+        new THREE.BoxBufferGeometry(1, 1, 1),
+        new THREE.MeshBasicMaterial({
+          color: 0xf2380e,
+          opacity: 0.5,
+          transparent: true,
+        })
+      ),
+    };
     this.pantallas = {
       pantalla0: new THREE.Object3D(),
-      pantalla1: new THREE.Object3D()
-    }
+      pantalla1: new THREE.Object3D(),
+    };
     this.letreros_Labels = {
       titulo_pantalla1: this.makeLabelCanvas(32, "Pantalla1"),
       titulo_pantalla2: this.makeLabelCanvas(32, "Pantalla2"),
@@ -244,8 +305,12 @@ class Test3d extends Component {
       boton1_p2_r1: this.makeLabelCanvas(24, "grafico"),
     };
     this.letrerostexture = {
-      titulo_pantalla1: new THREE.CanvasTexture(this.letreros_Labels.titulo_pantalla1),
-      titulo_pantalla2: new THREE.CanvasTexture(this.letreros_Labels.titulo_pantalla2),
+      titulo_pantalla1: new THREE.CanvasTexture(
+        this.letreros_Labels.titulo_pantalla1
+      ),
+      titulo_pantalla2: new THREE.CanvasTexture(
+        this.letreros_Labels.titulo_pantalla2
+      ),
       boton_p1_r1: new THREE.CanvasTexture(this.letreros_Labels.boton_p1_r1),
       boton0_p2_r1: new THREE.CanvasTexture(this.letreros_Labels.boton0_p2_r1),
       boton1_p2_r1: new THREE.CanvasTexture(this.letreros_Labels.boton1_p2_r1),
@@ -258,22 +323,59 @@ class Test3d extends Component {
       this.letrerostexture[property].wrapT = THREE.ClampToEdgeWrapping;
     }
     this.labelmaterials = {
-      titulo_pantalla1: new THREE.MeshBasicMaterial({ map: this.letrerostexture.titulo_pantalla1, side: THREE.DoubleSide, transparent: true, }),
-      titulo_pantalla2: new THREE.MeshBasicMaterial({ map: this.letrerostexture.titulo_pantalla2, side: THREE.DoubleSide, transparent: true }),
-      boton_p1_r1: new THREE.MeshBasicMaterial({ map: this.letrerostexture.boton_p1_r1, side: THREE.DoubleSide, transparent: true }),
-      boton0_p2_r1: new THREE.MeshBasicMaterial({ map: this.letrerostexture.boton0_p2_r1, side: THREE.DoubleSide, transparent: true }),
-      boton1_p2_r1: new THREE.MeshBasicMaterial({ map: this.letrerostexture.boton1_p2_r1, side: THREE.DoubleSide, transparent: true }),
-    }
+      titulo_pantalla1: new THREE.MeshBasicMaterial({
+        map: this.letrerostexture.titulo_pantalla1,
+        side: THREE.DoubleSide,
+        transparent: true,
+      }),
+      titulo_pantalla2: new THREE.MeshBasicMaterial({
+        map: this.letrerostexture.titulo_pantalla2,
+        side: THREE.DoubleSide,
+        transparent: true,
+      }),
+      boton_p1_r1: new THREE.MeshBasicMaterial({
+        map: this.letrerostexture.boton_p1_r1,
+        side: THREE.DoubleSide,
+        transparent: true,
+      }),
+      boton0_p2_r1: new THREE.MeshBasicMaterial({
+        map: this.letrerostexture.boton0_p2_r1,
+        side: THREE.DoubleSide,
+        transparent: true,
+      }),
+      boton1_p2_r1: new THREE.MeshBasicMaterial({
+        map: this.letrerostexture.boton1_p2_r1,
+        side: THREE.DoubleSide,
+        transparent: true,
+      }),
+    };
     this.labelGeo = {
-      titulo_pantalla1: new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), this.labelmaterials.titulo_pantalla1),
-      titulo_pantalla2: new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), this.labelmaterials.titulo_pantalla2),
-      boton_p1_r1: new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), this.labelmaterials.boton_p1_r1),
-      boton0_p2_r1: new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), this.labelmaterials.boton0_p2_r1),
-      boton1_p2_r1: new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), this.labelmaterials.boton1_p2_r1),
-    }
+      titulo_pantalla1: new THREE.Mesh(
+        new THREE.PlaneBufferGeometry(1, 1),
+        this.labelmaterials.titulo_pantalla1
+      ),
+      titulo_pantalla2: new THREE.Mesh(
+        new THREE.PlaneBufferGeometry(1, 1),
+        this.labelmaterials.titulo_pantalla2
+      ),
+      boton_p1_r1: new THREE.Mesh(
+        new THREE.PlaneBufferGeometry(1, 1),
+        this.labelmaterials.boton_p1_r1
+      ),
+      boton0_p2_r1: new THREE.Mesh(
+        new THREE.PlaneBufferGeometry(1, 1),
+        this.labelmaterials.boton0_p2_r1
+      ),
+      boton1_p2_r1: new THREE.Mesh(
+        new THREE.PlaneBufferGeometry(1, 1),
+        this.labelmaterials.boton1_p2_r1
+      ),
+    };
     for (const property in this.labelGeo) {
-      this.labelGeo[property].scale.x = this.letreros_Labels[property].width * 0.001;
-      this.labelGeo[property].scale.y = this.letreros_Labels[property].height * 0.001;
+      this.labelGeo[property].scale.x =
+        this.letreros_Labels[property].width * 0.001;
+      this.labelGeo[property].scale.y =
+        this.letreros_Labels[property].height * 0.001;
     }
 
     var i0 = 0;
@@ -281,31 +383,79 @@ class Test3d extends Component {
       var i1 = 0;
       for (const property1 in this.fondos) {
         if (i1 === 0 && i0 === 0) {
-
-          this.labelGeo.boton_p1_r1.position.set(this.labelGeo.titulo_pantalla1.position.x, this.labelGeo.titulo_pantalla1.position.y - 0.05, this.labelGeo.titulo_pantalla1.position.z)
+          this.labelGeo.boton_p1_r1.position.set(
+            this.labelGeo.titulo_pantalla1.position.x,
+            this.labelGeo.titulo_pantalla1.position.y - 0.05,
+            this.labelGeo.titulo_pantalla1.position.z
+          );
           this.objInteraccion.push(this.btn_inter.inter0);
-          this.btn_inter.inter0.scale.set(this.labelGeo.boton_p1_r1.scale.x, this.labelGeo.boton_p1_r1.scale.y, 0.005);
-          this.btn_inter.inter0.position.set(this.labelGeo.boton_p1_r1.position.x, this.labelGeo.boton_p1_r1.position.y, -0.005);
-          this.fondos[property1].scale.set(this.labelGeo.titulo_pantalla1.scale.x + 0.1, this.labelGeo.titulo_pantalla1.scale.x + 0.05);
-          this.fondos[property1].position.set(this.labelGeo.titulo_pantalla1.position.x + 0.05, this.labelGeo.titulo_pantalla1.position.y - 0.007, -0.1);
+          this.btn_inter.inter0.scale.set(
+            this.labelGeo.boton_p1_r1.scale.x,
+            this.labelGeo.boton_p1_r1.scale.y,
+            0.005
+          );
+          this.btn_inter.inter0.position.set(
+            this.labelGeo.boton_p1_r1.position.x,
+            this.labelGeo.boton_p1_r1.position.y,
+            -0.005
+          );
+          this.fondos[property1].scale.set(
+            this.labelGeo.titulo_pantalla1.scale.x + 0.1,
+            this.labelGeo.titulo_pantalla1.scale.x + 0.05
+          );
+          this.fondos[property1].position.set(
+            this.labelGeo.titulo_pantalla1.position.x + 0.05,
+            this.labelGeo.titulo_pantalla1.position.y - 0.007,
+            -0.1
+          );
           this.pantallas[property].add(this.labelGeo.titulo_pantalla1);
           this.pantallas[property].add(this.labelGeo.boton_p1_r1);
           this.pantallas[property].add(this.btn_inter.inter0);
           this.pantallas[property].add(this.fondos[property1]);
         } else if (i1 === 1 && i0 === 1) {
-
-          this.labelGeo.boton0_p2_r1.position.set(this.labelGeo.titulo_pantalla2.position.x - 0.05, this.labelGeo.titulo_pantalla2.position.y - 0.05, this.labelGeo.titulo_pantalla2.position.z)
-          this.labelGeo.boton1_p2_r1.position.set(this.labelGeo.titulo_pantalla2.position.x + 0.05, this.labelGeo.titulo_pantalla2.position.y - 0.05, this.labelGeo.titulo_pantalla2.position.z)
+          this.labelGeo.boton0_p2_r1.position.set(
+            this.labelGeo.titulo_pantalla2.position.x - 0.05,
+            this.labelGeo.titulo_pantalla2.position.y - 0.05,
+            this.labelGeo.titulo_pantalla2.position.z
+          );
+          this.labelGeo.boton1_p2_r1.position.set(
+            this.labelGeo.titulo_pantalla2.position.x + 0.05,
+            this.labelGeo.titulo_pantalla2.position.y - 0.05,
+            this.labelGeo.titulo_pantalla2.position.z
+          );
           this.objInteraccion0.push(this.labelGeo.boton0_p2_r1);
           this.objInteraccion3.push(this.labelGeo.boton1_p2_r1);
           /****************/
-          this.btn_inter.inter1.scale.set(this.labelGeo.boton0_p2_r1.scale.x, this.labelGeo.boton0_p2_r1.scale.y, 0.005);
-          this.btn_inter.inter1.position.set(this.labelGeo.boton0_p2_r1.position.x, this.labelGeo.boton0_p2_r1.position.y, -0.005)
-          this.btn_inter.inter2.scale.set(this.labelGeo.boton1_p2_r1.scale.x, this.labelGeo.boton1_p2_r1.scale.y, 0.005);
-          this.btn_inter.inter2.position.set(this.labelGeo.boton1_p2_r1.position.x, this.labelGeo.boton1_p2_r1.position.y, -0.005)
+          this.btn_inter.inter1.scale.set(
+            this.labelGeo.boton0_p2_r1.scale.x,
+            this.labelGeo.boton0_p2_r1.scale.y,
+            0.005
+          );
+          this.btn_inter.inter1.position.set(
+            this.labelGeo.boton0_p2_r1.position.x,
+            this.labelGeo.boton0_p2_r1.position.y,
+            -0.005
+          );
+          this.btn_inter.inter2.scale.set(
+            this.labelGeo.boton1_p2_r1.scale.x,
+            this.labelGeo.boton1_p2_r1.scale.y,
+            0.005
+          );
+          this.btn_inter.inter2.position.set(
+            this.labelGeo.boton1_p2_r1.position.x,
+            this.labelGeo.boton1_p2_r1.position.y,
+            -0.005
+          );
           /****** */
-          this.fondos[property1].scale.set(this.labelGeo.titulo_pantalla2.scale.x + 0.2, this.labelGeo.titulo_pantalla2.scale.x + 0.05);
-          this.fondos[property1].position.set(this.labelGeo.titulo_pantalla2.position.x + 0.05, this.labelGeo.titulo_pantalla2.position.y - 0.007, -0.1);
+          this.fondos[property1].scale.set(
+            this.labelGeo.titulo_pantalla2.scale.x + 0.2,
+            this.labelGeo.titulo_pantalla2.scale.x + 0.05
+          );
+          this.fondos[property1].position.set(
+            this.labelGeo.titulo_pantalla2.position.x + 0.05,
+            this.labelGeo.titulo_pantalla2.position.y - 0.007,
+            -0.1
+          );
           this.pantallas[property].add(this.labelGeo.titulo_pantalla2);
           this.pantallas[property].add(this.labelGeo.boton0_p2_r1);
           this.pantallas[property].add(this.labelGeo.boton1_p2_r1);
@@ -322,51 +472,49 @@ class Test3d extends Component {
     for (const property in this.pantallas) {
       this.GUIv2.add(this.pantallas[property]);
     }
-    this.GUIv2.position.set(0.3, 0.33, 0.9); this.GUIv2.rotation.set(0, - Math.PI / 4, 0);
+    this.GUIv2.position.set(0.3, 0.33, 0.9);
+    this.GUIv2.rotation.set(0, -Math.PI / 4, 0);
     console.log("gui2");
     console.log(this.GUIv2);
-
 
     let bu = new Button3d(
       0.005,
       0xf2380e,
       1,
-      true ,
-      {size : 32 ,text: " Salir " },
-      {x:0.03 , y : 0.03 } ,
-      {x:0, y:0, z :0}
-    ).button
+      true,
+      { size: 32, text: " Salir " },
+      { x: 0.03, y: 0.03 },
+      { x: 0, y: 0, z: 0 }
+    ).button;
     let bu2 = new Button3d(
       0.005,
       0x81e219,
       1,
-      true ,
-      {size : 32 ,text: " votar " },
-      {x:0.03 , y : 0.03 } ,
-      {x:0, y:0, z :0}
-    ).button
+      true,
+      { size: 32, text: " votar " },
+      { x: 0.03, y: 0.03 },
+      { x: 0, y: 0, z: 0 }
+    ).button;
+    console.log("//---------- button");
+    bu.obj.position.set(0.1, 0.185, 0.93);
+    bu.obj.rotation.x = -Math.PI / 2;
+    bu2.obj.position.set(0, 0.185, 0.93);
+    bu2.obj.rotation.x = -Math.PI / 2;
+    this.menuopciones.salir = bu.Interaction;
+    this.menuopciones.votacion = bu2.Interaction;
 
-
-    console.log("//---------- button")
-
-     bu.obj.position.set(0.1,0.185,0.93);  bu.obj.rotation.x = -Math.PI/2
-        bu2.obj.position.set(0,0.185,0.93);  bu2.obj.rotation.x = -Math.PI/2
-     this.menuopciones.salir = bu.Interaction;this.menuopciones.votacion = bu2.Interaction;
-
-       this.scene.add(bu.obj); this.scene.add(bu2.obj);
+    this.scene.add(bu.obj);
+    this.scene.add(bu2.obj);
     this.scene.add(this.GUIv2);
+
     this.pantallas.pantalla0.visible = this.estados_pantalla.p0;
     this.pantallas.pantalla1.visible = this.estados_pantalla.p1;
-
-
-
-
 
     /*
    ▄▀▀ █░░█ ▀█▀ . █▀▀ █▄░█ █▀▄
    █░█ █░░█ ░█░ . █▀▀ █▀██ █░█
    ░▀▀ ░▀▀░ ▀▀▀ . ▀▀▀ ▀░░▀ ▀▀░
-
+   
        */
 
     //---------------default------------------------
@@ -407,290 +555,187 @@ class Test3d extends Component {
     //  this.controls.connect();
 
     // this.controls.isLocked = true ;
-    console.log(this.controls.getObject());
-
-    this.controls.getObject().position.set(this.state.posicionplayer.x, this.state.posicionplayer.y, this.state.posicionplayer.z);
+    //  console.log(this.controls.getObject());
 
     this.scene.add(this.controls.getObject());
     //---------
-    var roughnessMipmapper = new RoughnessMipmapper(this.renderer);
-    //--------------------------------------------------------
-    var objmesa = new THREE.Object3D();
-    new GLTFLoader()
-      .setDRACOLoader(new DRACOLoader())
-      .load(modeloMesaurl, (gltf) => {
-        gltf.scene.traverse((nino) => {
-          if (nino.isMesh) {
-            nino.material.envMap = this.entorno;
-            roughnessMipmapper.generateMipmaps(nino.material);
-          }
-        });
-        objmesa.add(gltf.scene);
-      });
-    objmesa.position.set(1, -0.3, -1.75);
-    objmesa.rotation.set(0, 0, 0);
-    objmesa.scale.set(1, 1, 1);
-    objmesa.castShadow = true;
-    objmesa.receiveShadow = true;
-    this.scene.add(objmesa);
 
-    var objpiso = new THREE.Object3D();
-    new GLTFLoader().load(modelopiso, (gltf) => {
-      gltf.scene.traverse((nino) => {
-        if (nino.isMesh) {
-          nino.material.envMap = this.entorno;
-        }
-      });
-      objpiso.add(gltf.scene);
-    });
-    //-2.72,-0.3,-1.75, 0,0,0, 1,1,1)
-    objpiso.position.set(-2.72, -0.3, -1.75);
-    objpiso.rotation.set(0, 0, 0);
-    objpiso.scale.set(1, 1, 1);
-    this.scene.add(objpiso);
-
-    var objluz = new THREE.Object3D();
-    new GLTFLoader().load(
-      modelluz,
-      (gltf) => {
-        gltf.scene.traverse((nino) => {
-          if (nino.isMesh) {
-            nino.material.envMap = this.entorno;
-          }
-        });
-        objluz.add(gltf.scene);
-      },
-      (xhr) => {
-        console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
-      },
-      (error) => {
-        console.log("An error happened");
-      }
+    this.scene.add(
+      new CargarObj(
+        this.entorno, //se carga el entorno por los reflejos
+        modeloMesaurl, //le mando el modelo en gltf
+        "mesa", //el nombre del objeto
+        { x: 1, y: -0.3, z: -1.75 }, // posicion
+        { x: 0, y: 0, z: 0 }, // rotacion
+        { x: 1, y: 1, z: 1 }
+      ).obj //escala
     );
-    //1,-0.3,-1.75, 0,0,0, 1,1,1
-    objluz.position.set(1, -0.3, -1.75);
-    objluz.rotation.set(0, 0, 0);
-    objluz.scale.set(1, 1, 1);
-    this.scene.add(objluz);
 
-    var objmueble = new THREE.Object3D();
-    new GLTFLoader().load(modelomueble1, (gltf) => {
-      gltf.scene.traverse((nino) => {
-        if (nino.isMesh) {
-          nino.material.envMap = this.entorno;
-        }
-      });
-      objmueble.add(gltf.scene);
-    });
-    //1,-0.3,-1.75, 0,0,0, 1,1,1
-    objmueble.position.set(-0.33, -0.07, -0.9);
-    objmueble.rotation.set(0, 0, 0);
-    objmueble.scale.set(1, 1, 1);
-    objmueble.castShadow = true;
-    objmueble.receiveShadow = true;
-    console.log(objmueble);
-    this.scene.add(objmueble);
-
-    var objpared1 = new THREE.Object3D();
-    new GLTFLoader().load(modelopared, (gltf) => {
-      gltf.scene.traverse((nino) => {
-        if (nino.isMesh) {
-          nino.material.envMap = this.entorno;
-        }
-      });
-      objpared1.add(gltf.scene);
-    });
-    //1,-0.25,-2, 0,0,0, 1,1,1
-    objpared1.position.set(1, -0.27, -2);
-    objpared1.rotation.set(0, 0, 0);
-    objpared1.scale.set(1, 1, 1);
-
-    this.scene.add(objpared1);
-
-    var objpared2 = new THREE.Object3D();
-    new GLTFLoader().load(modelopared2, (gltf) => {
-      gltf.scene.traverse((nino) => {
-        if (nino.isMesh) {
-          nino.material.envMap = this.entorno;
-        }
-      });
-      objpared2.add(gltf.scene);
-    });
-    //1,6.04 ,-2, 0,0,0, 1,1,1
-    objpared2.position.set(1, 6.04, -2);
-    objpared2.rotation.set(0, 0, 0);
-    objpared2.scale.set(1, 1, 1);
-    this.scene.add(objpared2);
-
-    var objsilla1 = new THREE.Object3D();
-    new GLTFLoader().load(modelosilla, (gltf) => {
-      gltf.scene.traverse((nino) => {
-        if (nino.isMesh) {
-          nino.material.envMap = this.entorno;
-        }
-      });
-      objsilla1.add(gltf.scene);
-    });
-    objsilla1.position.set(1.32, -0.33, -1.7);
-    objsilla1.rotation.set(0, 0, 0);
-    objsilla1.scale.set(1, 1, 1);
-    this.scene.add(objsilla1);
-
-    var objsilla2 = new THREE.Object3D();
-    new GLTFLoader().load(modelosilla, (gltf) => {
-      gltf.scene.traverse((nino) => {
-        if (nino.isMesh) {
-          nino.material.envMap = this.entorno;
-        }
-      });
-      objsilla2.add(gltf.scene);
-    });
-    //sillas[1].rotation.y= Math.PI; sillas[1].position.x=-1.28; sillas[1].position.z=1.5;
-    objsilla2.position.set(-1.28, -0.33, 1.5);
-    objsilla2.rotation.set(0, Math.PI, 0);
-    objsilla2.scale.set(1, 1, 1);
-    this.scene.add(objsilla2);
-
-    var objsilla3 = new THREE.Object3D();
-    new GLTFLoader().load(modelosilla, (gltf) => {
-      gltf.scene.traverse((nino) => {
-        if (nino.isMesh) {
-          nino.material.envMap = this.entorno;
-        }
-      });
-      objsilla3.add(gltf.scene);
-    });
-    //  sillas[2].rotation.y= Math.PI/2;sillas[2].position.x=-2.28;sillas[2].position.z=-1.4;
-    objsilla3.position.set(-2.28, -0.33, -1.4);
-    objsilla3.rotation.set(0, Math.PI / 2, 0);
-    objsilla3.scale.set(1, 1, 1);
-    this.scene.add(objsilla3);
-
-    var objsilla4 = new THREE.Object3D();
-    new GLTFLoader().load(modelosilla, (gltf) => {
-      gltf.scene.traverse((nino) => {
-        if (nino.isMesh) {
-          nino.material.envMap = this.entorno;
-        }
-      });
-      objsilla4.add(gltf.scene);
-    });
-    //  illas[4].rotation.y= Math.PI/2;sillas[4].position.x=-2.28;sillas[4].position.z=-2;
-    objsilla4.position.set(-2.28, -0.33, -2);
-    objsilla4.rotation.set(0, Math.PI / 2, 0);
-    objsilla4.scale.set(1, 1, 1);
-    this.scene.add(objsilla4);
-
-    var objsilla5 = new THREE.Object3D();
-    new GLTFLoader().load(modelosilla, (gltf) => {
-      gltf.scene.traverse((nino) => {
-        if (nino.isMesh) {
-          nino.material.envMap = this.entorno;
-        }
-      });
-      objsilla5.add(gltf.scene);
-    });
-    // sillas[5].rotation.y = - Math.PI/2; sillas[5].position.x=2.28;sillas[5].position.z=1.2;
-    objsilla5.position.set(2.28, -0.33, 1.2);
-    objsilla5.rotation.set(0, -Math.PI / 2, 0);
-    objsilla5.scale.set(1, 1, 1);
-    this.scene.add(objsilla5);
-
-    var objsilla6 = new THREE.Object3D();
-    new GLTFLoader().load(modelosilla, (gltf) => {
-      gltf.scene.traverse((nino) => {
-        if (nino.isMesh) {
-          nino.material.envMap = this.entorno;
-        }
-      });
-      objsilla6.add(gltf.scene);
-    });
-    //sillas[6].rotation.y = - Math.PI/2; sillas[6].position.x=2.28;sillas[6].position.z=0.65;
-    objsilla6.position.set(2.28, -0.33, 0.65);
-    objsilla6.rotation.set(0, -Math.PI / 2, 0);
-    objsilla6.scale.set(1, 1, 1);
-    this.scene.add(objsilla6);
-
-    var objsilla7 = new THREE.Object3D();
-    new GLTFLoader().load(modelosilla, (gltf) => {
-      gltf.scene.traverse((nino) => {
-        if (nino.isMesh) {
-          nino.material.envMap = this.entorno;
-        }
-      });
-      objsilla7.add(gltf.scene);
-    });
-    //sillas[7].rotation.y = - Math.PI/2; sillas[7].position.x=2.28;sillas[7].position.z=1.8;
-    objsilla7.position.set(2.28, -0.33, 1.8);
-    objsilla7.rotation.set(0, -Math.PI / 2, 0);
-    objsilla7.scale.set(1, 1, 1);
-    this.scene.add(objsilla7);
-
-    var objsilla8 = new THREE.Object3D();
-    new GLTFLoader().load(modelosilla, (gltf) => {
-      gltf.scene.traverse((nino) => {
-        if (nino.isMesh) {
-          nino.material.envMap = this.entorno;
-        }
-      });
-      objsilla8.add(gltf.scene);
-    });
-    //sillas[3].rotation.y= Math.PI/2;sillas[3].position.x=-2.28;sillas[3].position.z=-0.7;
-    objsilla8.position.set(-2.28, -0.33, -0.7);
-    objsilla8.rotation.set(0, Math.PI / 2, 0);
-    objsilla8.scale.set(1, 1, 1);
-    this.scene.add(objsilla8);
+    this.scene.add(
+      new CargarObj(
+        this.entorno,
+        modelopiso,
+        "piso",
+        { x: -2.72, y: -0.3, z: -1.75 },
+        { x: 0, y: 0, z: 0 },
+        { x: 1, y: 1, z: 1 }
+      ).obj
+    );
+    this.scene.add(
+      new CargarObj(
+        this.entorno,
+        modelluz,
+        "luz",
+        { x: 1, y: -0.3, z: -1.75 },
+        { x: 0, y: 0, z: 0 },
+        { x: 1, y: 1, z: 1 }
+      ).obj
+    );
+    this.scene.add(
+      new CargarObj(
+        this.entorno,
+        modelomueble1,
+        "muble",
+        { x: -0.33, y: -0.07, z: -0.9 },
+        { x: 0, y: 0, z: 0 },
+        { x: 1, y: 1, z: 1 }
+      ).obj
+    );
+    this.scene.add(
+      new CargarObj(
+        this.entorno,
+        modelopared,
+        "pared1",
+        { x: 1, y: -0.27, z: -2 },
+        { x: 0, y: 0, z: 0 },
+        { x: 1, y: 1, z: 1 }
+      ).obj
+    );
+    this.scene.add(
+      new CargarObj(
+        this.entorno,
+        modelopared2,
+        "pared2",
+        { x: 1, y: 6.04, z: -2 },
+        { x: 0, y: 0, z: 0 },
+        { x: 1, y: 1, z: 1 }
+      ).obj
+    );
+    this.scene.add(
+      new CargarObj(
+        this.entorno,
+        modelosilla,
+        "silla1",
+        { x: 1.32, y: -0.33, z: -1.7 },
+        { x: 0, y: 0, z: 0 },
+        { x: 1, y: 1, z: 1 }
+      ).obj
+    );
+    this.scene.add(
+      new CargarObj(
+        this.entorno,
+        modelosilla,
+        "silla2",
+        { x: -1.28, y: -0.33, z: 1.5 },
+        { x: 0, y: Math.PI, z: 0 },
+        { x: 1, y: 1, z: 1 }
+      ).obj
+    );
+    this.scene.add(
+      new CargarObj(
+        this.entorno,
+        modelosilla,
+        "silla3",
+        { x: -2.28, y: -0.33, z: -1.4 },
+        { x: 0, y: Math.PI / 2, z: 0 },
+        { x: 1, y: 1, z: 1 }
+      ).obj
+    );
+    this.scene.add(
+      new CargarObj(
+        this.entorno,
+        modelosilla,
+        "silla4",
+        { x: -2.28, y: -0.33, z: -2 },
+        { x: 0, y: Math.PI / 2, z: 0 },
+        { x: 1, y: 1, z: 1 }
+      ).obj
+    );
+    this.scene.add(
+      new CargarObj(
+        this.entorno,
+        modelosilla,
+        "silla5",
+        { x: 2.28, y: -0.33, z: 1.2 },
+        { x: 0, y: -Math.PI / 2, z: 0 },
+        { x: 1, y: 1, z: 1 }
+      ).obj
+    );
+    this.scene.add(
+      new CargarObj(
+        this.entorno,
+        modelosilla,
+        "silla6",
+        { x: 2.28, y: -0.33, z: 0.65 },
+        { x: 0, y: -Math.PI / 2, z: 0 },
+        { x: 1, y: 1, z: 1 }
+      ).obj
+    );
+    this.scene.add(
+      new CargarObj(
+        this.entorno,
+        modelosilla,
+        "silla7",
+        { x: 2.28, y: -0.33, z: 1.8 },
+        { x: 0, y: -Math.PI / 2, z: 0 },
+        { x: 1, y: 1, z: 1 }
+      ).obj
+    );
+    this.scene.add(
+      new CargarObj(
+        this.entorno,
+        modelosilla,
+        "silla8",
+        { x: -2.28, y: -0.33, z: -0.7 },
+        { x: 0, y: Math.PI / 2, z: 0 },
+        { x: 1, y: 1, z: 1 }
+      ).obj
+    );
 
     //-------------------------------------------------------- espejo
-    var geometry = new THREE.PlaneBufferGeometry(0.65, 1.93);
-    var verticalMirror = new Reflector(geometry, {
-      clipBias: 0.0005,
-      textureWidth: window.innerWidth * window.devicePixelRatio,
-      textureHeight: window.innerHeight * window.devicePixelRatio,
-      color: 0x889999,
-      recursion: 1,
-    });
-    verticalMirror.position.y = 0.177;
-    verticalMirror.position.x = 0.023;
-    verticalMirror.position.z = -0.047;
-    verticalMirror.rotation.x = -Math.PI / 2;
-    this.scene.add(verticalMirror);
-    var objectopasidad = new THREE.Mesh(
-      geometry,
-      new THREE.MeshBasicMaterial({
-        color: 0x0000000,
-        opacity: 0.9,
-        transparent: true,
-      })
-    );
-    objectopasidad.position.y = verticalMirror.position.y + 0.001;
-    objectopasidad.position.x = verticalMirror.position.x;
-    objectopasidad.position.z = verticalMirror.position.z;
-    objectopasidad.rotation.x = verticalMirror.rotation.x;
-    this.scene.add(objectopasidad);
+    //0.177 0.023 -0.047
+    let espejo = new Mirror(
+      0.65,
+      1.93,
+      window.innerWidth * window.devicePixelRatio,
+      window.innerHeight * window.devicePixelRatio,
+      0x0000000,
+      0.9,
+      { x: 0.023, y: 0.177, z: -0.047 },
+      { x: -Math.PI / 2, y: 0, z: 0 }
+    ).obj;
+    this.scene.add(espejo.mirror);
+    this.scene.add(espejo.filter);
 
     this.mount.appendChild(this.renderer.domElement);
     this.animate();
-
-    //zona de impresiones para pruevas
-    // console.log(this.materialC);
   } // fin del componentdidmount
   /*
     *
     *
     * *
-    *
+    * 
     * *
     * *
-    *
+    * 
     fin del metodo componentdidmount
     *
     *
     * *
-    *
+    * 
     * *
-    *
-    *
+    * 
+    *     
     */
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimensions);
@@ -702,22 +747,28 @@ class Test3d extends Component {
     *
     *
     * *
-    *
+    * 
     * *
     * *
-    *
+    * 
     fin del metodo componentWillUnmount
     *
     *
     * *
-    *
+    * 
     * *
-    *
-    *
+    * 
+    *     
     */
   animate() {
     requestAnimationFrame(this.animate);
-
+    this.controls
+      .getObject()
+      .position.set(
+        this.state.posicionplayer.x,
+        this.state.posicionplayer.y,
+        this.state.posicionplayer.z
+      );
     var time = performance.now();
 
     var delta = (time - this.prevTime) / 1000;
@@ -745,23 +796,7 @@ class Test3d extends Component {
       this.renderer.render(this.scene, this.camera);
     }
   }
-  /*
-    *
-    *
-    * *
-    *
-    * *
-    * *
-    *
-    fin del metodo componentWillUnmount
-    *
-    *
-    * *
-    *
-    * *
-    *
-    *
-    */
+
   mouseEventsdown = (event) => {
     /*    this.setState({
           x: event.clientX,
@@ -770,7 +805,7 @@ class Test3d extends Component {
     // console.log(event);
     event.preventDefault();
     console.log("clic");
-    // this.video.play();
+
     this.mouse.x =
       (event.clientX / this.renderer.domElement.clientWidth) * 2 - 1;
     this.mouse.y =
@@ -781,74 +816,50 @@ class Test3d extends Component {
     var intersectspause = this.raycaster.intersectObjects(this.objInteraccion2);
     var intersect = this.raycaster.intersectObjects(this.objInteraccion);
     var intersect0 = this.raycaster.intersectObjects(this.objInteraccion0);
-    var intersect3 = this.raycaster.intersectObjects(this.objInteraccion3);
     let intersect4 = this.raycaster.intersectObjects(this.menuopciones.salir);
-      let intersect5 = this.raycaster.intersectObjects(this.menuopciones.votacion);
-    if (intersectsplay.length > 0 && !this.state.votaciones) {
+    let intersect5 = this.raycaster.intersectObjects(
+      this.menuopciones.votacion
+    );
+    var intersect3 = this.raycaster.intersectObjects(this.objInteraccion3);
+    if (intersectsplay.length > 0) {
       // this.video.play();
       //this.meshvideo.visible = true;
-    } else
-      if (intersectspause.length > 0 && !this.state.votaciones) {
-        //this.video.pause();
-        //   this.meshvideo.visible = false;
-        //    this.setupCanvasDrawing();
-      } else if (intersect0.length > 0 && this.estados_pantalla.p1 && !this.state.votaciones) {
-          console.log("video play")
-          this.video.play();
-          this.meshvideo.visible = true;
-        } else
-          if (intersect.length > 0 && this.estados_pantalla.p0 && !this.state.votaciones) {
-            console.log("primera pantalal fuera")
-            this.estados_pantalla.p0 = false;
-            this.pantallas.pantalla0.visible = this.estados_pantalla.p0;
-            this.estados_pantalla.p1 = true;
-            this.pantallas.pantalla1.visible = this.estados_pantalla.p1;
-          }
-          else
-            if (intersect3.length > 0 && this.estados_pantalla.p1 && !this.state.votaciones) {
-              console.log("video pausado")
-              this.video.pause();
-              this.meshvideo.visible = false;
-              this.setupCanvasDrawing();
-            }else if(intersect4.length > 0 && !this.state.votaciones){
-              console.log("salir")
-              window.location.href="/Dashboard/Desktop"
-            }else if(intersect5.length > 0 && !this.state.votaciones){
-
-              this.setState({votaciones:true })
-              console.log("votacion")
-
-            }
+    } else if (intersectspause.length > 0) {
+      //this.video.pause();
+      //   this.meshvideo.visible = false;
+      //    this.setupCanvasDrawing();
+    } else if (intersect0.length > 0 && this.estados_pantalla.p1) {
+      console.log("video play");
+      this.video.play();
+      this.meshvideo.visible = true;
+    } else if (intersect.length > 0 && this.estados_pantalla.p0) {
+      console.log("primera pantalal fuera");
+      this.estados_pantalla.p0 = false;
+      this.pantallas.pantalla0.visible = this.estados_pantalla.p0;
+      this.estados_pantalla.p1 = true;
+      this.pantallas.pantalla1.visible = this.estados_pantalla.p1;
+    } else if (intersect3.length > 0 && this.estados_pantalla.p1) {
+      console.log("video pausado");
+      this.video.pause();
+      this.meshvideo.visible = false;
+      this.setupCanvasDrawing();
+    } else if (intersect4.length > 0 && !this.state.votaciones) {
+      console.log("salir");
+      window.location.href = "/Dashboard/Desktop";
+    } else if (intersect5.length > 0 && !this.state.votaciones) {
+      this.setState({ votaciones: true });
+      console.log("votacion");
+    }
 
     this.estado = true;
   };
   mouseEventup = (event) => {
-    /*    this.setState({
-        x: event.clientX,
-        y: event.clientY
-      }); */
     // console.log(event);
     this.estado = false;
     // this.video.pause();
     console.log("no clic");
   };
-  /*
-    *
-    *
-    * *
-    *
-    * *
-    * *
-    *
-    fin del metodo componentWillUnmount
-    *
-    *
-    * *
-    *
-    * *
-    *
-    *
-    */
+
   setupCanvasDrawing = () => {
     console.log("nuevo material");
     var drawingCanvas = this.canvasG;
@@ -860,25 +871,10 @@ class Test3d extends Component {
 
     this.materialC.transparent = true;
   };
-  /*
-    *
-    *
-    * *
-    *
-    * *
-    * *
-    *
-    fin del metodo setupCanvasDrawing
-    *
-    *
-    * *
-    *
-    * *
-    *
-    *  */
+
   makeLabelCanvas = (size, name) => {
     const borderSize = 2;
-    const ctx = document.createElement('canvas').getContext('2d');
+    const ctx = document.createElement("canvas").getContext("2d");
     const font = `${size}px bold sans-serif`;
     ctx.font = font;
     // medir cuánto tiempo el nombre será
@@ -890,44 +886,65 @@ class Test3d extends Component {
 
     // necesidad de establecer la fuente de nuevo después de cambiar el tamaño del lienzo
     ctx.font = font;
-    ctx.textBaseline = 'top';
+    ctx.textBaseline = "top";
     //color : white , blue, black
-    ctx.fillStyle = 'transparent';
+    ctx.fillStyle = "transparent";
     ctx.fillRect(0, 0, width, height);
-    ctx.fillStyle = 'black';
+    ctx.fillStyle = "black";
     ctx.fillText(name, borderSize, borderSize);
 
     return ctx.canvas;
-  }
+  };
 
-  /****/
-funcionvotacion=()=>{
-  this.setState({votaciones: false})
-}
-
+  funcionvotacion = () => {
+    this.setState({ votaciones: false, resultados: true });
+  };
+  funcdis = () => {
+    this.setState({ votaciones: false, resultados: false });
+  };
+  funcvolvervoto = () => {
+    console.log("000000000");
+    this.setState({ votaciones: true, resultados: false });
+  };
+  funcalert = (texto) => {
+    this.setState({ votaciones: false, resultados: false });
+    alert(`SE acltualizo la alfa ${texto}`);
+  };
   render() {
-    let custo ={
-      padding :"0"
-      , borderTopLeftRadius : "0.5rem",borderTopRightRadius : "0.5rem"
-    }
-
-
+    let custo = {
+      padding: "0",
+      borderTopLeftRadius: "0.5rem",
+      borderTopRightRadius: "0.5rem",
+    };
     return (
       <div className="test3d">
-
-    <Rodal
-      width={300}
-      height={420}
-      animation={"fade"}
-      visible={this.state.votaciones}
-      onClose={() => this.setState({votaciones: false})}
-      customStyles = {custo}
-    >
-    <ContentCard obj = {this.state.practica} voto ={this.funcionvotacion}   />
-
-    </Rodal>
+        <Rodal
+          width={300}
+          height={420}
+          animation={"fade"}
+          visible={this.state.votaciones}
+          customStyles={custo}
+        >
+          <ContentCard obj={this.state.practica} voto={this.funcionvotacion} />
+        </Rodal>
+        <Rodal
+          width={900}
+          height={600}
+          visible={this.state.resultados}
+          customStyles={custo}
+        >
+          <Navvote
+            alfa="EXPERIENCIA MULTIMEDIA"
+            estado="inciada"
+            descripcion="descripcion"
+            obj={this.state.results}
+            funccer={this.funcdis}
+            funvolver={this.funcvolvervoto}
+            alert={this.funcalert}
+          />
+        </Rodal>
         <div
-          style={{ width: "100vw", height: "50.1vw", pointerEvents:"none" }}
+          style={{ width: "100vw", height: "50.1vw" }}
           id="boardCanvas"
           ref={(mount) => {
             this.mount = mount;
@@ -939,7 +956,7 @@ funcionvotacion=()=>{
 }
 
 export default Test3d;
-    /*  <div className={(this.state.votaciones ? "": "invisible ") +"tarjetas position-absolute h-100 w-100 "} style={{display: "grid", placeItems:"center" , zIndex:"2",background:"rgba(0,0,0,0.7)"  }}>tarjeta</div>*/
+
 /*
                                   ,;;;;;;,
                                 ,;;;'""`;;\

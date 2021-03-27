@@ -50,6 +50,9 @@ query.obtenerEscritorioProyectos = function (id) {
   return `SELECT 
     proyectos.id,
     proyectos.proyectonombre,
+    proyectos.proyectodescripcion,
+    proyectos.proyectoicon,
+    proyectos.proyectobanner,
     practicas.practicanombre,
     alfas.alfanombre,
     alfas.alfaestado

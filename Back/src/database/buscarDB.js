@@ -444,6 +444,7 @@ funcionesDB.buscareventoscalendarioproyecto = async (proyecto) => {
   });
 };
 funcionesDB.buscaractividadesproyecto = async (user, id) => {
+  console.log(user, id);
   return new Promise((res, rej) => {
     //console.log(idUser)
     promesa.then(async (result) => {
@@ -496,6 +497,52 @@ funcionesDB.buscaractividadesproyecto = async (user, id) => {
         );
       }
     });
+  });
+};
+
+funcionesDB.obteneractientreproyectos = (array) => {
+  return new Promise((res, rej) => {
+    // console.log(array);
+    for (let i = 0; i < array.length; i++) {
+      funcionesDB
+        .buscaractividadesproyecto(1, array[i].id)
+        .then((contenido) => {
+          console.log("buscaractividadesproyecto");
+          /// actividad y entregable
+          let arraydef = [];
+          for (let j1 = 0; j1 < contenido.actividades.length; j1++) {
+            if (contenido.actividades[j1].contenido !== null) {
+              arraydef.push({
+                userName: contenido.actividades[j1].nombre,
+                projectName: array[i].title,
+                activity: contenido.actividades[j1].titulo,
+                date: contenido.actividades[j1].fechaentrega,
+                fileName: contenido.actividades[j1].contenido,
+                fileUrl: `${env.host}/proyecto/contenido/proyecto${array[i].id}/${contenido.actividades[j1].contenido}`,
+              });
+            }
+          }
+          //`${env.host}/proyecto/contenido/proyecto${array[a].proid}/${array[a].contenidonombrearchivo}`
+          for (let j2 = 0; j2 < contenido.entregables.length; j2++) {
+            if (contenido.entregables[j2].contenido !== null) {
+              arraydef.push({
+                userName: "general",
+                projectName: array[i].title,
+                activity: contenido.entregables[j2].nombre,
+                date: contenido.entregables[j2].fechaentrega,
+                fileName: contenido.entregables[j2].contenido,
+                fileUrl: `${env.host}/proyecto/contenido/proyecto${array[i].id}/${contenido.entregables[j2].contenido}`,
+              });
+            }
+          }
+          console.log("entre");
+          array[i].updates = arraydef;
+          if (i >= array.length - 1) {
+            res(array);
+          }
+        })
+        .catch((err) => rej(err));
+    }
   });
 };
 /**
@@ -1712,15 +1759,41 @@ function rearmarProyectosescri(array) {
   var alfanombre = null,
     alfaestado = null;
 
+  let proyectos = [];
+  /*
   for (var i = 0; i < array.length; i++) {
     if (idproyecto != array[i].id) {
       idproyecto = array[i].id;
       proyectonombre = array[i].proyectonombre;
       arraydef.push({ idproyecto, proyectonombre, practicas });
     }
+  }*/
+
+  for (var i = 0; i < array.length; i++) {
+    if (idproyecto != array[i].id) {
+      idproyecto = array[i].id;
+      let icon = null,
+        image = null;
+      if (array[i].proyectoicon !== "null") {
+        icon = array[i].proyectoicon;
+      }
+      if (array[i].proyectobanner !== "null") {
+        image = array[i].proyectobanner;
+      }
+      proyectos.push({
+        id: array[i].id,
+        title: array[i].proyectonombre,
+        descripcion: array[i].proyectodescripcion,
+        practicas: [],
+        icon,
+        image,
+        updates: [],
+      });
+    }
   }
+  proyectos = quitarduplicados(proyectos);
   //  console.log(arraydef)
-  for (var i = 0; i < arraydef.length; i++) {
+  /*for (var i = 0; i < arraydef.length; i++) {
     let practicasinter = [];
     for (var j = 0; j < array.length; j++) {
       if (arraydef[i].idproyecto == array[j].id) {
@@ -1733,9 +1806,20 @@ function rearmarProyectosescri(array) {
     let set = new Set(practicasinter.map(JSON.stringify));
     practicasinter = Array.from(set).map(JSON.parse);
     arraydef[i].practicas = practicasinter;
-  }
+  }*/
   //console.log(arraydef[0].practicas)
-
+  for (var i = 0; i < proyectos.length; i++) {
+    for (var j = 0; j < array.length; j++) {
+      if (proyectos[i].id == array[j].id) {
+        proyectos[i].practicas.push({
+          practica: array[j].practicanombre,
+          porcentaje: 0,
+        });
+      }
+      proyectos[i].practicas = quitarduplicados(proyectos[i].practicas);
+    }
+  }
+  /*
   for (var i = 0; i < arraydef.length; i++) {
     for (var j = 0; j < arraydef[i].practicas.length; j++) {
       var alfastemp = [];
@@ -1806,10 +1890,70 @@ function rearmarProyectosescri(array) {
       alfastemp = Array.from(set).map(JSON.parse);
       arraydef[i].practicas[j].alfas = alfastemp;
     }
+  }*/
+  for (var i = 0; i < proyectos.length; i++) {
+    for (var j = 0; j < proyectos[i].practicas.length; j++) {
+      for (var k = 0; k < array.length; k++) {
+        if (proyectos[i].practicas[j].practica == array[k].practicanombre) {
+          let temp = 0,
+            temp1 = 0,
+            por;
+          if (array[k].practicanombre == "Sistema Multimedia mínimo viable") {
+            if (array[k].alfanombre == "Valor del sistema multimedia") {
+              if (array[k].alfaestado == "iniciado") {
+                temp = 0;
+              }
+              if (array[k].alfaestado == "Alcanzable") {
+                temp = 25;
+              }
+              if (array[k].alfaestado == "Diferenciado") {
+                temp = 50;
+              }
+              if (array[k].alfaestado == "Visionado") {
+                temp = 75;
+              }
+              if (array[k].alfaestado == "Definido") {
+                temp = 100;
+              }
+            }
+          }
+          if (
+            array[k].practicanombre == "Concepción de la experiencia multimedia"
+          ) {
+            if (array[k].alfanombre == "Diseño responsable") {
+              if (array[k].alfaestado == "iniciado") {
+                temp1 = 0;
+              }
+              if (array[k].alfaestado == "Identificado") {
+                temp1 = 25;
+              }
+              if (array[k].alfaestado == "Comprendido") {
+                temp1 = 50;
+              }
+              if (array[k].alfaestado == "Acordado") {
+                temp1 = 75;
+              }
+              if (array[k].alfaestado == "Concebido") {
+                temp1 = 100;
+              }
+            }
+          }
+          if (temp == 0) {
+            por = temp1;
+          } else if (temp1 == 0) {
+            por = temp;
+          } else {
+            por = parseInt(temp / temp1, 10);
+          }
+
+          proyectos[i].practicas[j].porcentaje = por;
+        }
+      }
+    }
   }
 
   //console.log(arraydef[0].practicas[0].alfas[0]);
-  return { proyectos: arraydef };
+  return { proyectos: proyectos };
 }
 function rearmas(idUser, rows) {
   //   console.log(idUser);
@@ -2164,7 +2308,7 @@ function actividadespro(user, array, id) {
   let arraydef = [];
   for (let a = 0; a < array.length; a++) {
     // console.log(array[a].userid)
-    if (user.id === array[a].userid) {
+    /*  if (user.id === array[a].userid) {
       arraydef.push({
         actividadid: array[a].actid,
         titulo: array[a].actividadtitulo,
@@ -2192,7 +2336,25 @@ function actividadespro(user, array, id) {
         contenido: `${env.host}/proyecto/contenido/proyecto${id}/${array[a].contenidonombrearchivo}`,
         entregar: false,
       });
+    }*/
+    let temp = null;
+    if (array[a].contenidonombrearchivo !== "null") {
+      temp = array[a].contenidonombrearchivo;
     }
+
+    arraydef.push({
+      actividadid: array[a].actid,
+      titulo: array[a].actividadtitulo,
+      descripcion: array[a].actividaddescripcion,
+      revisiones: array[a].actividadrevision,
+      nombre: array[a].nombre,
+      rol: array[a].roltitulo,
+      estado: array[a].actividadestado,
+      fechaentrega: array[a].actividadfechaentrega,
+      tecnica: array[a].tecnicatitulo,
+      contenido: temp,
+      entregar: false,
+    });
   }
   return arraydef;
 }
@@ -2200,6 +2362,10 @@ function actividadespro(user, array, id) {
 function entregablepro(array) {
   let arraydef = [];
   for (let a = 0; a < array.length; a++) {
+    let temp = null;
+    if (array[a].contenidonombrearchivo !== "null") {
+      temp = array[a].contenidonombrearchivo;
+    }
     arraydef.push({
       id: array[a].entrid,
       nombre: array[a].entregatitulo,
@@ -2208,7 +2374,7 @@ function entregablepro(array) {
       tipoactivo: array[a].entregatipoArchivo,
       fechaentrega: array[a].entregafechaEntrega,
       revisiones: array[a].entreganumeroRevisiones,
-      contenido: `${env.host}/proyecto/contenido/proyecto${array[a].proid}/${array[a].contenidonombrearchivo}`,
+      contenido: temp,
     });
   }
   return arraydef;

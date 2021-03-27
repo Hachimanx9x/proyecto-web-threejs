@@ -1,62 +1,46 @@
-class CargarObjGltf{
-    constructor(){
-    
+import * as THREE from "three/build/three.module";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
+export default class {
+    constructor(entorno, modelo, name, position, rotation, scale) {
+        this.modelo = modelo
+        this.entorno = entorno;
+        this.position = position;
+        this.rotation = rotation;
+        this.scale = scale;
+        this.obj3d = new THREE.Object3D();
+        this.obj3d.name = name
     }
 
-    insertarEscena(entorno,cargador,obj3d, url ,escena ,x,y,z,rx,ry,rz,sx,sy,sz){
-        cargador.load(url, (gltf)=>{
-            gltf.scene.traverse((nino)=>{
-                if ( nino.isMesh ) {
+    get obj() {
+        this.cargarobj();
+        this.obj3d.position.set(this.position.x, this.position.y, this.position.z)
+        this.obj3d.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z)
+        this.obj3d.scale.set(this.scale.x, this.scale.y, this.scale.z)
+        return this.obj3d;
 
-                    nino.material.envMap = entorno;
-
-                }
-                 
-            });
-            obj3d.add(gltf.scene);
-        });
-        //posicion al ingresar a la escena
-        obj3d.position.x = x;obj3d.position.y = y;obj3d.position.z = z;
-        //rotacion
-        obj3d.rotation.x = rx; obj3d.rotation.y = ry; obj3d.rotation.z = rz; 
-        //escala
-        obj3d.scale.x= sx; obj3d.scale.y= sy; obj3d.scale.z= sz; 
-        //insertar en la escena
-        escena.add(obj3d); 
-
-    }//fin de inicio
-
-    getOBJ3d(entorno,cargador,obj3d, url){
-        cargador.load(url, (gltf)=>{
-            gltf.scene.traverse((nino)=>{
-                if ( nino.isMesh ) {
-
-                    nino.material.envMap = entorno;
-
-                }
-            });
-            obj3d.add(gltf.scene);
-          
-        });
-       return obj3d;
     }
+
+    cargarobj() {
+        new GLTFLoader()
+            .setDRACOLoader(new DRACOLoader())
+            .load(this.modelo, (gltf) => {
+                gltf.scene.traverse((nino) => {
+                    if (nino.isMesh) {
+                        nino.material.envMap = this.entorno;
+
+                    }
+                });
+                this.obj3d.add(gltf.scene);
+            },
+                (xhr) => {
+                    //console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
+                },
+                (error) => {
+                    console.log(error);
+                });
+    }
+
 
 
 }//fin de la clase
-
-/*loader.load( '/publico/modelos/Mesa.gltf', function ( gltf ) {
-
-					gltf.scene.traverse( function ( child ) {
-
-						if ( child.isMesh ) {
-
-							child.material.envMap = envMap;
-
-						}
-
-					} );
-					
-					obj3d1.add(gltf.scene)
-					
-
-				} ); */
