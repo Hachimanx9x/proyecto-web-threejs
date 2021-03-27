@@ -119,6 +119,10 @@ li {
   .o-link-btn {
     font-size: 0.8rem;
   }
+  .sidebar {
+    min-width: 70px;
+    max-width: 70px;
+  }
   .sidebar.is-open {
     min-width: 180px;
     max-width: 180px;
