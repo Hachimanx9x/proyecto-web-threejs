@@ -182,45 +182,6 @@ export default function ViewProfile(props) {
     { key: "Diseñador UX", cat: "Diseñador UX" },
   ];
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        Axios.all([
-          Axios.get(`http://localhost:3030/api/herramientas`),
-          Axios.get(`http://localhost:3030/api/idiomas`),
-        ]).then((response) => {
-          const tools = [];
-          const languages = [];
-          for (let i = 0; i < response[0].data.API.length; i++) {
-            tools.push({
-              cat: {
-                id: response[0].data.API[i].id,
-                icon: response[0].data.API[i].icono,
-                name: response[0].data.API[i].nombre,
-              },
-              key: response[0].data.API[i].nombre,
-            });
-            setToolist([...tools]);
-          }
-          for (let i = 0; i < response[1].data.API.length; i++) {
-            languages.push({
-              cat: response[1].data.API[i].id,
-              key:
-                response[1].data.API[i].idiomanombre +
-                " " +
-                response[1].data.API[i].idiomanivel,
-            });
-            setLanguageslist([...languages]);
-          }
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
   const RemoveSkill = (selectedItem) => {
     if (selectedItem !== undefined) {
       const skill = skills;
@@ -300,45 +261,10 @@ export default function ViewProfile(props) {
       errors.validLastName &&
       errors.validLang
     ) {
-      try {
-        const datform = new FormData();
-        datform.append("email", nullData);
-        datform.append("password", nullData);
-        datform.append("experiencia", years);
-        datform.append("nombre", fullname);
-        datform.append("descripcion", description);
-        datform.append("pais", country);
-        datform.append("edad", nullData);
-        datform.append("github", github);
-        datform.append("gitlab", gitlab);
-        datform.append("bitbucket", bitbucket);
-        datform.append("linkedin", linkedin);
-        datform.append("herramienta", skillsdi);
-        datform.append("palabra", userKeywords);
-        datform.append("idiomas", userLanguages);
-        datform.append("foto", picture);
-        datform.append("cv", cvpicture);
-        console.log(skillsdi);
-        const obj = JSON.parse(token);
-        const tokensito = obj.token;
-        const options = {
-          headers: { authorization: `llave ${tokensito}` },
-        };
-
-        const { data } = await Axios.put(
-          `http://localhost:3030/actualizar/usuario`,
-          datform,
-          options
-        );
-        console.log(data);
-        localStorage.setItem("login", "");
-      } catch (error) {
-        console.log(error);
-      }
       setConfirmation(true);
       setTimeout(() => {
         setModal(false);
-        window.location.reload();
+        props.history.push("/Dashboard/Projects");
       }, 1200);
     } else {
       setModal(false);
