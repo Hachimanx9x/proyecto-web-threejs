@@ -10,17 +10,25 @@ a:focus {
       SIDEBAR STYLE
   ----------------------------------------------------- */
 .sidebar {
-  min-width: 250px;
-  max-width: 250px;
+  min-width: 100px;
+  max-width: 100px;
   background: #202a5b;
   color: #fff;
-  margin-left: -250px;
   transition: all 0.5s;
 }
 
 .sidebar.is-open {
-  margin-left: 0;
+  min-width: 250px;
+  max-width: 250px;
   transition: 0.5s;
+}
+.side-menu p {
+  display: none;
+  transition: all 0.5s;
+}
+.is-open p {
+  display: inline;
+  visibility: visible;
 }
 .sidebar-header {
   text-align: center;
@@ -30,7 +38,9 @@ a:focus {
   padding: 0.5rem;
   text-align: center;
 }
-
+.sidebar-header .o-small-logo {
+  height: 5rem;
+}
 .nav-item {
   height: 2.5rem;
 }
@@ -50,7 +60,6 @@ li a.dropdown-toggle::after {
   left: 60%;
   top: 10%;
 }
-
 .sidebar-header > span {
   position: relative;
   float: right;
@@ -60,7 +69,7 @@ li a.dropdown-toggle::after {
   display: none;
 }
 .side-menu {
-  overflow-y: scroll;
+  overflow-y: hidden;
 }
 
 .o-link-btn:hover {
@@ -86,10 +95,10 @@ a.active .nav-item {
   border-left: 5px solid #3bccf6;
   width: 100%;
 }
-
 .disabled .o-link-btn {
   color: gray;
 }
+
 .nav-item {
   height: 2.5rem;
   box-shadow: none;
@@ -97,6 +106,14 @@ a.active .nav-item {
 
 li {
   box-shadow: none;
+}
+.nav-item .o-link-btn {
+  text-align: center;
+  transition: all 0.6s;
+}
+.is-open .nav-item .o-link-btn {
+  text-align: start;
+  transition: all 0.6s;
 }
 @media only screen and (max-width: 923px) {
   .o-link-btn {
@@ -114,11 +131,33 @@ li {
     position: relative;
   }
 }
+
 @media only screen and (max-width: 590px) {
+  .sidebar {
+    z-index: 3;
+    width: 0%;
+    height: 100vh;
+    margin-left: -250px;
+    position: fixed;
+  }
+  .sidebar.is-open > .sidebar-header span {
+    display: unset;
+    position: fixed;
+  }
+  .sidebar.is-open {
+    min-width: 100%;
+    max-width: 100%;
+    z-index: 3;
+    position: fixed;
+    height: 100vh;
+    margin-left: 0;
+    transition: all 0.5s, height 0s;
+  }
   .sidebar-header span {
     transform: translateX(-165px);
     transition: all 0.6s ease;
   }
+
   .sidebar-header img {
     width: auto;
   }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faProjectDiagram,
@@ -10,6 +10,7 @@ import classNames from "classnames";
 import "./Sidebar.css";
 import { Link, NavLink } from "react-router-dom";
 import Logo from "../../../Logos/softmedia_logo.svg";
+import LogoSmall from "../../../Logos/Logo.svg";
 
 const deleteUser = () => {
   localStorage.setItem("login", "");
@@ -18,7 +19,18 @@ const deleteUser = () => {
 };
 const SideBar = ({ isOpen, toggle }) => {
   const token = localStorage.getItem("login");
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
+  useEffect(() => {
+    function resize() {
+      setWindowWidth(window.innerWidth);
+    }
+    window.addEventListener("resize", resize);
+    resize();
+    return () => {
+      window.removeEventListener("resize", resize);
+    };
+  }, []);
   return (
     <div id="sidebar" className={classNames("sidebar", { "is-open": isOpen })}>
       <div className="sidebar-header">
@@ -31,7 +43,14 @@ const SideBar = ({ isOpen, toggle }) => {
           className={token === "registrandose" ? "disabled" : ""}
         >
           {" "}
-          <img src={Logo} alt="Softmedia" className="text-center" />
+          <img
+            src={windowWidth < 590 ? Logo : isOpen ? Logo : LogoSmall}
+            alt="Softmedia"
+            className={
+              "text-center " +
+              (windowWidth > 590 && !isOpen ? "o-small-logo" : "")
+            }
+          />
         </NavLink>
       </div>
       <div className="side-menu">
@@ -45,7 +64,7 @@ const SideBar = ({ isOpen, toggle }) => {
               <li tag={Link} to={"/Dashboard/Projects"}>
                 <button className="btn z-depth-0 o-link-btn font-weight-bold text-capitalize">
                   <FontAwesomeIcon icon={faProjectDiagram} className="mr-2" />
-                  Proyectos
+                  <p> Proyectos</p>
                 </button>
               </li>
             </div>
@@ -60,7 +79,7 @@ const SideBar = ({ isOpen, toggle }) => {
               <li tag={Link} to={"/Dashboard/Contacts"}>
                 <button className="btn z-depth-0 o-link-btn font-weight-bold text-capitalize">
                   <FontAwesomeIcon icon={faUserFriends} className="mr-2" />
-                  Contactos
+                  <p> Contactos</p>
                 </button>
               </li>
             </div>
@@ -75,7 +94,7 @@ const SideBar = ({ isOpen, toggle }) => {
               <li tag={Link} to={"/Dashboard/Calendar"}>
                 <button className="btn z-depth-0 o-link-btn font-weight-bold text-capitalize">
                   <FontAwesomeIcon icon={faCalendarAlt} className="mr-2" />
-                  {"   "} Calendario
+                  {"   "} <p> Calendario</p>
                 </button>
               </li>
             </div>
@@ -88,7 +107,7 @@ const SideBar = ({ isOpen, toggle }) => {
                 className="btn z-depth-0 o-link-btn font-weight-bold text-capitalize"
               >
                 <FontAwesomeIcon icon={faDoorOpen} className="mr-2" />
-                Salir
+                <p> Salir</p>
               </a>
             </li>
           </div>
