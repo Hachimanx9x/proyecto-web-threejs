@@ -224,7 +224,7 @@ class ProjectView extends Component {
         <div className="o-project-creation-section">
           <section className="row bg-white o-project-basic-info">
             <div className="col-xs-12 col-sm-4">
-              <p>Icono del proyecto</p>
+              <p className="d-block">Icono del proyecto</p>
               <img
                 src={
                   this.state.projectIcon === null
@@ -235,7 +235,7 @@ class ProjectView extends Component {
                 className="rounded-circle"
                 style={{ width: "3rem", height: "3rem" }}
               />
-              <p>Banner del proyecto</p>
+              <p className="d-block">Banner del proyecto</p>
               <div className="o-project-form d-flex justify-content-end">
                 <img
                   src={
