@@ -908,7 +908,7 @@ class Test3d extends Component {
   };
   funcalert = (texto) => {
     this.setState({ votaciones: false, resultados: false });
-    alert(`SE acltualizo la alfa ${texto}`);
+    alert(`Se actualizo la alfa ${texto}`);
   };
   render() {
     let custo = {
