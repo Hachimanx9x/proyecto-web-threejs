@@ -66,7 +66,7 @@ const CardMember = ({ member, remove, add, change, rols, readOnly }) => {
               alt="member profile"
               src={member.urlimage}
             />
-            <p>{member.name}</p>
+            <p className="d-block">{member.name}</p>
           </div>
           <div className="o-card-member-rols">
             {member.rols.map((rol, i) => (

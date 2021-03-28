@@ -204,7 +204,7 @@ export default class CalendarEvents extends Component {
             <p className="o-text-events">Eventos programados</p>
             <div className="o-date-picker-container pt-3">
               {this.state.events.map((event, i) => (
-                <p key={i} className="ml-3">
+                <p key={i} className="ml-3 d-block">
                   <FontAwesomeIcon
                     icon={faSquare}
                     color={this.state.colors[i]}
