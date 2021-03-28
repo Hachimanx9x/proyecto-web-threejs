@@ -75,7 +75,7 @@
   position: absolute;
   right: 0;
   left: 0;
-  top: 97px;
+  top: 57%;
   color: #4fa77b;
 }
 .o-blue-container .chartjs-render-monitor {
@@ -87,10 +87,6 @@
   .o-grahpcart-project p.position-absolute {
     font-size: 12px;
   }
-
-  .o-text-chart {
-    left: 26px;
-  }
 }
 @media only screen and (max-width: 1166px) {
   .o-blue-container .chartjs-render-monitor {
@@ -98,16 +94,6 @@
     width: 100% !important;
     min-width: 10rem;
     height: auto !important;
-  }
-
-  .o-text-chart {
-    left: 10px;
-    top: 90px;
-  }
-}
-@media only screen and (max-width: 950px) {
-  .o-text-chart {
-    top: 80px;
   }
 }
 @media only screen and (max-width: 800px) {
@@ -131,9 +117,6 @@
     left: 0;
     right: 0;
     font-size: 12px;
-  }
-  .o-text-chart {
-    top: 100px;
   }
 }
 
@@ -166,10 +149,6 @@
   }
   .o-collapse-column small {
     font-size: 9px;
-  }
-  .o-text-chart {
-    left: 10px;
-    top: 90px;
   }
 }
 @media only screen and (max-width: 420px) {

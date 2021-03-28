@@ -206,7 +206,7 @@
   position: absolute;
   right: 0;
   left: 0;
-  top: 40px;
+  top: 35%;
   color: #4fa77b;
 }
 @media only screen and (max-width: 800px) {
@@ -247,7 +247,6 @@
 @media only screen and (max-width: 590px) {
   .o-grahpcart-project .o-text-practice-chart {
     font-size: 18px;
-    top: 50px;
   }
   .o-project-creation-section {
     min-width: 100%;
