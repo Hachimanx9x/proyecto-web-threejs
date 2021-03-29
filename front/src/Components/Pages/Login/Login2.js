@@ -83,7 +83,7 @@ class Login extends Component {
       });
       const { email, password } = this.state;
       await httpInstance
-        .post("login", { email, password })
+        .post("login", { correo: email, contraseña: password })
         .then((respuesta) => {
           if (respuesta.statusText === "OK") {
             console.log(respuesta.data);

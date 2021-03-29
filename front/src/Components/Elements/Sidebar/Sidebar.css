@@ -26,7 +26,7 @@ a:focus {
   display: none;
   transition: all 0.5s;
 }
-.is-open p {
+.is-open .side-menu p {
   display: inline;
   visibility: visible;
 }

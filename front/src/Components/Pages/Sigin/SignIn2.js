@@ -85,13 +85,33 @@ class SigIn extends Component {
         validpassword: true,
       });
     }
+    //Validaciones de la segunda contraseña.
     if (confirmpassword.trim() === "") {
       this.setState({
         validpasswordConfirmation: false,
         passwordMessageConfirmation: "La contraseña es requerida.",
       });
+    } else if (confirmpassword.trim().length < 6) {
+      this.setState({
+        validpasswordConfirmation: false,
+        passwordMessageConfirmation:
+          "La contraseña debe tener al menos 6 caracteres.",
+      });
     }
     if (
+      confirmpassword.trim() !== "" &&
+      password.trim() !== "" &&
+      password === confirmpassword &&
+      password.trim().length < 6
+    ) {
+      this.setState({
+        validpassword: false,
+        passwordMessage: "La contraseña debe tener al menos 6 caracteres.",
+        validpasswordConfirmation: false,
+        passwordMessageConfirmation:
+          "La contraseña debe tener al menos 6 caracteres.",
+      });
+    } else if (
       confirmpassword.trim() !== "" &&
       password.trim() !== "" &&
       password === confirmpassword
@@ -138,14 +158,14 @@ class SigIn extends Component {
           return Promise.reject(error);
         }
       });
-      const { email, password, nombre } = this.state;
+      const { email, password, name } = this.state;
 
       //------
       await httpInstance
         .post("/create/usuario", {
-          email,
-          password,
-          nombre,
+          email: email,
+          password: password,
+          nombre: name,
         })
         .then((respuesta) => {
           if (respuesta.statusText === "OK") {
@@ -232,7 +252,7 @@ class SigIn extends Component {
                 }}
                 label="Contraseña"
                 className={
-                  (this.state.validEmail ? "" : "is-invalid ") +
+                  (this.state.validpassword ? "" : "is-invalid ") +
                   "o-sigin-input  mt-4 mt-sm-5  text-white"
                 }
                 type="password"

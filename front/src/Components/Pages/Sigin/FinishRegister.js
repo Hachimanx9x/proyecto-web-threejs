@@ -446,13 +446,13 @@ export default function FinishRegister(props) {
           <p
             className={
               (!errorList.validYears ? "" : "invisible ") +
-              "o-text-error mt-5 pt-1"
+              "o-text-error mt-5 pt-1 "
             }
           >
             Campo requerido
           </p>
 
-          <p className="mt-0 mb-0 pb-0">
+          <p className="mt-0 mb-0 pb-0 ">
             Idiomas <strong className="text-danger">*</strong>
           </p>
           <Multiselect
@@ -500,7 +500,7 @@ export default function FinishRegister(props) {
           >
             Seleccione al menos un idioma
           </p>
-          <p className=" mb-0 p-0">
+          <p className="mt-0 mb-0 p-0 ">
             Palabras clave <strong className="text-danger">*</strong>
           </p>
           <Multiselect

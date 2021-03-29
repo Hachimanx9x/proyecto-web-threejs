@@ -54,10 +54,10 @@ export default class CalendarEvents extends Component {
       selectedDate: null,
       colors: [],
       error: false,
-      fetched: false,
+      fetched: true,
     };
   }
-
+  /*
   componentDidMount() {
     const token = localStorage.getItem("login");
     const obj = JSON.parse(token);
@@ -109,7 +109,7 @@ export default class CalendarEvents extends Component {
     }
     this.setState({ colors: temcolors, fetched: true, events: temvents });
   }
-
+*/
   handleDayClick(day, { selected }) {
     this.setState({
       selectedDate: selected ? undefined : day,
