@@ -1,3 +1,9 @@
+function actual() {
+  let fecha = new Date();
+  fecha.setDate(fecha.getDate() + 32);
+  return `${fecha.getFullYear()}-${fecha.getDate()}-${fecha.getDay()}`;
+}
+
 module.exports = {
   nombre: "Metodologia para la preproduccion de un sistema multiemdia",
   descripcion: "ayuda a cencebir ssitema multimedia",
@@ -55,7 +61,7 @@ module.exports = {
 -El Journey Map que ofrece una representación visual de los diferentes elementos descritos.`,
           entregaestado: "asignado",
           entregatipoArchivo: "documento",
-          entregafechaEntrega: "2021-01-23",
+          entregafechaEntrega: `${actual()}`,
           entreganumeroRevisiones: 0,
           Herramientas: [
             "Boceto de Storyboards",
@@ -78,7 +84,7 @@ module.exports = {
                     -Una especificación de los patrones identificados, con el Sistema Multimedia y el despliegue de su Experiencia Multimedia, así como los lineamientos y recomendaciones para su adaptación y uso en la solución. `,
           entregaestado: "asignado",
           entregatipoArchivo: "documento",
-          entregafechaEntrega: "2021-01-23",
+          entregafechaEntrega: `${actual()}`,
           entreganumeroRevisiones: 0,
           Herramientas: [
             "Kit de tarjetas de previsión",
@@ -196,8 +202,8 @@ module.exports = {
           titulo: "A8",
           estado: "asignada",
           descripcion: `Diseñe la estructura y el flujo (narrativo, temporal, de eventos) de la historia a desarrollarse a partir del problema que desea resolverse, describiendo los acontecimientos que narra, los personajes que participan, el tiempo en el que se desarrolla y el espacio en el que suceden dichos acontecimientos.`,
-          fechacreacion: "2021-01-11",
-          fechaentrega: "2021-01-23",
+          fechacreacion: `${actual()}`,
+          fechaentrega: `${actual()}`,
           revision: 0,
           tecnica: 1,
           listecncias: [
@@ -211,8 +217,8 @@ module.exports = {
           titulo: "A9",
           estado: "asignada",
           descripcion: `Defina las bases del diseño de una experiencia multimedia interactiva, a partir de la historia y el (los) problema(s) identificado(s), especificando los hitos de la historia en donde el Sistema Multimedia debe producir en el usuario una influencia cognitiva, emocional y sensorial.`,
-          fechacreacion: "2021-01-11",
-          fechaentrega: "2021-01-23",
+          fechacreacion: `${actual()}`,
+          fechaentrega: `${actual()}`,
           revision: 0,
           tecnica: 1,
           listecncias: [
@@ -226,8 +232,8 @@ module.exports = {
           titulo: "A10",
           estado: "asignada",
           descripcion: `Defina los tipos de medios digitales a partir de los cuales se llevará a cabo la producción de los contenidos multimedia, así como la estimación de las ambientaciones del entorno físico necesarias, que involucren al usuario en el continuo de la experiencia, antes, durante y después de interactuar con los contenidos multimedia.`,
-          fechacreacion: "2021-01-11",
-          fechaentrega: "2021-01-23",
+          fechacreacion: `${actual()}`,
+          fechaentrega: `${actual()}`,
           revision: 0,
           tecnica: 1,
           listecncias: [
@@ -240,8 +246,8 @@ module.exports = {
           titulo: "A11",
           estado: "asignada",
           descripcion: `Identifique las diferentes fuentes y procesos de transformación de la información que se producen como resultado de la experiencia multimedia, antes, durante y después de la interacción del usuario con la solución.`,
-          fechacreacion: "2021-01-11",
-          fechaentrega: "2021-01-23",
+          fechacreacion: `${actual()}`,
+          fechaentrega: `${actual()}`,
           revision: 0,
           tecnica: 1,
           listecncias: [
@@ -256,8 +262,8 @@ module.exports = {
           titulo: "A12",
           estado: "asignada",
           descripcion: `Defina las diferentes percepciones sensoriales, así como las distintas modalidades de interacción guiadas por el diseño de la experiencia multimedia y los tipos de medios digitales, que son necesarios para asegurar la influencia psicológica, cognitiva y sensorial en el usuario.`,
-          fechacreacion: "2021-01-11",
-          fechaentrega: "2021-01-23",
+          fechacreacion: `${actual()}`,
+          fechaentrega: `${actual()}`,
           revision: 0,
           tecnica: 1,
           listecncias: [
@@ -270,8 +276,8 @@ module.exports = {
           titulo: "A14",
           estado: "asignada",
           descripcion: `Efectúe la realización preliminar de la verificación del diseño de la experiencia multimedia.`,
-          fechacreacion: "2021-01-11",
-          fechaentrega: "2021-01-23",
+          fechacreacion: `${actual()}`,
+          fechaentrega: `${actual()}`,
           revision: 0,
           tecnica: 1,
           listecncias: [
@@ -285,8 +291,8 @@ module.exports = {
           titulo: "A17",
           estado: "asignada",
           descripcion: `Identifique cuáles son las leyes y normatividades vigentes a nivel global, nacional y regional, que pueden influir en el diseño de la solución.`,
-          fechacreacion: "2021-01-11",
-          fechaentrega: "2021-01-23",
+          fechacreacion: `${actual()}`,
+          fechaentrega: `${actual()}`,
           revision: 0,
           tecnica: 1,
           listecncias: ["Identificación de políticas y normativas"],
@@ -295,8 +301,8 @@ module.exports = {
           titulo: "A18",
           estado: "asignada",
           descripcion: `Identifique factores relacionados con los efectos indirectos y de largo plazo, que pueden producirse como resultado del uso del Sistema Multimedia.`,
-          fechacreacion: "2021-01-11",
-          fechaentrega: "2021-01-23",
+          fechacreacion: `${actual()}`,
+          fechaentrega: `${actual()}`,
           revision: 0,
           tecnica: 1,
           listecncias: ["Uso no dirigido"],
@@ -305,8 +311,8 @@ module.exports = {
           titulo: "A19",
           estado: "asignada",
           descripcion: `Identifique posibles patrones que respondan a la concepción del contexto de desarrollo del Sistema Multimedia y de otras soluciones existentes, así como patrones de comportamiento en las personas.`,
-          fechacreacion: "2021-01-11",
-          fechaentrega: "2021-01-23",
+          fechacreacion: `${actual()}`,
+          fechaentrega: `${actual()}`,
           revision: 0,
           tecnica: 1,
           listecncias: [
@@ -496,7 +502,7 @@ module.exports = {
           entregadescripcion: `Es un documento en donde se consigna un análisis sobre la necesidad de los diferentes tipos de recursos y de riesgos, a la luz de la aplicación de diferentes técnicas, que permiten hacer un análisis de viabilidad en torno al desarrollo del Sistema Multimedia.`,
           entregaestado: "asignado",
           entregatipoArchivo: "documento",
-          entregafechaEntrega: "2021-01-23",
+          entregafechaEntrega: `${actual()}`,
           entreganumeroRevisiones: 0,
           Herramientas: [
             "Modelo Canvas",
@@ -514,7 +520,7 @@ module.exports = {
           entregadescripcion: `Consiste en el documento que especifica el análisis para la proposición de valor del Sistema Multimedia.`,
           entregaestado: "asignado",
           entregatipoArchivo: "documento",
-          entregafechaEntrega: "2021-01-23",
+          entregafechaEntrega: `${actual()}`,
           entreganumeroRevisiones: 0,
           Herramientas: ["Matriz de proposición de valor"],
         },
@@ -523,7 +529,7 @@ module.exports = {
           entregadescripcion: `Se trata del documento en el cual se consigna el enunciado de la visión del Sistema Multimedia mínimo viable.`,
           entregaestado: "asignado",
           entregatipoArchivo: "documento",
-          entregafechaEntrega: "2021-01-23",
+          entregafechaEntrega: `${actual()}`,
           entreganumeroRevisiones: 0,
           Herramientas: [
             "Estructura para la formulación de la visión del SMMV",
@@ -534,7 +540,7 @@ module.exports = {
           entregadescripcion: `Consiste del documento o conjunto de documentos, en los cuales se inscribe el análisis del modelo Canvas del Sistema Multimedia mínimo viable. `,
           entregaestado: "asignado",
           entregatipoArchivo: "documento",
-          entregafechaEntrega: "2021-01-23",
+          entregafechaEntrega: `${actual()}`,
           entreganumeroRevisiones: 0,
           Herramientas: ["Modelo Canvas adaptado"],
         },
@@ -662,8 +668,8 @@ module.exports = {
           titulo: "A4",
           estado: "asignada",
           descripcion: `Identifique y clasifique cuáles son los riesgos asociados con el desarrollo del Sistema Multimedia.`,
-          fechacreacion: "2021-01-11",
-          fechaentrega: "2021-01-23",
+          fechacreacion: `${actual()}`,
+          fechaentrega: `${actual()}`,
           revision: 0,
           tecnica: 1,
           listecncias: [
@@ -676,8 +682,8 @@ module.exports = {
           titulo: "A5",
           estado: "asignada",
           descripcion: `Defina una estimación de los recursos necesarios para el desarrollo del Sistema Multimedia y analice sobre su condición, disponibilidad o necesidad de adquisición.`,
-          fechacreacion: "2021-01-11",
-          fechaentrega: "2021-01-23",
+          fechacreacion: `${actual()}`,
+          fechaentrega: `${actual()}`,
           revision: 0,
           tecnica: 1,
           listecncias: [
@@ -689,8 +695,8 @@ module.exports = {
           titulo: "A6",
           estado: "asignada",
           descripcion: `Analice la viabilidad para el desarrollo del Sistema Multimedia y contrástela con las oportunidades de innovación que genera para sus clientes y patrocinadores.`,
-          fechacreacion: "2021-01-11",
-          fechaentrega: "2021-01-23",
+          fechacreacion: `${actual()}`,
+          fechaentrega: `${actual()}`,
           revision: 0,
           tecnica: 1,
           listecncias: [
@@ -704,8 +710,8 @@ module.exports = {
           titulo: "A13",
           estado: "asignada",
           descripcion: `Defina en un alto nivel de abstracción, las tecnologías hardware software, así como los objetos físicos necesarios que aseguren una calidad de la experiencia, alineados a las bases de su diseño.`,
-          fechacreacion: "2021-01-11",
-          fechaentrega: "2021-01-23",
+          fechacreacion: `${actual()}`,
+          fechaentrega: `${actual()}`,
           revision: 0,
           tecnica: 1,
           listecncias: [
@@ -717,8 +723,8 @@ module.exports = {
           titulo: "A16",
           estado: "asignada",
           descripcion: `Identifique las motivaciones, recursos y métodos de potenciales adversarios que pueden decidir atacar el Sistema Multimedia y el impacto que esto puede causar en las personas que son usuarios de la solución.`,
-          fechacreacion: "2021-01-11",
-          fechaentrega: "2021-01-23",
+          fechacreacion: `${actual()}`,
+          fechaentrega: `${actual()}`,
           revision: 0,
           tecnica: 1,
           listecncias: [
@@ -733,8 +739,8 @@ module.exports = {
                     -Identifique los aportes de valor de la solución que se concibe, en el Plan para el Desarrollo del Sistema Multimedia.
                     -Identifique al menos, dos soluciones existentes similares a la solución que actualmente se concibe (no necesariamente deben ser sistemas multimedia), y que sean utilizadas en el sector objetivo.
                     `,
-          fechacreacion: "2021-01-11",
-          fechaentrega: "2021-01-23",
+          fechacreacion: `${actual()}`,
+          fechaentrega: `${actual()}`,
           revision: 0,
           tecnica: 1,
           listecncias: ["Matriz de proposición de valor"],
@@ -746,8 +752,8 @@ module.exports = {
                     -A partir de la proposición de valor, genere un espacio para lluvia de ideas con los interesados.
     -Escoja diferentes ideas y estructúrelas a partir de una serie de conectores y conceptos, asegurándose hacer explícita la diferenciación de valor en torno a la propuesta que seconcibe, en contraste con las existentes.
     -Analice los resultados obtenidos, junto a los interesados y realice los ajustes acordados.`,
-          fechacreacion: "2021-01-11",
-          fechaentrega: "2021-01-23",
+          fechacreacion: `${actual()}`,
+          fechaentrega: `${actual()}`,
           revision: 0,
           tecnica: 1,
           listecncias: ["Estructura para la formulación de la visión del SMMV"],
@@ -761,8 +767,8 @@ module.exports = {
     -Evalúe el resultado del modelo Canvas para el SMMV y discútalo con los interesados.
     -Realice los ajustes al modelo Canvas del SMMV en función de la retroalimentación de los interesados.
                     `,
-          fechacreacion: "2021-01-11",
-          fechaentrega: "2021-01-23",
+          fechacreacion: `${actual()}`,
+          fechaentrega: `${actual()}`,
           revision: 0,
           tecnica: 1,
           listecncias: ["Canvas de SMMV"],

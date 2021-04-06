@@ -5,7 +5,11 @@ const io = require("socket.io")(http, {
     methods: ["GET", "POST"],
   },
 });
-
+let roomslist = [];
+let posiciones = [
+  { x: 0, y: 0.3, z: 1 },
+  { x: 0, y: 0.3, z: -1.1 },
+];
 //al iniciar una conexion en hilo de envio de datos
 io.on("connection", function (socket) {
   console.log(`usuario ${socket.id}`);
@@ -16,7 +20,10 @@ io.on("connection", function (socket) {
     //se define el hilo de conexion con esa sala
     socket.join(room);
     // console.log(getuserroom(room))
-
+    if (roomslist.length > 0) {
+    } else {
+      roomslist.push({ room: room });
+    }
     //se emite un mensaje a todos los que esten en esa sala del nuevo usuario
     io.in(socket.room).emit("entrar", {
       iserid: socket.id,
