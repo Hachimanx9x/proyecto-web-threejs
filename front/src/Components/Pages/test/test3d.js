@@ -40,7 +40,8 @@ import video1 from "../../../Logos/videos/gumdang.mp4";
 class Test3d extends Component {
   constructor(props) {
     super(props);
-
+    //variables de la libreria threejs
+    this.scene = new THREE.Scene();
     this.animate = this.animate.bind(this);
     this.updateDimensions = this.updateDimensions.bind(this);
     this.mouseEventsdown = this.mouseEventsdown.bind(this);
@@ -50,10 +51,24 @@ class Test3d extends Component {
     this.makeLabelCanvas = this.makeLabelCanvas.bind(this);
     this.funcionvotacion = this.funcionvotacion.bind(this);
     this.variablerara = [];
+    this.npcs = [];
+    this.numnpcs = 0;
+    this.posiciones = [
+      { x: 0, y: 0.3, z: -1.1 },
+      { x: 0.45, y: 0.3, z: -0.7 },
+      { x: 0.45, y: 0.3, z: -0.1 },
+      { x: 0.45, y: 0.3, z: 0.6 },
+      { x: -0.45, y: 0.3, z: -0.5 },
+      { x: -0.45, y: 0.3, z: -0.1 },
+      { x: -0.45, y: 0.3, z: -1.7 },
+    ];
+    this.escena = false;
+
     this.hablar = this.hablar.bind(this);
     this.state = {
       state: "mute",
       escuchar: false,
+      escena: false,
       room: `sala1`,
       user: "default",
       compas: [],
@@ -123,29 +138,101 @@ class Test3d extends Component {
       //se reescribe el usaurio actual
       if (this.state.user === "default") {
         let com = [];
+
         console.log(data);
         data.room.splice(data.room.indexOf(data.iserid), 1);
         console.log(`id:${data.iserid}  rom: ${data.room}`);
         data.room.forEach((element) => {
           com.push({ id: element, buffer: [] });
+
+          let tempobj = new THREE.Object3D().add(
+            new THREE.Mesh(
+              new THREE.BoxGeometry(0.2, 0.2, 0.2),
+              new THREE.MeshBasicMaterial({ color: 0x00ff00 })
+            )
+          );
+          tempobj.name = element;
+
+          if (this.numnpcs >= 7) {
+            this.numnpcs = 0;
+          }
+          tempobj.position.set(
+            this.posiciones[this.numnpcs].x,
+            this.posiciones[this.numnpcs].y,
+            this.posiciones[this.numnpcs].z
+          );
+          this.scene.add(tempobj);
+
+          this.npcs.push(tempobj);
+          this.numnpcs++;
         });
+
         this.variablerara = com;
         console.log(this.variablerara);
         this.setState({
           user: data.iserid,
           compas: data.room,
+          escena: true,
         });
+        this.escena = true;
       } else {
         //en caso de reescribi el usaurio los siguientes seran los demas compañeros
         let com = [];
+
         data.room.splice(data.room.indexOf(this.state.user), 1);
         console.log(`id:${this.state.user}  rom: ${data.room}`);
         data.room.forEach((element) => {
           com.push({ id: element, buffer: [] });
+          let si = false;
+          if (this.variablerara.length > 0) {
+            for (let a = 0; a < this.variablerara.length; a++) {
+              if (this.variablerara[a].id !== element && !si) {
+                let esta = false;
+                for (let b = 0; b < this.scene.children.length; b++) {
+                  if (this.scene.children[b].name != element) {
+                    esta = true;
+                  }
+                }
+                if (esta) {
+                  si = !si;
+                  console.log(` diferente ${element}`);
+                }
+              }
+            }
+          } else {
+            si = !si;
+          }
+
+          if (si) {
+            console.log(`objeto ${element}`);
+            let tempobj = new THREE.Object3D().add(
+              new THREE.Mesh(
+                new THREE.BoxGeometry(0.2, 0.2, 0.2),
+                new THREE.MeshBasicMaterial({ color: 0x00ff00 })
+              )
+            );
+            tempobj.name = element;
+
+            if (this.numnpcs >= 7) {
+              this.numnpcs = 0;
+            }
+            tempobj.position.set(
+              this.posiciones[this.numnpcs].x,
+              this.posiciones[this.numnpcs].y,
+              this.posiciones[this.numnpcs].z
+            );
+            this.scene.add(tempobj);
+            console.log(this.scene);
+            this.npcs.push(tempobj);
+            this.numnpcs++;
+            si = false;
+          }
         });
+
         this.variablerara = com;
-        console.log(this.variablerara);
-        this.setState({ compas: data.room });
+        // console.log(this.variablerara);
+        this.setState({ compas: data.room, escena: true });
+        this.escena = true;
       }
     });
     this.socket.on("hablar", (data) => {
@@ -156,8 +243,14 @@ class Test3d extends Component {
     });
     this.socket.on("chao", (data) => {
       for (let a = 0; a < this.variablerara.length; a++) {
-        if ((this.variablerara[a].id = data)) {
+        if (this.variablerara[a].id === data) {
           this.variablerara.splice(a, 1);
+        }
+      }
+      for (let a = 0; a < this.npcs.length; a++) {
+        if (this.npcs[a].name === data) {
+          this.scene.remove(this.npcs[a]);
+          this.npcs.splice(a, 1);
         }
       }
       console.log("Chao");
@@ -230,7 +323,6 @@ class Test3d extends Component {
       negz,
     ]);
 
-    this.scene = new THREE.Scene();
     this.scene.background = entorno;
     this.scene.environment = entorno;
 
@@ -863,7 +955,18 @@ class Test3d extends Component {
     this.materialC.needsUpdate = true;
     this.prevTime = time;
     this.renderer.render(this.scene, this.camera);
-
+    /*
+    if (this.escena) {
+      if (this.npcs.length > 0 && this.variablerara.length > 0) {
+        for (let a = 0; a < this.npcs.length; a++) {
+          let x = 0;
+          this.npcs[a].position.set(x, 0.3, 0);
+          x = x + 0.5;
+          this.scene.add(this.npcs[a]);
+        }
+      }
+    }
+*/
     //   console.log(this.camera.position);
     // console.log("renderizando ando");
   } //fin animate

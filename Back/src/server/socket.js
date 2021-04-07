@@ -43,10 +43,13 @@ io.on("connection", function (socket) {
 
     io.in(socket.rooms).emit("chat message", msg);
   });
+  socket.on("votaron", function () {
+    io.in(socket.rooms).emit("onvote", "Ok");
+  });
 
   socket.on("disconnect", function () {
-    io.in(socket.rooms).emit("chao", socket.id);
-    console.log(`el usuario ${socket.id} en la sala ${socket.rooms}`);
+    io.in(socket.room).emit("chao", socket.id);
+    console.log(`el usuario ${socket.id} en la sala ${socket.room}`);
   });
 });
 
