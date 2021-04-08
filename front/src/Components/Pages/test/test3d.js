@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 //libreria 3d
 import * as THREE from "three/build/three.module";
+import MicrophoneStream from "microphone-stream";
 //libreria para los controles
 //import {OrbitControls} from "three/examples/jsm/controls/OrbitControls" ;
 import { PointerLockControls } from "three/examples/jsm/controls/PointerLockControls";
@@ -10,12 +11,12 @@ import Detector from "../../../lib_externo/Detector";
 import { Chart } from "react-chartjs-2";
 //socket
 import io from "socket.io-client";
-import Button3d from './script/buttons'
+import Button3d from "./script/buttons";
 import Rodal from "rodal";
 import "rodal/lib/rodal.css";
-import ContentCard from "./script/cardvote"
-import CargarObj from "./script/CargarObjGltf"
-import Mirror from "./script/mirror"
+import ContentCard from "./script/cardvote";
+import CargarObj from "./script/CargarObjGltf";
+import Mirror from "./script/mirror";
 //imagenes
 import posx from "../../../Logos/img/Bridge2/posx.jpg";
 import negx from "../../../Logos/img/Bridge2/negx.jpg";
@@ -39,7 +40,8 @@ import video1 from "../../../Logos/videos/gumdang.mp4";
 class Test3d extends Component {
   constructor(props) {
     super(props);
-
+    //variables de la libreria threejs
+    this.scene = new THREE.Scene();
     this.animate = this.animate.bind(this);
     this.updateDimensions = this.updateDimensions.bind(this);
     this.mouseEventsdown = this.mouseEventsdown.bind(this);
@@ -47,28 +49,69 @@ class Test3d extends Component {
 
     this.setupCanvasDrawing = this.setupCanvasDrawing.bind(this);
     this.makeLabelCanvas = this.makeLabelCanvas.bind(this);
-    this.funcionvotacion = this.funcionvotacion.bind(this)
+    this.funcionvotacion = this.funcionvotacion.bind(this);
+    this.variablerara = [];
+    this.npcs = [];
+    this.numnpcs = 0;
+    this.posiciones = [
+      { x: 0, y: 0.3, z: -1.1 },
+      { x: 0.45, y: 0.3, z: -0.7 },
+      { x: 0.45, y: 0.3, z: -0.1 },
+      { x: 0.45, y: 0.3, z: 0.6 },
+      { x: -0.45, y: 0.3, z: -0.5 },
+      { x: -0.45, y: 0.3, z: -0.1 },
+      { x: -0.45, y: 0.3, z: -1.7 },
+    ];
+    this.escena = false;
+
+    this.hablar = this.hablar.bind(this);
     this.state = {
+      state: "mute",
+      escuchar: false,
+      escena: false,
+      room: `sala1`,
+      user: "default",
+      compas: [],
       player: null,
       reunion: 1,
       votaciones: false,
-      practica:
-      {
+      practica: {
         nombre: "practica 1 ",
         estadoActual: "iniciado",
         estaoevaluar: "identificado",
         preguntas: [
-          { texto: "se a identificado tensiones de valor entre interesados", estado: false },
-          { texto: "se a identificado posibles usos mal intencionados del Sistema Multimedia", estado: false },
-          { texto: "se a identificado patrones que afectan el Sistema Multimedia", estado: false },
-          { texto: "se a identificado leyes y normatividades que influyen en la solución", estado: false },
-          { texto: "se a identificado aspectos culturales, sociales y cognitivos que influyen en la comunidad objeto de análisis", estado: false }
-        ]
+          {
+            texto: "se a identificado tensiones de valor entre interesados",
+            estado: false,
+          },
+          {
+            texto:
+              "se a identificado posibles usos mal intencionados del Sistema Multimedia",
+            estado: false,
+          },
+          {
+            texto:
+              "se a identificado patrones que afectan el Sistema Multimedia",
+            estado: false,
+          },
+          {
+            texto:
+              "se a identificado leyes y normatividades que influyen en la solución",
+            estado: false,
+          },
+          {
+            texto:
+              "se a identificado aspectos culturales, sociales y cognitivos que influyen en la comunidad objeto de análisis",
+            estado: false,
+          },
+        ],
       },
       posicionplayer: { x: 0, y: 0.3, z: 1 },
       marksData: {
         labels: ["ruta1", "ruta2", "ruta3", "ruta4"],
-        animation: false,
+        animation: {
+          duration: 0,
+        },
 
         datasets: [
           {
@@ -82,19 +125,162 @@ class Test3d extends Component {
             data: [54, 65, 60, 70],
           },
         ],
-      }
-
+      },
     };
   }
-  componentDidMount() {
+  async componentDidMount() {
     //   console.log(this.state)
-    this.socket = io('http://localhost:3030/', {
+    this.socket = io("http://localhost:3030/", {
       reconnectionDelayMax: 10000,
-      auth: {
-        token: "123"
-      },
-      query: {
-        reunion: this.state.reunion
+    });
+    this.socket.emit("entra room", this.state.room);
+    this.socket.on("entrar", (data) => {
+      //se reescribe el usaurio actual
+      if (this.state.user === "default") {
+        let com = [];
+
+        console.log(data);
+        data.room.splice(data.room.indexOf(data.iserid), 1);
+        console.log(`id:${data.iserid}  rom: ${data.room}`);
+        data.room.forEach((element) => {
+          com.push({ id: element, buffer: [] });
+
+          let tempobj = new THREE.Object3D().add(
+            new THREE.Mesh(
+              new THREE.BoxGeometry(0.2, 0.2, 0.2),
+              new THREE.MeshBasicMaterial({ color: 0x00ff00 })
+            )
+          );
+          tempobj.name = element;
+
+          if (this.numnpcs >= 7) {
+            this.numnpcs = 0;
+          }
+          tempobj.position.set(
+            this.posiciones[this.numnpcs].x,
+            this.posiciones[this.numnpcs].y,
+            this.posiciones[this.numnpcs].z
+          );
+          this.scene.add(tempobj);
+
+          this.npcs.push(tempobj);
+          this.numnpcs++;
+        });
+
+        this.variablerara = com;
+        console.log(this.variablerara);
+        this.setState({
+          user: data.iserid,
+          compas: data.room,
+          escena: true,
+        });
+        this.escena = true;
+      } else {
+        //en caso de reescribi el usaurio los siguientes seran los demas compañeros
+        let com = [];
+
+        data.room.splice(data.room.indexOf(this.state.user), 1);
+        console.log(`id:${this.state.user}  rom: ${data.room}`);
+        data.room.forEach((element) => {
+          com.push({ id: element, buffer: [] });
+          let si = false;
+          if (this.variablerara.length > 0) {
+            for (let a = 0; a < this.variablerara.length; a++) {
+              if (this.variablerara[a].id !== element && !si) {
+                let esta = false;
+                for (let b = 0; b < this.scene.children.length; b++) {
+                  if (this.scene.children[b].name != element) {
+                    esta = true;
+                  }
+                }
+                if (esta) {
+                  si = !si;
+                  console.log(` diferente ${element}`);
+                }
+              }
+            }
+          } else {
+            si = !si;
+          }
+
+          if (si) {
+            console.log(`objeto ${element}`);
+            let tempobj = new THREE.Object3D().add(
+              new THREE.Mesh(
+                new THREE.BoxGeometry(0.2, 0.2, 0.2),
+                new THREE.MeshBasicMaterial({ color: 0x00ff00 })
+              )
+            );
+            tempobj.name = element;
+
+            if (this.numnpcs >= 7) {
+              this.numnpcs = 0;
+            }
+            tempobj.position.set(
+              this.posiciones[this.numnpcs].x,
+              this.posiciones[this.numnpcs].y,
+              this.posiciones[this.numnpcs].z
+            );
+            this.scene.add(tempobj);
+            console.log(this.scene);
+            this.npcs.push(tempobj);
+            this.numnpcs++;
+            si = false;
+          }
+        });
+
+        this.variablerara = com;
+        // console.log(this.variablerara);
+        this.setState({ compas: data.room, escena: true });
+        this.escena = true;
+      }
+    });
+    this.socket.on("hablar", (data) => {
+      const { id } = data;
+      if (id !== this.state.user) {
+        this.hablar(data);
+      }
+    });
+    this.socket.on("chao", (data) => {
+      for (let a = 0; a < this.variablerara.length; a++) {
+        if (this.variablerara[a].id === data) {
+          this.variablerara.splice(a, 1);
+        }
+      }
+      for (let a = 0; a < this.npcs.length; a++) {
+        if (this.npcs[a].name === data) {
+          this.scene.remove(this.npcs[a]);
+          this.npcs.splice(a, 1);
+        }
+      }
+      console.log("Chao");
+      console.log(this.variablerara);
+    });
+    let micStream = new MicrophoneStream({
+      stream: null,
+      objectMode: false,
+      bufferSize: 512,
+      context: null,
+    });
+    await navigator.mediaDevices
+      .getUserMedia({ audio: true })
+      .then((result) => {
+        //el navegador lo ofrece y aqui es tomado por  micStream
+        micStream.setStream(result);
+      });
+    micStream.on("data", (chunk) => {
+      // esto combierte todo en  Float32Array
+      // el raw son los datos del audio capturado pero pasados por un coversion
+      var raw = MicrophoneStream.toRaw(chunk);
+      //esto activa y desactiva el poder usar un microfono
+      if (this.state.escuchar) {
+        //la variable a enviar
+        let temp = [];
+        //re procesa para que no sea enviado como Float32Array sino como una array normal
+        //esto para evitar errores
+        temp = [...raw];
+        //se emite la informacion a escuchar por otros usuarios
+        this.socket.emit("hablar", temp);
       }
     });
 
@@ -123,8 +309,9 @@ class Test3d extends Component {
     this.objInteraccion2 = [];
     this.objInteraccion3 = [];
     this.menuopciones = {
+      microphone: [],
       salir: [],
-      votacion: []
+      votacion: [],
     };
     //skybox
     var entorno = new THREE.CubeTextureLoader().load([
@@ -136,7 +323,6 @@ class Test3d extends Component {
       negz,
     ]);
 
-    this.scene = new THREE.Scene();
     this.scene.background = entorno;
     this.scene.environment = entorno;
 
@@ -167,7 +353,8 @@ class Test3d extends Component {
     var objectI1 = new THREE.Mesh(
       geocaja,
       new THREE.MeshBasicMaterial({
-        color: 0x4ff20e, opacity: 0.5,
+        color: 0x4ff20e,
+        opacity: 0.5,
         transparent: true,
       })
     );
@@ -175,7 +362,8 @@ class Test3d extends Component {
     var objectI2 = new THREE.Mesh(
       geocaja,
       new THREE.MeshBasicMaterial({
-        color: 0xf2380e, opacity: 0.5,
+        color: 0xf2380e,
+        opacity: 0.5,
         transparent: true,
       })
     );
@@ -206,7 +394,7 @@ class Test3d extends Component {
     this.objgrafico.scale.set(0.2, 0.2, 0.2);
     console.log("grafico");
     console.log(this.objgrafico);
-    this.scene.add(this.objgrafico);
+    // this.scene.add(this.objgrafico);
 
     /*
     
@@ -217,18 +405,53 @@ class Test3d extends Component {
     this.GUIv2 = new THREE.Object3D(); ///const guiv2 = new THREE.Object3D();
 
     this.fondos = {
-      fondo0: new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), new THREE.MeshBasicMaterial({ color: 0x2E9AFE, opacity: 0.5, transparent: true, })),
-      fondo1: new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), new THREE.MeshBasicMaterial({ color: 0x2E9AFE, opacity: 0.5, transparent: true, }))
-    }
+      fondo0: new THREE.Mesh(
+        new THREE.PlaneBufferGeometry(1, 1),
+        new THREE.MeshBasicMaterial({
+          color: 0x2e9afe,
+          opacity: 0.5,
+          transparent: true,
+        })
+      ),
+      fondo1: new THREE.Mesh(
+        new THREE.PlaneBufferGeometry(1, 1),
+        new THREE.MeshBasicMaterial({
+          color: 0x2e9afe,
+          opacity: 0.5,
+          transparent: true,
+        })
+      ),
+    };
     this.btn_inter = {
-      inter0: new THREE.Mesh(new THREE.BoxBufferGeometry(1, 1, 1), new THREE.MeshBasicMaterial({ color: 0x61f20e, opacity: 0.5, transparent: true, })),
-      inter1: new THREE.Mesh(new THREE.BoxBufferGeometry(1, 1, 1), new THREE.MeshBasicMaterial({ color: 0x4ff20e, opacity: 0.5, transparent: true, })),
-      inter2: new THREE.Mesh(new THREE.BoxBufferGeometry(1, 1, 1), new THREE.MeshBasicMaterial({ color: 0xf2380e, opacity: 0.5, transparent: true, }))
-    }
+      inter0: new THREE.Mesh(
+        new THREE.BoxBufferGeometry(1, 1, 1),
+        new THREE.MeshBasicMaterial({
+          color: 0x61f20e,
+          opacity: 0.5,
+          transparent: true,
+        })
+      ),
+      inter1: new THREE.Mesh(
+        new THREE.BoxBufferGeometry(1, 1, 1),
+        new THREE.MeshBasicMaterial({
+          color: 0x4ff20e,
+          opacity: 0.5,
+          transparent: true,
+        })
+      ),
+      inter2: new THREE.Mesh(
+        new THREE.BoxBufferGeometry(1, 1, 1),
+        new THREE.MeshBasicMaterial({
+          color: 0xf2380e,
+          opacity: 0.5,
+          transparent: true,
+        })
+      ),
+    };
     this.pantallas = {
       pantalla0: new THREE.Object3D(),
-      pantalla1: new THREE.Object3D()
-    }
+      pantalla1: new THREE.Object3D(),
+    };
     this.letreros_Labels = {
       titulo_pantalla1: this.makeLabelCanvas(32, "Pantalla1"),
       titulo_pantalla2: this.makeLabelCanvas(32, "Pantalla2"),
@@ -237,8 +460,12 @@ class Test3d extends Component {
       boton1_p2_r1: this.makeLabelCanvas(24, "grafico"),
     };
     this.letrerostexture = {
-      titulo_pantalla1: new THREE.CanvasTexture(this.letreros_Labels.titulo_pantalla1),
-      titulo_pantalla2: new THREE.CanvasTexture(this.letreros_Labels.titulo_pantalla2),
+      titulo_pantalla1: new THREE.CanvasTexture(
+        this.letreros_Labels.titulo_pantalla1
+      ),
+      titulo_pantalla2: new THREE.CanvasTexture(
+        this.letreros_Labels.titulo_pantalla2
+      ),
       boton_p1_r1: new THREE.CanvasTexture(this.letreros_Labels.boton_p1_r1),
       boton0_p2_r1: new THREE.CanvasTexture(this.letreros_Labels.boton0_p2_r1),
       boton1_p2_r1: new THREE.CanvasTexture(this.letreros_Labels.boton1_p2_r1),
@@ -251,22 +478,59 @@ class Test3d extends Component {
       this.letrerostexture[property].wrapT = THREE.ClampToEdgeWrapping;
     }
     this.labelmaterials = {
-      titulo_pantalla1: new THREE.MeshBasicMaterial({ map: this.letrerostexture.titulo_pantalla1, side: THREE.DoubleSide, transparent: true, }),
-      titulo_pantalla2: new THREE.MeshBasicMaterial({ map: this.letrerostexture.titulo_pantalla2, side: THREE.DoubleSide, transparent: true }),
-      boton_p1_r1: new THREE.MeshBasicMaterial({ map: this.letrerostexture.boton_p1_r1, side: THREE.DoubleSide, transparent: true }),
-      boton0_p2_r1: new THREE.MeshBasicMaterial({ map: this.letrerostexture.boton0_p2_r1, side: THREE.DoubleSide, transparent: true }),
-      boton1_p2_r1: new THREE.MeshBasicMaterial({ map: this.letrerostexture.boton1_p2_r1, side: THREE.DoubleSide, transparent: true }),
-    }
+      titulo_pantalla1: new THREE.MeshBasicMaterial({
+        map: this.letrerostexture.titulo_pantalla1,
+        side: THREE.DoubleSide,
+        transparent: true,
+      }),
+      titulo_pantalla2: new THREE.MeshBasicMaterial({
+        map: this.letrerostexture.titulo_pantalla2,
+        side: THREE.DoubleSide,
+        transparent: true,
+      }),
+      boton_p1_r1: new THREE.MeshBasicMaterial({
+        map: this.letrerostexture.boton_p1_r1,
+        side: THREE.DoubleSide,
+        transparent: true,
+      }),
+      boton0_p2_r1: new THREE.MeshBasicMaterial({
+        map: this.letrerostexture.boton0_p2_r1,
+        side: THREE.DoubleSide,
+        transparent: true,
+      }),
+      boton1_p2_r1: new THREE.MeshBasicMaterial({
+        map: this.letrerostexture.boton1_p2_r1,
+        side: THREE.DoubleSide,
+        transparent: true,
+      }),
+    };
     this.labelGeo = {
-      titulo_pantalla1: new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), this.labelmaterials.titulo_pantalla1),
-      titulo_pantalla2: new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), this.labelmaterials.titulo_pantalla2),
-      boton_p1_r1: new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), this.labelmaterials.boton_p1_r1),
-      boton0_p2_r1: new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), this.labelmaterials.boton0_p2_r1),
-      boton1_p2_r1: new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), this.labelmaterials.boton1_p2_r1),
-    }
+      titulo_pantalla1: new THREE.Mesh(
+        new THREE.PlaneBufferGeometry(1, 1),
+        this.labelmaterials.titulo_pantalla1
+      ),
+      titulo_pantalla2: new THREE.Mesh(
+        new THREE.PlaneBufferGeometry(1, 1),
+        this.labelmaterials.titulo_pantalla2
+      ),
+      boton_p1_r1: new THREE.Mesh(
+        new THREE.PlaneBufferGeometry(1, 1),
+        this.labelmaterials.boton_p1_r1
+      ),
+      boton0_p2_r1: new THREE.Mesh(
+        new THREE.PlaneBufferGeometry(1, 1),
+        this.labelmaterials.boton0_p2_r1
+      ),
+      boton1_p2_r1: new THREE.Mesh(
+        new THREE.PlaneBufferGeometry(1, 1),
+        this.labelmaterials.boton1_p2_r1
+      ),
+    };
     for (const property in this.labelGeo) {
-      this.labelGeo[property].scale.x = this.letreros_Labels[property].width * 0.001;
-      this.labelGeo[property].scale.y = this.letreros_Labels[property].height * 0.001;
+      this.labelGeo[property].scale.x =
+        this.letreros_Labels[property].width * 0.001;
+      this.labelGeo[property].scale.y =
+        this.letreros_Labels[property].height * 0.001;
     }
 
     var i0 = 0;
@@ -274,31 +538,79 @@ class Test3d extends Component {
       var i1 = 0;
       for (const property1 in this.fondos) {
         if (i1 === 0 && i0 === 0) {
-
-          this.labelGeo.boton_p1_r1.position.set(this.labelGeo.titulo_pantalla1.position.x, this.labelGeo.titulo_pantalla1.position.y - 0.05, this.labelGeo.titulo_pantalla1.position.z)
+          this.labelGeo.boton_p1_r1.position.set(
+            this.labelGeo.titulo_pantalla1.position.x,
+            this.labelGeo.titulo_pantalla1.position.y - 0.05,
+            this.labelGeo.titulo_pantalla1.position.z
+          );
           this.objInteraccion.push(this.btn_inter.inter0);
-          this.btn_inter.inter0.scale.set(this.labelGeo.boton_p1_r1.scale.x, this.labelGeo.boton_p1_r1.scale.y, 0.005);
-          this.btn_inter.inter0.position.set(this.labelGeo.boton_p1_r1.position.x, this.labelGeo.boton_p1_r1.position.y, -0.005);
-          this.fondos[property1].scale.set(this.labelGeo.titulo_pantalla1.scale.x + 0.1, this.labelGeo.titulo_pantalla1.scale.x + 0.05);
-          this.fondos[property1].position.set(this.labelGeo.titulo_pantalla1.position.x + 0.05, this.labelGeo.titulo_pantalla1.position.y - 0.007, -0.1);
+          this.btn_inter.inter0.scale.set(
+            this.labelGeo.boton_p1_r1.scale.x,
+            this.labelGeo.boton_p1_r1.scale.y,
+            0.005
+          );
+          this.btn_inter.inter0.position.set(
+            this.labelGeo.boton_p1_r1.position.x,
+            this.labelGeo.boton_p1_r1.position.y,
+            -0.005
+          );
+          this.fondos[property1].scale.set(
+            this.labelGeo.titulo_pantalla1.scale.x + 0.1,
+            this.labelGeo.titulo_pantalla1.scale.x + 0.05
+          );
+          this.fondos[property1].position.set(
+            this.labelGeo.titulo_pantalla1.position.x + 0.05,
+            this.labelGeo.titulo_pantalla1.position.y - 0.007,
+            -0.1
+          );
           this.pantallas[property].add(this.labelGeo.titulo_pantalla1);
           this.pantallas[property].add(this.labelGeo.boton_p1_r1);
           this.pantallas[property].add(this.btn_inter.inter0);
           this.pantallas[property].add(this.fondos[property1]);
         } else if (i1 === 1 && i0 === 1) {
-
-          this.labelGeo.boton0_p2_r1.position.set(this.labelGeo.titulo_pantalla2.position.x - 0.05, this.labelGeo.titulo_pantalla2.position.y - 0.05, this.labelGeo.titulo_pantalla2.position.z)
-          this.labelGeo.boton1_p2_r1.position.set(this.labelGeo.titulo_pantalla2.position.x + 0.05, this.labelGeo.titulo_pantalla2.position.y - 0.05, this.labelGeo.titulo_pantalla2.position.z)
+          this.labelGeo.boton0_p2_r1.position.set(
+            this.labelGeo.titulo_pantalla2.position.x - 0.05,
+            this.labelGeo.titulo_pantalla2.position.y - 0.05,
+            this.labelGeo.titulo_pantalla2.position.z
+          );
+          this.labelGeo.boton1_p2_r1.position.set(
+            this.labelGeo.titulo_pantalla2.position.x + 0.05,
+            this.labelGeo.titulo_pantalla2.position.y - 0.05,
+            this.labelGeo.titulo_pantalla2.position.z
+          );
           this.objInteraccion0.push(this.labelGeo.boton0_p2_r1);
           this.objInteraccion3.push(this.labelGeo.boton1_p2_r1);
           /****************/
-          this.btn_inter.inter1.scale.set(this.labelGeo.boton0_p2_r1.scale.x, this.labelGeo.boton0_p2_r1.scale.y, 0.005);
-          this.btn_inter.inter1.position.set(this.labelGeo.boton0_p2_r1.position.x, this.labelGeo.boton0_p2_r1.position.y, -0.005)
-          this.btn_inter.inter2.scale.set(this.labelGeo.boton1_p2_r1.scale.x, this.labelGeo.boton1_p2_r1.scale.y, 0.005);
-          this.btn_inter.inter2.position.set(this.labelGeo.boton1_p2_r1.position.x, this.labelGeo.boton1_p2_r1.position.y, -0.005)
+          this.btn_inter.inter1.scale.set(
+            this.labelGeo.boton0_p2_r1.scale.x,
+            this.labelGeo.boton0_p2_r1.scale.y,
+            0.005
+          );
+          this.btn_inter.inter1.position.set(
+            this.labelGeo.boton0_p2_r1.position.x,
+            this.labelGeo.boton0_p2_r1.position.y,
+            -0.005
+          );
+          this.btn_inter.inter2.scale.set(
+            this.labelGeo.boton1_p2_r1.scale.x,
+            this.labelGeo.boton1_p2_r1.scale.y,
+            0.005
+          );
+          this.btn_inter.inter2.position.set(
+            this.labelGeo.boton1_p2_r1.position.x,
+            this.labelGeo.boton1_p2_r1.position.y,
+            -0.005
+          );
           /****** */
-          this.fondos[property1].scale.set(this.labelGeo.titulo_pantalla2.scale.x + 0.2, this.labelGeo.titulo_pantalla2.scale.x + 0.05);
-          this.fondos[property1].position.set(this.labelGeo.titulo_pantalla2.position.x + 0.05, this.labelGeo.titulo_pantalla2.position.y - 0.007, -0.1);
+          this.fondos[property1].scale.set(
+            this.labelGeo.titulo_pantalla2.scale.x + 0.2,
+            this.labelGeo.titulo_pantalla2.scale.x + 0.05
+          );
+          this.fondos[property1].position.set(
+            this.labelGeo.titulo_pantalla2.position.x + 0.05,
+            this.labelGeo.titulo_pantalla2.position.y - 0.007,
+            -0.1
+          );
           this.pantallas[property].add(this.labelGeo.titulo_pantalla2);
           this.pantallas[property].add(this.labelGeo.boton0_p2_r1);
           this.pantallas[property].add(this.labelGeo.boton1_p2_r1);
@@ -315,7 +627,8 @@ class Test3d extends Component {
     for (const property in this.pantallas) {
       this.GUIv2.add(this.pantallas[property]);
     }
-    this.GUIv2.position.set(0.3, 0.33, 0.9); this.GUIv2.rotation.set(0, - Math.PI / 4, 0);
+    this.GUIv2.position.set(0.3, 0.33, 0.9);
+    this.GUIv2.rotation.set(0, -Math.PI / 4, 0);
     console.log("gui2");
     console.log(this.GUIv2);
 
@@ -327,31 +640,45 @@ class Test3d extends Component {
       { size: 32, text: " Salir " },
       { x: 0.03, y: 0.03 },
       { x: 0, y: 0, z: 0 }
-    ).button
+    ).button;
+
+    bu.obj.position.set(0.05, 0.185, 0.93);
+    bu.obj.rotation.x = -Math.PI / 2;
+
     let bu2 = new Button3d(
       0.005,
       0x81e219,
       1,
       true,
-      { size: 32, text: " votar " },
+      { size: 32, text: " Votar " },
       { x: 0.03, y: 0.03 },
       { x: 0, y: 0, z: 0 }
-    ).button
-    console.log("//---------- button")
-    bu.obj.position.set(0.1, 0.185, 0.93); bu.obj.rotation.x = -Math.PI / 2
-    bu2.obj.position.set(0, 0.185, 0.93); bu2.obj.rotation.x = -Math.PI / 2
-    this.menuopciones.salir = bu.Interaction; this.menuopciones.votacion = bu2.Interaction;
+    ).button;
+    bu2.obj.position.set(0, 0.185, 0.93);
+    bu2.obj.rotation.x = -Math.PI / 2;
+    let bu3 = new Button3d(
+      0.005,
+      0x2f5fff,
+      1,
+      true,
+      { size: 32, text: " Microfono " },
+      { x: 0.03, y: 0.03 },
+      { x: 0, y: 0, z: 0 }
+    ).button;
+    bu3.obj.position.set(-0.05, 0.185, 0.93);
+    bu3.obj.rotation.x = -Math.PI / 2;
+    console.log("//---------- button");
 
-    this.scene.add(bu.obj); this.scene.add(bu2.obj);
-    this.scene.add(this.GUIv2);
-
-
+    this.menuopciones.salir = bu.Interaction;
+    this.menuopciones.votacion = bu2.Interaction;
+    this.menuopciones.microphone = bu3.Interaction;
+    this.scene.add(bu.obj);
+    this.scene.add(bu2.obj);
+    this.scene.add(bu3.obj);
+    //this.scene.add(this.GUIv2);
+    // this.setupCanvasDrawing();
     this.pantallas.pantalla0.visible = this.estados_pantalla.p0;
     this.pantallas.pantalla1.visible = this.estados_pantalla.p1;
-
-
-
-
 
     /*
    ▄▀▀ █░░█ ▀█▀ . █▀▀ █▄░█ █▀▄
@@ -398,55 +725,171 @@ class Test3d extends Component {
     //  this.controls.connect();
 
     // this.controls.isLocked = true ;
-    //  console.log(this.controls.getObject());
-
-
+    console.log("control-----------");
+    console.log(this.state.posicionplayer);
 
     this.scene.add(this.controls.getObject());
     //---------
 
-
-    this.scene.add(new CargarObj(
-      this.entorno,    //se carga el entorno por los reflejos 
-      modeloMesaurl,  //le mando el modelo en gltf
-      "mesa", //el nombre del objeto
-      { x: 1, y: -0.3, z: -1.75 }, // posicion
-      { x: 0, y: 0, z: 0 },  // rotacion
-      { x: 1, y: 1, z: 1 }).obj //escala
+    this.scene.add(
+      new CargarObj(
+        this.entorno, //se carga el entorno por los reflejos
+        modeloMesaurl, //le mando el modelo en gltf
+        "mesa", //el nombre del objeto
+        { x: 1, y: -0.3, z: -1.75 }, // posicion
+        { x: 0, y: 0, z: 0 }, // rotacion
+        { x: 1, y: 1, z: 1 }
+      ).obj //escala
     );
 
-    this.scene.add(new CargarObj(this.entorno, modelopiso, "piso", { x: -2.72, y: -0.3, z: -1.75 }, { x: 0, y: 0, z: 0 }, { x: 1, y: 1, z: 1 }).obj);
-    this.scene.add(new CargarObj(this.entorno, modelluz, "luz", { x: 1, y: -0.3, z: -1.75 }, { x: 0, y: 0, z: 0 }, { x: 1, y: 1, z: 1 }).obj);
-    this.scene.add(new CargarObj(this.entorno, modelomueble1, "muble", { x: -0.33, y: -0.07, z: -0.9 }, { x: 0, y: 0, z: 0 }, { x: 1, y: 1, z: 1 }).obj);
-    this.scene.add(new CargarObj(this.entorno, modelopared, "pared1", { x: 1, y: -0.27, z: -2 }, { x: 0, y: 0, z: 0 }, { x: 1, y: 1, z: 1 }).obj);
-    this.scene.add(new CargarObj(this.entorno, modelopared2, "pared2", { x: 1, y: 6.04, z: -2 }, { x: 0, y: 0, z: 0 }, { x: 1, y: 1, z: 1 }).obj);
-    this.scene.add(new CargarObj(this.entorno, modelosilla, "silla1", { x: 1.32, y: -0.33, z: -1.7 }, { x: 0, y: 0, z: 0 }, { x: 1, y: 1, z: 1 }).obj);
-    this.scene.add(new CargarObj(this.entorno, modelosilla, "silla2", { x: -1.28, y: -0.33, z: 1.5 }, { x: 0, y: Math.PI, z: 0 }, { x: 1, y: 1, z: 1 }).obj);
-    this.scene.add(new CargarObj(this.entorno, modelosilla, "silla3", { x: -2.28, y: -0.33, z: -1.4 }, { x: 0, y: Math.PI / 2, z: 0 }, { x: 1, y: 1, z: 1 }).obj);
-    this.scene.add(new CargarObj(this.entorno, modelosilla, "silla4", { x: -2.28, y: -0.33, z: -2 }, { x: 0, y: Math.PI / 2, z: 0 }, { x: 1, y: 1, z: 1 }).obj);
-    this.scene.add(new CargarObj(this.entorno, modelosilla, "silla5", { x: 2.28, y: -0.33, z: 1.2 }, { x: 0, y: -Math.PI / 2, z: 0 }, { x: 1, y: 1, z: 1 }).obj);
-    this.scene.add(new CargarObj(this.entorno, modelosilla, "silla6", { x: 2.28, y: -0.33, z: 0.65 }, { x: 0, y: -Math.PI / 2, z: 0 }, { x: 1, y: 1, z: 1 }).obj);
-    this.scene.add(new CargarObj(this.entorno, modelosilla, "silla7", { x: 2.28, y: -0.33, z: 1.8 }, { x: 0, y: -Math.PI / 2, z: 0 }, { x: 1, y: 1, z: 1 }).obj);
-    this.scene.add(new CargarObj(this.entorno, modelosilla, "silla8", { x: -2.28, y: -0.33, z: -0.7 }, { x: 0, y: Math.PI / 2, z: 0 }, { x: 1, y: 1, z: 1 }).obj);
-
+    this.scene.add(
+      new CargarObj(
+        this.entorno,
+        modelopiso,
+        "piso",
+        { x: -2.72, y: -0.3, z: -1.75 },
+        { x: 0, y: 0, z: 0 },
+        { x: 1, y: 1, z: 1 }
+      ).obj
+    );
+    this.scene.add(
+      new CargarObj(
+        this.entorno,
+        modelluz,
+        "luz",
+        { x: 1, y: -0.3, z: -1.75 },
+        { x: 0, y: 0, z: 0 },
+        { x: 1, y: 1, z: 1 }
+      ).obj
+    );
+    this.scene.add(
+      new CargarObj(
+        this.entorno,
+        modelomueble1,
+        "muble",
+        { x: -0.33, y: -0.07, z: -0.9 },
+        { x: 0, y: 0, z: 0 },
+        { x: 1, y: 1, z: 1 }
+      ).obj
+    );
+    this.scene.add(
+      new CargarObj(
+        this.entorno,
+        modelopared,
+        "pared1",
+        { x: 1, y: -0.27, z: -2 },
+        { x: 0, y: 0, z: 0 },
+        { x: 1, y: 1, z: 1 }
+      ).obj
+    );
+    this.scene.add(
+      new CargarObj(
+        this.entorno,
+        modelopared2,
+        "pared2",
+        { x: 1, y: 6.04, z: -2 },
+        { x: 0, y: 0, z: 0 },
+        { x: 1, y: 1, z: 1 }
+      ).obj
+    );
+    this.scene.add(
+      new CargarObj(
+        this.entorno,
+        modelosilla,
+        "silla1",
+        { x: 1.32, y: -0.33, z: -1.7 },
+        { x: 0, y: 0, z: 0 },
+        { x: 1, y: 1, z: 1 }
+      ).obj
+    );
+    this.scene.add(
+      new CargarObj(
+        this.entorno,
+        modelosilla,
+        "silla2",
+        { x: -1.28, y: -0.33, z: 1.5 },
+        { x: 0, y: Math.PI, z: 0 },
+        { x: 1, y: 1, z: 1 }
+      ).obj
+    );
+    this.scene.add(
+      new CargarObj(
+        this.entorno,
+        modelosilla,
+        "silla3",
+        { x: -2.28, y: -0.33, z: -1.4 },
+        { x: 0, y: Math.PI / 2, z: 0 },
+        { x: 1, y: 1, z: 1 }
+      ).obj
+    );
+    this.scene.add(
+      new CargarObj(
+        this.entorno,
+        modelosilla,
+        "silla4",
+        { x: -2.28, y: -0.33, z: -2 },
+        { x: 0, y: Math.PI / 2, z: 0 },
+        { x: 1, y: 1, z: 1 }
+      ).obj
+    );
+    this.scene.add(
+      new CargarObj(
+        this.entorno,
+        modelosilla,
+        "silla5",
+        { x: 2.28, y: -0.33, z: 1.2 },
+        { x: 0, y: -Math.PI / 2, z: 0 },
+        { x: 1, y: 1, z: 1 }
+      ).obj
+    );
+    this.scene.add(
+      new CargarObj(
+        this.entorno,
+        modelosilla,
+        "silla6",
+        { x: 2.28, y: -0.33, z: 0.65 },
+        { x: 0, y: -Math.PI / 2, z: 0 },
+        { x: 1, y: 1, z: 1 }
+      ).obj
+    );
+    this.scene.add(
+      new CargarObj(
+        this.entorno,
+        modelosilla,
+        "silla7",
+        { x: 2.28, y: -0.33, z: 1.8 },
+        { x: 0, y: -Math.PI / 2, z: 0 },
+        { x: 1, y: 1, z: 1 }
+      ).obj
+    );
+    this.scene.add(
+      new CargarObj(
+        this.entorno,
+        modelosilla,
+        "silla8",
+        { x: -2.28, y: -0.33, z: -0.7 },
+        { x: 0, y: Math.PI / 2, z: 0 },
+        { x: 1, y: 1, z: 1 }
+      ).obj
+    );
 
     //-------------------------------------------------------- espejo
     //0.177 0.023 -0.047
     let espejo = new Mirror(
-      0.65, 1.93,
+      0.65,
+      1.93,
       window.innerWidth * window.devicePixelRatio,
       window.innerHeight * window.devicePixelRatio,
       0x0000000,
       0.9,
       { x: 0.023, y: 0.177, z: -0.047 },
       { x: -Math.PI / 2, y: 0, z: 0 }
-    ).obj
-    this.scene.add(espejo.mirror); this.scene.add(espejo.filter);
-
+    ).obj;
+    this.scene.add(espejo.mirror);
+    this.scene.add(espejo.filter);
 
     this.mount.appendChild(this.renderer.domElement);
     this.animate();
-
   } // fin del componentdidmount
   /*
     *
@@ -489,8 +932,15 @@ class Test3d extends Component {
     *     
     */
   animate() {
+    // this.setupCanvasDrawing();
     requestAnimationFrame(this.animate);
-    this.controls.getObject().position.set(this.state.posicionplayer.x, this.state.posicionplayer.y, this.state.posicionplayer.z);
+    this.controls
+      .getObject()
+      .position.set(
+        this.state.posicionplayer.x,
+        this.state.posicionplayer.y,
+        this.state.posicionplayer.z
+      );
     var time = performance.now();
 
     var delta = (time - this.prevTime) / 1000;
@@ -505,7 +955,18 @@ class Test3d extends Component {
     this.materialC.needsUpdate = true;
     this.prevTime = time;
     this.renderer.render(this.scene, this.camera);
-
+    /*
+    if (this.escena) {
+      if (this.npcs.length > 0 && this.variablerara.length > 0) {
+        for (let a = 0; a < this.npcs.length; a++) {
+          let x = 0;
+          this.npcs[a].position.set(x, 0.3, 0);
+          x = x + 0.5;
+          this.scene.add(this.npcs[a]);
+        }
+      }
+    }
+*/
     //   console.log(this.camera.position);
     // console.log("renderizando ando");
   } //fin animate
@@ -539,50 +1000,51 @@ class Test3d extends Component {
     var intersect = this.raycaster.intersectObjects(this.objInteraccion);
     var intersect0 = this.raycaster.intersectObjects(this.objInteraccion0);
     let intersect4 = this.raycaster.intersectObjects(this.menuopciones.salir);
-    let intersect5 = this.raycaster.intersectObjects(this.menuopciones.votacion);
+    let intersect5 = this.raycaster.intersectObjects(
+      this.menuopciones.votacion
+    );
+    let intersect6 = this.raycaster.intersectObjects(
+      this.menuopciones.microphone
+    );
     var intersect3 = this.raycaster.intersectObjects(this.objInteraccion3);
     if (intersectsplay.length > 0) {
       // this.video.play();
       //this.meshvideo.visible = true;
-    } else
-      if (intersectspause.length > 0) {
-        //this.video.pause();
-        //   this.meshvideo.visible = false;
-        //    this.setupCanvasDrawing();
-      } else
-        if (intersect0.length > 0 && this.estados_pantalla.p1) {
-          console.log("video play")
-          this.video.play();
-          this.meshvideo.visible = true;
-        } else
-          if (intersect.length > 0 && this.estados_pantalla.p0) {
-            console.log("primera pantalal fuera")
-            this.estados_pantalla.p0 = false;
-            this.pantallas.pantalla0.visible = this.estados_pantalla.p0;
-            this.estados_pantalla.p1 = true;
-            this.pantallas.pantalla1.visible = this.estados_pantalla.p1;
-          }
-          else
-            if (intersect3.length > 0 && this.estados_pantalla.p1) {
-              console.log("video pausado")
-              this.video.pause();
-              this.meshvideo.visible = false;
-              this.setupCanvasDrawing();
-
-            } else if (intersect4.length > 0 && !this.state.votaciones) {
-              console.log("salir")
-              window.location.href = "/Dashboard/Desktop"
-            } else if (intersect5.length > 0 && !this.state.votaciones) {
-
-              this.setState({ votaciones: true })
-              console.log("votacion")
-
-            }
+    } else if (intersectspause.length > 0) {
+      //this.video.pause();
+      //   this.meshvideo.visible = false;
+      //    this.setupCanvasDrawing();
+    } else if (intersect0.length > 0 && this.estados_pantalla.p1) {
+      console.log("video play");
+      this.video.play();
+      this.meshvideo.visible = true;
+    } else if (intersect.length > 0 && this.estados_pantalla.p0) {
+      console.log("primera pantalal fuera");
+      this.estados_pantalla.p0 = false;
+      this.pantallas.pantalla0.visible = this.estados_pantalla.p0;
+      this.estados_pantalla.p1 = true;
+      this.pantallas.pantalla1.visible = this.estados_pantalla.p1;
+    } else if (intersect3.length > 0 && this.estados_pantalla.p1) {
+      console.log("video pausado");
+      this.video.pause();
+      this.meshvideo.visible = false;
+      this.setupCanvasDrawing();
+    } else if (intersect4.length > 0 && !this.state.votaciones) {
+      console.log("salir");
+      window.location.href = "/Dashboard/Desktop";
+    } else if (intersect5.length > 0 && !this.state.votaciones) {
+      this.setState({ votaciones: true });
+      console.log("votacion");
+    } else if (intersect6.length > 0) {
+      this.setState({
+        escuchar: !this.state.escuchar,
+      });
+      console.log(`microfono ${this.state.escuchar}`);
+    }
 
     this.estado = true;
   };
   mouseEventup = (event) => {
-
     // console.log(event);
     this.estado = false;
     // this.video.pause();
@@ -603,7 +1065,7 @@ class Test3d extends Component {
 
   makeLabelCanvas = (size, name) => {
     const borderSize = 2;
-    const ctx = document.createElement('canvas').getContext('2d');
+    const ctx = document.createElement("canvas").getContext("2d");
     const font = `${size}px bold sans-serif`;
     ctx.font = font;
     // medir cuánto tiempo el nombre será
@@ -615,24 +1077,97 @@ class Test3d extends Component {
 
     // necesidad de establecer la fuente de nuevo después de cambiar el tamaño del lienzo
     ctx.font = font;
-    ctx.textBaseline = 'top';
-    //color : white , blue, black 
-    ctx.fillStyle = 'transparent';
+    ctx.textBaseline = "top";
+    //color : white , blue, black
+    ctx.fillStyle = "transparent";
     ctx.fillRect(0, 0, width, height);
-    ctx.fillStyle = 'black';
+    ctx.fillStyle = "black";
     ctx.fillText(name, borderSize, borderSize);
 
     return ctx.canvas;
+  };
+  //eventos del boto
+  microphone(event) {
+    //this.state.escuchar esta true
+    if (this.state.escuchar) {
+      //se pondra falso con una variable temporal y el letro del boton sera mute
+      let temp = !this.state.escuchar;
+      this.setState({
+        state: "Mute",
+        escuchar: temp,
+      });
+    } else {
+      //se pondra true con una variable temporal y el letro del boton sera Ok
+      let temp = !this.state.escuchar;
+      this.setState({
+        state: "Ok",
+        escuchar: temp,
+      });
+    }
+  }
+  hablar(data) {
+    console.log(`Hablando : ${data.id}`);
+    // console.log(data.raw);
+    let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    //se saca el array raw que contiene la info del audio y la id de la persona que esta hablando
+    const { raw, id } = data;
+    let datos = this.variablerara.find((element) => element.id === id);
+
+    //    console.log(raw)
+    //se compara si ya se tienen todas las muestras de un segundo de audio y si el
+    //id de la persona es diferente se rellena 'datos' que contendra la informacion del
+    // audio
+    if (datos.buffer.length < 48000) {
+      //re recorre raw para almacenar los datos hasta llegar a la cantindad de muestras por segundo
+      for (const property in raw) {
+        datos.buffer.push(raw[property]);
+      }
+    } else {
+      console.log("reproducir");
+      // re estrucutra un búfer estéreo vacío de 1 segundo a la frecuencia de muestreo de AudioContext
+      // esto basicamente es crea un aundio basio de 1 canal de 48000 muestras por segundo, a 48000
+      var myArrayBuffer = audioCtx.createBuffer(
+        1,
+        audioCtx.sampleRate,
+        audioCtx.sampleRate
+      );
+      // Llene el búfer con ruido blanco;
+      for (
+        var channel = 0;
+        channel < myArrayBuffer.numberOfChannels;
+        channel++
+      ) {
+        // Esto nos da la matriz real que contiene los datos
+        var nowBuffering = myArrayBuffer.getChannelData(channel);
+        //esto rellena los datos de nuevo buffer
+        for (var i = 0; i < myArrayBuffer.length; i++) {
+          nowBuffering[i] = datos.buffer[i];
+        }
+      }
+      //Obtenga un AudioBufferSourceNode.
+      //Este es el AudioNode para usar cuando queremos reproducir un AudioBuffer
+      var source = audioCtx.createBufferSource();
+      // establecer el búfer en el AudioBufferSourceNode
+      source.buffer = myArrayBuffer;
+      // conectar el AudioBufferSourceNode a la destino para que podamos escuchar el sonido
+      source.connect(audioCtx.destination);
+      // reproduce el sonido
+      source.start();
+      //limpia los datos para u nuevo muestreo
+      datos.buffer = [];
+    }
   }
 
   funcionvotacion = () => {
-    this.setState({ votaciones: false })
-  }
+    this.setState({ votaciones: false });
+  };
   render() {
     let custo = {
-      padding: "0"
-      , borderTopLeftRadius: "0.5rem", borderTopRightRadius: "0.5rem"
-    }
+      padding: "0",
+      borderTopLeftRadius: "0.5rem",
+      borderTopRightRadius: "0.5rem",
+    };
     return (
       <div className="test3d">
         <Rodal
@@ -644,7 +1179,6 @@ class Test3d extends Component {
           customStyles={custo}
         >
           <ContentCard obj={this.state.practica} voto={this.funcionvotacion} />
-
         </Rodal>
         <div
           style={{ width: "100vw", height: "50.1vw" }}
