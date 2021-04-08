@@ -52,6 +52,7 @@ class Test3d extends Component {
     this.funcionvotacion = this.funcionvotacion.bind(this);
     this.variablerara = [];
     this.npcs = [];
+    this.idsnpcs = [];
     this.numnpcs = 0;
     this.posiciones = [
       { x: 0, y: 0.3, z: -1.1 },
@@ -166,7 +167,7 @@ class Test3d extends Component {
           this.npcs.push(tempobj);
           this.numnpcs++;
         });
-
+        this.idsnpcs = data.room;
         this.variablerara = com;
         console.log(this.variablerara);
         this.setState({
@@ -181,23 +182,14 @@ class Test3d extends Component {
 
         data.room.splice(data.room.indexOf(this.state.user), 1);
         console.log(`id:${this.state.user}  rom: ${data.room}`);
+
         data.room.forEach((element) => {
           com.push({ id: element, buffer: [] });
           let si = false;
           if (this.variablerara.length > 0) {
-            for (let a = 0; a < this.variablerara.length; a++) {
-              if (this.variablerara[a].id !== element && !si) {
-                let esta = false;
-                for (let b = 0; b < this.scene.children.length; b++) {
-                  if (this.scene.children[b].name != element) {
-                    esta = true;
-                  }
-                }
-                if (esta) {
-                  si = !si;
-                  console.log(` diferente ${element}`);
-                }
-              }
+            if (this.idsnpcs.indexOf(element) < 0) {
+              si = !si;
+              console.log(` diferente ${element}`);
             }
           } else {
             si = !si;
@@ -229,6 +221,7 @@ class Test3d extends Component {
           }
         });
 
+        this.idsnpcs = data.room;
         this.variablerara = com;
         // console.log(this.variablerara);
         this.setState({ compas: data.room, escena: true });
@@ -661,7 +654,7 @@ class Test3d extends Component {
       0x2f5fff,
       1,
       true,
-      { size: 32, text: " Microfono " },
+      { size: 32, text: "  Microfono  " },
       { x: 0.03, y: 0.03 },
       { x: 0, y: 0, z: 0 }
     ).button;
