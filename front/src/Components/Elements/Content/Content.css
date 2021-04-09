@@ -15,6 +15,16 @@ a:focus {
   margin-left: 0;
   height: 100vh;
 }
+
+.o-topbar-arrow {
+  transform: rotate(180deg);
+  transition: all 0.8s ease;
+}
+
+.o-topbar-arrow-close {
+  transform: rotate(0deg);
+  transition: all 0.8s ease;
+}
 @media only screen and (max-width: 590px) {
   body {
     overflow: hidden;

@@ -65,7 +65,7 @@
 }
 .o-project-creation-section .md-outline input[type="text"] + label,
 .o-project-creation-section .md-outline textarea + label {
-  transform: translateY(-14px) scale(0.8);
+  transform: translateY(-18px) scale(0.8);
   background: #fff;
   height: 1.6rem;
   left: 1px;
@@ -73,7 +73,7 @@
   padding-bottom: 0px;
   padding-right: 5px;
   margin-left: 0.5rem;
-  font-size: 0.8rem;
+  font-size: 1.2rem;
   color: #007bff;
   position: absolute;
 }
@@ -84,14 +84,12 @@
 .o-project-creation-section .md-outline textarea {
   border-color: #007bff;
   border-bottom: 0.1px solid #007bff;
-  font-size: 10px;
+  font-size: 12px;
   min-height: 2rem;
-}
-.o-project-creation-section .md-outline input[type="text"] {
-  max-width: 20rem;
 }
 .o-project-creation-section .md-outline textarea:focus + label {
   color: #007bff;
+  transform: translateY(-18px) scale(0.8);
 }
 .o-project-creation-section .md-outline textarea:focus {
   border-color: #007bff;

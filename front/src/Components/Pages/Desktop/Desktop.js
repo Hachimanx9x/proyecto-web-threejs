@@ -164,7 +164,7 @@ export default function Desktop() {
   }
   return (
     <div className="container-fluid mb-5 mb-sm-0 pb-5 pb-sm-0 m-0 p-0">
-      <h4 className="mb-3 pl-4">Actualizaciones</h4>
+      <h4 className="mb-3 pl-4">Proyectos</h4>
 
       <div className="o-blue-container o-updates-container">
         <div className="mt-3 mb-0 d-flex justify-content-end">

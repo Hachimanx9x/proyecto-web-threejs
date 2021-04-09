@@ -97,12 +97,12 @@ export default function LandingPage() {
       <header className="m-0 mb-3">
         <div className="o-landing-title">
           <h1 className="text-white m-0 ">
-            El mejor sitio para diseño de tu sistema multimedia
+            El mejor sitio para diseñar tu sistema multimedia
           </h1>
           <p className="text-white text-justify mt-2">
-            La página encargada del apoyo a sus desarrolladores, con guías
-            ágiles para la creación de proyectos multimedia y sus procesos de
-            retralimentación grupal.
+            Diseña sistemas multimedia apoyandote con guías ágiles para
+            desarrollo que se adapten a tus necesidades. Coordina actividades de
+            diseño y procesos de retralimentación grupal.
           </p>
           <a
             className=" float-right blue accent-4 text-capitalize  z-depth-0 text-light ml-0 mr-0 mt-2 font-weight-bold o-button"
@@ -121,9 +121,8 @@ export default function LandingPage() {
             <p>
               El sistema cuenta con una serie de funcionalidades que permiten la
               planeación, diseño, maquetación y desarrollo de un sistema
-              multimedia, esto apoyado con una metodología de desarrollo
-              sugerida por el sistema que se adapta con facilidad a los
-              distintos proyectos.
+              multimedia, esto apoyado con una metodología de desarrollo que se
+              adapta con facilidad a los distintos proyectos.
             </p>
           </div>
           <div>

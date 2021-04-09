@@ -26,7 +26,7 @@ const Content = ({ sidebarIsOpen, toggleSidebar }) => (
       "is-open": sidebarIsOpen,
     })}
   >
-    <Topbar toggleSidebar={toggleSidebar} />
+    <Topbar toggleSidebar={toggleSidebar} sidebarIsOpen={sidebarIsOpen} />
     <Switch>
       <Route exact path="Dashboard" component={Loged} />
       <Route exact path="/Dashboard/Projects" component={Desktop} />

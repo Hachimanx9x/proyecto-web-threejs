@@ -214,7 +214,12 @@ class CreateEvents extends Component {
                       ? "is-invalid border-danger "
                       : "") + "m-0  mr-0"
                   }
-                  label="Título de la reunión"
+                  label={
+                    <p>
+                      Título de la reunión{" "}
+                      <strong className="text-danger">*</strong>
+                    </p>
+                  }
                   outline
                   onChange={(e) => this.handleInput("eventTitle", e)}
                 />
@@ -232,7 +237,7 @@ class CreateEvents extends Component {
               <div className="row mt-0 ml-2 mr-2 p-2 rounded justify-content-between">
                 <div className="col-sm-4 mt-1 mb-2 mb-sm-0 mt-sm-0 mr-1 position-relative">
                   <small className="o-hour-text m-0 mb-2">
-                    Proyecto asociado
+                    Proyecto asociado <strong className="text-danger">*</strong>
                   </small>
                   <div className="position-relative mt-1 mb-2 mb-sm-4">
                     <div className="o-create-select">
@@ -272,7 +277,8 @@ class CreateEvents extends Component {
                   style={{ minWidth: "14rem", maxWidth: "14rem" }}
                 >
                   <small className="o-hour-text m-0">
-                    Hora de inicio de la reunión
+                    Hora de inicio de la reunión{" "}
+                    <strong className="text-danger">*</strong>
                   </small>
                   <div className="position-relative bg-warning ">
                     <div className="o-clock-container">
@@ -319,7 +325,8 @@ class CreateEvents extends Component {
 
                 <div className="col-sm-4 mt-1 mt-sm-0 position-relative">
                   <small className="o-hour-text m-0">
-                    Hora de finalización de la reunión
+                    Hora de finalización de la reunión{" "}
+                    <strong className="text-danger">*</strong>
                   </small>
                   <div className="postition-relative">
                     <div className="o-clock-container">

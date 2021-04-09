@@ -16,7 +16,7 @@ const CardMember = ({ member, remove, add, change, rols, readOnly }) => {
 
   const deleteConfirmation = () => {
     setShow(!show);
-    setTimeout(() => remove(member), 1000);
+    setTimeout(() => remove(member), 800);
   };
 
   const deleteMember = () => {
@@ -26,7 +26,7 @@ const CardMember = ({ member, remove, add, change, rols, readOnly }) => {
 
   const addMember = () => {
     setShow(!show);
-    setTimeout(() => add(member), 1000);
+    setTimeout(() => add(member), 800);
   };
 
   const memberRol = (somejob) => {

@@ -15,12 +15,6 @@ import SuccessAnimation from "../../Elements/SuccessAnimation/SuccessAnimation";
 class CreateProject extends Component {
   constructor(props) {
     super(props);
-    this.removeMember = this.removeMember.bind(this);
-    this.addMember = this.addMember.bind(this);
-    this.changeRol = this.changeRol.bind(this);
-    this.handleInput = this.handleInput.bind(this);
-    this.handleValidation = this.handleValidation.bind(this);
-    this.createProject = this.createProject.bind(this);
 
     this.state = {
       projectIcon: null,
@@ -148,28 +142,35 @@ class CreateProject extends Component {
    * Looks if the member exist in the array of selected members by searching for the id.
    * Removes the member and set the state.
    */
-  removeMember(member) {
-    const members = this.state.members;
-    const item = members.find((iterador) => iterador.id === member.id);
+  removeMember = (member) => {
+    const { members, contacts } = this.state;
+    const item = members.findIndex((iterador) => iterador.id === member.id);
+
     if (item) {
+      contacts.push({
+        id: member.id,
+        name: member.name,
+        urlimage: member.urlimage,
+        rols: [...member.rols],
+      });
       members.splice(item, 1);
-      this.setState({ members: [...members] });
+      this.setState({ members: [...members], contacts: [...contacts] });
     }
-  }
+  };
   /*
    * Recieves an object of the member.
    * Stores the current array of members in a temporal variable.
    * Looks if the member exist in the array of selected members by searching for the id so the member is not duplicated.
    * Adds the member and set the state.
    */
-  addMember(member) {
+  addMember = (member) => {
     const members = this.state.members;
     const item = members.find((iterador) => iterador.id === member.id);
     if (!item) {
       members.push({ ...member, selectedrol: "" });
       this.setState({ members: [...members] });
     }
-  }
+  };
 
   /*
    * Recieves an object of the member and the selected rol.
@@ -177,14 +178,14 @@ class CreateProject extends Component {
    * Looks if the member exist in the array of selected members by searching for the id.
    * Updates the rol in the array and set the state.
    */
-  changeRol(member, rol) {
+  changeRol = (member, rol) => {
     const members = this.state.members;
     const item = members.find((iterador) => iterador.id === member.id);
     if (item) {
       item.selectedrol = rol;
       this.setState({ members: [...members] });
     }
-  }
+  };
   handleInput = (name, e) => {
     if (name === "projectIcon" || name === "projectPicture") {
       const reader = new FileReader();
@@ -467,7 +468,8 @@ class CreateProject extends Component {
             <div className="d-flex justify-content-between">
               <p className="m-3 pl-1 pl-sm-4">
                 Integrantes del proyecto{" "}
-                <strong className="text-danger">*</strong>
+                <strong className="text-danger">*</strong>{" "}
+                <small>(Selecciona al menos 3 integrantes)</small>
                 <span
                   className={
                     this.state.errors.members ? "text-danger" : "invisible"

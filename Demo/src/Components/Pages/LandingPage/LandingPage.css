@@ -39,7 +39,7 @@ body {
   max-width: 1140px;
   align-content: center;
   display: flex;
-  margin: 8rem auto 0 auto;
+  margin: 14rem auto 0 auto;
   text-align: justify;
   justify-content: space-around;
   flex-direction: row;
@@ -83,7 +83,7 @@ header h1 {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin: 7rem auto 0 auto;
+  margin: 12rem auto 0 auto;
 }
 
 .o-card-section h3 {
