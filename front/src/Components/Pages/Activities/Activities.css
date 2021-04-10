@@ -2,13 +2,18 @@
   max-height: 40rem;
   overflow-y: auto;
 }
-
+.o-deliverables-col {
+  text-align: start;
+  justify-content: center;
+  min-width: 17rem;
+  max-width: 65%;
+}
 .o-text-alfa-state {
   position: absolute;
-  color: #4285f4;
-  top: 50px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   font-size: 1.4rem;
-  right: 108px;
 }
 .o-activities-col::-webkit-scrollbar {
   width: 6px;
@@ -21,4 +26,17 @@
 
 .o-activities-col::-webkit-scrollbar-thumb:hover {
   background: #3a4c99;
+}
+
+@media only screen and (max-width: 1300px) {
+  .o-deliverables-col {
+    margin-left: 24px;
+  }
+}
+
+@media only screen and (max-width: 1300px) {
+  .o-deliverables-col {
+    max-width: 100%;
+    margin: 0;
+  }
 }

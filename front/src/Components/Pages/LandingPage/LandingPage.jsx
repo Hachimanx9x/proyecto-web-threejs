@@ -100,9 +100,9 @@ export default function LandingPage() {
             El mejor sitio para diseñar tu sistema multimedia
           </h1>
           <p className="text-white text-justify mt-2">
-            Diseña sistemas multimedia apoyandote con guías ágiles para
+            Diseña sistemas multimedia apoyándote con guías ágiles para
             desarrollo que se adapten a tus necesidades. Coordina actividades de
-            diseño y procesos de retralimentación grupal.
+            diseño y procesos de retrolimentación grupal.
           </p>
           <a
             className=" float-right blue accent-4 text-capitalize  z-depth-0 text-light ml-0 mr-0 mt-2 font-weight-bold o-button"

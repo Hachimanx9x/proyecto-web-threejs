@@ -49,6 +49,12 @@
   width: 4rem;
 }
 
+.o-document-type.cem {
+  background-color: #ffefbe;
+  border-color: #d0a114;
+  color: #d0a114;
+}
+
 .o-icon-deliverable-container {
   width: 1.6rem;
   height: 1.6rem;
@@ -58,6 +64,10 @@
   top: -2px;
   right: -2px;
 }
+.o-icon-deliverable-container.cem {
+  background-color: #d0a114;
+}
+
 .o-icon-deliverable {
   color: white;
   position: absolute;
@@ -78,9 +88,34 @@
   background-color: #fff;
 }
 
+.o-btn-deliverable label {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 9;
+  cursor: pointer;
+}
+.o-btn-deliverable.cem {
+  border-color: #d0a114;
+}
 .o-btn-deliverable:focus {
   outline: none;
 }
 .o-btn-deliverable:hover {
   background-color: rgb(238, 229, 229);
+}
+
+.o-deliverable-select.cem::before {
+  background-color: #d0a114;
+}
+
+.o-deliverable-select.cem:hover::before {
+  background: #957411;
+}
+
+.o-deliverable-select.cem select {
+  color: #d0a114;
+  border-color: #d0a114;
 }

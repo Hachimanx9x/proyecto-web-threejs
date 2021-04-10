@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Accordion2Styles.css";
-import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 class Accordion2 extends Component {
   render() {
@@ -27,12 +27,13 @@ class Accordion2 extends Component {
             </div>
 
             <FontAwesomeIcon
-              icon={this.props.active === this.props.title ? faMinus : faPlus}
+              icon={faChevronDown}
               className={
                 (this.props.active === this.props.title
                   ? "rotate "
                   : "rotated ") + "mr-2"
               }
+              style={{ fontSize: "20px" }}
             />
           </span>
         </button>

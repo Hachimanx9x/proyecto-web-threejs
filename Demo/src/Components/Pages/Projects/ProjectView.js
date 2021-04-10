@@ -383,7 +383,7 @@ class ProjectView extends Component {
                   <a
                     className="btn text-white mr-2 z-depth-0 text-capitalize"
                     style={{ background: "#4FA77B", fontSize: "12px" }}
-                    href="/Dashboard/Projects/Activities"
+                    href={`/Dashboard/Projects/ActivitiesSMMV/${1}`}
                   >
                     Actividades
                   </a>
@@ -491,7 +491,7 @@ class ProjectView extends Component {
                   <a
                     className="btn text-white mr-2 z-depth-0 text-capitalize"
                     style={{ background: "#D0A114", fontSize: "12px" }}
-                    href="/Dashboard/Projects/Activities"
+                    href={`/Dashboard/Projects/ActivitiesCEM/${1}`}
                   >
                     Actividades
                   </a>
