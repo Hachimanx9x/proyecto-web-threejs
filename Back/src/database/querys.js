@@ -305,7 +305,7 @@ query.buscarcontactosusuariotalento = function (id) {
 
 query.obtenerproyectosactividadescompleto = function (id) {
   return `SELECT 
-
+  proyectos.id,
     actividades.id AS "actid",
     actividades.actividadtitulo,
     actividades.actividaddescripcion,

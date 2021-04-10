@@ -375,7 +375,8 @@ este carga las actividades y entregables del proyecto
       "estado": "entregada",
       "fechaentrega": "2021-01-23",
       "tecnica": "Video como apoyo a la etnografía",
-      "contenido": "Coursera 2T27CP6QW48Q.pdf"
+      "namefile": "Coursera 2T27CP6QW48Q.pdf",
+      "contenido": "http://localhost:3030/proyecto120/Coursera 2T27CP6QW48Q.pdf"
     },
     {
       "actividadid": 503,
@@ -388,7 +389,8 @@ este carga las actividades y entregables del proyecto
       "estado": "asignada",
       "fechaentrega": "2021-01-23",
       "tecnica": "Producción de metáforas y analogías",
-      "contenido": null
+      "namefile": null,
+      "contenido": "http://localhost:3030/proyecto120/null"
     }
   ],
   "entregables": [
