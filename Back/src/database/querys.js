@@ -454,7 +454,9 @@ query.obtenerentregcontinte = function (id) {
     join entregas on entregables.id = entregas.entragable
     where proyectos.id = ${id};`;
 };
-
+query.obtenerActividades = function (id) {
+  return `SELECT * FROM actividades id=${id}; `;
+};
 //-------------busquedas por tablas
 query.obtenertodasIdiomas = function () {
   return `SELECT * FROM idiomas ; `;
@@ -1074,9 +1076,9 @@ query.updatentrega = function (descripcion, titulo, nombrearchivo, id) {
     entregasnombrearchivoguardado ="${nombrearchivo}"
     WHERE id = ${id}; `;
 };
-query.actualizaractividad = function (integrante, actividad) {
+query.actualizaractividad = function (actividad, fecha, tecnica) {
   return `update listaactividades
-    set integrante = ${integrante}, actividad= ${actividad}
+    set actividad= ${actividad}, actividadfechaentrega= "${fecha}", tecnica=${tecnica}
     where  actividad= ${actividad};  `;
 };
 /**

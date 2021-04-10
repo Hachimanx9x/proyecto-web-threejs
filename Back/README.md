@@ -822,13 +822,13 @@ esla id del contacto a a gregar
 ```
 
 ```sh
-/actualizar/actividad
+/reasignar/actividad
 ```
 
 esta ruta reasigna la una actividad a un integrante en especifico
 
 ```json
-{ "actividad": 1, "integrante": 12 }
+{ "actividad": 1, "fecha": "2021-12-31", "tecnica": "titulo_tecnica" }
 ```
 
 > rutas de eliminación

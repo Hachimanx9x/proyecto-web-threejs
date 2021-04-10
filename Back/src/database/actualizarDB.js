@@ -1139,12 +1139,12 @@ funcionesDB.updateproyecticon = (obj) => {
 //----------------------------------------------------------------
 funcionesDB.updatelistactvity = (obj) => {
   return new Promise((res, rej) => {
-    const { integrante, actividad } = obj;
+    const { actividad, fecha, tecnica } = obj;
     promesa.then((result) => {
       const { mariaDB, sqlite, vDB } = result;
       if (vDB) {
         mariaDB.query(
-          Query.actualizaractividad(integrante, actividad),
+          Query.actualizaractividad(actividad, fecha, tecnica),
           (err) => {
             if (!err) {
               res({ msj: "success" });
@@ -1154,13 +1154,16 @@ funcionesDB.updatelistactvity = (obj) => {
           }
         );
       } else {
-        sqlite.all(Query.actualizaractividad(integrante, actividad), (err) => {
-          if (!err) {
-            res({ msj: "success" });
-          } else {
-            rej({ msj: "error" });
+        sqlite.all(
+          Query.actualizaractividad(actividad, fecha, tecnica),
+          (err) => {
+            if (!err) {
+              res({ msj: "success" });
+            } else {
+              rej({ msj: "error" });
+            }
           }
-        });
+        );
       }
     });
   });

@@ -1159,6 +1159,30 @@ funcionesDB.obtenertodasIntegrantes = async () => {
   });
 };
 //---------------------------------------------------------
+funcionesDB.obtenerActividad = async (id) => {
+  return new Promise((res, rej) => {
+    promesa.then(async (result) => {
+      const { mariaDB, sqlite, vDB } = result;
+      if (vDB) {
+        await mariaDB.query(Query.obtenerActividades(id), async (err, rows) => {
+          if (!err) {
+            res(rows[0]);
+          } else {
+            rej(err);
+          }
+        });
+      } else {
+        sqlite.all(Query.obtenerActividades(id), (err, rows) => {
+          if (!err) {
+            res(rows[0]);
+          } else {
+            rej(err);
+          }
+        });
+      }
+    });
+  });
+};
 funcionesDB.obtenertodasListaActividades = async () => {
   return new Promise((res, rej) => {
     promesa.then(async (result) => {

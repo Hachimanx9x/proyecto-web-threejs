@@ -1025,13 +1025,45 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
 });
 
 rutas.put("/reasignar/actividad", proToken, (req, res) => {
-  const { actividad, integrante } = req.body;
-  actualizarDB
-    .updatelistactvity({ actividad, integrante })
-    .then((result) => {
-      res.json(result);
+  const { actividad, fecha, tecnica } = req.body;
+  buscarDB
+    .obtenerActividad()
+    .then((acti) => {
+      buscarDB
+        .obtenertodasTecnicas()
+        .then((tec) => {
+          let temfecha = acti.actividadfechaentrega,
+            temtecnica = acti.tecnica,
+            tempnameacti = null;
+          if (temfecha !== fecha) {
+            temfecha = fecha;
+          }
+          tec.API.find((tecnicaarray) => {
+            if (tecnicaarray.id === temtecnica) {
+              tempnameacti = tecnica.tecnicatitulo;
+            }
+          });
+          if (tempnameacti !== tecnica) {
+            tec.API.find((tecnicaarray) => {
+              if (tecnica === tecnicaarray.tecnicatitulo) {
+                temtecnica = tecnicaarray.id;
+              }
+            });
+          }
+          actualizarDB
+            .updatelistactvity({
+              actividad,
+              fecha: temfecha,
+              tecnica: temtecnica,
+            })
+            .then((result) => {
+              res.json(result);
+            })
+            .catch((err) => res.json(err));
+        })
+        .catch((errtec) => res.json(errtec));
     })
-    .catch((err) => res.json(err));
+    .catch((erract) => res.json(erract));
 });
 
 rutas.put("/update/lenguaje", proToken, (req, res) => {
