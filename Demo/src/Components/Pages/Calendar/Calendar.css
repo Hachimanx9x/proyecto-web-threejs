@@ -19,17 +19,6 @@
   margin: 1rem 0.5rem;
 }
 
-.o-create-event-container {
-  height: 1.5rem;
-  border-radius: 3rem;
-  vertical-align: middle;
-  margin: 0rem 0rem 0.5rem 0rem;
-}
-
-.o-create-event-container button:focus {
-  outline: none;
-}
-
 .o-blue-container {
   background-color: #eef7fc;
   padding: 1rem;

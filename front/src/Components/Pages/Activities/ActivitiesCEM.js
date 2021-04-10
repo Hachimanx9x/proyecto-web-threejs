@@ -6,14 +6,14 @@ import arrow from "../../../Logos/arrow.svg";
 
 import "./Activities.css";
 
-export default function ActivitiesSMMV(props) {
+export default function ActivitiesCEM(props) {
   const data = {
     labels: ["Completado", "Faltante"],
     datasets: [
       {
         data: [60, 40],
-        backgroundColor: ["#4fa77b", "#ddd8d8"],
-        hoverBackgroundColor: ["#3c8862", "rgb(238, 229, 229)"],
+        backgroundColor: ["#D0A114", "#ddd8d8"],
+        hoverBackgroundColor: ["#957411", "rgb(238, 229, 229)"],
       },
     ],
   };
@@ -37,15 +37,15 @@ export default function ActivitiesSMMV(props) {
           style={{ minWidth: "24rem" }}
         >
           <p className="m-2">Actividades</p>
-          <CardActivities alfa="SMMV" />
-          <CardActivities alfa="SMMV" />
-          <CardActivities alfa="SMMV" />
+          <CardActivities alfa="cem" />
+          <CardActivities alfa="cem" />
+          <CardActivities alfa="cem" />
         </div>
         <div className="col o-deliverables-col bg-white d-flex flex-wrap rounded z-depth-1 p-0 p-sm-1">
           <div>
             <p className="m-2">Entregables</p>
             <div className="o-activities-col">
-              <CardDeliverables alfa="SMMV" />
+              <CardDeliverables alfa="cem" />
             </div>
           </div>
           <div>
@@ -53,7 +53,7 @@ export default function ActivitiesSMMV(props) {
             <p className="m-2">Estado de alfa</p>
             <div className="position-relative">
               <Doughnut data={data} />
-              <p className="o-text-alfa-state o-text-smmv">60%</p>
+              <p className="o-text-alfa-state o-text-cem">60%</p>
             </div>
           </div>
         </div>

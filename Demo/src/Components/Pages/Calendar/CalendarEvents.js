@@ -25,8 +25,6 @@ require("moment/locale/es.js");
 export default class CalendarEvents extends Component {
   constructor(props) {
     super(props);
-    this.handleDayClick = this.handleDayClick.bind(this);
-    this.createEvent = this.createEvent.bind(this);
     this.state = {
       events: [
         {
@@ -73,27 +71,23 @@ export default class CalendarEvents extends Component {
     this.setState({ colors: temcolors, fetched: true, events: temvents });
   }
 
-  handleDayClick(day, { selected }) {
+  handleDayClick = (day, { selected }) => {
     this.setState({
       selectedDate: selected ? undefined : day,
     });
     localStorage.setItem("date", this.state.selectedDate);
     const date = this.state.selectedDate;
     console.log(date);
-  }
+  };
 
-  createEvent() {
+  createEvent = () => {
     if (this.state.selectedDate != null) {
       localStorage.setItem("date", this.state.selectedDate);
       this.props.history.push("/Dashboard/Calendar/CreateEvent");
     } else {
       this.setState({ error: true });
     }
-  }
-  getRandomColor() {
-    const color = "#" + Math.floor(Math.random() * 16777215).toString(16);
-    return color;
-  }
+  };
   render() {
     if (this.state.fetched) {
       return (
@@ -120,22 +114,17 @@ export default class CalendarEvents extends Component {
             />
           </div>
           <div className="col-12 col-sm-3 o-picker-cont ml-1 o-blue-container">
-            <div className="d-flex justify-content-between bg-white o-create-event-container  mr-1 ml-1 ">
-              <p className="text-primary ml-4">Crear evento</p>
-
-              <button
-                className="m-0 bg-primary rounded-circle text-white"
-                style={{
-                  border: "none",
-                  width: "1.5rem",
-                  height: "1.5rem",
-                }}
-                type="button"
-                onClick={this.createEvent}
-              >
-                <FontAwesomeIcon icon={faPlus} />
-              </button>
-            </div>
+            <button
+              className={
+                (this.state.selectedDate === null ? "disabled " : "") +
+                "btn z-depth-1 rounded-pill  border-0 btn-primary text-capitalize text-default text-white"
+              }
+              type="button"
+              onClick={this.createEvent}
+            >
+              <FontAwesomeIcon className="mr-2" icon={faPlus} />
+              Crear evento
+            </button>
 
             <div
               className="o-date-picker-container text-center "

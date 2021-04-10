@@ -6,7 +6,7 @@ import {
   faFileAlt,
   faCalendarAlt,
   faClock,
-  faDownload,
+  faArrowDown,
 } from "@fortawesome/free-solid-svg-icons";
 
 const CardDesktop = ({ update }) => {
@@ -66,7 +66,8 @@ const CardDesktop = ({ update }) => {
                 type="submit"
                 className="border-0 rounded-pill grey lighten-2 cyan-text o-download-btn"
               >
-                Descargar <FontAwesomeIcon className="mr-2" icon={faDownload} />
+                Descargar{" "}
+                <FontAwesomeIcon className="mr-2" icon={faArrowDown} />
               </button>
             </form>
           </div>

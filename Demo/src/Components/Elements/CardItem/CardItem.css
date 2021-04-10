@@ -190,11 +190,24 @@
   line-height: 14px;
 }
 
+.o-bg-smmv {
+  background-color: #4fa77b;
+}
+.o-border-smmv {
+  border-color: #4fa77b;
+}
+.o-text-smmv {
+  color: #4fa77b;
+}
 .o-bg-cem {
   background-color: #d0a114;
 }
 .o-border-cem {
-  border: 1px solid #d0a114;
+  border-color: #d0a114;
+}
+
+.o-text-cem {
+  color: #d0a114;
 }
 
 .tab.o-bg-cem button:hover,

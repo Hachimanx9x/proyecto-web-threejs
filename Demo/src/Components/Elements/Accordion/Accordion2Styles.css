@@ -26,12 +26,12 @@
   border-radius: 50%;
 }
 .rotate {
-  transform: rotate(0);
+  transform: rotate(180deg);
   transition: transform 1s ease;
 }
 
 .rotated {
-  transform: rotate(-90deg);
+  transform: rotate(0deg);
   transition: transform 1s ease;
 }
 .accordionHeading {
