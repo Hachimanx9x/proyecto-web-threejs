@@ -316,6 +316,7 @@ query.obtenerproyectosactividadescompleto = function (id) {
     
     usuarios.id AS "userid",
     usuarios.nombre,
+    usuarios.fotoperfil,
     roles.roltitulo,
     tecnicas.tecnicatitulo, 
     contenidos.id AS "conid",

@@ -6,9 +6,15 @@ const io = require("socket.io")(http, {
   },
 });
 let roomslist = [];
+let idrooms = [];
 let posiciones = [
-  { x: 0, y: 0.3, z: 1 },
   { x: 0, y: 0.3, z: -1.1 },
+  { x: 0.45, y: 0.3, z: -0.7 },
+  { x: 0.45, y: 0.3, z: -0.1 },
+  { x: 0.45, y: 0.3, z: 0.6 },
+  { x: -0.45, y: 0.3, z: -0.5 },
+  { x: -0.45, y: 0.3, z: -0.1 },
+  { x: -0.45, y: 0.3, z: -1.7 },
 ];
 //al iniciar una conexion en hilo de envio de datos
 io.on("connection", function (socket) {
@@ -21,14 +27,27 @@ io.on("connection", function (socket) {
     socket.join(room);
     // console.log(getuserroom(room))
     if (roomslist.length > 0) {
+      if (idrooms.indexOf(room) < 0) {
+        let integrantes = [socket.id];
+        roomslist.push({ room: room, integrantes });
+        idrooms.push(room);
+      } else {
+        roomslist.find((ele) => {
+          if (ele.id === room) {
+            ele.integrantes.push(socket.id);
+          }
+        });
+      }
     } else {
-      roomslist.push({ room: room });
+      let integrantes = [socket.id];
+      roomslist.push({ room: room, integrantes });
+      idrooms.push(room);
     }
     //se emite un mensaje a todos los que esten en esa sala del nuevo usuario
     io.in(socket.room).emit("entrar", {
       iserid: socket.id,
       room: getuserroom(room, socket.id),
-      num: getuserroom(room, socket.id).length,
+      num: getuserroom(room).length,
     });
   });
   //se escucha el evento hablar
@@ -55,7 +74,7 @@ io.on("connection", function (socket) {
 
 module.exports = http;
 
-function getuserroom(room, id) {
+function getuserroom(room) {
   const nsp = io.of("/");
   const rooms = nsp.adapter.rooms.get(room);
   let list = [];

@@ -2337,9 +2337,13 @@ function actividadespro(user, array, id) {
         entregar: false,
       });
     }*/
-    let temp = null;
+    let temp = null,
+      temp2 = null;
     if (array[a].contenidonombrearchivo !== "null") {
       temp = array[a].contenidonombrearchivo;
+    }
+    if (array[a].fotoperfil !== "null" && array[a].fotoperfil !== null) {
+      temp2 = `${env.host}/usuario${array[a].userid}/${array[a].fotoperfil}`;
     }
 
     arraydef.push({
@@ -2348,12 +2352,12 @@ function actividadespro(user, array, id) {
       descripcion: array[a].actividaddescripcion,
       revisiones: array[a].actividadrevision,
       nombre: array[a].nombre,
+      foto: temp2,
       rol: array[a].roltitulo,
       estado: array[a].actividadestado,
       fechaentrega: array[a].actividadfechaentrega,
       tecnica: array[a].tecnicatitulo,
       contenido: temp,
-      entregar: false,
     });
   }
   return arraydef;

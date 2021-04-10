@@ -365,30 +365,30 @@ este carga las actividades y entregables del proyecto
 {
   "actividades": [
     {
-      "actividadid": 1171,
+      "actividadid": 497,
       "titulo": "A8",
       "descripcion": "Diseñe la estructura y el flujo (narrativo, temporal, de\n                        eventos) de la historia a desarrollarse a partir del problema\n                        que desea resolverse, describiendo los acontecimientos que\n                        narra, los personajes que participan, el tiempo en el que se\n                        desarrolla y el espacio en el que suceden dichos\n                        acontecimientos.",
-      "revisiones": 0,
+      "revisiones": 1,
       "nombre": "nombre test14",
+      "foto": null,
       "rol": "Arquitecto Experiencia Multimedia",
-      "estado": "asignada",
+      "estado": "entregada",
       "fechaentrega": "2021-01-23",
       "tecnica": "Video como apoyo a la etnografía",
-      "contenido": "http://localhost:3030/proyecto/contenido/proyecto168/null",
-      "entregar": false
+      "contenido": "Coursera 2T27CP6QW48Q.pdf"
     },
     {
-      "actividadid": 1180,
+      "actividadid": 503,
       "titulo": "A9",
       "descripcion": "Defina las bases del diseño de una experiencia multimedia\n                    interactiva, a partir de la historia y el (los) problema(s)\n                    identificado(s), especificando los hitos de la historia en donde\n                    el Sistema Multimedia debe producir en el usuario una\n                    influencia cognitiva, emocional y sensorial.",
       "revisiones": 0,
       "nombre": "nombre test14",
+      "foto": null,
       "rol": "Arquitecto Experiencia Multimedia",
       "estado": "asignada",
       "fechaentrega": "2021-01-23",
       "tecnica": "Producción de metáforas y analogías",
-      "contenido": "http://localhost:3030/proyecto/contenido/proyecto168/null",
-      "entregar": false
+      "contenido": null
     }
   ],
   "entregables": [
