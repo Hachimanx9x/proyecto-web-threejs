@@ -21,9 +21,6 @@ export default function Dashboard(props) {
   ) {
     props.history.push("/Dashboard/FinishRegister");
   }
-  useEffect(() => {
-    console.log(path);
-  }, [path]);
 
   return <SideToggler />;
 }
