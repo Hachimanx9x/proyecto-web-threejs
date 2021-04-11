@@ -104,7 +104,7 @@ class Login extends Component {
                 }
                 type="text"
                 icon="envelope"
-                maxlength="250"
+                maxLength="250"
               />
             </div>
             <div className="row position-absolute m-0 justify-content-end w-100">
@@ -128,7 +128,7 @@ class Login extends Component {
                 }
                 type="password"
                 icon="lock"
-                maxlength="15"
+                maxLength="15"
               />
             </div>
             <div className="row position-absolute m-0 justify-content-end w-100">

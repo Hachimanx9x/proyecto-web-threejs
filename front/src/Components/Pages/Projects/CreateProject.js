@@ -384,7 +384,7 @@ class CreateProject extends Component {
                 }
                 outline
                 required
-                maxlength="350"
+                maxLength="350"
                 onChange={(e) => this.handleInput("projectName", e)}
               />
               <div className="position-relative" style={{ maxWidth: "20rem" }}>
@@ -403,7 +403,7 @@ class CreateProject extends Component {
                 label="Descripción del proyecto"
                 className="rounded pt-3 pt-sm-2"
                 outline
-                maxlength="1350"
+                maxLength="1350"
                 required
               />
             </div>

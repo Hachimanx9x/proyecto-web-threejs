@@ -227,7 +227,7 @@ class CreateEvents extends Component {
                     </p>
                   }
                   outline
-                  maxlength="500"
+                  maxLength="500"
                   onChange={(e) => this.handleInput("eventTitle", e)}
                 />
                 <span
@@ -391,7 +391,7 @@ class CreateEvents extends Component {
                     label="Descripción de la reunión"
                     onChange={(e) => this.handleInput("eventDescription", e)}
                     outline
-                    maxlength="1000"
+                    maxLength="1000"
                   />
                 </div>
               </div>

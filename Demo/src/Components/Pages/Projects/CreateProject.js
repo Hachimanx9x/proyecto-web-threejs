@@ -383,7 +383,7 @@ class CreateProject extends Component {
                   </span>
                 }
                 outline
-                maxlength="350"
+                maxLength="350"
                 required
                 onChange={(e) => this.handleInput("projectName", e)}
               />
@@ -404,7 +404,7 @@ class CreateProject extends Component {
                 className="rounded pt-3 pt-sm-2"
                 outline
                 required
-                maxlength="1350"
+                maxLength="1350"
               />
             </div>
           </section>
