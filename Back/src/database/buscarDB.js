@@ -23,7 +23,7 @@ funcionesDB.obtenerToken = (body) => {
               // console.log(rows);
               if (rows[0] == null || rows.length == 0) {
                 console.log("error en los datos ");
-                rej({ respuesta: "Contraseña o correo equivocados" });
+                rej({ msj: "Contraseña o correo equivocados" });
               } else {
                 //console.log(rows);
                 const token = jwt.sign({ rows }, LLAVE);
@@ -38,7 +38,7 @@ funcionesDB.obtenerToken = (body) => {
               // console.log(rows);
               if (rows[0] === null || rows.length === 0) {
                 // console.log("error en los datos ")
-                rej({ respuesta: "Contraseña o correo equivocados" });
+                rej({ msj: "Contraseña o correo equivocados" });
               } else {
                 //console.log(rows);
                 const token = jwt.sign({ rows }, LLAVE);
