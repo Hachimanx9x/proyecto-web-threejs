@@ -37,6 +37,9 @@ class ProjectView extends Component {
             { rol: "desarrollador web" },
             { rol: "desarrollador fullstack" },
             { rol: "ui designer" },
+            { rol: "desarrollador web" },
+            { rol: "desarrollador fullstack" },
+            { rol: "ui designer" },
           ],
           selectedRol: "Arquitecto de Pruebas",
         },
@@ -44,11 +47,7 @@ class ProjectView extends Component {
           id: 2,
           name: "Tatsumi",
           urlimage: User,
-          rols: [
-            { rol: "desarrollador web" },
-            { rol: "desarrollador fullstack" },
-            { rol: "ui designer" },
-          ],
+          rols: [{ rol: "desarrollador web" }],
           selectedRol: "Arquitecto Sw/Hw",
         },
         {
@@ -203,7 +202,7 @@ class ProjectView extends Component {
             style={{ fontSize: "0.9rem" }}
             className="text-danger w-100"
             onChange={(e) => {
-              this.setState({ modal: e.target.value });
+              this.setState({ titleConfirmarion: e.target.value });
             }}
           />
           <button
@@ -213,6 +212,10 @@ class ProjectView extends Component {
                 ? "disabled"
                 : "") + " btn btn-danger btn-block border-0 text-white mt-2"
             }
+            onClick={() => {
+              this.setState({ modal: false });
+              this.props.history.push("/Dashboard/Projects");
+            }}
           >
             <small>
               Lo entiendo y me hago cargo responsable de las consecuencias.
@@ -222,6 +225,15 @@ class ProjectView extends Component {
         </Rodal>
 
         <div className="o-project-creation-section">
+          <div className="d-flex justify-content-end">
+            <button
+              className="btn text-capitalize z-depth-0 text-white"
+              style={{ backgroundColor: "#D61E1E" }}
+              onClick={() => this.setState({ modal: true })}
+            >
+              Eliminar
+            </button>
+          </div>
           <section className="row bg-white o-project-basic-info">
             <div className="col-xs-12 col-sm-4">
               <p className="d-block">Icono del proyecto</p>

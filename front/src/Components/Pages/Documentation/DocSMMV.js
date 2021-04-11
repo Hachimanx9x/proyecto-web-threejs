@@ -12,15 +12,12 @@ export default function DocSMMV() {
 
   return (
     <div className="h-100 w-100">
-      <a href="javascript:history.back()" className="text-decoration-none">
-        {" "}
-        <button className="o-btn-return">
-          <span>
-            <img src={arrow} alt="Arrow button" />
-          </span>
-          Regresar
-        </button>
-      </a>
+      <button className="o-btn-return" onClick={() => props.history.goBack()}>
+        <span>
+          <img src={arrow} alt="Arrow button" />
+        </span>
+        Regresar
+      </button>
       <div className="row">
         <section id="CardDocSection">
           <p>
