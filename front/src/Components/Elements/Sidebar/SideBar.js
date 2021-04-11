@@ -20,6 +20,13 @@ const deleteUser = () => {
 const SideBar = ({ isOpen, toggle }) => {
   const token = localStorage.getItem("login");
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [activeLink, setActiveLink] = useState(true);
+  const obj = JSON.parse(token);
+
+  const data = obj.data;
+  if (data.herramientas.length === 0) {
+    setActiveLink(false);
+  }
 
   useEffect(() => {
     function resize() {

@@ -7,7 +7,7 @@ import arrow from "../../../Logos/arrow.svg";
 import "./Documentation.css";
 import CardRole from "../../Elements/CardRole/CardRole";
 import { SMMV } from "./SMMV";
-export default function DocSMMV() {
+export default function DocSMMV(props) {
   const items = SMMV;
 
   return (

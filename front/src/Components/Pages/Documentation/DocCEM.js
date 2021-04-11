@@ -7,7 +7,7 @@ import arrow from "../../../Logos/arrow.svg";
 import "./Documentation.css";
 import CardRole from "../../Elements/CardRole/CardRole";
 import { CEM } from "./CEM";
-export default function DocCEM() {
+export default function DocCEM(props) {
   const items = CEM;
 
   return (

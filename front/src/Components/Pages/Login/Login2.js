@@ -67,7 +67,7 @@ class Login extends Component {
     if (this.state.validEmail && this.state.validpassword) {
       const httpInstance = axios.create({
         baseURL: "http://localhost:3030/",
-        timeout: 1000,
+        timeout: 10000,
         headers: { "Content-Type": "application/json" },
       });
       httpInstance.interceptors.response.use(null, (error) => {
@@ -83,7 +83,7 @@ class Login extends Component {
       });
       const { email, password } = this.state;
       await httpInstance
-        .post("login", { correo: email, contraseña: password })
+        .post("login", { email: email, password: password })
         .then((respuesta) => {
           if (respuesta.statusText === "OK") {
             console.log(respuesta.data);
@@ -91,6 +91,7 @@ class Login extends Component {
               "login",
               JSON.stringify({
                 token: respuesta.data.token,
+                data: respuesta.data.datos,
               })
             );
 
