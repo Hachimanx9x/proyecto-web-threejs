@@ -366,7 +366,7 @@ export default function ViewProfile(props) {
               setName(e.target.value);
             }}
             outline
-            maxlength="115"
+            maxLength="115"
           />
           <p
             className={
@@ -387,7 +387,7 @@ export default function ViewProfile(props) {
               setLastname(e.target.value);
             }}
             outline
-            maxlength="115"
+            maxLength="115"
           />
           <p
             className={
@@ -406,7 +406,7 @@ export default function ViewProfile(props) {
               setCv(e.target.value);
             }}
             outline
-            maxlength="130"
+            maxLength="130"
           />
           <div
             className="row bg-primary p-0 m-0 mt-4"
@@ -609,7 +609,7 @@ export default function ViewProfile(props) {
               setBitbucket(e.target.value);
             }}
             outline
-            maxlength="130"
+            maxLength="130"
           />
         </div>
         <div className="col-xs-12 col-sm-3 text-center o-col">
@@ -626,7 +626,7 @@ export default function ViewProfile(props) {
               setLinkedin(e.target.value);
             }}
             outline
-            maxlength="130"
+            maxLength="130"
           />
         </div>
         <div className="col-xs-12 col-sm-3 text-center o-col">
@@ -643,7 +643,7 @@ export default function ViewProfile(props) {
               setGitlab(e.target.value);
             }}
             outline
-            maxlength="130"
+            maxLength="130"
           />
         </div>
         <div className="col-xs-12 col-sm-3 text-center o-col">
@@ -660,7 +660,7 @@ export default function ViewProfile(props) {
               setGithub(e.target.value);
             }}
             outline
-            maxlength="130"
+            maxLength="130"
           />
         </div>
       </section>
@@ -698,7 +698,7 @@ export default function ViewProfile(props) {
               setDescription(e.target.value);
             }}
             outline
-            maxlength="1000"
+            maxLength="1000"
           />
         </div>
       </section>

@@ -127,7 +127,7 @@ class Login extends Component {
                   "o-login-input mt-5 text-white"
                 }
                 type="text"
-                maxlength="250"
+                maxLength="250"
                 icon="envelope"
               />
             </div>
@@ -152,7 +152,7 @@ class Login extends Component {
                 }
                 type="password"
                 icon="lock"
-                maxlength="15"
+                maxLength="15"
               />
             </div>
             <div className="row position-absolute m-0 justify-content-end w-100">
