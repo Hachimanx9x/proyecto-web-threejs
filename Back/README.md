@@ -95,7 +95,16 @@ esta ruta pide en el body un objeto de la siguiente estructura
 este devolvera un token con lo datos de ese momento del usuario
 
 ```json
-"token": "llave eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb3dzIjpbeyJpZCI6MTIsImVtYWlsIjoiY29ycm9lOEBnbWFpbC5jb20iLCJjb250cmFzZW5hIjoiMTIzNDU2Nzg5IiwiZm90b3BlcmZpbCI6Im51bGwiLCJub21icmVhcmNoaXZvaG9qYWRldmlkYSI6Im51bGwiLCJhbm9zZGVleHBlcmllbmNpYSI6bnVsbCwibm9tYnJlIjoibm9tYnJlIHRlc3QxNiIsImRlc2NyaXBjaW9uIjoibnVsbCIsInBhaXMiOiJudWxsIiwiZWRhZCI6bnVsbCwiZ2l0aHViIjoibnVsbCIsImdpdGxhYiI6Im51bGwiLCJiaXRidWNrZXQiOiJudWxsIiwibGlua2VkaW4iOiJudWxsIn1dLCJpYXQiOjE2MTExODU4NDJ9.TWId6FOMQ0_TGyngDFHJF4Uuol0dqC0sLcCo2FRTuqY "
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb3dzIjpbeyJpZCI6NSwiZW1haWwiOiJjb3Jyb2VAZ21haWwuY29tIiwiY29udHJhc2VuYSI6IjEyMzQ1Njc4OSIsImZvdG9wZXJmaWwiOiJudWxsIiwibm9tYnJlYXJjaGl2b2hvamFkZXZpZGEiOiJudWxsIiwiYW5vc2RlZXhwZXJpZW5jaWEiOm51bGwsIm5vbWJyZSI6Im5vbWJyZSB0ZXN0MTEiLCJkZXNjcmlwY2lvbiI6Im51bGwiLCJwYWlzIjoibnVsbCIsImVkYWQiOm51bGwsImdpdGh1YiI6Im51bGwiLCJnaXRsYWIiOiJudWxsIiwiYml0YnVja2V0IjoibnVsbCIsImxpbmtlZGluIjoibnVsbCJ9XSwiaWF0IjoxNjE4MTcyOTQzfQ.KGFii30jmdoocv_BNZ7S-gKMq9l0n8f-UaFHPUWWLCA",
+  "datos": {
+    "id": 5,
+    "nombre": "nombre test11",
+    "foto": null,
+    "herramientas": [],
+    "palabras": []
+  }
+}
 ```
 
 ```sh

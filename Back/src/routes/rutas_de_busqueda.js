@@ -10,12 +10,62 @@ const LLAVE = "misecretos";
 const model = require("../models/models");
 
 rutas.post("/login", (req, res) => {
-  console.log("body", req.body);
+  // console.log("body", req.body);
   const { email, password } = req.body;
   if (typeof email === "string" && typeof password === "string") {
     buscarDB
       .obtenerToken(req.body)
-      .then((resul) => res.json(resul))
+      .then((resul) => {
+        jwt.verify(resul.token, LLAVE, (err, data) => {
+          buscarDB
+            .obtenerusuarioid({ id: data.rows[0].id })
+            .then((usua) => {
+              buscarDB
+                .buscartalentogeneral2(data.rows[0].id)
+                .then((talento) => {
+                  if (talento.data.length < 1) {
+                    let tem = null;
+                    if (
+                      usua.fotoperfil !== null &&
+                      usua.fotoperfil !== "null"
+                    ) {
+                      tem = `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`;
+                    }
+                    res.json({
+                      token: resul.token,
+                      datos: {
+                        id: data.rows[0].id,
+                        nombre: usua.nombre,
+                        foto: tem,
+                        herramientas: [],
+                        palabras: [],
+                      },
+                    });
+                  } else {
+                    let tem = null;
+                    if (
+                      usua.fotoperfil !== null &&
+                      usua.fotoperfil !== "null"
+                    ) {
+                      tem = `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`;
+                    }
+                    res.json({
+                      token: resul.token,
+                      datos: {
+                        id: data.rows[0].id,
+                        nombre: usua.nombre,
+                        foto: tem,
+                        herramientas: talento.data[0].herramientas,
+                        palabras: talento.data[0].palabras,
+                      },
+                    });
+                  }
+                })
+                .catch((talenerr) => console.log(talenerr));
+            })
+            .catch((dererro) => res.json(dererro));
+        });
+      })
       .catch((err) => {
         buscarDB
           .obtenertodasUsuarios()
