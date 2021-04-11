@@ -37,7 +37,7 @@
     "rodal": "^1.8.1",
     "socket.io-client": "^2.3.0",
     "styled-components": "^5.2.1",
-    "three": "^0.120.1"
+    "three": "^0.125.0"
   },
   "scripts": {
     "start": "react-scripts start",
