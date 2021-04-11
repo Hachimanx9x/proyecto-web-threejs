@@ -67,6 +67,9 @@
 .o-blue-container .md-outline textarea:focus + label {
   color: #007bff;
 }
+.o-blue-container .md-outline textarea {
+  height: 15rem;
+}
 .o-blue-container .md-outline textarea:focus {
   border-color: #007bff;
   box-shadow: inset 0 0 0 1px #007bff;

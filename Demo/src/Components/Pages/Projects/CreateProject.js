@@ -307,6 +307,7 @@ class CreateProject extends Component {
         </Rodal>
         <h5 className="mb-3 pl-4">Creación del proyecto</h5>
         <div className="o-project-creation-section">
+          <p className="text-danger">* Campos obligatorios</p>
           <section className="row bg-white o-project-basic-info">
             <div className="col-xs-12 col-sm-4">
               <p>Icono del proyecto</p>
@@ -382,6 +383,7 @@ class CreateProject extends Component {
                   </span>
                 }
                 outline
+                maxlength="350"
                 required
                 onChange={(e) => this.handleInput("projectName", e)}
               />
@@ -402,6 +404,7 @@ class CreateProject extends Component {
                 className="rounded pt-3 pt-sm-2"
                 outline
                 required
+                maxlength="1350"
               />
             </div>
           </section>

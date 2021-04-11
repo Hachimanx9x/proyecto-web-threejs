@@ -1,8 +1,10 @@
 .o-activities-col {
-  max-height: 40rem;
+  max-height: 60rem;
   overflow-y: auto;
 }
 .o-deliverables-col {
+  max-height: 60rem;
+  overflow-y: auto;
   text-align: start;
   justify-content: center;
   min-width: 17rem;
@@ -15,16 +17,19 @@
   transform: translate(-50%, -50%);
   font-size: 1.4rem;
 }
-.o-activities-col::-webkit-scrollbar {
+.o-activities-col::-webkit-scrollbar,
+.o-deliverables-col::-webkit-scrollbar {
   width: 6px;
   background-color: #e0e0e0;
 }
-.o-activities-col::-webkit-scrollbar-thumb {
+.o-activities-col::-webkit-scrollbar-thumb,
+.o-deliverables-col::-webkit-scrollbar-thumb {
   background: #4285f4;
   border-radius: 3px;
 }
 
-.o-activities-col::-webkit-scrollbar-thumb:hover {
+.o-activities-col::-webkit-scrollbar-thumb:hover,
+.o-deliverables-col.o-activities-col::-webkit-scrollbar-thumb:hover {
   background: #3a4c99;
 }
 

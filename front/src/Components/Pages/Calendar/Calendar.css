@@ -73,6 +73,9 @@
   border-bottom: 0.3px solid #007bff;
 }
 
+.o-blue-container .md-outline textarea {
+  height: 15rem;
+}
 .o-project-select {
   height: 1.5rem;
   font-size: 0.8rem;

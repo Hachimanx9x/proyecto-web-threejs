@@ -12,6 +12,9 @@ import MomentLocaleUtils from "react-day-picker/moment";
 import "moment/locale/es.js";
 import Rodal from "rodal";
 import SuccessAnimation from "../../Elements/SuccessAnimation/SuccessAnimation";
+import moment from "moment";
+
+import "moment/locale/es.js";
 require("moment/locale/es.js");
 
 class CreateEvents extends Component {
@@ -47,14 +50,6 @@ class CreateEvents extends Component {
       ],
     };
   }
-  componentDidMount = () => {
-    let temcolors = [];
-    for (let i = 0; i < this.state.events.length; i++) {
-      const color = "#" + Math.floor(Math.random() * 16777215).toString(16);
-      temcolors.push(color);
-    }
-    this.setState({ colors: [...temcolors], fetched: true });
-  };
   /*
    *Function to create the event. Looks if every required field is correctly filled and send the http request to the server.
    */
@@ -124,26 +119,42 @@ class CreateEvents extends Component {
   /*
    * Add an resizable method to get the current viewport dimensions for responsive issues.
    */
-  componentDidMount() {
+
+  componentDidMount = () => {
+    let temcolors = [];
+    for (let i = 0; i < this.state.events.length; i++) {
+      const color = "#" + Math.floor(Math.random() * 16777215).toString(16);
+      temcolors.push(color);
+    }
     window.addEventListener("resize", this.handleResize);
 
     const date = new Date(localStorage.getItem("date"));
     const dateparts = date.toLocaleDateString().split("/");
     console.log(dateparts[2] + "/" + dateparts[1] + "/" + dateparts[0]);
-    this.setState({ selectedDate: date, fetched: true });
-  }
+    this.setState({
+      colors: [...temcolors],
+      selectedDate: date,
+      fetched: true,
+    });
+  };
   /*
    * Removes the method before the component is unmounted.
    */
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     window.removeEventListener("rezise", this.handleResize);
-  }
+  };
   handleInput = (name, e) => {
     if (name === "confirmationModal") {
       this.setState({ [name]: e });
     } else {
       this.setState({ [name]: e.target.value });
     }
+  };
+
+  handleDayClick = (day, { selected }) => {
+    this.setState({
+      selectedDate: selected ? undefined : day,
+    });
   };
   render() {
     if (this.state.fetched) {
@@ -208,6 +219,7 @@ class CreateEvents extends Component {
               </div>
 
               <div className="p-0  pl-sm-4 pr-sm-4 m-0 d-flex flex-column position-relative  mr-sm-2 ml-sm-2">
+                <small className="text-danger">* Campos obligatorios</small>
                 <MDBInput
                   className={
                     (!this.state.titleIsValid
@@ -221,6 +233,7 @@ class CreateEvents extends Component {
                     </p>
                   }
                   outline
+                  maxlength="500"
                   onChange={(e) => this.handleInput("eventTitle", e)}
                 />
                 <span
@@ -384,6 +397,7 @@ class CreateEvents extends Component {
                     label="Descripción de la reunión"
                     onChange={(e) => this.handleInput("eventDescription", e)}
                     outline
+                    maxlength="1000"
                   />
                 </div>
               </div>
@@ -396,8 +410,19 @@ class CreateEvents extends Component {
                 <DayPicker
                   localeUtils={MomentLocaleUtils}
                   className="o-date-picker-container"
-                  selectedDays={[new Date(localStorage.getItem("date"))]}
+                  onDayClick={this.handleDayClick}
+                  selectedDays={this.state.selectedDate}
                   locale="es"
+                  disabledDays={{ before: moment().toDate() }}
+                  todayButton="Hoy"
+                  modifiers={{
+                    foo: new Date(),
+                  }}
+                  onTodayButtonClick={(day, modifiers) =>
+                    this.setState({
+                      selectedDate: day,
+                    })
+                  }
                 />
               </div>
 

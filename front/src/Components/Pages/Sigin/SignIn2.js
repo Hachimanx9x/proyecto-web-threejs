@@ -211,6 +211,7 @@ class SigIn extends Component {
                 }
                 type="text"
                 icon="user"
+                maxlength="230"
               />
             </div>
             <div className="row position-absolute m-0 justify-content-end w-100">
@@ -234,6 +235,7 @@ class SigIn extends Component {
                 }
                 type="text"
                 icon="envelope"
+                maxlength="250"
               />
             </div>
             <div className="row position-absolute m-0 justify-content-end w-100">
@@ -257,6 +259,7 @@ class SigIn extends Component {
                 }
                 type="password"
                 icon="lock"
+                maxlength="15"
               />
             </div>
             <div className="row position-absolute m-0 justify-content-end w-100">
@@ -286,6 +289,7 @@ class SigIn extends Component {
                 }
                 type="password"
                 icon="lock"
+                maxlength="15"
               />
             </div>
             <div className="row position-absolute m-0 justify-content-end w-100">

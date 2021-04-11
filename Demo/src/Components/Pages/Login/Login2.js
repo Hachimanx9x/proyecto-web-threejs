@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { MDBInput } from "mdbreact";
-import axios from "axios";
 import "./Login2.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
@@ -105,6 +104,7 @@ class Login extends Component {
                 }
                 type="text"
                 icon="envelope"
+                maxlength="250"
               />
             </div>
             <div className="row position-absolute m-0 justify-content-end w-100">
@@ -128,6 +128,7 @@ class Login extends Component {
                 }
                 type="password"
                 icon="lock"
+                maxlength="15"
               />
             </div>
             <div className="row position-absolute m-0 justify-content-end w-100">

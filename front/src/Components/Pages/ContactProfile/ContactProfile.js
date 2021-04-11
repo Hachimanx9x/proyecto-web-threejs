@@ -159,12 +159,14 @@ export default function ContactProfile() {
             style={{ maxWidth: "40rem" }}
             label="Asunto"
             outline
+            maxlength="500"
           />
           <MDBInput
             type="textarea"
             className="m-0 mr-0 rounded"
             label="Cuerpo"
             outline
+            maxlength="500"
           />
           <div className="d-flex justify-content-end">
             <button className="text-capitalize btn border-0 z-depth-0 btn-primary text-white font-weight-bold">

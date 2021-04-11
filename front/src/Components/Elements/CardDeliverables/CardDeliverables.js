@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   faAngleDoubleDown,
   faAngleDoubleUp,
@@ -7,7 +7,8 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./CardDeliverables.css";
 
-export default function CardDeliverables({ alfa }) {
+export default function CardDeliverables({ alfa, deliverable }) {
+  const [option, setOption] = useState(deliverable.estado);
   return (
     <div
       className="text-center m-1 mt-2 mb-2 p-2"
@@ -17,7 +18,7 @@ export default function CardDeliverables({ alfa }) {
           : { background: "#d0a114", width: "16rem" }
       }
     >
-      <p className="text-white">Análisis de viabilidad del SM</p>
+      <p className="text-white">{deliverable.nombre}</p>
       <div className="bg-white rounded d-flex justify-content-between m-1 p-2 position-relative">
         <small>Estado: </small>
         <div
@@ -26,11 +27,9 @@ export default function CardDeliverables({ alfa }) {
             "o-deliverable-select rounded-pill"
           }
         >
-          <select>
-            <option hidden>Seleccione...</option>
-            <option value="Iniciado">Iniciado</option>
-            <option value="Entregado">Entregado</option>
-            <option value="Atrasado">Atrasado</option>
+          <select value={option} onChange={(e) => setOption(e.target.value)}>
+            <option value="asignado">Asignado</option>
+            <option value="entregado">Entregado</option>
           </select>
         </div>
       </div>
@@ -43,6 +42,17 @@ export default function CardDeliverables({ alfa }) {
           .doc
         </small>
       </div>
+      <div className="bg-white rounded d-flex justify-content-between m-1 p-2">
+        <small>Archivo:</small>
+        <small className={alfa === "SMMV" ? "o-text-smmv" : "o-text-cem"}>
+          <small>
+            {deliverable.namefile !== null
+              ? deliverable.namefile
+              : "No se han subido archivos."}
+          </small>
+        </small>
+      </div>
+
       <div className="bg-white rounded d-flex justify-content-between m-1 p-2">
         <small>Descargar:</small>
         <button
@@ -93,7 +103,7 @@ export default function CardDeliverables({ alfa }) {
       <div className="bg-white rounded d-flex justify-content-between m-1 p-2">
         <small>Revisiones:</small>
         <small className={alfa === "SMMV" ? "o-text-smmv" : "o-text-cem"}>
-          0
+          {deliverable.revisiones}
         </small>
         <button
           className={

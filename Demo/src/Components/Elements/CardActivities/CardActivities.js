@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 //import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -6,11 +6,18 @@ import {
   faAngleDoubleUp,
   faCalendarAlt,
   faSmileBeam,
+  faMeh,
+  faFrown,
 } from "@fortawesome/free-solid-svg-icons";
 import User from "../../../Logos/user-icon.png";
 import "./CardActivities.css";
+import moment from "moment";
 
-export default function CardActivities({ alfa }) {
+import "moment/locale/es.js";
+require("moment/locale/es.js");
+
+export default function CardActivities({ alfa, activity, tecniques }) {
+  const [option, setOption] = useState(activity.tecnica);
   return (
     <div
       className="o-card z-depth-1 m-0 mt-4 p-0 bg-white"
@@ -23,18 +30,13 @@ export default function CardActivities({ alfa }) {
               "o-activity-description " + (alfa === "SMMV" ? "" : "cem")
             }
           >
-            <small>
-              Defina en un alto nivel de abstracción, las tecnologías
-              hardware-software, así como los objetos físicos necesarios que
-              aseguren una calidad de la experiencia, alineados a las bases de
-              su diseño.
-            </small>
+            <small>{activity.descripcion}</small>
             <span
               className={
                 (alfa === "SMMV" ? "o-bg-smmv" : "o-bg-cem") + " o-activity"
               }
             >
-              A13
+              {activity.titulo}
             </span>
           </div>
         </div>
@@ -50,7 +52,7 @@ export default function CardActivities({ alfa }) {
               (alfa === "SMMV" ? "" : "cem ") + "o-state-activity ml-2 mr-2"
             }
           >
-            Entregada
+            {activity.estado === "entregada" ? "Entregada" : "Asignado"}
           </div>
           <FontAwesomeIcon
             style={{
@@ -58,8 +60,8 @@ export default function CardActivities({ alfa }) {
               fontSize: "1.5rem",
               background: "#4fa77b",
             }}
-            className="text-white rounded-circle"
-            icon={faSmileBeam}
+            className="text-white rounded-circle "
+            icon={activity.estado === "entregada" ? faSmileBeam : faMeh}
           />
         </div>
         <div className="col-xs-6 col-sm-9 d-flex text-center o-activity-user-container">
@@ -68,10 +70,10 @@ export default function CardActivities({ alfa }) {
             alt="User in charge"
             className="o-activity-user mr-2"
           />
-          <div className="col-xs-9 col-sm-7 p-0">
+          <div className="col-xs-9 col-sm-12 p-0">
             <div className="d-flex flex-column text-justify">
-              <small className="m-0">Encargado: Juan Carlos</small>
-              <small className="m-0">Rol: Arquitecto de información</small>
+              <small className="m-0">Encargado: {activity.nombre}</small>
+              <small className="m-0">Rol: {activity.rol}</small>
             </div>
           </div>
         </div>
@@ -91,13 +93,15 @@ export default function CardActivities({ alfa }) {
                 "o-tecnique-select rounded-pill"
               }
             >
-              <select>
-                <option hidden>Rol del proyecto</option>
-                <option value="Arquitecto de experiencia multimedia">
-                  Arquitecto de experiencia multimedia
-                </option>
-                <option value="Arquitecto Software">Arquitecto Software</option>
-                <option value="Arquitecto Hardware">Arquitecto Hardware</option>
+              <select
+                value={option}
+                onChange={(e) => setOption(e.target.value)}
+              >
+                {tecniques.map((tecnique, i) => (
+                  <option key={i} value={tecnique}>
+                    {tecnique}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
@@ -106,7 +110,13 @@ export default function CardActivities({ alfa }) {
           <p>Fecha de entrega:</p>
           <form>
             <div className="sd-container">
-              <input className="sd" type="date" name="selected_date" />
+              <input
+                className="sd"
+                type="date"
+                name="selected_date"
+                defaultValue={activity.fechaentrega}
+                min={moment().toDate()}
+              />
               <span className="open-button">
                 <button>
                   <FontAwesomeIcon icon={faCalendarAlt} />
@@ -121,18 +131,23 @@ export default function CardActivities({ alfa }) {
             type="text"
             className="bg-transparent rounded-pill text-white pl-2"
             readOnly
-            defaultValue="0"
+            defaultValue={activity.revisiones}
             style={{
               outline: "none",
               border: "1px solid white",
-              width: "100%",
+              width: "60%",
+              minWidth: "5rem",
               height: "30px",
             }}
           />
         </div>
       </div>
       <div className="d-flex justify-content-end p-2">
-        {" "}
+        <small className="mr-auto pt-2">
+          {activity.namefile !== null
+            ? activity.namefile
+            : "No se han subido archivos."}
+        </small>{" "}
         <button
           className={
             (alfa === "SMMV" ? "o-border-smmv o-text-smmv" : "cem o-text-cem") +

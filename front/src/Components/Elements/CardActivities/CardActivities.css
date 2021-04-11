@@ -2,7 +2,12 @@
   border: 1px solid #4fa77b;
   padding: 0.8rem 0.4rem;
   border-radius: 0.3rem;
-  margin-right: 4rem;
+  font-size: 12px;
+  line-height: 10px;
+  min-width: 100%;
+  min-height: 4rem;
+
+  margin: 0;
   position: relative;
 }
 .o-activity-description.cem {
@@ -16,8 +21,10 @@
   padding: 0;
   left: -40px;
   top: -28px;
-  border-radius: 100%;
-  padding: 5px;
+  border-radius: 50%;
+  width: 1.9rem;
+  height: 1.9rem;
+  padding: 11px 0 0 7px;
 }
 
 .o-activity-user {

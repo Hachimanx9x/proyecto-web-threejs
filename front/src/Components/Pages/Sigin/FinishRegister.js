@@ -336,6 +336,7 @@ export default function FinishRegister(props) {
               setName(e.target.value);
             }}
             outline
+            maxlength="115"
           />
           <p
             className={
@@ -355,6 +356,7 @@ export default function FinishRegister(props) {
               setLastname(e.target.value);
             }}
             outline
+            maxlength="115"
           />
           <p
             className={
@@ -373,6 +375,7 @@ export default function FinishRegister(props) {
               setCv(e.target.value);
             }}
             outline
+            maxlength="130"
           />
           <div
             className="row bg-primary p-0 m-0 mt-4"
@@ -570,6 +573,7 @@ export default function FinishRegister(props) {
               setBitbucket(e.target.value);
             }}
             outline
+            maxlength="130"
           />
         </div>
         <div className="col-xs-12 col-sm-3 text-center o-col">
@@ -600,6 +604,7 @@ export default function FinishRegister(props) {
               setGitlab(e.target.value);
             }}
             outline
+            maxlength="130"
           />
         </div>
         <div className="col-xs-12 col-sm-3 text-center o-col">
@@ -615,6 +620,7 @@ export default function FinishRegister(props) {
               setGithub(e.target.value);
             }}
             outline
+            maxlength="130"
           />
         </div>
       </section>
@@ -651,6 +657,7 @@ export default function FinishRegister(props) {
               setDescription(e.target.value);
             }}
             outline
+            maxlength="1000"
           />
         </div>
       </section>
