@@ -2403,7 +2403,8 @@ function entregablepro(array) {
       tipoactivo: array[a].entregatipoArchivo,
       fechaentrega: array[a].entregafechaEntrega,
       revisiones: array[a].entreganumeroRevisiones,
-      contenido: temp,
+      namefile: temp,
+      contenido: `${env.host}/proyecto${array[a].id}/${temp}`,
     });
   }
   return arraydef;

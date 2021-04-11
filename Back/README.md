@@ -395,24 +395,26 @@ este carga las actividades y entregables del proyecto
   ],
   "entregables": [
     {
-      "id": 460,
-      "nombre": "Análisis de viabilidad del Sistema Multimedia",
-      "descripcion": "Es un documento en donde se consigna un análisis\n                    sobre la necesidad de los diferentes tipos de recursos\n                    y de riesgos, a la luz de la aplicación de diferentes\n                    técnicas, que permiten hacer un análisis de viabilidad\n                    en torno al desarrollo del Sistema Multimedia. \n                    ",
+      "id": 175,
+      "nombre": "Propuesta de diseño de la Experiencia Multimedia",
+      "descripcion": "Consiste en un documento en donde se especifica:\n                    -El universo narrativo y la historia en la cual se inscribe\n                    la experiencia multimedia. \n                    Elemento Tipo Descripción\n                    -Las metáforas y analogías que se han estimado\n                    necesarias para expresar la historia en la cual se\n                    inscribe la experiencia multimedia.\n                    -Los personajes que intervienen en la historia, así\n                    como sus atributos físicos y emocionales.\n                    -Los medios digitales que se estiman necesarios para la\n                    representación de la experiencia multimedia\n                    interactiva.",
       "estado": "asignado",
       "tipoactivo": "documento",
       "fechaentrega": "2021-01-23",
       "revisiones": 0,
-      "contenido": "http://localhost:3030/proyecto/contenido/proyecto168/null"
+      "namefile": null,
+      "contenido": "http://localhost:3030/proyectoundefined/null"
     },
     {
-      "id": 461,
-      "nombre": "Proposición de valor del Sistema Multimedia",
-      "descripcion": "Consiste en el documento que especifica el análisis\n                    para la proposición de valor del Sistema Multimedia.",
+      "id": 176,
+      "nombre": "Especificaciones del diseño responsable",
+      "descripcion": "Este documento especifica los siguientes factores\n                    relacionados con el diseño responsable:\n                    -La especificación de las potenciales tensiones de valor\n                    que pueden producirse entre diferentes interesados, y\n                    las posibles estrategias para su neutralización y\n                    gestión.\n                    - Un listado en donde se especifican potenciales usos\n                    de la solución, con propósitos diferentes a los\n                    concebidos por sus diseñadores, así como las posibles\n                    estrategias para reducir la probabilidad sobre este tipo\n                    de escenarios.\n                    -La especificación de las leyes y normativas con alto\n                    potencial de influir en el Sistema Multimedia y el\n                    despliegue de su experiencia multimedia, y los\n                    mecanismos para monitorear y controlar su\n                    cumplimiento. ",
       "estado": "asignado",
       "tipoactivo": "documento",
       "fechaentrega": "2021-01-23",
       "revisiones": 0,
-      "contenido": "http://localhost:3030/proyecto/contenido/proyecto168/null"
+      "namefile": null,
+      "contenido": "http://localhost:3030/proyectoundefined/null"
     }
   ]
 }

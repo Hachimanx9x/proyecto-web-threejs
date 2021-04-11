@@ -48,6 +48,7 @@ io.on("connection", function (socket) {
       iserid: socket.id,
       room: getuserroom(room, socket.id),
       num: getuserroom(room).length,
+      vote: null,
     });
   });
   //se escucha el evento hablar
