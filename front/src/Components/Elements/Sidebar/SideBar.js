@@ -20,14 +20,12 @@ const deleteUser = () => {
 const SideBar = ({ isOpen, toggle }) => {
   const token = localStorage.getItem("login");
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const [activeLink, setActiveLink] = useState(true);
+  let activeLink = true;
   const obj = JSON.parse(token);
-
   const data = obj.data;
   if (data.herramientas.length === 0) {
-    setActiveLink(false);
+    activeLink = false;
   }
-
   useEffect(() => {
     function resize() {
       setWindowWidth(window.innerWidth);
@@ -47,7 +45,7 @@ const SideBar = ({ isOpen, toggle }) => {
 
         <NavLink
           to="/Dashboard/Projects"
-          className={token === "registrandose" ? "disabled" : ""}
+          className={!activeLink ? "disabled" : ""}
         >
           {" "}
           <img
@@ -64,7 +62,7 @@ const SideBar = ({ isOpen, toggle }) => {
         <div className="list-unstyled pb-3">
           <NavLink
             activeClassName="active"
-            className={token === "registrandose" ? "disabled" : ""}
+            className={!activeLink ? "disabled" : ""}
             to="/Dashboard/Projects"
           >
             <div className="nav-item">
@@ -80,7 +78,7 @@ const SideBar = ({ isOpen, toggle }) => {
           <NavLink
             activeClassName="active"
             to="/Dashboard/Contacts"
-            className={token === "registrandose" ? "disabled" : ""}
+            className={!activeLink ? "disabled" : ""}
           >
             <div className="nav-item">
               <li tag={Link} to={"/Dashboard/Contacts"}>
@@ -95,7 +93,7 @@ const SideBar = ({ isOpen, toggle }) => {
           <NavLink
             activeClassName="active"
             to="/Dashboard/Calendar"
-            className={token === "registrandose" ? "disabled" : ""}
+            className={!activeLink ? "disabled" : ""}
           >
             <div className="nav-item">
               <li tag={Link} to={"/Dashboard/Calendar"}>

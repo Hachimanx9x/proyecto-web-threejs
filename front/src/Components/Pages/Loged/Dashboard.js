@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import SideToggler from "./SideToggler";
 
@@ -24,6 +24,5 @@ export default function Dashboard(props) {
   ) {
     props.history.push("/Dashboard/FinishRegister");
   }
-
   return <SideToggler />;
 }

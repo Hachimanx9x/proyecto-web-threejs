@@ -85,7 +85,17 @@ class Login extends Component {
       await httpInstance
         .post("login", { email: email, password: password })
         .then((respuesta) => {
-          if (respuesta.statusText === "OK") {
+          if (
+            respuesta.data.msj === "Correo no registrado" ||
+            respuesta.data.msj === "Contraseña o correo equivocados"
+          ) {
+            this.setState({
+              validpassword: false,
+              passwordMessage: "Correo o contraseña equivocado.",
+              validEmail: false,
+              emailMessage: "Correo o contraseña equivocado.",
+            });
+          } else if (respuesta.statusText === "OK") {
             console.log(respuesta.data);
             localStorage.setItem(
               "login",

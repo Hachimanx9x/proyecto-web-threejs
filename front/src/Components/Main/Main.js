@@ -11,6 +11,15 @@ import TestAxios from "../Pages/test/maxios";
 import LandingPage from "../Pages/LandingPage/LandingPage.jsx";
 
 class Main extends Component {
+  Redirect = () => {
+    const token = localStorage.getItem("login");
+    //El metodo de redireccionamiento.
+    if (token === null || token === undefined || token === "") {
+      return <Redirect to="/Home" />;
+    } else {
+      return <Redirect to="/Dashboard/Projects" />;
+    }
+  };
   render() {
     return (
       <div className="o-container-main">
@@ -24,7 +33,7 @@ class Main extends Component {
           <Route exact path="/test3dsimple" component={Test3d2} />
           <Route exact path="/testfile" component={TestFile} />
           <Route exact path="/axios" component={TestAxios} />
-          <Redirect to="/Home" />
+          {this.Redirect()}
         </Switch>
       </div>
     );
