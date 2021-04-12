@@ -238,7 +238,6 @@ rutas.post("/agregar/herramientas", proToken, (req, res) => {
 });
 
 rutas.post("/create/proyecto", proToken, (req, res) => {
-  console.log(req.body);
   jwt.verify(req.token, LLAVE, (err, data) => {
     if (err) {
       res.sendStatus(403);
@@ -248,6 +247,10 @@ rutas.post("/create/proyecto", proToken, (req, res) => {
         if (typeof practica === "string") {
           practica = practica.split(",");
         }
+        if (typeof integrantes === "string") {
+          integrantes = JSON.parse(integrantes);
+        }
+        console.log({ nombre, descripcion, practica, integrantes });
         integrantes.push({
           user: data.rows[0].id,
           rol: "Arquitecto Experiencia Multimedia",
