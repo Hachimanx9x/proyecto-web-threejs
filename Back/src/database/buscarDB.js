@@ -2223,6 +2223,13 @@ function organizarcalendario(array) {
   let arraydef = [];
 
   for (let a = 0; a < array.length; a++) {
+    let fecha = new Date();
+    let temfecha = array[a].reunionfecha.split("-");
+    let strfecha = `${temfecha[0]}/${temfecha[1]}/${temfecha[2]} ${array[a].reunionhora}`;
+    const date1 = new Date(strfecha);
+    let start = `${date1.getDay()}/${date1.getDate()}/${date1.getFullYear()} ${date1.getHours()}:${date1.getMinutes()}:00`;
+    data1.setHours(date1.getHours() + array[a].reuniondurancion);
+    let end = `${date1.getDay()}/${date1.getDate()}/${date1.getFullYear()} ${date1.getHours()}:${date1.getMinutes()}:00`;
     arraydef.push({
       proyecto: array[a].proyectoid,
       pronombre: array[a].proyectonombre,
@@ -2231,6 +2238,8 @@ function organizarcalendario(array) {
       fecha: array[a].reunionfecha,
       hora: array[a].reunionhora,
       duracion: array[a].reuniondurancion,
+      start: start,
+      end: end,
       descripcion: array[a].reuniondescripcion,
       vigente: array[a].vigente,
     });

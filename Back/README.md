@@ -480,6 +480,8 @@ esta ruta trea todas las reuniones del usuario relacionadas a un proyecto en que
     "fecha": "02-02-2021",
     "hora": "15:00",
     "duracion": 2,
+    "start": "2/2/2021 15:0:00",
+    "end": "2/2/2021 17:0:00",
     "descripcion": "test",
     "vigente": 1
   }
