@@ -440,6 +440,7 @@ esta ruta devuelve todos los contactos del usuario
   "contactos": [
     {
       "iduser": 12,
+      "idcontac": 7,
       "nombre": "nombre test16",
       "descripcion": "null",
       "foto": null,

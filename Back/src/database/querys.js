@@ -248,6 +248,7 @@ query.buscarcontactosusuario = function (id) {
     usuarios.descripcion, 
     usuarios.fotoperfil,
     palabrasclave.palabra,
+    contactos.id AS "conid",
     contactos.preferencias,
     herramientas.id AS "herrid",
 	herramientas.herramientanombre,

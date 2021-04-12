@@ -2131,6 +2131,7 @@ function rearmarcontactos(array) {
       }
       arraydef.push({
         iduser: array[i].id,
+        idcontac: array[i].conid,
         nombre: array[i].nombre,
         descripcion: array[i].descripcion,
         foto: temf,
