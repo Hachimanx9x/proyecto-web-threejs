@@ -721,6 +721,8 @@ este pide un objeto con la siguiente estructura
 este pide un objeto con la siguiente estructura
 
 ```json
+
+//body
 {
   "nombre": "tes proyecto",
   "descripcion": "descripcion test",
@@ -736,6 +738,9 @@ este pide un objeto con la siguiente estructura
     }
   ]
 }
+
+//file
+ { "banner":"aqui va el archivo" , "icon" :"aqui va el archivo"}
 ```
 
 ```sh
