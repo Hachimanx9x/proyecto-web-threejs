@@ -11,273 +11,88 @@ import CardTalents from "../../Elements/CardTalents/CardTalents";
 class Contacts extends Component {
   constructor(props) {
     super(props);
-    this.selectFilter = this.selectFilter.bind(this);
-    this.search = this.search.bind(this);
-    this.showFavorite = this.showFavorite.bind(this);
-    this.changefavorite = this.changefavorite.bind(this);
-    this.addTalent = this.addTalent.bind(this);
-    this.deleteContact = this.deleteContact.bind(this);
 
     this.state = {
       keyWord: "",
       filter: "Contactos",
       favorites: false,
-      show: [
-        {
-          id: "1",
-          jobs: [
-            "Desarrollador FullStack",
-            "Desarrollador Frontend",
-            "Desarrollador Backend",
-          ],
-          urlimage: User,
-          name: "Accel",
-          description:
-            "Programador e ingeniero multimedia con experiencia en entorno web",
-          favorite: false,
-          skills: [
-            "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg",
-
-            "https://www.vectorlogo.zone/logos/angular/angular-icon.svg",
-
-            "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg",
-            "https://upload.vectorlogo.zone/logos/javascript/images/239ec8a4-163e-4792-83b6-3f6d96911757.svg",
-          ],
-        },
-        {
-          id: "2",
-          jobs: ["Ui designer", "Diseñador gráfico", "Diseñador Web"],
-          urlimage: User,
-          name: "Juan Carlos",
-          description:
-            "Programador e ingeniero multimedia con experiencia en entorno web",
-          favorite: true,
-          skills: [
-            "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg",
-
-            "https://www.vectorlogo.zone/logos/angular/angular-icon.svg",
-
-            "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg",
-
-            "https://upload.vectorlogo.zone/logos/javascript/images/239ec8a4-163e-4792-83b6-3f6d96911757.svg",
-          ],
-        },
-      ],
-      talents: [
-        {
-          id: "3",
-          name: "Juan Carlos Hurtado",
-          description:
-            "Ingeniero multimedia. Desarrollador FullStack con experiencia en desarrollo de aplicaciones web y móviles",
-          jobs: [
-            "Desarrollador Frontend",
-            "Desarrollador Backend",
-            "Desarrollador FullStack",
-          ],
-          img: User,
-          skills: [
-            "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg",
-
-            "https://www.vectorlogo.zone/logos/angular/angular-icon.svg",
-
-            "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg",
-
-            "https://upload.vectorlogo.zone/logos/javascript/images/239ec8a4-163e-4792-83b6-3f6d96911757.svg",
-
-            "https://www.vectorlogo.zone/logos/nodejs/nodejs-icon.svg",
-
-            "https://www.vectorlogo.zone/logos/w3_html5/w3_html5-icon.svg",
-
-            "https://raw.githubusercontent.com/devicons/devicon/ac557d6ff33ff370a5db99f97aeab35ea5c67fbd/icons/css3/css3-original.svg",
-
-            "https://www.vectorlogo.zone/logos/php/php-icon.svg",
-
-            "https://www.vectorlogo.zone/logos/flutterio/flutterio-icon.svg",
-
-            "https://www.vectorlogo.zone/logos/mysql/mysql-official.svg",
-
-            "https://www.vectorlogo.zone/logos/golang/golang-official.svg",
-
-            "https://www.vectorlogo.zone/logos/graphql/graphql-icon.svg",
-
-            "https://www.vectorlogo.zone/logos/typescriptlang/typescriptlang-icon.svg",
-
-            "https://cdn.worldvectorlogo.com/logos/laravel-2.svg",
-
-            "https://www.vectorlogo.zone/logos/jquery/jquery-icon.svg",
-
-            "https://www.vectorlogo.zone/logos/getbootstrap/getbootstrap-icon.svg",
-
-            "https://cdn.worldvectorlogo.com/logos/material-ui-1.svg",
-
-            "https://cdn.worldvectorlogo.com/logos/rails.svg",
-            "https://cdn.worldvectorlogo.com/logos/figma-1.svg",
-          ],
-        },
-        {
-          id: "4",
-          name: "Andrés David Londoño",
-          description:
-            "Ingeniero multimedia. Desarrollador web. Senior en tecnologías para desarrollo fronend y backend con experiencia en desarrollo de aplicaciones web y móviles",
-          jobs: ["Desarrollador Web", "Ui designer", "Desarrollador FullStack"],
-          img: User,
-          skills: [
-            "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg",
-
-            "https://www.vectorlogo.zone/logos/angular/angular-icon.svg",
-
-            "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg",
-
-            "https://www.vectorlogo.zone/logos/nodejs/nodejs-icon.svg",
-
-            "https://www.vectorlogo.zone/logos/w3_html5/w3_html5-icon.svg",
-
-            "https://raw.githubusercontent.com/devicons/devicon/ac557d6ff33ff370a5db99f97aeab35ea5c67fbd/icons/css3/css3-original.svg",
-
-            "https://www.vectorlogo.zone/logos/php/php-icon.svg",
-
-            "https://www.vectorlogo.zone/logos/flutterio/flutterio-icon.svg",
-
-            "https://www.vectorlogo.zone/logos/mysql/mysql-official.svg",
-
-            "https://www.vectorlogo.zone/logos/golang/golang-official.svg",
-
-            "https://www.vectorlogo.zone/logos/graphql/graphql-icon.svg",
-
-            "https://www.vectorlogo.zone/logos/typescriptlang/typescriptlang-icon.svg",
-
-            "https://www.vectorlogo.zone/logos/jquery/jquery-icon.svg",
-
-            "https://www.vectorlogo.zone/logos/getbootstrap/getbootstrap-icon.svg",
-
-            "https://www.vectorlogo.zone/logos/python/python-icon.svg",
-
-            "https://www.vectorlogo.zone/logos/djangoproject/djangoproject-icon.svg",
-
-            "https://www.vectorlogo.zone/logos/mongodb/mongodb-icon.svg",
-
-            "https://cdn.worldvectorlogo.com/logos/dotnet.svg",
-
-            "https://www.vectorlogo.zone/logos/sqlite/sqlite-icon.svg",
-
-            "https://cdn.worldvectorlogo.com/logos/redux.svg",
-            "https://cdn.worldvectorlogo.com/logos/android.svg",
-
-            "https://www.vectorlogo.zone/logos/ionicframework/ionicframework-icon.svg",
-
-            "https://cdn.worldvectorlogo.com/logos/c--4.svg",
-            "https://cdn.worldvectorlogo.com/logos/c.svg",
-            "https://cdn.worldvectorlogo.com/logos/c-2975.svg",
-            "https://cdn.worldvectorlogo.com/logos/java-14.svg",
-
-            "https://cdn.worldvectorlogo.com/logos/wordpress-blue.svg",
-          ],
-        },
-      ],
-      contacts: [
-        {
-          id: "1",
-          jobs: [
-            "Desarrollador FullStack",
-            "Desarrollador Frontend",
-            "Desarrollador Backend",
-          ],
-          urlimage: User,
-          name: "Accel",
-          description:
-            "Programador e ingeniero multimedia con experiencia en entorno web",
-          favorite: false,
-          skills: [
-            "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg",
-
-            "https://www.vectorlogo.zone/logos/angular/angular-icon.svg",
-
-            "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg",
-
-            "https://upload.vectorlogo.zone/logos/javascript/images/239ec8a4-163e-4792-83b6-3f6d96911757.svg",
-          ],
-        },
-        {
-          id: "2",
-          jobs: ["Ui designer", "Diseñador gráfico", "Diseñador Web"],
-          urlimage: User,
-          name: "Juan Carlos",
-          description:
-            "Programador e ingeniero multimedia con experiencia en entorno web",
-          favorite: true,
-          skills: [
-            "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg",
-
-            "https://www.vectorlogo.zone/logos/angular/angular-icon.svg",
-            "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg",
-
-            "https://upload.vectorlogo.zone/logos/javascript/images/239ec8a4-163e-4792-83b6-3f6d96911757.svg",
-          ],
-        },
-      ],
+      fetched: false,
+      show: [],
+      talents: [],
+      contacts: [],
     };
   }
-  /* 
-  componentDidMount() {
+  componentDidMount = () => {
     const token = localStorage.getItem("login");
     const obj = JSON.parse(token);
-    const tokensito = obj.token;
-    const httpInstance = axios.create({
-      baseURL: "http://localhost:3030/",
-      timeout: 1000,
+    let temp = obj.token;
+    const options = {
       headers: {
         "Content-Type": "application/json",
-        authorization: `llave ${tokensito}`,
+        authorization: `llave ${temp}`,
       },
-    }); //
+    };
+    try {
+      axios
+        .all([
+          axios.get(`http://localhost:3030/contactos`, options),
+          axios.get(`http://localhost:3030/talentos`, options),
+        ])
 
-    httpInstance.interceptors.response.use(null, (error) => {
-      const expectedError =
-        error.response &&
-        error.response.status >= 400 &&
-        error.response.status < 500;
-      if (!expectedError) {
-        // Loggear mensaje de error a un servicio como Sentry
-        // Mostrar error genérico al usuario
-        return Promise.reject(error);
-      }
-    });
-    //------
-    httpInstance
-      .get("contactos")
-      .then((respuesta) => {
-        if (respuesta.statusText === "OK") {
-          console.log(respuesta.data.contactos);
-          /*
-          for (let i = 0; i < respuesta.data.contactos.length; i++) {
-            const picture = respuesta.data.contactos[i].foto.split("/");
-            const contactpicture =
-              picture[6] !== "null" ? respuesta.data.contactos[i].foto : User;
-            const contactdescription =
-              respuesta.data.contactos[i].description !== null &&
-              respuesta.data.contactos[i].description !== "null"
-                ? respuesta.data.contactos[i].descripcion
-                : "Sin descripción";
-            talentslist.push({
-              id: respuesta.data.contactos[i].userid,
-              jobs: respuesta.data.contactos[i].palabras,
-              urlimage: contactpicture,
-              name: respuesta.data.contactos[i].nombre,
-              description: contactdescription,
-              favorite: respuesta.data.contactos[i].preferencia === 0 ? false : true,
+        .then((response) => {
+          const allcontacts = response[0].data.contactos;
+          const alltaletns = response[1].data.data;
+          console.log(alltaletns);
+          const contacts = [];
+          const talents = [];
+
+          for (let i of allcontacts) {
+            const tools = [];
+            for (let j of i.herramientas) {
+              tools.push(j.icono);
+            }
+            contacts.push({
+              id: i.iduser,
+              name: i.nombre,
+              description:
+                i.descripcion === "undefined" || i.descripcion === "null"
+                  ? "Ninguna"
+                  : i.descripcion,
+              jobs: [...i.palabras],
+              skills: [...tools],
+              favorite: i.preferencia === 0 ? false : true,
+              urlimage: i.foto === null ? User : i.foto,
             });
-            this.setState({ talents: [...talentslist] });
           }
-          this.setState({ fetched: true });
-        } else {
-          console.log("error fatal");
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
-*/
+          for (let i of alltaletns) {
+            const tools = [];
+            for (let j of i.herramientas) {
+              tools.push(j.icono);
+            }
+            talents.push({
+              id: i.userid,
+              name: i.nombre,
+              description:
+                i.descripcion === "undefined" || i.descripcion === "null"
+                  ? "Ninguna"
+                  : i.descripcion,
+              jobs: [...i.palabras],
+              img: i.foto === null ? User : i.foto,
+              skills: [...tools],
+            });
+          }
+          this.setState({
+            show: [...contacts],
+            contacts: [...contacts],
+            talents: [...talents],
+            fetched: true,
+          });
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   selectFilter = (filter) => {
     const { talents, contacts } = this.state;
     if (filter === "Talentos") {
@@ -333,8 +148,9 @@ class Contacts extends Component {
     this.setState({ show: [...show], favorites: !favorites });
   };
 
-  changefavorite(contact) {
+  changefavorite = async (contact) => {
     const { contacts, show } = this.state;
+    console.log(contact);
     const item = contacts.find((iterador) => iterador.id === contact.id);
     const item2 = show.find((iterador) => iterador.id === contact.id);
     if (item) {
@@ -344,13 +160,51 @@ class Contacts extends Component {
 
       this.setState({ contacts: [...contacts], show: [...show] });
     }
-  }
+    try {
+      const token = localStorage.getItem("login");
+      const obj = JSON.parse(token);
+      const tokensito = obj.token;
+      const options = {
+        headers: { authorization: `llave ${tokensito}` },
+      };
+
+      const { data } = await axios.put(
+        `http://localhost:3030/update/contacto`,
+        {
+          preferencias: true,
+          id: contact.id,
+        },
+        options
+      );
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   deleteContact = async (contact) => {
     const { talents, contacts } = this.state;
     const token = localStorage.getItem("login");
     const item = contacts.find((iterador) => iterador.id === contact.id);
     const item2 = contacts.findIndex((iterador) => iterador.id === contact.id);
 
+    try {
+      const obj = JSON.parse(token);
+      const tokensito = obj.token;
+      const options = {
+        headers: { authorization: `llave ${tokensito}` },
+      };
+
+      const { data } = await axios.delete(
+        `http://localhost:3030/delete/contacto`,
+        {
+          id: contact.id,
+        },
+        options
+      );
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
     if (item) {
       talents.push({
         id: item.id,
@@ -374,26 +228,6 @@ class Contacts extends Component {
       contacts: [...contacts],
       talents: [...talents],
     });
-
-    try {
-      const obj = JSON.parse(token);
-      const tokensito = obj.token;
-      const options = {
-        headers: { authorization: `llave ${tokensito}` },
-      };
-
-      const { data } = await axios.post(
-        `http://localhost:3030/agregar/contacto`,
-        {
-          usuario: contact.id,
-          preferencia: false,
-        },
-        options
-      );
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   addTalent = async (talent) => {
@@ -462,115 +296,118 @@ class Contacts extends Component {
     const initialSelectedIndex = options.findIndex(
       ({ value }) => value === this.state.filter
     );
-
-    return (
-      <div className="o-contact-talents">
-        <h4>Contactos guardados</h4>
-        <section className="w-100 d-flex justify-content-end ">
-          <div className="o-bg-blue w-100 d-flex flex-wrap-reverse">
-            <div id="SearchBar">
-              <p
-                className="align-text-c enter mb-2"
-                style={{ fontSize: "0.8rem" }}
-              >
-                Profesión
-              </p>
-              <div className="input-group mb-3">
-                <input
-                  type="text"
-                  className="form-control m-0 o-rounded-input"
-                  placeholder="Palabra clave"
-                  aria-label="Palabra clave"
-                  onChange={(e) => this.setState({ keyWord: e.target.value })}
-                />
-                <div className="input-group-append">
-                  <button
-                    className="btn btn-primary text-white m-0 z-depth-0 o-keyword-btn"
-                    type="button"
-                    onClick={() => this.search()}
-                  >
-                    <FontAwesomeIcon icon={faSearch} />
-                  </button>
+    if (this.state.fetched) {
+      return (
+        <div className="o-contact-talents">
+          <h4>Contactos guardados</h4>
+          <section className="w-100 d-flex justify-content-end ">
+            <div className="o-bg-blue w-100 d-flex flex-wrap-reverse">
+              <div id="SearchBar">
+                <p
+                  className="align-text-c enter mb-2"
+                  style={{ fontSize: "0.8rem" }}
+                >
+                  Profesión
+                </p>
+                <div className="input-group mb-3">
+                  <input
+                    type="text"
+                    className="form-control m-0 o-rounded-input"
+                    placeholder="Palabra clave"
+                    aria-label="Palabra clave"
+                    onChange={(e) => this.setState({ keyWord: e.target.value })}
+                  />
+                  <div className="input-group-append">
+                    <button
+                      className="btn btn-primary text-white m-0 z-depth-0 o-keyword-btn"
+                      type="button"
+                      onClick={() => this.search()}
+                    >
+                      <FontAwesomeIcon icon={faSearch} />
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div id="Switch">
-              <p className="mb-2" style={{ fontSize: "0.8rem" }}>
-                Seleccionar
-              </p>
-              <div className="o-contacts-filter">
-                <SwitchSelector
-                  className="mt-0"
-                  options={options}
-                  forcedSelectedIndex={this.state.favorites ? 0 : null}
-                  initialSelectedIndex={initialSelectedIndex}
-                  backgroundColor={"#fff"}
-                  fontColor={"#757575"}
-                  onChange={this.selectFilter}
-                />
+              <div id="Switch">
+                <p className="mb-2" style={{ fontSize: "0.8rem" }}>
+                  Seleccionar
+                </p>
+                <div className="o-contacts-filter">
+                  <SwitchSelector
+                    className="mt-0"
+                    options={options}
+                    forcedSelectedIndex={this.state.favorites ? 0 : null}
+                    initialSelectedIndex={initialSelectedIndex}
+                    backgroundColor={"#fff"}
+                    fontColor={"#757575"}
+                    onChange={this.selectFilter}
+                  />
+                </div>
+              </div>
+              <div id="FavoriteButton">
+                <p className="mb-2" style={{ fontSize: "0.8rem" }}>
+                  Contactos
+                </p>{" "}
+                <button
+                  className={
+                    (this.state.favorites
+                      ? "btn-primary "
+                      : "bg-white text-primary ") +
+                    "btn z-depth-0 border-0 mt-0 text-capitalize rounded-pill w-100 "
+                  }
+                  onClick={() => this.showFavorite()}
+                >
+                  Favoritos{" "}
+                  <FontAwesomeIcon
+                    className={
+                      this.state.favorites ? "o-icon-filter" : "o-icon-filter-2"
+                    }
+                    icon={faHeart}
+                  />
+                </button>
               </div>
             </div>
-            <div id="FavoriteButton">
-              <p className="mb-2" style={{ fontSize: "0.8rem" }}>
-                Contactos
-              </p>{" "}
-              <button
-                className={
-                  (this.state.favorites
-                    ? "btn-primary "
-                    : "bg-white text-primary ") +
-                  "btn z-depth-0 border-0 mt-0 text-capitalize rounded-pill w-100 "
-                }
-                onClick={() => this.showFavorite()}
-              >
-                Favoritos{" "}
-                <FontAwesomeIcon
-                  className={
-                    this.state.favorites ? "o-icon-filter" : "o-icon-filter-2"
-                  }
-                  icon={faHeart}
-                />
-              </button>
-            </div>
-          </div>
-        </section>
-        <div
-          className={
-            (this.state.show.length === 0 ? "d-flex " : "") +
-            "o-card-contacts-container w-100 "
-          }
-        >
-          {this.state.show.length !== 0 ? (
-            this.state.filter === "Contactos" ? (
-              this.state.show.map((contact) => (
-                <CardContacts
-                  key={contact.id}
-                  changefavorite={this.changefavorite}
-                  deleteContact={this.deleteContact}
-                  contact={contact}
-                />
-              ))
+          </section>
+          <div
+            className={
+              (this.state.show.length === 0 ? "d-flex " : "") +
+              "o-card-contacts-container w-100 "
+            }
+          >
+            {this.state.show.length !== 0 ? (
+              this.state.filter === "Contactos" ? (
+                this.state.show.map((contact) => (
+                  <CardContacts
+                    key={contact.id}
+                    changefavorite={this.changefavorite}
+                    deleteContact={this.deleteContact}
+                    contact={contact}
+                  />
+                ))
+              ) : (
+                this.state.show.map((talent) => (
+                  <CardTalents
+                    key={talent.id}
+                    addTalent={this.addTalent}
+                    talent={talent}
+                  />
+                ))
+              )
+            ) : this.state.filter === "Contactos" ? (
+              <p className="text-center text-secondary m-auto">
+                No tienes ningún contacto
+              </p>
             ) : (
-              this.state.show.map((talent) => (
-                <CardTalents
-                  key={talent.id}
-                  addTalent={this.addTalent}
-                  talent={talent}
-                />
-              ))
-            )
-          ) : this.state.filter === "Contactos" ? (
-            <p className="text-center text-secondary m-auto">
-              No tienes ningún contacto
-            </p>
-          ) : (
-            <p className="text-center text-secondary m-auto">
-              No hay talentos para mostrar
-            </p>
-          )}
+              <p className="text-center text-secondary m-auto">
+                No hay talentos para mostrar
+              </p>
+            )}
+          </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return <div>Cargando....</div>;
+    }
   }
 }
 
