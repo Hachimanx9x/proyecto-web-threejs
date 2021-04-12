@@ -832,7 +832,7 @@ asi mismo tambien se puede resibir dos archivos en variables foto o cv en caso d
 esla id del contacto a a gregar
 
 ```json
-{ "preferencias": true, "id": 2 }
+{ "preferences": true, "id": 2 }
 ```
 
 ```sh
