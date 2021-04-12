@@ -113,14 +113,20 @@ rutas.delete("/delete/listalenguajeuser", (req, res) => {
 //-------------------------------------------------------
 rutas.delete("/delete/contacto", (req, res) => {
   const { id } = req.body;
-  if (typeof id === "number") {
+  /*  if (typeof id === "number") {
     deleteDB
       .deleteContact(req.body)
       .then((re) => {
         res.json(re);
       })
       .catch((err) => res.json(err));
-  }
+  } */
+  deleteDB
+    .deleteContact(req.body)
+    .then((re) => {
+      res.json(re);
+    })
+    .catch((err) => res.json(err));
 });
 //-------------------------------------------------------
 rutas.delete("/delete/listacontactos", (req, res) => {
