@@ -954,7 +954,7 @@ Esta devuelven un objeto con una array llamado API que contiene los objetos gene
 
 > rutas de eliminación
 
-```sh
+````sh
 /delete/lenguaje
 /delete/habilidad
 /delete/herramientas
@@ -962,6 +962,11 @@ Esta devuelven un objeto con una array llamado API que contiene los objetos gene
 /delete/palabraclave
 /delete/listalenguajeuser
 /delete/contacto
+este es el id de contacto no de usuario
+```json
+{"id": 1}
+````
+
 /delete/listacontactos
 /delete/listaherramientas
 /delete/practica
@@ -973,7 +978,6 @@ Esta devuelven un objeto con una array llamado API que contiene los objetos gene
 /delete/listarol
 /delete/integrante
 /delete/listaactividades
-/delete/contacto
 /delete/entregable
 /delete/listaerramientasmetogologia
 /delete/listacontactos
@@ -985,8 +989,9 @@ Esta devuelven un objeto con una array llamado API que contiene los objetos gene
 /delete/listaentregas
 /delete/listaintegrantes
 /delete/metodologia
-/                                             //se requiere codigo
-```
+/ //se requiere codigo
+
+````
 
 > rutas de inserción
 
@@ -1026,7 +1031,7 @@ Esta devuelven un objeto con una array llamado API que contiene los objetos gene
 /insert/listmethodologyTool  { entregable, herramientametodologia }
 /api/crearbucket             { bucket }
 /proyecto/insertarArchivo    { bucket }  { archivo }
-```
+````
 
 > rutas de actualización
 
