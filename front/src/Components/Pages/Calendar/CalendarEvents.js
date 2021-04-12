@@ -47,8 +47,8 @@ export default class CalendarEvents extends Component {
         },
         {
           title: "Reunión avances",
-          start: new Date("2021/02/18 12:22:00"),
-          end: new Date("2021/02/18 13:42:00"),
+          start: new Date("2021-04-18 12:22"),
+          end: new Date("2021-04-18 13:42"),
         },
       ],
       selectedDate: null,
@@ -57,8 +57,7 @@ export default class CalendarEvents extends Component {
       fetched: true,
     };
   }
-  /*
-  componentDidMount() {
+  componentDidMount = () => {
     const token = localStorage.getItem("login");
     const obj = JSON.parse(token);
     const tokensito = obj.token;
@@ -108,8 +107,7 @@ export default class CalendarEvents extends Component {
       });
     }
     this.setState({ colors: temcolors, fetched: true, events: temvents });
-  }
-*/
+  };
   handleDayClick = (day, { selected }) => {
     this.setState({
       selectedDate: selected ? undefined : day,
@@ -124,10 +122,6 @@ export default class CalendarEvents extends Component {
       this.setState({ error: true });
     }
   };
-  getRandomColor() {
-    const color = "#" + Math.floor(Math.random() * 16777215).toString(16);
-    return color;
-  }
   render() {
     if (this.state.fetched) {
       return (

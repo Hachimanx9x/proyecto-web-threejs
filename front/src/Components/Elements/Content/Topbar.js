@@ -11,6 +11,14 @@ const Topbar = ({ toggleSidebar, sidebarIsOpen }, props) => {
   const [topbarIsOpen, setTopbarOpen] = useState(true);
   const toggleTopbar = () => setTopbarOpen(!topbarIsOpen);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const token = localStorage.getItem("login");
+  let activeLink = true;
+  const obj = JSON.parse(token);
+  const data = obj.data;
+  const name = data.nombre.split(" ", 1);
+  if (data.herramientas.length === 0) {
+    activeLink = false;
+  }
 
   useEffect(() => {
     function resize() {
@@ -53,8 +61,11 @@ const Topbar = ({ toggleSidebar, sidebarIsOpen }, props) => {
         } navbar-collapse justify-content-end`}
         id="navbar-menu"
       >
-        <a className="nav-link text-info" href="/Dashboard/InfoUser">
-          <label className="mr-2 font-weight-bold">Perfil</label>
+        <a
+          className={"nav-link text-info" + (!activeLink ? " disabled" : "")}
+          href="/Dashboard/InfoUser"
+        >
+          <label className="mr-2 font-weight-bold">{name}</label>
           <img
             src={User}
             alt="User"

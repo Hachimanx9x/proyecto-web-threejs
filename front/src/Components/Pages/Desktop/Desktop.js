@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Desktop.css";
 import CardDesktop from "../../Elements/CardDesktop/CardDesktop";
 import ProjectPicture from "../../../ilustracion-equipo-de-trabajo.jpg";
@@ -146,6 +146,73 @@ export default function Desktop() {
       ],
     },
   ]);
+
+  useEffect(() => {
+    function fetchData() {
+      const token = localStorage.getItem("login");
+      const obj = JSON.parse(token);
+      let temp = obj.token;
+      const options = {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `llave ${temp}`,
+        },
+      };
+      try {
+        axios
+          .all([axios.get(`http://localhost:3030/escritorio`, options)])
+          .then((response) => {
+            console.log(response);
+            /*
+              {
+      id: 1,
+      title: "Videojuegos 3d",
+      description:
+        "Este proyecto es una guía firme de como unir un grupo de trabajo para la creación de un sistema multimedia.",
+      image: ProjectPicture,
+      icon: ProjectIcon,
+      updates: [
+        {
+          userName: "Juan Carlos Hurtado",
+          projectName: "Desarrollo de videojuegos RV",
+          activity: "A1",
+          date: "13/01/2020",
+          hour: "11:30",
+          fileName: "foto.png",
+          fileUrl:
+            "https://i.pinimg.com/originals/47/81/18/4781189a78cb263f7ffc16bab6b6b192.png",
+        },
+        {
+          userName: "Juan Carlos Hurtado",
+          projectName: "Desarrollo de videojuegos RV1",
+          activity: "A1",
+          date: "13/01/2020",
+          hour: "11:30",
+          fileName: "foto.png",
+          fileUrl:
+            "https://i.pinimg.com/originals/47/81/18/4781189a78cb263f7ffc16bab6b6b192.png",
+        },
+        {
+          userName: "Juan Carlos Hurtado",
+          projectName: "Desarrollo de videojuegos RV2",
+          activity: "A1",
+          date: "13/01/2020",
+          hour: "11:30",
+          fileName: "foto.png",
+          fileUrl:
+            "https://i.pinimg.com/originals/47/81/18/4781189a78cb263f7ffc16bab6b6b192.png",
+        },
+      ],
+    },*/
+            console.log("uwu");
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData();
+  }, []);
+
   const [show, setShow] = useState([...projects]);
   function search() {
     const array = [];
