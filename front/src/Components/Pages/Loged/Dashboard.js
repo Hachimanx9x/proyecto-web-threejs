@@ -7,7 +7,6 @@ export default function Dashboard(props) {
   const token = localStorage.getItem("login");
   const obj = JSON.parse(token);
   const data = obj.data;
-  console.log(data);
   let temp = obj.token;
   if (
     temp === null ||

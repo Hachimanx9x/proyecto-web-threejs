@@ -41,8 +41,8 @@ class Contacts extends Component {
 
         .then((response) => {
           const allcontacts = response[0].data.contactos;
+          console.log(allcontacts);
           const alltaletns = response[1].data.data;
-          console.log(alltaletns);
           const contacts = [];
           const talents = [];
 
@@ -53,6 +53,7 @@ class Contacts extends Component {
             }
             contacts.push({
               id: i.iduser,
+              idcontact: i.idcontac,
               name: i.nombre,
               description:
                 i.descripcion === "undefined" || i.descripcion === "null"
@@ -81,6 +82,13 @@ class Contacts extends Component {
               skills: [...tools],
             });
           }
+          for (let i of contacts) {
+            const item = talents.findIndex((iterador) => iterador.id === i.id);
+            if (item) {
+              talents.splice(item, 1);
+            }
+          }
+
           this.setState({
             show: [...contacts],
             contacts: [...contacts],
@@ -150,7 +158,6 @@ class Contacts extends Component {
 
   changefavorite = async (contact) => {
     const { contacts, show } = this.state;
-    console.log(contact);
     const item = contacts.find((iterador) => iterador.id === contact.id);
     const item2 = show.find((iterador) => iterador.id === contact.id);
     if (item) {
@@ -168,40 +175,38 @@ class Contacts extends Component {
         headers: { authorization: `llave ${tokensito}` },
       };
 
-      const { data } = await axios.put(
-        `http://localhost:3030/update/contacto`,
-        {
-          preferencias: true,
-          id: contact.id,
-        },
-        options
-      );
-      console.log(data);
+      await axios
+        .put(
+          `http://localhost:3030/update/contacto`,
+          {
+            preferences: contact.favorite ? true : false,
+            id: contact.idcontact,
+          },
+          options
+        )
+        .then((response) => {
+          console.log(response);
+        });
     } catch (error) {
       console.log(error);
     }
   };
   deleteContact = async (contact) => {
     const { talents, contacts } = this.state;
-    const token = localStorage.getItem("login");
     const item = contacts.find((iterador) => iterador.id === contact.id);
     const item2 = contacts.findIndex((iterador) => iterador.id === contact.id);
-
     try {
+      const token = localStorage.getItem("login");
       const obj = JSON.parse(token);
       const tokensito = obj.token;
-      const options = {
-        headers: { authorization: `llave ${tokensito}` },
-      };
-
-      const { data } = await axios.delete(
-        `http://localhost:3030/delete/contacto`,
-        {
-          id: contact.id,
-        },
-        options
-      );
-      console.log(data);
+      await axios
+        .delete(`http://localhost:3030/delete/contacto`, {
+          headers: { authorization: `llave ${tokensito}` },
+          data: { id: contact.idcontact },
+        })
+        .then((response) => {
+          console.log(response);
+        });
     } catch (error) {
       console.log(error);
     }
@@ -217,6 +222,11 @@ class Contacts extends Component {
       contacts.splice(item2, 1);
     }
 
+    this.setState({
+      contacts: [...contacts],
+      talents: [...talents],
+    });
+
     if (contacts.length === 0) {
       setTimeout(() => {
         this.setState({
@@ -224,10 +234,6 @@ class Contacts extends Component {
         });
       }, 1000);
     }
-    this.setState({
-      contacts: [...contacts],
-      talents: [...talents],
-    });
   };
 
   addTalent = async (talent) => {
@@ -237,15 +243,6 @@ class Contacts extends Component {
     const item2 = talents.findIndex((iterador) => iterador.id === talent.id);
 
     if (item) {
-      contacts.push({
-        id: item.id,
-        jobs: item.jobs,
-        urlimage: item.img,
-        name: item.name,
-        description: item.description,
-        favorite: false,
-        skills: item.skills,
-      });
       talents.splice(item2, 1);
     }
 
@@ -267,15 +264,45 @@ class Contacts extends Component {
         headers: { authorization: `llave ${tokensito}` },
       };
 
-      const { data } = await axios.post(
-        `http://localhost:3030/agregar/contacto`,
-        {
-          usuario: talent.id,
-          preferencia: false,
-        },
-        options
-      );
-      console.log(data);
+      axios
+        .all([
+          await axios.post(
+            `http://localhost:3030/agregar/contacto`,
+            {
+              usuario: talent.id,
+              preferencia: false,
+            },
+            options
+          ),
+          axios.get(`http://localhost:3030/contactos`, options),
+        ])
+        .then((response) => {
+          const allcontacts = response[1].data.contactos;
+          const contacts = [];
+
+          for (let i of allcontacts) {
+            const tools = [];
+            for (let j of i.herramientas) {
+              tools.push(j.icono);
+            }
+            contacts.push({
+              id: i.iduser,
+              idcontact: i.idcontac,
+              name: i.nombre,
+              description:
+                i.descripcion === "undefined" || i.descripcion === "null"
+                  ? "Ninguna"
+                  : i.descripcion,
+              jobs: [...i.palabras],
+              skills: [...tools],
+              favorite: i.preferencia === 0 ? false : true,
+              urlimage: i.foto === null ? User : i.foto,
+            });
+          }
+          this.setState({
+            contacts: [...contacts],
+          });
+        });
     } catch (error) {
       console.log(error);
     }
@@ -376,18 +403,18 @@ class Contacts extends Component {
           >
             {this.state.show.length !== 0 ? (
               this.state.filter === "Contactos" ? (
-                this.state.show.map((contact) => (
+                this.state.show.map((contact, i) => (
                   <CardContacts
-                    key={contact.id}
+                    key={i}
                     changefavorite={this.changefavorite}
                     deleteContact={this.deleteContact}
                     contact={contact}
                   />
                 ))
               ) : (
-                this.state.show.map((talent) => (
+                this.state.show.map((talent, i) => (
                   <CardTalents
-                    key={talent.id}
+                    key={i}
                     addTalent={this.addTalent}
                     talent={talent}
                   />
