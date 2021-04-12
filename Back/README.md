@@ -437,30 +437,30 @@ esta ruta devuelve todos los contactos del usuario
 
 ```json
 {
-    "contactos": [
+  "contactos": [
+    {
+      "iduser": 12,
+      "nombre": "nombre test16",
+      "descripcion": "null",
+      "foto": null,
+      "palabras": ["perro"],
+      "herramientas": [
         {
-            "iduser": 5,
-            "nombre": "nombre test11",
-            "palabras": [
-                "test"
-            ],,
-            "herramientas": [
-                {
-                    "id": 1,
-                    "nombre": "Reactjs",
-                    "descripcion": "Es una biblioteca Javascript de código abierto diseñada para crear interfaces de usuario con el objetivo de facilitar el desarrollo de aplicaciones en una sola página. Es mantenido por Facebook y la comunidad de software libre. En el proyecto hay más de mil desarrolladores libres. ",
-                    "icono": "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg"
-                },
-                {
-                    "id": 32,
-                    "nombre": "Adobe Ilustrator",
-                    "descripcion": "Es un editor de gráficos vectoriales en forma de taller de arte que trabaja sobre un tablero de dibujo, conocido como «mesa de trabajo» y está destinado a la creación artística de dibujo y pintura para ilustración, para crear y diseñar imágenes, sirve para editar entre otras cosas (ilustración como rama del arte digital aplicado a la ilustración técnica o el diseño gráfico, entre otros).",
-                    "icono": "https://cdn.worldvectorlogo.com/logos/adobe-illustrator-cc.svg"
-                }
-            ],
-            "preferencia": 0
+          "id": 1,
+          "nombre": "Reactjs",
+          "descripcion": "Es una biblioteca Javascript de código abierto diseñada para crear interfaces de usuario con el objetivo de facilitar el desarrollo de aplicaciones en una sola página. Es mantenido por Facebook y la comunidad de software libre. En el proyecto hay más de mil desarrolladores libres. ",
+          "icono": "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg"
+        },
+        {
+          "id": 32,
+          "nombre": "Adobe Ilustrator",
+          "descripcion": "Es un editor de gráficos vectoriales en forma de taller de arte que trabaja sobre un tablero de dibujo, conocido como «mesa de trabajo» y está destinado a la creación artística de dibujo y pintura para ilustración, para crear y diseñar imágenes, sirve para editar entre otras cosas (ilustración como rama del arte digital aplicado a la ilustración técnica o el diseño gráfico, entre otros).",
+          "icono": "https://cdn.worldvectorlogo.com/logos/adobe-illustrator-cc.svg"
         }
-    ]
+      ],
+      "preferencia": 0
+    }
+  ]
 }
 ```
 
