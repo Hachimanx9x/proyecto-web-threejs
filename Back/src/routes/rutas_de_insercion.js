@@ -244,8 +244,10 @@ rutas.post("/create/proyecto", proToken, (req, res) => {
       res.sendStatus(403);
     } else {
       if (data.rows.length > 0) {
-        const { nombre, descripcion, practica, integrantes } = req.body;
-
+        let { nombre, descripcion, practica, integrantes } = req.body;
+        if (typeof practica === "string") {
+          practica = practica.split(",");
+        }
         integrantes.push({
           user: data.rows[0].id,
           rol: "Arquitecto Experiencia Multimedia",
