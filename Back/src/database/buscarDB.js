@@ -2125,11 +2125,15 @@ function rearmarcontactos(array) {
   // console.log(array)
   for (var i = 0; i < array.length; i++) {
     if (iduser != array[i].id) {
+      let temf = null;
+      if (array[i].fotoperfil !== null && array[i].fotoperfil !== "null") {
+        temf = `${env.host}/proyecto/contenido/usuario${array[i].id}/${array[i].fotoperfil}`;
+      }
       arraydef.push({
         iduser: array[i].id,
         nombre: array[i].nombre,
         descripcion: array[i].descripcion,
-        foto: `${env.host}/proyecto/contenido/usuario${array[i].id}/${array[i].fotoperfil}`,
+        foto: temf,
         palabras,
         herramientas,
         preferencia: array[i].preferencias,
