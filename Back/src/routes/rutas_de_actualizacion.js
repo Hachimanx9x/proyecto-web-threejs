@@ -8,7 +8,7 @@ const ftpminio = require("../ftp/peticiones");
 const chalk = require("chalk");
 const LLAVE = "misecretos";
 const path = require("path");
-
+const env = require("../env");
 rutas.put("/entrega/actividad", proToken, (req, res) => {
   const { actividad } = req.body;
   if (req.files !== undefined || req.files !== null) {
