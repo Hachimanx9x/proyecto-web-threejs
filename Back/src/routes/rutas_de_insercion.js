@@ -4,7 +4,7 @@ const rutas = ex.Router();
 const nodemailer = require("nodemailer");
 
 const path = require("path");
-
+const env = require("../env");
 const ftpminio = require("../ftp/peticiones");
 const buscarDB = require("../database/buscarDB");
 const insertDB = require("../database/insertarDB");
