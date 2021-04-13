@@ -298,7 +298,10 @@ rutas.post("/create/proyecto", proToken, (req, res) => {
                         ) +
                         chalk.bgBlue("_▓_")
                     );
-                    if (req.files != null || req.files != undefined) {
+                    if (req.files != null && req.files != undefined) {
+                      console.log(chalk.bgBlue("___________________"));
+                      console.log(chalk.bgBlue("___________________"));
+                      console.log(chalk.bgBlue(req.files));
                       const { banner, icon } = req.files;
                       if (
                         banner != null ||
