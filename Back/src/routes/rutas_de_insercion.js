@@ -92,8 +92,53 @@ rutas.post("/create/usuario", (req, res) => {
                     let rows = [];
                     rows.push(usuario);
                     const token = jwt.sign({ rows }, LLAVE);
-
-                    res.json({ token: token });
+                    buscarDB
+                      .obtenerusuarioid({ id: rows[0].id })
+                      .then((usua) => {
+                        buscarDB
+                          .buscartalentogeneral2(rows[0].id)
+                          .then((talento) => {
+                            if (talento.data.length < 1) {
+                              let tem = null;
+                              if (
+                                usua.fotoperfil !== null &&
+                                usua.fotoperfil !== "null"
+                              ) {
+                                tem = `${env.host}/proyecto/contenido/usuario${rows[0].id}/${usua.fotoperfil}`;
+                              }
+                              res.json({
+                                token: token,
+                                datos: {
+                                  id: rows[0].id,
+                                  nombre: usua.nombre,
+                                  foto: tem,
+                                  herramientas: [],
+                                  palabras: [],
+                                },
+                              });
+                            } else {
+                              let tem = null;
+                              if (
+                                usua.fotoperfil !== null &&
+                                usua.fotoperfil !== "null"
+                              ) {
+                                tem = `${env.host}/proyecto/contenido/usuario${rows[0].id}/${usua.fotoperfil}`;
+                              }
+                              res.json({
+                                token: token,
+                                datos: {
+                                  id: rows[0].id,
+                                  nombre: usua.nombre,
+                                  foto: tem,
+                                  herramientas: talento.data[0].herramientas,
+                                  palabras: talento.data[0].palabras,
+                                },
+                              });
+                            }
+                          })
+                          .catch((talenerr) => console.log(talenerr));
+                      })
+                      .catch((dererro) => res.json(dererro));
                   })
                   .catch((err2) => {
                     res.json(err2);
