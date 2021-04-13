@@ -114,7 +114,15 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
     palabra,
     idiomas,
   } = req.body;
-
+  if (typeof herramienta === "string") {
+    console.log("herramienta es string");
+  }
+  if (typeof palabra === "string") {
+    console.log("palabra es string");
+  }
+  if (typeof idiomas === "string") {
+    console.log("idiomas es string");
+  }
   let herraas = herramienta.split(",");
   let palatem = palabra.split(",");
   let idiotemop = idiomas.split(",");
