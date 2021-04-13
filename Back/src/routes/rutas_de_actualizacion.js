@@ -114,6 +114,7 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
     palabra,
     idiomas,
   } = req.body;
+
   let herraas = herramienta.split(",");
   let palatem = palabra.split(",");
   let idiotemop = idiomas.split(",");
@@ -144,30 +145,25 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
           .obtenerusuarioid({ id: data.rows[0].id })
           .then((datos) => {
             let bucket = `usuario${data.rows[0].id}`;
-            if (req.files != null || req.files != undefined) {
-              let a = false,
-                b = false;
+            if (req.files !== null && req.files !== undefined) {
               if (
-                req.files.foto != null ||
-                req.files.foto != undefined ||
-                req.files.foto != ""
+                req.files.foto != null &&
+                req.files.foto != undefined &&
+                req.files.cv === null &&
+                req.files.cv === undefined
               ) {
-                a = true;
-              }
-              if (
-                req.files.cv != null ||
-                req.files.cv === undefined ||
-                req.files.foto != ""
-              ) {
-                b = true;
-              }
-              console.log(`${a} + ${b} `);
-              if (a === true && b === false) {
-                console.log("una foto");
-                if (datos.fotoperfil != "null" || datos.fotoperfil != null) {
+                console.log(
+                  chalk.red(`Solo entro la foto ${req.files.foto.name}`)
+                );
+                if (datos.fotoperfil !== "null" && datos.fotoperfil !== null) {
                   ftpminio
                     .removeObject(bucket, datos.fotoperfil)
                     .then((result) => {
+                      console.log(
+                        chalk.yellow(
+                          `Se elimino la foto anterior por ${req.files.foto.name}`
+                        )
+                      );
                       req.files.foto.mv(
                         __dirname + "/tmp/" + req.files.foto.name,
                         (err) => {
@@ -190,157 +186,47 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
                                 metaData
                               )
                               .then((resul) => {
-                                actualizarDB
-                                  .actualizarusuario(
-                                    {
-                                      email,
-                                      password,
-                                      experiencia,
-                                      nombre,
-                                      descripcion,
-                                      pais,
-                                      edad,
-                                      github,
-                                      gitlab,
-                                      bitbucket,
-                                      linkedin,
-                                    },
-                                    data.rows[0].id,
-                                    req.files.foto.name,
-                                    null
+                                console.log(
+                                  chalk.green(
+                                    `Se subio la foto ${req.files.foto.name} al buket:${bucket} `
                                   )
-                                  .then((result) => {
-                                    let c = 0;
-                                    for (let a = 0; a < palabra.length; a++) {
-                                      insertDB
-                                        .insertKeyword({
-                                          user: data.rows[0].id,
-                                          palabra: palabra[a],
-                                        })
-                                        .then((result) => {
-                                          if (c === palabra.length - 1) {
-                                            insertDB
-                                              .agregarherramientas({
-                                                herramientas: herramienta,
-                                                id: data.rows[0].id,
-                                              })
-                                              .then((resul) => {
-                                                let d = 0;
-                                                for (
-                                                  let a = 0;
-                                                  a < idiomas.length;
-                                                  a++
-                                                ) {
-                                                  insertDB
-                                                    .insertlistlenguaje({
-                                                      user: data.rows[0].id,
-                                                      idioma: idiomas[a],
-                                                    })
-                                                    .then((result) => {
-                                                      if (
-                                                        d ===
-                                                        idiomas.length - 1
-                                                      ) {
-                                                        buscarDB
-                                                          .obtenerusuarioid({
-                                                            id: data.rows[0].id,
-                                                          })
-                                                          .then((usua) => {
-                                                            buscarDB
-                                                              .buscartalentogeneral2(
-                                                                data.rows[0].id
-                                                              )
-                                                              .then(
-                                                                (talento) => {
-                                                                  if (
-                                                                    talento.data
-                                                                      .length <
-                                                                    1
-                                                                  ) {
-                                                                    let tem = null;
-                                                                    if (
-                                                                      usua.fotoperfil !==
-                                                                        null &&
-                                                                      usua.fotoperfil !==
-                                                                        "null"
-                                                                    ) {
-                                                                      tem = `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`;
-                                                                    }
-                                                                    res.json({
-                                                                      token:
-                                                                        resul.token,
-                                                                      datos: {
-                                                                        id:
-                                                                          data
-                                                                            .rows[0]
-                                                                            .id,
-                                                                        nombre:
-                                                                          usua.nombre,
-                                                                        foto: tem,
-                                                                        herramientas: [],
-                                                                        palabras: [],
-                                                                      },
-                                                                    });
-                                                                  } else {
-                                                                    let tem = null;
-                                                                    if (
-                                                                      usua.fotoperfil !==
-                                                                        null &&
-                                                                      usua.fotoperfil !==
-                                                                        "null"
-                                                                    ) {
-                                                                      tem = `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`;
-                                                                    }
-                                                                    res.json({
-                                                                      token:
-                                                                        resul.token,
-                                                                      datos: {
-                                                                        id:
-                                                                          data
-                                                                            .rows[0]
-                                                                            .id,
-                                                                        nombre:
-                                                                          usua.nombre,
-                                                                        foto: tem,
-                                                                        herramientas:
-                                                                          talento
-                                                                            .data[0]
-                                                                            .herramientas,
-                                                                        palabras:
-                                                                          talento
-                                                                            .data[0]
-                                                                            .palabras,
-                                                                      },
-                                                                    });
-                                                                  }
-                                                                }
-                                                              )
-                                                              .catch(
-                                                                (talenerr) =>
-                                                                  console.log(
-                                                                    talenerr
-                                                                  )
-                                                              );
-                                                          })
-                                                          .catch((dererro) =>
-                                                            res.json(dererro)
-                                                          );
-                                                      }
-                                                      d++;
-                                                    })
-                                                    .catch((err) =>
-                                                      res.json(err)
-                                                    );
-                                                }
-                                              })
-                                              .catch((err) => res.json(err));
-                                          }
-                                          c++;
-                                        })
-                                        .catch((err) => res.json(err));
-                                    }
+                                );
+                                actuusermt(
+                                  {
+                                    email,
+                                    password,
+                                    experiencia,
+                                    nombre,
+                                    descripcion,
+                                    pais,
+                                    edad,
+                                    github,
+                                    gitlab,
+                                    bitbucket,
+                                    linkedin,
+                                  },
+                                  data.rows[0].id,
+                                  req.files.foto.name,
+                                  null,
+                                  palabra,
+                                  idiomas,
+                                  herramienta
+                                )
+                                  .then((succes) => {
+                                    console.log(
+                                      chalk.blue(
+                                        `Se actualizo el usuario con el id: ${data.rows[0].id}`
+                                      )
+                                    );
+                                    datauseridmt(data.rows[0].id).then(
+                                      (userdata) => {
+                                        res.json(userdata);
+                                      }
+                                    );
                                   })
-                                  .catch((err2) => res.json(err2));
+                                  .catch((err1) => {
+                                    console.log(`erro ${err1}`);
+                                  });
                               })
                               .catch((err) => res.json(err));
                           } else {
@@ -350,353 +236,111 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
                       );
                     });
                 } else {
-                  ftpminio
-                    .putFile(
-                      bucket,
-                      req.files.foto.name,
-                      path.join(__dirname, `/tmp/${req.files.foto.name}`),
-                      metaData
-                    )
-                    .then((resul) => {
-                      actualizarDB
-                        .actualizarusuario(
-                          {
-                            email,
-                            password,
-                            experiencia,
-                            nombre,
-                            descripcion,
-                            pais,
-                            edad,
-                            github,
-                            gitlab,
-                            bitbucket,
-                            linkedin,
-                          },
-                          data.rows[0].id,
+                  req.files.foto.mv(
+                    __dirname + "/tmp/" + req.files.foto.name,
+                    (err) => {
+                      ftpminio
+                        .putFile(
+                          bucket,
                           req.files.foto.name,
-                          null
-                        )
-                        .then((result) => {
-                          let c = 0;
-                          for (let a = 0; a < palabra.length; a++) {
-                            insertDB
-                              .insertKeyword({
-                                user: data.rows[0].id,
-                                palabra: palabra[a],
-                              })
-                              .then((result) => {
-                                if (c === palabra.length - 1) {
-                                  insertDB
-                                    .agregarherramientas({
-                                      herramientas: herramienta,
-                                      id: data.rows[0].id,
-                                    })
-                                    .then((resul) => {
-                                      let d = 0;
-                                      for (let b = 0; b < idiomas.length; b++) {
-                                        insertDB
-                                          .insertlistlenguaje({
-                                            user: data.rows[0].id,
-                                            idioma: idiomas[b],
-                                          })
-                                          .then((result) => {
-                                            if (d === idiomas.length - 1) {
-                                              buscarDB
-                                                .obtenerusuarioid({
-                                                  id: data.rows[0].id,
-                                                })
-                                                .then((usua) => {
-                                                  buscarDB
-                                                    .buscartalentogeneral2(
-                                                      data.rows[0].id
-                                                    )
-                                                    .then((talento) => {
-                                                      if (
-                                                        talento.data.length < 1
-                                                      ) {
-                                                        let tem = null;
-                                                        if (
-                                                          usua.fotoperfil !==
-                                                            null &&
-                                                          usua.fotoperfil !==
-                                                            "null"
-                                                        ) {
-                                                          tem = `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`;
-                                                        }
-                                                        res.json({
-                                                          token: resul.token,
-                                                          datos: {
-                                                            id: data.rows[0].id,
-                                                            nombre: usua.nombre,
-                                                            foto: tem,
-                                                            herramientas: [],
-                                                            palabras: [],
-                                                          },
-                                                        });
-                                                      } else {
-                                                        let tem = null;
-                                                        if (
-                                                          usua.fotoperfil !==
-                                                            null &&
-                                                          usua.fotoperfil !==
-                                                            "null"
-                                                        ) {
-                                                          tem = `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`;
-                                                        }
-                                                        res.json({
-                                                          token: resul.token,
-                                                          datos: {
-                                                            id: data.rows[0].id,
-                                                            nombre: usua.nombre,
-                                                            foto: tem,
-                                                            herramientas:
-                                                              talento.data[0]
-                                                                .herramientas,
-                                                            palabras:
-                                                              talento.data[0]
-                                                                .palabras,
-                                                          },
-                                                        });
-                                                      }
-                                                    })
-                                                    .catch((talenerr) =>
-                                                      console.log(talenerr)
-                                                    );
-                                                })
-                                                .catch((dererro) =>
-                                                  res.json(dererro)
-                                                );
-                                            }
-                                            d++;
-                                          })
-                                          .catch((err) => res.json(err));
-                                      }
-                                    })
-                                    .catch((err) => res.json(err));
-                                }
-                                c++;
-                              })
-                              .catch((err) => res.json(err));
+                          path.join(__dirname, `/tmp/${req.files.foto.name}`),
+                          {
+                            "Content-Type": `${req.files.foto.mimetype}`,
+                            size: req.files.foto.size,
+                            "X-Amz-Meta-Testing": 1234,
+                            example: 5678,
                           }
+                        )
+                        .then((resul) => {
+                          console.log(
+                            chalk.green(
+                              `Se subio la foto ${req.files.foto.name} al buket:${bucket} `
+                            )
+                          );
+                          actuusermt(
+                            {
+                              email,
+                              password,
+                              experiencia,
+                              nombre,
+                              descripcion,
+                              pais,
+                              edad,
+                              github,
+                              gitlab,
+                              bitbucket,
+                              linkedin,
+                            },
+                            data.rows[0].id,
+                            req.files.foto.name,
+                            null,
+                            palabra,
+                            idiomas,
+                            herramienta
+                          )
+                            .then((succes) => {
+                              console.log(
+                                chalk.blue(
+                                  `Se actualizo el usuario con el id: ${data.rows[0].id}`
+                                )
+                              );
+                              datauseridmt(data.rows[0].id).then((userdata) => {
+                                res.json(userdata);
+                              });
+                            })
+                            .catch((err1) => {
+                              console.log(`erro ${err1}`);
+                            });
                         })
-                        .catch((err2) => res.json(err2));
-                    })
-                    .catch((err) => res.json(err));
+                        .catch((err) => res.json(err));
+                    }
+                  );
                 }
-              } else if (a === false && b === true) {
-                console.log("cv");
+              }
+
+              if (
+                req.files.foto === null &&
+                req.files.foto === undefined &&
+                req.files.cv != null &&
+                req.files.cv !== undefined
+              ) {
+                console.log(
+                  chalk.red(`Solo entro la hoja de vida ${req.files.cv.name}`)
+                );
                 if (
-                  datos.nombrearchivohojadevida != "null" ||
-                  datos.nombrearchivohojadevida != null
+                  datos.nombrearchivohojadevida !== "null" &&
+                  datos.nombrearchivohojadevida !== null
                 ) {
                   ftpminio
                     .removeObject(bucket, datos.nombrearchivohojadevida)
                     .then((result) => {
+                      console.log(
+                        chalk.yellow(
+                          `Se elimino la hoja de vida anterior por ${req.files.foto.name}`
+                        )
+                      );
                       req.files.cv.mv(
                         __dirname + "/tmp/" + req.files.cv.name,
                         (err) => {
-                          if (!err) {
-                            var metaData = {
-                              "Content-Type": `${req.files.cv.mimetype}`,
-                              size: req.files.cv.size,
-                              "X-Amz-Meta-Testing": 1234,
-                              example: 5678,
-                            };
-
-                            ftpminio
-                              .putFile(
-                                bucket,
-                                req.files.cv.name,
-                                path.join(
-                                  __dirname,
-                                  `/tmp/${req.files.cv.name}`
-                                ),
-                                metaData
-                              )
-                              .then((resul) => {
-                                actualizarDB
-                                  .actualizarusuario(
-                                    {
-                                      email,
-                                      password,
-                                      experiencia,
-                                      nombre,
-                                      descripcion,
-                                      pais,
-                                      edad,
-                                      github,
-                                      gitlab,
-                                      bitbucket,
-                                      linkedin,
-                                    },
-                                    data.rows[0].id,
-                                    null,
-                                    req.files.cv.name
-                                  )
-                                  .then((result) => {
-                                    let c = 0;
-                                    for (let a = 0; a < palabra.length; a++) {
-                                      insertDB
-                                        .insertKeyword({
-                                          user: data.rows[0].id,
-                                          palabra: palabra[a],
-                                        })
-                                        .then((result) => {
-                                          if (c === palabra.length - 1) {
-                                            insertDB
-                                              .agregarherramientas({
-                                                herramientas: herramienta,
-                                                id: data.rows[0].id,
-                                              })
-                                              .then((resul) => {
-                                                let d = 0;
-                                                for (
-                                                  let a = 0;
-                                                  a < idiomas.length;
-                                                  a++
-                                                ) {
-                                                  insertDB
-                                                    .insertlistlenguaje({
-                                                      user: data.rows[0].id,
-                                                      idioma: idiomas[a],
-                                                    })
-                                                    .then((result) => {
-                                                      if (
-                                                        d ===
-                                                        idiomas.length - 1
-                                                      ) {
-                                                        buscarDB
-                                                          .obtenerusuarioid({
-                                                            id: data.rows[0].id,
-                                                          })
-                                                          .then((usua) => {
-                                                            buscarDB
-                                                              .buscartalentogeneral2(
-                                                                data.rows[0].id
-                                                              )
-                                                              .then(
-                                                                (talento) => {
-                                                                  if (
-                                                                    talento.data
-                                                                      .length <
-                                                                    1
-                                                                  ) {
-                                                                    let tem = null;
-                                                                    if (
-                                                                      usua.fotoperfil !==
-                                                                        null &&
-                                                                      usua.fotoperfil !==
-                                                                        "null"
-                                                                    ) {
-                                                                      tem = `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`;
-                                                                    }
-                                                                    res.json({
-                                                                      token:
-                                                                        resul.token,
-                                                                      datos: {
-                                                                        id:
-                                                                          data
-                                                                            .rows[0]
-                                                                            .id,
-                                                                        nombre:
-                                                                          usua.nombre,
-                                                                        foto: tem,
-                                                                        herramientas: [],
-                                                                        palabras: [],
-                                                                      },
-                                                                    });
-                                                                  } else {
-                                                                    let tem = null;
-                                                                    if (
-                                                                      usua.fotoperfil !==
-                                                                        null &&
-                                                                      usua.fotoperfil !==
-                                                                        "null"
-                                                                    ) {
-                                                                      tem = `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`;
-                                                                    }
-                                                                    res.json({
-                                                                      token:
-                                                                        resul.token,
-                                                                      datos: {
-                                                                        id:
-                                                                          data
-                                                                            .rows[0]
-                                                                            .id,
-                                                                        nombre:
-                                                                          usua.nombre,
-                                                                        foto: tem,
-                                                                        herramientas:
-                                                                          talento
-                                                                            .data[0]
-                                                                            .herramientas,
-                                                                        palabras:
-                                                                          talento
-                                                                            .data[0]
-                                                                            .palabras,
-                                                                      },
-                                                                    });
-                                                                  }
-                                                                }
-                                                              )
-                                                              .catch(
-                                                                (talenerr) =>
-                                                                  console.log(
-                                                                    talenerr
-                                                                  )
-                                                              );
-                                                          })
-                                                          .catch((dererro) =>
-                                                            res.json(dererro)
-                                                          );
-                                                      }
-                                                      d++;
-                                                    })
-                                                    .catch((err) =>
-                                                      res.json(err)
-                                                    );
-                                                }
-                                              })
-                                              .catch((err) => res.json(err));
-                                          }
-                                          c++;
-                                        })
-                                        .catch((err) => res.json(err));
-                                    }
-                                  })
-                                  .catch((err2) => res.json(err2));
-                              })
-                              .catch((err) => res.json(err));
-                          } else {
-                            console.log(err);
-                          }
-                        }
-                      );
-                    })
-                    .catch((err) => res.json(err));
-                } else {
-                  req.files.cv.mv(
-                    __dirname + "/tmp/" + req.files.cv.name,
-                    (err) => {
-                      if (!err) {
-                        var metaData = {
-                          "Content-Type": `${req.files.cv.mimetype}`,
-                          size: req.files.cv.size,
-                          "X-Amz-Meta-Testing": 1234,
-                          example: 5678,
-                        };
-
-                        ftpminio
-                          .putFile(
-                            bucket,
-                            req.files.cv.name,
-                            path.join(__dirname, `/tmp/${req.files.cv.name}`),
-                            metaData
-                          )
-                          .then((resul) => {
-                            actualizarDB
-                              .actualizarusuario(
+                          ftpminio
+                            .putFile(
+                              bucket,
+                              req.files.cv.name,
+                              path.join(__dirname, `/tmp/${req.files.cv.name}`),
+                              {
+                                "Content-Type": `${req.files.cv.mimetype}`,
+                                size: req.files.cv.size,
+                                "X-Amz-Meta-Testing": 1234,
+                                example: 5678,
+                              }
+                            )
+                            .then((upcv) => {
+                              console.log(
+                                chalk.green(
+                                  `Se subio la hoja de vida ${req.files.foto.name} al buket:${bucket} `
+                                )
+                              );
+                              actuusermt(
                                 {
                                   email,
                                   password,
@@ -712,943 +356,386 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
                                 },
                                 data.rows[0].id,
                                 null,
-                                req.files.cv.name
+                                req.files.cv.name,
+                                palabra,
+                                idiomas,
+                                herramienta
                               )
-                              .then((result) => {
-                                let c = 0;
-                                for (let a = 0; a < palabra.length; a++) {
-                                  insertDB
-                                    .insertKeyword({
-                                      user: data.rows[0].id,
-                                      palabra: palabra[a],
-                                    })
-                                    .then((result) => {
-                                      if (c === palabra.length - 1) {
-                                        insertDB
-                                          .agregarherramientas({
-                                            herramientas: herramienta,
-                                            id: data.rows[0].id,
-                                          })
-                                          .then((resul) => {
-                                            let d = 0;
-                                            for (
-                                              let a = 0;
-                                              a < idiomas.length;
-                                              a++
-                                            ) {
-                                              insertDB
-                                                .insertlistlenguaje({
-                                                  user: data.rows[0].id,
-                                                  idioma: idiomas[a],
-                                                })
-                                                .then((result) => {
-                                                  if (
-                                                    d ===
-                                                    idiomas.length - 1
-                                                  ) {
-                                                    buscarDB
-                                                      .obtenerusuarioid({
-                                                        id: data.rows[0].id,
-                                                      })
-                                                      .then((usua) => {
-                                                        buscarDB
-                                                          .buscartalentogeneral2(
-                                                            data.rows[0].id
-                                                          )
-                                                          .then((talento) => {
-                                                            if (
-                                                              talento.data
-                                                                .length < 1
-                                                            ) {
-                                                              let tem = null;
-                                                              if (
-                                                                usua.fotoperfil !==
-                                                                  null &&
-                                                                usua.fotoperfil !==
-                                                                  "null"
-                                                              ) {
-                                                                tem = `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`;
-                                                              }
-                                                              res.json({
-                                                                token:
-                                                                  resul.token,
-                                                                datos: {
-                                                                  id:
-                                                                    data.rows[0]
-                                                                      .id,
-                                                                  nombre:
-                                                                    usua.nombre,
-                                                                  foto: tem,
-                                                                  herramientas: [],
-                                                                  palabras: [],
-                                                                },
-                                                              });
-                                                            } else {
-                                                              let tem = null;
-                                                              if (
-                                                                usua.fotoperfil !==
-                                                                  null &&
-                                                                usua.fotoperfil !==
-                                                                  "null"
-                                                              ) {
-                                                                tem = `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`;
-                                                              }
-                                                              res.json({
-                                                                token:
-                                                                  resul.token,
-                                                                datos: {
-                                                                  id:
-                                                                    data.rows[0]
-                                                                      .id,
-                                                                  nombre:
-                                                                    usua.nombre,
-                                                                  foto: tem,
-                                                                  herramientas:
-                                                                    talento
-                                                                      .data[0]
-                                                                      .herramientas,
-                                                                  palabras:
-                                                                    talento
-                                                                      .data[0]
-                                                                      .palabras,
-                                                                },
-                                                              });
-                                                            }
-                                                          })
-                                                          .catch((talenerr) =>
-                                                            console.log(
-                                                              talenerr
-                                                            )
-                                                          );
-                                                      })
-                                                      .catch((dererro) =>
-                                                        res.json(dererro)
-                                                      );
-                                                  }
-                                                  d++;
-                                                })
-                                                .catch((err) => res.json(err));
-                                            }
-                                          })
-                                          .catch((err) => res.json(err));
-                                      }
-                                      c++;
-                                    })
-                                    .catch((err) => res.json(err));
-                                }
-                              })
-                              .catch((err2) => res.json(err2));
-                          })
-                          .catch((err) => res.json(err));
-                      } else {
-                        console.log(err);
-                      }
+                                .then((succes) => {
+                                  console.log(
+                                    chalk.blue(
+                                      `Se actualizo el usuario con el id: ${data.rows[0].id}`
+                                    )
+                                  );
+                                  datauseridmt(data.rows[0].id).then(
+                                    (userdata) => {
+                                      res.json(userdata);
+                                    }
+                                  );
+                                })
+                                .catch((err1) => {
+                                  console.log(`erro ${err1}`);
+                                });
+                            })
+                            .catch((errcv2) => {
+                              console.log(`error cv ${errcv2}`);
+                            });
+                        }
+                      );
+                    })
+                    .catch((errcv) => {
+                      console.log(`error cv ${errcv}`);
+                    });
+                } else {
+                  req.files.cv.mv(
+                    __dirname + "/tmp/" + req.files.cv.name,
+                    (err) => {
+                      ftpminio
+                        .putFile(
+                          bucket,
+                          req.files.cv.name,
+                          path.join(__dirname, `/tmp/${req.files.cv.name}`),
+                          {
+                            "Content-Type": `${req.files.cv.mimetype}`,
+                            size: req.files.cv.size,
+                            "X-Amz-Meta-Testing": 1234,
+                            example: 5678,
+                          }
+                        )
+                        .then((upcv) => {
+                          console.log(
+                            chalk.green(
+                              `Se subio la hola de vida ${req.files.foto.name} al buket:${bucket} `
+                            )
+                          );
+                          actuusermt(
+                            {
+                              email,
+                              password,
+                              experiencia,
+                              nombre,
+                              descripcion,
+                              pais,
+                              edad,
+                              github,
+                              gitlab,
+                              bitbucket,
+                              linkedin,
+                            },
+                            data.rows[0].id,
+                            null,
+                            req.files.cv.name,
+                            palabra,
+                            idiomas,
+                            herramienta
+                          )
+                            .then((succes) => {
+                              console.log(
+                                chalk.blue(
+                                  `Se actualizo el usuario con el id: ${data.rows[0].id}`
+                                )
+                              );
+                              datauseridmt(data.rows[0].id).then((userdata) => {
+                                res.json(userdata);
+                              });
+                            })
+                            .catch((err1) => {
+                              console.log(`erro ${err1}`);
+                            });
+                        })
+                        .catch((errcv2) => {
+                          console.log(`error cv ${errcv2}`);
+                        });
                     }
                   );
                 }
-              } else if (a === true && b === true) {
-                console.log("los dos");
+              }
+
+              if (
+                req.files.foto !== null &&
+                req.files.foto !== undefined &&
+                req.files.cv !== null &&
+                req.files.cv !== undefined
+              ) {
+                console.log(
+                  chalk.red(
+                    `Ento foto ${req.files.foto.name} y hoja de vida ${req.files.cv.name}`
+                  )
+                );
                 if (
-                  datos.fotoperfil != "null" ||
-                  (datos.fotoperfil != null &&
-                    datos.nombrearchivohojadevida != "null") ||
+                  datos.fotoperfil != "null" &&
+                  datos.fotoperfil != null &&
+                  datos.nombrearchivohojadevida != "null" &&
                   datos.nombrearchivohojadevida != null
                 ) {
                   ftpminio
                     .removeObject(bucket, datos.nombrearchivohojadevida)
                     .then((result) => {
+                      console.log(
+                        chalk.yellow(
+                          `Se elimino la hoja de vida por ${req.files.cv.name}`
+                        )
+                      );
                       ftpminio
                         .removeObject(bucket, datos.fotoperfil)
-                        .then((result2) => {
-                          req.files.foto.mv(
-                            __dirname + "/tmp/" + req.files.foto.name,
+                        .then((result) => {
+                          console.log(
+                            chalk.yellow(
+                              `Se elimino la foto por ${req.files.foto.name}`
+                            )
+                          );
+                          req.files.cv.mv(
+                            __dirname + "/tmp/" + req.files.cv.name,
                             (err) => {
                               if (!err) {
-                                var metaData1 = {
-                                  "Content-Type": `${req.files.foto.mimetype}`,
-                                  size: req.files.foto.size,
-                                  "X-Amz-Meta-Testing": 1234,
-                                  example: 5678,
-                                };
-
-                                ftpminio
-                                  .putFile(
-                                    bucket,
-                                    req.files.foto.name,
-                                    path.join(
-                                      __dirname,
-                                      `/tmp/${req.files.foto.name}`
-                                    ),
-                                    metaData1
-                                  )
-                                  .then((resul) => {
-                                    req.files.cv.mv(
-                                      __dirname + "/tmp/" + req.files.cv.name,
-                                      (err) => {
-                                        if (!err) {
-                                          var metaData = {
+                                req.files.foto.mv(
+                                  __dirname + "/tmp/" + req.files.foto.name,
+                                  (err2) => {
+                                    if (!err2) {
+                                      ftpminio
+                                        .putFile(
+                                          bucket,
+                                          req.files.cv.name,
+                                          path.join(
+                                            __dirname,
+                                            `/tmp/${req.files.cv.name}`
+                                          ),
+                                          {
                                             "Content-Type": `${req.files.cv.mimetype}`,
                                             size: req.files.cv.size,
                                             "X-Amz-Meta-Testing": 1234,
                                             example: 5678,
-                                          };
-
+                                          }
+                                        )
+                                        .then((upcv) => {
+                                          console.log(
+                                            chalk.green(
+                                              `Se subio la hoja de vida ${req.files.cv.name} al buket:${bucket} `
+                                            )
+                                          );
                                           ftpminio
                                             .putFile(
                                               bucket,
-                                              req.files.cv.name,
+                                              req.files.foto.name,
                                               path.join(
                                                 __dirname,
-                                                `/tmp/${req.files.cv.name}`
+                                                `/tmp/${req.files.foto.name}`
                                               ),
-                                              metaData
+                                              {
+                                                "Content-Type": `${req.files.foto.mimetype}`,
+                                                size: req.files.foto.size,
+                                                "X-Amz-Meta-Testing": 1234,
+                                                example: 5678,
+                                              }
                                             )
                                             .then((resul) => {
-                                              actualizarDB
-                                                .actualizarusuario(
-                                                  {
-                                                    email,
-                                                    password,
-                                                    experiencia,
-                                                    nombre,
-                                                    descripcion,
-                                                    pais,
-                                                    edad,
-                                                    github,
-                                                    gitlab,
-                                                    bitbucket,
-                                                    linkedin,
-                                                  },
-                                                  data.rows[0].id,
-                                                  req.files.foto.name,
-                                                  req.files.cv.name
+                                              console.log(
+                                                chalk.green(
+                                                  `Se subio la foto ${req.files.foto.name} al buket:${bucket} `
                                                 )
-                                                .then((result) => {
-                                                  let c = 0;
-                                                  for (
-                                                    let a = 0;
-                                                    a < palabra.length;
-                                                    a++
-                                                  ) {
-                                                    insertDB
-                                                      .insertKeyword({
-                                                        user: data.rows[0].id,
-                                                        palabra: palabra[a],
-                                                      })
-                                                      .then((result) => {
-                                                        if (
-                                                          c ===
-                                                          palabra.length - 1
-                                                        ) {
-                                                          insertDB
-                                                            .agregarherramientas(
-                                                              {
-                                                                herramientas: herramienta,
-                                                                id:
-                                                                  data.rows[0]
-                                                                    .id,
-                                                              }
-                                                            )
-                                                            .then((resul) => {
-                                                              let d = 0;
-                                                              for (
-                                                                let a = 0;
-                                                                a <
-                                                                idiomas.length;
-                                                                a++
-                                                              ) {
-                                                                insertDB
-                                                                  .insertlistlenguaje(
-                                                                    {
-                                                                      user:
-                                                                        data
-                                                                          .rows[0]
-                                                                          .id,
-                                                                      idioma:
-                                                                        idiomas[
-                                                                          a
-                                                                        ],
-                                                                    }
-                                                                  )
-                                                                  .then(
-                                                                    (
-                                                                      result
-                                                                    ) => {
-                                                                      if (
-                                                                        d ===
-                                                                        idiomas.length -
-                                                                          1
-                                                                      ) {
-                                                                        buscarDB
-                                                                          .obtenerusuarioid(
-                                                                            {
-                                                                              id:
-                                                                                data
-                                                                                  .rows[0]
-                                                                                  .id,
-                                                                            }
-                                                                          )
-                                                                          .then(
-                                                                            (
-                                                                              usua
-                                                                            ) => {
-                                                                              buscarDB
-                                                                                .buscartalentogeneral2(
-                                                                                  data
-                                                                                    .rows[0]
-                                                                                    .id
-                                                                                )
-                                                                                .then(
-                                                                                  (
-                                                                                    talento
-                                                                                  ) => {
-                                                                                    if (
-                                                                                      talento
-                                                                                        .data
-                                                                                        .length <
-                                                                                      1
-                                                                                    ) {
-                                                                                      let tem = null;
-                                                                                      if (
-                                                                                        usua.fotoperfil !==
-                                                                                          null &&
-                                                                                        usua.fotoperfil !==
-                                                                                          "null"
-                                                                                      ) {
-                                                                                        tem = `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`;
-                                                                                      }
-                                                                                      res.json(
-                                                                                        {
-                                                                                          token:
-                                                                                            resul.token,
-                                                                                          datos: {
-                                                                                            id:
-                                                                                              data
-                                                                                                .rows[0]
-                                                                                                .id,
-                                                                                            nombre:
-                                                                                              usua.nombre,
-                                                                                            foto: tem,
-                                                                                            herramientas: [],
-                                                                                            palabras: [],
-                                                                                          },
-                                                                                        }
-                                                                                      );
-                                                                                    } else {
-                                                                                      let tem = null;
-                                                                                      if (
-                                                                                        usua.fotoperfil !==
-                                                                                          null &&
-                                                                                        usua.fotoperfil !==
-                                                                                          "null"
-                                                                                      ) {
-                                                                                        tem = `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`;
-                                                                                      }
-                                                                                      res.json(
-                                                                                        {
-                                                                                          token:
-                                                                                            resul.token,
-                                                                                          datos: {
-                                                                                            id:
-                                                                                              data
-                                                                                                .rows[0]
-                                                                                                .id,
-                                                                                            nombre:
-                                                                                              usua.nombre,
-                                                                                            foto: tem,
-                                                                                            herramientas:
-                                                                                              talento
-                                                                                                .data[0]
-                                                                                                .herramientas,
-                                                                                            palabras:
-                                                                                              talento
-                                                                                                .data[0]
-                                                                                                .palabras,
-                                                                                          },
-                                                                                        }
-                                                                                      );
-                                                                                    }
-                                                                                  }
-                                                                                )
-                                                                                .catch(
-                                                                                  (
-                                                                                    talenerr
-                                                                                  ) =>
-                                                                                    console.log(
-                                                                                      talenerr
-                                                                                    )
-                                                                                );
-                                                                            }
-                                                                          )
-                                                                          .catch(
-                                                                            (
-                                                                              dererro
-                                                                            ) =>
-                                                                              res.json(
-                                                                                dererro
-                                                                              )
-                                                                          );
-                                                                      }
-                                                                      d++;
-                                                                    }
-                                                                  )
-                                                                  .catch(
-                                                                    (err) =>
-                                                                      res.json(
-                                                                        err
-                                                                      )
-                                                                  );
-                                                              }
-                                                            })
-                                                            .catch((err) =>
-                                                              res.json(err)
-                                                            );
-                                                        }
-                                                        c++;
-                                                      })
-                                                      .catch((err) =>
-                                                        res.json(err)
-                                                      );
-                                                  }
+                                              );
+                                              actuusermt(
+                                                {
+                                                  email,
+                                                  password,
+                                                  experiencia,
+                                                  nombre,
+                                                  descripcion,
+                                                  pais,
+                                                  edad,
+                                                  github,
+                                                  gitlab,
+                                                  bitbucket,
+                                                  linkedin,
+                                                },
+                                                data.rows[0].id,
+                                                req.files.foto.name,
+                                                req.files.cv.name,
+                                                palabra,
+                                                idiomas,
+                                                herramienta
+                                              )
+                                                .then((succes) => {
+                                                  chalk.blue(
+                                                    `Se actualizo el usuario con el id: ${data.rows[0].id}`
+                                                  );
+                                                  datauseridmt(
+                                                    data.rows[0].id
+                                                  ).then((userdata) => {
+                                                    res.json(userdata);
+                                                  });
                                                 })
-                                                .catch((err2) =>
-                                                  res.json(err2)
-                                                );
+                                                .catch((err1) => {
+                                                  console.log(`erro ${err1}`);
+                                                });
                                             })
                                             .catch((err) => res.json(err));
-                                        } else {
-                                          console.log(err);
-                                        }
-                                      }
-                                    );
-                                  })
-                                  .catch((err) => res.json(err));
+                                        })
+                                        .catch((errcv2) => {
+                                          console.log(`error cv ${errcv2}`);
+                                        });
+                                    } else {
+                                      console.log(err2);
+                                    }
+                                  }
+                                );
                               } else {
                                 console.log(err);
                               }
                             }
                           );
                         })
-                        .catch((err2) => res.json(err2));
+                        .catch((errrcv) => {
+                          console.log("error re foto");
+                        });
                     })
-                    .catch((err) => res.json(err));
-                } else {
-                  req.files.foto.mv(
-                    __dirname + "/tmp/" + req.files.foto.name,
+                    .catch((errrcv) => {
+                      console.log("error re cv");
+                    });
+                }
+                if (
+                  datos.fotoperfil === "null" &&
+                  datos.nombrearchivohojadevida === "null"
+                ) {
+                  console.log("sin archivos previos registrados");
+                  req.files.cv.mv(
+                    __dirname + "/tmp/" + req.files.cv.name,
                     (err) => {
                       if (!err) {
-                        var metaData1 = {
-                          "Content-Type": `${req.files.foto.mimetype}`,
-                          size: req.files.foto.size,
-                          "X-Amz-Meta-Testing": 1234,
-                          example: 5678,
-                        };
-
-                        ftpminio
-                          .putFile(
-                            bucket,
-                            req.files.foto.name,
-                            path.join(__dirname, `/tmp/${req.files.foto.name}`),
-                            metaData1
-                          )
-                          .then((resul) => {
-                            req.files.cv.mv(
-                              __dirname + "/tmp/" + req.files.cv.name,
-                              (err) => {
-                                if (!err) {
-                                  var metaData = {
+                        console.log(`archivo ${req.files.cv.name} en local`);
+                        req.files.foto.mv(
+                          __dirname + "/tmp/" + req.files.foto.name,
+                          (err2) => {
+                            if (!err2) {
+                              console.log(
+                                `archivo ${req.files.foto.name} en local`
+                              );
+                              ftpminio
+                                .putFile(
+                                  bucket,
+                                  req.files.cv.name,
+                                  path.join(
+                                    __dirname,
+                                    `/tmp/${req.files.cv.name}`
+                                  ),
+                                  {
                                     "Content-Type": `${req.files.cv.mimetype}`,
                                     size: req.files.cv.size,
                                     "X-Amz-Meta-Testing": 1234,
                                     example: 5678,
-                                  };
-
+                                  }
+                                )
+                                .then((upcv) => {
+                                  console.log(
+                                    chalk.green(
+                                      `Se subio la hoja de vida ${req.files.cv.name} al buket:${bucket} `
+                                    )
+                                  );
                                   ftpminio
                                     .putFile(
                                       bucket,
-                                      req.files.cv.name,
+                                      req.files.foto.name,
                                       path.join(
                                         __dirname,
-                                        `/tmp/${req.files.cv.name}`
+                                        `/tmp/${req.files.foto.name}`
                                       ),
-                                      metaData
+                                      {
+                                        "Content-Type": `${req.files.foto.mimetype}`,
+                                        size: req.files.foto.size,
+                                        "X-Amz-Meta-Testing": 1234,
+                                        example: 5678,
+                                      }
                                     )
                                     .then((resul) => {
-                                      actualizarDB
-                                        .actualizarusuario(
-                                          {
-                                            email,
-                                            password,
-                                            experiencia,
-                                            nombre,
-                                            descripcion,
-                                            pais,
-                                            edad,
-                                            github,
-                                            gitlab,
-                                            bitbucket,
-                                            linkedin,
-                                          },
-                                          data.rows[0].id,
-                                          req.files.foto.name,
-                                          req.files.cv.name
+                                      console.log(
+                                        chalk.green(
+                                          `Se subio la foto ${req.files.foto.name} al buket:${bucket} `
                                         )
-                                        .then((result) => {
-                                          let c = 0;
-                                          for (
-                                            let a = 0;
-                                            a < palabra.length;
-                                            a++
-                                          ) {
-                                            insertDB
-                                              .insertKeyword({
-                                                user: data.rows[0].id,
-                                                palabra: palabra[a],
-                                              })
-                                              .then((result) => {
-                                                if (c === palabra.length - 1) {
-                                                  insertDB
-                                                    .agregarherramientas({
-                                                      herramientas: herramienta,
-                                                      id: data.rows[0].id,
-                                                    })
-                                                    .then((resul) => {
-                                                      let d = 0;
-                                                      for (
-                                                        let a = 0;
-                                                        a < idiomas.length;
-                                                        a++
-                                                      ) {
-                                                        insertDB
-                                                          .insertlistlenguaje({
-                                                            user:
-                                                              data.rows[0].id,
-                                                            idioma: idiomas[a],
-                                                          })
-                                                          .then((result) => {
-                                                            if (
-                                                              d ===
-                                                              idiomas.length - 1
-                                                            ) {
-                                                              buscarDB
-                                                                .obtenerusuarioid(
-                                                                  {
-                                                                    id:
-                                                                      data
-                                                                        .rows[0]
-                                                                        .id,
-                                                                  }
-                                                                )
-                                                                .then(
-                                                                  (usua) => {
-                                                                    buscarDB
-                                                                      .buscartalentogeneral2(
-                                                                        data
-                                                                          .rows[0]
-                                                                          .id
-                                                                      )
-                                                                      .then(
-                                                                        (
-                                                                          talento
-                                                                        ) => {
-                                                                          if (
-                                                                            talento
-                                                                              .data
-                                                                              .length <
-                                                                            1
-                                                                          ) {
-                                                                            let tem = null;
-                                                                            if (
-                                                                              usua.fotoperfil !==
-                                                                                null &&
-                                                                              usua.fotoperfil !==
-                                                                                "null"
-                                                                            ) {
-                                                                              tem = `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`;
-                                                                            }
-                                                                            res.json(
-                                                                              {
-                                                                                token:
-                                                                                  resul.token,
-                                                                                datos: {
-                                                                                  id:
-                                                                                    data
-                                                                                      .rows[0]
-                                                                                      .id,
-                                                                                  nombre:
-                                                                                    usua.nombre,
-                                                                                  foto: tem,
-                                                                                  herramientas: [],
-                                                                                  palabras: [],
-                                                                                },
-                                                                              }
-                                                                            );
-                                                                          } else {
-                                                                            let tem = null;
-                                                                            if (
-                                                                              usua.fotoperfil !==
-                                                                                null &&
-                                                                              usua.fotoperfil !==
-                                                                                "null"
-                                                                            ) {
-                                                                              tem = `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`;
-                                                                            }
-                                                                            res.json(
-                                                                              {
-                                                                                token:
-                                                                                  resul.token,
-                                                                                datos: {
-                                                                                  id:
-                                                                                    data
-                                                                                      .rows[0]
-                                                                                      .id,
-                                                                                  nombre:
-                                                                                    usua.nombre,
-                                                                                  foto: tem,
-                                                                                  herramientas:
-                                                                                    talento
-                                                                                      .data[0]
-                                                                                      .herramientas,
-                                                                                  palabras:
-                                                                                    talento
-                                                                                      .data[0]
-                                                                                      .palabras,
-                                                                                },
-                                                                              }
-                                                                            );
-                                                                          }
-                                                                        }
-                                                                      )
-                                                                      .catch(
-                                                                        (
-                                                                          talenerr
-                                                                        ) =>
-                                                                          console.log(
-                                                                            talenerr
-                                                                          )
-                                                                      );
-                                                                  }
-                                                                )
-                                                                .catch(
-                                                                  (dererro) =>
-                                                                    res.json(
-                                                                      dererro
-                                                                    )
-                                                                );
-                                                            }
-                                                            d++;
-                                                          })
-                                                          .catch((err) =>
-                                                            res.json(err)
-                                                          );
-                                                      }
-                                                    })
-                                                    .catch((err) =>
-                                                      res.json(err)
-                                                    );
-                                                }
-                                                c++;
-                                              })
-                                              .catch((err) => res.json(err));
-                                          }
+                                      );
+                                      actuusermt(
+                                        {
+                                          email,
+                                          password,
+                                          experiencia,
+                                          nombre,
+                                          descripcion,
+                                          pais,
+                                          edad,
+                                          github,
+                                          gitlab,
+                                          bitbucket,
+                                          linkedin,
+                                        },
+                                        data.rows[0].id,
+                                        req.files.foto.name,
+                                        req.files.cv.name,
+                                        palabra,
+                                        idiomas,
+                                        herramienta
+                                      )
+                                        .then((succes) => {
+                                          console.log(
+                                            chalk.blue(
+                                              `Se actualizo el usuario con el id: ${data.rows[0].id}`
+                                            )
+                                          );
+                                          datauseridmt(data.rows[0].id).then(
+                                            (userdata) => {
+                                              res.json(userdata);
+                                            }
+                                          );
                                         })
-                                        .catch((err2) => res.json(err2));
+                                        .catch((err1) => {
+                                          console.log(`erro ${err1}`);
+                                        });
                                     })
                                     .catch((err) => res.json(err));
-                                } else {
-                                  console.log(err);
-                                }
-                              }
-                            );
-                          })
-                          .catch((err) => res.json(err));
+                                })
+                                .catch((errcv2) => {
+                                  console.log(`error cv ${errcv2}`);
+                                });
+                            } else {
+                              console.log(err2);
+                            }
+                          }
+                        );
                       } else {
                         console.log(err);
                       }
                     }
                   );
                 }
-              } else {
-                req.files.cv.mv(
-                  __dirname + "/tmp/" + req.files.cv.name,
-                  (err) => {
-                    if (!err) {
-                      var metaData = {
-                        "Content-Type": `${req.files.cv.mimetype}`,
-                        size: req.files.cv.size,
-                        "X-Amz-Meta-Testing": 1234,
-                        example: 5678,
-                      };
-
-                      ftpminio
-                        .putFile(
-                          bucket,
-                          req.files.cv.name,
-                          path.join(__dirname, `/tmp/${req.files.cv.name}`),
-                          metaData
-                        )
-                        .then((resul) => {
-                          actualizarDB
-                            .actualizarusuario(
-                              {
-                                email,
-                                password,
-                                experiencia,
-                                nombre,
-                                descripcion,
-                                pais,
-                                edad,
-                                github,
-                                gitlab,
-                                bitbucket,
-                                linkedin,
-                              },
-                              data.rows[0].id,
-                              null,
-                              req.files.cv.name
-                            )
-                            .then((result) => {
-                              let c = 0;
-                              for (let a = 0; a < palabra.length; a++) {
-                                insertDB
-                                  .insertKeyword({
-                                    user: data.rows[0].id,
-                                    palabra: palabra[a],
-                                  })
-                                  .then((result) => {
-                                    if (c === palabra.length - 1) {
-                                      insertDB
-                                        .agregarherramientas({
-                                          herramientas: herramienta,
-                                          id: data.rows[0].id,
-                                        })
-                                        .then((resul) => {
-                                          let d = 0;
-                                          for (
-                                            let a = 0;
-                                            a < idiomas.length;
-                                            a++
-                                          ) {
-                                            insertDB
-                                              .insertlistlenguaje({
-                                                user: data.rows[0].id,
-                                                idioma: idiomas[a],
-                                              })
-                                              .then((result) => {
-                                                if (d === idiomas.length - 1) {
-                                                  buscarDB
-                                                    .obtenerusuarioid({
-                                                      id: data.rows[0].id,
-                                                    })
-                                                    .then((usua) => {
-                                                      buscarDB
-                                                        .buscartalentogeneral2(
-                                                          data.rows[0].id
-                                                        )
-                                                        .then((talento) => {
-                                                          if (
-                                                            talento.data
-                                                              .length < 1
-                                                          ) {
-                                                            let tem = null;
-                                                            if (
-                                                              usua.fotoperfil !==
-                                                                null &&
-                                                              usua.fotoperfil !==
-                                                                "null"
-                                                            ) {
-                                                              tem = `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`;
-                                                            }
-                                                            res.json({
-                                                              token:
-                                                                resul.token,
-                                                              datos: {
-                                                                id:
-                                                                  data.rows[0]
-                                                                    .id,
-                                                                nombre:
-                                                                  usua.nombre,
-                                                                foto: tem,
-                                                                herramientas: [],
-                                                                palabras: [],
-                                                              },
-                                                            });
-                                                          } else {
-                                                            let tem = null;
-                                                            if (
-                                                              usua.fotoperfil !==
-                                                                null &&
-                                                              usua.fotoperfil !==
-                                                                "null"
-                                                            ) {
-                                                              tem = `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`;
-                                                            }
-                                                            res.json({
-                                                              token:
-                                                                resul.token,
-                                                              datos: {
-                                                                id:
-                                                                  data.rows[0]
-                                                                    .id,
-                                                                nombre:
-                                                                  usua.nombre,
-                                                                foto: tem,
-                                                                herramientas:
-                                                                  talento
-                                                                    .data[0]
-                                                                    .herramientas,
-                                                                palabras:
-                                                                  talento
-                                                                    .data[0]
-                                                                    .palabras,
-                                                              },
-                                                            });
-                                                          }
-                                                        })
-                                                        .catch((talenerr) =>
-                                                          console.log(talenerr)
-                                                        );
-                                                    })
-                                                    .catch((dererro) =>
-                                                      res.json(dererro)
-                                                    );
-                                                }
-                                                d++;
-                                              })
-                                              .catch((err) => res.json(err));
-                                          }
-                                        })
-                                        .catch((err) => res.json(err));
-                                    }
-                                    c++;
-                                  })
-                                  .catch((err) => res.json(err));
-                              }
-                            })
-                            .catch((err2) => res.json(err2));
-                        })
-                        .catch((err) => res.json(err));
-                    } else {
-                      console.log(err);
-                    }
-                  }
-                );
               }
             } else {
-              actualizarDB
-                .actualizarusuario(
-                  {
-                    email,
-                    password,
-                    experiencia,
-                    nombre,
-                    descripcion,
-                    pais,
-                    edad,
-                    github,
-                    gitlab,
-                    bitbucket,
-                    linkedin,
-                  },
-                  data.rows[0].id,
-                  null,
-                  null
-                )
-                .then((result) => {
-                  let c = 0;
-                  for (let a = 0; a < palabra.length; a++) {
-                    insertDB
-                      .insertKeyword({
-                        user: data.rows[0].id,
-                        palabra: palabra[a],
-                      })
-                      .then((result) => {
-                        if (c === palabra.length - 1) {
-                          insertDB
-                            .agregarherramientas({
-                              herramientas: herramienta,
-                              id: data.rows[0].id,
-                            })
-                            .then((resul) => {
-                              let d = 0;
-                              for (let a = 0; a < idiomas.length; a++) {
-                                insertDB
-                                  .insertlistlenguaje({
-                                    user: data.rows[0].id,
-                                    idioma: idiomas[a],
-                                  })
-                                  .then((result) => {
-                                    if (d === idiomas.length - 1) {
-                                      buscarDB
-                                        .obtenerusuarioid({
-                                          id: data.rows[0].id,
-                                        })
-                                        .then((usua) => {
-                                          buscarDB
-                                            .buscartalentogeneral2(
-                                              data.rows[0].id
-                                            )
-                                            .then((talento) => {
-                                              if (talento.data.length < 1) {
-                                                let tem = null;
-                                                if (
-                                                  usua.fotoperfil !== null &&
-                                                  usua.fotoperfil !== "null"
-                                                ) {
-                                                  tem = `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`;
-                                                }
-                                                res.json({
-                                                  token: resul.token,
-                                                  datos: {
-                                                    id: data.rows[0].id,
-                                                    nombre: usua.nombre,
-                                                    foto: tem,
-                                                    herramientas: [],
-                                                    palabras: [],
-                                                  },
-                                                });
-                                              } else {
-                                                let tem = null;
-                                                if (
-                                                  usua.fotoperfil !== null &&
-                                                  usua.fotoperfil !== "null"
-                                                ) {
-                                                  tem = `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`;
-                                                }
-                                                res.json({
-                                                  token: resul.token,
-                                                  datos: {
-                                                    id: data.rows[0].id,
-                                                    nombre: usua.nombre,
-                                                    foto: tem,
-                                                    herramientas:
-                                                      talento.data[0]
-                                                        .herramientas,
-                                                    palabras:
-                                                      talento.data[0].palabras,
-                                                  },
-                                                });
-                                              }
-                                            })
-                                            .catch((talenerr) =>
-                                              console.log(talenerr)
-                                            );
-                                        })
-                                        .catch((dererro) => res.json(dererro));
-                                    }
-                                    d++;
-                                  })
-                                  .catch((err) => res.json(err));
-                              }
-                            })
-                            .catch((err) => res.json(err));
-                        }
-                        c++;
-                      })
-                      .catch((err) => res.json(err));
-                  }
+              actuusermt(
+                {
+                  email,
+                  password,
+                  experiencia,
+                  nombre,
+                  descripcion,
+                  pais,
+                  edad,
+                  github,
+                  gitlab,
+                  bitbucket,
+                  linkedin,
+                },
+                data.rows[0].id,
+                null,
+                null,
+                palabra,
+                idiomas,
+                herramienta
+              )
+                .then((succes) => {
+                  datauseridmt(data.rows[0].id).then((userdata) => {
+                    res.json(userdata);
+                  });
                 })
-                .catch((err) => res.json(err));
+                .catch((err1) => {
+                  console.log(`erro ${err1}`);
+                });
             }
           })
           .catch((err) => console.log(err));
@@ -2174,6 +1261,121 @@ rutas.put("/update/proyectos", proToken, (req, res) => {
       .catch((err) => res.json(err));
   }
 });
+
+function actuusermt(obj, id, foto, cv, palabras, idiomas, herramientas) {
+  return new Promise((res, rej) => {
+    /*obj=  {
+                                      email,
+                                      password,
+                                      experiencia,
+                                      nombre,
+                                      descripcion,
+                                      pais,
+                                      edad,
+                                      github,
+                                      gitlab,
+                                      bitbucket,
+                                      linkedin,
+                                    }*/
+    actualizarDB
+      .actualizarusuario(obj, id, foto, cv)
+      .then((result) => {
+        let c = 0;
+        for (let a = 0; a < palabras.length; a++) {
+          insertDB
+            .insertKeyword({
+              user: id,
+              palabra: palabras[a],
+            })
+            .then((result) => {
+              if (c === palabras.length - 1) {
+                insertDB
+                  .agregarherramientas({
+                    herramientas: herramientas,
+                    id: id,
+                  })
+                  .then((resul) => {
+                    let d = 0;
+                    for (let a = 0; a < idiomas.length; a++) {
+                      insertDB
+                        .insertlistlenguaje({
+                          user: id,
+                          idioma: idiomas[a],
+                        })
+                        .then((result) => {
+                          if (d === idiomas.length - 1) {
+                            res("fin");
+                          }
+                          d++;
+                        })
+                        .catch((err) => rej(err));
+                    }
+                  })
+                  .catch((err) => rej(err));
+              }
+              c++;
+            })
+            .catch((err) => rej(err));
+        }
+      })
+      .catch((err2) => rej(err2));
+  });
+}
+
+function datauseridmt(id) {
+  return new Promise((res, rej) => {
+    buscarDB
+      .obtenerusuarioid({
+        id: id,
+      })
+      .then((usua) => {
+        const token = jwt.sign({ rows: [usua] }, LLAVE);
+        buscarDB
+          .buscartalentogeneral2(id)
+          .then((talento) => {
+            if (talento.data.length < 1) {
+              let tem = null;
+              if (usua.fotoperfil !== null && usua.fotoperfil !== "null") {
+                tem = `${env.host}/proyecto/contenido/usuario${id}/${usua.fotoperfil}`;
+              }
+              res({
+                token: token,
+                datos: {
+                  id: id,
+                  nombre: usua.nombre,
+                  foto: tem,
+                  herramientas: [],
+                  palabras: [],
+                },
+              });
+            } else {
+              let tem = null;
+              if (usua.fotoperfil !== null && usua.fotoperfil !== "null") {
+                tem = `${env.host}/proyecto/contenido/usuario${id}/${usua.fotoperfil}`;
+              }
+              res({
+                token: token,
+                datos: {
+                  id: id,
+                  nombre: usua.nombre,
+                  foto: tem,
+                  herramientas: talento.data[0].herramientas,
+                  palabras: talento.data[0].palabras,
+                },
+              });
+            }
+          })
+          .catch((talenerr) => {
+            console.log(`error metodo datauseridmt ${talenerr} `);
+            rej(dererro);
+          });
+      })
+      .catch((dererro) => {
+        console.log(`error metodo datauseridmt ${dererro} `);
+        rej(dererro);
+      });
+  });
+}
 
 /**
       db      `7MM"""Mq. `7MMF'                                 mm    `7MM                       `7MM          

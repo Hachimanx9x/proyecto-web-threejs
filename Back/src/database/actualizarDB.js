@@ -132,11 +132,24 @@ funcionesDB.actualizarusuario = (obj, id, foto, cv) => {
         }
         let expi = usuario.anosdeexperiencia;
         if (
+          usuario.anosdeexperiencia === "NaN" ||
+          usuario.anosdeexperiencia === NaN ||
+          usuario.anosdeexperiencia === null
+        ) {
+          expi = 0;
+        }
+
+        if (
           experiencia !== null &&
           experiencia !== "null" &&
           experiencia !== undefined
         ) {
-          expi = experiencia;
+          let temp = `${experiencia}`;
+          if (temp === "NaN") {
+            expi = 0;
+          } else {
+            expi = experiencia;
+          }
         }
         let fototem = usuario.fotoperfil;
         if (foto !== null && foto !== undefined) {
