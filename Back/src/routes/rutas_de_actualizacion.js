@@ -98,6 +98,7 @@ rutas.put("/entrega/entregable", proToken, (req, res) => {
 });
 
 rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
+  console.log(req.body);
   let {
     email,
     password,
@@ -114,9 +115,7 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
     palabra,
     idiomas,
   } = req.body;
-  console.log(herramienta);
-  console.log(palabra);
-  console.log(palabra);
+
   let herraas = herramienta.split(",");
   let palatem = palabra.split(",");
   let idiotemop = idiomas.split(",");
