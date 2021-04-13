@@ -241,9 +241,90 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
                                                         d ===
                                                         idiomas.length - 1
                                                       ) {
-                                                        res.json({
-                                                          msj: "agregados",
-                                                        });
+                                                        buscarDB
+                                                          .obtenerusuarioid({
+                                                            id: data.rows[0].id,
+                                                          })
+                                                          .then((usua) => {
+                                                            buscarDB
+                                                              .buscartalentogeneral2(
+                                                                data.rows[0].id
+                                                              )
+                                                              .then(
+                                                                (talento) => {
+                                                                  if (
+                                                                    talento.data
+                                                                      .length <
+                                                                    1
+                                                                  ) {
+                                                                    let tem = null;
+                                                                    if (
+                                                                      usua.fotoperfil !==
+                                                                        null &&
+                                                                      usua.fotoperfil !==
+                                                                        "null"
+                                                                    ) {
+                                                                      tem = `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`;
+                                                                    }
+                                                                    res.json({
+                                                                      token:
+                                                                        resul.token,
+                                                                      datos: {
+                                                                        id:
+                                                                          data
+                                                                            .rows[0]
+                                                                            .id,
+                                                                        nombre:
+                                                                          usua.nombre,
+                                                                        foto: tem,
+                                                                        herramientas: [],
+                                                                        palabras: [],
+                                                                      },
+                                                                    });
+                                                                  } else {
+                                                                    let tem = null;
+                                                                    if (
+                                                                      usua.fotoperfil !==
+                                                                        null &&
+                                                                      usua.fotoperfil !==
+                                                                        "null"
+                                                                    ) {
+                                                                      tem = `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`;
+                                                                    }
+                                                                    res.json({
+                                                                      token:
+                                                                        resul.token,
+                                                                      datos: {
+                                                                        id:
+                                                                          data
+                                                                            .rows[0]
+                                                                            .id,
+                                                                        nombre:
+                                                                          usua.nombre,
+                                                                        foto: tem,
+                                                                        herramientas:
+                                                                          talento
+                                                                            .data[0]
+                                                                            .herramientas,
+                                                                        palabras:
+                                                                          talento
+                                                                            .data[0]
+                                                                            .palabras,
+                                                                      },
+                                                                    });
+                                                                  }
+                                                                }
+                                                              )
+                                                              .catch(
+                                                                (talenerr) =>
+                                                                  console.log(
+                                                                    talenerr
+                                                                  )
+                                                              );
+                                                          })
+                                                          .catch((dererro) =>
+                                                            res.json(dererro)
+                                                          );
                                                       }
                                                       d++;
                                                     })
@@ -321,7 +402,71 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
                                           })
                                           .then((result) => {
                                             if (d === idiomas.length - 1) {
-                                              res.json({ msj: "agregados" });
+                                              buscarDB
+                                                .obtenerusuarioid({
+                                                  id: data.rows[0].id,
+                                                })
+                                                .then((usua) => {
+                                                  buscarDB
+                                                    .buscartalentogeneral2(
+                                                      data.rows[0].id
+                                                    )
+                                                    .then((talento) => {
+                                                      if (
+                                                        talento.data.length < 1
+                                                      ) {
+                                                        let tem = null;
+                                                        if (
+                                                          usua.fotoperfil !==
+                                                            null &&
+                                                          usua.fotoperfil !==
+                                                            "null"
+                                                        ) {
+                                                          tem = `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`;
+                                                        }
+                                                        res.json({
+                                                          token: resul.token,
+                                                          datos: {
+                                                            id: data.rows[0].id,
+                                                            nombre: usua.nombre,
+                                                            foto: tem,
+                                                            herramientas: [],
+                                                            palabras: [],
+                                                          },
+                                                        });
+                                                      } else {
+                                                        let tem = null;
+                                                        if (
+                                                          usua.fotoperfil !==
+                                                            null &&
+                                                          usua.fotoperfil !==
+                                                            "null"
+                                                        ) {
+                                                          tem = `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`;
+                                                        }
+                                                        res.json({
+                                                          token: resul.token,
+                                                          datos: {
+                                                            id: data.rows[0].id,
+                                                            nombre: usua.nombre,
+                                                            foto: tem,
+                                                            herramientas:
+                                                              talento.data[0]
+                                                                .herramientas,
+                                                            palabras:
+                                                              talento.data[0]
+                                                                .palabras,
+                                                          },
+                                                        });
+                                                      }
+                                                    })
+                                                    .catch((talenerr) =>
+                                                      console.log(talenerr)
+                                                    );
+                                                })
+                                                .catch((dererro) =>
+                                                  res.json(dererro)
+                                                );
                                             }
                                             d++;
                                           })
@@ -421,9 +566,90 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
                                                         d ===
                                                         idiomas.length - 1
                                                       ) {
-                                                        res.json({
-                                                          msj: "agregados",
-                                                        });
+                                                        buscarDB
+                                                          .obtenerusuarioid({
+                                                            id: data.rows[0].id,
+                                                          })
+                                                          .then((usua) => {
+                                                            buscarDB
+                                                              .buscartalentogeneral2(
+                                                                data.rows[0].id
+                                                              )
+                                                              .then(
+                                                                (talento) => {
+                                                                  if (
+                                                                    talento.data
+                                                                      .length <
+                                                                    1
+                                                                  ) {
+                                                                    let tem = null;
+                                                                    if (
+                                                                      usua.fotoperfil !==
+                                                                        null &&
+                                                                      usua.fotoperfil !==
+                                                                        "null"
+                                                                    ) {
+                                                                      tem = `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`;
+                                                                    }
+                                                                    res.json({
+                                                                      token:
+                                                                        resul.token,
+                                                                      datos: {
+                                                                        id:
+                                                                          data
+                                                                            .rows[0]
+                                                                            .id,
+                                                                        nombre:
+                                                                          usua.nombre,
+                                                                        foto: tem,
+                                                                        herramientas: [],
+                                                                        palabras: [],
+                                                                      },
+                                                                    });
+                                                                  } else {
+                                                                    let tem = null;
+                                                                    if (
+                                                                      usua.fotoperfil !==
+                                                                        null &&
+                                                                      usua.fotoperfil !==
+                                                                        "null"
+                                                                    ) {
+                                                                      tem = `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`;
+                                                                    }
+                                                                    res.json({
+                                                                      token:
+                                                                        resul.token,
+                                                                      datos: {
+                                                                        id:
+                                                                          data
+                                                                            .rows[0]
+                                                                            .id,
+                                                                        nombre:
+                                                                          usua.nombre,
+                                                                        foto: tem,
+                                                                        herramientas:
+                                                                          talento
+                                                                            .data[0]
+                                                                            .herramientas,
+                                                                        palabras:
+                                                                          talento
+                                                                            .data[0]
+                                                                            .palabras,
+                                                                      },
+                                                                    });
+                                                                  }
+                                                                }
+                                                              )
+                                                              .catch(
+                                                                (talenerr) =>
+                                                                  console.log(
+                                                                    talenerr
+                                                                  )
+                                                              );
+                                                          })
+                                                          .catch((dererro) =>
+                                                            res.json(dererro)
+                                                          );
                                                       }
                                                       d++;
                                                     })
@@ -520,9 +746,84 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
                                                     d ===
                                                     idiomas.length - 1
                                                   ) {
-                                                    res.json({
-                                                      msj: "agregados",
-                                                    });
+                                                    buscarDB
+                                                      .obtenerusuarioid({
+                                                        id: data.rows[0].id,
+                                                      })
+                                                      .then((usua) => {
+                                                        buscarDB
+                                                          .buscartalentogeneral2(
+                                                            data.rows[0].id
+                                                          )
+                                                          .then((talento) => {
+                                                            if (
+                                                              talento.data
+                                                                .length < 1
+                                                            ) {
+                                                              let tem = null;
+                                                              if (
+                                                                usua.fotoperfil !==
+                                                                  null &&
+                                                                usua.fotoperfil !==
+                                                                  "null"
+                                                              ) {
+                                                                tem = `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`;
+                                                              }
+                                                              res.json({
+                                                                token:
+                                                                  resul.token,
+                                                                datos: {
+                                                                  id:
+                                                                    data.rows[0]
+                                                                      .id,
+                                                                  nombre:
+                                                                    usua.nombre,
+                                                                  foto: tem,
+                                                                  herramientas: [],
+                                                                  palabras: [],
+                                                                },
+                                                              });
+                                                            } else {
+                                                              let tem = null;
+                                                              if (
+                                                                usua.fotoperfil !==
+                                                                  null &&
+                                                                usua.fotoperfil !==
+                                                                  "null"
+                                                              ) {
+                                                                tem = `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`;
+                                                              }
+                                                              res.json({
+                                                                token:
+                                                                  resul.token,
+                                                                datos: {
+                                                                  id:
+                                                                    data.rows[0]
+                                                                      .id,
+                                                                  nombre:
+                                                                    usua.nombre,
+                                                                  foto: tem,
+                                                                  herramientas:
+                                                                    talento
+                                                                      .data[0]
+                                                                      .herramientas,
+                                                                  palabras:
+                                                                    talento
+                                                                      .data[0]
+                                                                      .palabras,
+                                                                },
+                                                              });
+                                                            }
+                                                          })
+                                                          .catch((talenerr) =>
+                                                            console.log(
+                                                              talenerr
+                                                            )
+                                                          );
+                                                      })
+                                                      .catch((dererro) =>
+                                                        res.json(dererro)
+                                                      );
                                                   }
                                                   d++;
                                                 })
@@ -678,12 +979,115 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
                                                                         idiomas.length -
                                                                           1
                                                                       ) {
-                                                                        res.json(
-                                                                          {
-                                                                            msj:
-                                                                              "agregados",
-                                                                          }
-                                                                        );
+                                                                        buscarDB
+                                                                          .obtenerusuarioid(
+                                                                            {
+                                                                              id:
+                                                                                data
+                                                                                  .rows[0]
+                                                                                  .id,
+                                                                            }
+                                                                          )
+                                                                          .then(
+                                                                            (
+                                                                              usua
+                                                                            ) => {
+                                                                              buscarDB
+                                                                                .buscartalentogeneral2(
+                                                                                  data
+                                                                                    .rows[0]
+                                                                                    .id
+                                                                                )
+                                                                                .then(
+                                                                                  (
+                                                                                    talento
+                                                                                  ) => {
+                                                                                    if (
+                                                                                      talento
+                                                                                        .data
+                                                                                        .length <
+                                                                                      1
+                                                                                    ) {
+                                                                                      let tem = null;
+                                                                                      if (
+                                                                                        usua.fotoperfil !==
+                                                                                          null &&
+                                                                                        usua.fotoperfil !==
+                                                                                          "null"
+                                                                                      ) {
+                                                                                        tem = `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`;
+                                                                                      }
+                                                                                      res.json(
+                                                                                        {
+                                                                                          token:
+                                                                                            resul.token,
+                                                                                          datos: {
+                                                                                            id:
+                                                                                              data
+                                                                                                .rows[0]
+                                                                                                .id,
+                                                                                            nombre:
+                                                                                              usua.nombre,
+                                                                                            foto: tem,
+                                                                                            herramientas: [],
+                                                                                            palabras: [],
+                                                                                          },
+                                                                                        }
+                                                                                      );
+                                                                                    } else {
+                                                                                      let tem = null;
+                                                                                      if (
+                                                                                        usua.fotoperfil !==
+                                                                                          null &&
+                                                                                        usua.fotoperfil !==
+                                                                                          "null"
+                                                                                      ) {
+                                                                                        tem = `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`;
+                                                                                      }
+                                                                                      res.json(
+                                                                                        {
+                                                                                          token:
+                                                                                            resul.token,
+                                                                                          datos: {
+                                                                                            id:
+                                                                                              data
+                                                                                                .rows[0]
+                                                                                                .id,
+                                                                                            nombre:
+                                                                                              usua.nombre,
+                                                                                            foto: tem,
+                                                                                            herramientas:
+                                                                                              talento
+                                                                                                .data[0]
+                                                                                                .herramientas,
+                                                                                            palabras:
+                                                                                              talento
+                                                                                                .data[0]
+                                                                                                .palabras,
+                                                                                          },
+                                                                                        }
+                                                                                      );
+                                                                                    }
+                                                                                  }
+                                                                                )
+                                                                                .catch(
+                                                                                  (
+                                                                                    talenerr
+                                                                                  ) =>
+                                                                                    console.log(
+                                                                                      talenerr
+                                                                                    )
+                                                                                );
+                                                                            }
+                                                                          )
+                                                                          .catch(
+                                                                            (
+                                                                              dererro
+                                                                            ) =>
+                                                                              res.json(
+                                                                                dererro
+                                                                              )
+                                                                          );
                                                                       }
                                                                       d++;
                                                                     }
@@ -826,10 +1230,111 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
                                                               d ===
                                                               idiomas.length - 1
                                                             ) {
-                                                              res.json({
-                                                                msj:
-                                                                  "agregados",
-                                                              });
+                                                              buscarDB
+                                                                .obtenerusuarioid(
+                                                                  {
+                                                                    id:
+                                                                      data
+                                                                        .rows[0]
+                                                                        .id,
+                                                                  }
+                                                                )
+                                                                .then(
+                                                                  (usua) => {
+                                                                    buscarDB
+                                                                      .buscartalentogeneral2(
+                                                                        data
+                                                                          .rows[0]
+                                                                          .id
+                                                                      )
+                                                                      .then(
+                                                                        (
+                                                                          talento
+                                                                        ) => {
+                                                                          if (
+                                                                            talento
+                                                                              .data
+                                                                              .length <
+                                                                            1
+                                                                          ) {
+                                                                            let tem = null;
+                                                                            if (
+                                                                              usua.fotoperfil !==
+                                                                                null &&
+                                                                              usua.fotoperfil !==
+                                                                                "null"
+                                                                            ) {
+                                                                              tem = `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`;
+                                                                            }
+                                                                            res.json(
+                                                                              {
+                                                                                token:
+                                                                                  resul.token,
+                                                                                datos: {
+                                                                                  id:
+                                                                                    data
+                                                                                      .rows[0]
+                                                                                      .id,
+                                                                                  nombre:
+                                                                                    usua.nombre,
+                                                                                  foto: tem,
+                                                                                  herramientas: [],
+                                                                                  palabras: [],
+                                                                                },
+                                                                              }
+                                                                            );
+                                                                          } else {
+                                                                            let tem = null;
+                                                                            if (
+                                                                              usua.fotoperfil !==
+                                                                                null &&
+                                                                              usua.fotoperfil !==
+                                                                                "null"
+                                                                            ) {
+                                                                              tem = `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`;
+                                                                            }
+                                                                            res.json(
+                                                                              {
+                                                                                token:
+                                                                                  resul.token,
+                                                                                datos: {
+                                                                                  id:
+                                                                                    data
+                                                                                      .rows[0]
+                                                                                      .id,
+                                                                                  nombre:
+                                                                                    usua.nombre,
+                                                                                  foto: tem,
+                                                                                  herramientas:
+                                                                                    talento
+                                                                                      .data[0]
+                                                                                      .herramientas,
+                                                                                  palabras:
+                                                                                    talento
+                                                                                      .data[0]
+                                                                                      .palabras,
+                                                                                },
+                                                                              }
+                                                                            );
+                                                                          }
+                                                                        }
+                                                                      )
+                                                                      .catch(
+                                                                        (
+                                                                          talenerr
+                                                                        ) =>
+                                                                          console.log(
+                                                                            talenerr
+                                                                          )
+                                                                      );
+                                                                  }
+                                                                )
+                                                                .catch(
+                                                                  (dererro) =>
+                                                                    res.json(
+                                                                      dererro
+                                                                    )
+                                                                );
                                                             }
                                                             d++;
                                                           })
@@ -931,9 +1436,82 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
                                               })
                                               .then((result) => {
                                                 if (d === idiomas.length - 1) {
-                                                  res.json({
-                                                    msj: "agregados",
-                                                  });
+                                                  buscarDB
+                                                    .obtenerusuarioid({
+                                                      id: data.rows[0].id,
+                                                    })
+                                                    .then((usua) => {
+                                                      buscarDB
+                                                        .buscartalentogeneral2(
+                                                          data.rows[0].id
+                                                        )
+                                                        .then((talento) => {
+                                                          if (
+                                                            talento.data
+                                                              .length < 1
+                                                          ) {
+                                                            let tem = null;
+                                                            if (
+                                                              usua.fotoperfil !==
+                                                                null &&
+                                                              usua.fotoperfil !==
+                                                                "null"
+                                                            ) {
+                                                              tem = `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`;
+                                                            }
+                                                            res.json({
+                                                              token:
+                                                                resul.token,
+                                                              datos: {
+                                                                id:
+                                                                  data.rows[0]
+                                                                    .id,
+                                                                nombre:
+                                                                  usua.nombre,
+                                                                foto: tem,
+                                                                herramientas: [],
+                                                                palabras: [],
+                                                              },
+                                                            });
+                                                          } else {
+                                                            let tem = null;
+                                                            if (
+                                                              usua.fotoperfil !==
+                                                                null &&
+                                                              usua.fotoperfil !==
+                                                                "null"
+                                                            ) {
+                                                              tem = `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`;
+                                                            }
+                                                            res.json({
+                                                              token:
+                                                                resul.token,
+                                                              datos: {
+                                                                id:
+                                                                  data.rows[0]
+                                                                    .id,
+                                                                nombre:
+                                                                  usua.nombre,
+                                                                foto: tem,
+                                                                herramientas:
+                                                                  talento
+                                                                    .data[0]
+                                                                    .herramientas,
+                                                                palabras:
+                                                                  talento
+                                                                    .data[0]
+                                                                    .palabras,
+                                                              },
+                                                            });
+                                                          }
+                                                        })
+                                                        .catch((talenerr) =>
+                                                          console.log(talenerr)
+                                                        );
+                                                    })
+                                                    .catch((dererro) =>
+                                                      res.json(dererro)
+                                                    );
                                                 }
                                                 d++;
                                               })
@@ -1001,7 +1579,62 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
                                   })
                                   .then((result) => {
                                     if (d === idiomas.length - 1) {
-                                      res.json({ msj: "agregados" });
+                                      buscarDB
+                                        .obtenerusuarioid({
+                                          id: data.rows[0].id,
+                                        })
+                                        .then((usua) => {
+                                          buscarDB
+                                            .buscartalentogeneral2(
+                                              data.rows[0].id
+                                            )
+                                            .then((talento) => {
+                                              if (talento.data.length < 1) {
+                                                let tem = null;
+                                                if (
+                                                  usua.fotoperfil !== null &&
+                                                  usua.fotoperfil !== "null"
+                                                ) {
+                                                  tem = `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`;
+                                                }
+                                                res.json({
+                                                  token: resul.token,
+                                                  datos: {
+                                                    id: data.rows[0].id,
+                                                    nombre: usua.nombre,
+                                                    foto: tem,
+                                                    herramientas: [],
+                                                    palabras: [],
+                                                  },
+                                                });
+                                              } else {
+                                                let tem = null;
+                                                if (
+                                                  usua.fotoperfil !== null &&
+                                                  usua.fotoperfil !== "null"
+                                                ) {
+                                                  tem = `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`;
+                                                }
+                                                res.json({
+                                                  token: resul.token,
+                                                  datos: {
+                                                    id: data.rows[0].id,
+                                                    nombre: usua.nombre,
+                                                    foto: tem,
+                                                    herramientas:
+                                                      talento.data[0]
+                                                        .herramientas,
+                                                    palabras:
+                                                      talento.data[0].palabras,
+                                                  },
+                                                });
+                                              }
+                                            })
+                                            .catch((talenerr) =>
+                                              console.log(talenerr)
+                                            );
+                                        })
+                                        .catch((dererro) => res.json(dererro));
                                     }
                                     d++;
                                   })
