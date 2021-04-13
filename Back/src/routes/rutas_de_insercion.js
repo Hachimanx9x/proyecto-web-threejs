@@ -251,7 +251,9 @@ rutas.post("/create/proyecto", proToken, (req, res) => {
           integrantes = JSON.parse(`[${integrantes}]`);
         }
         console.log({ nombre, descripcion, practica, integrantes });
-
+        console.log(chalk.bgBlue("___________________"));
+        console.log(chalk.bgBlue("___________________"));
+        console.log(chalk.bgBlue(req.files));
         integrantes.push({
           user: data.rows[0].id,
           rol: "Arquitecto Experiencia Multimedia",
@@ -299,9 +301,6 @@ rutas.post("/create/proyecto", proToken, (req, res) => {
                         chalk.bgBlue("_▓_")
                     );
                     if (req.files != null && req.files != undefined) {
-                      console.log(chalk.bgBlue("___________________"));
-                      console.log(chalk.bgBlue("___________________"));
-                      console.log(chalk.bgBlue(req.files));
                       const { banner, icon } = req.files;
                       if (
                         banner != null ||
