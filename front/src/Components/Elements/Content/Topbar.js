@@ -13,13 +13,16 @@ const Topbar = ({ toggleSidebar, sidebarIsOpen }, props) => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const token = localStorage.getItem("login");
   let activeLink = true;
-  const obj = JSON.parse(token);
-  const data = obj.data;
-  const name = data.nombre.split(" ", 1);
-  if (data.herramientas.length === 0) {
-    activeLink = false;
-  }
 
+  let name = "Perfil";
+  if (token !== "" && token !== undefined && token !== null) {
+    const obj = JSON.parse(token);
+    const data = obj.data;
+    name = data.nombre.split(" ", 1);
+    if (data.herramientas.length === 0) {
+      activeLink = false;
+    }
+  }
   useEffect(() => {
     function resize() {
       setWindowWidth(window.innerWidth);

@@ -182,6 +182,8 @@ export default function FinishRegister(props) {
   const updateUserDate = async () => {
     const nullData = null;
     const fullname = name + " " + lastname;
+    const blob =
+      picture !== null ? new Blob([picture], { type: "image/png" }) : null;
     const skillsdi = [];
     for (let i = 0; i < skills.length; i++) {
       skillsdi.push(skills[i].id);
@@ -213,7 +215,7 @@ export default function FinishRegister(props) {
         datform.append("herramienta", skillsdi);
         datform.append("palabra", userKeywords);
         datform.append("idiomas", userLanguages);
-        datform.append("foto", picture);
+        datform.append("foto", blob, "file");
         datform.append("cv", cvpicture);
         console.log(skillsdi);
         const obj = JSON.parse(token);
@@ -222,17 +224,18 @@ export default function FinishRegister(props) {
           headers: { authorization: `llave ${tokensito}` },
         };
 
-        const { data } = await Axios.put(
+        await Axios.put(
           `http://localhost:3030/actualizar/usuario`,
           datform,
           options
-        );
-        console.log(data);
-        localStorage.setItem("login", "");
+        ).thern((response) => {
+          console.log(response);
+        });
       } catch (error) {
         console.log(error);
       }
       setConfirmation(true);
+      localStorage.setItem("login", "");
       setTimeout(() => {
         setModal(false);
         window.location.reload();
@@ -300,10 +303,12 @@ export default function FinishRegister(props) {
             className="o-user-register-pic rounded-circle"
           />
           <div className="inputWrapper bg-primary">
+            <label htmlFor="user-picture-upload"></label>
             <p className="text-white o-icon-input-text">Subir foto</p>
             <input
               className="fileInput rounded-pill"
               type="file"
+              id="user-picture-upload"
               name="file1"
               accept="image/*"
               onChange={(e) => {
@@ -383,10 +388,13 @@ export default function FinishRegister(props) {
           >
             <div className="col-xs-6 col-sm-6 p-0 m-0 o-up-btn bg-primary ">
               <div className="inputWrapper m-0 bg-primary">
+                <label htmlFor="user-picture-cv"></label>
+
                 <p className="text-white o-icon-input-text">Subir foto</p>
                 <input
                   className="fileInput rounded-pill"
                   type="file"
+                  id="user-picture-cv"
                   name="file1"
                   accept="image/*"
                   onChange={(e) => {

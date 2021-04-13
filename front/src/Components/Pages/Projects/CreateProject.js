@@ -38,59 +38,7 @@ class CreateProject extends Component {
       success: false,
       rols: [],
       fetched: false,
-      contacts: [
-        {
-          id: 1,
-          name: "Saitama",
-          urlimage: User,
-          rols: [
-            { rol: "desarrollador web" },
-            { rol: "desarrollador fullstack" },
-            { rol: "ui designer" },
-          ],
-        },
-        {
-          id: 2,
-          name: "Tatsumi",
-          urlimage: User,
-          rols: [
-            { rol: "desarrollador web" },
-            { rol: "desarrollador fullstack" },
-            { rol: "ui designer" },
-          ],
-        },
-        {
-          id: 3,
-          name: "Saber",
-          urlimage: User,
-
-          rols: [
-            { rol: "desarrollador web" },
-            { rol: "desarrollador fullstack" },
-            { rol: "ui designer" },
-          ],
-        },
-        {
-          id: 4,
-          name: "Accel",
-          urlimage: User,
-          rols: [
-            { rol: "desarrollador web" },
-            { rol: "desarrollador fullstack" },
-            { rol: "ui designer" },
-          ],
-        },
-        {
-          id: 5,
-          name: "Hachiman",
-          urlimage: User,
-          rols: [
-            { rol: "desarrollador web" },
-            { rol: "desarrollador fullstack" },
-            { rol: "ui designer" },
-          ],
-        },
-      ],
+      contacts: [],
     };
   }
   /*
@@ -186,17 +134,14 @@ class CreateProject extends Component {
    * Removes the member and set the state.
    */
   removeMember = (member) => {
-    const { members, contacts } = this.state;
-    const item = members.findIndex((iterador) => iterador.user === member.user);
-
-    if (item) {
-      contacts.push({
-        user: member.id,
-        name: member.name,
-        urlimage: member.urlimage,
-        rols: [...member.rols],
-      });
-      members.splice(item, 1);
+    let { members, contacts } = this.state;
+    const item = contacts.find((iterador) => iterador.user === member.user);
+    const item2 = members.findIndex(
+      (iterador) => iterador.user === member.user
+    );
+    members.splice(item2, 1);
+    if (!item) {
+      contacts.push({ ...member, rol: "" });
       this.setState({ members: [...members], contacts: [...contacts] });
     }
   };
@@ -207,12 +152,15 @@ class CreateProject extends Component {
    * Adds the member and set the state.
    */
   addMember = (member) => {
-    const { members } = this.state;
+    let { members, contacts } = this.state;
     const item = members.find((iterador) => iterador.user === member.user);
-
+    const item2 = contacts.findIndex(
+      (iterador) => iterador.user === member.user
+    );
+    contacts.splice(item2, 1);
     if (!item) {
       members.push({ ...member, rol: "" });
-      this.setState({ members: [...members] });
+      this.setState({ members: [...members], contacts: [...contacts] });
     }
   };
 
@@ -301,6 +249,10 @@ class CreateProject extends Component {
       errors,
     } = this.state;
     console.log(this.state);
+    const projectmembers = [];
+    for (let i of members) {
+      projectmembers.push(JSON.stringify(i));
+    }
     const practices = [];
     if (projectPractices.smmv) {
       practices.push("Concepción de la experiencia multimedia");
@@ -308,16 +260,23 @@ class CreateProject extends Component {
     if (projectPractices.cem) {
       practices.push("Sistema Multimedia mínimo viable");
     }
+    const blob =
+      projectIcon !== null
+        ? new Blob([projectIcon], { type: "image/png" })
+        : null;
+    const blob2 =
+      projectPicture !== null
+        ? new Blob([projectPicture], { type: "image/png" })
+        : null;
     if (!errors.name && !errors.members && !errors.practices) {
       try {
         const datform = new FormData();
         datform.append("nombre", projectName);
         datform.append("descripcion", projectDescription);
-        datform.append("practica", practices);
-        datform.append("integrantes", [...members]);
-        datform.append("banner", projectPicture);
-        datform.append("icon", projectIcon);
-
+        datform.append("practica", [...practices]);
+        datform.append("integrantes", [...projectmembers]);
+        datform.append("banner", blob, "banner");
+        datform.append("icon", blob2, "icon");
         const token = localStorage.getItem("login");
         const obj = JSON.parse(token);
         const tokensito = obj.token;

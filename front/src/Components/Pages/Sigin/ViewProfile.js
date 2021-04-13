@@ -401,10 +401,13 @@ export default function ViewProfile(props) {
             className="o-user-register-pic rounded-circle"
           />
           <div className="inputWrapper bg-primary">
+            <label htmlFor="user-picture-cv"></label>
+
             <p className="text-white o-icon-input-text">Subir foto</p>
             <input
               className="fileInput rounded-pill"
               type="file"
+              id="user-picture-cv"
               name="file1"
               accept="image/*"
               onChange={(e) => {
@@ -412,7 +415,7 @@ export default function ViewProfile(props) {
                 try {
                   reader.onload = () => {
                     if (reader.readyState === 2) {
-                      setPicture(reader.result);
+                      setCvpicture(reader.result);
                     }
                   };
                   reader.readAsDataURL(e.target.files[0]);
@@ -487,9 +490,11 @@ export default function ViewProfile(props) {
             <div className="col-xs-6 col-sm-6 p-0 m-0 o-up-btn bg-primary ">
               <div className="inputWrapper m-0 bg-primary">
                 <p className="text-white o-icon-input-text">Subir foto</p>
+                <p className="text-white o-icon-input-text">Subir foto</p>
                 <input
                   className="fileInput rounded-pill"
                   type="file"
+                  id="user-picture-upload"
                   name="file1"
                   accept="image/*"
                   onChange={(e) => {
@@ -497,7 +502,7 @@ export default function ViewProfile(props) {
                     try {
                       reader.onload = () => {
                         if (reader.readyState === 2) {
-                          setCvpicture(reader.result);
+                          setPicture(reader.result);
                         }
                       };
                       reader.readAsDataURL(e.target.files[0]);

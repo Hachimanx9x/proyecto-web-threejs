@@ -168,12 +168,18 @@ class SigIn extends Component {
           nombre: name,
         })
         .then((respuesta) => {
-          if (respuesta.statusText === "OK") {
-            console.log(respuesta.data);
+          if (respuesta.data.msj === "error email ya registrado") {
+            this.setState({
+              validEmail: false,
+              emailMessage: "Correo ya registrado.",
+            });
+          } else if (respuesta.statusText === "OK") {
+            console.log(respuesta);
             localStorage.setItem(
               "login",
               JSON.stringify({
                 token: respuesta.data.token,
+                data: respuesta.data.datos,
               })
             );
 

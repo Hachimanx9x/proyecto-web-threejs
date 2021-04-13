@@ -15,7 +15,7 @@ class Main extends Component {
     const token = localStorage.getItem("login");
     //El metodo de redireccionamiento.
     if (token === null || token === undefined || token === "") {
-      return <Redirect to="/Home" />;
+      return <Redirect to="/Login" />;
     } else {
       return <Redirect to="/Dashboard/Projects" />;
     }

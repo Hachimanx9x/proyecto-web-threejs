@@ -18,13 +18,15 @@ const deleteUser = () => {
   console.log(localStorage.getItem("login"));
 };
 const SideBar = ({ isOpen, toggle }) => {
-  const token = localStorage.getItem("login");
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const token = localStorage.getItem("login");
   let activeLink = true;
-  const obj = JSON.parse(token);
-  const data = obj.data;
-  if (data.herramientas.length === 0) {
-    activeLink = false;
+  if (token !== "" && token !== undefined && token !== null) {
+    const obj = JSON.parse(token);
+    const data = obj.data;
+    if (data.herramientas.length === 0) {
+      activeLink = false;
+    }
   }
   useEffect(() => {
     function resize() {

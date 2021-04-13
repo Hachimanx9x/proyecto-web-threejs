@@ -1,26 +1,28 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import SideToggler from "./SideToggler";
 
 export default function Dashboard(props) {
   let path = props.location.pathname;
   const token = localStorage.getItem("login");
-  const obj = JSON.parse(token);
-  const data = obj.data;
-  let temp = obj.token;
   if (
-    temp === null ||
-    temp === undefined ||
-    temp === "" ||
-    temp === {} ||
-    temp === "{}"
+    token !== "" &&
+    token !== {} &&
+    token !== "{}" &&
+    token !== null &&
+    token !== undefined
   ) {
+    const obj = JSON.parse(token);
+    const data = obj.data;
+    if (
+      data.herramientas.length === 0 &&
+      path !== "/Dashboard/FinishRegister"
+    ) {
+      props.history.push("/Dashboard/FinishRegister");
+    }
+  } else {
     props.history.push("/Login");
-  } else if (
-    data.herramientas.length === 0 &&
-    path !== "/Dashboard/FinishRegister"
-  ) {
-    props.history.push("/Dashboard/FinishRegister");
+    window.history.replaceState(null, "Home", "/Login");
   }
   return <SideToggler />;
 }

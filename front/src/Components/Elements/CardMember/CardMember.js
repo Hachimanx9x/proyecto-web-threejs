@@ -15,8 +15,7 @@ const CardMember = ({ member, remove, add, change, rols, readOnly }) => {
   const [modal, setModal] = useState(false);
 
   const deleteConfirmation = () => {
-    setShow(!show);
-    setTimeout(() => remove(member), 800);
+    setTimeout(() => remove(member), 0);
   };
 
   const deleteMember = () => {
@@ -25,8 +24,7 @@ const CardMember = ({ member, remove, add, change, rols, readOnly }) => {
   };
 
   const addMember = () => {
-    setShow(!show);
-    setTimeout(() => add(member), 800);
+    setTimeout(() => add(member), 0);
   };
 
   const memberRol = (somejob) => {
@@ -58,7 +56,7 @@ const CardMember = ({ member, remove, add, change, rols, readOnly }) => {
           Eliminar
         </button>
       </Rodal>
-      <Fade show={show}>
+      <Fade show={true}>
         <div className="card o-card-member rounded">
           <div className="text-center">
             <img
@@ -76,7 +74,7 @@ const CardMember = ({ member, remove, add, change, rols, readOnly }) => {
                   memberRol(rol) + " rounded-pill mt-1 o-member-contact"
                 }
               >
-                <p>{rol.rol}</p>
+                <p>{rol}</p>
               </div>
             ))}
           </div>

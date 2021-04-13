@@ -21,66 +21,81 @@ import ProjectView from "../../Pages/Projects/ProjectView";
 import ActivitiesCEM from "../../Pages/Activities/ActivitiesCEM";
 import ActivitiesSMMV from "../../Pages/Activities/Activities";
 
-const Content = ({ sidebarIsOpen, toggleSidebar }) => (
-  <div
-    className={classNames("content container-fluid", {
-      "is-open": sidebarIsOpen,
-    })}
-  >
-    <Topbar toggleSidebar={toggleSidebar} sidebarIsOpen={sidebarIsOpen} />
-    <Switch>
-      <Route exact path="Dashboard" component={Loged} />
-      <Route exact path="/Dashboard/Projects" component={Desktop} />
-      <Route
-        exact
-        path="/Dashboard/Projects/ActivitiesSMMV/:id"
-        component={ActivitiesSMMV}
-      />
-      <Route
-        exact
-        path="/Dashboard/Projects/ActivitiesCEM/:id"
-        component={ActivitiesCEM}
-      />
-      <Route
-        exact
-        path="/Dashboard/Projects/CreateProject"
-        component={CreateProject}
-      />{" "}
-      <Route
-        exact
-        path="/Dashboard/Projects/DocumentationSMMV"
-        component={DocSMMV}
-      />
-      <Route
-        exact
-        path="/Dashboard/Projects/DocumentationCEM"
-        component={DocCEM}
-      />
-      <Route exact path="/Dashboard/Projects/:id" component={ProjectView} />
-      <Route exact path="/Dashboard/Contacts" component={Contacts} />
-      <Route exact path="/Dashboard/Contacts/:id" component={ContactProfile} />
-      <Route exact path="/Dashboard/Calendar" component={CalendarEvents} />
-      <Route
-        exact
-        path="/Dashboard/Calendar/CreateEvent"
-        component={CreateEvent}
-      />
-      <Route
-        exact
-        path="/Dashboard/Projects/Documentation"
-        component={Documentation}
-      />
-      <Route exact path="/Dashboard/Projects/Documentation2" component={Doc2} />
-      <Route exact path="/Dashboard/Meetings" component={Meetings} />
-      <Route
-        exact
-        path="/Dashboard/FinishRegister"
-        component={FinishRegister}
-      />
-      <Route exact path="/Dashboard/infoUser" component={ViewProfile} />
-      <Redirect to="/Dashboard/Projects" />
-    </Switch>
-  </div>
-);
+const Content = ({ sidebarIsOpen, toggleSidebar }) => {
+  const token = localStorage.getItem("login");
+  return (
+    <div
+      className={classNames("content container-fluid", {
+        "is-open": sidebarIsOpen,
+      })}
+    >
+      <Topbar toggleSidebar={toggleSidebar} sidebarIsOpen={sidebarIsOpen} />
+      <Switch>
+        <Route exact path="Dashboard" component={Loged} />
+        <Route exact path="/Dashboard/Projects" component={Desktop} />
+        <Route
+          exact
+          path="/Dashboard/Projects/ActivitiesSMMV/:id"
+          component={ActivitiesSMMV}
+        />
+        <Route
+          exact
+          path="/Dashboard/Projects/ActivitiesCEM/:id"
+          component={ActivitiesCEM}
+        />
+        <Route
+          exact
+          path="/Dashboard/Projects/CreateProject"
+          component={CreateProject}
+        />{" "}
+        <Route
+          exact
+          path="/Dashboard/Projects/DocumentationSMMV"
+          component={DocSMMV}
+        />
+        <Route
+          exact
+          path="/Dashboard/Projects/DocumentationCEM"
+          component={DocCEM}
+        />
+        <Route exact path="/Dashboard/Projects/:id" component={ProjectView} />
+        <Route exact path="/Dashboard/Contacts" component={Contacts} />
+        <Route
+          exact
+          path="/Dashboard/Contacts/:id"
+          component={ContactProfile}
+        />
+        <Route exact path="/Dashboard/Calendar" component={CalendarEvents} />
+        <Route
+          exact
+          path="/Dashboard/Calendar/CreateEvent"
+          component={CreateEvent}
+        />
+        <Route
+          exact
+          path="/Dashboard/Projects/Documentation"
+          component={Documentation}
+        />
+        <Route
+          exact
+          path="/Dashboard/Projects/Documentation2"
+          component={Doc2}
+        />
+        <Route exact path="/Dashboard/Meetings" component={Meetings} />
+        <Route
+          exact
+          path="/Dashboard/FinishRegister"
+          component={FinishRegister}
+        />
+        <Route exact path="/Dashboard/infoUser" component={ViewProfile} />
+        {token === null || token === undefined || token === "" ? (
+          <Redirect to="/Login" />
+        ) : (
+          <Redirect to="/Dashboard/Projects" />
+        )}
+      </Switch>
+    </div>
+  );
+};
 
 export default Content;

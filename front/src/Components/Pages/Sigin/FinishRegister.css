@@ -23,6 +23,16 @@
 .o-register-container .inputWrapper:hover {
   background-color: #0d47a1;
 }
+.o-register-container .inputWrapper label {
+  opacity: 0;
+  z-index: 100;
+  background-color: transparent;
+  position: absolute;
+  cursor: pointer;
+  width: 100%;
+  left: 0;
+  height: 100%;
+}
 .o-register-container .fileInput {
   cursor: pointer;
   height: 5rem;
@@ -40,17 +50,18 @@
 }
 
 .o-register-container .o-icon-input-text {
-  margin: 0 auto;
-  top: 6px;
+  position: absolute;
+  top: 20%;
+  right: -12px;
   font-size: 0.9rem;
-  position: relative;
+  width: 100%;
   text-decoration: none;
 }
 .o-up-btn .o-icon-input-text {
-  left: 1.7rem;
-  top: 0.5rem;
   font-size: 0.9rem;
   position: absolute;
+  top: 25%;
+  right: -40px;
   text-decoration: none;
 }
 .o-register-container .o-icon-input-text:focus {
@@ -238,8 +249,37 @@
     padding-bottom: 2rem;
     min-width: 15rem;
   }
+  .o-register-container .o-icon-input-text {
+    position: absolute;
+    top: 15%;
+    left: -10%;
+    font-size: 0.9rem;
+    width: auto;
+    text-decoration: none;
+  }
+  .o-up-btn .o-icon-input-text {
+    font-size: 0.9rem;
+    top: 30%;
+    left: 20px;
+    text-decoration: none;
+  }
 }
 @media only screen and (max-width: 590px) {
+  .o-register-container .o-icon-input-text {
+    position: absolute;
+    top: 15%;
+    left: -10%;
+    font-size: 0.9rem;
+    width: auto;
+    text-decoration: none;
+  }
+  .o-up-btn .o-icon-input-text {
+    font-size: 0.9rem;
+    position: absolute;
+    top: 30%;
+    right: -60px;
+    text-decoration: none;
+  }
   .o-register-container {
     margin: 0 0 5rem 0;
     padding: 0rem;
