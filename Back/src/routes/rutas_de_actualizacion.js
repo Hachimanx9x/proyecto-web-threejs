@@ -98,6 +98,11 @@ rutas.put("/entrega/entregable", proToken, (req, res) => {
 });
 
 rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
+  console.log("llego del body");
+  console.log(req.body);
+  console.log("llego de files");
+  console.log(req.files);
+
   let {
     email,
     password,
@@ -707,7 +712,7 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
                 }
               }
             } else {
-              console.log(chalk.bgBlue("actualizacion si archivos"));
+              console.log(chalk.blue("actualización sin archivos"));
               actuusermt(
                 {
                   email,
