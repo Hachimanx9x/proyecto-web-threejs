@@ -67,48 +67,6 @@ rutas.post("/login", (req, res) => {
                     .catch((talenerr) => console.log(talenerr));
                 })
                 .catch((dererro) => res.json(dererro));
-              buscarDB
-                .buscartalentogeneral2(data.rows[0].id)
-                .then((talento) => {
-                  if (talento.data.length < 1) {
-                    let tem = null;
-                    if (
-                      usua.fotoperfil !== null &&
-                      usua.fotoperfil !== "null"
-                    ) {
-                      tem = `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`;
-                    }
-                    res.json({
-                      token: resul.token,
-                      datos: {
-                        id: data.rows[0].id,
-                        nombre: usua.nombre,
-                        foto: tem,
-                        herramientas: [],
-                        palabras: [],
-                      },
-                    });
-                  } else {
-                    let tem = null;
-                    if (
-                      usua.fotoperfil !== null &&
-                      usua.fotoperfil !== "null"
-                    ) {
-                      tem = `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`;
-                    }
-                    res.json({
-                      token: resul.token,
-                      datos: {
-                        id: data.rows[0].id,
-                        nombre: usua.nombre,
-                        foto: tem,
-                        herramientas: talento.data[0].herramientas,
-                        palabras: talento.data[0].palabras,
-                      },
-                    });
-                  }
-                })
-                .catch((talenerr) => console.log(talenerr));
             })
             .catch((dererro) => res.json(dererro));
         });
