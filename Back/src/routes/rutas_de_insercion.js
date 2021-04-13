@@ -247,10 +247,11 @@ rutas.post("/create/proyecto", proToken, (req, res) => {
         if (typeof practica === "string") {
           practica = practica.split(",");
         }
-        if (typeof integrantes === "string") {
-          integrantes = JSON.parse(integrantes);
+        if (typeof integrantes === "String") {
+          integrantes = JSON.parse(`[${integrantes}]`);
         }
         console.log({ nombre, descripcion, practica, integrantes });
+
         integrantes.push({
           user: data.rows[0].id,
           rol: "Arquitecto Experiencia Multimedia",
