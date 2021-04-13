@@ -707,6 +707,7 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
                 }
               }
             } else {
+              console.log(chalk.bgBlue("actualizacion si archivos"));
               actuusermt(
                 {
                   email,
@@ -729,6 +730,9 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
                 herramienta
               )
                 .then((succes) => {
+                  console.log(
+                    chalk.green(`usuario${data.rows[0].id} fue actualizado`)
+                  );
                   datauseridmt(data.rows[0].id).then((userdata) => {
                     res.json(userdata);
                   });
