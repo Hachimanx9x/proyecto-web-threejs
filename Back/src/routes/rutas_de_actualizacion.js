@@ -147,7 +147,11 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
           .then((datos) => {
             let bucket = `usuario${data.rows[0].id}`;
             if (req.files !== null && req.files !== undefined) {
-              if (req.files.foto != null && req.files.cv === null) {
+              if (
+                req.files.foto != null &&
+                req.files.foto != undefined &&
+                (req.files.cv === null || req.files.cv === "null")
+              ) {
                 console.log(
                   chalk.red(`Solo entro la foto ${req.files.foto.name}`)
                 );
@@ -294,7 +298,11 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
                 }
               }
 
-              if (req.files.foto === null && req.files.cv != null) {
+              if (
+                (req.files.foto === null || req.files.foto === "null") &&
+                req.files.cv != null &&
+                req.files.cv !== undefined
+              ) {
                 console.log(
                   chalk.red(`Solo entro la hoja de vida ${req.files.cv.name}`)
                 );
