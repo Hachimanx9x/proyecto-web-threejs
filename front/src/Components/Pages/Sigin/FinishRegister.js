@@ -13,12 +13,14 @@ import SuccessAnimation from "../../Elements/SuccessAnimation/SuccessAnimation";
 
 export default function FinishRegister(props) {
   const [picture, setPicture] = useState(null);
+  const [pictureName, setPictureName] = useState(null);
   const [description, setDescription] = useState();
   const [country, setCountry] = useState(null);
   const [name, setName] = useState("");
   const [lastname, setLastname] = useState("");
   const [cv, setCv] = useState("");
   const [cvpicture, setCvpicture] = useState(null);
+  const [cvName, setCvName] = useState(null);
   const [years, setYears] = useState(null);
   const [linkedin, setLinkedin] = useState("");
   const [github, setGithub] = useState("");
@@ -184,10 +186,12 @@ export default function FinishRegister(props) {
     const fullname = name + " " + lastname;
     const blob =
       picture !== null ? new Blob([picture], { type: "image/png" }) : null;
+    const blob2 = cv !== null ? new Blob([cv], { type: "image/png" }) : null;
     const skillsdi = [];
     for (let i = 0; i < skills.length; i++) {
       skillsdi.push(skills[i].id);
     }
+    console.log(pictureName + " " + cvName);
     const errors = errorList;
     console.log(errors);
     await handleValidation();
@@ -215,8 +219,8 @@ export default function FinishRegister(props) {
         datform.append("herramienta", skillsdi);
         datform.append("palabra", userKeywords);
         datform.append("idiomas", userLanguages);
-        datform.append("foto", blob, "file");
-        datform.append("cv", cvpicture);
+        datform.append("foto", blob, pictureName);
+        datform.append("cv", blob2, cvName);
         console.log(skillsdi);
         const obj = JSON.parse(token);
         const tokensito = obj.token;
@@ -235,10 +239,10 @@ export default function FinishRegister(props) {
         console.log(error);
       }
       setConfirmation(true);
-      localStorage.setItem("login", "");
+      //  localStorage.setItem("login", "");
       setTimeout(() => {
         setModal(false);
-        window.location.reload();
+        //   window.location.reload();
       }, 1200);
     } else {
       setModal(false);
@@ -320,6 +324,8 @@ export default function FinishRegister(props) {
                     }
                   };
                   reader.readAsDataURL(e.target.files[0]);
+                  console.log(e.target.files[0].name);
+                  setPictureName(e.target.files[0].name);
                 } catch (error) {
                   console.log(
                     "Error en la subida del archivo. Probablemente archivo abortado."
@@ -406,6 +412,7 @@ export default function FinishRegister(props) {
                         }
                       };
                       reader.readAsDataURL(e.target.files[0]);
+                      setCvName(e.target.files[0].name);
                     } catch (error) {
                       console.log(
                         "Error en la subida del archivo. Probablemente archivo abortado."

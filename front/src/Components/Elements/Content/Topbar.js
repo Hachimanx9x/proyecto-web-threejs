@@ -15,12 +15,17 @@ const Topbar = ({ toggleSidebar, sidebarIsOpen }, props) => {
   let activeLink = true;
 
   let name = "Perfil";
+  let foto = User;
   if (token !== "" && token !== undefined && token !== null) {
     const obj = JSON.parse(token);
     const data = obj.data;
     name = data.nombre.split(" ", 1);
     if (data.herramientas.length === 0) {
       activeLink = false;
+    }
+    if (data.foto !== null && data.foto !== "null") {
+      foto = data.foto;
+      console.log(foto);
     }
   }
   useEffect(() => {
@@ -70,7 +75,7 @@ const Topbar = ({ toggleSidebar, sidebarIsOpen }, props) => {
         >
           <label className="mr-2 font-weight-bold">{name}</label>
           <img
-            src={User}
+            src={foto}
             alt="User"
             style={{ height: "3rem", width: "3rem", borderRadius: "50%" }}
           />
