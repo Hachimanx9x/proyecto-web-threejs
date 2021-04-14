@@ -12,13 +12,13 @@ import "./FinishRegister.css";
 import SuccessAnimation from "../../Elements/SuccessAnimation/SuccessAnimation";
 
 export default function FinishRegister(props) {
-  const [picture, setPicture] = useState(null);
   const [pictureName, setPictureName] = useState(null);
-  const [description, setDescription] = useState();
+  const [picture, setPicture] = useState(null);
+  const [description, setDescription] = useState(null);
   const [country, setCountry] = useState(null);
   const [name, setName] = useState("");
   const [lastname, setLastname] = useState("");
-  const [cv, setCv] = useState("");
+  const [cv, setCv] = useState(null);
   const [cvpicture, setCvpicture] = useState(null);
   const [cvName, setCvName] = useState(null);
   const [years, setYears] = useState(null);
@@ -178,22 +178,30 @@ export default function FinishRegister(props) {
       : (errors.validWords = true);
 
     setErrorList(errors);
-    console.log(errors);
   }
 
   const updateUserDate = async () => {
     const nullData = null;
     const fullname = name + " " + lastname;
-    const blob =
-      picture !== null ? new Blob([picture], { type: "image/png" }) : null;
-    const blob2 = cv !== null ? new Blob([cv], { type: "image/png" }) : null;
+    let blob = null;
+    let blob2 = null;
+    if (pictureName !== null) {
+      const picturetype = pictureName.split(".");
+      blob = new Blob([picture], {
+        type: `image/${picturetype[picturetype.length - 1]}`,
+      });
+    }
+    if (cvName !== null) {
+      const picturetype = pictureName.split(".");
+      blob2 = new Blob([cvpicture], {
+        type: `image/${picturetype[picturetype.length - 1]}`,
+      });
+    }
     const skillsdi = [];
     for (let i = 0; i < skills.length; i++) {
       skillsdi.push(skills[i].id);
     }
-    console.log(pictureName + " " + cvName);
     const errors = errorList;
-    console.log(errors);
     await handleValidation();
     if (
       errors.validSkills &&
@@ -219,9 +227,19 @@ export default function FinishRegister(props) {
         datform.append("herramienta", skillsdi);
         datform.append("palabra", userKeywords);
         datform.append("idiomas", userLanguages);
-        datform.append("foto", blob, pictureName);
-        datform.append("cv", blob2, cvName);
-        console.log(skillsdi);
+
+        if (cvpicture !== null && cvpicture !== "null") {
+          datform.append("cv", blob2, cvName);
+        } else {
+          datform.append("cv", null);
+        }
+
+        if (picture !== null && picture !== "null") {
+          datform.append("foto", blob, pictureName);
+        } else {
+          datform.append("foto", null);
+        }
+
         const obj = JSON.parse(token);
         const tokensito = obj.token;
         const options = {
@@ -239,10 +257,10 @@ export default function FinishRegister(props) {
         console.log(error);
       }
       setConfirmation(true);
-      //  localStorage.setItem("login", "");
+      localStorage.setItem("login", "");
       setTimeout(() => {
         setModal(false);
-        //   window.location.reload();
+        window.location.reload();
       }, 1200);
     } else {
       setModal(false);
@@ -324,7 +342,6 @@ export default function FinishRegister(props) {
                     }
                   };
                   reader.readAsDataURL(e.target.files[0]);
-                  console.log(e.target.files[0].name);
                   setPictureName(e.target.files[0].name);
                 } catch (error) {
                   console.log(
@@ -413,6 +430,11 @@ export default function FinishRegister(props) {
                       };
                       reader.readAsDataURL(e.target.files[0]);
                       setCvName(e.target.files[0].name);
+                      const blob = new Blob([e.target.files[0]], {
+                        type: e.target.files[0].type,
+                      });
+                      //console.log(blob);
+                      setCvpicture(blob);
                     } catch (error) {
                       console.log(
                         "Error en la subida del archivo. Probablemente archivo abortado."
@@ -432,7 +454,7 @@ export default function FinishRegister(props) {
               }}
             >
               <small style={{ fontSize: "0.6rem" }}>
-                {cvpicture === null ? "" : cvpicture.name}
+                {cvpicture === null ? "" : cvName}
               </small>
             </div>
           </div>
@@ -759,7 +781,7 @@ export default function FinishRegister(props) {
                   alt={skill.name}
                   src={skill.icon}
                 />
-                <div className="bg-primary text-white">
+                <div className="bg-primary text-white text-center">
                   <small style={{ fontSize: "0.65rem" }}>{skill.name}</small>
                 </div>
               </div>
