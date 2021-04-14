@@ -49,7 +49,7 @@ class Login extends Component {
         validpassword: false,
         passwordMessage: "La contraseña es requerida.",
       });
-    } else if (password.trim().length < 6) {
+    } else if (password.trim().length < 5) {
       this.setState({
         validpassword: false,
         passwordMessage: "La contraseña debe tener al menos 6 caracteres.",
