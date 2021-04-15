@@ -20,13 +20,11 @@ const Topbar = ({ toggleSidebar, sidebarIsOpen }, props) => {
     const obj = JSON.parse(token);
     const data = obj.data;
     name = data.nombre.split(" ", 1);
-    console.log(data);
     if (data.herramientas.length === 0) {
       activeLink = false;
     }
     if (data.foto !== null && data.foto !== "null") {
       foto = data.foto;
-      console.log(foto);
     }
   }
   useEffect(() => {

@@ -7,7 +7,6 @@ import {
   faCalendarAlt,
   faSmileBeam,
   faMeh,
-  faFrown,
 } from "@fortawesome/free-solid-svg-icons";
 import User from "../../../Logos/user-icon.png";
 import "./CardActivities.css";
@@ -192,5 +191,3 @@ export default function CardActivities({ alfa, activity, tecniques }) {
     </div>
   );
 }
-
-//CardActivities.propTypes = {};

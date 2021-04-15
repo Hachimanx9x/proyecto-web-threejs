@@ -20,8 +20,6 @@ class Main extends Component {
   componentDidMount = () => {
     const token = localStorage.getItem("login");
     let path = window.location.pathname;
-    console.log(path.split("/")[1]);
-    let ruta = "/Dashboard/Projects";
     if (token === null || token === undefined || token === "") {
       this.setState({ ruta: "/Login" });
     } else {

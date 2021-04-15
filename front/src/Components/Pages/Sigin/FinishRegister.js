@@ -12,7 +12,6 @@ import "./FinishRegister.css";
 import SuccessAnimation from "../../Elements/SuccessAnimation/SuccessAnimation";
 
 export default function FinishRegister(props) {
-  const [pictureName, setPictureName] = useState(null);
   const [picture, setPicture] = useState(null);
   const [description, setDescription] = useState(null);
   const [country, setCountry] = useState(null);
@@ -20,7 +19,6 @@ export default function FinishRegister(props) {
   const [lastname, setLastname] = useState("");
   const [cv, setCv] = useState(null);
   const [cvpicture, setCvpicture] = useState(null);
-  const [cvName, setCvName] = useState(null);
   const [years, setYears] = useState(null);
   const [linkedin, setLinkedin] = useState("");
   const [github, setGithub] = useState("");
@@ -183,34 +181,6 @@ export default function FinishRegister(props) {
   const updateUserDate = async () => {
     const nullData = null;
     const fullname = name + " " + lastname;
-    let blob = null;
-    let blob2 = null;
-    if (pictureName !== null) {
-      const picturetype = pictureName.split(".");
-      console.log(picturetype[picturetype.length - 1]);
-      blob = new Blob([picture], {
-        type: `image/${picturetype[picturetype.length - 1]}`,
-      });
-      const reader = new FileReader();
-      reader.readAsDataURL(blob);
-      console.log(reader);
-      blob = reader;
-    }
-    if (cvName !== null) {
-      const picturetype = pictureName.split(".");
-      blob2 = new Blob([cvpicture], {
-        type: `image/${picturetype[picturetype.length - 1]}`,
-      });
-      const reader = new FileReader();
-      reader.readAsDataURL(blob2);
-      console.log(reader);
-      blob2 = reader;
-    }
-
-    console.log(picture);
-    console.log(cvpicture);
-    console.log(blob);
-    console.log(blob2);
     const skillsdi = [];
     for (let i = 0; i < skills.length; i++) {
       skillsdi.push(skills[i].id);
@@ -241,18 +211,8 @@ export default function FinishRegister(props) {
         datform.append("herramienta", skillsdi);
         datform.append("palabra", userKeywords);
         datform.append("idiomas", userLanguages);
-
-        if (cvpicture !== null && cvpicture !== "null") {
-          datform.append("cv", blob2, cvName);
-        } else {
-          datform.append("cv", null);
-        }
-
-        if (picture !== null && picture !== "null") {
-          datform.append("foto", blob, pictureName);
-        } else {
-          datform.append("foto", null);
-        }
+        datform.append("foto", picture);
+        datform.append("cv", cvpicture);
 
         const obj = JSON.parse(token);
         const tokensito = obj.token;
@@ -271,10 +231,10 @@ export default function FinishRegister(props) {
         console.log(error);
       }
       setConfirmation(true);
-      //localStorage.setItem("login", "");
+      localStorage.setItem("login", "");
       setTimeout(() => {
         setModal(false);
-        // window.location.reload();
+        window.location.reload();
       }, 1200);
     } else {
       setModal(false);
@@ -334,7 +294,7 @@ export default function FinishRegister(props) {
         <div className="col-xs-12 col-sm-3 text-center o-col">
           <p>Foto perfil</p>
           <img
-            src={picture === null ? User : picture}
+            src={picture === null ? User : URL.createObjectURL(picture)}
             alt={"User profile"}
             className="o-user-register-pic rounded-circle"
           />
@@ -348,19 +308,8 @@ export default function FinishRegister(props) {
               name="file1"
               accept="image/*"
               onChange={(e) => {
-                const reader = new FileReader();
-                try {
-                  reader.onload = () => {
-                    if (reader.readyState === 2) {
-                      setPicture(reader.result);
-                    }
-                  };
-                  reader.readAsDataURL(e.target.files[0]);
-                  setPictureName(e.target.files[0].name);
-                } catch (error) {
-                  console.log(
-                    "Error en la subida del archivo. Probablemente archivo abortado."
-                  );
+                if (e.target.files[0] !== undefined) {
+                  setPicture(e.target.files[0]);
                 }
               }}
             />
@@ -412,6 +361,7 @@ export default function FinishRegister(props) {
           <p>Hoja de vida</p>
           <MDBInput
             type="text"
+            value={cv}
             label="URL/Link"
             onChange={(e) => {
               setCv(e.target.value);
@@ -435,19 +385,8 @@ export default function FinishRegister(props) {
                   name="file1"
                   accept="image/*"
                   onChange={(e) => {
-                    const reader = new FileReader();
-                    try {
-                      reader.onload = () => {
-                        if (reader.readyState === 2) {
-                          setCvpicture(reader.result);
-                        }
-                      };
-                      reader.readAsDataURL(e.target.files[0]);
-                      setCvName(e.target.files[0].name);
-                    } catch (error) {
-                      console.log(
-                        "Error en la subida del archivo. Probablemente archivo abortado."
-                      );
+                    if (e.target.files[0] !== undefined) {
+                      setCvpicture(e.target.files[0]);
                     }
                   }}
                 />
@@ -463,7 +402,7 @@ export default function FinishRegister(props) {
               }}
             >
               <small style={{ fontSize: "0.6rem" }}>
-                {cvpicture === null ? "" : cvName}
+                {cvpicture === null ? "" : cvpicture.name}
               </small>
             </div>
           </div>
