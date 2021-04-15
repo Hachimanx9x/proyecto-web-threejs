@@ -187,16 +187,30 @@ export default function FinishRegister(props) {
     let blob2 = null;
     if (pictureName !== null) {
       const picturetype = pictureName.split(".");
+      console.log(picturetype[picturetype.length - 1]);
       blob = new Blob([picture], {
         type: `image/${picturetype[picturetype.length - 1]}`,
       });
+      const reader = new FileReader();
+      reader.readAsDataURL(blob);
+      console.log(reader);
+      blob = reader;
     }
     if (cvName !== null) {
       const picturetype = pictureName.split(".");
       blob2 = new Blob([cvpicture], {
         type: `image/${picturetype[picturetype.length - 1]}`,
       });
+      const reader = new FileReader();
+      reader.readAsDataURL(blob2);
+      console.log(reader);
+      blob2 = reader;
     }
+
+    console.log(picture);
+    console.log(cvpicture);
+    console.log(blob);
+    console.log(blob2);
     const skillsdi = [];
     for (let i = 0; i < skills.length; i++) {
       skillsdi.push(skills[i].id);
@@ -257,10 +271,10 @@ export default function FinishRegister(props) {
         console.log(error);
       }
       setConfirmation(true);
-      localStorage.setItem("login", "");
+      //localStorage.setItem("login", "");
       setTimeout(() => {
         setModal(false);
-        window.location.reload();
+        // window.location.reload();
       }, 1200);
     } else {
       setModal(false);
@@ -430,11 +444,6 @@ export default function FinishRegister(props) {
                       };
                       reader.readAsDataURL(e.target.files[0]);
                       setCvName(e.target.files[0].name);
-                      const blob = new Blob([e.target.files[0]], {
-                        type: e.target.files[0].type,
-                      });
-                      //console.log(blob);
-                      setCvpicture(blob);
                     } catch (error) {
                       console.log(
                         "Error en la subida del archivo. Probablemente archivo abortado."

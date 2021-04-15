@@ -144,7 +144,7 @@ class SigIn extends Component {
     ) {
       const httpInstance = axios.create({
         baseURL: "http://localhost:3030/",
-        timeout: 1000,
+        timeout: 3000,
         headers: { "Content-Type": "application/json" },
       });
       httpInstance.interceptors.response.use(null, (error) => {

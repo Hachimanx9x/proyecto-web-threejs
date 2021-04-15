@@ -11,13 +11,23 @@ import TestAxios from "../Pages/test/maxios";
 import LandingPage from "../Pages/LandingPage/LandingPage.jsx";
 
 class Main extends Component {
-  Redirect = () => {
+  constructor(props) {
+    super(props);
+    this.state = {
+      ruta: "/Dashboard/Projects",
+    };
+  }
+  componentDidMount = () => {
     const token = localStorage.getItem("login");
-    //El metodo de redireccionamiento.
+    let path = window.location.pathname;
+    console.log(path.split("/")[1]);
+    let ruta = "/Dashboard/Projects";
     if (token === null || token === undefined || token === "") {
-      return <Redirect to="/Login" />;
+      this.setState({ ruta: "/Login" });
     } else {
-      return <Redirect to="/Dashboard/Projects" />;
+      if (path.split("/")[1] !== "Dashboard") {
+        window.location.href = "/Dashboard/Projects";
+      }
     }
   };
   render() {
@@ -33,7 +43,7 @@ class Main extends Component {
           <Route exact path="/test3dsimple" component={Test3d2} />
           <Route exact path="/testfile" component={TestFile} />
           <Route exact path="/axios" component={TestAxios} />
-          {this.Redirect()}
+          <Redirect to={this.state.ruta} />
         </Switch>
       </div>
     );
