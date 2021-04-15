@@ -150,7 +150,9 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
               if (
                 req.files.foto != null &&
                 req.files.foto != undefined &&
-                (req.files.cv === null || req.files.cv === "null")
+                (req.files.cv === null ||
+                  req.files.cv === "null" ||
+                  req.files.cv === undefined)
               ) {
                 console.log(
                   chalk.red(`Solo entro la foto ${req.files.foto.name}`)
@@ -299,7 +301,9 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
               }
 
               if (
-                (req.files.foto === null || req.files.foto === "null") &&
+                (req.files.foto === null ||
+                  req.files.foto === "null" ||
+                  req.files.foto === undefined) &&
                 req.files.cv != null &&
                 req.files.cv !== undefined
               ) {
@@ -453,8 +457,10 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
               if (
                 req.files.foto !== null &&
                 req.files.foto !== undefined &&
+                req.files.foto !== "null" &&
                 req.files.cv !== null &&
-                req.files.cv !== undefined
+                req.files.cv !== undefined &&
+                req.files.cv !== "null"
               ) {
                 console.log(
                   chalk.red(
