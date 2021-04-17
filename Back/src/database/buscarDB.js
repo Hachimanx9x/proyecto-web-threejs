@@ -2456,17 +2456,23 @@ function ordeninfoproyect(rows) {
     objdef.descripcion = rows[a].proyectodescripcion;
     objdef.estado = rows[a].proyectoestado;
     let temp1p = null,
-      temp2p = null;
+      temp2p = null,
+      temp3p = null;
     if (rows[a].proyectoicon !== null && rows[a].proyectoicon !== "null") {
       temp1p = `${env.host}/proyecto/contenido/proyecto${rows[a].idproyecto}/${rows[a].proyectoicon}`;
     }
     if (rows[a].proyectobanner !== null && rows[a].proyectobanner !== "null") {
       temp2p = `${env.host}/proyecto/contenido/proyecto${rows[a].idproyecto}/${rows[a].proyectobanner}`;
     }
+    if (rows[a].fotoperfil !== null && rows[a].fotoperfil !== "null") {
+      temp3p = `${env.host}/proyecto/contenido/usuario${rows[a].interid}/${rows[a].fotoperfil}`;
+    }
     objdef.icono = temp1p;
     objdef.banner = temp2p;
+
     objdef.integrantes.push({
       id: rows[a].interid,
+      foto: temp3p,
       nombre: rows[a].nombre,
       rol: rows[a].roltitulo,
       palabras: [],

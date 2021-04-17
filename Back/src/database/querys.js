@@ -147,7 +147,7 @@ query.buscarProyecto = function (id) {
     proyectos.proyectoestado,
     proyectos.proyectoicon,
     proyectos.proyectobanner,
-	integrantes.id AS "interid",
+  usuarios.id AS "interid",
 	usuarios.nombre,
 	roles.roltitulo,
   palabrasclave.palabra,
