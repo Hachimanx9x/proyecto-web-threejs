@@ -2436,7 +2436,6 @@ function ponerurlherramientas(array) {
   }
   return arraydef;
 }
-
 function ordeninfoproyect(rows) {
   let objdef = {
     idproyecto: null,
@@ -2456,12 +2455,21 @@ function ordeninfoproyect(rows) {
     objdef.nombre = rows[a].proyectonombre;
     objdef.descripcion = rows[a].proyectodescripcion;
     objdef.estado = rows[a].proyectoestado;
-    objdef.icono = `${env.host}/proyecto/contenido/proyecto${rows[a].idproyecto}/${rows[a].proyectoicon}`;
-    objdef.banner = `${env.host}/proyecto/contenido/proyecto${rows[a].idproyecto}/${rows[a].proyectobanner}`;
+    let temp1p = null,
+      temp2p = null;
+    if (rows[a].proyectoicon !== null && rows[a].proyectoicon !== "null") {
+      temp1p = `${env.host}/proyecto/contenido/proyecto${rows[a].idproyecto}/${rows[a].proyectoicon}`;
+    }
+    if (rows[a].proyectobanner !== null && rows[a].proyectobanner !== "null") {
+      temp2p = `${env.host}/proyecto/contenido/proyecto${rows[a].idproyecto}/${rows[a].proyectobanner}`;
+    }
+    objdef.icono = temp1p;
+    objdef.banner = temp2p;
     objdef.integrantes.push({
       id: rows[a].interid,
       nombre: rows[a].nombre,
       rol: rows[a].roltitulo,
+      palabras: [],
     });
     objdef.actividades.push({
       id: rows[a].actiid,
@@ -2474,6 +2482,7 @@ function ordeninfoproyect(rows) {
     });
     objdef.practicas.push({
       nombre: rows[a].practicanombre,
+      descripcion: rows[a].pradescrip,
       alfa: {
         nombre: rows[a].alfanombre,
         estado: rows[a].alfaestado,
@@ -2482,6 +2491,16 @@ function ordeninfoproyect(rows) {
   }
   let set0 = new Set(objdef.integrantes.map(JSON.stringify));
   objdef.integrantes = Array.from(set0).map(JSON.parse);
+  for (let a = 0; a < objdef.integrantes.length; a++) {
+    for (let b = 0; b < rows.length; b++) {
+      if (objdef.integrantes[a].id === rows[b].interid) {
+        objdef.integrantes[a].palabras.push(rows[b].palabra);
+      }
+    }
+    objdef.integrantes[a].palabras = Array.from(
+      new Set(objdef.integrantes[a].palabras.map(JSON.stringify))
+    ).map(JSON.parse);
+  }
 
   let set1 = new Set(objdef.actividades.map(JSON.stringify));
   objdef.actividades = Array.from(set1).map(JSON.parse);
@@ -2492,8 +2511,14 @@ function ordeninfoproyect(rows) {
   let practicas = [];
   let alfas = [];
   for (let b = 0; b < objdef.practicas.length; b++) {
-    practicas.push({ nombre: objdef.practicas[b].nombre, alfas, tasa: 0 });
+    practicas.push({
+      nombre: objdef.practicas[b].nombre,
+      descripcion: objdef.practicas[b].descripcion,
+      alfas,
+      tasa: 0,
+    });
   }
+
   let set3 = new Set(practicas.map(JSON.stringify));
   practicas = Array.from(set3).map(JSON.parse);
 

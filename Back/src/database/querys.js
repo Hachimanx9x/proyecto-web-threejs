@@ -150,15 +150,18 @@ query.buscarProyecto = function (id) {
 	integrantes.id AS "interid",
 	usuarios.nombre,
 	roles.roltitulo,
+  palabrasclave.palabra,
     actividades.id AS "actiid",
     actividades.actividadtitulo,
 	actividades.actividadestado,
 	practicas.practicanombre,
+  practicas.practicadescripcion AS "pradescrip",
 	alfas.alfanombre,
 	alfas.alfaestado,
 	entregables.id AS "entreid",
 	entregables.entregaestado
 FROM usuarios
+join palabrasclave ON usuarios.id = palabrasclave.pcusuario
 JOIN integrantes ON usuarios.id = integrantes.usuario
 join roles on integrantes.rol = roles.id
 JOIN listaintegrantes ON integrantes.id = listaintegrantes.integrante
