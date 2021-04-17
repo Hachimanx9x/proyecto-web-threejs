@@ -39,7 +39,9 @@ rutas.put("/entrega/actividad", proToken, (req, res) => {
                     metaData
                   )
                   .then((result) => {
-                    res.json({ msj: `activdad ${actividad} entregada` });
+                    res.json({
+                      file: `${env.host}/proyecto/contenido/proyecto${result.proyecto}/${archivo.name}`,
+                    });
                   })
                   .catch((err2) => res.json(err2));
               })
