@@ -4,8 +4,9 @@ import User from "../../../Logos/user-icon.png";
 import ProjectIcon from "../../../Logos/project.png";
 import ProjectPicture from "../../../ilustracion-equipo-de-trabajo.jpg";
 import CardMember from "../../Elements/CardMember/CardMember";
-import { defaults, Doughnut } from "react-chartjs-2";
+import Axios from "axios";
 
+import { defaults, Doughnut } from "react-chartjs-2";
 import "rodal/lib/rodal.css";
 import "./CreateProject.css";
 import Rodal from "rodal";
@@ -34,12 +35,12 @@ class ProjectView extends Component {
           name: "Saitama",
           urlimage: User,
           rols: [
-            { rol: "desarrollador web" },
-            { rol: "desarrollador fullstack" },
-            { rol: "ui designer" },
-            { rol: "desarrollador web" },
-            { rol: "desarrollador fullstack" },
-            { rol: "ui designer" },
+            "desarrollador web",
+            "desarrollador fullstack",
+            "ui designer",
+            "desarrollador web",
+            "desarrollador fullstack",
+            "ui designer",
           ],
           selectedRol: "Arquitecto de Pruebas",
         },
@@ -47,7 +48,7 @@ class ProjectView extends Component {
           id: 2,
           name: "Tatsumi",
           urlimage: User,
-          rols: [{ rol: "desarrollador web" }],
+          rols: ["desarrollador web"],
           selectedRol: "Arquitecto Sw/Hw",
         },
         {
@@ -55,33 +56,21 @@ class ProjectView extends Component {
           name: "Saber",
           urlimage: User,
 
-          rols: [
-            { rol: "desarrollador web" },
-            { rol: "desarrollador fullstack" },
-            { rol: "ui designer" },
-          ],
+          rols: ["desarrollador web", "desarrollador fullstack", "ui designer"],
           selectedRol: "Diseñador de producto",
         },
         {
           id: 4,
           name: "Accel",
           urlimage: User,
-          rols: [
-            { rol: "desarrollador web" },
-            { rol: "desarrollador fullstack" },
-            { rol: "ui designer" },
-          ],
+          rols: ["desarrollador web", "desarrollador fullstack", "ui designer"],
           selectedRol: "Arquitecto de Información",
         },
         {
           id: 5,
           name: "Hachiman",
           urlimage: User,
-          rols: [
-            { rol: "desarrollador web" },
-            { rol: "desarrollador fullstack" },
-            { rol: "ui designer" },
-          ],
+          rols: ["desarrollador web", "desarrollador fullstack", "ui designer"],
           selectedRol: "Arquitecto de Experiencia Multimedia",
         },
       ],
@@ -91,52 +80,32 @@ class ProjectView extends Component {
           id: 1,
           name: "Saitama",
           urlimage: User,
-          rols: [
-            { rol: "desarrollador web" },
-            { rol: "desarrollador fullstack" },
-            { rol: "ui designer" },
-          ],
+          rols: ["desarrollador web", "desarrollador fullstack", "ui designer"],
         },
         {
           id: 2,
           name: "Tatsumi",
           urlimage: User,
-          rols: [
-            { rol: "desarrollador web" },
-            { rol: "desarrollador fullstack" },
-            { rol: "ui designer" },
-          ],
+          rols: ["desarrollador web", "desarrollador fullstack", "ui designer"],
         },
         {
           id: 3,
           name: "Saber",
           urlimage: User,
 
-          rols: [
-            { rol: "desarrollador web" },
-            { rol: "desarrollador fullstack" },
-            { rol: "ui designer" },
-          ],
+          rols: ["desarrollador web", "desarrollador fullstack", "ui designer"],
         },
         {
           id: 4,
           name: "Accel",
           urlimage: User,
-          rols: [
-            { rol: "desarrollador web" },
-            { rol: "desarrollador fullstack" },
-            { rol: "ui designer" },
-          ],
+          rols: ["desarrollador web", "desarrollador fullstack", "ui designer"],
         },
         {
           id: 5,
           name: "Hachiman",
           urlimage: User,
-          rols: [
-            { rol: "desarrollador web" },
-            { rol: "desarrollador fullstack" },
-            { rol: "ui designer" },
-          ],
+          rols: ["desarrollador web", "desarrollador fullstack", "ui designer"],
         },
       ],
     };
@@ -149,6 +118,52 @@ class ProjectView extends Component {
    */
   componentDidMount = () => {
     window.addEventListener("resize", this.handleResize);
+
+    const proyectId = this.props.match.params.id;
+    const token = localStorage.getItem("login");
+    const obj = JSON.parse(token);
+    let temp = obj.token;
+    const options = {
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `llave ${temp}`,
+      },
+    };
+    try {
+      Axios.get(`http://localhost:3030/proyectos/${proyectId}`, options).then(
+        (response) => {
+          /**
+           *  const allcontacts = response.data.contactos;
+           const contacts = [];
+ 
+           for (let i of allcontacts) {
+             const tools = [];
+             for (let j of i.herramientas) {
+               tools.push(j.icono);
+             }
+             contacts.push({
+               user: i.iduser,
+               name: i.nombre,
+               description:
+                 i.descripcion === "undefined" || i.descripcion === "null"
+                   ? "Ninguna"
+                   : i.descripcion,
+               rols: [...i.palabras],
+               skills: [...tools],
+               urlimage: i.foto === null ? User : i.foto,
+             });
+           }
+           this.setState({
+             contacts: [...contacts],
+             fetched: true,
+           });
+           */
+          console.log(response);
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
   componentWillUnmount = () => {
     window.removeEventListener("resize", this.handleResize);

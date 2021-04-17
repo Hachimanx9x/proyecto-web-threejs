@@ -53,14 +53,14 @@ const CardTalents = ({ talent, addTalent }) => {
     } else if (
       rol === "diseñador gráfico" ||
       rol === "diseñador ui" ||
-      rol === "animadores 2d"
+      rol === "animadores 2d" ||
+      rol === "desarrollador fullstack"
     ) {
       style = "fullstack-developer";
     } else if (
       rol === "animador 3d" ||
       rol === "modelador 3d" ||
-      rol === "gestor de hardware" ||
-      rol === "desarrollador backend"
+      rol === "desarrollador web"
     ) {
       style = "ui-designer";
     } else if (
@@ -70,9 +70,15 @@ const CardTalents = ({ talent, addTalent }) => {
     ) {
       style = "other-job-1";
     } else if (
+      rol === "gestor de hardware" ||
+      rol === "desarrollador backend" ||
+      rol === "ilustrador"
+    ) {
+      style = "backend-developer";
+    } else if (
       rol === "productor audiovisual" ||
-      rol === "ilustrador" ||
-      rol === "gestor de proyectos"
+      rol === "gestor de proyectos" ||
+      rol === "desarrollador móvil"
     ) {
       style = "other-job-2";
     } else {

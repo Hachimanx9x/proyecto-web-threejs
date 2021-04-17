@@ -30,12 +30,46 @@ const CardMember = ({ member, remove, add, change, rols, readOnly }) => {
   const memberRol = (somejob) => {
     let style = "";
     const rol = somejob.toLowerCase();
-    if (rol === "desarrollador web") {
+    if (
+      rol === "programador" ||
+      rol === "ing multimedia" ||
+      rol === "analista de datos" ||
+      rol === "desarrollador frontend"
+    ) {
       style = "web-developer";
-    } else if (rol === "desarrollador fullstack") {
+    } else if (
+      rol === "diseñador gráfico" ||
+      rol === "diseñador ui" ||
+      rol === "animadores 2d" ||
+      rol === "desarrollador fullstack"
+    ) {
       style = "fullstack-developer";
-    } else if (rol === "ui designer") {
+    } else if (
+      rol === "animador 3d" ||
+      rol === "modelador 3d" ||
+      rol === "desarrollador web"
+    ) {
       style = "ui-designer";
+    } else if (
+      rol === "gestor de software" ||
+      rol === "diseñador de producto" ||
+      rol === "diseñador de fotografía"
+    ) {
+      style = "other-job-1";
+    } else if (
+      rol === "gestor de hardware" ||
+      rol === "desarrollador backend" ||
+      rol === "ilustrador"
+    ) {
+      style = "backend-developer";
+    } else if (
+      rol === "productor audiovisual" ||
+      rol === "gestor de proyectos" ||
+      rol === "desarrollador móvil"
+    ) {
+      style = "other-job-2";
+    } else {
+      style = "other-job-3";
     }
     return style;
   };

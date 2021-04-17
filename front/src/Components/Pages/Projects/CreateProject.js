@@ -181,15 +181,8 @@ class CreateProject extends Component {
   handleInput = (name, e) => {
     if (name === "projectIcon" || name === "projectPicture") {
       const reader = new FileReader();
-      try {
-        reader.onload = () => {
-          if (reader.readyState === 2) {
-            this.setState({ [name]: reader.result });
-          }
-        };
-        reader.readAsDataURL(e.target.files[0]);
-      } catch (error) {
-        console.log(error);
+      if (e.target.files[0] !== undefined && e.target.files[0] !== null) {
+        this.setState({ [name]: e.target.files[0] });
       }
     } else if (name === "smmv" || name === "cem") {
       const { projectPractices } = this.state;
@@ -297,7 +290,7 @@ class CreateProject extends Component {
       this.setState({ success: true });
       setTimeout(() => {
         this.setState({ confirmationModal: false });
-        //    this.props.history.push("/Dashboard/Desktop");
+        this.props.history.push("/Dashboard/Desktop");
       }, 1200);
     } else {
       this.setState({ confirmationModal: false });
@@ -374,7 +367,7 @@ class CreateProject extends Component {
                     src={
                       this.state.projectIcon === null
                         ? ProjectIcon
-                        : this.state.projectIcon
+                        : URL.createObjectURL(this.state.projectIcon)
                     }
                     alt={"icon"}
                     className="rounded-circle"
@@ -403,7 +396,7 @@ class CreateProject extends Component {
                     src={
                       this.state.projectPicture === null
                         ? ProjectPicture
-                        : this.state.projectPicture
+                        : URL.createObjectURL(this.state.projectPicture)
                     }
                     className="o-picture-project"
                     alt="project"
