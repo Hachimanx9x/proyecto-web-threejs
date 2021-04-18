@@ -349,8 +349,9 @@ rutas.post("/create/proyecto", proToken, (req, res) => {
                     if (req.files != null && req.files != undefined) {
                       const { banner, icon } = req.files;
                       if (
-                        banner != null ||
-                        (banner != undefined && icon == null) ||
+                        banner != null &&
+                        banner != undefined &&
+                        icon == null &&
                         icon == undefined
                       ) {
                         banner.mv(__dirname + "/tmp/" + banner.name, (err) => {
@@ -391,8 +392,9 @@ rutas.post("/create/proyecto", proToken, (req, res) => {
                           }
                         });
                       } else if (
-                        banner == null ||
-                        (banner == undefined && icon != null) ||
+                        banner == null &&
+                        banner == undefined &&
+                        icon != null &&
                         icon != undefined
                       ) {
                         icon.mv(__dirname + "/tmp/" + icon.name, (err) => {
@@ -430,8 +432,9 @@ rutas.post("/create/proyecto", proToken, (req, res) => {
                           }
                         });
                       } else if (
-                        banner != null ||
-                        (banner != undefined && icon != null) ||
+                        banner != null &&
+                        banner != undefined &&
+                        icon != null &&
                         icon != undefined
                       ) {
                         banner.mv(__dirname + "/tmp/" + banner.name, (err) => {
