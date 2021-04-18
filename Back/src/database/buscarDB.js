@@ -507,31 +507,41 @@ funcionesDB.obteneractientreproyectos = (array) => {
       funcionesDB
         .buscaractividadesproyecto(1, array[i].id)
         .then((contenido) => {
-          console.log("buscaractividadesproyecto");
           /// actividad y entregable
           let arraydef = [];
           for (let j1 = 0; j1 < contenido.actividades.length; j1++) {
-            if (contenido.actividades[j1].contenido !== null) {
+            if (
+              contenido.actividades[j1].namefile !== null &&
+              contenido.actividades[j1].namefile !== "null"
+            ) {
+              console.log(
+                chalk.red(
+                  `Actividad ${contenido.actividades[j1].nombre} con el contenido: `
+                ) + chalk.blue(`${contenido.actividades[j1].namefile}`)
+              );
               arraydef.push({
                 userName: contenido.actividades[j1].nombre,
                 projectName: array[i].title,
                 activity: contenido.actividades[j1].titulo,
                 date: contenido.actividades[j1].fechaentrega,
-                fileName: contenido.actividades[j1].contenido,
-                fileUrl: `${env.host}/proyecto/contenido/proyecto${array[i].id}/${contenido.actividades[j1].contenido}`,
+                fileName: contenido.actividades[j1].namefile,
+                fileUrl: `${env.host}/proyecto/contenido/proyecto${array[i].id}/${contenido.actividades[j1].namefile}`,
               });
             }
           }
           //`${env.host}/proyecto/contenido/proyecto${array[a].proid}/${array[a].contenidonombrearchivo}`
           for (let j2 = 0; j2 < contenido.entregables.length; j2++) {
-            if (contenido.entregables[j2].contenido !== null) {
+            if (
+              contenido.entregables[j2].namefile !== null &&
+              contenido.entregables[j2].namefile !== "null"
+            ) {
               arraydef.push({
                 userName: "general",
                 projectName: array[i].title,
                 activity: contenido.entregables[j2].nombre,
                 date: contenido.entregables[j2].fechaentrega,
-                fileName: contenido.entregables[j2].contenido,
-                fileUrl: `${env.host}/proyecto/contenido/proyecto${array[i].id}/${contenido.entregables[j2].contenido}`,
+                fileName: contenido.entregables[j2].namefile,
+                fileUrl: `${env.host}/proyecto/contenido/proyecto${array[i].id}/${contenido.entregables[j2].namefile}`,
               });
             }
           }
