@@ -414,7 +414,10 @@ rutas.post("/create/proyecto", proToken, (req, res) => {
                               )
                               .then((resulicon) => {
                                 actualizarDB
-                                  .updateproyecticon({ icono, id })
+                                  .updateproyecticon({
+                                    icono: icon.name,
+                                    id: result.proyectoid,
+                                  })
                                   .then((resultdf) => {
                                     console.log(
                                       chalk.bgRed("__") +

@@ -1798,11 +1798,14 @@ function rearmarProyectosescri(array) {
       idproyecto = array[i].id;
       let icon = null,
         image = null;
-      if (array[i].proyectoicon !== "null") {
-        icon = array[i].proyectoicon;
+      if (array[i].proyectoicon !== "null" && array[i].proyectoicon !== null) {
+        icon = `${env.host}/proyecto/contenido/proyecto${array[i].id}/${array[i].proyectoicon}`;
       }
-      if (array[i].proyectobanner !== "null") {
-        image = array[i].proyectobanner;
+      if (
+        array[i].proyectobanner !== "null" &&
+        array[i].proyectobanner !== null
+      ) {
+        image = `${env.host}/proyecto/contenido/proyecto${array[i].id}/${array[i].proyectobanner}`;
       }
       proyectos.push({
         id: array[i].id,
