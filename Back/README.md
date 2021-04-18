@@ -743,6 +743,26 @@ este pide un objeto con la siguiente estructura
  { "banner":"aqui va el archivo" , "icon" :"aqui va el archivo"}
 ```
 
+Roles permitidos para la creación de un proyecto segun las dos practicas
+
+```json
+{
+  "CEM": [
+    "Arquitecto Experiencia Multimedia",
+    "Arquitecto de producción de contenidos",
+    "Arquitecto de información",
+    "Arquitecto de pruebas"
+  ],
+  "SMMV": [
+    "Arquitecto Experiencia Multimedia",
+    "Arquitecto de Hardware/Software",
+    "Arquitecto de información",
+    "Diseñador Audiovisual",
+    "Diseñador de Concepto y Storyboard"
+  ]
+}
+```
+
 ```sh
 /crear/reunion
 ```

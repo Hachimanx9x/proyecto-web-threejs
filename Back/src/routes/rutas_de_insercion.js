@@ -295,14 +295,15 @@ rutas.post("/create/proyecto", proToken, (req, res) => {
         if (typeof integrantes === "string") {
           integrantes = JSON.parse(`[${integrantes}]`);
         }
-        console.log({ nombre, descripcion, practica, integrantes });
-        console.log(chalk.bgBlue("___________________"));
-        console.log(chalk.bgBlue("___________________"));
-        console.log(chalk.bgBlue(req.files));
         integrantes.push({
           user: data.rows[0].id,
           rol: "Arquitecto Experiencia Multimedia",
         });
+        console.log({ nombre, descripcion, practica, integrantes });
+        console.log(chalk.bgBlue("___________________"));
+        console.log(chalk.bgBlue("___________________"));
+        console.log(chalk.bgBlue(req.files));
+
         let proyecto = {
           nombre: nombre,
           descripcion: descripcion,
