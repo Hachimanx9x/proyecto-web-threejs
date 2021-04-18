@@ -2185,13 +2185,25 @@ function obtenerproyectos(array) {
   for (var i = 0; i < array.length; i++) {
     if (idproyecto != array[i].id) {
       idproyecto = array[i].id;
+
+      let ptemf = null,
+        ptemf2 = null;
+      if (array[i].proyectoicon !== null && array[i].proyectoicon !== null) {
+        ptemf = `${env.host}/proyecto/contenido/proyecto${array[i].id}/${array[i].proyectoicon}`;
+      }
+      if (
+        array[i].proyectobanner !== null &&
+        array[i].proyectobanner !== null
+      ) {
+        ptemf2 = `${env.host}//proyecto/contenido/proyecto${array[i].id}/${array[i].proyectobanner}`;
+      }
       arraydef.push({
         idproyecto,
         pronombre: array[i].proyectonombre,
         prodescripcion: array[i].proyectodescripcion,
         estado: array[i].proyectoestado,
-        icono: `${env.host}/proyecto/contenido/proyecto${array[i].id}/${array[i].proyectoicon}`,
-        banner: `${env.host}//proyecto/contenido/proyecto${array[i].id}/${array[i].proyectobanner}`,
+        icono: ptemf,
+        banner: ptemf2,
       });
     }
   }
