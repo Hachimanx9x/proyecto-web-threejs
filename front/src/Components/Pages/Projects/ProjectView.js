@@ -282,7 +282,6 @@ class ProjectView extends Component {
                 value={this.state.projectName}
                 outline
                 required
-                disabled
               />
 
               <MDBInput
@@ -290,7 +289,6 @@ class ProjectView extends Component {
                 value={this.state.projectDescription}
                 label="Descripción del proyecto"
                 className="rounded pt-3 pt-sm-2"
-                disabled
                 outline
               />
             </div>

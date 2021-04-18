@@ -180,7 +180,6 @@ class CreateProject extends Component {
   };
   handleInput = (name, e) => {
     if (name === "projectIcon" || name === "projectPicture") {
-      const reader = new FileReader();
       if (e.target.files[0] !== undefined && e.target.files[0] !== null) {
         this.setState({ [name]: e.target.files[0] });
       }
@@ -253,14 +252,7 @@ class CreateProject extends Component {
     if (projectPractices.cem) {
       practices.push("Sistema Multimedia mínimo viable");
     }
-    const blob =
-      projectIcon !== null
-        ? new Blob([projectIcon], { type: "image/png" })
-        : null;
-    const blob2 =
-      projectPicture !== null
-        ? new Blob([projectPicture], { type: "image/png" })
-        : null;
+
     if (!errors.name && !errors.members && !errors.practices) {
       try {
         const datform = new FormData();
@@ -268,8 +260,8 @@ class CreateProject extends Component {
         datform.append("descripcion", projectDescription);
         datform.append("practica", [...practices]);
         datform.append("integrantes", [...projectmembers]);
-        datform.append("banner", blob, "banner");
-        datform.append("icon", blob2, "icon");
+        datform.append("banner", projectPicture);
+        datform.append("icon", projectIcon);
         const token = localStorage.getItem("login");
         const obj = JSON.parse(token);
         const tokensito = obj.token;
@@ -290,7 +282,7 @@ class CreateProject extends Component {
       this.setState({ success: true });
       setTimeout(() => {
         this.setState({ confirmationModal: false });
-        this.props.history.push("/Dashboard/Desktop");
+        // this.props.history.push("/Dashboard/Desktop");
       }, 1200);
     } else {
       this.setState({ confirmationModal: false });
