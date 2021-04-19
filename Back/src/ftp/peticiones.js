@@ -2,7 +2,7 @@ const minio = require("../serverMinio");
 var fs = require("fs");
 const path = require("path");
 const stream = require("stream");
-
+const chalk = require("chalk");
 const db = require("../database/buscarDB");
 const peticiones = {};
 
