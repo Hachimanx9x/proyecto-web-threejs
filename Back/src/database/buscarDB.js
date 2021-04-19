@@ -507,6 +507,7 @@ funcionesDB.obteneractientreproyectos = (array) => {
       funcionesDB
         .buscaractividadesproyecto(1, array[i].id)
         .then((contenido) => {
+          console.log(contenido);
           /// actividad y entregable
           let arraydef = [];
           for (let j1 = 0; j1 < contenido.actividades.length; j1++) {
@@ -2252,9 +2253,9 @@ function organizarcalendario(array) {
     let fecha = new Date();
     let temfecha = array[a].reunionfecha.split("-");
     let strfecha = `${temfecha[0]}/${temfecha[1]}/${temfecha[2]} ${array[a].reunionhora}`;
-    const date1 = new Date(strfecha);
+    let date1 = new Date(strfecha);
     let start = `${date1.getDay()}/${date1.getDate()}/${date1.getFullYear()} ${date1.getHours()}:${date1.getMinutes()}:00`;
-    data1.setHours(date1.getHours() + array[a].reuniondurancion);
+    date1.setHours(date1.getHours() + array[a].reuniondurancion);
     let end = `${date1.getDay()}/${date1.getDate()}/${date1.getFullYear()} ${date1.getHours()}:${date1.getMinutes()}:00`;
     arraydef.push({
       proyecto: array[a].proyectoid,

@@ -72,6 +72,8 @@ Las rutas con contenido automatico
 /insert/auto/roles
 /insert/auto/herramientasmetodologia
 /insert/auto/tecnicas
+/auto/idiomas
+/auto/herramienta
 ```
 
 para la ejecucion del servidor usa el comando en la capeta back
@@ -505,6 +507,8 @@ esta ruta trae las reuniones de un proyecto en concreto
     "fecha": "02-02-2021",
     "hora": "15:00",
     "duracion": 2,
+    "start": "2/2/2021 15:0:00",
+    "end": "2/2/2021 17:0:00",
     "descripcion": "test",
     "vigente": 1
   }

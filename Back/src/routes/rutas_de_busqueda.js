@@ -129,20 +129,32 @@ rutas.get("/escritorio", proToken, (req, res) => {
               buscarDB
                 .obtenerEscritorioProyectos(data)
                 .then((pro) => {
-                  buscarDB
-                    .obteneractientreproyectos(pro.proyectos)
-                    .then((def) => {
-                      res.json({
-                        proyectos: def,
-                        datos: {
-                          nombre: usua.nombre,
-                          foto: `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`,
-                          herramientas: talento.data[0].herramientas,
-                          palabras: talento.data[0].palabras,
-                        },
-                      });
-                    })
-                    .catch((dererro) => res.json(dererro));
+                  if (pro.proyectos.length === 0) {
+                    res.json({
+                      proyectos: [],
+                      datos: {
+                        nombre: usua.nombre,
+                        foto: `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`,
+                        herramientas: talento.data[0].herramientas,
+                        palabras: talento.data[0].palabras,
+                      },
+                    });
+                  } else {
+                    buscarDB
+                      .obteneractientreproyectos(pro.proyectos)
+                      .then((def) => {
+                        res.json({
+                          proyectos: def,
+                          datos: {
+                            nombre: usua.nombre,
+                            foto: `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`,
+                            herramientas: talento.data[0].herramientas,
+                            palabras: talento.data[0].palabras,
+                          },
+                        });
+                      })
+                      .catch((dererro) => res.json(dererro));
+                  }
                 })
                 .catch((err2) => res.json(err2));
             })

@@ -411,6 +411,7 @@ rutas.delete("/delete/metodologia", (req, res) => {
 
 rutas.delete("/", (req, res) => {
   const { codigo } = req.body;
+  console.log(req.body);
   if (typeof codigo === "number" && codigo === 666) {
     deleteDB
       .deletealllenguaje()

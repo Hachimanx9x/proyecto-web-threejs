@@ -40,6 +40,7 @@ function sinfile(r, ps, res) {
     }
   );
   ps.pipe(res); //se renderiza el archivo
+  console.log(chalk.bgBlue("___") + chalk.blue(`Archivo enviado `));
   try {
     fs.unlinkSync(path.join(__dirname, `../routes/tmp/${namefile}`)); //se borra el archivo temporal
     // console.log('borrado')
