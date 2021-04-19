@@ -14,6 +14,7 @@ peticiones.getFilesingle = async (bucket, namefile, res) => {
     function (e) {
       if (e) {
         console.log(chalk.bgRed("___") + chalk.red(`bucket o archivo`));
+        console.log(e);
         return res.json(e);
       }
       //console.log('done')
