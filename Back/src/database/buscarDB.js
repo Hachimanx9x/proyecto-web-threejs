@@ -2511,11 +2511,15 @@ function ordeninfoproyect(rows) {
       id: rows[a].entreid,
       estado: rows[a].entregaestado,
     });
+    let tealfname = rows[a].alfanombre;
+    if (rows[a].alfanombre === "Valor del sistema multimedia") {
+      tealfname = "Valor del SM";
+    }
     objdef.practicas.push({
       nombre: rows[a].practicanombre,
       descripcion: rows[a].pradescrip,
       alfa: {
-        nombre: rows[a].alfanombre,
+        nombre: tealfname,
         estado: rows[a].alfaestado,
       },
     });
@@ -2596,6 +2600,7 @@ function ordeninfoproyect(rows) {
 
   return objdef;
 }
+function cambionombrealfa(obj) {}
 function quitarduplicados(array) {
   return Array.from(new Set(array.map(JSON.stringify))).map(JSON.parse);
 }

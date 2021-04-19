@@ -13,6 +13,7 @@ peticiones.getFilesingle = async (bucket, namefile, res) => {
     path.join(__dirname, `../routes/tmp/${namefile}`),
     function (e) {
       if (e) {
+        console.log(chalk.bgRed("___") + chalk.red(`bucket o archivo`));
         return res.json(e);
       }
       //console.log('done')
