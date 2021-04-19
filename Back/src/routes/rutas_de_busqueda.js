@@ -352,7 +352,7 @@ rutas.get("/calendario", proToken, (req, res) => {
   });
 });
 
-rutas.get("/calendarios/:id", proToken, (req, res) => {
+rutas.get("/calendario/:id", proToken, (req, res) => {
   jwt.verify(req.token, LLAVE, async (err, data) => {
     const { id } = req.params;
     await buscarDB
