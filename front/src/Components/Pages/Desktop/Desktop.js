@@ -13,139 +13,8 @@ defaults.global.legend.display = false;
 export default function Desktop() {
   const [active, setActive] = useState();
   const [keyWord, setKeyWord] = useState("");
-
-  const data = {
-    labels: ["Completado", "Faltante"],
-    datasets: [
-      {
-        data: [60, 40],
-        backgroundColor: ["#4fa77b", "#ddd8d8"],
-        hoverBackgroundColor: ["#3c8862", "rgb(238, 229, 229)"],
-      },
-    ],
-  };
-  const [projects, setProjects] = useState([
-    {
-      id: 1,
-      title: "Videojuegos 3d",
-      description:
-        "Este proyecto es una guía firme de como unir un grupo de trabajo para la creación de un sistema multimedia.",
-      image: ProjectPicture,
-      icon: ProjectIcon,
-      updates: [
-        {
-          userName: "Juan Carlos Hurtado",
-          projectName: "Desarrollo de videojuegos RV",
-          activity: "A1",
-          date: "13/01/2020",
-          hour: "11:30",
-          fileName: "foto.png",
-          fileUrl:
-            "https://i.pinimg.com/originals/47/81/18/4781189a78cb263f7ffc16bab6b6b192.png",
-        },
-        {
-          userName: "Juan Carlos Hurtado",
-          projectName: "Desarrollo de videojuegos RV1",
-          activity: "A1",
-          date: "13/01/2020",
-          hour: "11:30",
-          fileName: "foto.png",
-          fileUrl:
-            "https://i.pinimg.com/originals/47/81/18/4781189a78cb263f7ffc16bab6b6b192.png",
-        },
-        {
-          userName: "Juan Carlos Hurtado",
-          projectName: "Desarrollo de videojuegos RV2",
-          activity: "A1",
-          date: "13/01/2020",
-          hour: "11:30",
-          fileName: "foto.png",
-          fileUrl:
-            "https://i.pinimg.com/originals/47/81/18/4781189a78cb263f7ffc16bab6b6b192.png",
-        },
-      ],
-    },
-    {
-      id: 2,
-      title: "Videojuegos ameno",
-      description:
-        "Este proyecto es una guía firme de como unir un grupo de trabajo para la creación de un sistema multimedia.",
-      image: ProjectPicture,
-      icon: ProjectIcon,
-      updates: [
-        {
-          userName: "Juan Carlos Hurtado",
-          projectName: "Desarrollo de videojuegos RV",
-          activity: "A1",
-          date: "13/01/2020",
-          hour: "11:30",
-          fileName: "foto.png",
-          fileUrl:
-            "https://i.pinimg.com/originals/47/81/18/4781189a78cb263f7ffc16bab6b6b192.png",
-        },
-        {
-          userName: "Juan Carlos Hurtado",
-          projectName: "Desarrollo de videojuegos RV1",
-          activity: "A1",
-          date: "13/01/2020",
-          hour: "11:30",
-          fileName: "foto.png",
-          fileUrl:
-            "https://i.pinimg.com/originals/47/81/18/4781189a78cb263f7ffc16bab6b6b192.png",
-        },
-        {
-          userName: "Juan Carlos Hurtado",
-          projectName: "Desarrollo de videojuegos RV2",
-          activity: "A1",
-          date: "13/01/2020",
-          hour: "11:30",
-          fileName: "foto.png",
-          fileUrl:
-            "https://i.pinimg.com/originals/47/81/18/4781189a78cb263f7ffc16bab6b6b192.png",
-        },
-      ],
-    },
-    {
-      id: 3,
-      title: "Videojuegos latirre",
-      description:
-        "Este proyecto es una guía firme de como unir un grupo de trabajo para la creación de un sistema multimedia.",
-      image: ProjectPicture,
-      icon: ProjectIcon,
-      updates: [
-        {
-          userName: "Juan Carlos Hurtado",
-          projectName: "Desarrollo de videojuegos RV",
-          activity: "A1",
-          date: "13/01/2020",
-          hour: "11:30",
-          fileName: "foto.png",
-          fileUrl:
-            "https://i.pinimg.com/originals/47/81/18/4781189a78cb263f7ffc16bab6b6b192.png",
-        },
-        {
-          userName: "Juan Carlos Hurtado",
-          projectName: "Desarrollo de videojuegos RV1",
-          activity: "A1",
-          date: "13/01/2020",
-          hour: "11:30",
-          fileName: "foto.png",
-          fileUrl:
-            "https://i.pinimg.com/originals/47/81/18/4781189a78cb263f7ffc16bab6b6b192.png",
-        },
-        {
-          userName: "Juan Carlos Hurtado",
-          projectName: "Desarrollo de videojuegos RV2",
-          activity: "A1",
-          date: "13/01/2020",
-          hour: "11:30",
-          fileName: "foto.png",
-          fileUrl:
-            "https://i.pinimg.com/originals/47/81/18/4781189a78cb263f7ffc16bab6b6b192.png",
-        },
-      ],
-    },
-  ]);
+  const [fetched, setFetched] = useState(false);
+  const [projects, setProjects] = useState([]);
 
   useEffect(() => {
     function fetchData() {
@@ -158,53 +27,67 @@ export default function Desktop() {
           authorization: `llave ${temp}`,
         },
       };
+
       try {
         axios
           .all([axios.get(`http://localhost:3030/escritorio`, options)])
           .then((response) => {
-            console.log(response);
-            /*
-              {
-      id: 1,
-      title: "Videojuegos 3d",
-      description:
-        "Este proyecto es una guía firme de como unir un grupo de trabajo para la creación de un sistema multimedia.",
-      image: ProjectPicture,
-      icon: ProjectIcon,
-      updates: [
-        {
-          userName: "Juan Carlos Hurtado",
-          projectName: "Desarrollo de videojuegos RV",
-          activity: "A1",
-          date: "13/01/2020",
-          hour: "11:30",
-          fileName: "foto.png",
-          fileUrl:
-            "https://i.pinimg.com/originals/47/81/18/4781189a78cb263f7ffc16bab6b6b192.png",
-        },
-        {
-          userName: "Juan Carlos Hurtado",
-          projectName: "Desarrollo de videojuegos RV1",
-          activity: "A1",
-          date: "13/01/2020",
-          hour: "11:30",
-          fileName: "foto.png",
-          fileUrl:
-            "https://i.pinimg.com/originals/47/81/18/4781189a78cb263f7ffc16bab6b6b192.png",
-        },
-        {
-          userName: "Juan Carlos Hurtado",
-          projectName: "Desarrollo de videojuegos RV2",
-          activity: "A1",
-          date: "13/01/2020",
-          hour: "11:30",
-          fileName: "foto.png",
-          fileUrl:
-            "https://i.pinimg.com/originals/47/81/18/4781189a78cb263f7ffc16bab6b6b192.png",
-        },
-      ],
-    },*/
-            console.log("uwu");
+            console.log(response[0].data.proyectos);
+            const temp = response[0].data.proyectos;
+            const projects = [];
+
+            for (const i of temp) {
+              const practices = [];
+              for (const j of i.practicas) {
+                if (j.practica === "Sistema Multimedia mínimo viable") {
+                  practices.push({
+                    name: j.practica,
+                    data: {
+                      labels: ["Completado", "Faltante"],
+                      datasets: [
+                        {
+                          data: [j.porcentaje, 100 - j.porcentaje],
+                          backgroundColor: ["#4fa77b", "#ddd8d8"],
+                          hoverBackgroundColor: [
+                            "#3c8862",
+                            "rgb(238, 229, 229)",
+                          ],
+                        },
+                      ],
+                    },
+                  });
+                } else {
+                  practices.push({
+                    name: j.practica,
+                    data: {
+                      labels: ["Completado", "Faltante"],
+                      datasets: [
+                        {
+                          data: [j.porcentaje, 100 - j.porcentaje],
+                          backgroundColor: ["#D0A114", "#ddd8d8"],
+                          hoverBackgroundColor: [
+                            "#957411",
+                            "rgb(238, 229, 229)",
+                          ],
+                        },
+                      ],
+                    },
+                  });
+                }
+              }
+              projects.push({
+                id: i.id,
+                title: i.title,
+                icon: i.icon !== null ? i.icon : ProjectIcon,
+                image: i.image !== null ? i.image : ProjectPicture,
+                description: i.descripcion,
+                practices: [...practices],
+                updates: [...i.updates],
+              });
+            }
+            setProjects([...projects]);
+            setShow([...projects]);
+            setFetched(true);
           });
       } catch (error) {
         console.log(error);
@@ -229,88 +112,132 @@ export default function Desktop() {
       setShow([...projects]);
     }
   }
-  return (
-    <div className="container-fluid mb-5 mb-sm-0 pb-5 pb-sm-0 m-0 p-0">
-      <h4 className="mb-3 pl-4">Proyectos</h4>
+  if (!fetched) {
+    return <div>....Cargando</div>;
+  } else {
+    return (
+      <div className="container-fluid mb-5 mb-sm-0 pb-5 pb-sm-0 m-0 p-0">
+        <h4 className="mb-3 pl-4">Proyectos</h4>
 
-      <div className="o-blue-container o-updates-container">
-        <div className="mt-3 mb-0 d-flex justify-content-end">
-          <a
-            className="btn btn-primary m-0 border-0 text-capitalize  text-white z-depth-0"
-            type="button"
-            href="/Dashboard/Projects/CreateProject"
-          >
-            Crear proyecto
-          </a>
-        </div>
-        <section className="d-flex justify-content-center input-group mt-2 pt-1">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Buscar proyecto"
-            aria-label="Buscar proyecto"
-            onChange={(e) => setKeyWord(e.target.value)}
-          />
-          <div className="input-group-append">
-            <button
-              className="btn btn-primary text-white z-depth-0"
+        <div className="o-blue-container o-updates-container">
+          <div className="mt-3 mb-0 d-flex justify-content-end">
+            <a
+              className="btn btn-primary m-0 border-0 text-capitalize  text-white z-depth-0"
               type="button"
-              onClick={search}
+              href="/Dashboard/Projects/CreateProject"
             >
-              <FontAwesomeIcon icon={faSearch} />
-            </button>
+              Crear proyecto
+            </a>
           </div>
-        </section>
-        {show.lenght !== 0 ? (
-          show.map((project, i) => (
-            <Accordion2
-              title={project.title}
-              active={active}
-              icon={project.icon}
-              projectId={project.id}
-              setActive={setActive}
-              number={project.updates.length}
-              key={i}
-            >
-              <div className="o-updates-section">
-                {project.updates.map((update, i) => (
-                  <CardDesktop update={update} key={i} />
-                ))}
-              </div>
+          <section className="d-flex justify-content-center input-group mt-2 pt-1">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Buscar proyecto"
+              aria-label="Buscar proyecto"
+              onChange={(e) => setKeyWord(e.target.value)}
+            />
+            <div className="input-group-append">
+              <button
+                className="btn btn-primary text-white z-depth-0"
+                type="button"
+                onClick={search}
+              >
+                <FontAwesomeIcon icon={faSearch} />
+              </button>
+            </div>
+          </section>
+          {show.length !== 0 ? (
+            show.map((project, i) => (
+              <Accordion2
+                title={project.title}
+                active={active}
+                icon={project.icon}
+                projectId={project.id}
+                setActive={setActive}
+                number={project.updates.length}
+                key={i}
+              >
+                <div
+                  className={
+                    "o-updates-section" +
+                    (project.updates.length === 0 ? " overflow-hidden" : "")
+                  }
+                >
+                  {project.updates.length !== 0 ? (
+                    project.updates.map((update, i) => (
+                      <CardDesktop update={update} key={i} />
+                    ))
+                  ) : (
+                    <div className="d-flex h-100 justify-content-center align-items-center">
+                      <p className="text-secondary">
+                        No hay actualizaciones para mostrar
+                      </p>
+                    </div>
+                  )}
+                </div>
 
-              <div className="o-collapse-column text-center">
-                <div className="h-100">
-                  <div className="o-grahpcart-project">
-                    <p className="position-absolute">
-                      Prácticas completadas en un:
-                    </p>
-                    <Doughnut data={data} />
-                    <p className="o-text-chart">60%</p>
+                <div className="o-collapse-column text-center">
+                  <div className="o-accord-scroll">
+                    {project.practices.map((practice, i) => (
+                      <div key={i}>
+                        <small
+                          className="text-center position-absolute"
+                          style={{
+                            fontSize: "12px",
+                            left: "50%",
+                            transform: "translateX(-50%)",
+                          }}
+                        >
+                          Actividades del{" "}
+                          {practice.name === "Sistema Multimedia mínimo viable"
+                            ? "SMMV"
+                            : "CEM"}{" "}
+                          completadas en un:
+                        </small>
+                        <div className="o-grahpcart-project mt-4">
+                          <Doughnut data={practice.data} />
+                          <p
+                            className="o-text-chart"
+                            style={
+                              practice.name ===
+                              "Sistema Multimedia mínimo viable"
+                                ? { color: "#4fa77b" }
+                                : { color: "#D0A114" }
+                            }
+                          >
+                            {practice.data.datasets[0].data[0]}%
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="h-auto ">
+                    <img
+                      src={project.image}
+                      alt="Project"
+                      className="o-project-update-img"
+                    />
+                    <small>{project.description}</small>
+                    <a
+                      className="mt-auto mb-0 m-auto btn btn-primary m-0 border-0 text-capitalize  text-white z-depth-0 text-capitalize"
+                      href={`/Dashboard/Projects/${project.id}`}
+                    >
+                      Ingresar
+                    </a>
                   </div>
                 </div>
-                <div className="h-100">
-                  <img
-                    src={project.image}
-                    alt="Project"
-                    className="o-project-update-img"
-                  />
-                  <small>{project.description}</small>
-                  <a
-                    className="mt-auto mb-0 m-auto btn btn-primary m-0 border-0 text-capitalize  text-white z-depth-0 text-capitalize"
-                    href={`/Dashboard/Projects/${project.id}`}
-                  >
-                    Ingresar
-                  </a>
-                </div>
-              </div>
-            </Accordion2>
-          ))
-        ) : (
-          <p className="m-auto">No tienes ningún proyecto</p>
-        )}
+              </Accordion2>
+            ))
+          ) : (
+            <div className="d-flex h-75">
+              <p className="m-auto text-secondary">No tienes ningún proyecto</p>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 /*
 class Desktop extends Component {

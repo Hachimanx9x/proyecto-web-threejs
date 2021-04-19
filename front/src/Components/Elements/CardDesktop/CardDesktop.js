@@ -38,12 +38,14 @@ const CardDesktop = ({ update }) => {
       </div>
       <div className="row justify-content-between">
         <div
-          className={"col-6" + (windowWidth < 1070 ? "col-sm-6" : "col-sm-3")}
+          className={"col-12" + (windowWidth < 1070 ? "col-sm-6" : "col-sm-3")}
         >
           <p className="grey-text">
-            <FontAwesomeIcon icon={faCalendarAlt} /> {update.date}
+            <FontAwesomeIcon icon={faCalendarAlt} className="text-danger" />{" "}
+            {update.date}
           </p>
         </div>
+        {/*
         <div
           className={"col-6" + (windowWidth < 1070 ? "col-sm-6" : "col-sm-3")}
         >
@@ -56,6 +58,7 @@ const CardDesktop = ({ update }) => {
             {update.hour}
           </p>
         </div>
+        */}
         <div className="col-xs-4 col-sm-6 rounded-pill grey p-0 lighten-3 d-flex o-download-section">
           <div className="col-xs-6 col-sm-6">
             <p className="grey-text pt-2 pl-3 mb-0">{update.fileName}</p>

@@ -194,29 +194,29 @@ class CreateProject extends Component {
       if (this.state.projectPractices.cem && this.state.projectPractices.smmv) {
         this.setState({
           rols: [
-            { rol: "Arquitecto de Información" },
-            { rol: "Arquitecto de Pruebas" },
-            { rol: "Arquitecto de Producción de contenidos" },
+            { rol: "Arquitecto de información" },
+            { rol: "Arquitecto de pruebas" },
+            { rol: "Arquitecto de producción de contenidos" },
             { rol: "Diseñador Audiovisual" },
-            { rol: "Diseñador de concepto y Storyboard" },
-            { rol: "Arquitecto Hw/Sw" },
+            { rol: "Diseñador de Concepto y Storyboard" },
+            { rol: "Arquitecto de Hardware/Software" },
           ],
         });
       } else if (this.state.projectPractices.cem) {
         this.setState({
           rols: [
-            { rol: "Arquitecto de Información" },
-            { rol: "Arquitecto de Pruebas" },
-            { rol: "Arquitecto de Producción de contenidos" },
+            { rol: "Arquitecto de información" },
+            { rol: "Arquitecto de pruebas" },
+            { rol: "Arquitecto de producción de contenidos" },
           ],
         });
       } else if (this.state.projectPractices.smmv) {
         this.setState({
           rols: [
-            { rol: "Arquitecto de Información" },
+            { rol: "Arquitecto de información" },
             { rol: "Diseñador Audiovisual" },
-            { rol: "Diseñador de concepto y Storyboard" },
-            { rol: "Arquitecto Hw/Sw" },
+            { rol: "Diseñador de Concepto y Storyboard" },
+            { rol: "Arquitecto de Hardware/Software" },
           ],
         });
       } else {
@@ -282,7 +282,7 @@ class CreateProject extends Component {
       this.setState({ success: true });
       setTimeout(() => {
         this.setState({ confirmationModal: false });
-        // this.props.history.push("/Dashboard/Desktop");
+        this.props.history.push("/Dashboard/Desktop");
       }, 1200);
     } else {
       this.setState({ confirmationModal: false });

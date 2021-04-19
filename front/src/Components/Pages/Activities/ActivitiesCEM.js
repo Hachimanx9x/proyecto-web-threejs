@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import CardActivities from "../../Elements/CardActivities/CardActivities";
 import CardDeliverables from "../../Elements/CardDeliverables/CardDeliverables";
 import { Doughnut } from "react-chartjs-2";
+import Axios from "axios";
 import arrow from "../../../Logos/arrow.svg";
 import { CEM } from "../Documentation/CEM";
 import "./Activities.css";
@@ -71,7 +72,26 @@ export default function ActivitiesCEM(props) {
   useEffect(() => {
     function searchTecnique() {
       const activities = CEM.actividades;
-
+      const proyectId = props.match.params.id;
+      const token = localStorage.getItem("login");
+      const obj = JSON.parse(token);
+      let temp = obj.token;
+      const options = {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `llave ${temp}`,
+        },
+      };
+      try {
+        Axios.get(
+          `http://localhost:3030/proyecto/actividades/${proyectId}`,
+          options
+        ).then((response) => {
+          console.log(response);
+        });
+      } catch (error) {
+        console.log(error);
+      }
       const array = [];
       for (let i = 0; i < activities.length; i++) {
         for (let j = 0; j < activities[i].herramientas.length; j++) {
@@ -113,10 +133,7 @@ export default function ActivitiesCEM(props) {
           </button>
         </div>
         <div className="row">
-          <div
-            className="col-xs-12 col-sm-8 bg-white rounded z-depth-1 p-0 p-sm-4 mb-2 mr-0 ml-0 mr-sm-4 ml-sm-4 o-activities-col"
-            style={{ minWidth: "24rem" }}
-          >
+          <div className="col-xs-12 bg-white rounded z-depth-1 p-0 p-sm-4 mb-2 mr-0 ml-0 mr-sm-4 ml-sm-4 o-activities-col">
             <p className="m-2">Actividades</p>
             {activities.map((activity, i) => (
               <CardActivities
