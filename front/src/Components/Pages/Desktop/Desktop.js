@@ -113,7 +113,7 @@ export default function Desktop() {
     }
   }
   if (!fetched) {
-    return <div>....Cargando</div>;
+    return <div>Cargando....</div>;
   } else {
     return (
       <div className="container-fluid mb-5 mb-sm-0 pb-5 pb-sm-0 m-0 p-0">

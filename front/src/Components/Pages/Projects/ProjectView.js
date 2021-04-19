@@ -17,97 +17,17 @@ class ProjectView extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      projectId: null,
       projectIcon: null,
       projectPicture: null,
-      projectName: "Creacion de un entorno 3d para el trabajo colaborativo",
-      projectDescription:
-        "Este es un proyecto que reune a un grupo de desarrolladores para la creación de un entrono virtual colaborativo que permitirá implementa una metodología ágil.",
-      projectPractices: {
-        smmv: false,
-        cem: false,
-      },
+      projectName: "",
+      projectDescription: "",
+      projectPractices: [],
       modal: false,
       titleConfirmarion: "",
       windowWidth: window.innerWidth,
-      members: [
-        {
-          id: 1,
-          name: "Saitama",
-          urlimage: User,
-          rols: [
-            "desarrollador web",
-            "desarrollador fullstack",
-            "ui designer",
-            "desarrollador web",
-            "desarrollador fullstack",
-            "ui designer",
-          ],
-          selectedRol: "Arquitecto de Pruebas",
-        },
-        {
-          id: 2,
-          name: "Tatsumi",
-          urlimage: User,
-          rols: ["desarrollador web"],
-          selectedRol: "Arquitecto Sw/Hw",
-        },
-        {
-          id: 3,
-          name: "Saber",
-          urlimage: User,
-
-          rols: ["desarrollador web", "desarrollador fullstack", "ui designer"],
-          selectedRol: "Diseñador de producto",
-        },
-        {
-          id: 4,
-          name: "Accel",
-          urlimage: User,
-          rols: ["desarrollador web", "desarrollador fullstack", "ui designer"],
-          selectedRol: "Arquitecto de Información",
-        },
-        {
-          id: 5,
-          name: "Hachiman",
-          urlimage: User,
-          rols: ["desarrollador web", "desarrollador fullstack", "ui designer"],
-          selectedRol: "Arquitecto de Experiencia Multimedia",
-        },
-      ],
-
-      contacts: [
-        {
-          id: 1,
-          name: "Saitama",
-          urlimage: User,
-          rols: ["desarrollador web", "desarrollador fullstack", "ui designer"],
-        },
-        {
-          id: 2,
-          name: "Tatsumi",
-          urlimage: User,
-          rols: ["desarrollador web", "desarrollador fullstack", "ui designer"],
-        },
-        {
-          id: 3,
-          name: "Saber",
-          urlimage: User,
-
-          rols: ["desarrollador web", "desarrollador fullstack", "ui designer"],
-        },
-        {
-          id: 4,
-          name: "Accel",
-          urlimage: User,
-          rols: ["desarrollador web", "desarrollador fullstack", "ui designer"],
-        },
-        {
-          id: 5,
-          name: "Hachiman",
-          urlimage: User,
-          rols: ["desarrollador web", "desarrollador fullstack", "ui designer"],
-        },
-      ],
+      members: [],
+      isLeader: false,
     };
   }
   handleResize = (e) => {
@@ -123,6 +43,7 @@ class ProjectView extends Component {
     const token = localStorage.getItem("login");
     const obj = JSON.parse(token);
     let temp = obj.token;
+    const userId = obj.data.id;
     const options = {
       headers: {
         "Content-Type": "application/json",
@@ -130,37 +51,81 @@ class ProjectView extends Component {
       },
     };
     try {
-      Axios.get(`http://localhost:3030/proyectos/${proyectId}`, options).then(
-        (response) => {
-          /**
-           *  const allcontacts = response.data.contactos;
-           const contacts = [];
- 
-           for (let i of allcontacts) {
-             const tools = [];
-             for (let j of i.herramientas) {
-               tools.push(j.icono);
-             }
-             contacts.push({
-               user: i.iduser,
-               name: i.nombre,
-               description:
-                 i.descripcion === "undefined" || i.descripcion === "null"
-                   ? "Ninguna"
-                   : i.descripcion,
-               rols: [...i.palabras],
-               skills: [...tools],
-               urlimage: i.foto === null ? User : i.foto,
-             });
-           }
-           this.setState({
-             contacts: [...contacts],
-             fetched: true,
-           });
-           */
-          console.log(response);
+      Axios.all([
+        Axios.get(`http://localhost:3030/proyectos/${proyectId}`, options),
+        Axios.get(`http://localhost:3030/calendario/${proyectId}`, options),
+      ]).then((response) => {
+        console.log(response);
+        const project = response[0].data.proyectos;
+        const allmembers = response[0].data.proyectos.integrantes;
+        const members = [];
+        const practices = [];
+        let isLeader = false;
+        for (let i of allmembers) {
+          members.push({
+            id: i.id,
+            name: i.nombre,
+            rols: [...i.palabras],
+            urlimage: i.foto === null ? User : i.foto,
+            selectedRol: i.rol,
+          });
         }
-      );
+        const item = members.find((iterador) => iterador.id === userId);
+        if (item.selectedRol === "Arquitecto Experiencia Multimedia") {
+          isLeader = true;
+        }
+        for (const j of project.practicas) {
+          if (j.practica === "Sistema Multimedia mínimo viable") {
+            practices.push({
+              name: j.nombre,
+              description: j.descripcion,
+              data: {
+                labels: ["Completado", "Faltante"],
+                datasets: [
+                  {
+                    data: [j.tasa, 100 - j.tasa],
+                    backgroundColor: ["#4fa77b", "#ddd8d8"],
+                    hoverBackgroundColor: ["#3c8862", "rgb(238, 229, 229)"],
+                  },
+                ],
+              },
+              alphas: [...j.alfas],
+            });
+          } else {
+            practices.push({
+              name: j.nombre,
+              description: j.descripcion,
+              data: {
+                labels: ["Completado", "Faltante"],
+                datasets: [
+                  {
+                    data: [j.tasa, 100 - j.tasa],
+                    backgroundColor: ["#D0A114", "#ddd8d8"],
+                    hoverBackgroundColor: ["#957411", "rgb(238, 229, 229)"],
+                  },
+                ],
+              },
+              alphas: [...j.alfas],
+            });
+          }
+        }
+        this.setState({
+          members: [...members],
+          fetched: true,
+          projectPicture: project.foto,
+          projectIcon: project.icono,
+          projectName: project.nombre,
+          projectDescription:
+            project.descripcion === null ||
+            project.descripcion === "" ||
+            project.descripcion === undefined
+              ? "Sin descripción."
+              : project.descripcion,
+          projectPractices: [...practices],
+          projectId: project.idproyecto,
+          isLeader: isLeader,
+        });
+      });
     } catch (error) {
       console.log(error);
     }
@@ -189,389 +154,454 @@ class ProjectView extends Component {
         },
       ],
     };
-    return (
-      <div className="row mb-3 mb-sm-0 pb-5 pb-sm-0 w-100">
-        <Rodal
-          width={300}
-          height={420}
-          animation={"fade"}
-          visible={this.state.modal}
-          onClose={() => this.setState({ modal: false })}
-        >
-          <p className="text-center mt-4" style={{ fontSize: "0.9rem" }}>
-            Confirmación de abandono de proyecto
-          </p>
-          <p className="mt-2 mb-4 text-justify" style={{ fontSize: "0.9rem" }}>
-            El abandonar un proyecto no se puede
-            <strong className="text-danger"> deshacer</strong>. Esto eliminará
-            permanentemente su participación en el proyecto
-            <strong className="text-danger"> {this.state.projectName}</strong>,
-            el abandonar el proyecto puede incurrir en problemas legales
-            definidos por el método de contratación al ingresar el proyecto.
-          </p>
-          <p style={{ fontSize: "0.9rem" }} className="mt-2">
-            Escriba "{this.state.projectName}" para confirmar.
-          </p>
-          <input
-            value={this.state.titleConfirmarion}
-            style={{ fontSize: "0.9rem" }}
-            className="text-danger w-100"
-            onChange={(e) => {
-              this.setState({ titleConfirmarion: e.target.value });
-            }}
-          />
-          <button
-            style={{ fontSize: "0.6rem" }}
-            className={
-              (this.state.titleConfirmarion !== this.state.projectName
-                ? "disabled"
-                : "") + " btn btn-danger btn-block border-0 text-white mt-2"
-            }
-            onClick={() => {
-              this.setState({ modal: false });
-              this.props.history.push("/Dashboard/Projects");
-            }}
+    if (this.state.fetched) {
+      return (
+        <div className="row mb-3 mb-sm-0 pb-5 pb-sm-0 w-100">
+          <Rodal
+            width={300}
+            height={420}
+            animation={"fade"}
+            visible={this.state.modal}
+            onClose={() => this.setState({ modal: false })}
           >
-            <small>
-              Lo entiendo y me hago cargo responsable de las consecuencias.
-              Abandonar el proyecto.
-            </small>
-          </button>
-        </Rodal>
-
-        <div className="o-project-creation-section">
-          <div className="d-flex justify-content-end">
-            <button
-              className="btn text-capitalize z-depth-0 text-white"
-              style={{ backgroundColor: "#D61E1E" }}
-              onClick={() => this.setState({ modal: true })}
+            <p className="text-center mt-4" style={{ fontSize: "0.9rem" }}>
+              Confirmación de abandono de proyecto
+            </p>
+            <p
+              className="mt-2 mb-4 text-justify"
+              style={{ fontSize: "0.9rem" }}
             >
-              Eliminar
+              El abandonar un proyecto no se puede
+              <strong className="text-danger"> deshacer</strong>. Esto eliminará
+              permanentemente su participación en el proyecto
+              <strong className="text-danger"> {this.state.projectName}</strong>
+              , el abandonar el proyecto puede incurrir en problemas legales
+              definidos por el método de contratación al ingresar el proyecto.
+            </p>
+            <p style={{ fontSize: "0.9rem" }} className="mt-2">
+              Escriba "{this.state.projectName}" para confirmar.
+            </p>
+            <input
+              value={this.state.titleConfirmarion}
+              style={{ fontSize: "0.9rem" }}
+              className="text-danger w-100"
+              onChange={(e) => {
+                this.setState({ titleConfirmarion: e.target.value });
+              }}
+            />
+            <button
+              style={{ fontSize: "0.6rem" }}
+              className={
+                (this.state.titleConfirmarion !== this.state.projectName
+                  ? "disabled"
+                  : "") + " btn btn-danger btn-block border-0 text-white mt-2"
+              }
+              onClick={() => {
+                this.setState({ modal: false });
+                this.props.history.push("/Dashboard/Projects");
+              }}
+            >
+              <small>
+                Lo entiendo y me hago cargo responsable de las consecuencias.
+                Abandonar el proyecto.
+              </small>
             </button>
-          </div>
-          <section className="row bg-white o-project-basic-info">
-            <div className="col-xs-12 col-sm-4">
-              <p className="d-block">Icono del proyecto</p>
-              <img
-                src={
-                  this.state.projectIcon === null
-                    ? ProjectIcon
-                    : this.state.projectIcon
-                }
-                alt={"icon"}
-                className="rounded-circle"
-                style={{ width: "3rem", height: "3rem" }}
-              />
-              <p className="d-block">Banner del proyecto</p>
-              <div className="o-project-form d-flex justify-content-end">
+          </Rodal>
+
+          <div className="o-project-creation-section">
+            <div className="d-flex justify-content-end">
+              {this.state.isLeader ? (
+                <button
+                  className="btn text-capitalize z-depth-0 text-white"
+                  style={{ backgroundColor: "#D61E1E" }}
+                  onClick={() => this.setState({ modal: true })}
+                >
+                  Eliminar
+                </button>
+              ) : (
+                <></>
+              )}
+            </div>
+            <section className="row bg-white o-project-basic-info">
+              <div className="col-xs-12 col-sm-4">
+                <p className="d-block">Icono del proyecto</p>
                 <img
                   src={
-                    this.state.projectPicture === null
-                      ? ProjectPicture
-                      : this.state.projectPicture
+                    this.state.projectIcon === null
+                      ? ProjectIcon
+                      : this.state.projectIcon
                   }
-                  className="o-picture-project"
-                  alt="project"
+                  alt={"icon"}
+                  className="rounded-circle"
+                  style={{ width: "3rem", height: "3rem" }}
+                />
+                <p className="d-block">Banner del proyecto</p>
+                <div className="o-project-form d-flex justify-content-end">
+                  <img
+                    src={
+                      this.state.projectPicture === null
+                        ? ProjectPicture
+                        : this.state.projectPicture
+                    }
+                    className="o-picture-project"
+                    alt="project"
+                  />
+                </div>
+              </div>
+              <div className="col-xs-12 p-0 pl-sm-4 col-sm-8 position-relative">
+                <MDBInput
+                  type="text"
+                  label={<span>Nombre del proyecto </span>}
+                  value={this.state.projectName}
+                  outline
+                  required
+                />
+
+                <MDBInput
+                  type="textarea"
+                  value={this.state.projectDescription}
+                  label="Descripción del proyecto"
+                  className="rounded pt-3 pt-sm-2"
+                  outline
                 />
               </div>
-            </div>
-            <div className="col-xs-12 p-0 pl-sm-4 col-sm-8 position-relative">
-              <MDBInput
-                type="text"
-                label={<span>Nombre del proyecto </span>}
-                value={this.state.projectName}
-                outline
-                required
-              />
-
-              <MDBInput
-                type="textarea"
-                value={this.state.projectDescription}
-                label="Descripción del proyecto"
-                className="rounded pt-3 pt-sm-2"
-                outline
-              />
-            </div>
-          </section>
-          <section
-            className="row bg-white mt-4 flex-column"
-            style={{ borderRadius: "1rem" }}
-          >
-            <div className="d-flex justify-content-between">
-              <p className="m-3 pl-1 pl-sm-4">Integrantes del proyecto</p>
-            </div>
-            <div className="o-member-selection-container">
-              {this.state.members.map((member, i) => (
-                <CardMember readOnly={true} key={i} member={member} />
-              ))}
-            </div>
-          </section>
-          <section
-            id="Practices-section"
-            className="row bg-white mt-4 flex-column"
-            style={{ borderRadius: "1rem" }}
-          >
-            <p className="m-3 pl-1 pl-sm-4 w-100">
-              Prácticas para concebir la pre-producción
-            </p>
-            <div className="o-smmv-practice d-flex flex-wrap justify-content-center w-100 mb-3">
-              <div className="col-12 col-sm-6">
-                <div className="bg-white w-100 p-1 m-2 text-center">
-                  <p className="m-0">Sistema multimedia mínimo viable</p>
-                </div>
-                <div className="d-flex flex-wrap justify-content-between">
-                  <div className="card " style={{ margin: "10px auto" }}>
-                    <p className="text-white text-center ">Oportunidad</p>
+            </section>
+            <section
+              className="row bg-white mt-4 flex-column"
+              style={{ borderRadius: "1rem" }}
+            >
+              <div className="d-flex justify-content-between">
+                <p className="m-3 pl-1 pl-sm-4">Integrantes del proyecto</p>
+              </div>
+              <div className="o-member-selection-container">
+                {this.state.members.map((member, i) => (
+                  <CardMember readOnly={true} key={i} member={member} />
+                ))}
+              </div>
+            </section>
+            <section
+              id="Practices-section"
+              className="row bg-white mt-4 flex-column"
+              style={{ borderRadius: "1rem" }}
+            >
+              <p className="m-3 pl-1 pl-sm-4 w-100">
+                Prácticas para concebir la pre-producción
+              </p>
+              {this.state.projectPractices.map((practice, i) => {
+                if (practice.name === "Sistema Multimedia mínimo viable") {
+                  return (
                     <div
-                      style={{
-                        height: "15px",
-                        width: "50px",
-                        background: "rgba(255,255,255,0.2)",
-                        border: "1px solid white",
-                      }}
-                      className="rounded text-center d-flex flex-column justify-content-center text-white"
+                      key={i}
+                      className="o-smmv-practice d-flex flex-wrap justify-content-center w-100 mb-3"
                     >
-                      <small style={{ fontSize: "10px" }}>Alfa</small>
-                    </div>
-                    <div className="rounded bg-white d-flex  w-100 m-2 p-2 mt-1">
-                      <small className="mr-2">Estado:</small>
+                      <div className="col-12 col-sm-6">
+                        <div className="bg-white w-100 p-1 m-2 text-center">
+                          <p className="m-0">{practice.name}</p>
+                        </div>
+                        <div className="d-flex flex-wrap justify-content-between">
+                          <div
+                            className="card "
+                            style={{ margin: "10px auto" }}
+                          >
+                            <p className="text-white text-center ">
+                              {practice.alphas[1].nombre}
+                            </p>
+                            <div
+                              style={{
+                                height: "15px",
+                                width: "50px",
+                                background: "rgba(255,255,255,0.2)",
+                                border: "1px solid white",
+                              }}
+                              className="rounded text-center d-flex flex-column justify-content-center text-white"
+                            >
+                              <small style={{ fontSize: "10px" }}>Alfa</small>
+                            </div>
+                            <div className="rounded bg-white d-flex  w-100 m-2 p-2 mt-1">
+                              <small className="mr-2">Estado:</small>
+                              <div
+                                style={{
+                                  height: "20px",
+                                  width: "80px",
+                                  background: "#4fa77b33",
+                                  border: "1px solid #4fa77b",
+                                  color: "#4fa77b",
+                                }}
+                                className="rounded text-center d-flex flex-column justify-content-center"
+                              >
+                                <small>{practice.alphas[1].estado}</small>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="card" style={{ margin: "10px auto" }}>
+                            <p className="text-white text-center ">
+                              {practice.alphas[0].nombre}
+                            </p>
+                            <div
+                              style={{
+                                height: "15px",
+                                width: "50px",
+                                background: "rgba(255,255,255,0.2)",
+                                border: "1px solid white",
+                              }}
+                              className="rounded text-center d-flex flex-column justify-content-center text-white"
+                            >
+                              <small style={{ fontSize: "10px" }}>
+                                Sub-Alfa
+                              </small>
+                            </div>
+                            <div className="rounded bg-white d-flex w-100 m-2 p-2 mt-1">
+                              <small className="mr-2">Estado:</small>
+                              <div
+                                style={{
+                                  height: "20px",
+                                  width: "80px",
+                                  background: "#4fa77b33",
+                                  border: "1px solid #4fa77b",
+                                  color: "#4fa77b",
+                                }}
+                                className="rounded text-center d-flex flex-column justify-content-center"
+                              >
+                                <small>{practice.alphas[0].estado}</small>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                       <div
-                        style={{
-                          height: "20px",
-                          width: "80px",
-                          background: "#4fa77b33",
-                          border: "1px solid #4fa77b",
-                          color: "#4fa77b",
-                        }}
-                        className="rounded text-center d-flex flex-column justify-content-center"
+                        className="col-12 col-sm-3"
+                        style={{ minWidth: "15rem" }}
                       >
-                        <small>Identificada</small>
+                        <div className="bg-white w-100 p-1 m-2 text-center">
+                          <p className="m-0">Tasa de cumplimiento</p>
+                        </div>
+                        <div className="o-grahpcart-project text-center">
+                          <Doughnut data={practice.data} />
+                          <p className="o-text-practice-chart">
+                            {practice.data.datasets[0].data[0]}%
+                          </p>
+                        </div>
+                      </div>
+                      <div
+                        className={
+                          "col-12 d-flex flex-column justify-content-between " +
+                          (this.state.windowWidth < 1300
+                            ? "col-sm-12 "
+                            : "col-sm-3 ")
+                        }
+                        style={{ lineHeight: "16px", minWidth: "auto" }}
+                      >
+                        <div className="bg-white w-100 p-1 m-2 text-center">
+                          <p className="m-0">
+                            Información general de la práctica
+                          </p>
+                        </div>
+                        <small
+                          className="text-justify"
+                          style={{ fontSize: "10px" }}
+                        >
+                          {practice.description}
+                        </small>
+                        <div className="d-flex justify-content-end">
+                          <a
+                            className="btn text-white mr-2 z-depth-0 text-capitalize"
+                            style={{ background: "#4FA77B", fontSize: "12px" }}
+                            href={`/Dashboard/Projects/ActivitiesSMMV/${this.state.projectId}`}
+                          >
+                            Actividades
+                          </a>
+                          <a
+                            className="btn text-white mr-2 z-depth-0 text-capitalize"
+                            style={{ background: "#4FA77B", fontSize: "12px" }}
+                            href="/Dashboard/Projects/DocumentationSMMV"
+                          >
+                            Información
+                          </a>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="card" style={{ margin: "10px auto" }}>
-                    <p className="text-white text-center ">Valor del SM</p>
+                  );
+                } else {
+                  return (
                     <div
-                      style={{
-                        height: "15px",
-                        width: "50px",
-                        background: "rgba(255,255,255,0.2)",
-                        border: "1px solid white",
-                      }}
-                      className="rounded text-center d-flex flex-column justify-content-center text-white"
+                      key={i}
+                      className="o-cem-practice d-flex justify-content-center flex-wrap w-100 mb-3"
                     >
-                      <small style={{ fontSize: "10px" }}>Sub-Alfa</small>
-                    </div>
-                    <div className="rounded bg-white d-flex w-100 m-2 p-2 mt-1">
-                      <small className="mr-2">Estado:</small>
+                      <div className="col-12 col-sm-6">
+                        <div className="bg-white w-100 p-1 m-2 text-center">
+                          <p className="m-0"> {practice.name}</p>
+                        </div>
+                        <div className="d-flex flex-wrap justify-content-between">
+                          <div
+                            className="card "
+                            style={{ margin: "10px auto" }}
+                          >
+                            <p className="text-white text-center ">
+                              {practice.alphas[0].nombre}
+                            </p>
+                            <div
+                              style={{
+                                height: "15px",
+                                width: "50px",
+                                background: "rgba(255,255,255,0.2)",
+                                border: "1px solid white",
+                              }}
+                              className="rounded text-center d-flex flex-column justify-content-center text-white"
+                            >
+                              <small style={{ fontSize: "10px" }}>Alfa</small>
+                            </div>
+                            <div className="rounded bg-white d-flex  w-100 m-2 p-2 mt-1">
+                              <small className="mr-2">Estado:</small>
+                              <div
+                                style={{
+                                  height: "20px",
+                                  width: "80px",
+                                  background: "#d0a11433",
+                                  border: "1px solid #d0a114",
+                                  color: "#d0a114",
+                                }}
+                                className="rounded text-center d-flex flex-column justify-content-center"
+                              >
+                                <small> {practice.alphas[0].estado}</small>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="card" style={{ margin: "10px auto" }}>
+                            <p className="text-white text-center ">
+                              {" "}
+                              {practice.alphas[1].nombre}
+                            </p>
+                            <div
+                              style={{
+                                height: "15px",
+                                width: "50px",
+                                background: "rgba(255,255,255,0.2)",
+                                border: "1px solid white",
+                              }}
+                              className="rounded text-center d-flex flex-column justify-content-center text-white"
+                            >
+                              <small style={{ fontSize: "10px" }}>
+                                Sub-Alfa
+                              </small>
+                            </div>
+                            <div className="rounded bg-white d-flex w-100 m-2 p-2 mt-1">
+                              <small className="mr-2">Estado:</small>
+                              <div
+                                style={{
+                                  height: "20px",
+                                  width: "80px",
+                                  background: "#d0a11433",
+                                  border: "1px solid #d0a114",
+                                  color: "#d0a114",
+                                }}
+                                className="rounded text-center d-flex flex-column justify-content-center"
+                              >
+                                <small> {practice.alphas[1].estado}</small>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                       <div
-                        style={{
-                          height: "20px",
-                          width: "80px",
-                          background: "#4fa77b33",
-                          border: "1px solid #4fa77b",
-                          color: "#4fa77b",
-                        }}
-                        className="rounded text-center d-flex flex-column justify-content-center"
+                        className="col-12 col-sm-3"
+                        style={{ minWidth: "15rem" }}
                       >
-                        <small>Identificada</small>
+                        <div className="bg-white w-100 p-1 m-2 text-center">
+                          <p className="m-0">Tasa de cumplimiento</p>
+                        </div>
+                        <div className="o-grahpcart-project text-center">
+                          <Doughnut data={practice.data} />
+                          <p className="o-text-practice-chart">
+                            {practice.data.datasets[0].data[0]}%
+                          </p>
+                        </div>
+                      </div>
+                      <div
+                        className={
+                          "col-12 d-flex flex-column justify-content-between " +
+                          (this.state.windowWidth < 1300
+                            ? "col-sm-12 "
+                            : "col-sm-3 ")
+                        }
+                        style={{ lineHeight: "16px", minWidth: "auto" }}
+                      >
+                        <div className="bg-white w-100 p-1 m-2 text-center">
+                          <p className="m-0">
+                            Información general de la práctica
+                          </p>
+                        </div>
+                        <small
+                          className="text-justify"
+                          style={{ fontSize: "10px" }}
+                        >
+                          {practice.description}
+                        </small>
+                        <div className="d-flex justify-content-end">
+                          <a
+                            className="btn text-white mr-2 z-depth-0 text-capitalize"
+                            style={{ background: "#D0A114", fontSize: "12px" }}
+                            href={`/Dashboard/Projects/ActivitiesCEM/${this.state.projectId}`}
+                          >
+                            Actividades
+                          </a>
+                          <a
+                            className="btn text-white mr-2 z-depth-0 text-capitalize"
+                            style={{ background: "#D0A114", fontSize: "12px" }}
+                            href="/Dashboard/Projects/DocumentationCEM"
+                          >
+                            Información
+                          </a>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-12 col-sm-3" style={{ minWidth: "15rem" }}>
-                <div className="bg-white w-100 p-1 m-2 text-center">
-                  <p className="m-0">Tasa de cumplimiento</p>
-                </div>
-                <div className="o-grahpcart-project text-center">
-                  <Doughnut data={data} />
-                  <p className="o-text-practice-chart">60%</p>
-                </div>
-              </div>
-              <div
-                className={
-                  "col-12 d-flex flex-column justify-content-between " +
-                  (this.state.windowWidth < 1300 ? "col-sm-12 " : "col-sm-3 ")
+                  );
                 }
-                style={{ lineHeight: "16px", minWidth: "auto" }}
-              >
-                <div className="bg-white w-100 p-1 m-2 text-center">
-                  <p className="m-0">Información general de la práctica</p>
-                </div>
-                <small className="text-justify" style={{ fontSize: "10px" }}>
-                  El propósito de esta práctica es poder generar y plasmar los
-                  elementos visuales e interactivos mínimos para poder
-                  transmitir una correcta experiencia a los usuarios.
-                </small>
-                <div className="d-flex justify-content-end">
-                  <a
-                    className="btn text-white mr-2 z-depth-0 text-capitalize"
-                    style={{ background: "#4FA77B", fontSize: "12px" }}
-                    href={`/Dashboard/Projects/ActivitiesSMMV/${1}`}
-                  >
-                    Actividades
-                  </a>
-                  <a
-                    className="btn text-white mr-2 z-depth-0 text-capitalize"
-                    style={{ background: "#4FA77B", fontSize: "12px" }}
-                    href="/Dashboard/Projects/DocumentationSMMV"
-                  >
-                    Información
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div className="o-cem-practice d-flex justify-content-center flex-wrap w-100 mb-3">
-              <div className="col-12 col-sm-6">
-                <div className="bg-white w-100 p-1 m-2 text-center">
-                  <p className="m-0">Sistema multimedia mínimo viable</p>
-                </div>
-                <div className="d-flex flex-wrap justify-content-between">
-                  <div className="card " style={{ margin: "10px auto" }}>
-                    <p className="text-white text-center ">Oportunidad</p>
-                    <div
-                      style={{
-                        height: "15px",
-                        width: "50px",
-                        background: "rgba(255,255,255,0.2)",
-                        border: "1px solid white",
-                      }}
-                      className="rounded text-center d-flex flex-column justify-content-center text-white"
-                    >
-                      <small style={{ fontSize: "10px" }}>Alfa</small>
-                    </div>
-                    <div className="rounded bg-white d-flex  w-100 m-2 p-2 mt-1">
-                      <small className="mr-2">Estado:</small>
-                      <div
-                        style={{
-                          height: "20px",
-                          width: "80px",
-                          background: "#d0a11433",
-                          border: "1px solid #d0a114",
-                          color: "#d0a114",
-                        }}
-                        className="rounded text-center d-flex flex-column justify-content-center"
-                      >
-                        <small>Identificada</small>
-                      </div>
-                    </div>
+              })}
+            </section>
+            <section
+              className="row bg-white mt-4 flex-column"
+              style={{ borderRadius: "1rem" }}
+            >
+              {" "}
+              <p className="m-3 pl-1 pl-sm-4 w-100">Calendario de reuniones</p>
+              <div className="d-flex flex-wrap p-1 pb-3 pl-sm-0 pr-sm-4 mt-2">
+                <div className="o-meetings-calendar">
+                  <p>Reunión de avances de oportunidad</p>
+                  <div className="d-flex justify-content-between">
+                    <small>09:00 AM - 10:00 AM</small>
+                    <small>27 / 04 / 2020</small>
                   </div>
-                  <div className="card" style={{ margin: "10px auto" }}>
-                    <p className="text-white text-center ">Valor del SM</p>
-                    <div
-                      style={{
-                        height: "15px",
-                        width: "50px",
-                        background: "rgba(255,255,255,0.2)",
-                        border: "1px solid white",
-                      }}
-                      className="rounded text-center d-flex flex-column justify-content-center text-white"
-                    >
-                      <small style={{ fontSize: "10px" }}>Sub-Alfa</small>
-                    </div>
-                    <div className="rounded bg-white d-flex w-100 m-2 p-2 mt-1">
-                      <small className="mr-2">Estado:</small>
-                      <div
-                        style={{
-                          height: "20px",
-                          width: "80px",
-                          background: "#d0a11433",
-                          border: "1px solid #d0a114",
-                          color: "#d0a114",
-                        }}
-                        className="rounded text-center d-flex flex-column justify-content-center"
-                      >
-                        <small>Identificada</small>
-                      </div>
-                    </div>
+                </div>{" "}
+                <div className="o-meetings-calendar">
+                  <p>Reunión de avances de oportunidad</p>
+                  <div className="d-flex justify-content-between">
+                    <small>09:00 AM - 10:00 AM</small>
+                    <small>27 / 04 / 2020</small>
+                  </div>
+                </div>{" "}
+                <div className="o-meetings-calendar">
+                  <p>Reunión de avances de oportunidad</p>
+                  <div className="d-flex justify-content-between">
+                    <small>09:00 AM - 10:00 AM</small>
+                    <small>27 / 04 / 2020</small>
                   </div>
                 </div>
               </div>
-              <div className="col-12 col-sm-3" style={{ minWidth: "15rem" }}>
-                <div className="bg-white w-100 p-1 m-2 text-center">
-                  <p className="m-0">Tasa de cumplimiento</p>
-                </div>
-                <div className="o-grahpcart-project text-center">
-                  <Doughnut data={data2} />
-                  <p className="o-text-practice-chart">60%</p>
-                </div>
+              <div className="d-flex justify-content-end pr-4 mr-4">
+                <a
+                  href="/Dashboard/Calendar"
+                  className="btn z-depth-0 text-capitalize btn-primary bg-primary"
+                >
+                  Más información
+                </a>
               </div>
-              <div
-                className={
-                  "col-12 d-flex flex-column justify-content-between " +
-                  (this.state.windowWidth < 1300 ? "col-sm-12 " : "col-sm-3 ")
-                }
-                style={{ lineHeight: "16px", minWidth: "auto" }}
-              >
-                <div className="bg-white w-100 p-1 m-2 text-center">
-                  <p className="m-0">Información general de la práctica</p>
-                </div>
-                <small className="text-justify" style={{ fontSize: "10px" }}>
-                  El propósito de esta práctica es poder generar y plasmar los
-                  elementos visuales e interactivos mínimos para poder
-                  transmitir una correcta experiencia a los usuarios.
-                </small>
-                <div className="d-flex justify-content-end">
-                  <a
-                    className="btn text-white mr-2 z-depth-0 text-capitalize"
-                    style={{ background: "#D0A114", fontSize: "12px" }}
-                    href={`/Dashboard/Projects/ActivitiesCEM/${1}`}
-                  >
-                    Actividades
-                  </a>
-                  <a
-                    className="btn text-white mr-2 z-depth-0 text-capitalize"
-                    style={{ background: "#D0A114", fontSize: "12px" }}
-                    href="/Dashboard/Projects/DocumentationCEM"
-                  >
-                    Información
-                  </a>
-                </div>
-              </div>
-            </div>
-          </section>
-          <section
-            className="row bg-white mt-4 flex-column"
-            style={{ borderRadius: "1rem" }}
-          >
-            {" "}
-            <p className="m-3 pl-1 pl-sm-4 w-100">Calendario de reuniones</p>
-            <div className="d-flex flex-wrap p-1 pb-3 pl-sm-3 pr-sm-3 mt-2">
-              <div className="o-meetings-calendar">
-                <p>Reunión de avances de oportunidad</p>
-                <div className="d-flex justify-content-between">
-                  <small>09:00 AM - 10:00 AM</small>
-                  <small>27 / 04 / 2020</small>
-                </div>
-              </div>{" "}
-              <div className="o-meetings-calendar">
-                <p>Reunión de avances de oportunidad</p>
-                <div className="d-flex justify-content-between">
-                  <small>09:00 AM - 10:00 AM</small>
-                  <small>27 / 04 / 2020</small>
-                </div>
-              </div>{" "}
-              <div className="o-meetings-calendar">
-                <p>Reunión de avances de oportunidad</p>
-                <div className="d-flex justify-content-between">
-                  <small>09:00 AM - 10:00 AM</small>
-                  <small>27 / 04 / 2020</small>
-                </div>
-              </div>
-            </div>
-            <div className="d-flex justify-content-end pr-4">
-              <a
-                href="/Dashboard/Calendar"
-                className="btn z-depth-0 text-capitalize btn-primary bg-primary"
-              >
-                Más información
-              </a>
-            </div>
-          </section>
+            </section>
+          </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return <div>Cargando...</div>;
+    }
   }
 }
 
