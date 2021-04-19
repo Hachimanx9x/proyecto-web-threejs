@@ -20,27 +20,31 @@ peticiones.getFilesingle = async (bucket, namefile, res) => {
         path.join(__dirname, `../routes/tmp/${namefile}`)
       ); //llamamos el archivo para el envio
       const ps = new stream.PassThrough();
-      stream.pipeline(
-        r,
-        ps, //<---- esto hace un truco con el manejo de errores de transmisión
-        (err) => {
-          if (err) {
-            console.log(err); //No hay tal archivo o cualquier otro tipo de error
-            return res.sendStatus(400);
-          }
-        }
-      );
-      ps.pipe(res); //se renderiza el archivo
-      try {
-        fs.unlinkSync(path.join(__dirname, `../routes/tmp/${namefile}`)); //se borra el archivo temporal
-        // console.log('borrado')
-      } catch (err) {
-        //  console.error('Something wrong happened removing the file', err)//No hay tal archivo o cualquier otro tipo de error
-      }
+      sinfile(r, ps, res);
     }
   );
 };
 
+function sinfile(r, ps, res) {
+  stream.pipeline(
+    r,
+    ps, //<---- esto hace un truco con el manejo de errores de transmisión
+    (err) => {
+      if (err) {
+        console.log("bocket es muy lento");
+        sinfile(r, ps, res);
+        return;
+      }
+    }
+  );
+  ps.pipe(res); //se renderiza el archivo
+  try {
+    fs.unlinkSync(path.join(__dirname, `../routes/tmp/${namefile}`)); //se borra el archivo temporal
+    // console.log('borrado')
+  } catch (err) {
+    //  console.error('Something wrong happened removing the file', err)//No hay tal archivo o cualquier otro tipo de error
+  }
+}
 peticiones.putFile = async (bucket, namefile, file, fileStat) => {
   var data = { upload: false, file: false };
   return new Promise((resolve, reject) => {
