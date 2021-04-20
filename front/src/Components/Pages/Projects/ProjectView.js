@@ -112,7 +112,7 @@ class ProjectView extends Component {
         this.setState({
           members: [...members],
           fetched: true,
-          projectPicture: project.foto,
+          projectPicture: project.banner,
           projectIcon: project.icono,
           projectName: project.nombre,
           projectDescription:
