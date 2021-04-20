@@ -507,7 +507,6 @@ funcionesDB.obteneractientreproyectos = (array) => {
       funcionesDB
         .buscaractividadesproyecto(1, array[i].id)
         .then((contenido) => {
-          console.log(contenido);
           /// actividad y entregable
           let arraydef = [];
           for (let j1 = 0; j1 < contenido.actividades.length; j1++) {

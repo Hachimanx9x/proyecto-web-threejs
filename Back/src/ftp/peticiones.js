@@ -22,12 +22,12 @@ peticiones.getFilesingle = async (bucket, namefile, res) => {
         path.join(__dirname, `../routes/tmp/${namefile}`)
       ); //llamamos el archivo para el envio
       const ps = new stream.PassThrough();
-      sinfile(r, ps, res);
+      sinfile(r, ps, res, namefile);
     }
   );
 };
 
-function sinfile(r, ps, res) {
+function sinfile(r, ps, res, namefile) {
   stream.pipeline(
     r,
     ps, //<---- esto hace un truco con el manejo de errores de transmisión
@@ -45,6 +45,7 @@ function sinfile(r, ps, res) {
     fs.unlinkSync(path.join(__dirname, `../routes/tmp/${namefile}`)); //se borra el archivo temporal
     // console.log('borrado')
   } catch (err) {
+    console.log(err);
     //  console.error('Something wrong happened removing the file', err)//No hay tal archivo o cualquier otro tipo de error
   }
 }
