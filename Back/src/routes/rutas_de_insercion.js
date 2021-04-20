@@ -957,6 +957,13 @@ rutas.post("/auto/herramienta", (req, res) => {
       url_icono:
         "https://raw.githubusercontent.com/Hachimanx9x/proyecto-web-threejs/master/min.io/iconos/after-effects-cc.svg",
     },
+    {
+      nombre: "Apollo",
+      descripcion:
+        "Apollo Client es una biblioteca de administración de estado integral para JavaScript que le permite administrar datos tanto locales como remotos con GraphQL. Se usa para buscar, almacenar en caché y modificar los datos de la aplicación, todo mientras actualiza automáticamente su interfaz de usuario.",
+      url_icono:
+        "https://raw.githubusercontent.com/Hachimanx9x/proyecto-web-threejs/master/min.io/iconos/apollographql-icon.svg",
+    },
   ];
   let g = 0;
   for (let a = 0; a < arra.length; a++) {
