@@ -682,35 +682,40 @@ rutas.post("/auto/herramienta", (req, res) => {
       tipo: "desarrollo",
       descripcion:
         "Es una biblioteca Javascript de código abierto diseñada para crear interfaces de usuario con el objetivo de facilitar el desarrollo de aplicaciones en una sola página. Es mantenido por Facebook y la comunidad de software libre. En el proyecto hay más de mil desarrolladores libres. ",
-      url_icono: "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg",
+      url_icono:
+        "https://raw.githubusercontent.com/Hachimanx9x/proyecto-web-threejs/master/min.io/iconos/reactjs-icon.svg",
     },
     {
       nombre: "Angularjs",
       tipo: "desarrollo",
       descripcion:
         "Es un framework de JavaScript de código abierto, mantenido por Google, que se utiliza para crear y mantener aplicaciones web de una sola página. Su objetivo es aumentar las aplicaciones basadas en navegador con capacidad de Modelo Vista Controlador (MVC), en un esfuerzo para hacer que el desarrollo y las pruebas sean más fáciles.",
-      url_icono: "https://www.vectorlogo.zone/logos/angular/angular-icon.svg",
+      url_icono:
+        "https://raw.githubusercontent.com/Hachimanx9x/proyecto-web-threejs/master/min.io/iconos/angular-icon.svg",
     },
     {
       nombre: "Vuejs",
       tipo: "desarrollo",
       descripcion:
         "Es un framework de JavaScript de código abierto para la construcción de interfaces de usuario y aplicaciones de una sola página. Fue creado por Evan You, y es mantenido por él y por el resto de los miembros activos del equipo central que provienen de diversas empresas como Netlify y Netguru.",
-      url_icono: "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg",
+      url_icono:
+        "https://raw.githubusercontent.com/Hachimanx9x/proyecto-web-threejs/master/min.io/iconos/vuejs-icon.svg",
     },
     {
       nombre: "Nodejs",
       tipo: "desarrollo",
       descripcion:
         "Es un entorno en tiempo de ejecución multiplataforma, de código abierto, para la capa del servidor (pero no limitándose a ello) basado en el lenguaje de programación JavaScript, asíncrono, con E/S de datos en una arquitectura orientada a eventos y basado en el motor V8 de Google. Fue creado con el enfoque de ser útil en la creación de programas de red altamente escalables, como por ejemplo, servidores web.​ Fue creado por Ryan Dahl en 2009 y su evolución está apadrinada por la empresa Joyent, que además tiene contratado a Dahl en plantilla.",
-      url_icono: "https://www.vectorlogo.zone/logos/nodejs/nodejs-icon.svg",
+      url_icono:
+        "https://raw.githubusercontent.com/Hachimanx9x/proyecto-web-threejs/master/min.io/iconos/nodejs-icon.svg",
     },
     {
       nombre: "HTML5",
       tipo: "desarrollo",
       descripcion:
         "Conocida como HTML5, y una variante XHTML conocida como sintaxis XHTML 5 que deberá servirse con sintaxis XML (application/xhtml+xml).1​2​ Esta es la primera vez que HTML y XHTML se han desarrollado en paralelo. La versión definitiva de la quinta revisión del estándar se publicó en octubre de 2014",
-      url_icono: "https://www.vectorlogo.zone/logos/w3_html5/w3_html5-icon.svg",
+      url_icono:
+        "https://raw.githubusercontent.com/Hachimanx9x/proyecto-web-threejs/master/min.io/iconos/w3_html5-icon.svg",
     },
     {
       nombre: "CSS3",
@@ -725,7 +730,8 @@ rutas.post("/auto/herramienta", (req, res) => {
       tipo: "desarrollo",
       descripcion:
         "Es un lenguaje de programación de uso general que se adapta especialmente al desarrollo web.2​ Fue creado inicialmente por el programador danés-canadiense Rasmus Lerdorf en 1994.3​ En la actualidad, la implementación de referencia de PHP es producida por The PHP Group.4​ PHP originalmente significaba Personal Home Page (Página personal), pero ahora significa el inicialismon 1​ recursivo PHP: Hypertext Preprocessor.",
-      url_icono: "https://www.vectorlogo.zone/logos/php/php-icon.svg",
+      url_icono:
+        "https://raw.githubusercontent.com/Hachimanx9x/proyecto-web-threejs/master/min.io/iconos/php-icon.svg",
     },
     {
       nombre: "Flutter",
@@ -733,28 +739,31 @@ rutas.post("/auto/herramienta", (req, res) => {
       descripcion:
         "Es un SDK de código fuente abierto de desarrollo de aplicaciones móviles creado por Google. Suele usarse para desarrollar interfaces de usuario para aplicaciones en Android, iOS y Web así como método primario para crear aplicaciones para Google Fuchsia",
       url_icono:
-        "https://www.vectorlogo.zone/logos/flutterio/flutterio-icon.svg",
+        "https://raw.githubusercontent.com/Hachimanx9x/proyecto-web-threejs/master/min.io/iconos/flutterio-icon.svg",
     },
     {
       nombre: "Mysql",
       tipo: "desarrollo",
       descripcion:
         "Es un sistema de gestión de bases de datos relacional desarrollado bajo licencia dual: Licencia pública general/Licencia comercial por Oracle Corporation y está considerada como la base de datos de código abierto más popular del mundo, y una de las más populares en general junto a Oracle y Microsoft SQL Server, todo para entornos de desarrollo web.",
-      url_icono: "https://cdn.worldvectorlogo.com/logos/mysql-7.svg",
+      url_icono:
+        "https://raw.githubusercontent.com/Hachimanx9x/proyecto-web-threejs/master/min.io/iconos/mysql-7.svg",
     },
     {
       nombre: "golang",
       tipo: "desarrollo",
       descripcion:
         "Es un lenguaje de programación concurrente y compilado inspirado en la sintaxis de C, que intenta ser dinámico como Python y con el rendimiento de C o C++. Ha sido desarrollado por Google9​ y sus diseñadores iniciales fueron Robert Griesemer, Rob Pike y Ken Thompson. 10​ Actualmente está disponible en formato binario para los sistemas operativos Windows, GNU/Linux, FreeBSD y Mac OS X, pudiendo también ser instalado en estos y en otros sistemas mediante el código fuente.",
-      url_icono: "https://www.vectorlogo.zone/logos/golang/golang-official.svg",
+      url_icono:
+        "https://raw.githubusercontent.com/Hachimanx9x/proyecto-web-threejs/master/min.io/iconos/golang-official.svg",
     },
     {
       nombre: "graphql",
       tipo: "desarrollo",
       descripcion:
         "Es un lenguaje de consulta y manipulación de datos para APIs, y un entorno de ejecución para realizar consultas con datos existentes.",
-      url_icono: "https://www.vectorlogo.zone/logos/graphql/graphql-icon.svg",
+      url_icono:
+        "https://raw.githubusercontent.com/Hachimanx9x/proyecto-web-threejs/master/min.io/iconos/graphql-icon.svg",
     },
     {
       nombre: "typescript",
@@ -762,14 +771,15 @@ rutas.post("/auto/herramienta", (req, res) => {
       descripcion:
         "Es un lenguaje de programación libre y de código abierto desarrollado y mantenido por Microsoft. Es un superconjunto de JavaScript, que esencialmente añade tipos estáticos y objetos basados en clases. Anders Hejlsberg, diseñador de C# y creador de Delphi y Turbo Pascal, ha trabajado en el desarrollo de TypeScript.1​ TypeScript es usado para desarrollar aplicaciones JavaScript que se ejecutarán en el lado del cliente o del servidor, o extensiones para programas (Node.js y Deno (software)).",
       url_icono:
-        "https://www.vectorlogo.zone/logos/typescriptlang/typescriptlang-icon.svg",
+        "https://raw.githubusercontent.com/Hachimanx9x/proyecto-web-threejs/master/min.io/iconos/typescriptlang-icon.svg",
     },
     {
       nombre: "jquery",
       tipo: "desarrollo",
       descripcion:
         "Es una biblioteca multiplataforma de JavaScript, creada inicialmente por John Resig, que permite simplificar la manera de interactuar con los documentos HTML, manipular el árbol DOM, manejar eventos, desarrollar animaciones y agregar interacción con la técnica AJAX a páginas web.1​ Fue presentada el 14 de enero de 2006 en el BarCamp NYC. De acuerdo a un análisis de la Web (realizado en 2017) JQuery es la biblioteca de JavaScript más utilizada, por un amplio margen.",
-      url_icono: "https://www.vectorlogo.zone/logos/jquery/jquery-icon.svg",
+      url_icono:
+        "https://raw.githubusercontent.com/Hachimanx9x/proyecto-web-threejs/master/min.io/iconos/jquery-icon.svg",
     },
     {
       nombre: "bootstrap",
@@ -777,14 +787,15 @@ rutas.post("/auto/herramienta", (req, res) => {
       descripcion:
         "Es una biblioteca multiplataforma o conjunto de herramientas de código abierto para diseño de sitios y aplicaciones web. Contiene plantillas de diseño con tipografía, formularios, botones, cuadros, menús de navegación y otros elementos de diseño basado en HTML y CSS, así como extensiones de JavaScript adicionales. A diferencia de muchos frameworks web, solo se ocupa del desarrollo front-end.",
       url_icono:
-        "https://www.vectorlogo.zone/logos/getbootstrap/getbootstrap-icon.svg",
+        "https://raw.githubusercontent.com/Hachimanx9x/proyecto-web-threejs/master/min.io/iconos/getbootstrap-icon.svg",
     },
     {
       nombre: "python",
       tipo: "desarrollo",
       descripcion:
         "Es un lenguaje de programación interpretado cuya filosofía hace hincapié en la legibilidad de su código.2​ Se trata de un lenguaje de programación multiparadigma, ya que soporta orientación a objetos, programación imperativa y, en menor medida, programación funcional. Es un lenguaje interpretado, dinámico y multiplataforma.",
-      url_icono: "https://www.vectorlogo.zone/logos/python/python-icon.svg",
+      url_icono:
+        "https://raw.githubusercontent.com/Hachimanx9x/proyecto-web-threejs/master/min.io/iconos/python-icon.svg",
     },
     {
       nombre: "django",
@@ -792,14 +803,15 @@ rutas.post("/auto/herramienta", (req, res) => {
       descripcion:
         "Es un framework de desarrollo web de código abierto, escrito en Python, que respeta el patrón de diseño conocido como modelo–vista–controlador (MVC). Fue desarrollado en origen para gestionar varias páginas orientadas a noticias de la World Company de Lawrence, Kansas, y fue liberada al público bajo una licencia BSD en julio de 2005; el framework fue nombrado en alusión al guitarrista de jazz gitano Django Reinhardt.",
       url_icono:
-        "https://www.vectorlogo.zone/logos/djangoproject/djangoproject-icon.svg",
+        "https://raw.githubusercontent.com/Hachimanx9x/proyecto-web-threejs/master/min.io/iconos/djangoproject-icon.svg",
     },
     {
       nombre: "mongodb",
       tipo: "desarrollo",
       descripcion:
         "Es un sistema de base de datos NoSQL, orientado a documentos y de código abierto.",
-      url_icono: "https://www.vectorlogo.zone/logos/mongodb/mongodb-icon.svg",
+      url_icono:
+        "https://raw.githubusercontent.com/Hachimanx9x/proyecto-web-threejs/master/min.io/iconos/mongodb-icon.svg",
     },
     {
       nombre: "javascript",
@@ -807,49 +819,55 @@ rutas.post("/auto/herramienta", (req, res) => {
       descripcion:
         "Es un lenguaje de programación interpretado, dialecto del estándar ECMAScript. Se define como orientado a objetos,2​ basado en prototipos, imperativo, débilmente tipado y dinámico.",
       url_icono:
-        "https://upload.vectorlogo.zone/logos/javascript/images/239ec8a4-163e-4792-83b6-3f6d96911757.svg",
+        "https://raw.githubusercontent.com/Hachimanx9x/proyecto-web-threejs/master/min.io/iconos/javascript.svg",
     },
     {
       nombre: "material-ui",
       tipo: "desarrollo",
       descripcion:
         "Es una biblioteca de código abierto que implementa el lenguaje visual de «materiales» de Google en sus componentes React. Ofrece la capacidad de combinar su biblioteca de interfaz de usuario, con el marco front-end de React.js.",
-      url_icono: "https://cdn.worldvectorlogo.com/logos/material-ui-1.svg",
+      url_icono:
+        "https://raw.githubusercontent.com/Hachimanx9x/proyecto-web-threejs/master/min.io/iconos/material-ui-1.svg",
     },
     {
       nombre: "rails",
       tipo: "desarrollo",
       descripcion:
         "También conocido como RoR o Rails, es un framework de aplicaciones web de código abierto escrito en el lenguaje de programación Ruby, siguiendo el paradigma del patrón Modelo Vista Controlador (MVC).",
-      url_icono: "https://cdn.worldvectorlogo.com/logos/rails.svg",
+      url_icono:
+        "https://raw.githubusercontent.com/Hachimanx9x/proyecto-web-threejs/master/min.io/iconos/rails.svg",
     },
     {
       nombre: "figma",
       tipo: "desarrollo",
       descripcion:
         "es un programa que ofrece todas las herramientas necesarias para diseñar un proyecto. Sobre todo es ideal para crear interfaces de usuario tanto para web como para móvil. También permite crear prototipos,  generar código para el traspaso (hand-off) e ilustrar, aunque para esto último no es la mejor herramienta para ello.",
-      url_icono: "https://www.vectorlogo.zone/logos/figma/figma-icon.svg",
+      url_icono:
+        "https://raw.githubusercontent.com/Hachimanx9x/proyecto-web-threejs/master/min.io/iconos/figma-1.svg",
     },
     {
       nombre: "dotnet",
       tipo: "desarrollo",
       descripcion:
         "Es un framework de Microsoft que hace un énfasis en la transparencia de redes, con independencia de plataforma de hardware y que permite un rápido desarrollo de aplicaciones. Basada en ella, la empresa intenta desarrollar una estrategia horizontal que integre sus productos, desde el sistema operativo hasta las herramientas de mercado.",
-      url_icono: "https://www.vectorlogo.zone/logos/dotnet/dotnet-icon.svg ",
+      url_icono:
+        "https://raw.githubusercontent.com/Hachimanx9x/proyecto-web-threejs/master/min.io/iconos/dotnet.svg",
     },
     {
       nombre: "sqlite",
       tipo: "desarrollo",
       descripcion:
         "es un sistema de gestión de bases de datos relacional compatible con ACID, contenida en una relativamente pequeña (~275 kiB)2​ biblioteca escrita en C. SQLite es un proyecto de dominio público1​ creado por D. Richard Hipp.",
-      url_icono: "https://www.vectorlogo.zone/logos/sqlite/sqlite-icon.svg",
+      url_icono:
+        "https://raw.githubusercontent.com/Hachimanx9x/proyecto-web-threejs/master/min.io/iconos/sqlite-icon.svg",
     },
     {
       nombre: "android",
       tipo: "desarrollo",
       descripcion:
         "es el entorno de desarrollo integrado oficial para la plataforma Android. Fue anunciado el 16 de mayo de 2013 en la conferencia Google I/O, y reemplazó a Eclipse como el IDE oficial para el desarrollo de aplicaciones para Android. La primera versión estable fue publicada en diciembre de 2014.",
-      url_icono: "https://cdn.worldvectorlogo.com/logos/android.svg",
+      url_icono:
+        "https://raw.githubusercontent.com/Hachimanx9x/proyecto-web-threejs/master/min.io/iconos/android.svg",
     },
     {
       nombre: "ionic",
@@ -857,78 +875,87 @@ rutas.post("/auto/herramienta", (req, res) => {
       descripcion:
         "Es una estructura tecnológica (Framework)  de código abierto que se utiliza en el desarrollo de aplicaciones móviles híbridas, es decir, se combinan el HTML5, CSS y JavaScript dando como resultado aplicaciones con una interfaz amigable e intuitiva para el usuario que luego se comercializan o descargan en plataformas como Android o IOs.",
       url_icono:
-        "https://www.vectorlogo.zone/logos/ionicframework/ionicframework-icon.svg",
+        "https://raw.githubusercontent.com/Hachimanx9x/proyecto-web-threejs/master/min.io/iconos/ionicframework-icon.svg",
     },
     {
       nombre: "c++",
       tipo: "desarrollo",
       descripcion:
         "Es un lenguaje de programación diseñado en 1979 por Bjarne Stroustrup. La intención de su creación fue extender al lenguaje de programación C mecanismos que permiten la manipulación de objetos. En ese sentido, desde el punto de vista de los lenguajes orientados a objetos, C++ es un lenguaje híbrido.",
-      url_icono: "https://cdn.worldvectorlogo.com/logos/c.svg",
+      url_icono:
+        "https://raw.githubusercontent.com/Hachimanx9x/proyecto-web-threejs/master/min.io/iconos/c%2B%2B.svg",
     },
     {
       nombre: "c",
       tipo: "desarrollo",
       descripcion:
         "Es un lenguaje de programación de propósito general2​:1 originalmente desarrollado por Dennis Ritchie entre 1969 y 1972 en los Laboratorios Bell,1​ como evolución del anterior lenguaje B, a su vez basado en BCPL.",
-      url_icono: "https://cdn.worldvectorlogo.com/logos/c-2975.svg",
+      url_icono:
+        "https://raw.githubusercontent.com/Hachimanx9x/proyecto-web-threejs/master/min.io/iconos/c.svg",
     },
     {
       nombre: "c#",
       tipo: "desarrollo",
       descripcion:
         "Es un lenguaje de programación orientado a objetos. Con este nuevo lenguaje se quiso mejorar con respecto de los dos lenguajes anteriores de los que deriva el C, y el C++.",
-      url_icono: "https://cdn.worldvectorlogo.com/logos/c--4.svg",
+      url_icono:
+        "https://raw.githubusercontent.com/Hachimanx9x/proyecto-web-threejs/master/min.io/iconos/cs.svg",
     },
     {
       nombre: "java",
       tipo: "desarrollo",
       descripcion:
         "Es un lenguaje de programación y una plataforma informática que fue comercializada por primera vez en 1995 por Sun Microsystems. Hay muchas aplicaciones y sitios web que no funcionarán, probablemente, a menos que tengan Java instalado y cada día se crean más. Java es rápido, seguro y fiable. ",
-      url_icono: "https://cdn.worldvectorlogo.com/logos/java-14.svg",
+      url_icono:
+        "https://raw.githubusercontent.com/Hachimanx9x/proyecto-web-threejs/master/min.io/iconos/java-icon.svg",
     },
     {
       nombre: "wordpress",
       tipo: "diseño",
       descripcion:
         "Es un sistema de gestión de contenidos ( en inglés, Content Management System o CMS) lanzado el 27 de mayo de 2003, enfocado a la creación de cualquier tipo de página web. Originalmente alcanzó una gran popularidad en la creación de blogs, para luego convertirse en una de las principales herramientas para la creación de páginas web comerciales",
-      url_icono: "https://cdn.worldvectorlogo.com/logos/wordpress-blue.svg",
+      url_icono:
+        "https://raw.githubusercontent.com/Hachimanx9x/proyecto-web-threejs/master/min.io/iconos/wordpress-blue.svg",
     },
     {
       nombre: "Adobe  XD",
       tipo: "diseño",
       descripcion:
         "Es un editor de gráficos vectoriales desarrollado y publicado por Adobe Inc para diseñar y crear un prototipo de la experiencia del usuario para páginas web y aplicaciones móviles. El software está disponible para MacOS y Windows.",
-      url_icono: "https://cdn.worldvectorlogo.com/logos/adobe-xd.svg",
+      url_icono:
+        "https://raw.githubusercontent.com/Hachimanx9x/proyecto-web-threejs/master/min.io/iconos/adobe-xd.svg",
     },
     {
-      nombre: "Adobe Ilustrator",
+      nombre: "Adobe Illustrator",
       tipo: "diseño",
       descripcion:
         "Es un editor de gráficos vectoriales en forma de taller de arte que trabaja sobre un tablero de dibujo, conocido como «mesa de trabajo» y está destinado a la creación artística de dibujo y pintura para ilustración, para crear y diseñar imágenes, sirve para editar entre otras cosas (ilustración como rama del arte digital aplicado a la ilustración técnica o el diseño gráfico, entre otros).",
       url_icono:
-        "https://www.vectorlogo.zone/logos/adobe_illustrator/adobe_illustrator-icon.svg ",
+        "https://raw.githubusercontent.com/Hachimanx9x/proyecto-web-threejs/master/min.io/iconos/adobe-illustrator-cc.svg",
     },
     {
       nombre: "Adobe Premiere",
       tipo: "diseño",
       descripcion:
         "es un software de edición de video desarrollado por Adobe y publicado como parte de Adobe Creative Cloud. Está orientado a la edición de vídeos profesionales, mientras que su derivado, Adobe Premiere Elements, apunta al mercado de consumidores. Lanzado en 2003, luego de una reescritura de código, Adobe Premiere Pro es el sucesor de Adobe Premiere, originalmente lanzado en 1991, el cual contiene funciones más avanzadas.",
-      url_icono: "https://cdn.worldvectorlogo.com/logos/premiere-cc.svg",
+      url_icono:
+        "https://raw.githubusercontent.com/Hachimanx9x/proyecto-web-threejs/master/min.io/iconos/premiere-cc.svg",
     },
     {
       nombre: "Adobe Photoshop",
       tipo: "diseño",
       descripcion:
         "Es un editor de fotografías desarrollado por Adobe Systems Incorporated. Usado principalmente para el retoque de fotografías y gráficos, su nombre en español significa 'taller de fotos'. Es conocido mundialmente.",
-      url_icono: "https://cdn.worldvectorlogo.com/logos/photoshop-cc.svg",
+      url_icono:
+        "https://raw.githubusercontent.com/Hachimanx9x/proyecto-web-threejs/master/min.io/iconos/photoshop-cc.svg",
     },
     {
       nombre: "Adobe After Effects",
       tipo: "diseño",
       descripcion:
         "Es una aplicación que tiene forma de estudio destinado para la creación o aplicación en una composición, así como realización de gráficos profesionales en movimiento y efectos especiales, que desde sus raíces han consistido básicamente en la superposición de capas. Adobe After Effects es uno de los softwares basados en línea de tiempo más potentes del mercado junto con Autodesk Combustion y Eyeon Fusion.",
-      url_icono: "https://cdn.worldvectorlogo.com/logos/after-effects-cc.svg",
+      url_icono:
+        "https://raw.githubusercontent.com/Hachimanx9x/proyecto-web-threejs/master/min.io/iconos/after-effects-cc.svg",
     },
   ];
   let g = 0;
