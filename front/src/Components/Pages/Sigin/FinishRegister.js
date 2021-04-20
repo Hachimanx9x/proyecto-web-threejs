@@ -17,7 +17,7 @@ export default function FinishRegister(props) {
   const [country, setCountry] = useState(null);
   const [name, setName] = useState("");
   const [lastname, setLastname] = useState("");
-  const [cv, setCv] = useState(null);
+  const [cv, setCv] = useState("");
   const [cvpicture, setCvpicture] = useState(null);
   const [years, setYears] = useState(null);
   const [linkedin, setLinkedin] = useState("");
@@ -121,17 +121,26 @@ export default function FinishRegister(props) {
   const RemoveSkill = (selectedItem) => {
     if (selectedItem !== undefined) {
       const skill = skills;
-      const item = skill.find((iterador) => iterador.id === selectedItem.id);
       const t = test;
       const t2 = selected;
-      const item2 = t2.find((iterador) => iterador.cat.id === selectedItem.id);
-      if (item) {
-        skill.splice(item, 1);
-        t.splice(item2, 1);
-        setSkills([...skill]);
-        setTest([...t]);
-        setSelected([...t]);
+      for (let i = 0; i < skill.length; i++) {
+        const element = skill[i];
+        if (element.id === selectedItem.id) {
+          skill.splice(i, 1);
+          break;
+        }
       }
+      for (let i = 0; i < t2.length; i++) {
+        const element = t2[i];
+        if (element.cat.id === selectedItem.id) {
+          t.splice(i, 1);
+          break;
+        }
+      }
+
+      setSkills([...skill]);
+      setTest([...t]);
+      setSelected([...t]);
     }
   };
 
