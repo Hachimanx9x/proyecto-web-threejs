@@ -2249,10 +2249,10 @@ function organizarcalendario(array) {
   let arraydef = [];
 
   for (let a = 0; a < array.length; a++) {
-    let fecha = new Date();
     let temfecha = array[a].reunionfecha.split("-");
     let strfecha = `${temfecha[0]}/${temfecha[1]}/${temfecha[2]} ${array[a].reunionhora}`;
     let date1 = new Date(strfecha);
+    let fecha = `${date1.getDay()}/${date1.getDate()}/${date1.getFullYear()}`;
     let start = `${date1.getDay()}/${date1.getDate()}/${date1.getFullYear()} ${date1.getHours()}:${date1.getMinutes()}:00`;
     date1.setHours(date1.getHours() + array[a].reuniondurancion);
     let end = `${date1.getDay()}/${date1.getDate()}/${date1.getFullYear()} ${date1.getHours()}:${date1.getMinutes()}:00`;
@@ -2261,7 +2261,7 @@ function organizarcalendario(array) {
       pronombre: array[a].proyectonombre,
       reunion: array[a].reunionid,
       titulo: array[a].reuniontitulo,
-      fecha: array[a].reunionfecha,
+      fecha: fecha,
       hora: array[a].reunionhora,
       duracion: array[a].reuniondurancion,
       start: start,
@@ -2408,7 +2408,10 @@ function actividadespro(user, array, id) {
     if (array[a].fotoperfil !== "null" && array[a].fotoperfil !== null) {
       temp2 = `${env.host}/usuario${array[a].userid}/${array[a].fotoperfil}`;
     }
-
+    let temfecha = array[a].actividadfechaentrega.split("-");
+    let strfecha = `${temfecha[0]}/${temfecha[1]}/${temfecha[2]}`;
+    let date1 = new Date(strfecha);
+    let fecha = `${date1.getDay()}/${date1.getDate()}/${date1.getFullYear()}`;
     arraydef.push({
       actividadid: array[a].actid,
       titulo: array[a].actividadtitulo,
@@ -2418,7 +2421,7 @@ function actividadespro(user, array, id) {
       foto: temp2,
       rol: array[a].roltitulo,
       estado: array[a].actividadestado,
-      fechaentrega: array[a].actividadfechaentrega,
+      fechaentrega: fecha,
       tecnica: array[a].tecnicatitulo,
       namefile: temp,
       contenido: `${env.host}/proyecto${array[a].id}/${temp}`,
