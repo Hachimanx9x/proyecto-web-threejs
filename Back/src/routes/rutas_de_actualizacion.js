@@ -766,31 +766,53 @@ rutas.put("/reasignar/actividad", proToken, (req, res) => {
           let temfecha = acti.actividadfechaentrega,
             temtecnica = acti.tecnica,
             tempnameacti = null;
-          if (temfecha !== fecha) {
+          if (
+            temfecha !== fecha &&
+            fecha !== null &&
+            fecha !== "null" &&
+            fecha !== undefined
+          ) {
             temfecha = fecha;
           }
           tec.API.find((tecnicaarray) => {
             if (tecnicaarray.id === temtecnica) {
-              tempnameacti = tecnica.tecnicatitulo;
+              tempnameacti = tecnicaarray.tecnicatitulo;
             }
           });
-          if (tempnameacti !== tecnica) {
+          if (
+            tempnameacti !== tecnica &&
+            tecnica !== null &&
+            tecnica !== "null" &&
+            tecnica !== undefined
+          ) {
             tec.API.find((tecnicaarray) => {
               if (tecnica === tecnicaarray.tecnicatitulo) {
                 temtecnica = tecnicaarray.id;
               }
             });
           }
-          actualizarDB
-            .updatelistactvity({
-              actividad,
-              fecha: temfecha,
-              tecnica: temtecnica,
-            })
-            .then((result) => {
-              res.json(result);
-            })
-            .catch((err) => res.json(err));
+          if (
+            tecnica !== null &&
+            tecnica !== "null" &&
+            tecnica !== undefined &&
+            fecha !== null &&
+            fecha !== "null" &&
+            fecha !== undefined
+          ) {
+            actualizarDB
+              .updatelistactvity({
+                actividad,
+                fecha: temfecha,
+                tecnica: temtecnica,
+              })
+              .then((result) => {
+                res.json(result);
+              })
+              .catch((err) => res.json(err));
+          } else {
+            console.log(chalk.red("error de datos"));
+            res.json({ msj: "datos erroneos" });
+          }
         })
         .catch((errtec) => res.json(errtec));
     })
