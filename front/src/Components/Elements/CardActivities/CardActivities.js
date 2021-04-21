@@ -23,28 +23,23 @@ export default function CardActivities({ alfa, activity, tecniques }) {
     activity.fechaentrega.split("/")[1] +
     "-" +
     activity.fechaentrega.split("/")[0];
-  console.log(activity.fechaentrega + "  2021-05-02");
   return (
     <div
       className="o-card z-depth-1 m-0 mt-4 p-0 bg-white"
       style={{ maxWidth: "50rem", minWidth: "24rem" }}
     >
       <div className="d-flex p-4">
-        <div className="d-flex flex-column">
-          <div
+        <div
+          className={"o-activity-description " + (alfa === "SMMV" ? "" : "cem")}
+        >
+          <small>{activity.descripcion}</small>
+          <span
             className={
-              "o-activity-description " + (alfa === "SMMV" ? "" : "cem")
+              (alfa === "SMMV" ? "o-bg-smmv" : "o-bg-cem") + " o-activity"
             }
           >
-            <small>{activity.descripcion}</small>
-            <span
-              className={
-                (alfa === "SMMV" ? "o-bg-smmv" : "o-bg-cem") + " o-activity"
-              }
-            >
-              <p>{activity.titulo}</p>
-            </span>
-          </div>
+            <p>{activity.titulo}</p>
+          </span>
         </div>
       </div>
       <div className="row m-0 mb-4 o-info-activity">
@@ -124,7 +119,7 @@ export default function CardActivities({ alfa, activity, tecniques }) {
                 className="sd"
                 type="date"
                 name="selected_date"
-                defaultValue={"2021/05/21"}
+                defaultValue={date}
                 min={moment().toDate()}
               />
               <span className="open-button">

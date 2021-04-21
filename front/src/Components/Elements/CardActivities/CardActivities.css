@@ -4,9 +4,8 @@
   border-radius: 0.3rem;
   font-size: 12px;
   line-height: 10px;
-  min-width: 100%;
+  width: 100%;
   min-height: 4rem;
-
   margin: 0;
   position: relative;
 }
