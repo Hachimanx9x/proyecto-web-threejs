@@ -2410,6 +2410,15 @@ function actividadespro(user, array, id) {
     }
     // console.log(array[a].actividadfechaentrega);
     let temfecha = array[a].actividadfechaentrega.split("-");
+    let day = parseInt(temfecha[1], 10);
+    if (day < 10) {
+      day = `0${day}`;
+    }
+
+    let mes = parseInt(temfecha[2], 10);
+    if (mes < 10) {
+      mes = `0${mes}`;
+    }
     let strfecha = `${temfecha[1]}/${temfecha[2]}/${temfecha[0]}`;
     //let date1 = new Date(strfecha);
     // let fecha = `${date1.getDay()}/${date1.getDate()}/${date1.getFullYear()}`;
