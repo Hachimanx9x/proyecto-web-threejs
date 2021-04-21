@@ -207,6 +207,17 @@
   top: 35%;
   color: #4fa77b;
 }
+
+@media only screen and (max-width: 900px) {
+  .o-icon-input-text {
+    font-size: 14px;
+  }
+  .o-inputWrapper-btn {
+    width: 7rem;
+    height: 2rem;
+    font-size: 0.8rem;
+  }
+}
 @media only screen and (max-width: 800px) {
   .o-project-creation-section {
     min-width: 45rem;
@@ -223,6 +234,7 @@
   .o-inputWrapper-btn {
     width: 7rem;
     height: 2rem;
+    font-size: 0.8rem;
   }
 }
 
@@ -239,7 +251,6 @@
   }
   .o-inputWrapper-btn {
     width: 6rem;
-    font-size: 0.8rem;
   }
 }
 @media only screen and (max-width: 590px) {

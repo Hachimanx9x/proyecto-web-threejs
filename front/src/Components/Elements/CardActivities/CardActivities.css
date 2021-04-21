@@ -18,18 +18,25 @@
   color: white;
   margin: 0.8rem 0 0 1.5rem;
   position: absolute;
-  padding: 0;
   left: -40px;
   top: -28px;
   border-radius: 50%;
   width: 1.9rem;
   height: 1.9rem;
-  padding: 11px 0 0 7px;
+}
+
+.o-activity p {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
 }
 
 .o-activity-user {
   width: 2.2rem;
   height: 2.2rem;
+  box-sizing: border-box;
+  border-radius: 50%;
   margin: 0 1rem;
 }
 

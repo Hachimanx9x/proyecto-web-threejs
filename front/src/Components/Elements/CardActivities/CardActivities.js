@@ -17,8 +17,8 @@ require("moment/locale/es.js");
 
 export default function CardActivities({ alfa, activity, tecniques }) {
   const [option, setOption] = useState(activity.tecnica);
-  const date = new Date("05/21/201");
-  console.log(activity.fechaentrega);
+  //const date = new Date("05/21/201");
+  // console.log(activity.fechaentrega);
   return (
     <div
       className="o-card z-depth-1 m-0 mt-4 p-0 bg-white"
@@ -37,7 +37,7 @@ export default function CardActivities({ alfa, activity, tecniques }) {
                 (alfa === "SMMV" ? "o-bg-smmv" : "o-bg-cem") + " o-activity"
               }
             >
-              {activity.titulo}
+              <p>{activity.titulo}</p>
             </span>
           </div>
         </div>
@@ -67,7 +67,11 @@ export default function CardActivities({ alfa, activity, tecniques }) {
         </div>
         <div className="col-xs-6 col-sm-9 d-flex text-center o-activity-user-container">
           <img
-            src={User}
+            src={
+              activity.foto === null || activity.foto === undefined
+                ? User
+                : activity.foto
+            }
             alt="User in charge"
             className="o-activity-user mr-2"
           />
