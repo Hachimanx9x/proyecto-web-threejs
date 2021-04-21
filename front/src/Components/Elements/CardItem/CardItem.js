@@ -65,6 +65,7 @@ export default function CardItem({ item, category, icon, alpha }) {
             <div className={"tab" + (alpha === "CEM" ? " o-bg-cem" : "")}>
               {tabs.map((tab, i) => (
                 <button
+                  key={i}
                   className={
                     (tabs[i].tab ? "active " : "") +
                     "tablinks" +
@@ -81,6 +82,7 @@ export default function CardItem({ item, category, icon, alpha }) {
             <p>Descripción</p>
             {tabs.map((tab, i) => (
               <div
+                key={i}
                 className={
                   (tabs[i].tab
                     ? "tabcontent display-block text-secondary"
