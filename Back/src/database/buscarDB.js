@@ -2406,7 +2406,7 @@ function actividadespro(user, array, id) {
       temp = array[a].contenidonombrearchivo;
     }
     if (array[a].fotoperfil !== "null" && array[a].fotoperfil !== null) {
-      temp2 = `${env.host}/usuario${array[a].userid}/${array[a].fotoperfil}`;
+      temp2 = `${env.host}/proyecto/contenido/usuario${array[a].userid}/${array[a].fotoperfil}`;
     }
     let temfecha = array[a].actividadfechaentrega.split("-");
     let strfecha = `${temfecha[0]}/${temfecha[1]}/${temfecha[2]}`;
@@ -2424,7 +2424,7 @@ function actividadespro(user, array, id) {
       fechaentrega: fecha,
       tecnica: array[a].tecnicatitulo,
       namefile: temp,
-      contenido: `${env.host}/proyecto${array[a].id}/${temp}`,
+      contenido: `${env.host}/proyecto/contenido/proyecto${array[a].id}/${temp}`,
     });
   }
   return arraydef;
