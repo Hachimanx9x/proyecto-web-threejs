@@ -2408,7 +2408,7 @@ function actividadespro(user, array, id) {
     if (array[a].fotoperfil !== "null" && array[a].fotoperfil !== null) {
       temp2 = `${env.host}/proyecto/contenido/usuario${array[a].userid}/${array[a].fotoperfil}`;
     }
-    console.log(array[a].actividadfechaentrega);
+    // console.log(array[a].actividadfechaentrega);
     let temfecha = array[a].actividadfechaentrega.split("-");
     let strfecha = `${temfecha[2]}/${temfecha[1]}/${temfecha[0]}`;
     let date1 = new Date(strfecha);
