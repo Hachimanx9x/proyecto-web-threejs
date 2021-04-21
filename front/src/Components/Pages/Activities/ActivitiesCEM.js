@@ -92,15 +92,13 @@ export default function ActivitiesCEM(props) {
           <div className="col o-deliverables-col bg-white d-flex flex-wrap rounded z-depth-1 p-0 p-sm-1">
             <div>
               <p className="m-2">Entregables</p>
-              <div className="o-activities-col">
-                {deliverables.map((deliverable, i) => (
-                  <CardDeliverables
-                    key={i}
-                    alfa="cem"
-                    deliverable={deliverable}
-                  />
-                ))}
-              </div>
+              {deliverables.map((deliverable, i) => (
+                <CardDeliverables
+                  key={i}
+                  alfa="cem"
+                  deliverable={deliverable}
+                />
+              ))}
             </div>
             <div>
               {" "}
