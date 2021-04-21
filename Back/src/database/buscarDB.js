@@ -2411,8 +2411,8 @@ function actividadespro(user, array, id) {
     // console.log(array[a].actividadfechaentrega);
     let temfecha = array[a].actividadfechaentrega.split("-");
     let strfecha = `${temfecha[2]}/${temfecha[1]}/${temfecha[0]}`;
-    let date1 = new Date(strfecha);
-    let fecha = `${date1.getDay()}/${date1.getDate()}/${date1.getFullYear()}`;
+    //let date1 = new Date(strfecha);
+    // let fecha = `${date1.getDay()}/${date1.getDate()}/${date1.getFullYear()}`;
     arraydef.push({
       actividadid: array[a].actid,
       titulo: array[a].actividadtitulo,
@@ -2422,7 +2422,7 @@ function actividadespro(user, array, id) {
       foto: temp2,
       rol: array[a].roltitulo,
       estado: array[a].actividadestado,
-      fechaentrega: fecha,
+      fechaentrega: strfecha,
       tecnica: array[a].tecnicatitulo,
       namefile: temp,
       contenido: `${env.host}/proyecto/contenido/proyecto${array[a].id}/${temp}`,
