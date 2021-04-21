@@ -27,6 +27,7 @@ class ProjectView extends Component {
       titleConfirmarion: "",
       windowWidth: window.innerWidth,
       members: [],
+      meetings: [],
       isLeader: false,
     };
   }
@@ -56,6 +57,7 @@ class ProjectView extends Component {
         Axios.get(`http://localhost:3030/calendario/${proyectId}`, options),
       ]).then((response) => {
         console.log(response);
+        const meetings = [];
         const project = response[0].data.proyectos;
         const allmembers = response[0].data.proyectos.integrantes;
         const members = [];
@@ -68,6 +70,14 @@ class ProjectView extends Component {
             rols: [...i.palabras],
             urlimage: i.foto === null ? User : i.foto,
             selectedRol: i.rol,
+          });
+        }
+        for (const i of response[1].data) {
+          meetings.push({
+            title: i.titulo,
+            date: i.fecha,
+            start: this.convertTime(i.start),
+            end: this.convertTime(i.end),
           });
         }
         const item = members.find((iterador) => iterador.id === userId);
@@ -110,10 +120,7 @@ class ProjectView extends Component {
           }
         }
         this.setState({
-          members: [...members],
-          fetched: true,
-          projectPicture: project.banner,
-          projectIcon: project.icono,
+          projectId: project.idproyecto,
           projectName: project.nombre,
           projectDescription:
             project.descripcion === null ||
@@ -121,15 +128,34 @@ class ProjectView extends Component {
             project.descripcion === undefined
               ? "Sin descripción."
               : project.descripcion,
+          projectPicture: project.banner,
+          projectIcon: project.icono,
           projectPractices: [...practices],
-          projectId: project.idproyecto,
+          members: [...members],
+          meetings: [...meetings],
           isLeader: isLeader,
+          fetched: true,
         });
       });
     } catch (error) {
       console.log(error);
     }
   };
+  convertTime = (time) => {
+    // Check correct time format and split into components
+    time = time
+      .toString()
+      .match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+
+    if (time.length > 1) {
+      // If time format correct
+      time = time.slice(1); // Remove full string match value
+      time[5] = +time[0] < 12 ? "AM" : "PM"; // Set AM/PM
+      time[0] = +time[0] % 12 || 12; // Adjust hours
+    }
+    return time.join(""); // return adjusted time or original string
+  };
+
   componentWillUnmount = () => {
     window.removeEventListener("resize", this.handleResize);
   };
@@ -565,27 +591,23 @@ class ProjectView extends Component {
               {" "}
               <p className="m-3 pl-1 pl-sm-4 w-100">Calendario de reuniones</p>
               <div className="d-flex flex-wrap p-1 pb-3 pl-sm-0 pr-sm-4 mt-2">
-                <div className="o-meetings-calendar">
-                  <p>Reunión de avances de oportunidad</p>
-                  <div className="d-flex justify-content-between">
-                    <small>09:00 AM - 10:00 AM</small>
-                    <small>27 / 04 / 2020</small>
-                  </div>
-                </div>{" "}
-                <div className="o-meetings-calendar">
-                  <p>Reunión de avances de oportunidad</p>
-                  <div className="d-flex justify-content-between">
-                    <small>09:00 AM - 10:00 AM</small>
-                    <small>27 / 04 / 2020</small>
-                  </div>
-                </div>{" "}
-                <div className="o-meetings-calendar">
-                  <p>Reunión de avances de oportunidad</p>
-                  <div className="d-flex justify-content-between">
-                    <small>09:00 AM - 10:00 AM</small>
-                    <small>27 / 04 / 2020</small>
-                  </div>
-                </div>
+                {this.state.meetings.length === 0 ? (
+                  <p className="m-auto text-secondary">
+                    No hay reuniones programadas
+                  </p>
+                ) : (
+                  this.state.meetings.map((meeting, i) => (
+                    <div key={i} className="o-meetings-calendar">
+                      <p>{meeting.title}</p>
+                      <div className="d-flex justify-content-between">
+                        <small>
+                          {meeting.start} - {meeting.end}
+                        </small>
+                        <small>{meeting.date}</small>
+                      </div>
+                    </div>
+                  ))
+                )}
               </div>
               <div className="d-flex justify-content-end pr-4 mr-4">
                 <a

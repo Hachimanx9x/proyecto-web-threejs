@@ -17,6 +17,8 @@ require("moment/locale/es.js");
 
 export default function CardActivities({ alfa, activity, tecniques }) {
   const [option, setOption] = useState(activity.tecnica);
+  const date = new Date("05/21/201");
+  console.log(activity.fechaentrega);
   return (
     <div
       className="o-card z-depth-1 m-0 mt-4 p-0 bg-white"
