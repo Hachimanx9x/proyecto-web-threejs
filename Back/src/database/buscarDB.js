@@ -2408,8 +2408,9 @@ function actividadespro(user, array, id) {
     if (array[a].fotoperfil !== "null" && array[a].fotoperfil !== null) {
       temp2 = `${env.host}/proyecto/contenido/usuario${array[a].userid}/${array[a].fotoperfil}`;
     }
+    console.log(array[a].actividadfechaentrega);
     let temfecha = array[a].actividadfechaentrega.split("-");
-    let strfecha = `${temfecha[0]}/${temfecha[1]}/${temfecha[2]}`;
+    let strfecha = `${temfecha[2]}/${temfecha[1]}/${temfecha[0]}`;
     let date1 = new Date(strfecha);
     let fecha = `${date1.getDay()}/${date1.getDate()}/${date1.getFullYear()}`;
     arraydef.push({
@@ -2446,7 +2447,7 @@ function entregablepro(array) {
       fechaentrega: array[a].entregafechaEntrega,
       revisiones: array[a].entreganumeroRevisiones,
       namefile: temp,
-      contenido: `${env.host}/proyecto${array[a].id}/${temp}`,
+      contenido: `${env.host}/proyecto/contenido/proyecto${array[a].id}/${temp}`,
     });
   }
   return arraydef;

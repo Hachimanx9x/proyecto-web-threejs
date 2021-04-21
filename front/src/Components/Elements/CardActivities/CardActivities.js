@@ -17,8 +17,13 @@ require("moment/locale/es.js");
 
 export default function CardActivities({ alfa, activity, tecniques }) {
   const [option, setOption] = useState(activity.tecnica);
-  //const date = new Date("05/21/201");
-  // console.log(activity.fechaentrega);
+  const date =
+    activity.fechaentrega.split("/")[2] +
+    "-" +
+    activity.fechaentrega.split("/")[1] +
+    "-" +
+    activity.fechaentrega.split("/")[0];
+  console.log(activity.fechaentrega + "  2021-05-02");
   return (
     <div
       className="o-card z-depth-1 m-0 mt-4 p-0 bg-white"
@@ -119,7 +124,7 @@ export default function CardActivities({ alfa, activity, tecniques }) {
                 className="sd"
                 type="date"
                 name="selected_date"
-                defaultValue={activity.fechaentrega}
+                defaultValue={"2021/05/21"}
                 min={moment().toDate()}
               />
               <span className="open-button">
