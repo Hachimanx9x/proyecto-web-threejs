@@ -9,6 +9,118 @@ const chalk = require("chalk");
 const LLAVE = "misecretos";
 const path = require("path");
 const env = require("../env");
+
+rutas.put("/comiquieras/actividad", proToken, (req, res) => {
+  const { actividad, fecha, tecnica } = req.body;
+  buscarDB
+    .obtenerActividad()
+    .then((acti) => {
+      buscarDB
+        .obtenertodasTecnicas()
+        .then((tec) => {
+          let temfecha = acti.actividadfechaentrega,
+            temtecnica = acti.tecnica,
+            tempnameacti = null;
+          if (
+            temfecha !== fecha &&
+            fecha !== null &&
+            fecha !== "null" &&
+            fecha !== undefined
+          ) {
+            temfecha = fecha;
+          }
+          tec.API.find((tecnicaarray) => {
+            if (tecnicaarray.id === temtecnica) {
+              tempnameacti = tecnicaarray.tecnicatitulo;
+            }
+          });
+          if (
+            tempnameacti !== tecnica &&
+            tecnica !== null &&
+            tecnica !== "null" &&
+            tecnica !== undefined
+          ) {
+            tec.API.find((tecnicaarray) => {
+              if (tecnica === tecnicaarray.tecnicatitulo) {
+                temtecnica = tecnicaarray.id;
+              }
+            });
+          }
+          if (
+            tecnica !== null &&
+            tecnica !== "null" &&
+            tecnica !== undefined &&
+            fecha !== null &&
+            fecha !== "null" &&
+            fecha !== undefined
+          ) {
+            actualizarDB
+              .updatelistactvity({
+                actividad,
+                fecha: temfecha,
+                tecnica: temtecnica,
+              })
+              .then((result) => {
+                if (req.files !== undefined || req.files !== null) {
+                  if (
+                    req.files.archivo !== undefined ||
+                    req.files.archivo !== null
+                  ) {
+                    const { archivo } = req.files;
+                    if (typeof actividad === "string") {
+                      archivo.mv(__dirname + "/tmp/" + archivo.name, (err) => {
+                        if (!err) {
+                          var metaData = {
+                            "Content-Type": `${archivo.mimetype}`,
+                            size: archivo.size,
+                            "X-Amz-Meta-Testing": 1234,
+                            example: 5678,
+                          };
+                          console.log(
+                            chalk.bgGreen("|   |") + " actualizando actividad"
+                          );
+                          actualizarDB
+                            .entregaractividad(actividad, archivo.name)
+                            .then((result) => {
+                              console.log(
+                                chalk.bgGreen("|   |") +
+                                  `insertando en el bocket ${result.proyecto}`
+                              );
+                              ftpminio
+                                .putFile(
+                                  `proyecto${result.proyecto}`,
+                                  archivo.name,
+                                  path.join(__dirname, `/tmp/${archivo.name}`),
+                                  metaData
+                                )
+                                .then((result2) => {
+                                  res.json({
+                                    file: `${env.host}/proyecto/contenido/proyecto${result.proyecto}/${archivo.name}`,
+                                  });
+                                })
+                                .catch((err2) => res.json(err2));
+                            })
+                            .catch((err) => res.json(err));
+                        } else {
+                          console.log(err);
+                        }
+                      });
+                    }
+                  }
+                }
+                res.json(result);
+              })
+              .catch((err) => res.json(err));
+          } else {
+            console.log(chalk.red("error de datos"));
+            res.json({ msj: "datos erroneos" });
+          }
+        })
+        .catch((errtec) => res.json(errtec));
+    })
+    .catch((erract) => res.json(erract));
+});
+
 rutas.put("/entrega/actividad", proToken, (req, res) => {
   const { actividad } = req.body;
   if (req.files !== undefined || req.files !== null) {

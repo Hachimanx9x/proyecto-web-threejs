@@ -874,6 +874,22 @@ esta ruta reasigna la una actividad a un integrante en especifico
 { "actividad": 1, "fecha": "2021-12-31", "tecnica": "titulo_tecnica" }
 ```
 
+```sh
+put
+/comiquieras/actividad
+```
+
+```json
+//req.body
+{
+   "actividad": 1, "fecha": "2021-12-31", "tecnica": "titulo_tecnica"
+}
+//req.files
+{
+  "archivo":"aqui va el archivo"
+}
+```
+
 > rutas de eliminación
 
 ```sh
