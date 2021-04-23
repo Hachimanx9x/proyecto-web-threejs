@@ -5,10 +5,9 @@ const stream = require("stream");
 const chalk = require("chalk");
 const db = require("../database/buscarDB");
 const peticiones = {};
-
 peticiones.stringfile = async (bucket, namefile) => {
   return new Promise(async (res, rej) => {
-    await minio.fGetObject(
+    minio.fGetObject(
       bucket,
       namefile,
       path.join(__dirname, `../routes/tmp/${namefile}`),
