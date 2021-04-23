@@ -32,7 +32,8 @@ rutas.put("/comiquieras/actividad", proToken, (req, res) => {
             fecha !== undefined
           ) {
             console.log(chalk.green(`La fecha se cambio por ${fecha}`));
-            temfecha = fecha;
+            let tem = fecha.split("-");
+            temfecha = `${tem[0]}-${tem[2]}-${tem[1]}`;
           }
           tec.API.find((tecnicaarray) => {
             if (tecnicaarray.id === temtecnica) {
