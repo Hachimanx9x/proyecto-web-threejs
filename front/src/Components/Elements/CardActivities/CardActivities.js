@@ -16,6 +16,7 @@ import "moment/locale/es.js";
 import Axios from "axios";
 import Rodal from "rodal";
 import SuccessAnimation from "../SuccessAnimation/SuccessAnimation";
+import { Link } from "react-router-dom";
 require("moment/locale/es.js");
 
 export default function CardActivities({ alfa, activity, tecniques }) {
@@ -32,8 +33,15 @@ export default function CardActivities({ alfa, activity, tecniques }) {
     "-" +
     activity.fechaentrega.split("/")[0];
 
+  const downloadFile = () => {
+    let a = document.createElement("a");
+    a.href = activity.contenido;
+    a.setAttribute("download", activity.contenido);
+
+    a.click();
+  };
   const updateActivity = async () => {
-    if (file !== null && date !== null && tecnique !== null) {
+    if (file !== null || date !== null || tecnique !== null) {
       try {
         const datform = new FormData();
         datform.append("actividad", activity.actividadid);
@@ -280,25 +288,42 @@ export default function CardActivities({ alfa, activity, tecniques }) {
             />
           </div>
         </button>
-        <button
-          className={
-            (alfa === "SMMV" ? "o-border-smmv o-text-smmv" : "cem o-text-cem") +
-            " ml-3 rounded-pill o-btn-activity"
+        <Link
+          to={
+            "https://www.nicepng.com/png/detail/56-564803_luffy-monkey-d-luffy-png.png"
           }
+          target="_blank"
+          download
+          file={activity.namefile}
         >
-          Descargar documento{" "}
-          <div
+          Download
+        </Link>
+        <a
+          href={`data:image/jpeg;base64,${activity.contenido}`}
+          target="_blank"
+          download
+        >
+          <button
             className={
-              (alfa === "SMMV" ? "o-bg-smmv" : "cem") +
-              " o-icon-activity-container rounded-circle"
+              (alfa === "SMMV"
+                ? "o-border-smmv o-text-smmv"
+                : "cem o-text-cem") + " ml-3 rounded-pill o-btn-activity"
             }
           >
-            <FontAwesomeIcon
-              className="o-icon-activity"
-              icon={faAngleDoubleDown}
-            />
-          </div>
-        </button>
+            Descargar documento{" "}
+            <div
+              className={
+                (alfa === "SMMV" ? "o-bg-smmv" : "cem") +
+                " o-icon-activity-container rounded-circle"
+              }
+            >
+              <FontAwesomeIcon
+                className="o-icon-activity"
+                icon={faAngleDoubleDown}
+              />
+            </div>
+          </button>
+        </a>
         <input
           type="file"
           id="activity-upload"

@@ -47,8 +47,8 @@ export default function ActivitiesCEM(props) {
           }
         }
       }
-      setFetched(true);
       setTecniques([...array]);
+      setFetched(true);
     }
     searchTecnique();
   }, []);
