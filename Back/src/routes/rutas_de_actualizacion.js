@@ -53,135 +53,74 @@ rutas.put("/comiquieras/actividad", proToken, (req, res) => {
               }
             });
           }
-          if (
-            tecnica !== null &&
-            tecnica !== "null" &&
-            tecnica !== undefined &&
-            fecha !== null &&
-            fecha !== "null" &&
-            fecha !== undefined
-          ) {
-            actualizarDB
-              .updatelistactvity({
-                actividad,
-                fecha: temfecha,
-                tecnica: temtecnica,
-              })
-              .then((result) => {
-                console.log(result);
-                console.log(
-                  chalk.bgBlue("|___| ") +
-                    chalk.blue(`Se actualizo fecha o tecnica`)
-                );
-                if (req.files !== undefined && req.files !== null) {
-                  if (
-                    req.files.archivo !== undefined &&
-                    req.files.archivo !== null
-                  ) {
-                    const { archivo } = req.files;
-                    console.log(
-                      chalk.green(`Entro el archivo ${archivo.name}`)
-                    );
-                    console.log(
-                      chalk.green(`La tecnica se cambio por ${tecnica}`)
-                    );
-                    archivo.mv(__dirname + "/tmp/" + archivo.name, (err) => {
-                      if (!err) {
-                        var metaData = {
-                          "Content-Type": `${archivo.mimetype}`,
-                          size: archivo.size,
-                          "X-Amz-Meta-Testing": 1234,
-                          example: 5678,
-                        };
-                        console.log(
-                          chalk.bgGreen("|   |") + " actualizando actividad"
-                        );
-                        actualizarDB
-                          .entregaractividad(actividad, archivo.name)
-                          .then((result) => {
-                            console.log(
-                              chalk.bgGreen("|   |") +
-                                `insertando en el bocket ${result.proyecto}`
-                            );
-                            ftpminio
-                              .putFile(
-                                `proyecto${result.proyecto}`,
-                                archivo.name,
-                                path.join(__dirname, `/tmp/${archivo.name}`),
-                                metaData
-                              )
-                              .then((result2) => {
-                                res.json({
-                                  file: `${env.host}/proyecto/contenido/proyecto${result.proyecto}/${archivo.name}`,
-                                });
-                              })
-                              .catch((err2) => res.json(err2));
-                          })
-                          .catch((err) => res.json(err));
-                      } else {
-                        console.log(err);
-                      }
-                    });
-                  }
-                } else {
-                  res.json({ msj: "fecha/tecnica actualizado" });
+          actualizarDB
+            .updatelistactvity({
+              actividad,
+              fecha: temfecha,
+              tecnica: temtecnica,
+            })
+            .then((result) => {
+              console.log(result);
+              console.log(
+                chalk.bgBlue("|___| ") +
+                  chalk.blue(`Se actualizo fecha o tecnica`)
+              );
+              if (req.files !== undefined && req.files !== null) {
+                if (
+                  req.files.archivo !== undefined &&
+                  req.files.archivo !== null
+                ) {
+                  const { archivo } = req.files;
+                  console.log(chalk.green(`Entro el archivo ${archivo.name}`));
+                  console.log(
+                    chalk.green(`La tecnica se cambio por ${tecnica}`)
+                  );
+                  archivo.mv(__dirname + "/tmp/" + archivo.name, (err) => {
+                    if (!err) {
+                      var metaData = {
+                        "Content-Type": `${archivo.mimetype}`,
+                        size: archivo.size,
+                        "X-Amz-Meta-Testing": 1234,
+                        example: 5678,
+                      };
+                      console.log(
+                        chalk.bgGreen("|   |") + " actualizando actividad"
+                      );
+                      actualizarDB
+                        .entregaractividad(actividad, archivo.name)
+                        .then((result) => {
+                          console.log(
+                            chalk.bgGreen("|   |") +
+                              `insertando en el bocket ${result.proyecto}`
+                          );
+                          ftpminio
+                            .putFile(
+                              `proyecto${result.proyecto}`,
+                              archivo.name,
+                              path.join(__dirname, `/tmp/${archivo.name}`),
+                              metaData
+                            )
+                            .then((result2) => {
+                              res.json({
+                                file: `${env.host}/proyecto/contenido/proyecto${result.proyecto}/${archivo.name}`,
+                              });
+                            })
+                            .catch((err2) => res.json(err2));
+                        })
+                        .catch((err) => res.json(err));
+                    } else {
+                      console.log(err);
+                    }
+                  });
                 }
-              })
-              .catch((err123) => {
-                res.json(err123);
-                console.log("abajo");
-              });
-          } else {
-            if (req.files !== undefined && req.files !== null) {
-              if (
-                req.files.archivo !== undefined &&
-                req.files.archivo !== null
-              ) {
-                const { archivo } = req.files;
-                console.log(chalk.green(`Entro el archivo ${archivo.name}`));
-                console.log(chalk.green(`La fecha se cambio por ${tecnica}`));
-                archivo.mv(__dirname + "/tmp/" + archivo.name, (err) => {
-                  if (!err) {
-                    var metaData = {
-                      "Content-Type": `${archivo.mimetype}`,
-                      size: archivo.size,
-                      "X-Amz-Meta-Testing": 1234,
-                      example: 5678,
-                    };
-                    console.log(
-                      chalk.bgGreen("|   |") + " actualizando actividad"
-                    );
-                    actualizarDB
-                      .entregaractividad(actividad, archivo.name)
-                      .then((result) => {
-                        console.log(
-                          chalk.bgGreen("|   |") +
-                            `insertando en el bocket ${result.proyecto}`
-                        );
-                        ftpminio
-                          .putFile(
-                            `proyecto${result.proyecto}`,
-                            archivo.name,
-                            path.join(__dirname, `/tmp/${archivo.name}`),
-                            metaData
-                          )
-                          .then((result2) => {
-                            res.json({
-                              file: `${env.host}/proyecto/contenido/proyecto${result.proyecto}/${archivo.name}`,
-                            });
-                          })
-                          .catch((err2) => res.json(err2));
-                      })
-                      .catch((err) => res.json(err));
-                  } else {
-                    console.log(err);
-                  }
-                });
+              } else {
+                res.json({ msj: "fecha/tecnica actualizado" });
               }
-            } else {
-              res.json({ msj: "no se envio nada a actualizar" });
-            }
-          }
+            })
+            .catch((err123) => {
+              res.json(err123);
+              console.log("abajo");
+            });
         })
         .catch((errtec) => res.json(errtec));
     })
