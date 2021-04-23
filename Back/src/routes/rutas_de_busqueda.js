@@ -319,6 +319,16 @@ rutas.get("/proyecto/contenido/:buque/:name", (req, res) => {
     ftpminio.getFilesingle(buque, name, res);
   }
 });
+rutas.get("/proyecto/cadena/:buque/:name", (req, res) => {
+  const { buque, name } = req.params;
+  //console.log(req.params)
+  // const {id,name } = req.body;
+  if (name == "null" || name == null) {
+    res.json({ msj: "no existe" });
+  } else {
+    ftpminio.getFilesinglestring(buque, name, res);
+  }
+});
 
 rutas.get("/proyecto/actividades/:id", proToken, (req, res) => {
   const { id } = req.params;
