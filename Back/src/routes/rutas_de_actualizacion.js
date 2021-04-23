@@ -72,9 +72,9 @@ rutas.put("/comiquieras/actividad", proToken, (req, res) => {
                   chalk.bgBlue("|___| ") +
                     chalk.blue(`Se actualizo fecha o tecnica`)
                 );
-                if (req.files !== undefined || req.files !== null) {
+                if (req.files !== undefined |&& req.files !== null) {
                   if (
-                    req.files.archivo !== undefined ||
+                    req.files.archivo !== undefined &&
                     req.files.archivo !== null
                   ) {
                     const { archivo } = req.files;
