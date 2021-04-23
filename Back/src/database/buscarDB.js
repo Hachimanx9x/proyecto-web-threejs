@@ -2483,7 +2483,7 @@ function actividadespro(user, array, id) {
       if (mes < 10) {
         mes = `0${mes}`;
       }
-      let strfecha = `${day}/${mes}/${temfecha[0]}`;
+      let strfecha = `${mes}/${day}/${temfecha[0]}`;
       //let date1 = new Date(strfecha);
       // let fecha = `${date1.getDay()}/${date1.getDate()}/${date1.getFullYear()}`;
       if (temp) {
@@ -2554,7 +2554,7 @@ function entregablepro(array) {
       if (mes < 10) {
         mes = `0${mes}`;
       }
-      let strfecha = `${day}/${mes}/${temfecha[0]}`;
+      let strfecha = `${mes}/${day}/${temfecha[0]}`;
       if (temp) {
         peticiones
           .stringfile(`proyecto${array[a].proid}`, `${temp}`)
