@@ -521,58 +521,102 @@ funcionesDB.buscaractividadesproyecto = async (user, id) => {
 funcionesDB.obteneractientreproyectos = (array) => {
   return new Promise((res, rej) => {
     // console.log(array);
+    let contfe = 0;
     for (let i = 0; i < array.length; i++) {
+      let arraydef = [];
       funcionesDB
         .buscaractividadesproyecto(1, array[i].id)
         .then((contenido) => {
           /// actividad y entregable
-          let arraydef = [];
-          for (let j1 = 0; j1 < contenido.actividades.length; j1++) {
-            if (
-              contenido.actividades[j1].namefile !== null &&
-              contenido.actividades[j1].namefile !== "null"
-            ) {
-              console.log(
-                chalk.red(
-                  `Actividad ${contenido.actividades[j1].nombre} con el contenido: `
-                ) + chalk.blue(`${contenido.actividades[j1].namefile}`)
-              );
-              arraydef.push({
-                userName: contenido.actividades[j1].nombre,
-                projectName: array[i].title,
-                activity: contenido.actividades[j1].titulo,
-                date: contenido.actividades[j1].fechaentrega,
-                fileName: contenido.actividades[j1].namefile,
-                fileUrl: `${env.host}/proyecto/contenido/proyecto${array[i].id}/${contenido.actividades[j1].namefile}`,
-              });
-            }
-          }
-          //`${env.host}/proyecto/contenido/proyecto${array[a].proid}/${array[a].contenidonombrearchivo}`
-          for (let j2 = 0; j2 < contenido.entregables.length; j2++) {
-            if (
-              contenido.entregables[j2].namefile !== null &&
-              contenido.entregables[j2].namefile !== "null"
-            ) {
-              arraydef.push({
-                userName: "general",
-                projectName: array[i].title,
-                activity: contenido.entregables[j2].nombre,
-                date: contenido.entregables[j2].fechaentrega,
-                fileName: contenido.entregables[j2].namefile,
-                fileUrl: `${env.host}/proyecto/contenido/proyecto${array[i].id}/${contenido.entregables[j2].namefile}`,
-              });
-            }
-          }
-          console.log("entre");
-          array[i].updates = arraydef;
-          if (i >= array.length - 1) {
-            res(array);
-          }
+          verfiactificadad(
+            array[contfe].id,
+            contenido.actividades,
+            arraydef
+          ).then((acti) => {
+            verientrgables(
+              array[contfe].id,
+              array[contfe].title,
+              contenido.entregables,
+              acti
+            ).then((ente) => {
+              array[contfe].updates = ente;
+              if (contfe >= array.length - 1) {
+                console.log("chao");
+                res(array);
+              }
+              contfe++;
+            });
+          });
         })
         .catch((err) => rej(err));
     }
   });
 };
+
+function verfiactificadad(id, array, arraydef) {
+  return new Promise((res, rej) => {
+    let cont = 0;
+    for (let j1 = 0; j1 < array.length; j1++) {
+      if (array[j1].namefile !== null && array[j1].namefile !== "null") {
+        console.log(
+          chalk.red(`Actividad ${array[j1].titulo} con el contenido: `) +
+            chalk.blue(`${array[j1].namefile}`)
+        );
+        arraydef.push({
+          userName: array[j1].nombre,
+          projectName: array[j1].title,
+          activity: array[j1].titulo,
+          date: array[j1].fechaentrega,
+          fileName: array[j1].namefile,
+          fileUrl: `${env.host}/proyecto/contenido/proyecto${id}/${array[j1].namefile}`,
+          source: array[j1].contenido,
+        });
+        if (cont >= array.length - 1) {
+          res(arraydef);
+        }
+        cont++;
+      } else {
+        if (cont >= array.length - 1) {
+          res(arraydef);
+        }
+        cont++;
+      }
+    }
+  });
+}
+
+function verientrgables(id, proname, array, arraydef) {
+  return new Promise((res, rej) => {
+    let cont = 0;
+
+    for (let j2 = 0; j2 < array.length; j2++) {
+      if (array[j2].namefile !== null && array[j2].namefile !== "null") {
+        console.log(
+          chalk.red(`Entregable ${array[j1].titulo} con el contenido: `) +
+            chalk.blue(`${array[j1].namefile}`)
+        );
+        arraydef.push({
+          userName: "general",
+          projectName: proname,
+          activity: array[j2].nombre,
+          date: array[j2].fechaentrega,
+          fileName: array[j2].namefile,
+          fileUrl: `${env.host}/proyecto/contenido/proyecto${id}/${array[j2].namefile}`,
+          source: array[j1].contenido,
+        });
+        if (cont >= array.length - 1) {
+          res(arraydef);
+        }
+        cont++;
+      } else {
+        if (cont >= array.length - 1) {
+          res(arraydef);
+        }
+        cont++;
+      }
+    }
+  });
+}
 /**
  * 
  _______              __                __                                     
