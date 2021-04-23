@@ -1173,6 +1173,8 @@ funcionesDB.updatelistactvity = (obj) => {
             if (!err) {
               res({ msj: "success" });
             } else {
+              console.log("error  Query.actualizaractividad");
+              console.log(err);
               rej({ msj: "error" });
             }
           }

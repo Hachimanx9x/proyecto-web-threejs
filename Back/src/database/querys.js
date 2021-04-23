@@ -460,7 +460,7 @@ query.obtenerentregcontinte = function (id) {
     where proyectos.id = ${id};`;
 };
 query.obtenerActividades = function (id) {
-  return `SELECT * FROM actividades id=${id}; `;
+  return `SELECT * FROM actividades where id=${id}; `;
 };
 //-------------busquedas por tablas
 query.obtenertodasIdiomas = function () {

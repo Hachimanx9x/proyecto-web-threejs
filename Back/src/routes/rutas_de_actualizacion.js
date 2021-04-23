@@ -13,6 +13,7 @@ const env = require("../env");
 rutas.put("/comiquieras/actividad", proToken, (req, res) => {
   const { actividad, fecha, tecnica } = req.body;
   console.log(chalk.yellow("/comiquieras/actividad"));
+
   buscarDB
     .obtenerActividad(actividad)
     .then((acti) => {
@@ -66,6 +67,7 @@ rutas.put("/comiquieras/actividad", proToken, (req, res) => {
                 tecnica: temtecnica,
               })
               .then((result) => {
+                console.log(result);
                 console.log(
                   chalk.bgBlue("|___| ") +
                     chalk.blue(`Se actualizo fecha o tecnica`)
@@ -121,10 +123,13 @@ rutas.put("/comiquieras/actividad", proToken, (req, res) => {
                     });
                   }
                 } else {
-                  res.json(result);
+                  res.json({ msj: "fecha/tecnica actualizado" });
                 }
               })
-              .catch((err) => res.json(err));
+              .catch((err123) => {
+                res.json(err123);
+                console.log("abajo");
+              });
           } else {
             console.log(chalk.red("error de datos"));
             res.json({ msj: "datos erroneos" });
