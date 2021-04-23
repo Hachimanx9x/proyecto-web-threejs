@@ -459,10 +459,12 @@ funcionesDB.buscaractividadesproyecto = async (user, id) => {
                 (err2, rows2) => {
                   if (!err) {
                     actividadespro(user, rows, id).then((resultactivi) => {
-                      console.log(resultactivi);
-                      res({
-                        actividades: resultactivi,
-                        entregables: entregablepro(rows2),
+                      //console.log(resultactivi);
+                      entregablepro(rows2).then((prass) => {
+                        res({
+                          actividades: resultactivi,
+                          entregables: prass,
+                        });
                       });
                     });
                   } else {
@@ -485,9 +487,12 @@ funcionesDB.buscaractividadesproyecto = async (user, id) => {
                 (err, rows2) => {
                   if (!err) {
                     actividadespro(user, rows, id).then((resultactivi) => {
-                      res({
-                        actividades: resultactivi,
-                        entregables: entregablepro(rows2),
+                      //console.log(resultactivi);
+                      entregablepro(rows2).then((prass) => {
+                        res({
+                          actividades: resultactivi,
+                          entregables: prass,
+                        });
                       });
                     });
                   } else {
@@ -2479,25 +2484,58 @@ function actividadespro(user, array, id) {
 }
 
 function entregablepro(array) {
-  let arraydef = [];
-  for (let a = 0; a < array.length; a++) {
-    let temp = null;
-    if (array[a].contenidonombrearchivo !== "null") {
-      temp = array[a].contenidonombrearchivo;
+  return new Promise((res, rej) => {
+    let arraydef = [];
+    let count = 0;
+    for (let a = 0; a < array.length; a++) {
+      let temp = null;
+      if (array[a].contenidonombrearchivo !== "null") {
+        temp = array[a].contenidonombrearchivo;
+      }
+      if (temp) {
+        peticiones
+          .stringfile(`proyecto${array[a].id}`, `${temp}`)
+          .then((file) => {
+            arraydef.push({
+              id: array[a].entrid,
+              nombre: array[a].entregatitulo,
+              descripcion: array[a].entregadescripcion,
+              estado: array[a].entregaestado,
+              tipoactivo: array[a].entregatipoArchivo,
+              fechaentrega: array[a].entregafechaEntrega,
+              revisiones: array[a].entreganumeroRevisiones,
+              namefile: temp,
+              contenido: file,
+            });
+            if (count >= array.length - 1) {
+              res(arraydef);
+            }
+            count++;
+          });
+      } else {
+        peticiones
+          .stringfile(`proyecto${array[a].id}`, `${temp}`)
+          .then((file) => {
+            arraydef.push({
+              id: array[a].entrid,
+              nombre: array[a].entregatitulo,
+              descripcion: array[a].entregadescripcion,
+              estado: array[a].entregaestado,
+              tipoactivo: array[a].entregatipoArchivo,
+              fechaentrega: array[a].entregafechaEntrega,
+              revisiones: array[a].entreganumeroRevisiones,
+              namefile: temp,
+              contenido: temp,
+            });
+            if (count >= array.length - 1) {
+              res(arraydef);
+            }
+            count++;
+          });
+      }
+      //contenido: `${env.host}/proyecto/contenido/proyecto${array[a].id}/${temp}`,
     }
-    arraydef.push({
-      id: array[a].entrid,
-      nombre: array[a].entregatitulo,
-      descripcion: array[a].entregadescripcion,
-      estado: array[a].entregaestado,
-      tipoactivo: array[a].entregatipoArchivo,
-      fechaentrega: array[a].entregafechaEntrega,
-      revisiones: array[a].entreganumeroRevisiones,
-      namefile: temp,
-      contenido: `${env.host}/proyecto/contenido/proyecto${array[a].id}/${temp}`,
-    });
-  }
-  return arraydef;
+  });
 }
 function ponerurlherramientas(array) {
   let arraydef = [];
