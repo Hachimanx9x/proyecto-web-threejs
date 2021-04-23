@@ -2434,7 +2434,7 @@ function actividadespro(user, array, id) {
       fechaentrega: strfecha,
       tecnica: array[a].tecnicatitulo,
       namefile: temp,
-      contenido: `${env.host}/proyecto/cadena/proyecto${array[a].id}/${temp}`,
+      contenido: `${env.host}/proyecto/contenido/proyecto${array[a].id}/${temp}`,
     });
   }
   return arraydef;
