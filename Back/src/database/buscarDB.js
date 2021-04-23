@@ -2544,6 +2544,17 @@ function entregablepro(array) {
       if (array[a].contenidonombrearchivo !== "null") {
         temp = array[a].contenidonombrearchivo;
       }
+      let temfecha = array[a].entregafechaEntrega.split("-");
+      let day = parseInt(temfecha[1], 10);
+      if (day < 10) {
+        day = `0${day}`;
+      }
+
+      let mes = parseInt(temfecha[2], 10);
+      if (mes < 10) {
+        mes = `0${mes}`;
+      }
+      let strfecha = `${day}/${mes}/${temfecha[0]}`;
       if (temp) {
         peticiones
           .stringfile(`proyecto${array[a].proid}`, `${temp}`)
@@ -2554,7 +2565,7 @@ function entregablepro(array) {
               descripcion: array[a].entregadescripcion,
               estado: array[a].entregaestado,
               tipoactivo: array[a].entregatipoArchivo,
-              fechaentrega: array[a].entregafechaEntrega,
+              fechaentrega: strfecha,
               revisiones: array[a].entreganumeroRevisiones,
               namefile: temp,
               contenido: file,
