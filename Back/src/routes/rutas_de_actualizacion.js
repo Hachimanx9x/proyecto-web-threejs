@@ -12,13 +12,15 @@ const env = require("../env");
 
 rutas.put("/comiquieras/actividad", proToken, (req, res) => {
   const { actividad, fecha, tecnica } = req.body;
-
+  console.log(chalk.yellow("/comiquieras/actividad"));
   buscarDB
-    .obtenerActividad()
+    .obtenerActividad(actividad)
     .then((acti) => {
+      console.log("actividades");
       buscarDB
         .obtenertodasTecnicas()
         .then((tec) => {
+          console.log("tecnicas");
           let temfecha = acti.actividadfechaentrega,
             temtecnica = acti.tecnica,
             tempnameacti = null;
@@ -118,8 +120,9 @@ rutas.put("/comiquieras/actividad", proToken, (req, res) => {
                       }
                     });
                   }
+                } else {
+                  res.json(result);
                 }
-                res.json(result);
               })
               .catch((err) => res.json(err));
           } else {
