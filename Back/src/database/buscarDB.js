@@ -458,9 +458,12 @@ funcionesDB.buscaractividadesproyecto = async (user, id) => {
                 Query.obtenerproyectoentregablescompleto(id),
                 (err2, rows2) => {
                   if (!err) {
-                    res({
-                      actividades: actividadespro(user, rows, id),
-                      entregables: entregablepro(rows2),
+                    actividadespro(user, rows, id).then((resultactivi) => {
+                      console.log(resultactivi);
+                      res({
+                        actividades: resultactivi,
+                        entregables: entregablepro(rows2),
+                      });
                     });
                   } else {
                     rej(err2);
@@ -481,9 +484,11 @@ funcionesDB.buscaractividadesproyecto = async (user, id) => {
                 Query.obtenerproyectoentregablescompleto(id),
                 (err, rows2) => {
                   if (!err) {
-                    res({
-                      actividades: actividadespro(user, rows, id),
-                      entregables: entregablepro(rows2),
+                    actividadespro(user, rows, id).then((resultactivi) => {
+                      res({
+                        actividades: resultactivi,
+                        entregables: entregablepro(rows2),
+                      });
                     });
                   } else {
                     rej(err2);
@@ -2369,9 +2374,11 @@ function filtarinfo(array) {
 
 function actividadespro(user, array, id) {
   let arraydef = [];
-  for (let a = 0; a < array.length; a++) {
-    // console.log(array[a].userid)
-    /*  if (user.id === array[a].userid) {
+  return new Promise((res, rej) => {
+    let count = 0;
+    for (let a = 0; a < array.length; a++) {
+      // console.log(array[a].userid)
+      /*  if (user.id === array[a].userid) {
       arraydef.push({
         actividadid: array[a].actid,
         titulo: array[a].actividadtitulo,
@@ -2400,67 +2407,75 @@ function actividadespro(user, array, id) {
         entregar: false,
       });
     }*/
-    let temp = null,
-      temp2 = null;
-    if (array[a].contenidonombrearchivo !== "null") {
-      temp = array[a].contenidonombrearchivo;
-    }
-    if (array[a].fotoperfil !== "null" && array[a].fotoperfil !== null) {
-      temp2 = `${env.host}/proyecto/contenido/usuario${array[a].userid}/${array[a].fotoperfil}`;
-    }
-    // console.log(array[a].actividadfechaentrega);
-    let temfecha = array[a].actividadfechaentrega.split("-");
-    let day = parseInt(temfecha[1], 10);
-    if (day < 10) {
-      day = `0${day}`;
-    }
+      let temp = null,
+        temp2 = null;
+      if (array[a].contenidonombrearchivo !== "null") {
+        temp = array[a].contenidonombrearchivo;
+      }
+      if (array[a].fotoperfil !== "null" && array[a].fotoperfil !== null) {
+        temp2 = `${env.host}/proyecto/contenido/usuario${array[a].userid}/${array[a].fotoperfil}`;
+      }
+      // console.log(array[a].actividadfechaentrega);
+      let temfecha = array[a].actividadfechaentrega.split("-");
+      let day = parseInt(temfecha[1], 10);
+      if (day < 10) {
+        day = `0${day}`;
+      }
 
-    let mes = parseInt(temfecha[2], 10);
-    if (mes < 10) {
-      mes = `0${mes}`;
-    }
-    let strfecha = `${day}/${mes}/${temfecha[0]}`;
-    //let date1 = new Date(strfecha);
-    // let fecha = `${date1.getDay()}/${date1.getDate()}/${date1.getFullYear()}`;
-    if (temp === null) {
-      arraydef.push({
-        actividadid: array[a].actid,
-        titulo: array[a].actividadtitulo,
-        descripcion: array[a].actividaddescripcion,
-        revisiones: array[a].actividadrevision,
-        nombre: array[a].nombre,
-        foto: temp2,
-        rol: array[a].roltitulo,
-        estado: array[a].actividadestado,
-        fechaentrega: strfecha,
-        tecnica: array[a].tecnicatitulo,
-        namefile: temp,
-        contenido: null,
-      });
-    } else {
-      peticiones
-        .stringfile(`proyecto${array[a].id}`, `${temp}`)
-        .then((file) => {
-          arraydef.push({
-            actividadid: array[a].actid,
-            titulo: array[a].actividadtitulo,
-            descripcion: array[a].actividaddescripcion,
-            revisiones: array[a].actividadrevision,
-            nombre: array[a].nombre,
-            foto: temp2,
-            rol: array[a].roltitulo,
-            estado: array[a].actividadestado,
-            fechaentrega: strfecha,
-            tecnica: array[a].tecnicatitulo,
-            namefile: temp,
-            contenido: file,
+      let mes = parseInt(temfecha[2], 10);
+      if (mes < 10) {
+        mes = `0${mes}`;
+      }
+      let strfecha = `${day}/${mes}/${temfecha[0]}`;
+      //let date1 = new Date(strfecha);
+      // let fecha = `${date1.getDay()}/${date1.getDate()}/${date1.getFullYear()}`;
+      if (temp) {
+        peticiones
+          .stringfile(`proyecto${array[a].id}`, `${temp}`)
+          .then((file) => {
+            arraydef.push({
+              actividadid: array[a].actid,
+              titulo: array[a].actividadtitulo,
+              descripcion: array[a].actividaddescripcion,
+              revisiones: array[a].actividadrevision,
+              nombre: array[a].nombre,
+              foto: temp2,
+              rol: array[a].roltitulo,
+              estado: array[a].actividadestado,
+              fechaentrega: strfecha,
+              tecnica: array[a].tecnicatitulo,
+              namefile: temp,
+              contenido: file,
+            });
+            if (count === array.length - 1) {
+              res(arraydef);
+            }
+            count++;
           });
+      } else {
+        arraydef.push({
+          actividadid: array[a].actid,
+          titulo: array[a].actividadtitulo,
+          descripcion: array[a].actividaddescripcion,
+          revisiones: array[a].actividadrevision,
+          nombre: array[a].nombre,
+          foto: temp2,
+          rol: array[a].roltitulo,
+          estado: array[a].actividadestado,
+          fechaentrega: strfecha,
+          tecnica: array[a].tecnicatitulo,
+          namefile: temp,
+          contenido: temp,
         });
-    }
+        if (count === array.length - 1) {
+          res(arraydef);
+        }
+        count++;
+      }
 
-    //contenido: `${env.host}/proyecto/cadena/proyecto${array[a].id}/${temp}`,
-  }
-  return arraydef;
+      //contenido: `${env.host}/proyecto/cadena/proyecto${array[a].id}/${temp}`,
+    }
+  });
 }
 
 function entregablepro(array) {
