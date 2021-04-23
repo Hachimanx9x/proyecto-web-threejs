@@ -112,7 +112,7 @@ rutas.put("/comiquieras/actividad", proToken, (req, res) => {
                               )
                               .then((result2) => {
                                 res.json({
-                                  file: `${env.host}/proyecto/contenido/proyecto${result.proyecto}/${archivo.name}`,
+                                  file: `${env.host}/proyecto/cadena/proyecto${result.proyecto}/${archivo.name}`,
                                 });
                               })
                               .catch((err2) => res.json(err2));
