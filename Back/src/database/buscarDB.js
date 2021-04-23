@@ -5,7 +5,7 @@ const LLAVE = "misecretos";
 const env = require("../env");
 const model = require("../models/models");
 const chalk = require("chalk");
-
+const peticiones = require("../ftp/peticiones");
 const funcionesDB = () => {
   console.log("funciones de la base de datos");
 };
@@ -2422,20 +2422,43 @@ function actividadespro(user, array, id) {
     let strfecha = `${day}/${mes}/${temfecha[0]}`;
     //let date1 = new Date(strfecha);
     // let fecha = `${date1.getDay()}/${date1.getDate()}/${date1.getFullYear()}`;
-    arraydef.push({
-      actividadid: array[a].actid,
-      titulo: array[a].actividadtitulo,
-      descripcion: array[a].actividaddescripcion,
-      revisiones: array[a].actividadrevision,
-      nombre: array[a].nombre,
-      foto: temp2,
-      rol: array[a].roltitulo,
-      estado: array[a].actividadestado,
-      fechaentrega: strfecha,
-      tecnica: array[a].tecnicatitulo,
-      namefile: temp,
-      contenido: `${env.host}/proyecto/cadena/proyecto${array[a].id}/${temp}`,
-    });
+    if (temp === null) {
+      arraydef.push({
+        actividadid: array[a].actid,
+        titulo: array[a].actividadtitulo,
+        descripcion: array[a].actividaddescripcion,
+        revisiones: array[a].actividadrevision,
+        nombre: array[a].nombre,
+        foto: temp2,
+        rol: array[a].roltitulo,
+        estado: array[a].actividadestado,
+        fechaentrega: strfecha,
+        tecnica: array[a].tecnicatitulo,
+        namefile: temp,
+        contenido: null,
+      });
+    } else {
+      peticiones
+        .stringfile(`proyecto${array[a].id}`, `${temp}`)
+        .then((file) => {
+          arraydef.push({
+            actividadid: array[a].actid,
+            titulo: array[a].actividadtitulo,
+            descripcion: array[a].actividaddescripcion,
+            revisiones: array[a].actividadrevision,
+            nombre: array[a].nombre,
+            foto: temp2,
+            rol: array[a].roltitulo,
+            estado: array[a].actividadestado,
+            fechaentrega: strfecha,
+            tecnica: array[a].tecnicatitulo,
+            namefile: temp,
+            contenido: file,
+          });
+        });
+    }
+
+    //contenido: `${env.host}/proyecto/cadena/proyecto${array[a].id}/${temp}`,
   }
   return arraydef;
 }

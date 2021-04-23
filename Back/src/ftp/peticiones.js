@@ -6,6 +6,35 @@ const chalk = require("chalk");
 const db = require("../database/buscarDB");
 const peticiones = {};
 
+peticiones.stringfile=(bucket, namefile)=>{
+return new Promise((res,rej)=>{
+  await minio.fGetObject(
+    bucket,
+    namefile,
+    path.join(__dirname, `../routes/tmp/${namefile}`),
+    function (e) {
+      if (e) {
+        console.log(chalk.bgRed("___") + chalk.red(`bucket o archivo`));
+        console.log(e);
+        return rej(e);
+      }
+      let file = fs.readFileSync(
+        path.join(__dirname, `../routes/tmp/${namefile}`)
+      );
+      // console.log(file.toString("base64"));
+      try {
+        fs.unlinkSync(path.join(__dirname, `../routes/tmp/${namefile}`)); //se borra el archivo temporal
+        // console.log('borrado')
+      } catch (err) {
+        console.log(err);
+      }
+      res(file.toString("base64"));
+    }
+  );
+})
+}
+
+
 peticiones.getFilesinglestring = async (bucket, namefile, res) => {
   await minio.fGetObject(
     bucket,
