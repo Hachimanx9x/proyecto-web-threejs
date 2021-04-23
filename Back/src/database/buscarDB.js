@@ -71,8 +71,10 @@ funcionesDB.obtenerusuarioid = async (body) => {
       } else {
         sqlite.all(Query.usuarioid(id), (err, rows) => {
           if (!err) {
+            console.log(rows);
             res(rows[0]);
           } else {
+            console.log(err);
             rej({ err });
           }
         });
@@ -444,7 +446,7 @@ funcionesDB.buscareventoscalendarioproyecto = async (proyecto) => {
   });
 };
 funcionesDB.buscaractividadesproyecto = async (user, id) => {
-  console.log(user, id);
+  // console.log(user, id);
   return new Promise((res, rej) => {
     //console.log(idUser)
     promesa.then(async (result) => {
@@ -459,8 +461,9 @@ funcionesDB.buscaractividadesproyecto = async (user, id) => {
                 (err2, rows2) => {
                   if (!err) {
                     actividadespro(user, rows, id).then((resultactivi) => {
-                      //console.log(resultactivi);
+                      console.log("actividades");
                       entregablepro(rows2).then((prass) => {
+                        console.log("entregable");
                         res({
                           actividades: resultactivi,
                           entregables: prass,
@@ -478,17 +481,21 @@ funcionesDB.buscaractividadesproyecto = async (user, id) => {
           }
         );
       } else {
+        console.log(user, id);
         sqlite.all(
           Query.obtenerproyectosactividadescompleto(id),
           (err, rows) => {
             if (!err) {
+              console.log(`actividades ${id}`);
               sqlite.all(
                 Query.obtenerproyectoentregablescompleto(id),
                 (err, rows2) => {
                   if (!err) {
+                    console.log(`entreables ${id}`);
                     actividadespro(user, rows, id).then((resultactivi) => {
-                      //console.log(resultactivi);
+                      console.log(id);
                       entregablepro(rows2).then((prass) => {
+                        console.log("entregable");
                         res({
                           actividades: resultactivi,
                           entregables: prass,
@@ -496,6 +503,7 @@ funcionesDB.buscaractividadesproyecto = async (user, id) => {
                       });
                     });
                   } else {
+                    console.log("error de base de datos");
                     rej(err2);
                   }
                 }
@@ -2435,28 +2443,28 @@ function actividadespro(user, array, id) {
       //let date1 = new Date(strfecha);
       // let fecha = `${date1.getDay()}/${date1.getDate()}/${date1.getFullYear()}`;
       if (temp) {
-        peticiones
-          .stringfile(`proyecto${array[a].id}`, `${temp}`)
-          .then((file) => {
-            arraydef.push({
-              actividadid: array[a].actid,
-              titulo: array[a].actividadtitulo,
-              descripcion: array[a].actividaddescripcion,
-              revisiones: array[a].actividadrevision,
-              nombre: array[a].nombre,
-              foto: temp2,
-              rol: array[a].roltitulo,
-              estado: array[a].actividadestado,
-              fechaentrega: strfecha,
-              tecnica: array[a].tecnicatitulo,
-              namefile: temp,
-              contenido: file,
-            });
-            if (count === array.length - 1) {
-              res(arraydef);
-            }
-            count++;
+        console.log(array[a].actid);
+        console.log(`proyecto${id}`, `${temp}`);
+        peticiones.stringfile(`proyecto${id}`, `${temp}`).then((file) => {
+          arraydef.push({
+            actividadid: array[a].actid,
+            titulo: array[a].actividadtitulo,
+            descripcion: array[a].actividaddescripcion,
+            revisiones: array[a].actividadrevision,
+            nombre: array[a].nombre,
+            foto: temp2,
+            rol: array[a].roltitulo,
+            estado: array[a].actividadestado,
+            fechaentrega: strfecha,
+            tecnica: array[a].tecnicatitulo,
+            namefile: temp,
+            contenido: file,
           });
+          if (count === array.length - 1) {
+            res(arraydef);
+          }
+          count++;
+        });
       } else {
         arraydef.push({
           actividadid: array[a].actid,
@@ -2494,7 +2502,7 @@ function entregablepro(array) {
       }
       if (temp) {
         peticiones
-          .stringfile(`proyecto${array[a].id}`, `${temp}`)
+          .stringfile(`proyecto${array[a].proid}`, `${temp}`)
           .then((file) => {
             arraydef.push({
               id: array[a].entrid,
@@ -2513,25 +2521,21 @@ function entregablepro(array) {
             count++;
           });
       } else {
-        peticiones
-          .stringfile(`proyecto${array[a].id}`, `${temp}`)
-          .then((file) => {
-            arraydef.push({
-              id: array[a].entrid,
-              nombre: array[a].entregatitulo,
-              descripcion: array[a].entregadescripcion,
-              estado: array[a].entregaestado,
-              tipoactivo: array[a].entregatipoArchivo,
-              fechaentrega: array[a].entregafechaEntrega,
-              revisiones: array[a].entreganumeroRevisiones,
-              namefile: temp,
-              contenido: temp,
-            });
-            if (count >= array.length - 1) {
-              res(arraydef);
-            }
-            count++;
-          });
+        arraydef.push({
+          id: array[a].entrid,
+          nombre: array[a].entregatitulo,
+          descripcion: array[a].entregadescripcion,
+          estado: array[a].entregaestado,
+          tipoactivo: array[a].entregatipoArchivo,
+          fechaentrega: array[a].entregafechaEntrega,
+          revisiones: array[a].entreganumeroRevisiones,
+          namefile: temp,
+          contenido: temp,
+        });
+        if (count >= array.length - 1) {
+          res(arraydef);
+        }
+        count++;
       }
       //contenido: `${env.host}/proyecto/contenido/proyecto${array[a].id}/${temp}`,
     }

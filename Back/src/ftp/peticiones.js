@@ -13,21 +13,24 @@ peticiones.stringfile = async (bucket, namefile) => {
       path.join(__dirname, `../routes/tmp/${namefile}`),
       function (e) {
         if (e) {
-          console.log(chalk.bgRed("___") + chalk.red(`bucket o archivo`));
-          console.log(e);
-          return rej(e);
+          console.log(
+            chalk.bgRed("___") + chalk.red(`bucket : ${bucket} o archivo`)
+          );
+
+          rej(e);
+        } else {
+          let file = fs.readFileSync(
+            path.join(__dirname, `../routes/tmp/${namefile}`)
+          );
+          // console.log(file.toString("base64"));
+          try {
+            fs.unlinkSync(path.join(__dirname, `../routes/tmp/${namefile}`)); //se borra el archivo temporal
+            // console.log('borrado')
+          } catch (err) {
+            console.log(err);
+          }
+          res(file.toString("base64"));
         }
-        let file = fs.readFileSync(
-          path.join(__dirname, `../routes/tmp/${namefile}`)
-        );
-        // console.log(file.toString("base64"));
-        try {
-          fs.unlinkSync(path.join(__dirname, `../routes/tmp/${namefile}`)); //se borra el archivo temporal
-          // console.log('borrado')
-        } catch (err) {
-          console.log(err);
-        }
-        res(file.toString("base64"));
       }
     );
   });
@@ -40,8 +43,10 @@ peticiones.getFilesinglestring = async (bucket, namefile, res) => {
     path.join(__dirname, `../routes/tmp/${namefile}`),
     function (e) {
       if (e) {
-        console.log(chalk.bgRed("___") + chalk.red(`bucket o archivo`));
-        console.log(e);
+        console.log(
+          chalk.bgRed("___") + chalk.red(`getFilesinglestring bucket o archivo`)
+        );
+        // console.log(e);
         return res.json(e);
       }
       let file = fs.readFileSync(
@@ -66,8 +71,10 @@ peticiones.getFilesingle = async (bucket, namefile, res) => {
     path.join(__dirname, `../routes/tmp/${namefile}`),
     function (e) {
       if (e) {
-        console.log(chalk.bgRed("___") + chalk.red(`bucket o archivo`));
-        console.log(e);
+        console.log(
+          chalk.bgRed("___") + chalk.red(` getFilesinglebucket o archivo`)
+        );
+        // console.log(e);
         return res.json(e);
       }
       //console.log('done')

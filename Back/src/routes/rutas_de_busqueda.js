@@ -8,7 +8,7 @@ const ftpminio = require("../ftp/peticiones");
 const LLAVE = "misecretos";
 
 const model = require("../models/models");
-
+const chalk = require("chalk");
 rutas.post("/login", (req, res) => {
   // console.log("body", req.body);
   const { email, password } = req.body;
@@ -98,20 +98,25 @@ rutas.get("/escritorio", proToken, (req, res) => {
     if (err) {
       res.sendStatus(403);
     }
+    console.log(chalk.yellow(`/escritorio`));
     if (data.rows[0] != null && data.rows.length > 0) {
       buscarDB
         .obtenerusuarioid({ id: data.rows[0].id })
         .then((usua) => {
+          console.log(chalk.blue(`usuario ${usua.nombre}`));
           buscarDB
             .buscartalentogeneral2(data.rows[0].id)
             .then((talento) => {
+              console.log(chalk.blue(`talentos`));
               if (talento.data.length < 1) {
                 buscarDB
                   .obtenerEscritorioProyectos(data)
                   .then((pro) => {
+                    console.log(chalk.blue(`proyectos`));
                     buscarDB
                       .obteneractientreproyectos(pro.proyectos)
                       .then((def) => {
+                        console.log(chalk.blue(`entregado`));
                         res.json({
                           proyectos: def,
                           datos: {
@@ -125,38 +130,41 @@ rutas.get("/escritorio", proToken, (req, res) => {
                       .catch((dererro) => res.json(dererro));
                   })
                   .catch((err2) => res.json(err2));
+              } else {
+                buscarDB
+                  .obtenerEscritorioProyectos(data)
+                  .then((pro) => {
+                    console.log(chalk.blue(`proyectos`));
+                    if (pro.proyectos.length === 0) {
+                      res.json({
+                        proyectos: [],
+                        datos: {
+                          nombre: usua.nombre,
+                          foto: `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`,
+                          herramientas: talento.data[0].herramientas,
+                          palabras: talento.data[0].palabras,
+                        },
+                      });
+                    } else {
+                      buscarDB
+                        .obteneractientreproyectos(pro.proyectos)
+                        .then((def) => {
+                          console.log(chalk.blue(`actividades`));
+                          res.json({
+                            proyectos: def,
+                            datos: {
+                              nombre: usua.nombre,
+                              foto: `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`,
+                              herramientas: talento.data[0].herramientas,
+                              palabras: talento.data[0].palabras,
+                            },
+                          });
+                        })
+                        .catch((dererro) => res.json(dererro));
+                    }
+                  })
+                  .catch((err2) => res.json(err2));
               }
-              buscarDB
-                .obtenerEscritorioProyectos(data)
-                .then((pro) => {
-                  if (pro.proyectos.length === 0) {
-                    res.json({
-                      proyectos: [],
-                      datos: {
-                        nombre: usua.nombre,
-                        foto: `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`,
-                        herramientas: talento.data[0].herramientas,
-                        palabras: talento.data[0].palabras,
-                      },
-                    });
-                  } else {
-                    buscarDB
-                      .obteneractientreproyectos(pro.proyectos)
-                      .then((def) => {
-                        res.json({
-                          proyectos: def,
-                          datos: {
-                            nombre: usua.nombre,
-                            foto: `${env.host}/proyecto/contenido/usuario${data.rows[0].id}/${usua.fotoperfil}`,
-                            herramientas: talento.data[0].herramientas,
-                            palabras: talento.data[0].palabras,
-                          },
-                        });
-                      })
-                      .catch((dererro) => res.json(dererro));
-                  }
-                })
-                .catch((err2) => res.json(err2));
             })
             .catch((talenerr) => res.json(talenerr));
         })
