@@ -2582,7 +2582,7 @@ function entregablepro(array) {
           descripcion: array[a].entregadescripcion,
           estado: array[a].entregaestado,
           tipoactivo: array[a].entregatipoArchivo,
-          fechaentrega: array[a].entregafechaEntrega,
+          fechaentrega: strfecha,
           revisiones: array[a].entreganumeroRevisiones,
           namefile: temp,
           contenido: temp,
