@@ -16,7 +16,6 @@ import "moment/locale/es.js";
 import Axios from "axios";
 import Rodal from "rodal";
 import SuccessAnimation from "../SuccessAnimation/SuccessAnimation";
-import { Link } from "react-router-dom";
 require("moment/locale/es.js");
 
 export default function CardActivities({ alfa, activity, tecniques }) {
@@ -33,13 +32,6 @@ export default function CardActivities({ alfa, activity, tecniques }) {
     "-" +
     activity.fechaentrega.split("/")[0];
 
-  const downloadFile = () => {
-    let a = document.createElement("a");
-    a.href = activity.contenido;
-    a.setAttribute("download", activity.contenido);
-
-    a.click();
-  };
   const updateActivity = async () => {
     if (file !== null || date !== null || tecnique !== null) {
       try {
@@ -274,7 +266,10 @@ export default function CardActivities({ alfa, activity, tecniques }) {
             " rounded-pill o-btn-activity"
           }
         >
-          <label htmlFor="activity-upload" className="rounded-pill"></label>
+          <label
+            htmlFor={"activity-upload" + activity.actividadid}
+            className="rounded-pill"
+          ></label>
           Subir documento
           <div
             className={
@@ -288,20 +283,10 @@ export default function CardActivities({ alfa, activity, tecniques }) {
             />
           </div>
         </button>
-        <Link
-          to={
-            "https://www.nicepng.com/png/detail/56-564803_luffy-monkey-d-luffy-png.png"
-          }
-          target="_blank"
-          download
-          file={activity.namefile}
-        >
-          Download
-        </Link>
         <a
-          href={`data:image/jpeg;base64,${activity.contenido}`}
-          target="_blank"
-          download
+          href={`data:image/*;base64,${activity.contenido}`}
+          target={"_blank"}
+          download={activity.namefile}
         >
           <button
             className={
@@ -326,12 +311,12 @@ export default function CardActivities({ alfa, activity, tecniques }) {
         </a>
         <input
           type="file"
-          id="activity-upload"
+          id={"activity-upload" + activity.actividadid}
           className="d-none"
           onChange={(e) => {
             if (e.target.files[0] !== undefined) {
               setFile(e.target.files[0]);
-              console.log(file);
+              console.log(e.target.files[0]);
             }
           }}
         />

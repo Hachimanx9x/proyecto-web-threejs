@@ -64,7 +64,7 @@ export default function ActivitiesCEM(props) {
   };
   if (fetched) {
     return (
-      <div className="w-100 mb-5 mb-sm-1 pb-5 pb-sm-1">
+      <div className="w-100 mb-5 mb-sm-0 pb-5 pb-sm-0 ">
         <button className="o-btn-return" onClick={() => props.history.goBack()}>
           <span>
             <img src={arrow} alt="Arrow button" />
