@@ -12,6 +12,7 @@ const env = require("../env");
 
 rutas.put("/comiquieras/actividad", proToken, (req, res) => {
   const { actividad, fecha, tecnica } = req.body;
+  console.log({ actividad, fecha, tecnica });
   console.log(chalk.yellow("/comiquieras/actividad"));
   buscarDB
     .obtenerActividad(actividad)

@@ -1082,9 +1082,9 @@ query.updatentrega = function (descripcion, titulo, nombrearchivo, id) {
     WHERE id = ${id}; `;
 };
 query.actualizaractividad = function (actividad, fecha, tecnica) {
-  return `update listaactividades
-    set actividad= ${actividad}, actividadfechaentrega= "${fecha}", tecnica=${tecnica}
-    where  actividad= ${actividad};  `;
+  return `update actividades
+  set  actividadfechaentrega= "${fecha}", tecnica=${tecnica}
+  where  id= ${actividad};  `;
 };
 /**
  `7MM"""Yp,                                               
