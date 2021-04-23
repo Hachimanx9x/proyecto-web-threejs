@@ -20,7 +20,7 @@ peticiones.getFilesinglestring = async (bucket, namefile, res) => {
       let file = fs.readFileSync(
         path.join(__dirname, `../routes/tmp/${namefile}`)
       );
-      console.log(file.toString("base64"));
+      // console.log(file.toString("base64"));
       try {
         fs.unlinkSync(path.join(__dirname, `../routes/tmp/${namefile}`)); //se borra el archivo temporal
         // console.log('borrado')
