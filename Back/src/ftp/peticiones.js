@@ -27,7 +27,7 @@ peticiones.getFilesinglestring = async (bucket, namefile, res) => {
       } catch (err) {
         console.log(err);
       }
-      res.json({ name: namefile, file: file.toString("base64") });
+      res.json(file.toString("base64"));
     }
   );
 };
