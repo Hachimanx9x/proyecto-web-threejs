@@ -5,35 +5,47 @@ import {
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Axios from "axios";
+import Rodal from "rodal";
 import "./CardDeliverables.css";
+import SuccessAnimation from "../SuccessAnimation/SuccessAnimation";
 
 export default function CardDeliverables({ alfa, deliverable }) {
   const [option, setOption] = useState(deliverable.estado);
-  /*
-  const updateActivity = async () => {
-    try {
-      const datform = new FormData();
-      datform.append("actividad", nullData);
-      datform.append("fecha", nullData);
-      datform.append("tecnica", years);
-      datform.append("archivo", fullname);
-      const obj = JSON.parse(token);
-      const tokensito = obj.token;
-      const options = {
-        headers: { authorization: `llave ${tokensito}` },
-      };
+  const [confirmation, setConfirmation] = useState(false);
+  const [modal, setModal] = useState(false);
+  const [file, setFile] = useState(null);
 
-      await Axios.put(
-        `http://localhost:3030//comiquieras/actividad`,
-        datform,
-        options
-      ).thern((response) => {
-        console.log(response);
-      });
-    } catch (error) {
-      console.log(error);
+  const updateDeliverable = async () => {
+    if (file !== null) {
+      try {
+        const datform = new FormData();
+        datform.append("actividad", deliverable.id);
+        datform.append("archivo", file);
+
+        const token = localStorage.getItem("login");
+        const obj = JSON.parse(token);
+        const tokensito = obj.token;
+        const options = {
+          headers: { authorization: `llave ${tokensito}` },
+        };
+
+        await Axios.put(
+          `http://localhost:3030/entrega/entregable`,
+          datform,
+          options
+        ).thern((response) => {
+          console.log(response);
+        });
+      } catch (error) {
+        console.log(error);
+      }
     }
-  };*/
+    setConfirmation(true);
+    setTimeout(() => {
+      setModal(false);
+    }, 1200);
+  };
   return (
     <div
       className="text-center m-1 mt-2 mb-2 p-2"
@@ -43,6 +55,50 @@ export default function CardDeliverables({ alfa, deliverable }) {
           : { background: "#d0a114", width: "16rem" }
       }
     >
+      {" "}
+      <Rodal
+        width={300}
+        height={160}
+        animation={"fade"}
+        visible={modal}
+        onClose={() => setModal(false)}
+      >
+        {!confirmation ? (
+          <div>
+            <h5 className="mt-5 mb-2">¿Guardar cambios?</h5>
+            <div className="d-flex justify-content-between p-2">
+              <button
+                className="z-depth-0 border-primary btn border-primary text-primary font-weight-bold"
+                type="button"
+                style={{
+                  width: "7.2rem",
+                  fontSize: "0.8rem",
+                  height: "2.5rem",
+                }}
+                onClick={() => setModal(false)}
+              >
+                Cancelar
+              </button>
+              <button
+                className="z-depth-0 border-0 btn btn-primary font-weight-bold"
+                type="button"
+                style={{
+                  width: "7.2rem",
+                  fontSize: "0.8rem",
+                  height: "2.5rem",
+                }}
+                onClick={updateDeliverable}
+              >
+                Guardar
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div>
+            <SuccessAnimation />
+          </div>
+        )}
+      </Rodal>
       <p className="text-white">{deliverable.nombre}</p>
       <div className="bg-white rounded d-flex justify-content-between m-1 p-2 position-relative">
         <small>Estado: </small>
@@ -71,14 +127,20 @@ export default function CardDeliverables({ alfa, deliverable }) {
         <small>Archivo:</small>
         <small className={alfa === "SMMV" ? "o-text-smmv" : "o-text-cem"}>
           <small>
-            {deliverable.namefile !== null
+            {file !== null
+              ? file.name
+              : deliverable.namefile !== null
               ? deliverable.namefile
               : "No se han subido archivos."}
           </small>
         </small>
       </div>
-
-      <div className="bg-white rounded d-flex justify-content-between m-1 p-2">
+      <div
+        className={
+          (deliverable.namefile === null ? "d-none " : "") +
+          "bg-white rounded d-flex justify-content-between m-1 p-2"
+        }
+      >
         <small>Descargar:</small>
         <button
           className={
@@ -108,7 +170,10 @@ export default function CardDeliverables({ alfa, deliverable }) {
             " ml-3 rounded-pill o-btn-deliverable"
           }
         >
-          <label htmlFor="deliverable-upload" className="rounded-pill"></label>
+          <label
+            htmlFor={"deliverable-upload" + deliverable.id}
+            className="rounded-pill"
+          ></label>
           Subir documento
           <div
             className={
@@ -123,7 +188,19 @@ export default function CardDeliverables({ alfa, deliverable }) {
           </div>
         </button>
 
-        <input type="file" id="deliverable-upload" className="d-none" />
+        <input
+          type="file"
+          id={"deliverable-upload" + deliverable.id}
+          className="d-none"
+          onChange={(e) => {
+            if (e.target.files[0] !== undefined) {
+              setFile(e.target.files[0]);
+              setConfirmation(false);
+              setModal(true);
+              console.log(e.target.files[0]);
+            }
+          }}
+        />
       </div>
       <div className="bg-white rounded d-flex justify-content-between m-1 p-2">
         <small>Revisiones:</small>

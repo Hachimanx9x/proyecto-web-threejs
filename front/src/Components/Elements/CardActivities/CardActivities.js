@@ -287,6 +287,7 @@ export default function CardActivities({ alfa, activity, tecniques }) {
           href={`data:image/*;base64,${activity.contenido}`}
           target={"_blank"}
           download={activity.namefile}
+          className={activity.namefile === null ? "d-none " : ""}
         >
           <button
             className={
