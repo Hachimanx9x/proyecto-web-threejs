@@ -48,7 +48,7 @@ rutas.put("/comiquieras/actividad", proToken, (req, res) => {
           ) {
             tec.API.find((tecnicaarray) => {
               if (tecnica === tecnicaarray.tecnicatitulo) {
-                console.log(chalk.green(`La fecha se cambio por ${tecnica}`));
+                console.log(chalk.green(`La tecnica se cambio por ${tecnica}`));
                 temtecnica = tecnicaarray.id;
               }
             });
@@ -83,7 +83,7 @@ rutas.put("/comiquieras/actividad", proToken, (req, res) => {
                       chalk.green(`Entro el archivo ${archivo.name}`)
                     );
                     console.log(
-                      chalk.green(`La fecha se cambio por ${tecnica}`)
+                      chalk.green(`La tecnica se cambio por ${tecnica}`)
                     );
                     archivo.mv(__dirname + "/tmp/" + archivo.name, (err) => {
                       if (!err) {
