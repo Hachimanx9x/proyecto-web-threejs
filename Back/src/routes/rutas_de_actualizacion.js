@@ -12,7 +12,6 @@ const env = require("../env");
 
 rutas.put("/comiquieras/actividad", proToken, (req, res) => {
   const { actividad, fecha, tecnica } = req.body;
-  console.log({ actividad, fecha, tecnica });
   console.log(chalk.yellow("/comiquieras/actividad"));
   buscarDB
     .obtenerActividad(actividad)
@@ -135,7 +134,6 @@ rutas.put("/comiquieras/actividad", proToken, (req, res) => {
     })
     .catch((erract) => res.json(erract));
 });
-
 rutas.put("/entrega/actividad", proToken, (req, res) => {
   const { actividad } = req.body;
   if (req.files !== undefined || req.files !== null) {
