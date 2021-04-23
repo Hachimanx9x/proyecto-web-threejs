@@ -73,9 +73,6 @@ export default function ActivitiesCEM(props) {
         </button>
         <div className="d-flex justify-content-between p-1">
           <p>Proyecto creación de entornos 3d</p>
-          <button className="btn mt-2 bg-primary z-depth-0 text-white">
-            Guardar
-          </button>
         </div>
         <div className="row">
           <div className="col-xs-12 bg-white rounded z-depth-1 p-0 p-sm-4 mb-2 mr-0 ml-0 mr-sm-4 ml-sm-4 o-activities-col">
@@ -89,16 +86,18 @@ export default function ActivitiesCEM(props) {
               />
             ))}
           </div>
-          <div className="col o-deliverables-col bg-white d-flex flex-wrap rounded z-depth-1 p-0 p-sm-1">
+          <div className="col o-deliverables-col bg-white rounded z-depth-1 p-0 p-sm-1">
             <div>
               <p className="m-2">Entregables</p>
-              {deliverables.map((deliverable, i) => (
-                <CardDeliverables
-                  key={i}
-                  alfa="cem"
-                  deliverable={deliverable}
-                />
-              ))}
+              <div className="d-flex flex-wrap justify-content-center">
+                {deliverables.map((deliverable, i) => (
+                  <CardDeliverables
+                    key={i}
+                    alfa="cem"
+                    deliverable={deliverable}
+                  />
+                ))}
+              </div>
             </div>
             <div>
               {" "}

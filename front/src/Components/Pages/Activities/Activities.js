@@ -110,9 +110,6 @@ export default function ActivitiesSMMV(props) {
         </button>
         <div className="d-flex justify-content-between p-1">
           <p>Proyecto creación de entornos 3d</p>
-          <button className="btn mt-2 bg-primary z-depth-0 text-white">
-            Guardar
-          </button>
         </div>
         <div className="row">
           <div
@@ -129,10 +126,10 @@ export default function ActivitiesSMMV(props) {
               />
             ))}
           </div>
-          <div className="col o-deliverables-col bg-white d-flex flex-wrap rounded z-depth-1 p-0 p-sm-1">
+          <div className="col o-deliverables-col bg-white rounded z-depth-1 p-0 p-sm-1">
             <div>
               <p className="m-2">Entregables</p>
-              <div className="o-activities-col">
+              <div className="d-flex flex-wrap justify-content-center">
                 {deliverables.map((deliverable, i) => (
                   <CardDeliverables
                     key={i}

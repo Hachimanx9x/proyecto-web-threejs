@@ -9,6 +9,31 @@ import "./CardDeliverables.css";
 
 export default function CardDeliverables({ alfa, deliverable }) {
   const [option, setOption] = useState(deliverable.estado);
+  /*
+  const updateActivity = async () => {
+    try {
+      const datform = new FormData();
+      datform.append("actividad", nullData);
+      datform.append("fecha", nullData);
+      datform.append("tecnica", years);
+      datform.append("archivo", fullname);
+      const obj = JSON.parse(token);
+      const tokensito = obj.token;
+      const options = {
+        headers: { authorization: `llave ${tokensito}` },
+      };
+
+      await Axios.put(
+        `http://localhost:3030//comiquieras/actividad`,
+        datform,
+        options
+      ).thern((response) => {
+        console.log(response);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };*/
   return (
     <div
       className="text-center m-1 mt-2 mb-2 p-2"
@@ -111,6 +136,7 @@ export default function CardDeliverables({ alfa, deliverable }) {
             " m-0 rounded-circle text-white"
           }
           style={{
+            pointerEvents: "none",
             border: "none",
             width: "1.5rem",
             height: "1.5rem",

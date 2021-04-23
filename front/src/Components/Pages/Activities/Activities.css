@@ -3,6 +3,7 @@
   overflow-y: auto;
 }
 .o-deliverables-col {
+  flex-direction: column;
   max-height: 60rem;
   overflow-y: auto;
   text-align: start;
@@ -35,13 +36,7 @@
 
 @media only screen and (max-width: 1300px) {
   .o-deliverables-col {
-    margin-left: 24px;
-  }
-}
-
-@media only screen and (max-width: 1300px) {
-  .o-deliverables-col {
     max-width: 100%;
-    margin: 0;
+    margin: 0 0 0 24px;
   }
 }
