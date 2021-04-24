@@ -17,6 +17,7 @@
 .o-updates-section {
   height: 0;
   padding: 0 1rem;
+  overflow-x: hidden;
   overflow-y: auto;
   transition: all 0.6s ease;
 }

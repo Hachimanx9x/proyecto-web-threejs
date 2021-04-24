@@ -8,6 +8,7 @@ import {
   faClock,
   faArrowDown,
 } from "@fortawesome/free-solid-svg-icons";
+import Axios from "axios";
 
 const CardDesktop = ({ update }) => {
   const project = (
@@ -15,6 +16,19 @@ const CardDesktop = ({ update }) => {
   );
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
+  const getFile = () => {
+    Axios({
+      url: update.url, //your url
+      method: "GET",
+      responseType: "blob", // important
+    }).then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", update.fileName); //or any other extension
+      link.click();
+    });
+  };
   useEffect(() => {
     function resize() {
       setWindowWidth(window.innerWidth);
@@ -60,13 +74,16 @@ const CardDesktop = ({ update }) => {
         </div>
         */}
         <div className="col-xs-4 col-sm-6 rounded-pill grey p-0 lighten-3 d-flex o-download-section">
-          <div className="col-xs-6 col-sm-6">
-            <p className="grey-text pt-2 pl-3 mb-0">{update.fileName}</p>
+          <div className="col-xs-6 col-sm-6 d-flex flex-wrap">
+            <small className="grey-text pt-2 pl-3 mb-0">
+              {update.fileName}
+            </small>
           </div>
           <div className="col-xs-6 col-sm-6 p-0 d-flex justify-content-end">
             <form method="get" action={update.fileUrl}>
               <button
-                type="submit"
+                type="button"
+                onClick={getFile}
                 className="border-0 rounded-pill grey lighten-2 cyan-text o-download-btn"
               >
                 Descargar{" "}

@@ -31,6 +31,20 @@ export default function CardActivities({ alfa, activity, tecniques }) {
     activity.fechaentrega.split("/")[1] +
     "-" +
     activity.fechaentrega.split("/")[0];
+  /*
+  const getFile = () => {
+    Axios({
+      url: activity.url, //your url
+      method: "GET",
+      responseType: "blob", // important
+    }).then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", activity.namefile); //or any other extension
+      link.click();
+    });
+  };*/
 
   const updateActivity = async () => {
     if (file !== null || date !== null || tecnique !== null) {
