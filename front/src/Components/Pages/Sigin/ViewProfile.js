@@ -543,11 +543,9 @@ export default function ViewProfile(props) {
             >
               <select
                 onChange={(e) => setYears(e.target.value)}
+                defaultValue={years.cat}
                 className={!errorList.validYears ? "border-danger" : ""}
               >
-                <option value={years.cat} selected>
-                  {years.key}
-                </option>
                 {yearsList.map((year) => (
                   <option key={year.cat} value={year.cat}>
                     {year.key}
@@ -753,8 +751,10 @@ export default function ViewProfile(props) {
           <p>País</p>
           <div className="position-relative">
             <div className="o-single-select m-0 p-0">
-              <select onChange={(e) => setCountry(e.target.value)}>
-                <option selected>{country}</option>
+              <select
+                defaultValue={country}
+                onChange={(e) => setCountry(e.target.value)}
+              >
                 {countries.map((country) => (
                   <option key={country.cat} value={country.cat}>
                     {country.key}

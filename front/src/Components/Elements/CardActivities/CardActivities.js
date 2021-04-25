@@ -31,20 +31,16 @@ export default function CardActivities({ alfa, activity, tecniques }) {
     activity.fechaentrega.split("/")[1] +
     "-" +
     activity.fechaentrega.split("/")[0];
-  /*
+
   const getFile = () => {
-    Axios({
-      url: activity.url, //your url
-      method: "GET",
-      responseType: "blob", // important
-    }).then((response) => {
+    Axios.get(activity.url, { responseType: "blob" }).then((response) => {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", activity.namefile); //or any other extension
+      link.setAttribute("download", activity.namefile);
       link.click();
     });
-  };*/
+  };
 
   const updateActivity = async () => {
     if (file !== null || date !== null || tecnique !== null) {
@@ -297,33 +293,27 @@ export default function CardActivities({ alfa, activity, tecniques }) {
             />
           </div>
         </button>
-        <a
-          href={`data:image/*;base64,${activity.contenido}`}
-          target={"_blank"}
-          download={activity.namefile}
-          className={activity.namefile === null ? "d-none " : ""}
+        <button
+          type="button"
+          onClick={getFile}
+          className={
+            (alfa === "SMMV" ? "o-border-smmv o-text-smmv" : "cem o-text-cem") +
+            " ml-3 rounded-pill o-btn-activity"
+          }
         >
-          <button
+          Descargar documento{" "}
+          <div
             className={
-              (alfa === "SMMV"
-                ? "o-border-smmv o-text-smmv"
-                : "cem o-text-cem") + " ml-3 rounded-pill o-btn-activity"
+              (alfa === "SMMV" ? "o-bg-smmv" : "cem") +
+              " o-icon-activity-container rounded-circle"
             }
           >
-            Descargar documento{" "}
-            <div
-              className={
-                (alfa === "SMMV" ? "o-bg-smmv" : "cem") +
-                " o-icon-activity-container rounded-circle"
-              }
-            >
-              <FontAwesomeIcon
-                className="o-icon-activity"
-                icon={faAngleDoubleDown}
-              />
-            </div>
-          </button>
-        </a>
+            <FontAwesomeIcon
+              className="o-icon-activity"
+              icon={faAngleDoubleDown}
+            />
+          </div>
+        </button>
         <input
           type="file"
           id={"activity-upload" + activity.actividadid}

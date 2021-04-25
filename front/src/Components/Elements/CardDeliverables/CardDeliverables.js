@@ -135,33 +135,33 @@ export default function CardDeliverables({ alfa, deliverable }) {
           </small>
         </small>
       </div>
-      <div
-        className={
-          (deliverable.namefile === null ? "d-none " : "") +
-          "bg-white rounded d-flex justify-content-between m-1 p-2"
-        }
-      >
-        <small>Descargar:</small>
-        <button
-          className={
-            (alfa === "SMMV" ? "o-border-smmv o-text-smmv" : "o-text-cem cem") +
-            " ml-3 rounded-pill o-btn-deliverable"
-          }
-        >
-          Descargar documento
-          <div
+      {deliverable.namefile !== null ? (
+        <div className=" d-none bg-white rounded d-flex justify-content-between m-1 p-2">
+          <small>Descargar:</small>
+          <button
             className={
-              (alfa === "SMMV" ? "o-bg-smmv" : "cem") +
-              " o-icon-deliverable-container rounded-circle"
+              (alfa === "SMMV"
+                ? "o-border-smmv o-text-smmv"
+                : "o-text-cem cem") + " ml-3 rounded-pill o-btn-deliverable"
             }
           >
-            <FontAwesomeIcon
-              className="o-icon-deliverable"
-              icon={faAngleDoubleDown}
-            />
-          </div>
-        </button>
-      </div>
+            Descargar documento
+            <div
+              className={
+                (alfa === "SMMV" ? "o-bg-smmv" : "cem") +
+                " o-icon-deliverable-container rounded-circle"
+              }
+            >
+              <FontAwesomeIcon
+                className="o-icon-deliverable"
+                icon={faAngleDoubleDown}
+              />
+            </div>
+          </button>
+        </div>
+      ) : (
+        <></>
+      )}
       <div className="bg-white rounded d-flex justify-content-between m-1 p-2">
         <small>Subir:</small>
         <button
