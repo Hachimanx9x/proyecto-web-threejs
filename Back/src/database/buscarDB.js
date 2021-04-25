@@ -2554,7 +2554,7 @@ function entregablepro(array) {
       if (mes < 10) {
         mes = `0${mes}`;
       }
-      let strfecha = `${mes}/${day}/${temfecha[0]}`;
+      let strfecha = `${day}/${mes}/${temfecha[0]}`;
       if (temp) {
         peticiones
           .stringfile(`proyecto${array[a].proid}`, `${temp}`)
@@ -2568,7 +2568,8 @@ function entregablepro(array) {
               fechaentrega: strfecha,
               revisiones: array[a].entreganumeroRevisiones,
               namefile: temp,
-              contenido: file,
+              contenido: `${env.host}/proyecto/contenido/proyecto${array[a].id}/${temp}`,
+              source: file,
             });
             if (count >= array.length - 1) {
               res(arraydef);
@@ -2585,7 +2586,8 @@ function entregablepro(array) {
           fechaentrega: strfecha,
           revisiones: array[a].entreganumeroRevisiones,
           namefile: temp,
-          contenido: temp,
+          contenido: `${env.host}/proyecto/contenido/proyecto${array[a].id}/${temp}`,
+          source: file,
         });
         if (count >= array.length - 1) {
           res(arraydef);
