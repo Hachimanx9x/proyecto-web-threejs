@@ -275,15 +275,16 @@ class CreateProject extends Component {
           options
         ).then((response) => {
           console.log(response);
+          this.setState({ success: true });
+          setTimeout(() => {
+            this.setState({ confirmationModal: false });
+            this.props.history.push("/Dashboard/Desktop");
+          }, 1200);
         });
       } catch (error) {
         console.log(error);
-      }
-      this.setState({ success: true });
-      setTimeout(() => {
         this.setState({ confirmationModal: false });
-        this.props.history.push("/Dashboard/Desktop");
-      }, 1200);
+      }
     } else {
       this.setState({ confirmationModal: false });
     }

@@ -33,7 +33,7 @@ export default function CardActivities({ alfa, activity, tecniques }) {
     activity.fechaentrega.split("/")[0];
 
   const getFile = () => {
-    Axios.get(activity.url, { responseType: "blob" }).then((response) => {
+    Axios.get(activity.contenido, { responseType: "blob" }).then((response) => {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;

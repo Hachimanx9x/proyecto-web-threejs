@@ -121,7 +121,9 @@ class Contacts extends Component {
           const contain = contact.jobs.some((job) =>
             job.toLocaleLowerCase().includes(keyWord.toLocaleLowerCase())
           );
-          contain ? show.push(contact) : console.log("D :");
+          if (contain) {
+            show.push(contact);
+          }
         }
       } else {
         for (let i = 0; i < talents.length; i++) {
@@ -129,7 +131,9 @@ class Contacts extends Component {
           const contain = talent.jobs.some((job) =>
             job.toLocaleLowerCase().includes(keyWord.toLocaleLowerCase())
           );
-          contain ? show.push(talent) : console.log("D :");
+          if (contain) {
+            show.push(talent);
+          }
         }
       }
       this.setState({ show: [...show] });

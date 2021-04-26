@@ -16,6 +16,18 @@ export default function CardDeliverables({ alfa, deliverable }) {
   const [modal, setModal] = useState(false);
   const [file, setFile] = useState(null);
 
+  const getFile = () => {
+    Axios.get(deliverable.contenido, { responseType: "blob" }).then(
+      (response) => {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", deliverable.namefile);
+        link.click();
+      }
+    );
+  };
+
   const updateDeliverable = async () => {
     if (file !== null) {
       try {
@@ -144,6 +156,8 @@ export default function CardDeliverables({ alfa, deliverable }) {
                 ? "o-border-smmv o-text-smmv"
                 : "o-text-cem cem") + " ml-3 rounded-pill o-btn-deliverable"
             }
+            type="button"
+            onClick={getFile}
           >
             Descargar documento
             <div

@@ -13,6 +13,7 @@ import "moment/locale/es.js";
 import Rodal from "rodal";
 import SuccessAnimation from "../../Elements/SuccessAnimation/SuccessAnimation";
 import moment from "moment";
+import Axios from "axios";
 
 import "moment/locale/es.js";
 require("moment/locale/es.js");
@@ -41,6 +42,7 @@ class CreateEvents extends Component {
       projectIsValid: true,
       errorHour: "",
       confirmation: false,
+      projectList: [],
       colors: [],
       events: [
         "Reunión avances",
@@ -59,11 +61,44 @@ class CreateEvents extends Component {
     const titleValid = this.state.titleIsValid;
     const project = this.state.projectIsValid;
     if (hour & project & titleValid) {
-      this.setState({ confirmation: true });
-      setTimeout(() => {
+      const {
+        project,
+        eventTitle,
+        eventDescription,
+        eventStart,
+        eventEnd,
+        selectedDate,
+      } = this.state;
+      try {
+        const token = localStorage.getItem("login");
+        const obj = JSON.parse(token);
+        const tokensito = obj.token;
+        const options = {
+          headers: { authorization: `llave ${tokensito}` },
+        };
+
+        await Axios.post(
+          `http://localhost:3030/crear/reunion`,
+          {
+            proyect: project,
+            fecha: selectedDate,
+            start: eventStart,
+            end: eventEnd,
+            descripcion: eventDescription,
+            titulo: eventTitle,
+          },
+          options
+        ).thern((response) => {
+          this.setState({ confirmation: true });
+          setTimeout(() => {
+            this.setState({ confirmationModal: false });
+            this.props.history.push("/Dashboard/Calendar");
+          }, 1200);
+        });
+      } catch (error) {
+        console.log(error);
         this.setState({ confirmationModal: false });
-        this.props.history.push("/Dashboard/Calendar");
-      }, 1200);
+      }
     } else {
       this.setState({ confirmationModal: false });
     }
@@ -130,9 +165,40 @@ class CreateEvents extends Component {
     const date = new Date(localStorage.getItem("date"));
     const dateparts = date.toLocaleDateString().split("/");
     console.log(dateparts[2] + "/" + dateparts[1] + "/" + dateparts[0]);
+
+    const token = localStorage.getItem("login");
+    const obj = JSON.parse(token);
+    let temp = obj.token;
+    const projects = [];
+    const options = {
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `llave ${temp}`,
+      },
+    };
+    try {
+      Axios.all([
+        (Axios.get(`http://localhost:3030/escritorio`, options),
+        Axios.get(`http://localhost:3030/escritorio`, options)),
+      ]).then((response) => {
+        console.log(response);
+        const temp = response[0].data.proyectos;
+
+        for (const i of temp) {
+          projects.push({
+            id: i.id,
+            title: i.title,
+            pdates: [...i.updates],
+          });
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
     this.setState({
       colors: [...temcolors],
       selectedDate: date,
+      projectList: [...projects],
       fetched: true,
     });
   };
@@ -148,6 +214,12 @@ class CreateEvents extends Component {
     } else {
       this.setState({ [name]: e.target.value });
     }
+  };
+
+  handleDayClick = (day, { selected }) => {
+    this.setState({
+      selectedDate: selected ? undefined : day,
+    });
   };
   render() {
     if (this.state.fetched) {
@@ -248,20 +320,14 @@ class CreateEvents extends Component {
                   </small>
                   <div className="position-relative mt-1 mb-2 mb-sm-4">
                     <div className="o-create-select">
-                      <select onChange={(e) => this.handleInput("project", e)}>
-                        <option hidden>Seleccione</option>
-                        <option value="Creación de entorno web">
-                          Creación de entorno web
-                        </option>
-                        <option value="Arquitecto de experiencia multimedia">
-                          Arquitecto de experiencia multimedia
-                        </option>
-                        <option value="Arquitecto Software">
-                          Creación de videojuegos
-                        </option>
-                        <option value="Arquitecto Hardware">
-                          Desarrollo de software
-                        </option>
+                      <select
+                        className="w-100"
+                        onChange={(e) => this.handleInput("project", e)}
+                      >
+                        <option hidden>Seleccione </option>
+                        {this.state.projectList.map((project, i) => (
+                          <option value={project.id}>{project.title}</option>
+                        ))}
                       </select>
                     </div>
                   </div>
@@ -422,16 +488,22 @@ class CreateEvents extends Component {
 
               <div className="o-date-picker-container rounded mt-2 p-4 d-flex flex-column">
                 <p>Eventos programados para el mismo día</p>
-                {this.state.events.map((event, i) => (
-                  <p key={i}>
-                    <FontAwesomeIcon
-                      icon={faSquare}
-                      color={this.state.colors[i]}
-                      className="mr-2"
-                    />
-                    {event}
+                {this.state.events.length !== 0 ? (
+                  this.state.events.map((event, i) => (
+                    <p key={i}>
+                      <FontAwesomeIcon
+                        icon={faSquare}
+                        color={this.state.colors[i]}
+                        className="mr-2"
+                      />
+                      {event}
+                    </p>
+                  ))
+                ) : (
+                  <p className="m-auto text-secondary">
+                    No hay reuniones agendadas
                   </p>
-                ))}
+                )}
               </div>
             </div>
           </div>

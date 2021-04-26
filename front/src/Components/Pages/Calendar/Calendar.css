@@ -119,6 +119,7 @@
 .o-create-select {
   position: absolute;
   top: -5px;
+  width: 10rem;
 }
 
 .o-create-select select {
@@ -126,6 +127,7 @@
   padding: 0;
   border-radius: 1rem;
   max-width: 10rem;
+  width: 100%;
   height: 1.4rem;
   border: 1px solid #007bff;
   font-size: 0.6rem;
