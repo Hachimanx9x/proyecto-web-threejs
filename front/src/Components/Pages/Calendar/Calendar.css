@@ -26,12 +26,31 @@
   border-radius: 1rem;
 }
 
-.fc-prev-button,
-.fc-dayGridMonth-button,
-.fc-timeGridDay-button,
-.fc-timeGridWeek-button {
+.o-calendar-container .fc-button {
   margin-right: 0;
   box-shadow: none;
+  background-color: #3a81f1;
+  border: 1px solid #5d9bfd;
+  transition: all 0.4s ease;
+}
+
+.o-calendar-container .fc-button:hover {
+  margin-right: 0;
+  box-shadow: none;
+  background-color: #084e99;
+  border: 1px solid #5d9bfd;
+}
+
+.o-calendar-container .fc .fc-button-primary:not(:disabled):active,
+.fc .fc-button-primary:not(:disabled).fc-button-active {
+  background-color: #084e99;
+  border: 0;
+  box-shadow: 0 0 0 0.2rem rgba(18, 95, 177, 0.633);
+}
+
+.o-calendar-container .fc-button-primary:disabled {
+  background-color: #4285f4;
+  border: 0;
 }
 
 .fc-next-button {
@@ -44,6 +63,7 @@
 .fc-today-button {
   border-radius: 3px !important;
   box-shadow: none;
+  margin-left: 10px;
 }
 
 .fc-listWeek-button {

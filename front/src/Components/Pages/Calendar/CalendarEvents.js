@@ -37,18 +37,18 @@ export default class CalendarEvents extends Component {
         },
         {
           title: "Reunión avances",
-          start: new Date("2021/02/11 12:22"),
-          end: new Date("2021-02-13 13:42"),
+          start: moment().add(2, "days").toDate(),
+          end: moment().add(2, "days").toDate(),
         },
         {
           title: "Computación",
-          start: new Date("2021-02-21 12:22"),
-          end: new Date("2021-02-23 13:42"),
+          start: moment().add(3, "days").toDate(),
+          end: moment().add(4, "days").toDate(),
         },
         {
           title: "Reunión avances",
-          start: new Date("2021-04-18 12:22"),
-          end: new Date("2021-04-18 13:42"),
+          start: moment().add(5, "days").toDate(),
+          end: moment().add(5, "days").toDate(),
         },
       ],
       selectedDate: null,
@@ -56,7 +56,7 @@ export default class CalendarEvents extends Component {
       error: false,
       fetched: true,
     };
-  }
+  } /*
   componentDidMount = () => {
     const token = localStorage.getItem("login");
     const obj = JSON.parse(token);
@@ -107,7 +107,7 @@ export default class CalendarEvents extends Component {
       });
     }
     this.setState({ colors: temcolors, fetched: true, events: temvents });
-  };
+  };*/
   handleDayClick = (day, { selected }) => {
     this.setState({
       selectedDate: selected ? undefined : day,
@@ -127,6 +127,7 @@ export default class CalendarEvents extends Component {
       return (
         <div className="row mb-3 mb-sm-0 pb-5 pb-sm-0">
           <div className="col-12 col-sm-8 o-calendar-container  text-center">
+            {" "}
             <FullCalendar
               headerToolbar={{
                 left: "prev,next,today",
@@ -136,13 +137,9 @@ export default class CalendarEvents extends Component {
               eventClick={() => {
                 this.props.history.push("/Dashboard/Meetings");
               }}
-              plugins={[
-                dayGridPlugin,
-                timeGridPlugin,
-                listPlugin,
-                bootstrapPlugin,
-              ]}
-              themeSystem={"bootstrap"}
+              plugins={[dayGridPlugin, timeGridPlugin, listPlugin]}
+              themeSystem={bootstrapPlugin}
+              initialView="dayGridMonth"
               events={this.state.events}
               locale={esLocale}
             />
