@@ -294,7 +294,12 @@ funcionesDB.buscarProyecto = async (idp) => {
       if (vDB) {
         await mariaDB.query(Query.buscarProyecto(idp), (err, rows) => {
           if (!err) {
-            res({ proyectos: ordeninfoproyect(rows) });
+            funcionesDB.buscareventoscalendario(idp).then((cale) => {
+              res({
+                proyectos: ordeninfoproyect(rows),
+                calendario: calendariosoloproyecto(cale, idp),
+              });
+            });
           } else {
             rej({ err });
           }
@@ -302,7 +307,12 @@ funcionesDB.buscarProyecto = async (idp) => {
       } else {
         sqlite.all(Query.buscarProyecto(idp), (err, rows) => {
           if (!err) {
-            res({ proyectos: ordeninfoproyect(rows) });
+            funcionesDB.buscareventoscalendario(idp).then((cale) => {
+              res({
+                proyectos: ordeninfoproyect(rows),
+                calendario: calendariosoloproyecto(cale, idp),
+              });
+            });
           } else {
             rej({ err });
           }
@@ -2637,32 +2647,60 @@ function filpracticaproyecto(array, pra) {
   } else {
     for (let a = 0; array.length; a++) {
       if (array[a].nombre === temppracti) {
-        return array[a];
-      }
-    }
-  }
-}
-function practicasfiltoentregables(array, pra) {
-  let arradef = [];
-  let temppracti;
-  if (pra === "cem") {
-    temppracti = modelo.Practicas[0];
-  } else if (pra === "smmv") {
-    temppracti = modelo.Practicas[1];
-  }
-  if (pra !== undefined) {
-    for (let a = 0; a < array.length; a++) {
-      for (let b = 0; b < temppracti.Entregables.length; b++) {
-        if (array[a].nombre === temppracti.Entregables[b].entregatitulo) {
-          arradef.push(array[a]);
+        let temp = 0;
+        if (array[a].nombre === "Sistema Multimedia mínimo viable") {
+          for (let b = 0; b < array[a].alfas.length; b++) {
+            if (array[a].alfas[b].nombre === "Valor del sistema multimedia") {
+              if (array[a].alfas[b].estado == "iniciado") {
+                temp += 0;
+              }
+              if (array[a].alfas[b].estado == "Alcanzable") {
+                temp += 25;
+              }
+              if (array[a].alfas[b].estado == "Diferenciado") {
+                temp += 50;
+              }
+              if (array[a].alfas[b].estado == "Visionado") {
+                temp += 75;
+              }
+              if (array[a].alfas[b].estado == "Definido") {
+                temp += 100;
+              }
+            }
+          }
         }
+
+        if (array[a].nombre === "Concepción de la experiencia multimedia") {
+          for (let b = 0; b < array[a].alfas.length; b++) {
+            if (array[a].alfas[b].nombre === "Diseño responsable") {
+              if (array[a].alfas[b].estado == "iniciado") {
+                temp += 0;
+              }
+              if (array[a].alfas[b].estado == "Identificado") {
+                temp += 25;
+              }
+              if (array[a].alfas[b].estado == "Comprendido") {
+                temp += 50;
+              }
+              if (array[a].alfas[b].estado == "Acordado") {
+                temp += 75;
+              }
+              if (array[a].alfas[b].estado == "Concebido") {
+                temp += 100;
+              }
+            }
+          }
+        }
+        let objre = {
+          nombre: array[a].nombre,
+          descripcion: array[a].descripcion,
+          alfas: array[a].alfas,
+          tasa: temp,
+        };
+        return objre;
       }
     }
-  } else {
-    arradef = array;
   }
-
-  return arradef;
 }
 function ponerurlherramientas(array) {
   let arraydef = [];
@@ -2816,7 +2854,17 @@ function ordeninfoproyect(rows) {
 
   return objdef;
 }
-function cambionombrealfa(obj) {}
+function calendariosoloproyecto(array, proyecto) {
+  let arradef = [];
+
+  for (let a = 0; a < array.length; a++) {
+    if (array[a].proyecto === proyecto) {
+      arradef.push(array[a]);
+    }
+  }
+
+  return arradef;
+}
 function quitarduplicados(array) {
   return Array.from(new Set(array.map(JSON.stringify))).map(JSON.parse);
 }

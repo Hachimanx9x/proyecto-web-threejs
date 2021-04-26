@@ -369,7 +369,7 @@ este carga el proyecto en concreto del quel usuario pertenece
 este carga las actividades y entregables del proyecto
 
 ```sh
-/proyecto/actividades/:id
+/proyecto/actividades/:id/:pra
 ```
 
 ```json

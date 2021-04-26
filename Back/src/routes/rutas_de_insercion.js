@@ -976,16 +976,42 @@ rutas.post("/auto/herramienta", (req, res) => {
   }
 });
 rutas.post("/crear/reunion", proToken, (req, res) => {
-  const { proyec, fecha, hora, duracion, descripcion, titulo } = req.body;
+  let {
+    proyec,
+    fecha,
+    hora,
+    inicio,
+    fin,
+    duracion,
+    descripcion,
+    titulo,
+  } = req.body;
 
   if (
     proyec != undefined &&
     fecha != undefined &&
-    hora != undefined &&
-    duracion != undefined &&
-    descripcion != undefined &&
-    titulo != undefined
+    inicio != undefined &&
+    fin != undefined
   ) {
+    const hora1 = inicio.split(":");
+    const hora2 = fin.split(":");
+    let tem = parseInt(hora2[0]) - parseInt(hora1[0]);
+    if (duracion === undefined) {
+      if (tem < 1) {
+        duracion = 1;
+      } else {
+        duracion = tem;
+      }
+    }
+    if (hora === undefined) {
+      hora = inicio;
+    }
+    if (titulo === undefined) {
+      titulo = `Reunion del proyecto ${proyec}`;
+    }
+    if (descripcion === undefined) {
+      descripcion = `Reunión asignado para la fecha ${fecha}`;
+    }
     insertDB
       .crearreunion({ proyec, fecha, hora, duracion, descripcion, titulo })
       .then((resu) => {
