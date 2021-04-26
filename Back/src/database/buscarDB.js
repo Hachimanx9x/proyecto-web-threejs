@@ -6,6 +6,7 @@ const env = require("../env");
 const model = require("../models/models");
 const chalk = require("chalk");
 const peticiones = require("../ftp/peticiones");
+const modelo = require("../models/models");
 const funcionesDB = () => {
   console.log("funciones de la base de datos");
 };
@@ -445,7 +446,7 @@ funcionesDB.buscareventoscalendarioproyecto = async (proyecto) => {
     });
   });
 };
-funcionesDB.buscaractividadesproyecto = async (user, id) => {
+funcionesDB.buscaractividadesproyecto = async (user, id, pra) => {
   // console.log(user, id);
   return new Promise((res, rej) => {
     //console.log(idUser)
@@ -460,13 +461,20 @@ funcionesDB.buscaractividadesproyecto = async (user, id) => {
                 Query.obtenerproyectoentregablescompleto(id),
                 (err2, rows2) => {
                   if (!err) {
-                    actividadespro(user, rows, id).then((resultactivi) => {
+                    actividadespro(user, rows, id, pra).then((resultactivi) => {
                       console.log("actividades");
                       entregablepro(rows2).then((prass) => {
                         console.log("entregable");
-                        res({
-                          actividades: resultactivi,
-                          entregables: prass,
+
+                        funcionesDB.buscarProyecto(id).then((proyecto) => {
+                          res({
+                            actividades: filtroactividades(resultactivi, pra),
+                            entregables: practicasfiltoentregables(prass, pra),
+                            practica: filpracticaproyecto(
+                              proyecto.proyectos.practicas,
+                              pra
+                            ),
+                          });
                         });
                       });
                     });
@@ -492,13 +500,19 @@ funcionesDB.buscaractividadesproyecto = async (user, id) => {
                 (err, rows2) => {
                   if (!err) {
                     console.log(`entreables ${id}`);
-                    actividadespro(user, rows, id).then((resultactivi) => {
+                    actividadespro(user, rows, id, pra).then((resultactivi) => {
                       console.log(id);
                       entregablepro(rows2).then((prass) => {
                         console.log("entregable");
-                        res({
-                          actividades: resultactivi,
-                          entregables: prass,
+                        funcionesDB.buscarProyecto(id).then((proyecto) => {
+                          res({
+                            actividades: filtroactividades(resultactivi, pra),
+                            entregables: practicasfiltoentregables(prass, pra),
+                            practica: filpracticaproyecto(
+                              proyecto.proyectos.practicas,
+                              pra
+                            ),
+                          });
                         });
                       });
                     });
@@ -569,7 +583,7 @@ function verfiactificadad(id, array, arraydef) {
           date: array[j1].fechaentrega,
           fileName: array[j1].namefile,
           fileUrl: `${env.host}/proyecto/contenido/proyecto${id}/${array[j1].namefile}`,
-          source: array[j1].contenido,
+          //source:  array[j1].source
         });
         if (cont >= array.length - 1) {
           res(arraydef);
@@ -602,7 +616,6 @@ function verientrgables(id, proname, array, arraydef) {
           date: array[j2].fechaentrega,
           fileName: array[j2].namefile,
           fileUrl: `${env.host}/proyecto/contenido/proyecto${id}/${array[j2].namefile}`,
-          source: array[j1].contenido,
         });
         if (cont >= array.length - 1) {
           res(arraydef);
@@ -2428,42 +2441,12 @@ function filtarinfo(array) {
   }
   return arraydef;
 }
-
-function actividadespro(user, array, id) {
+function actividadespro(user, array, id, pra) {
   let arraydef = [];
+  console.log(pra);
   return new Promise((res, rej) => {
     let count = 0;
     for (let a = 0; a < array.length; a++) {
-      // console.log(array[a].userid)
-      /*  if (user.id === array[a].userid) {
-      arraydef.push({
-        actividadid: array[a].actid,
-        titulo: array[a].actividadtitulo,
-        descripcion: array[a].actividaddescripcion,
-        revisiones: array[a].actividadrevision,
-        nombre: array[a].nombre,
-        rol: array[a].roltitulo,
-        estado: array[a].actividadestado,
-        fechaentrega: array[a].actividadfechaentrega,
-        tecnica: array[a].tecnicatitulo,
-        contenido: `${env.host}/proyecto/contenido/proyecto${id}/${array[a].contenidonombrearchivo}`,
-        entregar: true,
-      });
-    } else {
-      arraydef.push({
-        actividadid: array[a].actid,
-        titulo: array[a].actividadtitulo,
-        descripcion: array[a].actividaddescripcion,
-        revisiones: array[a].actividadrevision,
-        nombre: array[a].nombre,
-        rol: array[a].roltitulo,
-        estado: array[a].actividadestado,
-        fechaentrega: array[a].actividadfechaentrega,
-        tecnica: array[a].tecnicatitulo,
-        contenido: `${env.host}/proyecto/contenido/proyecto${id}/${array[a].contenidonombrearchivo}`,
-        entregar: false,
-      });
-    }*/
       let temp = null,
         temp2 = null;
       if (array[a].contenidonombrearchivo !== "null") {
@@ -2487,9 +2470,10 @@ function actividadespro(user, array, id) {
       //let date1 = new Date(strfecha);
       // let fecha = `${date1.getDay()}/${date1.getDate()}/${date1.getFullYear()}`;
       if (temp) {
-        console.log(array[a].actid);
-        console.log(`proyecto${id}`, `${temp}`);
-        peticiones.stringfile(`proyecto${id}`, `${temp}`).then((file) => {
+        //    console.log(array[a].actid);
+        //   console.log(`proyecto${id}`, `${temp}`);
+        //metodo para volver binario los archivos que mando
+        /*   peticiones.stringfile(`proyecto${id}`, `${temp}`).then((file) => {
           arraydef.push({
             actividadid: array[a].actid,
             titulo: array[a].actividadtitulo,
@@ -2502,13 +2486,33 @@ function actividadespro(user, array, id) {
             fechaentrega: strfecha,
             tecnica: array[a].tecnicatitulo,
             namefile: temp,
-            contenido: file,
+            contenido: `${env.host}/proyecto/cadena/proyecto${array[a].id}/${temp}`,
+            source: file,
           });
           if (count === array.length - 1) {
             res(arraydef);
           }
           count++;
+        });*/
+        arraydef.push({
+          actividadid: array[a].actid,
+          titulo: array[a].actividadtitulo,
+          descripcion: array[a].actividaddescripcion,
+          revisiones: array[a].actividadrevision,
+          nombre: array[a].nombre,
+          foto: temp2,
+          rol: array[a].roltitulo,
+          estado: array[a].actividadestado,
+          fechaentrega: strfecha,
+          tecnica: array[a].tecnicatitulo,
+          namefile: temp,
+          contenido: `${env.host}/proyecto/cadena/proyecto${array[a].id}/${temp}`,
+          //  source: file,
         });
+        if (count === array.length - 1) {
+          res(arraydef);
+        }
+        count++;
       } else {
         arraydef.push({
           actividadid: array[a].actid,
@@ -2523,6 +2527,7 @@ function actividadespro(user, array, id) {
           tecnica: array[a].tecnicatitulo,
           namefile: temp,
           contenido: temp,
+          //     source: temp,
         });
         if (count === array.length - 1) {
           res(arraydef);
@@ -2531,10 +2536,32 @@ function actividadespro(user, array, id) {
       }
 
       //contenido: `${env.host}/proyecto/cadena/proyecto${array[a].id}/${temp}`,
+      //    console.log(temppracti);
     }
   });
 }
+function filtroactividades(array, pra) {
+  let arradef = [],
+    temppracti = null;
+  if (pra === "cem") {
+    temppracti = modelo.Practicas[0];
+  } else if (pra === "smmv") {
+    temppracti = modelo.Practicas[1];
+  }
+  if (pra !== undefined) {
+    for (let a = 0; a < array.length; a++) {
+      for (let b = 0; b < temppracti.Actividades.length; b++) {
+        if (array[a].titulo === temppracti.Actividades[b].titulo) {
+          arradef.push(array[a]);
+        }
+      }
+    }
+  } else {
+    arradef = array;
+  }
 
+  return arradef;
+}
 function entregablepro(array) {
   return new Promise((res, rej) => {
     let arraydef = [];
@@ -2545,12 +2572,12 @@ function entregablepro(array) {
         temp = array[a].contenidonombrearchivo;
       }
       let temfecha = array[a].entregafechaEntrega.split("-");
-      let day = parseInt(temfecha[1], 10);
+      let day = parseInt(temfecha[2], 10);
       if (day < 10) {
         day = `0${day}`;
       }
 
-      let mes = parseInt(temfecha[2], 10);
+      let mes = parseInt(temfecha[1], 10);
       if (mes < 10) {
         mes = `0${mes}`;
       }
@@ -2597,6 +2624,45 @@ function entregablepro(array) {
       //contenido: `${env.host}/proyecto/contenido/proyecto${array[a].id}/${temp}`,
     }
   });
+}
+function filpracticaproyecto(array, pra) {
+  let obj = {};
+  if (pra === "cem") {
+    temppracti = "Concepción de la experiencia multimedia";
+  } else if (pra === "smmv") {
+    temppracti = "Sistema Multimedia mínimo viable";
+  }
+  if (pra === undefined) {
+    return array;
+  } else {
+    for (let a = 0; array.length; a++) {
+      if (array[a].nombre === temppracti) {
+        return array[a];
+      }
+    }
+  }
+}
+function practicasfiltoentregables(array, pra) {
+  let arradef = [];
+  let temppracti;
+  if (pra === "cem") {
+    temppracti = modelo.Practicas[0];
+  } else if (pra === "smmv") {
+    temppracti = modelo.Practicas[1];
+  }
+  if (pra !== undefined) {
+    for (let a = 0; a < array.length; a++) {
+      for (let b = 0; b < temppracti.Entregables.length; b++) {
+        if (array[a].nombre === temppracti.Entregables[b].entregatitulo) {
+          arradef.push(array[a]);
+        }
+      }
+    }
+  } else {
+    arradef = array;
+  }
+
+  return arradef;
 }
 function ponerurlherramientas(array) {
   let arraydef = [];

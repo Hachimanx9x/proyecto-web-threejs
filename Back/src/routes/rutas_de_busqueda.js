@@ -338,8 +338,8 @@ rutas.get("/proyecto/cadena/:buque/:name", (req, res) => {
   }
 });
 
-rutas.get("/proyecto/actividades/:id", proToken, (req, res) => {
-  const { id } = req.params;
+rutas.get("/proyecto/actividades/:id/:pra", proToken, (req, res) => {
+  const { id, pra } = req.params;
   //const {user} = req.body;
   // const {id,name } = req.body;
   jwt.verify(req.token, LLAVE, (err, data) => {
@@ -348,7 +348,7 @@ rutas.get("/proyecto/actividades/:id", proToken, (req, res) => {
     } else {
       if (data != {} || data !== {} || data !== null || data !== undefined) {
         buscarDB
-          .buscaractividadesproyecto(data.rows[0], id)
+          .buscaractividadesproyecto(data.rows[0], id, pra)
           .then((respu) => res.json(respu))
           .catch((err) => res.json(err));
       }
