@@ -1018,6 +1018,8 @@ rutas.post("/crear/reunion", proToken, (req, res) => {
         res.json(resu);
       })
       .catch((err) => res.json(err));
+  } else {
+    res.json({ msj: "error de datos" });
   }
 });
 /**

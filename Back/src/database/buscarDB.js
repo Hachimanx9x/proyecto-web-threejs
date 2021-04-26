@@ -72,7 +72,7 @@ funcionesDB.obtenerusuarioid = async (body) => {
       } else {
         sqlite.all(Query.usuarioid(id), (err, rows) => {
           if (!err) {
-            console.log(rows);
+            //    console.log(rows);
             res(rows[0]);
           } else {
             console.log(err);
@@ -170,6 +170,8 @@ funcionesDB.obtenerEscritorioActividades = async (body) => {
 funcionesDB.obtenerEscritorioProyectos = async (body) => {
   return new Promise((res, rej) => {
     const { id } = body.rows[0];
+
+    console.log(id);
     if (id !== undefined) {
       promesa.then(async (result) => {
         const { mariaDB, sqlite, vDB } = result;
@@ -287,18 +289,17 @@ funcionesDB.obtenerProyecto = async (body) => {
   });
 };
 
-funcionesDB.buscarProyecto = async (idp) => {
+funcionesDB.buscarProyecto = async (idp, iduse) => {
+  console.log("funcionesDB.buscarProyecto");
+  console.log(iduse);
   return new Promise((res, rej) => {
     promesa.then(async (result) => {
       const { mariaDB, sqlite, vDB } = result;
       if (vDB) {
         await mariaDB.query(Query.buscarProyecto(idp), (err, rows) => {
           if (!err) {
-            funcionesDB.buscareventoscalendario(idp).then((cale) => {
-              res({
-                proyectos: ordeninfoproyect(rows),
-                calendario: calendariosoloproyecto(cale, idp),
-              });
+            funcionesDB.buscareventoscalendario(iduse).then((cale) => {
+              res({ proyectos: ordeninfoproyect(rows), calendario: cale });
             });
           } else {
             rej({ err });
@@ -307,7 +308,7 @@ funcionesDB.buscarProyecto = async (idp) => {
       } else {
         sqlite.all(Query.buscarProyecto(idp), (err, rows) => {
           if (!err) {
-            funcionesDB.buscareventoscalendario(idp).then((cale) => {
+            funcionesDB.buscareventoscalendario(iduse).then((cale) => {
               res({
                 proyectos: ordeninfoproyect(rows),
                 calendario: calendariosoloproyecto(cale, idp),
@@ -457,7 +458,9 @@ funcionesDB.buscareventoscalendarioproyecto = async (proyecto) => {
   });
 };
 funcionesDB.buscaractividadesproyecto = async (user, id, pra) => {
-  // console.log(user, id);
+  console.log("funcionesDB.buscaractividadesproyecto");
+  console.log(user);
+  console.log("funcionesDB.buscaractividadesproyecto");
   return new Promise((res, rej) => {
     //console.log(idUser)
     promesa.then(async (result) => {
@@ -471,21 +474,26 @@ funcionesDB.buscaractividadesproyecto = async (user, id, pra) => {
                 Query.obtenerproyectoentregablescompleto(id),
                 (err2, rows2) => {
                   if (!err) {
+                    console.log("dlksflkdfnñ");
                     actividadespro(user, rows, id, pra).then((resultactivi) => {
                       console.log("actividades");
                       entregablepro(rows2).then((prass) => {
                         console.log("entregable");
-
-                        funcionesDB.buscarProyecto(id).then((proyecto) => {
-                          res({
-                            actividades: filtroactividades(resultactivi, pra),
-                            entregables: practicasfiltoentregables(prass, pra),
-                            practica: filpracticaproyecto(
-                              proyecto.proyectos.practicas,
-                              pra
-                            ),
+                        funcionesDB
+                          .buscarProyecto(id, user.id)
+                          .then((proyecto) => {
+                            res({
+                              actividades: filtroactividades(resultactivi, pra),
+                              entregables: practicasfiltoentregables(
+                                prass,
+                                pra
+                              ),
+                              proyecto: filpracticaproyecto(
+                                proyecto.proyectos.practicas,
+                                pra
+                              ),
+                            });
                           });
-                        });
                       });
                     });
                   } else {
@@ -514,16 +522,21 @@ funcionesDB.buscaractividadesproyecto = async (user, id, pra) => {
                       console.log(id);
                       entregablepro(rows2).then((prass) => {
                         console.log("entregable");
-                        funcionesDB.buscarProyecto(id).then((proyecto) => {
-                          res({
-                            actividades: filtroactividades(resultactivi, pra),
-                            entregables: practicasfiltoentregables(prass, pra),
-                            practica: filpracticaproyecto(
-                              proyecto.proyectos.practicas,
-                              pra
-                            ),
+                        funcionesDB
+                          .buscarProyecto(id, user.id)
+                          .then((proyecto) => {
+                            res({
+                              actividades: filtroactividades(resultactivi, pra),
+                              entregables: practicasfiltoentregables(
+                                prass,
+                                pra
+                              ),
+                              proyecto: filpracticaproyecto(
+                                proyecto.proyectos.practicas,
+                                pra
+                              ),
+                            });
                           });
-                        });
                       });
                     });
                   } else {
@@ -542,14 +555,27 @@ funcionesDB.buscaractividadesproyecto = async (user, id, pra) => {
   });
 };
 
-funcionesDB.obteneractientreproyectos = (array) => {
+funcionesDB.obteneractientreproyectos = (user, array) => {
+  console.log("funcionesDB.obteneractientreproyectos");
+  if (typeof user === "number") {
+    user = {
+      id: user,
+    };
+  }
+  if (typeof user === "string") {
+    user = {
+      id: user,
+    };
+  }
+  console.log("funcionesDB.obteneractientreproyectos");
   return new Promise((res, rej) => {
     // console.log(array);
     let contfe = 0;
     for (let i = 0; i < array.length; i++) {
       let arraydef = [];
+
       funcionesDB
-        .buscaractividadesproyecto(1, array[i].id)
+        .buscaractividadesproyecto(user, array[i].id, undefined)
         .then((contenido) => {
           /// actividad y entregable
           verfiactificadad(
@@ -593,7 +619,7 @@ function verfiactificadad(id, array, arraydef) {
           date: array[j1].fechaentrega,
           fileName: array[j1].namefile,
           fileUrl: `${env.host}/proyecto/contenido/proyecto${id}/${array[j1].namefile}`,
-          //source:  array[j1].source
+          //  source: array[j1].source,
         });
         if (cont >= array.length - 1) {
           res(arraydef);
@@ -626,6 +652,7 @@ function verientrgables(id, proname, array, arraydef) {
           date: array[j2].fechaentrega,
           fileName: array[j2].namefile,
           fileUrl: `${env.host}/proyecto/contenido/proyecto${id}/${array[j2].namefile}`,
+          source: array[j1].contenido,
         });
         if (cont >= array.length - 1) {
           res(arraydef);
@@ -2451,9 +2478,10 @@ function filtarinfo(array) {
   }
   return arraydef;
 }
+
 function actividadespro(user, array, id, pra) {
   let arraydef = [];
-  console.log(pra);
+  //  console.log(pra);
   return new Promise((res, rej) => {
     let count = 0;
     for (let a = 0; a < array.length; a++) {
@@ -2467,12 +2495,12 @@ function actividadespro(user, array, id, pra) {
       }
       // console.log(array[a].actividadfechaentrega);
       let temfecha = array[a].actividadfechaentrega.split("-");
-      let day = parseInt(temfecha[1], 10);
+      let day = parseInt(temfecha[2], 10);
       if (day < 10) {
         day = `0${day}`;
       }
 
-      let mes = parseInt(temfecha[2], 10);
+      let mes = parseInt(temfecha[1], 10);
       if (mes < 10) {
         mes = `0${mes}`;
       }
@@ -2480,10 +2508,9 @@ function actividadespro(user, array, id, pra) {
       //let date1 = new Date(strfecha);
       // let fecha = `${date1.getDay()}/${date1.getDate()}/${date1.getFullYear()}`;
       if (temp) {
-        //    console.log(array[a].actid);
-        //   console.log(`proyecto${id}`, `${temp}`);
-        //metodo para volver binario los archivos que mando
-        /*   peticiones.stringfile(`proyecto${id}`, `${temp}`).then((file) => {
+        // console.log(array[a].actid);
+        // console.log(`proyecto${id}`, `${temp}`);
+        /*  peticiones.stringfile(`proyecto${id}`, `${temp}`).then((file) => {
           arraydef.push({
             actividadid: array[a].actid,
             titulo: array[a].actividadtitulo,
@@ -2537,7 +2564,7 @@ function actividadespro(user, array, id, pra) {
           tecnica: array[a].tecnicatitulo,
           namefile: temp,
           contenido: temp,
-          //     source: temp,
+          //   source: temp,
         });
         if (count === array.length - 1) {
           res(arraydef);
@@ -2550,15 +2577,16 @@ function actividadespro(user, array, id, pra) {
     }
   });
 }
+
 function filtroactividades(array, pra) {
-  let arradef = [],
-    temppracti = null;
+  let temppracti = "no llego nada";
+  arradef = [];
   if (pra === "cem") {
     temppracti = modelo.Practicas[0];
   } else if (pra === "smmv") {
     temppracti = modelo.Practicas[1];
   }
-  if (pra !== undefined) {
+  if (temppracti !== "no llego nada") {
     for (let a = 0; a < array.length; a++) {
       for (let b = 0; b < temppracti.Actividades.length; b++) {
         if (array[a].titulo === temppracti.Actividades[b].titulo) {
@@ -2582,12 +2610,12 @@ function entregablepro(array) {
         temp = array[a].contenidonombrearchivo;
       }
       let temfecha = array[a].entregafechaEntrega.split("-");
-      let day = parseInt(temfecha[2], 10);
+      let day = parseInt(temfecha[1], 10);
       if (day < 10) {
         day = `0${day}`;
       }
 
-      let mes = parseInt(temfecha[1], 10);
+      let mes = parseInt(temfecha[2], 10);
       if (mes < 10) {
         mes = `0${mes}`;
       }
@@ -2623,8 +2651,8 @@ function entregablepro(array) {
           fechaentrega: strfecha,
           revisiones: array[a].entreganumeroRevisiones,
           namefile: temp,
-          contenido: `${env.host}/proyecto/contenido/proyecto${array[a].id}/${temp}`,
-          source: file,
+          contenido: null,
+          source: temp,
         });
         if (count >= array.length - 1) {
           res(arraydef);
@@ -2701,6 +2729,28 @@ function filpracticaproyecto(array, pra) {
       }
     }
   }
+}
+
+function practicasfiltoentregables(array, pra) {
+  let arradef = [];
+  if (pra === "cem") {
+    temppracti = modelo.Practicas[0];
+  } else if (pra === "smmv") {
+    temppracti = modelo.Practicas[1];
+  }
+  if (pra !== undefined) {
+    for (let a = 0; a < array.length; a++) {
+      for (let b = 0; b < temppracti.Entregables.length; b++) {
+        if (array[a].nombre === temppracti.Entregables[b].entregatitulo) {
+          arradef.push(array[a]);
+        }
+      }
+    }
+  } else {
+    arradef = array;
+  }
+
+  return arradef;
 }
 function ponerurlherramientas(array) {
   let arraydef = [];
@@ -2854,11 +2904,13 @@ function ordeninfoproyect(rows) {
 
   return objdef;
 }
+
 function calendariosoloproyecto(array, proyecto) {
   let arradef = [];
 
+  console.log(array);
   for (let a = 0; a < array.length; a++) {
-    if (array[a].proyecto === proyecto) {
+    if (`${array[a].proyecto}` === `${proyecto}`) {
       arradef.push(array[a]);
     }
   }
@@ -2868,5 +2920,6 @@ function calendariosoloproyecto(array, proyecto) {
 function quitarduplicados(array) {
   return Array.from(new Set(array.map(JSON.stringify))).map(JSON.parse);
 }
+
 //-------------------
 module.exports = funcionesDB;

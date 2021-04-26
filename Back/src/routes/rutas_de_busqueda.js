@@ -113,8 +113,9 @@ rutas.get("/escritorio", proToken, (req, res) => {
                   .obtenerEscritorioProyectos(data)
                   .then((pro) => {
                     console.log(chalk.blue(`proyectos`));
+
                     buscarDB
-                      .obteneractientreproyectos(pro.proyectos)
+                      .obteneractientreproyectos(data.rows[0].id, pro.proyectos)
                       .then((def) => {
                         console.log(chalk.blue(`entregado`));
                         res.json({
@@ -147,7 +148,10 @@ rutas.get("/escritorio", proToken, (req, res) => {
                       });
                     } else {
                       buscarDB
-                        .obteneractientreproyectos(pro.proyectos)
+                        .obteneractientreproyectos(
+                          data.rows[0].id,
+                          pro.proyectos
+                        )
                         .then((def) => {
                           console.log(chalk.blue(`actividades`));
                           res.json({
@@ -308,8 +312,9 @@ rutas.get("/proyectos/:id", proToken, (req, res) => {
       res.sendStatus(403);
     } else {
       if (data != {} || data !== {} || data !== null || data !== undefined) {
+        //     console.log(data);
         buscarDB
-          .buscarProyecto(req.params.id)
+          .buscarProyecto(req.params.id, data.rows[0].id)
           .then((result) => res.json(result))
           .catch((err) => res.json(err));
       }
@@ -337,11 +342,29 @@ rutas.get("/proyecto/cadena/:buque/:name", (req, res) => {
     ftpminio.getFilesinglestring(buque, name, res);
   }
 });
-
+/*
+rutas.get("/proyecto/actividades/:id", proToken, (req, res) => {
+  const { id } = req.params;
+  //const {user} = req.body;
+  // const {id,name } = req.body;
+  jwt.verify(req.token, LLAVE, (err, data) => {
+    if (err) {
+      res.sendStatus(403);
+    } else {
+      if (data != {} || data !== {} || data !== null || data !== undefined) {
+        buscarDB
+          .buscaractividadesproyecto(data.rows[0], id)
+          .then((respu) => res.json(respu))
+          .catch((err) => res.json(err));
+      }
+    }
+  });
+});*/
 rutas.get("/proyecto/actividades/:id/:pra", proToken, (req, res) => {
   const { id, pra } = req.params;
   //const {user} = req.body;
   // const {id,name } = req.body;
+
   jwt.verify(req.token, LLAVE, (err, data) => {
     if (err) {
       res.sendStatus(403);
