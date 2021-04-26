@@ -31,6 +31,7 @@
   box-shadow: none;
   background-color: #3a81f1;
   border: 1px solid #5d9bfd;
+  transition: all 0.4s ease;
 }
 
 .o-calendar-container .fc-button:hover {
@@ -48,7 +49,8 @@
 }
 
 .o-calendar-container .fc-button-primary:disabled {
-  background-color: #264f79;
+  background-color: #4285f4;
+  border: 0;
 }
 
 .fc-next-button {
