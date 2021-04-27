@@ -292,56 +292,61 @@ este carga el proyecto en concreto del quel usuario pertenece
 ```json
 {
   "proyectos": {
-    "idproyecto": 168,
-    "nombre": "proyecto test2",
-    "descripcion": "cualquier cosa esta bien",
+    "idproyecto": 178,
+    "nombre": "Baki",
+    "descripcion": "",
     "estado": "iniciado",
-    "icono": "http://localhost:3030/proyecto/contenido/proyecto168/null",
-    "banner": "http://localhost:3030/proyecto/contenido/proyecto168/null",
+    "icono": null,
+    "banner": null,
     "integrantes": [
       {
-        "id": 504,
-        "nombre": "nombre test14",
-        "rol": "Arquitecto Experiencia Multimedia"
+        "id": 70,
+        "foto": "http://localhost:3030/proyecto/contenido/usuario70/SpotlessUnfinishedHairstreakbutterfly-size_restricted.gif",
+        "nombre": "sad ass",
+        "rol": "Arquitecto de pruebas",
+        "palabras": ["Desarrollador Frontend"]
       },
       {
-        "id": 502,
-        "nombre": "nombre test12",
-        "rol": "Arquitecto de información"
+        "id": 69,
+        "foto": "http://localhost:3030/proyecto/contenido/usuario69/dont-leave-the-baby-out-in-cold.gif",
+        "nombre": "sss ss",
+        "rol": "Arquitecto de información",
+        "palabras": ["Desarrollador Web"]
       }
     ],
     "actividades": [
       {
-        "id": 1171,
-        "nombre": "A8",
+        "id": 1342,
+        "nombre": "A14",
         "estado": "asignada"
       },
       {
-        "id": 1180,
-        "nombre": "A9",
+        "id": 1341,
+        "nombre": "A12",
         "estado": "asignada"
       }
     ],
     "entregable": [
       {
-        "id": 458,
+        "id": 519,
         "estado": "asignado"
       },
       {
-        "id": 459,
+        "id": 518,
         "estado": "asignado"
       }
     ],
     "practicas": [
       {
         "nombre": "Concepción de la experiencia multimedia",
+        "descripcion": "Con el uso de esta práctica se plantea el poder diseñar de una manera concreta todos los elementos que hacen parte de la experiencia multimedia propias del sistema así como relación todos sus elementos ",
         "alfas": [
           {
-            "nombre": "Experiencia multimedia",
+            "nombre": "Diseño responsable",
             "estado": "iniciado"
           },
           {
-            "nombre": "Diseño responsable",
+            "nombre": "Experiencia multimedia",
             "estado": "iniciado"
           }
         ],
@@ -349,20 +354,36 @@ este carga el proyecto en concreto del quel usuario pertenece
       },
       {
         "nombre": "Sistema Multimedia mínimo viable",
+        "descripcion": "Define el minimo producto viable para la entrega ante el cliente",
         "alfas": [
           {
             "nombre": "Oportunidad",
             "estado": "iniciado"
           },
           {
-            "nombre": "Valor del sistema multimedia",
+            "nombre": "Valor del SM",
             "estado": "iniciado"
           }
         ],
         "tasa": 0
       }
     ]
-  }
+  },
+  "calendario": [
+    {
+      "proyecto": 178,
+      "pronombre": "Baki",
+      "reunion": 8,
+      "titulo": "test titulo",
+      "fecha": "2/2/2021",
+      "hora": "15:00",
+      "duracion": 2,
+      "start": "2/2/2021 15:0:00",
+      "end": "2/2/2021 17:0:00",
+      "descripcion": "test descripcion",
+      "vigente": 1
+    }
+  ]
 }
 ```
 
@@ -373,61 +394,80 @@ este carga las actividades y entregables del proyecto
 ```
 
 ```json
+//http://localhost:3030/proyecto/actividades/179/cem
+//http Get
 {
   "actividades": [
     {
-      "actividadid": 497,
-      "titulo": "A8",
-      "descripcion": "Diseñe la estructura y el flujo (narrativo, temporal, de\n                        eventos) de la historia a desarrollarse a partir del problema\n                        que desea resolverse, describiendo los acontecimientos que\n                        narra, los personajes que participan, el tiempo en el que se\n                        desarrolla y el espacio en el que suceden dichos\n                        acontecimientos.",
-      "revisiones": 1,
-      "nombre": "nombre test14",
-      "foto": null,
-      "rol": "Arquitecto Experiencia Multimedia",
-      "estado": "entregada",
-      "fechaentrega": "2021-01-23",
-      "tecnica": "Video como apoyo a la etnografía",
-      "namefile": "Coursera 2T27CP6QW48Q.pdf",
-      "contenido": "http://localhost:3030/proyecto120/Coursera 2T27CP6QW48Q.pdf"
+      "actividadid": 1362,
+      "titulo": "A12",
+      "descripcion": "Defina las diferentes percepciones sensoriales, así como las distintas modalidades de interacción guiadas por el diseño de la experiencia multimedia y los tipos de medios digitales, que son necesarios para asegurar la influencia psicológica, cognitiva y sensorial en el usuario.",
+      "revisiones": 0,
+      "nombre": "wsssw scasd",
+      "foto": "http://localhost:3030/proyecto/contenido/usuario71/índice.png",
+      "rol": "Arquitecto de información",
+      "estado": "asignada",
+      "fechaentrega": "22/06/2021",
+      "tecnica": "Wireframes",
+      "namefile": null,
+      "contenido": null
     },
     {
-      "actividadid": 503,
-      "titulo": "A9",
-      "descripcion": "Defina las bases del diseño de una experiencia multimedia\n                    interactiva, a partir de la historia y el (los) problema(s)\n                    identificado(s), especificando los hitos de la historia en donde\n                    el Sistema Multimedia debe producir en el usuario una\n                    influencia cognitiva, emocional y sensorial.",
-      "revisiones": 0,
-      "nombre": "nombre test14",
-      "foto": null,
-      "rol": "Arquitecto Experiencia Multimedia",
-      "estado": "asignada",
-      "fechaentrega": "2021-01-23",
-      "tecnica": "Producción de metáforas y analogías",
-      "namefile": null,
-      "contenido": "http://localhost:3030/proyecto120/null"
+      "actividadid": 1364,
+      "titulo": "A17",
+      "descripcion": "Identifique cuáles son las leyes y normatividades vigentes a nivel global, nacional y regional, que pueden influir en el diseño de la solución.",
+      "revisiones": 1,
+      "nombre": "wsssw scasd",
+      "foto": "http://localhost:3030/proyecto/contenido/usuario71/índice.png",
+      "rol": "Arquitecto de información",
+      "estado": "entregada",
+      "fechaentrega": "22/06/2021",
+      "tecnica": "Identificación de políticas y normativas",
+      "namefile": "Carta-Solicitud-de-PE-Prórroga.doc",
+      "contenido": "http://localhost:3030/proyecto/cadena/proyecto179/Carta-Solicitud-de-PE-Prórroga.doc"
     }
   ],
   "entregables": [
     {
-      "id": 175,
-      "nombre": "Propuesta de diseño de la Experiencia Multimedia",
-      "descripcion": "Consiste en un documento en donde se especifica:\n                    -El universo narrativo y la historia en la cual se inscribe\n                    la experiencia multimedia. \n                    Elemento Tipo Descripción\n                    -Las metáforas y analogías que se han estimado\n                    necesarias para expresar la historia en la cual se\n                    inscribe la experiencia multimedia.\n                    -Los personajes que intervienen en la historia, así\n                    como sus atributos físicos y emocionales.\n                    -Los medios digitales que se estiman necesarios para la\n                    representación de la experiencia multimedia\n                    interactiva.",
+      "id": 529,
+      "nombre": "Especificaciones del diseño responsable",
+      "descripcion": "Este documento especifica los siguientes factores relacionados con el diseño responsable:\n                    -La especificación de las potenciales tensiones de valor que pueden producirse entre diferentes interesados, y las posibles estrategias para su neutralización y gestión.\n                    - Un listado en donde se especifican potenciales usos de la solución, con propósitos diferentes a los concebidos por sus diseñadores, así como las posibles estrategias para reducir la probabilidad sobre este tipo de escenarios.\n                    -La especificación de las leyes y normativas con alto potencial de influir en el Sistema Multimedia y el despliegue de su experiencia multimedia, y los mecanismos para monitorear y controlar su cumplimiento.\n                    -Un listado de efectos indirectos que puede producir a largo plazo en los usuarios e interesados indirectos, el uso del Sistema Multimedia y el despliegue de la experiencia multimedia, así como un conjunto de posibles pautas para mitigar los efectos de los factores desfavorables.\n                    -Una especificación de los patrones identificados, con el Sistema Multimedia y el despliegue de su Experiencia Multimedia, así como los lineamientos y recomendaciones para su adaptación y uso en la solución. ",
       "estado": "asignado",
       "tipoactivo": "documento",
-      "fechaentrega": "2021-01-23",
+      "fechaentrega": "22/06/2021",
       "revisiones": 0,
       "namefile": null,
-      "contenido": "http://localhost:3030/proyectoundefined/null"
+      "contenido": null,
+      "source": null
     },
     {
-      "id": 176,
-      "nombre": "Especificaciones del diseño responsable",
-      "descripcion": "Este documento especifica los siguientes factores\n                    relacionados con el diseño responsable:\n                    -La especificación de las potenciales tensiones de valor\n                    que pueden producirse entre diferentes interesados, y\n                    las posibles estrategias para su neutralización y\n                    gestión.\n                    - Un listado en donde se especifican potenciales usos\n                    de la solución, con propósitos diferentes a los\n                    concebidos por sus diseñadores, así como las posibles\n                    estrategias para reducir la probabilidad sobre este tipo\n                    de escenarios.\n                    -La especificación de las leyes y normativas con alto\n                    potencial de influir en el Sistema Multimedia y el\n                    despliegue de su experiencia multimedia, y los\n                    mecanismos para monitorear y controlar su\n                    cumplimiento. ",
+      "id": 527,
+      "nombre": "Propuesta de diseño de la Experiencia Multimedia",
+      "descripcion": "Consiste en un documento en donde se especifica:\n                    -El universo narrativo y la historia en la cual se inscribe la experiencia multimedia. \n                    -Las metáforas y analogías que se han estimado necesarias para expresar la historia en la cual se inscribe la experiencia multimedia.\n                    -Los personajes que intervienen en la historia, así como sus atributos físicos y emocionales.\n                    -Los medios digitales que se estiman necesarios para la representación de la experiencia multimedia interactiva.\n                    -Las percepciones sensoriales que debe ofrecer el contenido multimedia a los usuarios durante el despliegue de la experiencia multimedia.\n-Las modalidades de interacción que deben estar disponibles para el usuario durante la experiencia multimedia.\n-Las emociones que desean generarse como resultado del despliegue del contenido multimedia (medios digitales, percepciones sensoriales y modalidades de interacción) durante la experiencia multimedia.\n-El Journey Map que ofrece una representación visual de los diferentes elementos descritos.",
       "estado": "asignado",
       "tipoactivo": "documento",
-      "fechaentrega": "2021-01-23",
+      "fechaentrega": "22/06/2021",
       "revisiones": 0,
       "namefile": null,
-      "contenido": "http://localhost:3030/proyectoundefined/null"
+      "contenido": null,
+      "source": null
     }
-  ]
+  ],
+  "proyecto": {
+    "nombre": "Concepción de la experiencia multimedia",
+    "descripcion": "Con el uso de esta práctica se plantea el poder diseñar de una manera concreta todos los elementos que hacen parte de la experiencia multimedia propias del sistema así como relación todos sus elementos ",
+    "alfas": [
+      {
+        "nombre": "Experiencia multimedia",
+        "estado": "iniciado"
+      },
+      {
+        "nombre": "Diseño responsable",
+        "estado": "iniciado"
+      }
+    ],
+    "tasa": 0
+  }
 }
 ```
 
