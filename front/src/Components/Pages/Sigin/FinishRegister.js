@@ -233,18 +233,19 @@ export default function FinishRegister(props) {
           `http://localhost:3030/actualizar/usuario`,
           datform,
           options
-        ).thern((response) => {
+        ).then((response) => {
           console.log(response);
+          setConfirmation(true);
+          localStorage.setItem("login", "");
+          setTimeout(() => {
+            setModal(false);
+            window.location.reload();
+          }, 1200);
         });
       } catch (error) {
         console.log(error);
-      }
-      setConfirmation(true);
-      localStorage.setItem("login", "");
-      setTimeout(() => {
         setModal(false);
-        window.location.reload();
-      }, 1200);
+      }
     } else {
       setModal(false);
     }
