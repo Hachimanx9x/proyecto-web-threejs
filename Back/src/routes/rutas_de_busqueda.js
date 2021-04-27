@@ -9,12 +9,19 @@ const LLAVE = "misecretos";
 
 const model = require("../models/models");
 const chalk = require("chalk");
-
 rutas.get("/perfil", proToken, (req, res) => {
   console.log(chalk.yellow("/perfil"));
-  jwt.verify(resul.token, LLAVE, (err, data) => {
+  jwt.verify(req.token, LLAVE, (err, data) => {
     buscarDB.obtenerusuarioid({ id: data.rows[0].id }).then((usuario) => {
-      buscarDB.buscartalentogeneral2(data.rows[0].id).then((talentos) => {});
+      buscarDB.buscartalentogeneral2(data.rows[0].id).then((talentos) => {
+        buscarDB.obteneridiomasusuario(data.rows[0].id).then((idiomas) => {
+          res.json({
+            usuario,
+            talentos,
+            idiomas,
+          });
+        });
+      });
     });
   });
 });
