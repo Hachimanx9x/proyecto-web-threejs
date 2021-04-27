@@ -27,7 +27,7 @@ export default function ActivitiesSMMV(props) {
       };
       try {
         Axios.get(
-          `http://localhost:3030/proyecto/actividades/${proyectId}`,
+          `http://localhost:3030/proyecto/actividades/${proyectId}/smmv`,
           options
         ).then((response) => {
           console.log(response);

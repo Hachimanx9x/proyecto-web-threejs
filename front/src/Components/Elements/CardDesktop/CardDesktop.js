@@ -18,7 +18,7 @@ const CardDesktop = ({ update }) => {
 
   const getFile = () => {
     Axios({
-      url: update.url, //your url
+      url: update.fileUrl, //your url
       method: "GET",
       responseType: "blob", // important
     }).then((response) => {
@@ -80,16 +80,13 @@ const CardDesktop = ({ update }) => {
             </small>
           </div>
           <div className="col-xs-6 col-sm-6 p-0 d-flex justify-content-end">
-            <form method="get" action={update.fileUrl}>
-              <button
-                type="button"
-                onClick={getFile}
-                className="border-0 rounded-pill grey lighten-2 cyan-text o-download-btn"
-              >
-                Descargar{" "}
-                <FontAwesomeIcon className="mr-2" icon={faArrowDown} />
-              </button>
-            </form>
+            <button
+              type="button"
+              onClick={getFile}
+              className="border-0 rounded-pill grey lighten-2 cyan-text o-download-btn"
+            >
+              Descargar <FontAwesomeIcon className="mr-2" icon={faArrowDown} />
+            </button>
           </div>
         </div>
       </div>

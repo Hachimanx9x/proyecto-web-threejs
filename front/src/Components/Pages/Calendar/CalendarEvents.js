@@ -29,28 +29,7 @@ export default class CalendarEvents extends Component {
     this.handleDayClick = this.handleDayClick.bind(this);
     this.createEvent = this.createEvent.bind(this);
     this.state = {
-      events: [
-        {
-          start: moment().toDate(),
-          end: moment().add(1, "days").toDate(),
-          title: "Some title",
-        },
-        {
-          title: "Reunión avances",
-          start: moment().add(2, "days").toDate(),
-          end: moment().add(2, "days").toDate(),
-        },
-        {
-          title: "Computación",
-          start: moment().add(3, "days").toDate(),
-          end: moment().add(4, "days").toDate(),
-        },
-        {
-          title: "Reunión avances",
-          start: moment().add(5, "days").toDate(),
-          end: moment().add(5, "days").toDate(),
-        },
-      ],
+      events: [],
       selectedDate: null,
       colors: [],
       error: false,
@@ -189,16 +168,24 @@ export default class CalendarEvents extends Component {
             </div>
             <p className="o-text-events">Eventos programados</p>
             <div className="o-date-picker-container pt-3">
-              {this.state.events.map((event, i) => (
-                <p key={i} className="ml-3 d-block">
-                  <FontAwesomeIcon
-                    icon={faSquare}
-                    color={this.state.colors[i]}
-                    className="mr-2"
-                  />
-                  {event.title}
-                </p>
-              ))}
+              {this.state.events.length !== 0 ? (
+                this.state.events.map((event, i) => (
+                  <p key={i}>
+                    <FontAwesomeIcon
+                      icon={faSquare}
+                      color={this.state.colors[i]}
+                      className="mr-2"
+                    />
+                    {event.title}
+                  </p>
+                ))
+              ) : (
+                <div className="d-flex h-100">
+                  <p className="m-auto text-secondary">
+                    No hay reuniones agendadas
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </div>

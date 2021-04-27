@@ -179,16 +179,29 @@ class CreateEvents extends Component {
     try {
       Axios.all([
         (Axios.get(`http://localhost:3030/escritorio`, options),
-        Axios.get(`http://localhost:3030/escritorio`, options)),
+        Axios.get(`http://localhost:3030/respuesta`, options)),
       ]).then((response) => {
         console.log(response);
         const temp = response[0].data.proyectos;
+        const tempEvents = response[1].data;
 
         for (const i of temp) {
           projects.push({
             id: i.id,
             title: i.title,
             pdates: [...i.updates],
+          });
+        }
+
+        let temvents = [];
+        for (let i = 0; i < this.state.events.length; i++) {
+          const color = "#" + Math.floor(Math.random() * 16777215).toString(16);
+          temcolors.push(color);
+          temvents.push({
+            title: this.state.events[i].title,
+            start: this.state.events[i].start,
+            end: this.state.events[i].end,
+            color: color,
           });
         }
       });
@@ -500,9 +513,11 @@ class CreateEvents extends Component {
                     </p>
                   ))
                 ) : (
-                  <p className="m-auto text-secondary">
-                    No hay reuniones agendadas
-                  </p>
+                  <div className="d-flex h-100">
+                    <p className="m-auto text-secondary">
+                      No hay reuniones agendadas
+                    </p>
+                  </div>
                 )}
               </div>
             </div>
