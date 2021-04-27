@@ -459,6 +459,12 @@ query.obtenerentregcontinte = function (id) {
     join entregas on entregables.id = entregas.entragable
     where proyectos.id = ${id};`;
 };
+query.obteneridiomasusuario = function (id) {
+  return `select idiomas.* from idiomas
+  join listaidiomas on idiomas.id = listaidiomas.idioma
+  join usuarios on listaidiomas.usuario = usuarios.id
+  where usuarios.id=${id}; `;
+};
 query.obtenerActividades = function (id) {
   return `SELECT * FROM actividades where id=${id}; `;
 };

@@ -9,16 +9,42 @@ const LLAVE = "misecretos";
 
 const model = require("../models/models");
 const chalk = require("chalk");
+
 rutas.get("/perfil", proToken, (req, res) => {
   console.log(chalk.yellow("/perfil"));
   jwt.verify(req.token, LLAVE, (err, data) => {
     buscarDB.obtenerusuarioid({ id: data.rows[0].id }).then((usuario) => {
       buscarDB.buscartalentogeneral2(data.rows[0].id).then((talentos) => {
         buscarDB.obteneridiomasusuario(data.rows[0].id).then((idiomas) => {
+          let temfoto = null,
+            temcv = null;
+          if (usuario.fotoperfil !== null && usuario.fotoperfil !== "null") {
+            temfoto = `${env.host}/proyecto/contenido/usuario${usuario.id}/${usuario.fotoperfil}`;
+          }
+          if (
+            usuario.nombrearchivohojadevida !== null &&
+            usuario.nombrearchivohojadevida !== "null"
+          ) {
+            temcv = `${env.host}/proyecto/contenido/usuario${usuario.id}/${usuario.nombrearchivohojadevida}`;
+          }
           res.json({
-            usuario,
-            talentos,
-            idiomas,
+            id: usuario.id,
+            email: usuario.email,
+            password: usuario.contrasena,
+            experiencia: usuario.anosdeexperiencia,
+            nombre: usuario.nombre,
+            descripcion: usuario.descripcion,
+            pais: usuario.pais,
+            edad: usuario.edad,
+            github: usuario.github,
+            gitlab: usuario.gitlab,
+            bitbucket: usuario.bitbucket,
+            linkedin: usuario.linkedin,
+            herramienta: talentos.data[0].herramientas,
+            palabra: talentos.data[0].palabras,
+            idiomas: quitarduplicados(idiomas.API),
+            foto: temfoto,
+            cv: temcv,
           });
         });
       });
@@ -855,7 +881,9 @@ function reordenar(name) {
   }
   return objdef;
 }
-
+function quitarduplicados(array) {
+  return Array.from(new Set(array.map(JSON.stringify))).map(JSON.parse);
+}
 /*
  **************************************************************************************************
  ************************Exportaciones*****************************************************************

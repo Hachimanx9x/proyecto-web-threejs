@@ -1458,8 +1458,8 @@ function actuusermt(obj, id, foto, cv, palabras, idiomas, herramientas) {
                           idioma: idiomas[a],
                         })
                         .then((result) => {
-                          console.log(`idioma agreado al usuario ${id}`);
                           if (d === idiomas.length - 1) {
+                            console.log(`idioma agreado al usuario ${id}`);
                             res("fin");
                           }
                           d++;

@@ -220,6 +220,7 @@ funcionesDB.actualizarusuario = (obj, id, foto, cv) => {
         ) {
           linkedintem = linkedin;
         }
+
         funcionesDB
           .updateuser({
             id: usuario.id,
@@ -238,10 +239,12 @@ funcionesDB.actualizarusuario = (obj, id, foto, cv) => {
             linkedin: linkedintem,
           })
           .then((result) => {
-            res({ msj: `actualizado usuario ${name}` });
+            res({ msj: `${result.msj} usuario ${name}` });
           })
           .catch((err) => {
-            res(err);
+            console.log(chalk.red("funcionesDB.actualizarusuario"));
+            console.log(err);
+            rej(err);
           });
       })
       .catch((err) => rej(err));
@@ -781,24 +784,23 @@ funcionesDB.updateuserlinkedin = (obj) => {
   });
 };
 //----------------------------------------------------------------
-funcionesDB.updateuser = (obj) => {
+funcionesDB.updateuser = ({
+  id,
+  email,
+  password,
+  experiencia,
+  fotoperfil,
+  nombrearchivohojadevida,
+  nombre,
+  descripcion,
+  pais,
+  edad,
+  github,
+  gitlab,
+  bitbucket,
+  linkedin,
+}) => {
   return new Promise((res, rej) => {
-    const {
-      id,
-      email,
-      password,
-      experiencia,
-      fotoperfil,
-      nombrearchivohojadevida,
-      nombre,
-      descripcion,
-      pais,
-      edad,
-      github,
-      gitlab,
-      bitbucket,
-      linkedin,
-    } = obj;
     promesa.then((result) => {
       const { mariaDB, sqlite, vDB } = result;
       if (vDB) {
@@ -847,7 +849,7 @@ funcionesDB.updateuser = (obj) => {
           ),
           (err) => {
             if (!err) {
-              res({ msj: "success" });
+              res({ msj: "actualizado" });
             } else {
               rej({ msj: err });
             }

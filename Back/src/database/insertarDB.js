@@ -23,7 +23,7 @@ const funcionesDB = () => {
 
 funcionesDB.agregarherramientas = (obj) => {
   console.log("funcionesDB.agregarherramientas ");
-  console.log(obj);
+  //console.log(obj);
   return new Promise((res, rej) => {
     buscarDB
       .obtenertodasherramientas()
@@ -38,12 +38,12 @@ funcionesDB.agregarherramientas = (obj) => {
           funcionesDB
             .insertlistTool({ usuario: id, herramienta: herramientas[a] })
             .then((resul) => {
-              console.log("herramientas");
+              //   console.log("herramientas");
               //  console.log(`${a} vs ${herramientas.length} ==  ${herramientas[a]}`)
               if (c === herramientas.length - 1) {
                 organizarhabilidades(habi)
                   .then((result3) => {
-                    console.log(result3);
+                    //  console.log(result3);
                     let g = 0;
                     for (let d = 0; d < result3.length; d++) {
                       funcionesDB
@@ -3152,7 +3152,7 @@ function organizarhabilidades(array) {
             }
           }
         }
-        console.log(obj);
+        //    console.log(obj);
         let set = new Set(obj.map(JSON.stringify));
         let arrSinDuplicaciones = Array.from(set).map(JSON.parse);
         //  console.log(arrSinDuplicaciones)

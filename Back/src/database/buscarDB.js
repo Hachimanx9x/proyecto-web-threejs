@@ -761,6 +761,30 @@ funcionesDB.obtenertodasHabilidades = async () => {
   });
 };
 //---------------------------------------------------------
+funcionesDB.obteneridiomasusuario = async (id) => {
+  return new Promise((res, rej) => {
+    promesa.then(async (result) => {
+      const { mariaDB, sqlite, vDB } = result;
+      if (vDB) {
+        await mariaDB.query(Query.obteneridiomasusuario(id), (err, rows) => {
+          if (!err) {
+            res({ API: rows });
+          } else {
+            rej(err);
+          }
+        });
+      } else {
+        sqlite.all(Query.obteneridiomasusuario(id), (err, rows) => {
+          if (!err) {
+            res({ API: rows });
+          } else {
+            rej(err);
+          }
+        });
+      }
+    });
+  });
+};
 funcionesDB.obtenertodasherramientas = async () => {
   return new Promise((res, rej) => {
     promesa.then(async (result) => {
