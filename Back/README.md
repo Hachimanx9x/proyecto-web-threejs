@@ -817,8 +817,8 @@ este pide un objeto con la siguiente estructura
 {
   "proyec": 168,
   "fecha": "02-02-02021",
-  "hora": "15:00",
-  "duracion": 2,
+  "start": "15:00",
+  "end": "15:00",
   "descripcion": "test descripcion",
   "titulo": "test titulo"
 }
