@@ -9,6 +9,15 @@ const LLAVE = "misecretos";
 
 const model = require("../models/models");
 const chalk = require("chalk");
+
+rutas.get("/perfil", proToken, (req, res) => {
+  console.log(chalk.yellow("/perfil"));
+  jwt.verify(resul.token, LLAVE, (err, data) => {
+    buscarDB.obtenerusuarioid({ id: data.rows[0].id }).then((usuario) => {
+      buscarDB.buscartalentogeneral2(data.rows[0].id).then((talentos) => {});
+    });
+  });
+});
 rutas.post("/login", (req, res) => {
   // console.log("body", req.body);
   const { email, password } = req.body;

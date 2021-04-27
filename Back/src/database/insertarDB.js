@@ -22,6 +22,8 @@ const funcionesDB = () => {
                                        */
 
 funcionesDB.agregarherramientas = (obj) => {
+  console.log("funcionesDB.agregarherramientas ");
+  console.log(obj);
   return new Promise((res, rej) => {
     buscarDB
       .obtenertodasherramientas()
@@ -29,13 +31,14 @@ funcionesDB.agregarherramientas = (obj) => {
         const { herramientas, id } = obj;
         // console.log(obj)
         let habi = organizarherramientasparahabilidaes(herramientas, tools.API);
-        // console.log(habi)
+        //  console.log(habi);
         let c = 0;
         // console.log("hola")
         for (let a = 0; a < herramientas.length; a++) {
           funcionesDB
             .insertlistTool({ usuario: id, herramienta: herramientas[a] })
             .then((resul) => {
+              console.log("herramientas");
               //  console.log(`${a} vs ${herramientas.length} ==  ${herramientas[a]}`)
               if (c === herramientas.length - 1) {
                 organizarhabilidades(habi)
@@ -49,7 +52,9 @@ funcionesDB.agregarherramientas = (obj) => {
                           habilidad: result3[d],
                         })
                         .then((fin) => {
-                          if (g === result3.length - 1) res("Echo");
+                          if (g === result3.length - 1) {
+                            res("Echo");
+                          }
                           g++;
                         })
                         .catch((errv) => {
@@ -918,9 +923,9 @@ funcionesDB.insertAbility = (obj) => {
           Query.insertHabilidades(tipo, descripcion, nivel),
           (err, rows, fields) => {
             if (!err) {
-              res.json({ msj: "success" });
+              res({ msj: "success" });
             } else {
-              res.json({ msj: "error" });
+              rej({ msj: "error" });
             }
           }
         );
@@ -929,9 +934,9 @@ funcionesDB.insertAbility = (obj) => {
           Query.insertHabilidades(tipo, descripcion, nivel),
           (err, rows) => {
             if (!err) {
-              res.json({ msj: "success" });
+              res({ msj: "success" });
             } else {
-              res.json({ msj: "error" });
+              rej({ msj: "error" });
             }
           }
         );

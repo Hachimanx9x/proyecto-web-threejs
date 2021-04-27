@@ -217,7 +217,8 @@ rutas.put("/entrega/entregable", proToken, (req, res) => {
 });
 
 rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
-  console.log(req.body);
+  console.log(chalk.yellow(`/actualizar/usuario`));
+  // console.log(req.body);
   let {
     email,
     password,
@@ -258,6 +259,7 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
 
   jwt.verify(req.token, LLAVE, (err, data) => {
     if (err) {
+      console.log("Token no encontrado");
       res.sendStatus(403);
     } else {
       if (data != {} || data !== {} || data !== null || data !== undefined) {
@@ -1430,6 +1432,7 @@ function actuusermt(obj, id, foto, cv, palabras, idiomas, herramientas) {
     actualizarDB
       .actualizarusuario(obj, id, foto, cv)
       .then((result) => {
+        console.log(`Actualizado a info basica del usuario ${id}`);
         let c = 0;
         for (let a = 0; a < palabras.length; a++) {
           insertDB
@@ -1439,12 +1442,14 @@ function actuusermt(obj, id, foto, cv, palabras, idiomas, herramientas) {
             })
             .then((result) => {
               if (c === palabras.length - 1) {
+                console.log(`Actualizaron palabras clave`);
                 insertDB
                   .agregarherramientas({
                     herramientas: herramientas,
                     id: id,
                   })
                   .then((resul) => {
+                    console.log(`Actualizaron herramientas`);
                     let d = 0;
                     for (let a = 0; a < idiomas.length; a++) {
                       insertDB
@@ -1453,6 +1458,7 @@ function actuusermt(obj, id, foto, cv, palabras, idiomas, herramientas) {
                           idioma: idiomas[a],
                         })
                         .then((result) => {
+                          console.log(`idioma agreado al usuario ${id}`);
                           if (d === idiomas.length - 1) {
                             res("fin");
                           }

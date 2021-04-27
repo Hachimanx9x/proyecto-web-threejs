@@ -675,6 +675,29 @@ rutas.post("/auto/idiomas", (req, res) => {
     });
   }
 });
+rutas.post("/auto/habilidades", (req, res) => {
+  const arra = [
+    {
+      tipo: "Desarrollo",
+      descripcion: "es capas de afrontar el desarrollo a nivel logico",
+      nivel: "basico",
+    },
+    {
+      tipo: "Diseño",
+      descripcion: "es capas de afrontar el desarrollo a nivel estetico",
+      nivel: "basico",
+    },
+  ];
+  let num = 0;
+  for (let a = 0; a < arra.length; a++) {
+    insertDB.insertAbility(arra[num]).then((result) => {
+      if (num >= arra.length - 1) {
+        res.json({ msj: "terminado" });
+      }
+      num++;
+    });
+  }
+});
 rutas.post("/auto/herramienta", (req, res) => {
   const arra = [
     {
