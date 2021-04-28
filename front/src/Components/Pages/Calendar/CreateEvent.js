@@ -82,8 +82,8 @@ class CreateEvents extends Component {
           {
             proyec: project,
             fecha: selectedDate.toLocaleDateString(),
-            start: eventStart,
-            end: eventEnd,
+            inicio: eventStart,
+            fin: eventEnd,
             descripcion: eventDescription,
             titulo: eventTitle,
           },
@@ -193,8 +193,8 @@ class CreateEvents extends Component {
           const color = "#" + Math.floor(Math.random() * 16777215).toString(16);
           temcolors.push(color);
           events.push({
-            end: i.end,
-            date: i.fecha,
+            end: i.inicio,
+            date: i.fin,
             start: i.hora,
             project: i.pronombre,
             id: i.proyecto,
