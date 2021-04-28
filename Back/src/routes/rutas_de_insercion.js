@@ -1042,7 +1042,19 @@ rutas.post("/crear/reunion", proToken, (req, res) => {
       })
       .catch((err) => res.json(err));
   } else {
-    res.json({ msj: "error de datos" });
+    res.json({
+      msj: "error de datos",
+      obj: {
+        proyec,
+        fecha,
+        hora,
+        inicio,
+        fin,
+        duracion,
+        descripcion,
+        titulo,
+      },
+    });
   }
 });
 /**

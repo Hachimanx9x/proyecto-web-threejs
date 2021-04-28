@@ -2388,10 +2388,39 @@ function organizarcalendario(array) {
     let temfecha = array[a].reunionfecha.split("-");
     let strfecha = `${temfecha[0]}/${temfecha[1]}/${temfecha[2]} ${array[a].reunionhora}`;
     let date1 = new Date(strfecha);
-    let fecha = `${date1.getDay()}/${date1.getDate()}/${date1.getFullYear()}`;
-    let start = `${date1.getDay()}/${date1.getDate()}/${date1.getFullYear()} ${date1.getHours()}:${date1.getMinutes()}:00`;
+    let mes = date1.getDate(),
+      dia = date1.getDay(),
+      hora = date1.getHours(),
+      minu = date1.getMinutes();
+    if (date1.getDate() < 10) {
+      mes = `0${date1.getDate()}`;
+    }
+    if (date1.getDay() < 10) {
+      dia = `0${date1.getDay()}`;
+    }
+    if (date1.getHours() < 10) {
+      hora = `0${date1.getHours()}`;
+    }
+    if (date1.getMinutes() < 10) {
+      minu = `0${date1.getMinutes()}`;
+    }
+    let fecha = `${dia}/${mes}/${date1.getFullYear()}`;
+    let start = reajustefecha(
+      date1.getFullYear(),
+      date1.getDate(),
+      date1.getDay(),
+      date1.getHours(),
+      date1.getMinutes()
+    );
     date1.setHours(date1.getHours() + array[a].reuniondurancion);
-    let end = `${date1.getDay()}/${date1.getDate()}/${date1.getFullYear()} ${date1.getHours()}:${date1.getMinutes()}:00`;
+
+    let end = reajustefecha(
+      date1.getFullYear(),
+      date1.getDate(),
+      date1.getDay(),
+      date1.getHours(),
+      date1.getMinutes()
+    );
     arraydef.push({
       proyecto: array[a].proyectoid,
       pronombre: array[a].proyectonombre,
@@ -2928,7 +2957,21 @@ function ordeninfoproyect(rows) {
 
   return objdef;
 }
-
+function reajustefecha(ano, mes, dia, hora, minutos) {
+  if (mes < 10) {
+    mes = `0${mes}`;
+  }
+  if (dia < 10) {
+    dia = `0${dia}`;
+  }
+  if (hora < 10) {
+    hora = `0${hora}`;
+  }
+  if (minutos < 10) {
+    minutos = `0${minutos}`;
+  }
+  return `${dia}/${mes}/${ano} ${hora}:${minutos}:00`;
+}
 function calendariosoloproyecto(array, proyecto) {
   let arradef = [];
 
