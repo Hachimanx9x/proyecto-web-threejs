@@ -657,10 +657,19 @@ funcionesDB.crearreunion = (obj) => {
                     integrante: null,
                   })
                   .then((result) => {
+                    let temfecha = null;
+                    if (fecha.includes("/")) {
+                      //        console.log("detecto el /");
+                      temfecha = fecha.split("/");
+                    }
+                    if (fecha.includes("-")) {
+                      //      console.log("detecto el -");
+                      temfecha = fecha.split("-");
+                    }
                     funcionesDB
                       .insertMeeting({
                         titulo: titulo,
-                        fecha: fecha,
+                        fecha: `${temfecha[1]}-${temfecha[0]}-${temfecha[2]}`,
                         hora: hora,
                         duracion: duracion,
                         descripcion: descripcion,

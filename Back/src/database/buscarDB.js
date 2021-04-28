@@ -2385,18 +2385,28 @@ function organizarcalendario(array) {
   let arraydef = [];
 
   for (let a = 0; a < array.length; a++) {
-    let temfecha = array[a].reunionfecha.split("-");
+    let temfecha = null;
+    if (array[a].reunionfecha.includes("/")) {
+      //   console.log("detecto el /");
+      temfecha = array[a].reunionfecha.split("/");
+    }
+    if (array[a].reunionfecha.includes("-")) {
+      // console.log("detecto el -");
+      temfecha = array[a].reunionfecha.split("-");
+    }
     let strfecha = `${temfecha[0]}/${temfecha[1]}/${temfecha[2]} ${array[a].reunionhora}`;
+    //    console.log(strfecha);
     let date1 = new Date(strfecha);
-    let mes = date1.getDate(),
-      dia = date1.getDay(),
+    //  console.log(date1);
+    let mes = date1.getDay(),
+      dia = date1.getDate(),
       hora = date1.getHours(),
       minu = date1.getMinutes();
-    if (date1.getDate() < 10) {
-      mes = `0${date1.getDate()}`;
-    }
     if (date1.getDay() < 10) {
-      dia = `0${date1.getDay()}`;
+      mes = `0${date1.getDay()}`;
+    }
+    if (date1.getDate() < 10) {
+      dia = `0${date1.getDate()}`;
     }
     if (date1.getHours() < 10) {
       hora = `0${date1.getHours()}`;
@@ -2407,8 +2417,9 @@ function organizarcalendario(array) {
     let fecha = `${dia}/${mes}/${date1.getFullYear()}`;
     let start = reajustefecha(
       date1.getFullYear(),
-      date1.getDate(),
       date1.getDay(),
+      date1.getDate(),
+
       date1.getHours(),
       date1.getMinutes()
     );
@@ -2416,8 +2427,9 @@ function organizarcalendario(array) {
 
     let end = reajustefecha(
       date1.getFullYear(),
-      date1.getDate(),
       date1.getDay(),
+      date1.getDate(),
+
       date1.getHours(),
       date1.getMinutes()
     );
