@@ -2394,10 +2394,11 @@ function organizarcalendario(array) {
       // console.log("detecto el -");
       temfecha = array[a].reunionfecha.split("-");
     }
+    let fehcadir = `${temfecha[1]}/${temfecha[0]}/${temfecha[2]}`;
     let strfecha = `${temfecha[0]}/${temfecha[1]}/${temfecha[2]} ${array[a].reunionhora}`;
-    //    console.log(strfecha);
+    console.log(strfecha);
     let date1 = new Date(strfecha);
-    //  console.log(date1);
+    console.log(date1);
     let mes = date1.getDay(),
       dia = date1.getDate(),
       hora = date1.getHours(),
@@ -2438,7 +2439,7 @@ function organizarcalendario(array) {
       pronombre: array[a].proyectonombre,
       reunion: array[a].reunionid,
       titulo: array[a].reuniontitulo,
-      fecha: fecha,
+      fecha: fehcadir,
       hora: array[a].reunionhora,
       duracion: array[a].reuniondurancion,
       start: start,
@@ -2982,7 +2983,7 @@ function reajustefecha(ano, mes, dia, hora, minutos) {
   if (minutos < 10) {
     minutos = `0${minutos}`;
   }
-  return `${dia}/${mes}/${ano} ${hora}:${minutos}:00`;
+  return `${hora}:${minutos}`;
 }
 function calendariosoloproyecto(array, proyecto) {
   let arradef = [];
