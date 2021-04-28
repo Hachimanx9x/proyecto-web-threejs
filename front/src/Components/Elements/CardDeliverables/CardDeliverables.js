@@ -46,7 +46,7 @@ export default function CardDeliverables({ alfa, deliverable }) {
           `http://localhost:3030/entrega/entregable`,
           datform,
           options
-        ).thern((response) => {
+        ).then((response) => {
           console.log(response);
         });
       } catch (error) {

@@ -62,7 +62,7 @@ export default function CardActivities({ alfa, activity, tecniques }) {
           `http://localhost:3030/comiquieras/actividad`,
           datform,
           options
-        ).thern((response) => {
+        ).then((response) => {
           console.log(response);
         });
       } catch (error) {

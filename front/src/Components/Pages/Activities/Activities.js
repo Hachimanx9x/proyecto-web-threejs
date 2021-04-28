@@ -8,6 +8,8 @@ import "./Activities.css";
 import Axios from "axios";
 
 export default function ActivitiesSMMV(props) {
+  const [nameProject, setNameProject] = useState("");
+  const [progress, setProgress] = useState(null);
   const [tecniques, setTecniques] = useState([]);
   const [fetched, setFetched] = useState(false);
   const [activities, setActivities] = useState([]);
@@ -33,6 +35,8 @@ export default function ActivitiesSMMV(props) {
           console.log(response);
           setActivities([...response.data.actividades]);
           setDeliverables([...response.data.entregables]);
+          setNameProject(response.data.proyecto.nombre);
+          setProgress(response.data.proyecto.tasa);
         });
       } catch (error) {
         console.log(error);
@@ -56,7 +60,7 @@ export default function ActivitiesSMMV(props) {
     labels: ["Completado", "Faltante"],
     datasets: [
       {
-        data: [60, 40],
+        data: [progress, 100 - progress],
         backgroundColor: ["#4fa77b", "#ddd8d8"],
         hoverBackgroundColor: ["#3c8862", "rgb(238, 229, 229)"],
       },
@@ -72,7 +76,7 @@ export default function ActivitiesSMMV(props) {
           Regresar
         </button>
         <div className="d-flex justify-content-between p-1">
-          <p>Proyecto creación de entornos 3d</p>
+          <p>{nameProject}</p>
         </div>
         <div className="row">
           <div
@@ -107,7 +111,7 @@ export default function ActivitiesSMMV(props) {
               <p className="m-2">Estado de alfa</p>
               <div className="position-relative">
                 <Doughnut data={data} />
-                <p className="o-text-alfa-state o-text-smmv">60%</p>
+                <p className="o-text-alfa-state o-text-smmv">{progress}%</p>
               </div>
             </div>
           </div>

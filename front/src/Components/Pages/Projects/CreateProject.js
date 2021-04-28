@@ -4,7 +4,10 @@ import User from "../../../Logos/user-icon.png";
 import ProjectIcon from "../../../Logos/project.png";
 import ProjectPicture from "../../../ilustracion-equipo-de-trabajo.jpg";
 import CardMember from "../../Elements/CardMember/CardMember";
-import { faAngleDoubleUp } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAngleDoubleUp,
+  faCircleNotch,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Rodal from "rodal";
 
@@ -38,6 +41,7 @@ class CreateProject extends Component {
       success: false,
       rols: [],
       fetched: false,
+      preparation: true,
       contacts: [],
     };
   }
@@ -256,6 +260,10 @@ class CreateProject extends Component {
     if (!errors.name && !errors.members && !errors.practices) {
       try {
         const datform = new FormData();
+        this.setState({ preparation: true });
+        setTimeout(() => {
+          this.setState({ success: true });
+        }, 4000);
         datform.append("nombre", projectName);
         datform.append("descripcion", projectDescription);
         datform.append("practica", [...practices]);
@@ -275,12 +283,11 @@ class CreateProject extends Component {
           options
         ).then((response) => {
           console.log(response);
-          this.setState({ success: true });
           setTimeout(() => {
             this.setState({ confirmationModal: false });
             this.props.history.push("/Dashboard/Desktop");
-          }, 1200);
-        });
+          });
+        }, 1200);
       } catch (error) {
         console.log(error);
         this.setState({ confirmationModal: false });
@@ -326,25 +333,36 @@ class CreateProject extends Component {
             onClose={() => this.setState({ confirmationModal: false })}
           >
             {!this.state.success ? (
-              <div>
-                <h4 className="mt-3">Confirmación de creación de proyecto</h4>
-                <div className="d-flex justify-content-between p-2">
-                  <button
-                    className="z-depth-0 border-primary btn border-primary text-primary font-weight-bold"
-                    type="submit"
-                    onClick={() => this.setState({ confirmationModal: false })}
-                  >
-                    Cancelar
-                  </button>
-                  <button
-                    className="z-depth-0 border-0 btn btn-primary font-weight-bold"
-                    type="button"
-                    onClick={() => this.createProject()}
-                  >
-                    Crear
-                  </button>
+              this.state.preparation ? (
+                <h2 className="text-center">
+                  <FontAwesomeIcon
+                    icon={faCircleNotch}
+                    className="o-animation-loading"
+                  />
+                </h2>
+              ) : (
+                <div>
+                  <h4 className="mt-3">Confirmación de creación de proyecto</h4>
+                  <div className="d-flex justify-content-between p-2">
+                    <button
+                      className="z-depth-0 border-primary btn border-primary text-primary font-weight-bold"
+                      type="submit"
+                      onClick={() =>
+                        this.setState({ confirmationModal: false })
+                      }
+                    >
+                      Cancelar
+                    </button>
+                    <button
+                      className="z-depth-0 border-0 btn btn-primary font-weight-bold"
+                      type="button"
+                      onClick={() => this.createProject()}
+                    >
+                      Crear
+                    </button>
+                  </div>
                 </div>
-              </div>
+              )
             ) : (
               <SuccessAnimation />
             )}

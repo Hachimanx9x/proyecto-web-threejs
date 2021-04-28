@@ -11,7 +11,7 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 defaults.global.legend.display = false;
 
 export default function Desktop() {
-  const [active, setActive] = useState();
+  const [active, setActive] = useState(null);
   const [keyWord, setKeyWord] = useState("");
   const [fetched, setFetched] = useState(false);
   const [projects, setProjects] = useState([]);
@@ -80,7 +80,10 @@ export default function Desktop() {
                 title: i.title,
                 icon: i.icon !== null ? i.icon : ProjectIcon,
                 image: i.image !== null ? i.image : ProjectPicture,
-                description: i.descripcion,
+                description:
+                  i.descripcion === null || i.descripcion === ""
+                    ? "Sin descripción."
+                    : i.descripcion,
                 practices: [...practices],
                 updates: [...i.updates],
               });

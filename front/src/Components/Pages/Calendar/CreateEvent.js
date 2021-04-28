@@ -80,19 +80,20 @@ class CreateEvents extends Component {
         await Axios.post(
           `http://localhost:3030/crear/reunion`,
           {
-            proyect: project,
-            fecha: selectedDate,
+            proyec: project,
+            fecha: selectedDate.toLocaleDateString(),
             start: eventStart,
             end: eventEnd,
             descripcion: eventDescription,
             titulo: eventTitle,
           },
           options
-        ).thern((response) => {
+        ).then((response) => {
+          console.log(response);
           this.setState({ confirmation: true });
           setTimeout(() => {
             this.setState({ confirmationModal: false });
-            this.props.history.push("/Dashboard/Calendar");
+            //this.props.history.push("/Dashboard/Calendar");
           }, 1200);
         });
       } catch (error) {
@@ -113,7 +114,6 @@ class CreateEvents extends Component {
       this.state.eventStart !== null ? this.state.eventStart.split(":") : null;
     const endEvent =
       this.state.eventEnd !== null ? this.state.eventEnd.split(":") : null;
-    console.log(title + " " + startEvent + " " + endEvent);
     if (title.trim() === "") {
       this.setState({ titleIsValid: false });
     } else {
@@ -156,20 +156,18 @@ class CreateEvents extends Component {
    */
   componentDidMount = () => {
     let temcolors = [];
-    for (let i = 0; i < this.state.events.length; i++) {
-      const color = "#" + Math.floor(Math.random() * 16777215).toString(16);
-      temcolors.push(color);
-    }
     window.addEventListener("resize", this.handleResize);
 
     const date = new Date(localStorage.getItem("date"));
     const dateparts = date.toLocaleDateString().split("/");
-    console.log(dateparts[2] + "/" + dateparts[1] + "/" + dateparts[0]);
+    //   console.log(dateparts[2] + "/" + dateparts[1] + "/" + dateparts[0]);
 
     const token = localStorage.getItem("login");
     const obj = JSON.parse(token);
     let temp = obj.token;
     const projects = [];
+    const events = [];
+
     const options = {
       headers: {
         "Content-Type": "application/json",
@@ -178,42 +176,43 @@ class CreateEvents extends Component {
     };
     try {
       Axios.all([
-        (Axios.get(`http://localhost:3030/escritorio`, options),
-        Axios.get(`http://localhost:3030/respuesta`, options)),
+        Axios.get(`http://localhost:3030/escritorio`, options),
+        Axios.get(`http://localhost:3030/calendario`, options),
       ]).then((response) => {
         console.log(response);
-        const temp = response[0].data.proyectos;
+        const tempProyect = response[0].data.proyectos;
         const tempEvents = response[1].data;
 
-        for (const i of temp) {
+        for (const i of tempProyect) {
           projects.push({
             id: i.id,
             title: i.title,
-            pdates: [...i.updates],
           });
         }
-
-        let temvents = [];
-        for (let i = 0; i < this.state.events.length; i++) {
+        for (const i of tempEvents) {
           const color = "#" + Math.floor(Math.random() * 16777215).toString(16);
           temcolors.push(color);
-          temvents.push({
-            title: this.state.events[i].title,
-            start: this.state.events[i].start,
-            end: this.state.events[i].end,
-            color: color,
+          events.push({
+            end: i.end,
+            date: i.fecha,
+            start: i.hora,
+            project: i.pronombre,
+            id: i.proyecto,
+            start: i.start,
+            title: i.titulo,
           });
         }
+        this.setState({
+          colors: [...temcolors],
+          selectedDate: date,
+          projectList: [...projects],
+          events: [...events],
+          fetched: true,
+        });
       });
     } catch (error) {
       console.log(error);
     }
-    this.setState({
-      colors: [...temcolors],
-      selectedDate: date,
-      projectList: [...projects],
-      fetched: true,
-    });
   };
   /*
    * Removes the method before the component is unmounted.
@@ -339,7 +338,9 @@ class CreateEvents extends Component {
                       >
                         <option hidden>Seleccione </option>
                         {this.state.projectList.map((project, i) => (
-                          <option value={project.id}>{project.title}</option>
+                          <option key={i} value={project.id}>
+                            {project.title}
+                          </option>
                         ))}
                       </select>
                     </div>
@@ -509,7 +510,7 @@ class CreateEvents extends Component {
                         color={this.state.colors[i]}
                         className="mr-2"
                       />
-                      {event}
+                      {event.title} {event.start}-{event.end}
                     </p>
                   ))
                 ) : (

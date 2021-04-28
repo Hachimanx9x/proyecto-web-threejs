@@ -10,9 +10,9 @@ class Accordion2 extends Component {
         <button
           className="accordionHeading container"
           onClick={() =>
-            this.props.active === this.props.title
-              ? this.props.setActive("")
-              : this.props.setActive(this.props.title)
+            this.props.active === this.props.projectId
+              ? this.props.setActive(null)
+              : this.props.setActive(this.props.projectId)
           }
         >
           <img
@@ -40,7 +40,7 @@ class Accordion2 extends Component {
 
         <div
           className={
-            (this.props.active === this.props.title ? "show" : "") +
+            (this.props.active === this.props.projectId ? "show" : "") +
             " accordionContent"
           }
         >

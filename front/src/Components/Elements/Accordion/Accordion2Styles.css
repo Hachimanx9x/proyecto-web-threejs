@@ -88,7 +88,7 @@
 
 .accordionContent.show {
   visibility: visible;
-  height: 300px;
+  height: 310px;
   width: 100%;
   columns: 2;
   overflow: hidden;

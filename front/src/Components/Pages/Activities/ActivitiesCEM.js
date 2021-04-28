@@ -8,6 +8,8 @@ import { CEM } from "../Documentation/CEM";
 import "./Activities.css";
 
 export default function ActivitiesCEM(props) {
+  const [nameProject, setNameProject] = useState("");
+  const [progress, setProgress] = useState(null);
   const [tecniques, setTecniques] = useState([]);
   const [fetched, setFetched] = useState(false);
   const [activities, setActivities] = useState([]);
@@ -33,6 +35,8 @@ export default function ActivitiesCEM(props) {
           console.log(response);
           setActivities([...response.data.actividades]);
           setDeliverables([...response.data.entregables]);
+          setNameProject(response.data.proyecto.nombre);
+          setProgress(response.data.proyecto.tasa);
         });
       } catch (error) {
         console.log(error);
@@ -56,7 +60,7 @@ export default function ActivitiesCEM(props) {
     labels: ["Completado", "Faltante"],
     datasets: [
       {
-        data: [60, 40],
+        data: [progress, 100 - progress],
         backgroundColor: ["#D0A114", "#ddd8d8"],
         hoverBackgroundColor: ["#957411", "rgb(238, 229, 229)"],
       },
@@ -72,7 +76,7 @@ export default function ActivitiesCEM(props) {
           Regresar
         </button>
         <div className="d-flex justify-content-between p-1">
-          <p>Proyecto creación de entornos 3d</p>
+          <p>{nameProject}</p>
         </div>
         <div className="row">
           <div className="col-xs-12 bg-white rounded z-depth-1 p-0 p-sm-4 mb-2 mr-0 ml-0 mr-sm-4 ml-sm-4 o-activities-col">
@@ -104,7 +108,7 @@ export default function ActivitiesCEM(props) {
               <p className="m-2">Estado de alfa</p>
               <div className="position-relative">
                 <Doughnut data={data} />
-                <p className="o-text-alfa-state o-text-cem">60%</p>
+                <p className="o-text-alfa-state o-text-cem">{progress}%</p>
               </div>
             </div>
           </div>

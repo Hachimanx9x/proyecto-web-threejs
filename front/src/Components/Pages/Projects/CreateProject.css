@@ -208,6 +208,13 @@
   color: #4fa77b;
 }
 
+.o-animation-loading {
+  color: #7ac142;
+  text-align: center;
+  margin: 20px;
+  font-size: 100px;
+  animation: rotating 6s ease-out;
+}
 @media only screen and (max-width: 900px) {
   .o-icon-input-text {
     font-size: 14px;
@@ -289,5 +296,15 @@
     height: 9rem;
 
     margin: 0;
+  }
+}
+
+@keyframes rotating {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(1080deg);
   }
 }
