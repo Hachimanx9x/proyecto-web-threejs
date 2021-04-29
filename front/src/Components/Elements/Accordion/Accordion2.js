@@ -29,7 +29,7 @@ class Accordion2 extends Component {
             <FontAwesomeIcon
               icon={faChevronDown}
               className={
-                (this.props.active === this.props.title
+                (this.props.active === this.props.projectId
                   ? "rotate "
                   : "rotated ") + "mr-2"
               }

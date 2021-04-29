@@ -26,71 +26,61 @@ require("moment/locale/es.js");
 export default class CalendarEvents extends Component {
   constructor(props) {
     super(props);
-    this.handleDayClick = this.handleDayClick.bind(this);
-    this.createEvent = this.createEvent.bind(this);
     this.state = {
       events: [],
       selectedDate: null,
-      colors: [],
+      colors: [,],
       error: false,
-      fetched: true,
+      fetched: false,
     };
-  } /*
+  }
   componentDidMount = () => {
     const token = localStorage.getItem("login");
     const obj = JSON.parse(token);
-    const tokensito = obj.token;
-    const httpInstance = axios.create({
-      baseURL: "http://localhost:3030/",
-      timeout: 1000,
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `llave ${tokensito}`,
-      },
-    }); //
+    const events = [];
+    const colors = [];
 
-    httpInstance.interceptors.response.use(null, (error) => {
-      const expectedError =
-        error.response &&
-        error.response.status >= 400 &&
-        error.response.status < 500;
-      if (!expectedError) {
-        // Loggear mensaje de error a un servicio como Sentry
-        // Mostrar error genérico al usuario
-        return Promise.reject(error);
-      }
-    });
-    //------
-    httpInstance
-      .get("calendario")
-      .then((respuesta) => {
-        if (respuesta.statusText === "OK") {
+    const tokensito = obj.token;
+    const options = {
+      headers: { authorization: `llave ${tokensito}` },
+    };
+    try {
+      axios
+        .get(`http://localhost:3030/calendario`, options)
+        .then((respuesta) => {
           console.log(respuesta.data);
-        } else {
-          console.log("error fatal");
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-    let temcolors = [];
-    let temvents = [];
-    for (let i = 0; i < this.state.events.length; i++) {
-      const color = "#" + Math.floor(Math.random() * 16777215).toString(16);
-      temcolors.push(color);
-      temvents.push({
-        title: this.state.events[i].title,
-        start: this.state.events[i].start,
-        end: this.state.events[i].end,
-        color: color,
+          for (let i = 0; i < respuesta.data.length; i++) {
+            const element = respuesta.data[i];
+            if (element.start !== "NaN:NaN" && element.end !== "NaN:NaN") {
+              console.log(i);
+              const color =
+                "#" + Math.floor(Math.random() * 16777215).toString(16);
+              let temp = element.fecha.split("/");
+              const date = temp[2] + "/" + temp[1] + "/" + temp[0];
+              const start = new Date(date + " " + element.start);
+              const end = new Date(date + " " + element.end);
+              events.push({
+                title: element.titulo,
+                start: start,
+                end: end,
+                color: color,
+                allDay: true,
+              });
+              colors.push(color);
+            }
+          }
+          this.setState({ colors: colors, events: events, fetched: true });
+        });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  handleDayClick = (day, { selected }) => {
+    if (!selected) {
+      this.setState({
+        selectedDate: day,
       });
     }
-    this.setState({ colors: temcolors, fetched: true, events: temvents });
-  };*/
-  handleDayClick = (day, { selected }) => {
-    this.setState({
-      selectedDate: selected ? undefined : day,
-    });
   };
 
   createEvent = () => {
@@ -167,7 +157,7 @@ export default class CalendarEvents extends Component {
               </small>
             </div>
             <p className="o-text-events">Eventos programados</p>
-            <div className="o-date-picker-container pt-3">
+            <div className="o-date-picker-container pl-3 pt-3">
               {this.state.events.length !== 0 ? (
                 this.state.events.map((event, i) => (
                   <p key={i}>

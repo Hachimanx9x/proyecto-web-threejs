@@ -1,3 +1,6 @@
+* {
+  box-sizing: border-box;
+}
 .o-desktop-card {
   width: 100%;
   padding: 1rem 2rem;
@@ -8,17 +11,23 @@
 
 .o-download-section {
   height: 2.7rem;
+  justify-content: center;
+  padding: 0;
   min-width: 10rem;
+
+  position: relative;
   font-size: 12px;
 }
 .o-download-btn {
   padding: 13px 5px;
   font-size: 12px;
+  position: absolute;
+  right: 0;
+  margin-left: auto;
 }
 @media only screen and (max-width: 1190px) {
   .o-download-section {
     height: 2.7rem;
-    width: 100%;
   }
   .o-download-btn {
     padding: 14px 2px;
@@ -43,20 +52,29 @@
   }
   .o-download-btn {
     padding: 0.65rem 0.1rem;
-    width: 6.5rem;
-    font-size: 0.9rem;
+    width: 5.5rem;
+    height: 100%;
+    font-size: 0.8rem;
   }
 }
 @media only screen and (max-width: 590px) {
   .o-download-section {
-    height: 2.7rem;
+    height: 3.3rem;
     margin: 0;
     width: 100%;
+    position: relative;
     min-width: auto;
   }
   .o-download-btn {
     padding: 0.65rem 0.2rem;
+    width: 5.5rem;
+    right: 0%;
+    height: 3.3rem;
   }
+  .o-desktop-card {
+    padding: 1rem 0.5rem;
+  }
+
   .o-desktop-card p,
   .o-desktop-card strong,
   .o-desktop-card {

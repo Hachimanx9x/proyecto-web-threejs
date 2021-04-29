@@ -52,7 +52,10 @@ const CardDesktop = ({ update }) => {
       </div>
       <div className="row justify-content-between">
         <div
-          className={"col-12" + (windowWidth < 1070 ? "col-sm-6" : "col-sm-3")}
+          className={
+            "col-12 text-center" +
+            (windowWidth < 1070 ? "col-sm-6" : "col-sm-3")
+          }
         >
           <p className="grey-text">
             <FontAwesomeIcon icon={faCalendarAlt} className="text-danger" />{" "}
@@ -73,21 +76,19 @@ const CardDesktop = ({ update }) => {
           </p>
         </div>
         */}
-        <div className="col-xs-4 col-sm-6 rounded-pill grey p-0 lighten-3 d-flex o-download-section">
-          <div className="col-xs-6 col-sm-6 d-flex flex-wrap">
-            <small className="grey-text pt-2 pl-3 mb-0">
-              {update.fileName}
-            </small>
-          </div>
-          <div className="col-xs-6 col-sm-6 p-0 d-flex justify-content-end">
-            <button
-              type="button"
-              onClick={getFile}
-              className="border-0 rounded-pill grey lighten-2 cyan-text o-download-btn"
-            >
-              Descargar <FontAwesomeIcon className="mr-2" icon={faArrowDown} />
-            </button>
-          </div>
+      </div>
+      <div className="row rounded-pill grey p-0 lighten-3  o-download-section m-0 p-0">
+        <div className="col-8 col-sm-8 justify-content-center d-flex flex-column">
+          <small className="grey-text pt-2 pl-3 mb-0">{update.fileName}</small>
+        </div>
+        <div className="col-4 col-sm-4 d-flex">
+          <button
+            type="button"
+            onClick={getFile}
+            className="border-0 rounded-pill grey lighten-2 cyan-text o-download-btn ml-auto"
+          >
+            Descargar <FontAwesomeIcon className="mr-2" icon={faArrowDown} />
+          </button>
         </div>
       </div>
     </div>
@@ -98,3 +99,21 @@ CardDesktop.propTypes = {
   update: PropTypes.object.isRequired,
 };
 export default CardDesktop;
+
+/*
+
+<div className="row rounded-pill grey p-0 lighten-3  o-download-section">
+        <div className="col-xs-6 col-sm-6">
+          <small className="grey-text pt-2 pl-3 mb-0">{update.fileName}</small>
+        </div>
+        <div className="col-xs-6 col-sm-6 p-0 m-0 position-relative ">
+          <button
+            type="button"
+            onClick={getFile}
+            className="border-0 rounded-pill grey lighten-2 cyan-text o-download-btn ml-auto"
+          >
+            Descargar <FontAwesomeIcon className="mr-2" icon={faArrowDown} />
+          </button>
+        </div>
+      </div>
+*/

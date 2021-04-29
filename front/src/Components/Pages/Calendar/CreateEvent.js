@@ -27,7 +27,7 @@ class CreateEvents extends Component {
     this.createEvent = this.createEvent.bind(this);
 
     this.state = {
-      selectedDate: null,
+      selectedDate: new Date(localStorage.getItem("date")),
       confirmationModal: false,
       project: "",
       eventTitle: "",
@@ -50,6 +50,7 @@ class CreateEvents extends Component {
         "Entrevistas",
         "Creación de entorno",
       ],
+      todayEvents: [],
     };
   }
   /*
@@ -69,6 +70,7 @@ class CreateEvents extends Component {
         eventEnd,
         selectedDate,
       } = this.state;
+      const dateString = selectedDate.toLocaleDateString();
       try {
         const token = localStorage.getItem("login");
         const obj = JSON.parse(token);
@@ -77,11 +79,12 @@ class CreateEvents extends Component {
           headers: { authorization: `llave ${tokensito}` },
         };
 
+        this.setState({ confirmation: true });
         await Axios.post(
           `http://localhost:3030/crear/reunion`,
           {
             proyec: project,
-            fecha: selectedDate.toLocaleDateString(),
+            fecha: dateString.replaceAll("/", "-"),
             inicio: eventStart,
             fin: eventEnd,
             descripcion: eventDescription,
@@ -89,12 +92,10 @@ class CreateEvents extends Component {
           },
           options
         ).then((response) => {
-          console.log(response);
-          this.setState({ confirmation: true });
           setTimeout(() => {
             this.setState({ confirmationModal: false });
             //this.props.history.push("/Dashboard/Calendar");
-          }, 1200);
+          }, 1500);
         });
       } catch (error) {
         console.log(error);
@@ -153,15 +154,12 @@ class CreateEvents extends Component {
   };
   /*
    * Add an resizable method to get the current viewport dimensions for responsive issues.
+   * Fetch Data
    */
   componentDidMount = () => {
     let temcolors = [];
     window.addEventListener("resize", this.handleResize);
-
-    const date = new Date(localStorage.getItem("date"));
-    const dateparts = date.toLocaleDateString().split("/");
-    //   console.log(dateparts[2] + "/" + dateparts[1] + "/" + dateparts[0]);
-
+    const test = new Date("04-28-2021");
     const token = localStorage.getItem("login");
     const obj = JSON.parse(token);
     let temp = obj.token;
@@ -179,7 +177,6 @@ class CreateEvents extends Component {
         Axios.get(`http://localhost:3030/escritorio`, options),
         Axios.get(`http://localhost:3030/calendario`, options),
       ]).then((response) => {
-        console.log(response);
         const tempProyect = response[0].data.proyectos;
         const tempEvents = response[1].data;
 
@@ -193,8 +190,8 @@ class CreateEvents extends Component {
           const color = "#" + Math.floor(Math.random() * 16777215).toString(16);
           temcolors.push(color);
           events.push({
-            end: i.inicio,
-            date: i.fin,
+            end: i.end,
+            date: i.fecha,
             start: i.hora,
             project: i.pronombre,
             id: i.proyecto,
@@ -202,9 +199,10 @@ class CreateEvents extends Component {
             title: i.titulo,
           });
         }
+
+        this.compareDate(events);
         this.setState({
           colors: [...temcolors],
-          selectedDate: date,
           projectList: [...projects],
           events: [...events],
           fetched: true,
@@ -228,10 +226,42 @@ class CreateEvents extends Component {
     }
   };
 
-  handleDayClick = (day, { selected }) => {
-    this.setState({
-      selectedDate: selected ? undefined : day,
-    });
+  handleDayClick = async (day, { selected }) => {
+    if (!selected) {
+      await this.setState({
+        selectedDate: day,
+      });
+      this.compareDate(this.state.events);
+    }
+  };
+
+  compareDate = (array) => {
+    const firstDate = this.state.selectedDate.toLocaleDateString();
+    const events = [];
+    for (const event of array) {
+      let secondDate = event.date.split("/");
+      const dateParts =
+        secondDate[1] + "/" + secondDate[0] + "/" + secondDate[2];
+      const eventStart = new Date(dateParts + ", " + event.start);
+      const eventEnd = new Date(dateParts + ", " + event.end);
+      secondDate = new Date(
+        secondDate[1] + "/" + secondDate[0] + "/" + secondDate[2]
+      );
+      const options = {
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      };
+      if (firstDate === secondDate.toLocaleString().split(",")[0]) {
+        events.push({
+          end: eventStart.toLocaleString("en-US", options),
+          start: eventEnd.toLocaleString("en-US", options),
+          id: event.id,
+          title: event.title,
+        });
+      }
+    }
+    this.setState({ todayEvents: [...events] });
   };
   render() {
     if (this.state.fetched) {
@@ -332,10 +362,7 @@ class CreateEvents extends Component {
                   </small>
                   <div className="position-relative mt-1 mb-2 mb-sm-4">
                     <div className="o-create-select">
-                      <select
-                        className="w-100"
-                        onChange={(e) => this.handleInput("project", e)}
-                      >
+                      <select onChange={(e) => this.handleInput("project", e)}>
                         <option hidden>Seleccione </option>
                         {this.state.projectList.map((project, i) => (
                           <option key={i} value={project.id}>
@@ -502,15 +529,15 @@ class CreateEvents extends Component {
 
               <div className="o-date-picker-container rounded mt-2 p-4 d-flex flex-column">
                 <p>Eventos programados para el mismo día</p>
-                {this.state.events.length !== 0 ? (
-                  this.state.events.map((event, i) => (
+                {this.state.todayEvents.length !== 0 ? (
+                  this.state.todayEvents.map((event, i) => (
                     <p key={i}>
                       <FontAwesomeIcon
                         icon={faSquare}
                         color={this.state.colors[i]}
                         className="mr-2"
                       />
-                      {event.title} {event.start}-{event.end}
+                      {event.title} {event.start} - {event.end}
                     </p>
                   ))
                 ) : (

@@ -133,6 +133,8 @@
   font-size: 0.6rem;
   -webkit-appearance: button;
   outline: none;
+  cursor: pointer;
+  box-sizing: border-box;
 }
 
 .o-create-select::before {
@@ -153,7 +155,7 @@
   background: #007ce0;
 }
 .o-create-select:hover::before {
-  background: #0472ca;
+  background: #0a4779;
 }
 
 .o-clock-container {
