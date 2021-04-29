@@ -3,22 +3,15 @@ import * as THREE from "three/build/three.module";
 import { PointerLockControls } from "three/examples/jsm/controls/PointerLockControls";
 import io from "socket.io-client";
 class Test3d extends Component {
-    constructor(props) {
-        super(props);
-    }
+  constructor(props) {
+    super(props);
+  }
 
-    componentDidMount() {
-
-    }
-    render() {
-        console.log("HOla")
-        return (
-            <div className="test3d">
-
-                hoa
-            </div>
-        );
-    }
+  componentDidMount() {}
+  render() {
+    console.log("HOla");
+    return <div className="test3d">hoa</div>;
+  }
 }
 
 export default Test3d;
