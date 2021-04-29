@@ -171,7 +171,7 @@ funcionesDB.obtenerEscritorioProyectos = async (body) => {
   return new Promise((res, rej) => {
     const { id } = body.rows[0];
 
-    console.log(id);
+    //   console.log(id);
     if (id !== undefined) {
       promesa.then(async (result) => {
         const { mariaDB, sqlite, vDB } = result;
@@ -291,7 +291,7 @@ funcionesDB.obtenerProyecto = async (body) => {
 
 funcionesDB.buscarProyecto = async (idp, iduse) => {
   console.log("funcionesDB.buscarProyecto");
-  console.log(iduse);
+  //console.log(iduse);
   return new Promise((res, rej) => {
     promesa.then(async (result) => {
       const { mariaDB, sqlite, vDB } = result;
@@ -459,8 +459,7 @@ funcionesDB.buscareventoscalendarioproyecto = async (proyecto) => {
 };
 funcionesDB.buscaractividadesproyecto = async (user, id, pra) => {
   console.log("funcionesDB.buscaractividadesproyecto");
-  console.log(user);
-  console.log("funcionesDB.buscaractividadesproyecto");
+
   return new Promise((res, rej) => {
     //console.log(idUser)
     promesa.then(async (result) => {
@@ -474,7 +473,6 @@ funcionesDB.buscaractividadesproyecto = async (user, id, pra) => {
                 Query.obtenerproyectoentregablescompleto(id),
                 (err2, rows2) => {
                   if (!err) {
-                    console.log("dlksflkdfnñ");
                     actividadespro(user, rows, id, pra).then((resultactivi) => {
                       console.log("actividades");
                       entregablepro(rows2).then((prass) => {
@@ -507,21 +505,20 @@ funcionesDB.buscaractividadesproyecto = async (user, id, pra) => {
           }
         );
       } else {
-        console.log(user, id);
+        console.log(`se busca contenido del proyecto ${id}`);
         sqlite.all(
           Query.obtenerproyectosactividadescompleto(id),
           (err, rows) => {
             if (!err) {
-              console.log(`actividades ${id}`);
+              //      console.log(`actividades ${id}`);
               sqlite.all(
                 Query.obtenerproyectoentregablescompleto(id),
                 (err, rows2) => {
                   if (!err) {
-                    console.log(`entreables ${id}`);
+                    //      console.log(`entreables ${id}`);
                     actividadespro(user, rows, id, pra).then((resultactivi) => {
-                      console.log(id);
                       entregablepro(rows2).then((prass) => {
-                        console.log("entregable");
+                        //        console.log("entregable");
                         funcionesDB
                           .buscarProyecto(id, user.id)
                           .then((proyecto) => {
@@ -567,36 +564,27 @@ funcionesDB.obteneractientreproyectos = (user, array) => {
       id: user,
     };
   }
-  console.log("funcionesDB.obteneractientreproyectos");
-  return new Promise((res, rej) => {
-    // console.log(array);
-    let contfe = 0;
+  return new Promise(async (res, rej) => {
+    let contfe = 0,
+      tem = true;
+    let pro = 0;
     for (let i = 0; i < array.length; i++) {
-      let arraydef = [];
-
-      funcionesDB
-        .buscaractividadesproyecto(user, array[i].id, undefined)
+      await funcionesDB
+        .buscaractividadesproyecto(user, array[contfe].id, undefined)
         .then((contenido) => {
           /// actividad y entregable
-          verfiactificadad(
+          array[contfe].updates = verientrgables(
             array[contfe].id,
-            contenido.actividades,
-            arraydef
-          ).then((acti) => {
-            verientrgables(
-              array[contfe].id,
-              array[contfe].title,
-              contenido.entregables,
-              acti
-            ).then((ente) => {
-              array[contfe].updates = ente;
-              if (contfe >= array.length - 1) {
-                console.log("chao");
-                res(array);
-              }
-              contfe++;
-            });
-          });
+            array[contfe].title,
+            contenido.entregables,
+            verfiactificadad(array[contfe].id, contenido.actividades, [])
+          );
+
+          if (contfe >= array.length - 1) {
+            //  console.log("chao");
+            res(array);
+          }
+          contfe++;
         })
         .catch((err) => rej(err));
     }
@@ -604,68 +592,47 @@ funcionesDB.obteneractientreproyectos = (user, array) => {
 };
 
 function verfiactificadad(id, array, arraydef) {
-  return new Promise((res, rej) => {
-    let cont = 0;
-    for (let j1 = 0; j1 < array.length; j1++) {
-      if (array[j1].namefile !== null && array[j1].namefile !== "null") {
-        console.log(
-          chalk.red(`Actividad ${array[j1].titulo} con el contenido: `) +
-            chalk.blue(`${array[j1].namefile}`)
-        );
-        arraydef.push({
-          userName: array[j1].nombre,
-          projectName: array[j1].title,
-          activity: array[j1].titulo,
-          date: array[j1].fechaentrega,
-          fileName: array[j1].namefile,
-          fileUrl: `${env.host}/proyecto/contenido/proyecto${id}/${array[j1].namefile}`,
-          //  source: array[j1].source,
-        });
-        if (cont >= array.length - 1) {
-          res(arraydef);
-        }
-        cont++;
-      } else {
-        if (cont >= array.length - 1) {
-          res(arraydef);
-        }
-        cont++;
-      }
+  for (let j1 = 0; j1 < array.length; j1++) {
+    if (array[j1].namefile !== null && array[j1].namefile !== "null") {
+      console.log(
+        chalk.red(`Actividad ${array[j1].titulo} con el contenido: `) +
+          chalk.blue(`${array[j1].namefile}`)
+      );
+      arraydef.push({
+        userName: array[j1].nombre,
+        projectName: array[j1].title,
+        activity: array[j1].titulo,
+        date: array[j1].fechaentrega,
+        fileName: array[j1].namefile,
+        fileUrl: `${env.host}/proyecto/contenido/proyecto${id}/${array[j1].namefile}`,
+        //  source: array[j1].source,
+      });
     }
-  });
+  }
+
+  return arraydef;
 }
 
 function verientrgables(id, proname, array, arraydef) {
-  return new Promise((res, rej) => {
-    let cont = 0;
-
-    for (let j2 = 0; j2 < array.length; j2++) {
-      if (array[j2].namefile !== null && array[j2].namefile !== "null") {
-        console.log(
-          chalk.red(`Entregable ${array[j1].titulo} con el contenido: `) +
-            chalk.blue(`${array[j1].namefile}`)
-        );
-        arraydef.push({
-          userName: "general",
-          projectName: proname,
-          activity: array[j2].nombre,
-          date: array[j2].fechaentrega,
-          fileName: array[j2].namefile,
-          fileUrl: `${env.host}/proyecto/contenido/proyecto${id}/${array[j2].namefile}`,
-          source: array[j1].contenido,
-        });
-        if (cont >= array.length - 1) {
-          res(arraydef);
-        }
-        cont++;
-      } else {
-        if (cont >= array.length - 1) {
-          res(arraydef);
-        }
-        cont++;
-      }
+  for (let j2 = 0; j2 < array.length; j2++) {
+    if (array[j2].namefile !== null && array[j2].namefile !== "null") {
+      console.log(
+        chalk.red(`Entregable ${array[j1].titulo} con el contenido: `) +
+          chalk.blue(`${array[j1].namefile}`)
+      );
+      arraydef.push({
+        userName: "general",
+        projectName: proname,
+        activity: array[j2].nombre,
+        date: array[j2].fechaentrega,
+        fileName: array[j2].namefile,
+        fileUrl: `${env.host}/proyecto/contenido/proyecto${id}/${array[j2].namefile}`,
+        source: array[j1].contenido,
+      });
     }
-  });
+
+    return arraydef;
+  }
 }
 /**
  * 
@@ -2396,9 +2363,9 @@ function organizarcalendario(array) {
     }
     let fehcadir = `${temfecha[1]}/${temfecha[0]}/${temfecha[2]}`;
     let strfecha = `${temfecha[0]}/${temfecha[1]}/${temfecha[2]} ${array[a].reunionhora}`;
-    console.log(strfecha);
+    // console.log(strfecha);
     let date1 = new Date(strfecha);
-    console.log(date1);
+    //  console.log(date1);
     let mes = date1.getDay(),
       dia = date1.getDate(),
       hora = date1.getHours(),
@@ -2546,11 +2513,16 @@ function filtarinfo(array) {
 }
 
 function actividadespro(user, array, id, pra) {
-  let arraydef = [];
+  console.log("function actividadespro");
+
   //  console.log(pra);
   return new Promise((res, rej) => {
     let count = 0;
+    let arraydef = [];
     for (let a = 0; a < array.length; a++) {
+      /* console.log(
+        ` proyecto ${array[a].id} + archivo:${array[a].contenidonombrearchivo} `
+      );*/
       let temp = null,
         temp2 = null;
       if (array[a].contenidonombrearchivo !== "null") {
@@ -2559,7 +2531,6 @@ function actividadespro(user, array, id, pra) {
       if (array[a].fotoperfil !== "null" && array[a].fotoperfil !== null) {
         temp2 = `${env.host}/proyecto/contenido/usuario${array[a].userid}/${array[a].fotoperfil}`;
       }
-      // console.log(array[a].actividadfechaentrega);
       let temfecha = array[a].actividadfechaentrega.split("-");
       let day = parseInt(temfecha[2], 10);
       if (day < 10) {
@@ -2571,32 +2542,8 @@ function actividadespro(user, array, id, pra) {
         mes = `0${mes}`;
       }
       let strfecha = `${mes}/${day}/${temfecha[0]}`;
-      //let date1 = new Date(strfecha);
-      // let fecha = `${date1.getDay()}/${date1.getDate()}/${date1.getFullYear()}`;
+
       if (temp) {
-        // console.log(array[a].actid);
-        // console.log(`proyecto${id}`, `${temp}`);
-        /*  peticiones.stringfile(`proyecto${id}`, `${temp}`).then((file) => {
-          arraydef.push({
-            actividadid: array[a].actid,
-            titulo: array[a].actividadtitulo,
-            descripcion: array[a].actividaddescripcion,
-            revisiones: array[a].actividadrevision,
-            nombre: array[a].nombre,
-            foto: temp2,
-            rol: array[a].roltitulo,
-            estado: array[a].actividadestado,
-            fechaentrega: strfecha,
-            tecnica: array[a].tecnicatitulo,
-            namefile: temp,
-            contenido: `${env.host}/proyecto/cadena/proyecto${array[a].id}/${temp}`,
-            source: file,
-          });
-          if (count === array.length - 1) {
-            res(arraydef);
-          }
-          count++;
-        });*/
         arraydef.push({
           actividadid: array[a].actid,
           titulo: array[a].actividadtitulo,
@@ -2637,14 +2584,12 @@ function actividadespro(user, array, id, pra) {
         }
         count++;
       }
-
-      //contenido: `${env.host}/proyecto/cadena/proyecto${array[a].id}/${temp}`,
-      //    console.log(temppracti);
     }
   });
 }
 
 function filtroactividades(array, pra) {
+  // console.log(array);
   let temppracti = "no llego nada";
   arradef = [];
   if (pra === "cem") {
@@ -2988,7 +2933,7 @@ function reajustefecha(ano, mes, dia, hora, minutos) {
 function calendariosoloproyecto(array, proyecto) {
   let arradef = [];
 
-  console.log(array);
+  // console.log(array);
   for (let a = 0; a < array.length; a++) {
     if (`${array[a].proyecto}` === `${proyecto}`) {
       arradef.push(array[a]);
