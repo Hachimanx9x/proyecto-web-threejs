@@ -73,12 +73,14 @@ class ProjectView extends Component {
           });
         }
         for (const i of response[1].data) {
-          meetings.push({
-            title: i.titulo,
-            date: i.fecha,
-            start: this.convertTime(i.start),
-            end: this.convertTime(i.end),
-          });
+          if (i.start !== "NaN:NaN" && i.end !== "NaN:NaN") {
+            meetings.push({
+              title: i.titulo,
+              date: i.fecha,
+              start: this.convertTime(i.start),
+              end: this.convertTime(i.end),
+            });
+          }
         }
         const item = members.find((iterador) => iterador.id === userId);
         if (item.selectedRol === "Arquitecto Experiencia Multimedia") {
@@ -590,7 +592,7 @@ class ProjectView extends Component {
             >
               {" "}
               <p className="m-3 pl-1 pl-sm-4 w-100">Calendario de reuniones</p>
-              <div className="d-flex flex-wrap p-1 pb-3 pl-sm-0 pr-sm-4 mt-2">
+              <div className="d-flex flex-wrap p-1 pb-3 pl-2 pr-4 pr-sm-5 pl-sm-5 mt-2">
                 {this.state.meetings.length === 0 ? (
                   <p className="m-auto text-secondary">
                     No hay reuniones programadas

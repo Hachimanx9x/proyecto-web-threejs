@@ -94,7 +94,7 @@ class CreateEvents extends Component {
         ).then((response) => {
           setTimeout(() => {
             this.setState({ confirmationModal: false });
-            //this.props.history.push("/Dashboard/Calendar");
+            this.props.history.push("/Dashboard/Calendar");
           }, 1500);
         });
       } catch (error) {
