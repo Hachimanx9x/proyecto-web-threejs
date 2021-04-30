@@ -564,6 +564,7 @@ funcionesDB.obteneractientreproyectos = (user, array) => {
       id: user,
     };
   }
+
   return new Promise(async (res, rej) => {
     let contfe = 0,
       tem = true;
@@ -2201,7 +2202,9 @@ function rearmas2(idUser, rows) {
       if (defarray[i].userid === array[j].id) {
         if (herramientatemp != array[j].herramientanombre) {
           herramientatemp = array[j].herramientanombre;
+
           herramientemp.push({
+            id: array[j].herid,
             nombre: array[j].herramientanombre,
             descripcion: array[j].herramientadescripcion,
             icono: array[j].herramientanombreIcono,

@@ -236,6 +236,7 @@ query.buscartalentos = function () {
     usuarios.fotoperfil,
     usuarios.descripcion,
     palabrasclave.palabra,
+    herramientas.id AS "herid",
     herramientas.herramientanombre,
     herramientas.herramientadescripcion,
     herramientas.herramientanombreIcono
