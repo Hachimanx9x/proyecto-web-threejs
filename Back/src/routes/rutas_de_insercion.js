@@ -554,9 +554,9 @@ rutas.post("/insert/auto/tecnicas", (req, res) => {
   arradef = reordenararraytecnicas(arradef);
   let fin = false;
 
-  let promesatecnica = new Promise((resu, rej) => {
+  let promesatecnica = new Promise(async (resu, rej) => {
     for (let b = 0; b < arradef.length; b++) {
-      insertDB
+      await insertDB
         .insertTechnical({
           titulo: arradef[b].titulo,
           descripcion: arradef[b].descripcion,
@@ -587,9 +587,9 @@ rutas.post("/insert/auto/herramientasmetodologia", (req, res) => {
   arradef = reordenararrayherramientasmetodologia(arradef);
   let fin = false;
 
-  let promesatecnica = new Promise((resu, rej) => {
+  let promesatecnica = new Promise(async (resu, rej) => {
     for (let b = 0; b < arradef.length; b++) {
-      insertDB
+      await insertDB
         .insertMethodologyTool({
           nombre: arradef[b].nombre,
           descripcion: arradef[b].descripcion,
@@ -620,9 +620,9 @@ rutas.post("/insert/auto/roles", (req, res) => {
   arradef = reordenararrayroles(arradef);
   let fin = false;
 
-  let promesarol = new Promise((resu, rej) => {
+  let promesarol = new Promise(async (resu, rej) => {
     for (let b = 0; b < arradef.length; b++) {
-      insertDB
+      await insertDB
         .inserRoles({
           titulo: arradef[b].nombre,
           descripcion: arradef[b].descripcion,
@@ -648,7 +648,7 @@ rutas.post("/insert/auto/roles", (req, res) => {
     })
     .catch((err) => res.json(err));
 });
-rutas.post("/auto/idiomas", (req, res) => {
+rutas.post("/auto/idiomas", async (req, res) => {
   const arra = [
     { nombre: "Ingles", nivel: "A1 Beginner" },
     { nombre: "Ingles", nivel: "A2 Elementary" },
@@ -667,7 +667,7 @@ rutas.post("/auto/idiomas", (req, res) => {
   ];
   let con = 0;
   for (let a = 0; a < arra.length; a++) {
-    insertDB.insertLenguaje(arra[a]).then((result) => {
+    await insertDB.insertLenguaje(arra[a]).then((result) => {
       if (con == arra.length - 1) {
         res.json({ msj: "idiomas agregados" });
       }
@@ -675,7 +675,7 @@ rutas.post("/auto/idiomas", (req, res) => {
     });
   }
 });
-rutas.post("/auto/habilidades", (req, res) => {
+rutas.post("/auto/habilidades", async (req, res) => {
   const arra = [
     {
       tipo: "Desarrollo",
@@ -690,7 +690,7 @@ rutas.post("/auto/habilidades", (req, res) => {
   ];
   let num = 0;
   for (let a = 0; a < arra.length; a++) {
-    insertDB.insertAbility(arra[num]).then((result) => {
+    await insertDB.insertAbility(arra[num]).then((result) => {
       if (num >= arra.length - 1) {
         res.json({ msj: "terminado" });
       }
@@ -698,7 +698,7 @@ rutas.post("/auto/habilidades", (req, res) => {
     });
   }
 });
-rutas.post("/auto/herramienta", (req, res) => {
+rutas.post("/auto/herramienta", async (req, res) => {
   const arra = [
     {
       nombre: "Reactjs",
@@ -990,7 +990,7 @@ rutas.post("/auto/herramienta", (req, res) => {
   ];
   let g = 0;
   for (let a = 0; a < arra.length; a++) {
-    insertDB.insertTools(arra[a]).then((result) => {
+    await insertDB.insertTools(arra[a]).then((result) => {
       if (g === arra.length - 1) {
         res.json(result);
       }

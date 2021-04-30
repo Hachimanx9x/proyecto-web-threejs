@@ -2433,13 +2433,24 @@ function filtarinfo(array) {
   for (let a = 0; a < array.length; a++) {
     if (userid != array[a].userid) {
       userid = array[a].userid;
+      let temf = null,
+        temc = null;
+      if (array[a].fotoperfil !== null && array[a].fotoperfil !== "null") {
+        temf = `${env.host}/proyecto/contenido/usuario${userid}/${array[a].fotoperfil}`;
+      }
+      if (
+        array[a].nombrearchivohojadevida !== null &&
+        array[a].nombrearchivohojadevida !== "null"
+      ) {
+        temc = `${env.host}/proyecto/contenido/usuario${userid}/${array[a].nombrearchivohojadevida}`;
+      }
       arraydef.push({
         id: userid,
         nombre: array[a].nombre,
         descripcion: array[a].descripcion,
-        fotoperfil: array[a].fotoperfil,
+        fotoperfil: temf,
         experiencia: array[a].anosdeexperiencia,
-        cv: `${env.host}/proyecto/contenido/usuario${userid}/${array[a].nombrearchivohojadevida}`,
+        cv: temc,
         pais: array[a].pais,
         github: array[a].github,
         gitlab: array[a].gitlab,
