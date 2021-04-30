@@ -546,7 +546,7 @@ rutas.post("/create/proyecto", proToken, (req, res) => {
   });
 }); //fin de l ruta
 
-rutas.post("/insert/auto/tecnicas", (req, res) => {
+rutas.post("/insert/auto/tecnicas", async (req, res) => {
   let arradef = [];
   for (let a = 0; a < modelomt.Practicas.length; a++) {
     arradef.push(modelomt.Practicas[a].Tecnicas);
@@ -555,94 +555,96 @@ rutas.post("/insert/auto/tecnicas", (req, res) => {
   let fin = false;
 
   let promesatecnica = new Promise(async (resu, rej) => {
+    let num = 0;
     for (let b = 0; b < arradef.length; b++) {
       await insertDB
         .insertTechnical({
-          titulo: arradef[b].titulo,
-          descripcion: arradef[b].descripcion,
-          bibliografia: arradef[b].bibliografia,
+          titulo: arradef[num].titulo,
+          descripcion: arradef[num].descripcion,
+          bibliografia: arradef[num].bibliografia,
         })
+
         .then((resul) => {
-          if (fin) {
+          console.log(`Tecnica ${arradef[num].titulo} agregada`);
+          if (num === arradef.length - 1) {
             resu({ msj: "echo" });
           }
+
+          num++;
         })
         .catch((err) => rej(err));
-      if (b === arradef.length - 1) {
-        fin = true;
-      }
     }
   });
-  promesatecnica
+  await promesatecnica
     .then((reul) => {
       res.json(reul);
     })
     .catch((err) => res.json(err));
 });
-rutas.post("/insert/auto/herramientasmetodologia", (req, res) => {
+rutas.post("/insert/auto/herramientasmetodologia", async (req, res) => {
   let arradef = [];
   for (let a = 0; a < modelomt.Practicas.length; a++) {
     arradef.push(modelomt.Practicas[a].Herramientas);
   }
   arradef = reordenararrayherramientasmetodologia(arradef);
-  let fin = false;
+  let fin = 0;
 
   let promesatecnica = new Promise(async (resu, rej) => {
     for (let b = 0; b < arradef.length; b++) {
       await insertDB
         .insertMethodologyTool({
-          nombre: arradef[b].nombre,
-          descripcion: arradef[b].descripcion,
-          bibliografia: arradef[b].bibliografia,
+          nombre: arradef[fin].nombre,
+          descripcion: arradef[fin].descripcion,
+          bibliografia: arradef[fin].bibliografia,
         })
         .then((resul) => {
-          if (fin) {
+          console.log(
+            `herramienta meto ${arradef[fin].nombre} a sido agregada`
+          );
+          if (fin === arradef.length - 1) {
             resu({ msj: "echo" });
           }
+          fin++;
         })
         .catch((err) => rej(err));
-      if (b === arradef.length - 1) {
-        fin = true;
-      }
     }
   });
-  promesatecnica
+  await promesatecnica
     .then((reul) => {
       res.json(reul);
     })
     .catch((err) => res.json(err));
 });
-rutas.post("/insert/auto/roles", (req, res) => {
+rutas.post("/insert/auto/roles", async (req, res) => {
   let arradef = [];
   for (let a = 0; a < modelomt.Practicas.length; a++) {
     arradef.push(modelomt.Practicas[a].Roles);
   }
   arradef = reordenararrayroles(arradef);
-  let fin = false;
 
   let promesarol = new Promise(async (resu, rej) => {
+    let fin = 0;
     for (let b = 0; b < arradef.length; b++) {
       await insertDB
         .inserRoles({
-          titulo: arradef[b].nombre,
-          descripcion: arradef[b].descripcion,
+          titulo: arradef[fin].nombre,
+          descripcion: arradef[fin].descripcion,
           recomendacion: "",
         })
         .then((result) => {
-          if (fin) {
+          console.log(`rol ${arradef[fin].nombre} agregado`);
+          if (fin === arradef.length - 1) {
             resu({ msj: "echo" });
           }
+          fin++;
         })
         .catch((err) => {
           rej(err);
           console.log(err);
         });
-      if (b === arradef.length - 1) {
-        fin = true;
-      }
     }
   });
-  promesarol
+  await promesarol
     .then((reul) => {
       res.json(reul);
     })
@@ -667,7 +669,10 @@ rutas.post("/auto/idiomas", async (req, res) => {
   ];
   let con = 0;
   for (let a = 0; a < arra.length; a++) {
-    await insertDB.insertLenguaje(arra[a]).then((result) => {
+    await insertDB.insertLenguaje(arra[con]).then((result) => {
+      console.log(
+        `el idioma ${arra[con].nombre} con nivel ${arra[con].nivel} fue agregado`
+      );
       if (con == arra.length - 1) {
         res.json({ msj: "idiomas agregados" });
       }
@@ -691,6 +696,7 @@ rutas.post("/auto/habilidades", async (req, res) => {
   let num = 0;
   for (let a = 0; a < arra.length; a++) {
     await insertDB.insertAbility(arra[num]).then((result) => {
+      console.log(`la habilidad de ${arra[num].tipo}`);
       if (num >= arra.length - 1) {
         res.json({ msj: "terminado" });
       }
@@ -990,7 +996,8 @@ rutas.post("/auto/herramienta", async (req, res) => {
   ];
   let g = 0;
   for (let a = 0; a < arra.length; a++) {
-    await insertDB.insertTools(arra[a]).then((result) => {
+    await insertDB.insertTools(arra[g]).then((result) => {
+      console.log(`la herramienta ${arra[g].nombre} a sido agregada`);
       if (g === arra.length - 1) {
         res.json(result);
       }

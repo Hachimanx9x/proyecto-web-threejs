@@ -591,50 +591,33 @@ funcionesDB.obteneractientreproyectos = (user, array) => {
     }
   });
 };
-
-function verfiactificadad(id, array, arraydef) {
-  for (let j1 = 0; j1 < array.length; j1++) {
-    if (array[j1].namefile !== null && array[j1].namefile !== "null") {
-      console.log(
-        chalk.red(`Actividad ${array[j1].titulo} con el contenido: `) +
-          chalk.blue(`${array[j1].namefile}`)
-      );
-      arraydef.push({
-        userName: array[j1].nombre,
-        projectName: array[j1].title,
-        activity: array[j1].titulo,
-        date: array[j1].fechaentrega,
-        fileName: array[j1].namefile,
-        fileUrl: `${env.host}/proyecto/contenido/proyecto${id}/${array[j1].namefile}`,
-        //  source: array[j1].source,
-      });
-    }
-  }
-
-  return arraydef;
-}
-
-function verientrgables(id, proname, array, arraydef) {
-  for (let j2 = 0; j2 < array.length; j2++) {
-    if (array[j2].namefile !== null && array[j2].namefile !== "null") {
-      console.log(
-        chalk.red(`Entregable ${array[j1].titulo} con el contenido: `) +
-          chalk.blue(`${array[j1].namefile}`)
-      );
-      arraydef.push({
-        userName: "general",
-        projectName: proname,
-        activity: array[j2].nombre,
-        date: array[j2].fechaentrega,
-        fileName: array[j2].namefile,
-        fileUrl: `${env.host}/proyecto/contenido/proyecto${id}/${array[j2].namefile}`,
-        source: array[j1].contenido,
-      });
-    }
-
-    return arraydef;
-  }
-}
+funcionesDB.obtenerreunionconintegrantes = async (reunion) => {
+  return new Promise((res, req) => {
+    promesa.then(async (result) => {
+      const { mariaDB, sqlite, vDB } = result;
+      if (vDB) {
+        await mariaDB.query(
+          Query.buscarReunionconIntegrantes(reunion),
+          async (err, rows) => {
+            if (!err) {
+              res({ reunion: rearmardatosreunione(rows) });
+            } else {
+              rej(err);
+            }
+          }
+        );
+      } else {
+        sqlite.all(Query.buscarReunionconIntegrantes(reunion), (err, rows) => {
+          if (!err) {
+            res({ reunion: rearmardatosreunione(rows) });
+          } else {
+            rej(err);
+          }
+        });
+      }
+    });
+  });
+};
 /**
  * 
  _______              __                __                                     
@@ -1887,6 +1870,49 @@ funcionesDB.obtenerentredeproyectoconconte = (proyecto) => {
 };
 
 //-------------------
+function verfiactificadad(id, array, arraydef) {
+  for (let j1 = 0; j1 < array.length; j1++) {
+    if (array[j1].namefile !== null && array[j1].namefile !== "null") {
+      console.log(
+        chalk.red(`Actividad ${array[j1].titulo} con el contenido: `) +
+          chalk.blue(`${array[j1].namefile}`)
+      );
+      arraydef.push({
+        userName: array[j1].nombre,
+        projectName: array[j1].title,
+        activity: array[j1].titulo,
+        date: array[j1].fechaentrega,
+        fileName: array[j1].namefile,
+        fileUrl: `${env.host}/proyecto/contenido/proyecto${id}/${array[j1].namefile}`,
+        //  source: array[j1].source,
+      });
+    }
+  }
+
+  return arraydef;
+}
+
+function verientrgables(id, proname, array, arraydef) {
+  for (let j2 = 0; j2 < array.length; j2++) {
+    if (array[j2].namefile !== null && array[j2].namefile !== "null") {
+      console.log(
+        chalk.red(`Entregable ${array[j1].titulo} con el contenido: `) +
+          chalk.blue(`${array[j1].namefile}`)
+      );
+      arraydef.push({
+        userName: "general",
+        projectName: proname,
+        activity: array[j2].nombre,
+        date: array[j2].fechaentrega,
+        fileName: array[j2].namefile,
+        fileUrl: `${env.host}/proyecto/contenido/proyecto${id}/${array[j2].namefile}`,
+        source: array[j1].contenido,
+      });
+    }
+
+    return arraydef;
+  }
+}
 function rearmarProyectosescri(array) {
   var arraydef = [];
   var idproyecto = null;
@@ -2956,6 +2982,43 @@ function calendariosoloproyecto(array, proyecto) {
 
   return arradef;
 }
+function rearmardatosreunione(array) {
+  let integrantes = [];
+  for (let a = 0; a < array.length; a++) {
+    integrantes.push({
+      id: array[a].usuid,
+      nombre: array[a].usunombre,
+      rol: array[a].rol,
+    });
+  }
+  let rawfecha = array[0].fecha.split("-");
+  let date = new Date(
+    `${rawfecha[0]}/${rawfecha[1]}/${rawfecha[2]} ${array[0].hora}`
+  );
+  let start = array[0].hora;
+  date.setHours(date.getHours() + array[0].duracion);
+
+  let f1 = date.getHours(),
+    f2 = date.getMinutes();
+  if (f1 < 10) {
+    f1 = `0${f1}`;
+  }
+  if (f2 < 10) {
+    f2 = `0${f2}`;
+  }
+  let end = `${f1}:${f2}`;
+  return {
+    reunion: array[0].id,
+    titulo: array[0].titulo,
+    descripcion: array[0].descripcion,
+    fecha: `${rawfecha[1]}/${rawfecha[0]}/${rawfecha[2]}`,
+    inicio: start,
+    fin: end,
+    integrantes: integrantes,
+    proyecto: array[0].proid,
+  };
+}
+
 function quitarduplicados(array) {
   return Array.from(new Set(array.map(JSON.stringify))).map(JSON.parse);
 }

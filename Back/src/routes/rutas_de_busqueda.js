@@ -392,6 +392,17 @@ rutas.get("/calendario/:id", proToken, (req, res) => {
       .catch((err) => res.json(err));
   });
 });
+rutas.get("/reunion/:id", proToken, async (req, res) => {
+  await jwt.verify(req.token, LLAVE, async (err, data) => {
+    const { id } = req.params;
+
+    buscarDB
+      .obtenerreunionconintegrantes(id)
+      .then((result) => res.json(result))
+      .catch((err) => console.log(err));
+  });
+});
+
 rutas.get("/metodologia/:name", (req, res) => {
   const { name } = req.params;
   if (name === "CEM") {

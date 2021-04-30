@@ -92,6 +92,30 @@ WHERE usuarios.id = ${id}
   ) GROUP BY proyectos.id ;`;
 };
 
+query.buscarReunionconIntegrantes = function (id) {
+  return `SELECT 
+  reuniones.id,
+  reuniones.reuniontitulo AS "titulo",
+  reuniones.reuniondescripcion AS "descripion",
+  reuniones.reunionfecha AS "fecha",
+  reuniones.reunionhora AS "hora",
+  reuniones.reuniondurancion AS "duracion",
+  usuarios.id AS "usuid",
+  usuarios.nombre AS "usunombre",
+  roles.roltitulo AS "rol",
+  proyectos.id AS "proid"
+   from reuniones
+  join listareuniones on reuniones.id = listareuniones.reunion
+  join eventos on listareuniones.evento = eventos.id
+  join listaeventos on eventos.id = listaeventos.evento
+  join historiales on listaeventos.historial = historiales.id
+  join proyectos on historiales.id = proyectos.historia
+  join listaintegrantes on proyectos.id = listaintegrantes.proyecto
+  join integrantes on listaintegrantes.integrante = integrantes.id
+  join usuarios on integrantes.usuario = usuarios.id
+  join roles on integrantes.rol = roles.id
+  where reuniones.id=${id}; `;
+};
 query.obtenercalendario = function (id) {
   return `
     SELECT
