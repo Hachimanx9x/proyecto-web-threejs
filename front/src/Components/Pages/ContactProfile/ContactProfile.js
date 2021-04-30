@@ -5,11 +5,37 @@ import User from "../../../Logos/user-icon.png";
 import arrow from "../../../Logos/arrow.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
+import Axios from "axios";
 
 export default function ContactProfile(props) {
   const [keywords, setKeywords] = useState([]);
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [picture, setPicture] = useState(null);
+  //const [tools, setTools] = useState([]);
+  const [id, setId] = useState(null);
   useEffect(() => {
     function fetching() {
+      const talentoId = props.match.params.id;
+      const token = localStorage.getItem("login");
+      const obj = JSON.parse(token);
+      let temp = obj.token;
+      const options = {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `llave ${temp}`,
+        },
+      };
+      try {
+        Axios.get(`http://localhost:3030/talentos/${talentoId}`, options).then(
+          (response) => {
+            console.log(response);
+            setId(response.data.id);
+          }
+        );
+      } catch (error) {
+        console.log(error);
+      }
       const words = ["Desarrollador FullStack", "Programador", "Diseñador Web"];
       const list = [];
       for (let i = 0; i < words.length; i++) {
@@ -83,8 +109,7 @@ export default function ContactProfile(props) {
       img: "https://www.vectorlogo.zone/logos/php/php-icon.svg",
     },
   ];
-  /**
-   *   */
+
   return (
     <div>
       <button className="o-btn-return" onClick={() => props.history.goBack()}>
