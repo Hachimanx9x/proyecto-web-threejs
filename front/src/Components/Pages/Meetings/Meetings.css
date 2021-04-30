@@ -18,22 +18,6 @@
 .o-member-list {
   display: flex;
   height: 11rem;
-  overflow-x: auto;
-  scrollbar-color: #4285f4 white;
-  scrollbar-width: thin;
-}
-
-.o-member-list::-webkit-scrollbar {
-  height: 8px;
-  background-color: #e0e0e0;
-}
-.o-member-list::-webkit-scrollbar-thumb {
-  background: #4285f4;
-  border-radius: 3px;
-}
-
-.o-member-list::-webkit-scrollbar-thumb:hover {
-  background: #3a4c99;
 }
 
 .o-btn-mic {

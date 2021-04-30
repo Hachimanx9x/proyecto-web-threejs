@@ -67,7 +67,7 @@ export default function Meetings(props) {
           </div>
           <div className="col-xs-12 col-sm-6">
             <p>Ingresa a la reunión</p>
-            <div className="o-member-list">
+            <div className="o-member-list o-scroll-x">
               {members.map((member) => (
                 <div key={member.id} className="d-flex flex-column text-center">
                   <img

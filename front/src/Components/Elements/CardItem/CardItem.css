@@ -144,7 +144,7 @@
   border-radius: 4px;
   width: 180px;
   margin: 0 auto;
-  height: 2.3rem;
+  min-height: 2.3rem;
   border: 1px solid white;
   outline: none;
   text-align: center;
@@ -188,6 +188,7 @@
 }
 .o-modal-description {
   line-height: 14px;
+  height: 20rem;
 }
 
 .o-bg-smmv {

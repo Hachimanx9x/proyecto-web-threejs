@@ -49,7 +49,7 @@ export default function CardItem({ item, category, icon, alpha }) {
         <div className="o-modal-show">
           <div>
             <p>{item.nombre}</p>{" "}
-            <div className="o-modal-description">
+            <div className="o-modal-description o-scroll-y">
               <small className="text-secondary">{item.descripcion}</small>
             </div>
           </div>
@@ -85,7 +85,7 @@ export default function CardItem({ item, category, icon, alpha }) {
                 key={i}
                 className={
                   (tabs[i].tab
-                    ? "tabcontent display-block text-secondary"
+                    ? "tabcontent o-scroll-y display-block text-secondary"
                     : "d-none invisible") +
                   (alpha === "CEM" ? " o-border-cem" : "")
                 }

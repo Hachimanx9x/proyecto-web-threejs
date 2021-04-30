@@ -166,11 +166,8 @@
 }
 .o-skill-list-cnt {
   min-height: 9rem;
-  overflow-x: auto;
   position: relative;
   border: 1px solid #4285f4;
-  scrollbar-color: #4285f4 white;
-  scrollbar-width: thin;
 }
 @media only screen and (max-width: 1290px) {
   .o-box {
@@ -301,17 +298,4 @@
     max-width: 50%;
     min-width: 50%;
   }
-}
-
-.o-skill-list-cnt::-webkit-scrollbar {
-  height: 8px;
-  background-color: #e0e0e0;
-}
-.o-skill-list-cnt::-webkit-scrollbar-thumb {
-  background: #4285f4;
-  border-radius: 3px;
-}
-
-.o-skill-list-cnt::-webkit-scrollbar-thumb:hover {
-  background: #3a4c99;
 }

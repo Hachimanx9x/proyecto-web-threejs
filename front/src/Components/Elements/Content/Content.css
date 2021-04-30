@@ -25,6 +25,45 @@ a:focus {
   transform: rotate(0deg);
   transition: all 0.8s ease;
 }
+
+.o-animation-loading {
+  color: #7ac142;
+  text-align: center;
+  margin: 20px;
+  font-size: 100px;
+  animation: rotating 6s ease-out;
+}
+
+.o-scroll-y {
+  scrollbar-color: #4285f4 white;
+  scrollbar-width: thin;
+  overflow-y: auto;
+}
+
+.o-scroll-x {
+  scrollbar-color: #4285f4 white;
+  scrollbar-width: thin;
+  overflow-x: auto;
+}
+.o-scroll-y::-webkit-scrollbar {
+  width: 8px;
+  background-color: white;
+}
+
+.o-scroll-x::-webkit-scrollbar {
+  height: 8px;
+  background-color: white;
+}
+.o-scroll-y::-webkit-scrollbar-thumb,
+.o-scroll-x::-webkit-scrollbar-thumb {
+  background: #4285f4;
+  border-radius: 3px;
+}
+
+.o-scroll-y::-webkit-scrollbar-thumb:hover,
+.o-scroll-x::-webkit-scrollbar-thumb:hover {
+  background: #3a4c99;
+}
 @media only screen and (max-width: 590px) {
   body {
     overflow: hidden;

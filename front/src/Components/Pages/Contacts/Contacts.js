@@ -402,7 +402,7 @@ class Contacts extends Component {
           <div
             className={
               (this.state.show.length === 0 ? "d-flex " : "") +
-              "o-card-contacts-container w-100 "
+              "o-card-contacts-container o-scroll-y w-100 "
             }
           >
             {this.state.show.length !== 0 ? (

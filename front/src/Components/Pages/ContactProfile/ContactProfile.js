@@ -12,8 +12,9 @@ export default function ContactProfile(props) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [picture, setPicture] = useState(null);
-  //const [tools, setTools] = useState([]);
-  const [id, setId] = useState(null);
+  const [tools, setTools] = useState([]);
+  const [fetched, setFetched] = useState(false);
+  // const [id, setId] = useState(null);
   useEffect(() => {
     function fetching() {
       const talentoId = props.match.params.id;
@@ -29,86 +30,42 @@ export default function ContactProfile(props) {
       try {
         Axios.get(`http://localhost:3030/talentos/${talentoId}`, options).then(
           (response) => {
-            console.log(response);
-            setId(response.data.id);
+            console.log(response.data[0]);
+            //setId(response.data.id);
+            const words = response.data[0].palabras;
+            const list = [];
+            const tools = [];
+            for (let i = 0; i < words.length; i++) {
+              const color =
+                "#" + Math.floor(Math.random() * 16777215).toString(16);
+
+              list.push({
+                keyword: words[i],
+                color: color,
+              });
+            }
+            for (const i of response.data[0].herramientas) {
+              tools.push({
+                id: i.id,
+                name: i.nombre,
+                description: i.descripcion,
+                img: i.icono,
+              });
+            }
+            setName(response.data[0].nombre);
+            setDescription(response.data[0].descripcion);
+            setPicture(response.data[0].fotoperfil);
+            setTools([...tools]);
+            setKeywords([...list]);
+            setFetched(true);
           }
         );
       } catch (error) {
         console.log(error);
       }
-      const words = ["Desarrollador FullStack", "Programador", "Diseñador Web"];
-      const list = [];
-      for (let i = 0; i < words.length; i++) {
-        const color = "#" + Math.floor(Math.random() * 16777215).toString(16);
-
-        list.push({
-          keyword: words[i],
-          color: color,
-        });
-      }
-      setKeywords([...list]);
     }
     fetching();
   }, []);
-  const tools = [
-    {
-      name: "React JS",
-      description:
-        "React es una biblioteca Javascript de código abierto diseñada para crear interfaces de usuario con el objetivo de facilitar el desarrollo de aplicaciones en una sola página. Es mantenido por Facebook y la comunidad de software libre. En el proyecto hay más de mil desarrolladores libres.",
-      img: "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg",
-    },
-    {
-      name: "Angular",
-      description:
-        "Angular es un framework para aplicaciones web desarrollado en TypeScript, de código abierto, mantenido por Google, que se utiliza para crear y mantener aplicaciones web de una sola página.",
-      img: "https://www.vectorlogo.zone/logos/angular/angular-icon.svg",
-    },
-    {
-      name: "Vue JS",
-      description:
-        "Vue.js es un framework de JavaScript de código abierto para la construcción de interfaces de usuario y aplicaciones de una sola página. Fue creado por Evan You, y es mantenido por él y por el resto de los miembros activos del equipo central que provienen de diversas empresas como Netlify y Netguru.",
-      img: "https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg",
-    },
-    {
-      name: "JavaScript",
-      description:
-        "JavaScript es un lenguaje de programación interpretado, dialecto del estándar ECMAScript. Se define como orientado a objetos, ​ basado en prototipos, imperativo, débilmente tipado y dinámico.",
-      img:
-        "https://upload.vectorlogo.zone/logos/javascript/images/239ec8a4-163e-4792-83b6-3f6d96911757.svg",
-    },
-    {
-      name: "TypeScript",
-      description:
-        "TypeScript es un lenguaje de programación libre y de código abierto desarrollado y mantenido por Microsoft. Es un superconjunto de JavaScript, que esencialmente añade tipos estáticos y objetos basados en clases.",
-      img:
-        "https://www.vectorlogo.zone/logos/typescriptlang/typescriptlang-icon.svg",
-    },
-    {
-      name: "Node JS",
-      description:
-        "Node.js es un entorno en tiempo de ejecución multiplataforma, de código abierto, para la capa del servidor basado en el lenguaje de programación JavaScript, asíncrono, con E/S de datos en una arquitectura orientada a eventos y basado en el motor V8 de Google. ",
-      img: "https://www.vectorlogo.zone/logos/nodejs/nodejs-icon.svg",
-    },
-    {
-      name: "HTML5",
-      description:
-        "HTML, siglas en inglés de HyperText Markup Language, hace referencia al lenguaje de marcado para la elaboración de páginas web. ",
-      img: "https://www.vectorlogo.zone/logos/w3_html5/w3_html5-icon.svg",
-    },
-    {
-      name: "CSS3",
-      description:
-        "CSS, en español «Hojas de estilo en cascada», es un lenguaje de diseño gráfico para definir y crear la presentación de un documento estructurado escrito en un lenguaje de marcado.",
-      img:
-        "https://raw.githubusercontent.com/devicons/devicon/ac557d6ff33ff370a5db99f97aeab35ea5c67fbd/icons/css3/css3-original.svg",
-    },
-    {
-      name: "PHP",
-      description:
-        "PHP es un lenguaje de programación de uso general que se adapta especialmente al desarrollo web.​ Fue creado inicialmente por el programador danés-canadiense Rasmus Lerdorf en 1994.​ En la actualidad, la implementación de referencia de PHP es producida por The PHP Group.",
-      img: "https://www.vectorlogo.zone/logos/php/php-icon.svg",
-    },
-  ];
 
   return (
     <div>
@@ -123,24 +80,24 @@ export default function ContactProfile(props) {
           <div className="col-12 col-sm-4 mt-4 mt-sm-0 justify-content-center align-items-center d-flex">
             <div className="col-xs-6">
               <img
-                src={User}
+                src={picture !== null && picture !== "null" ? picture : User}
                 className="o-profile-talent-picture rounded-circle"
                 alt="Foto de perfil del usuario"
               />
             </div>
             <div className="col-xs-6 ml-2 d-flex justify-content-center align-items-center">
-              JUAN CARLOS HURTADO
+              <p className="text-uppercase">{name}</p>
             </div>
           </div>
         </div>
         <div className="d-flex w-100 flex-wrap">
-          <div className="mr-0 mr-sm-1">
+          <div className="mr-0 m-auto mr-sm-1">
             <p className="ml-2 ml-sm-0 pl-3 pl-sm-0">Descripción</p>
-            <div className="bg-white rounded o-description-profile-contact mt-2 mb-2 p-1">
-              <p className="m-1">
-                Programador e ingeniero multimedia con experiencia en entorno
-                web para diferentes plataformas y dispositivos me considero una
-                persona abierta y dispuesta a resolver retos
+            <div className="bg-white rounded o-description-profile-contact o-scroll-y mt-2 mb-2 p-1">
+              <p className="m-auto">
+                {description !== null && description !== "null"
+                  ? description
+                  : "Sin descripción."}
               </p>
             </div>
           </div>
@@ -162,7 +119,7 @@ export default function ContactProfile(props) {
         </div>
 
         <p>Herramientas utilizadas</p>
-        <div className="o-talent-tool-list">
+        <div className="o-talent-tool-list o-scoll-y">
           {tools.map((tool, i) => (
             <div className="o-profile-tool" key={i}>
               <img className="o-talent-tool" src={tool.img} alt="User tool" />

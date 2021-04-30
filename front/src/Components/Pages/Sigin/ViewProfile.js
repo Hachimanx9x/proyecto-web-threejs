@@ -2,7 +2,10 @@ import React, { useState, useEffect } from "react";
 import User from "../../../Logos/user-icon.png";
 import { MDBInput } from "mdbreact";
 import { Multiselect } from "multiselect-react-dropdown";
-import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCircleNotch,
+  faTimesCircle,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Rodal from "rodal";
 
@@ -14,12 +17,12 @@ import SuccessAnimation from "../../Elements/SuccessAnimation/SuccessAnimation";
 export default function ViewProfile(props) {
   const [picture, setPicture] = useState(null);
   const [description, setDescription] = useState(null);
-  const [country, setCountry] = useState("Colombia");
-  const [name, setName] = useState("Accel");
-  const [lastname, setLastname] = useState("Zero");
+  const [country, setCountry] = useState("");
+  const [name, setName] = useState("");
+  const [lastname, setLastname] = useState("");
   const [cv, setCv] = useState("");
   const [cvpicture, setCvpicture] = useState(null);
-  const [years, setYears] = useState({ key: "0 años", cat: 0 });
+  const [years, setYears] = useState({});
   const [linkedin, setLinkedin] = useState("");
   const [github, setGithub] = useState("");
   const [gitlab, setGitlab] = useState("");
@@ -35,6 +38,7 @@ export default function ViewProfile(props) {
   const [userPicture, setUserPicture] = useState(null);
   const [cvLink, setCvLink] = useState(null);
   const [confirmation, setConfirmation] = useState(false);
+  const [preparation, setPreparation] = useState(false);
   const [modal, setModal] = useState(false);
   const token = localStorage.getItem("login");
   const [languageslist, setLanguageslist] = useState([]);
@@ -283,7 +287,7 @@ export default function ViewProfile(props) {
     console.log(errors);
   }
 
-  const updateUserDate = async () => {
+  const updateUserData = async () => {
     const nullData = null;
     const fullname = name + " " + lastname;
     const skillsdi = [];
@@ -301,6 +305,10 @@ export default function ViewProfile(props) {
       errors.validLang
     ) {
       try {
+        setPreparation(true);
+        setTimeout(() => {
+          setConfirmation(true);
+        }, 1500);
         const datform = new FormData();
         datform.append("email", nullData);
         datform.append("password", nullData);
@@ -324,13 +332,32 @@ export default function ViewProfile(props) {
         const options = {
           headers: { authorization: `llave ${tokensito}` },
         };
-        setConfirmation(true);
 
-        await Axios.put(
-          `http://localhost:3030/actualizar/usuario`,
-          datform,
-          options
-        ).then((response) => {
+        Axios.all([
+          await Axios.put(
+            `http://localhost:3030/actualizar/usuario`,
+            datform,
+            options
+          ),
+          await Axios.get(`http://localhost:3030/perfil`, options),
+        ]).then((response) => {
+          if (response[1].statusText === "OK") {
+            const id = obj.data.id;
+            localStorage.setItem(
+              "login",
+              JSON.stringify({
+                token: tokensito,
+                data: {
+                  id: id,
+                  nombre: fullname,
+                  foto: response[1].data.foto,
+                  herramientas: skills,
+                  palabras: userKeywords,
+                },
+              })
+            );
+            window.location.reload();
+          }
           setModal(false);
           setTimeout(() => {
             setConfirmation(false);
@@ -355,35 +382,44 @@ export default function ViewProfile(props) {
           onClose={() => setModal(false)}
         >
           {!confirmation ? (
-            <div>
-              <h5 className="mt-5 mb-2">¿Guardar cambios?</h5>
-              <div className="d-flex justify-content-between p-2">
-                <button
-                  className="z-depth-0 border-primary btn border-primary text-primary font-weight-bold"
-                  type="button"
-                  style={{
-                    width: "7.2rem",
-                    fontSize: "0.8rem",
-                    height: "2.5rem",
-                  }}
-                  onClick={() => setModal(false)}
-                >
-                  Cancelar
-                </button>
-                <button
-                  className="z-depth-0 border-0 btn btn-primary font-weight-bold"
-                  type="button"
-                  style={{
-                    width: "7.2rem",
-                    fontSize: "0.8rem",
-                    height: "2.5rem",
-                  }}
-                  onClick={updateUserDate}
-                >
-                  Guardar
-                </button>
+            preparation ? (
+              <h2 className="text-center">
+                <FontAwesomeIcon
+                  icon={faCircleNotch}
+                  className="o-animation-loading"
+                />
+              </h2>
+            ) : (
+              <div>
+                <h5 className="mt-5 mb-2">¿Guardar cambios?</h5>
+                <div className="d-flex justify-content-between p-2">
+                  <button
+                    className="z-depth-0 border-primary btn border-primary text-primary font-weight-bold"
+                    type="button"
+                    style={{
+                      width: "7.2rem",
+                      fontSize: "0.8rem",
+                      height: "2.5rem",
+                    }}
+                    onClick={() => setModal(false)}
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    className="z-depth-0 border-0 btn btn-primary font-weight-bold"
+                    type="button"
+                    style={{
+                      width: "7.2rem",
+                      fontSize: "0.8rem",
+                      height: "2.5rem",
+                    }}
+                    onClick={updateUserData}
+                  >
+                    Guardar
+                  </button>
+                </div>
               </div>
-            </div>
+            )
           ) : (
             <div>
               <SuccessAnimation />
@@ -420,6 +456,15 @@ export default function ViewProfile(props) {
                 accept="image/*"
                 onChange={(e) => {
                   if (e.target.files[0] !== undefined) {
+                    if (
+                      /(?:\.([^.]+))?$/.exec(e.target.files[0].name)[1] ===
+                      "svg"
+                    ) {
+                      alert(
+                        "Solo se permiten archivos jpg, png, pdf, gif o webp"
+                      );
+                      return;
+                    }
                     setPicture(e.target.files[0]);
                   }
                 }}
@@ -497,7 +542,7 @@ export default function ViewProfile(props) {
                     accept="image/*"
                     onChange={(e) => {
                       if (e.target.files[0] !== undefined) {
-                        setPicture(e.target.files[0]);
+                        setCvpicture(e.target.files[0]);
                       }
                     }}
                   />
@@ -834,7 +879,7 @@ export default function ViewProfile(props) {
           </div>
           <div className="col-xs-12 o-col col-sm-8">
             <p>Herramientas Seleccionadas</p>
-            <div className="rounded p-2 pt-3 d-flex o-skill-list-cnt">
+            <div className="rounded p-2 pt-3 d-flex o-skill-list-cnt ">
               {skills.map((skill) => (
                 <div key={skill.id} className="o-card-select-skill rounded">
                   <span

@@ -38,26 +38,11 @@
   background-color: #eef7fc;
   border-radius: 0.5rem;
   height: calc(100vh - 310px);
-  overflow-y: auto;
-  scrollbar-color: #4285f4 white;
-  scrollbar-width: thin;
   padding: 1rem 1rem;
   box-sizing: border-box;
   margin: 1rem 1rem 0 0;
 }
-.o-card-contacts-container::-webkit-scrollbar {
-  width: 8px;
-  margin-left: 1rem;
-  background-color: white;
-}
-.o-card-contacts-container::-webkit-scrollbar-thumb {
-  background: #4285f4;
-  border-radius: 3px;
-}
 
-.o-card-contacts-container::-webkit-scrollbar-thumb:hover {
-  background: #3a4c99;
-}
 .o-talent-icon {
   width: 100px;
 }

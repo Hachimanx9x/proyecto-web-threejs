@@ -1,10 +1,8 @@
 .o-description-profile-contact {
   height: 6rem;
   padding: 0.3rem;
+  min-width: 40rem;
   max-width: 40rem;
-  overflow-y: auto;
-  scrollbar-color: #4285f4 white;
-  scrollbar-width: thin;
   white-space: pre-wrap; /* CSS3 */
   white-space: -moz-pre-wrap; /* Firefox */
   white-space: -pre-wrap; /* Opera <7 */
@@ -18,9 +16,6 @@
   padding: 0.3rem;
   min-width: 20vw;
   max-width: 20rem;
-  overflow-y: auto;
-  scrollbar-color: #4285f4 white;
-  scrollbar-width: thin;
   white-space: pre-wrap; /* CSS3 */
   white-space: -moz-pre-wrap; /* Firefox */
   white-space: -pre-wrap; /* Opera <7 */
@@ -38,9 +33,6 @@
 .o-talent-tool-list {
   max-height: 40rem;
   padding: 0rem 2rem;
-  overflow-y: auto;
-  scrollbar-color: #4285f4 white;
-  scrollbar-width: thin;
 }
 
 .o-hire-btn {
@@ -62,21 +54,6 @@
 }
 .o-profile-tool small {
   font-size: 10px;
-}
-.o-description-profile-contact::-webkit-scrollbar,
-.o-talent-tool-list::-webkit-scrollbar {
-  width: 5px;
-  background-color: white;
-}
-.o-description-profile-contact::-webkit-scrollbar-thumb,
-.o-talent-tool-list::-webkit-scrollbar-thumb {
-  background: #4285f4;
-  border-radius: 3px;
-}
-
-.o-description-profile-contact::-webkit-scrollbar-thumb:hover,
-.o-talent-tool-list::-webkit-scrollbar-thumb:hover {
-  background: #3a4c99;
 }
 
 .o-blue-container-2 .md-outline input[type="text"] + label,
@@ -158,6 +135,10 @@
   }
 }
 @media only screen and (max-width: 890px) {
+  .o-description-profile-contact {
+    max-width: calc(100vw - 80px);
+    min-width: calc(100vw - 280px);
+  }
   .o-geo-map {
     width: 15rem;
     height: 9rem;
@@ -170,7 +151,9 @@
 }
 @media only screen and (max-width: 590px) {
   .o-description-profile-contact {
-    width: 90%;
+    width: calc(100vw - 55px);
+    min-width: none;
+    max-width: none;
     margin: auto;
   }
   .o-keywords-profile-contact {

@@ -101,42 +101,65 @@ export default function FinishRegister(props) {
   ];
 
   useEffect(() => {
-    const fetchData = async () => {
+    const obj = JSON.parse(token);
+    let isMounted = true;
+    const data = obj.data;
+    if (data.herramientas.length !== 0) {
+      props.history.push("/Dashboard/Projects");
+    }
+    function fetchData() {
       try {
         Axios.all([
           Axios.get(`http://localhost:3030/api/herramientas`),
           Axios.get(`http://localhost:3030/api/idiomas`),
         ]).then((response) => {
-          const tools = [];
-          const languages = [];
-          for (let i = 0; i < response[0].data.API.length; i++) {
-            tools.push({
-              cat: {
-                id: response[0].data.API[i].id,
-                icon: response[0].data.API[i].icono,
-                name: response[0].data.API[i].nombre,
-              },
-              key: response[0].data.API[i].nombre,
-            });
-            setToolist([...tools]);
-          }
-          for (let i = 0; i < response[1].data.API.length; i++) {
-            languages.push({
-              cat: response[1].data.API[i].id,
-              key:
-                response[1].data.API[i].idiomanombre +
-                " " +
-                response[1].data.API[i].idiomanivel,
-            });
-            setLanguageslist([...languages]);
+          if (isMounted) {
+            const tools = [];
+            const languages = [];
+            for (let i = 0; i < response[0].data.API.length; i++) {
+              tools.push({
+                cat: {
+                  id: response[0].data.API[i].id,
+                  icon: response[0].data.API[i].icono,
+                  name: response[0].data.API[i].nombre,
+                },
+                key: response[0].data.API[i].nombre,
+              });
+            }
+            for (let i = 0; i < response[1].data.API.length; i++) {
+              languages.push({
+                cat: response[1].data.API[i].id,
+                key:
+                  response[1].data.API[i].idiomanombre +
+                  " " +
+                  response[1].data.API[i].idiomanivel,
+              });
+              const obj = JSON.parse(token);
+              const half = Math.ceil(obj.data.nombre.split(" ").length / 2);
+              const firstHalf = obj.data.nombre.split(" ").splice(0, half);
+              const secondHalf = obj.data.nombre
+                .split(" ")
+                .splice(
+                  obj.data.nombre.split(" ").length % 2 === 1
+                    ? -half + 1
+                    : -half
+                );
+              setName(firstHalf.join(" "));
+              setLastname(secondHalf.join(" "));
+              setToolist([...tools]);
+              setLanguageslist([...languages]);
+            }
           }
         });
       } catch (error) {
         console.log(error);
       }
-    };
-
+    }
     fetchData();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const RemoveSkill = (selectedItem) => {
@@ -208,7 +231,7 @@ export default function FinishRegister(props) {
     setErrorList(errors);
   }
 
-  const updateUserDate = async () => {
+  const updateUserData = async () => {
     const nullData = null;
     const fullname = name + " " + lastname;
     const skillsdi = [];
@@ -249,19 +272,37 @@ export default function FinishRegister(props) {
         const options = {
           headers: { authorization: `llave ${tokensito}` },
         };
+        setConfirmation(true);
 
-        await Axios.put(
-          `http://localhost:3030/actualizar/usuario`,
-          datform,
-          options
-        ).then((response) => {
+        Axios.all([
+          await Axios.put(
+            `http://localhost:3030/actualizar/usuario`,
+            datform,
+            options
+          ),
+          await Axios.get(`http://localhost:3030/perfil`, options),
+        ]).then((response) => {
+          if (response[1].statusText === "OK") {
+            const id = obj.data.id;
+            localStorage.setItem(
+              "login",
+              JSON.stringify({
+                token: tokensito,
+                data: {
+                  id: id,
+                  nombre: fullname,
+                  foto: response[1].data.foto,
+                  herramientas: skills,
+                  palabras: userKeywords,
+                },
+              })
+            );
+            setTimeout(() => {
+              setModal(false);
+              window.location.reload();
+            }, 1200);
+          }
           console.log(response);
-          setConfirmation(true);
-          localStorage.setItem("login", "");
-          setTimeout(() => {
-            setModal(false);
-            window.location.reload();
-          }, 1200);
         });
       } catch (error) {
         console.log(error);
@@ -305,7 +346,7 @@ export default function FinishRegister(props) {
                   fontSize: "0.8rem",
                   height: "2.5rem",
                 }}
-                onClick={updateUserDate}
+                onClick={updateUserData}
               >
                 Guardar
               </button>
@@ -354,6 +395,7 @@ export default function FinishRegister(props) {
             type="text"
             className={!errorList.validName ? "is-invalid border-danger" : ""}
             label="Nombres"
+            value={name}
             onChange={(e) => {
               setName(e.target.value);
             }}
@@ -374,6 +416,7 @@ export default function FinishRegister(props) {
             className={
               !errorList.validLastName ? "is-invalid border-danger" : ""
             }
+            value={lastname}
             onChange={(e) => {
               setLastname(e.target.value);
             }}
@@ -744,7 +787,7 @@ export default function FinishRegister(props) {
         </div>
         <div className="col-xs-12 o-col col-sm-8">
           <p>Herramientas Seleccionadas</p>
-          <div className="rounded p-2 pt-3 d-flex o-skill-list-cnt">
+          <div className="rounded p-2 pt-3 d-flex o-skill-list-cnt o-scroll-x">
             {skills.map((skill) => (
               <div key={skill.id} className="o-card-select-skill rounded">
                 <span

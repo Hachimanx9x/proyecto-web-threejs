@@ -122,7 +122,7 @@ export default function Desktop() {
       <div className="container-fluid mb-5 mb-sm-0 pb-5 pb-sm-0 m-0 p-0">
         <h4 className="mb-3 pl-4">Proyectos</h4>
 
-        <div className="o-blue-container o-updates-container">
+        <div className="o-blue-container o-updates-container o-scroll-y">
           <div className="mt-3 mb-0 d-flex justify-content-end">
             <a
               className="btn btn-primary m-0 border-0 text-capitalize  text-white z-depth-0"
@@ -163,7 +163,7 @@ export default function Desktop() {
               >
                 <div
                   className={
-                    "o-updates-section" +
+                    "o-updates-section o-scroll-y" +
                     (project.updates.length === 0 ? " overflow-hidden" : "")
                   }
                 >
@@ -181,7 +181,7 @@ export default function Desktop() {
                 </div>
 
                 <div className="o-collapse-column text-center">
-                  <div className="o-accord-scroll">
+                  <div className="o-accord-scroll o-scroll-y">
                     {project.practices.map((practice, i) => (
                       <div key={i}>
                         <small
