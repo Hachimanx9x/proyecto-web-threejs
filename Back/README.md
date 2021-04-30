@@ -602,7 +602,48 @@ esta ruta trae las reuniones de un proyecto en concreto
 ]
 ```
 
+```sh
+/reunion/:id
+```
+
 esta ruta trae la documentación
+
+```json
+// http://localhost:3030/reunion/21
+// get
+{
+  "reunion": {
+    "reunion": 21,
+    "titulo": "evento1",
+    "fecha": "02/05/2021",
+    "inicio": "16:02",
+    "fin": "17:02",
+    "integrantes": [
+      {
+        "id": 83,
+        "nombre": "asdfghjkpi cuatro",
+        "rol": "Arquitecto Experiencia Multimedia"
+      },
+      {
+        "id": 82,
+        "nombre": "correotres apellido",
+        "rol": "Arquitecto de producción de contenidos"
+      },
+      {
+        "id": 81,
+        "nombre": "correodos correodos",
+        "rol": "Arquitecto de pruebas"
+      },
+      {
+        "id": 80,
+        "nombre": "test test",
+        "rol": "Arquitecto de información"
+      }
+    ],
+    "proyecto": 199
+  }
+}
+```
 
 ```sh
 //metodologia/:name   //  CEM || SMMV

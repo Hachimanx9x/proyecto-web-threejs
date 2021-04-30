@@ -162,7 +162,7 @@ rutas.post("/create/usuario", (req, res) => {
   }
 });
 
-rutas.post("/agregar/contacto", proToken, (req, res) => {
+rutas.post("/agregar/contacto", proToken, async (req, res) => {
   let { usuario, preferencia } = req.body;
   usuario = parseInt(usuario, 10);
   if (preferencia == "false") {
@@ -173,15 +173,15 @@ rutas.post("/agregar/contacto", proToken, (req, res) => {
   }
 
   if (typeof usuario === "number" && typeof preferencia === "boolean") {
-    jwt.verify(req.token, LLAVE, (err, data) => {
+    await jwt.verify(req.token, LLAVE, async (err, data) => {
       if (err) {
         res.sendStatus(403);
       } else {
         if (data.rows.length > 0) {
-          insertDB
+          await insertDB
             .insertContacts(req.body)
-            .then((result) => {
-              buscarDB
+            .then(async (result) => {
+              await buscarDB
                 .obtenertodasContactos()
                 .then((result2) => {
                   const { API } = result2;
