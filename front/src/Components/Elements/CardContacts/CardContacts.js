@@ -28,7 +28,6 @@ const CardContacts = ({ contact, changefavorite, deleteContact }) => {
     const rol = somejob.toLowerCase();
     if (
       rol === "programador" ||
-      rol === "ing multimedia" ||
       rol === "analista de datos" ||
       rol === "desarrollador frontend"
     ) {
@@ -61,6 +60,7 @@ const CardContacts = ({ contact, changefavorite, deleteContact }) => {
     } else if (
       rol === "productor audiovisual" ||
       rol === "gestor de proyectos" ||
+      rol === "ing multimedia" ||
       rol === "desarrollador móvil"
     ) {
       style = "other-job-2";

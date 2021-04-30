@@ -76,17 +76,15 @@ export default function ContactProfile(props) {
       </button>
       <div className="o-blue-container o-blue-container-2">
         <div className="o-talent-intro">
-          <div className="col-12 col-sm-4 mt-4 mt-sm-0 justify-content-center align-items-center d-flex">
-            <div className="col-xs-6">
-              <img
-                src={picture !== null && picture !== "null" ? picture : User}
-                className="o-profile-talent-picture rounded-circle"
-                alt="Foto de perfil del usuario"
-              />
-            </div>
-            <div className="col-xs-6 ml-2 d-flex justify-content-center align-items-center">
-              <p className="text-uppercase">{name}</p>
-            </div>
+          <div className="col-12 col-sm-3 ">
+            <img
+              src={picture !== null && picture !== "null" ? picture : User}
+              className="o-profile-talent-picture rounded-circle"
+              alt="Foto de perfil del usuario"
+            />
+          </div>
+          <div className="col-12 col-sm-6  d-flex justify-content-center align-items-center">
+            <p className="text-uppercase">{name} </p>
           </div>
         </div>
         <div className="d-flex w-100 flex-wrap">

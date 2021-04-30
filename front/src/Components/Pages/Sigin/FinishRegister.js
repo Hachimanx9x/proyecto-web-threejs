@@ -137,13 +137,16 @@ export default function FinishRegister(props) {
               const obj = JSON.parse(token);
               const half = Math.ceil(obj.data.nombre.split(" ").length / 2);
               const firstHalf = obj.data.nombre.split(" ").splice(0, half);
-              const secondHalf = obj.data.nombre
-                .split(" ")
-                .splice(
-                  obj.data.nombre.split(" ").length % 2 === 1
-                    ? -half + 1
-                    : -half
-                );
+              const secondHalf =
+                obj.data.nombre.split(" ").length === 1
+                  ? ""
+                  : obj.data.nombre
+                      .split(" ")
+                      .splice(
+                        obj.data.nombre.split(" ").length % 2 === 1
+                          ? -half + 1
+                          : -half
+                      );
               setName(firstHalf.join(" "));
               setLastname(secondHalf.join(" "));
               setToolist([...tools]);
@@ -297,10 +300,8 @@ export default function FinishRegister(props) {
                 },
               })
             );
-            setTimeout(() => {
-              setModal(false);
-              window.location.reload();
-            }, 1200);
+            setModal(false);
+            window.location.reload();
           }
           console.log(response);
         });
@@ -468,6 +469,15 @@ export default function FinishRegister(props) {
                   accept="image/*"
                   onChange={(e) => {
                     if (e.target.files[0] !== undefined) {
+                      if (
+                        /(?:\.([^.]+))?$/.exec(e.target.files[0].name)[1] ===
+                        "svg"
+                      ) {
+                        alert(
+                          "Solo se permiten archivos jpg, png, pdf, gif o webp"
+                        );
+                        return;
+                      }
                       setCvpicture(e.target.files[0]);
                     }
                   }}

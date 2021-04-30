@@ -69,10 +69,12 @@ const Topbar = ({ toggleSidebar, sidebarIsOpen }, props) => {
         id="navbar-menu"
       >
         <a
-          className={"nav-link text-info" + (!activeLink ? " disabled" : "")}
+          className={`nav-link text-info d-flex aligin-items-center ${
+            !activeLink ? " disabled" : ""
+          }`}
           href="/Dashboard/InfoUser"
         >
-          <label className="mr-2 font-weight-bold">{name}</label>
+          <label className="m-auto pr-1 font-weight-bold">{name}</label>
           <img
             src={foto}
             alt="User"

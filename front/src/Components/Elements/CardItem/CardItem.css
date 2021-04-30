@@ -87,7 +87,7 @@
   top: 15px;
 }
 .o-card-activity-description {
-  overflow-y: hidden;
+  text-overflow: ellipsis;
   padding: 0.5rem;
   margin: 0;
   scrollbar-color: #4285f4 rgb(240, 238, 238);

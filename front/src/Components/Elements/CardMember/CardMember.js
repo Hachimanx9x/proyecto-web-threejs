@@ -98,7 +98,9 @@ const CardMember = ({ member, remove, add, change, rols, readOnly }) => {
               alt="member profile"
               src={member.urlimage}
             />
-            <p className="d-block">{member.name}</p>
+            <p className="d-block" style={{ maxWidth: "17ch" }}>
+              {member.name.split(" ")[0]}
+            </p>
           </div>
           <div className="o-card-member-rols">
             {member.rols.map((rol, i) => (
@@ -142,12 +144,7 @@ const CardMember = ({ member, remove, add, change, rols, readOnly }) => {
                 >
                   <FontAwesomeIcon icon={faTrash} className="text-danger" />
                 </button>
-                <Link
-                  to={{
-                    pathname: "/Dashboard/Contacts/" + member.name,
-                    contact: member,
-                  }}
-                >
+                <Link to={`/Dashboard/Contacts/${member.user}`}>
                   <FontAwesomeIcon
                     icon={faInfoCircle}
                     style={{ border: "1px solid #007E33" }}

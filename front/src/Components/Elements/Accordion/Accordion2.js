@@ -22,8 +22,14 @@ class Accordion2 extends Component {
           />
           <p className="p-2 mt-3">{this.props.title}</p>
           <span className={"accordion-icon d-flex"}>
-            <div className="mr-3 mr-sm-4 mt-0 rounded-pill new-update">
-              {this.props.number} Cambios
+            <div
+              className={`${
+                this.props.number === 0 ? "d-none" : ""
+              } mr-3 mr-sm-4 mt-0 rounded-pill new-update`}
+            >
+              {this.props.number === 1
+                ? "1 Cambio"
+                : this.props.number + " Cambios"}
             </div>
 
             <FontAwesomeIcon

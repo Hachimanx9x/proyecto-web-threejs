@@ -56,7 +56,6 @@ class ProjectView extends Component {
         Axios.get(`http://localhost:3030/proyectos/${proyectId}`, options),
         Axios.get(`http://localhost:3030/calendario/${proyectId}`, options),
       ]).then((response) => {
-        console.log(response);
         const meetings = [];
         const project = response[0].data.proyectos;
         const allmembers = response[0].data.proyectos.integrantes;

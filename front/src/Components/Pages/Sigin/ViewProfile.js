@@ -184,14 +184,23 @@ export default function ViewProfile(props) {
           }
           const half = Math.ceil(userData.nombre.split(" ").length / 2);
           const firstHalf = userData.nombre.split(" ").splice(0, half);
-          const secondHalf = userData.nombre
-            .split(" ")
-            .splice(
-              userData.nombre.split(" ").length % 2 === 1 ? -half + 1 : -half
-            );
+          const secondHalf =
+            userData.nombre.split(" ").length === 1
+              ? ""
+              : userData.nombre
+                  .split(" ")
+                  .splice(
+                    userData.nombre.split(" ").length % 2 === 1
+                      ? -half + 1
+                      : -half
+                  );
           setName(firstHalf.join(" "));
           setLastname(secondHalf.join(" "));
-          setDescription(userData.descripcion);
+          setDescription(
+            userData.descripcion === null || userData.descripcion === "null"
+              ? "Sin descripción."
+              : userData.descripcion
+          );
           setBitbucket(userData.bitbucket);
           setCountry(userData.pais);
           setGithub(userData.github);
@@ -305,9 +314,7 @@ export default function ViewProfile(props) {
     ) {
       try {
         setPreparation(true);
-        setTimeout(() => {
-          setConfirmation(true);
-        }, 1500);
+
         const datform = new FormData();
         datform.append("email", nullData);
         datform.append("password", nullData);
@@ -341,6 +348,8 @@ export default function ViewProfile(props) {
           await Axios.get(`http://localhost:3030/perfil`, options),
         ]).then((response) => {
           if (response[1].statusText === "OK") {
+            setConfirmation(true);
+
             const id = obj.data.id;
             localStorage.setItem(
               "login",
@@ -355,7 +364,9 @@ export default function ViewProfile(props) {
                 },
               })
             );
-            window.location.reload();
+            setTimeout(() => {
+              window.location.reload();
+            }, 2300);
           }
           setModal(false);
           setTimeout(() => {
@@ -541,6 +552,15 @@ export default function ViewProfile(props) {
                     accept="image/*"
                     onChange={(e) => {
                       if (e.target.files[0] !== undefined) {
+                        if (
+                          /(?:\.([^.]+))?$/.exec(e.target.files[0].name)[1] ===
+                          "svg"
+                        ) {
+                          alert(
+                            "Solo se permiten archivos jpg, png, pdf, gif o webp"
+                          );
+                          return;
+                        }
                         setCvpicture(e.target.files[0]);
                       }
                     }}

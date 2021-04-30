@@ -50,21 +50,24 @@ class CreateProject extends Component {
    */
   handleValidation = () => {
     const { projectName, projectPractices, members, errors } = this.state;
+
+    errors.name = false;
+    errors.practices = false;
+    errors.members = false;
+
     if (projectName.trim() === "") {
       errors.name = true;
-    } else {
-      errors.name = false;
     }
     if (projectPractices.length === 0) {
       errors.practices = true;
-    } else {
-      errors.practices = false;
     }
     if (members.length < 3) {
       errors.members = true;
       errors.membersMessage = "Selecciona al menos tres integrantes.";
-    } else {
-      errors.practices = false;
+    }
+    if (members.some((member) => member.rol === "")) {
+      errors.members = true;
+      errors.membersMessage = "Seleccione un rol para cada integrante.";
     }
     this.setState({ errors: errors });
   };
@@ -232,6 +235,18 @@ class CreateProject extends Component {
     }
   };
 
+  /* 
+  CEM
+"Arquitecto Experiencia Multimedia"
+"Arquitecto de producción de contenidos"
+"Arquitecto de información"
+"Arquitecto de pruebas"
+
+SMMV
+"Arquitecto Experiencia Multimedia"
+"Arquitecto de producción de contenidos"
+"Arquitecto de información"
+ "Arquitecto de pruebas"*/
   createProject = async () => {
     await this.handleValidation();
     const {
@@ -259,9 +274,6 @@ class CreateProject extends Component {
       try {
         const datform = new FormData();
         this.setState({ preparation: true });
-        setTimeout(() => {
-          this.setState({ success: true });
-        }, 4000);
         datform.append("nombre", projectName);
         datform.append("descripcion", projectDescription);
         datform.append("practica", [...practices]);
@@ -279,11 +291,12 @@ class CreateProject extends Component {
           datform,
           options
         ).then((response) => {
+          this.setState({ success: true });
           setTimeout(() => {
             this.setState({ confirmationModal: false });
-            this.props.history.push("/Dashboard/Desktop");
+            this.props.history.push("/Dashboard/Projects");
           });
-        }, 1200);
+        }, 2300);
       } catch (error) {
         console.log(error);
         this.setState({ confirmationModal: false });
@@ -445,10 +458,7 @@ class CreateProject extends Component {
                   maxLength="350"
                   onChange={(e) => this.handleInput("projectName", e)}
                 />
-                <div
-                  className="position-relative"
-                  style={{ maxWidth: "20rem" }}
-                >
+                <div className="position-relative" style={{ maxWidth: "auto" }}>
                   <p
                     className={
                       (this.state.errors.name ? "" : "invisible ") +

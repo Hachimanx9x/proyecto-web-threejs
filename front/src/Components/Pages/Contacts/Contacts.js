@@ -65,26 +65,22 @@ class Contacts extends Component {
             });
           }
           for (let i of alltaletns) {
-            const tools = [];
-            for (let j of i.herramientas) {
-              tools.push(j.icono);
-            }
-            talents.push({
-              id: i.userid,
-              name: i.nombre,
-              description:
-                i.descripcion === "undefined" || i.descripcion === "null"
-                  ? "Ninguna"
-                  : i.descripcion,
-              jobs: [...i.palabras],
-              img: i.foto === null ? User : i.foto,
-              skills: [...tools],
-            });
-          }
-          for (let i of contacts) {
-            const item = talents.findIndex((iterador) => iterador.id === i.id);
-            if (item) {
-              talents.splice(item, 1);
+            if (!contacts.some((contact) => contact.id === i.userid)) {
+              const tools = [];
+              for (let j of i.herramientas) {
+                tools.push(j.icono);
+              }
+              talents.push({
+                id: i.userid,
+                name: i.nombre,
+                description:
+                  i.descripcion === "undefined" || i.descripcion === "null"
+                    ? "Ninguna"
+                    : i.descripcion,
+                jobs: [...i.palabras],
+                img: i.foto === null ? User : i.foto,
+                skills: [...tools],
+              });
             }
           }
 

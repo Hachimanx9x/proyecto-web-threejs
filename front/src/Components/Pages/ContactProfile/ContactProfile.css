@@ -26,8 +26,8 @@
 }
 .o-talent-intro {
   display: flex;
-  flex-wrap: wrap-reverse;
-  padding: 1rem;
+  width: 100%;
+  padding: 1rem 2rem;
 }
 
 .o-talent-tool-list {
@@ -147,6 +147,13 @@
   .o-geo-info {
     margin: 0 1rem 0 5rem;
     min-width: 5rem;
+  }
+  .o-profile-talent-picture {
+    margin: 0;
+  }
+  .o-talent-intro {
+    flex-wrap: wrap;
+    justify-content: center;
   }
 }
 @media only screen and (max-width: 590px) {
