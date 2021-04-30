@@ -381,6 +381,14 @@ export default function FinishRegister(props) {
               accept="image/*"
               onChange={(e) => {
                 if (e.target.files[0] !== undefined) {
+                  if (
+                    /(?:\.([^.]+))?$/.exec(e.target.files[0].name)[1] === "svg"
+                  ) {
+                    alert(
+                      "Solo se permiten archivos jpg, png, pdf, gif o webp"
+                    );
+                    return;
+                  }
                   setPicture(e.target.files[0]);
                 }
               }}

@@ -90,7 +90,6 @@ class CreateProject extends Component {
     try {
       Axios.get(`http://localhost:3030/contactos`, options).then((response) => {
         const allcontacts = response.data.contactos;
-        console.log(response);
         const contacts = [];
 
         for (let i of allcontacts) {
@@ -244,7 +243,6 @@ class CreateProject extends Component {
       members,
       errors,
     } = this.state;
-    console.log(this.state);
     const projectmembers = [];
     for (let i of members) {
       projectmembers.push(JSON.stringify(i));
@@ -276,13 +274,11 @@ class CreateProject extends Component {
         const options = {
           headers: { authorization: `llave ${tokensito}` },
         };
-        console.log(datform);
         Axios.post(
           `http://localhost:3030/create/proyecto`,
           datform,
           options
         ).then((response) => {
-          console.log(response);
           setTimeout(() => {
             this.setState({ confirmationModal: false });
             this.props.history.push("/Dashboard/Desktop");

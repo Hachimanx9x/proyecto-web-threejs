@@ -210,7 +210,6 @@ export default function CardActivities({ alfa, activity, tecniques }) {
                 defaultValue={option}
                 onChange={(e) => {
                   setTecnique(e.target.value);
-                  console.log(e.target.value);
                 }}
               >
                 {tecniques.map((tecnique, i) => (
@@ -233,7 +232,6 @@ export default function CardActivities({ alfa, activity, tecniques }) {
                 defaultValue={defaultDate}
                 onChange={(e) => {
                   setDate(e.target.value);
-                  console.log(e.target.value);
                 }}
                 min={moment().toDate()}
               />
@@ -321,7 +319,6 @@ export default function CardActivities({ alfa, activity, tecniques }) {
           onChange={(e) => {
             if (e.target.files[0] !== undefined) {
               setFile(e.target.files[0]);
-              console.log(e.target.files[0]);
             }
           }}
         />

@@ -284,7 +284,6 @@ export default function ViewProfile(props) {
       : (errors.validWords = true);
 
     setErrorList(errors);
-    console.log(errors);
   }
 
   const updateUserData = async () => {

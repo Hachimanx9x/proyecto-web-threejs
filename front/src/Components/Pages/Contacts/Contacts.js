@@ -41,7 +41,6 @@ class Contacts extends Component {
 
         .then((response) => {
           const allcontacts = response[0].data.contactos;
-          console.log(allcontacts);
           const alltaletns = response[1].data.data;
           const contacts = [];
           const talents = [];
@@ -141,18 +140,18 @@ class Contacts extends Component {
   };
 
   showFavorite = () => {
-    this.state.filter === "Contactos"
-      ? console.log()
-      : this.setState({ filter: "Contactos" });
+    if (this.state.filter !== "Contactos") {
+      this.setState({ filter: "Contactos" });
+    }
     const favorites = this.state.favorites;
     let show = [];
 
     if (!favorites) {
       const { contacts } = this.state;
       for (let i = 0; i < contacts.length; i++) {
-        contacts[i].favorite
-          ? show.push(contacts[i])
-          : console.log(this.state.filter);
+        if (contacts[i].favorite) {
+          show.push(contacts[i]);
+        }
       }
     } else {
       show = [...this.state.contacts];

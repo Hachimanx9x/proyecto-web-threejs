@@ -30,7 +30,6 @@ export default function ContactProfile(props) {
       try {
         Axios.get(`http://localhost:3030/talentos/${talentoId}`, options).then(
           (response) => {
-            console.log(response.data[0]);
             //setId(response.data.id);
             const words = response.data[0].palabras;
             const list = [];

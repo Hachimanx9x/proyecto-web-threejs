@@ -32,7 +32,6 @@ export default function ActivitiesCEM(props) {
           `http://localhost:3030/proyecto/actividades/${proyectId}/cem`,
           options
         ).then((response) => {
-          console.log(response);
           setActivities([...response.data.actividades]);
           setDeliverables([...response.data.entregables]);
           setNameProject(response.data.proyecto.nombre);

@@ -14,7 +14,6 @@ export default function Dashboard(props) {
   ) {
     const obj = JSON.parse(token);
     const data = obj.data;
-    console.log(data);
     if (
       data.herramientas.length === 0 &&
       path !== "/Dashboard/FinishRegister"

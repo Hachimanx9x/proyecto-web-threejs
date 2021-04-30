@@ -9,7 +9,6 @@ import "@fortawesome/fontawesome-free/css/all.css";
 import "react-day-picker/lib/style.css";
 
 import FullCalendar from "@fullcalendar/react";
-import bootstrapPlugin from "@fullcalendar/bootstrap";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import listPlugin from "@fullcalendar/list";
 import esLocale from "@fullcalendar/core/locales/es";
@@ -48,11 +47,9 @@ export default class CalendarEvents extends Component {
       axios
         .get(`http://localhost:3030/calendario`, options)
         .then((respuesta) => {
-          console.log(respuesta.data);
           for (let i = 0; i < respuesta.data.length; i++) {
             const element = respuesta.data[i];
             if (element.start !== "NaN:NaN" && element.end !== "NaN:NaN") {
-              console.log(i);
               const color =
                 "#" + Math.floor(Math.random() * 16777215).toString(16);
               let temp = element.fecha.split("/");
@@ -107,7 +104,6 @@ export default class CalendarEvents extends Component {
                 this.props.history.push("/Dashboard/Meetings");
               }}
               plugins={[dayGridPlugin, timeGridPlugin, listPlugin]}
-              themeSystem={bootstrapPlugin}
               initialView="dayGridMonth"
               events={this.state.events}
               locale={esLocale}

@@ -32,7 +32,6 @@ export default function Desktop() {
         axios
           .all([axios.get(`http://localhost:3030/escritorio`, options)])
           .then((response) => {
-            console.log(response[0].data.proyectos);
             const temp = response[0].data.proyectos;
             const projects = [];
 
@@ -108,7 +107,9 @@ export default function Desktop() {
         const contain = project.title
           .toLocaleLowerCase()
           .includes(keyWord.toLocaleLowerCase());
-        contain ? array.push(project) : console.log("D :");
+        if (contain) {
+          array.push(project);
+        }
       }
       setShow([...array]);
     } else {
