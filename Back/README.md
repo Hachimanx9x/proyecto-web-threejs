@@ -618,28 +618,32 @@ esta ruta trae la documentación
     "fecha": "02/05/2021",
     "inicio": "16:02",
     "fin": "17:02",
-    "integrantes": [
-      {
-        "id": 83,
-        "nombre": "asdfghjkpi cuatro",
-        "rol": "Arquitecto Experiencia Multimedia"
-      },
-      {
-        "id": 82,
-        "nombre": "correotres apellido",
-        "rol": "Arquitecto de producción de contenidos"
-      },
-      {
-        "id": 81,
-        "nombre": "correodos correodos",
-        "rol": "Arquitecto de pruebas"
-      },
-      {
-        "id": 80,
-        "nombre": "test test",
-        "rol": "Arquitecto de información"
-      }
-    ],
+       "integrantes": [
+            {
+                "id": 83,
+                "foto": "http://localhost:3030/proyecto/contenido/usuario83/bitmap.png",
+                "nombre": "asdfghjkpi cuatro",
+                "rol": "Arquitecto Experiencia Multimedia"
+            },
+            {
+                "id": 82,
+                "foto": "http://localhost:3030/proyecto/contenido/usuario82/min.PNG",
+                "nombre": "correotres apellido",
+                "rol": "Arquitecto de producción de contenidos"
+            },
+            {
+                "id": 81,
+                "foto": "http://localhost:3030/proyecto/contenido/usuario81/Captura.PNG",
+                "nombre": "correodos correodos",
+                "rol": "Arquitecto de pruebas"
+            },
+            {
+                "id": 80,
+                "foto": "http://localhost:3030/proyecto/contenido/usuario80/Imagen1.png",
+                "nombre": "test test",
+                "rol": "Arquitecto de información"
+            }
+        ],,
     "proyecto": 199
   }
 }
