@@ -102,6 +102,7 @@ query.buscarReunionconIntegrantes = function (id) {
   reuniones.reuniondurancion AS "duracion",
   usuarios.id AS "usuid",
   usuarios.nombre AS "usunombre",
+  usuarios.fotoperfil AS "foto",
   roles.roltitulo AS "rol",
   proyectos.id AS "proid"
    from reuniones

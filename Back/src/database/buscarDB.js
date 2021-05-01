@@ -2985,8 +2985,13 @@ function calendariosoloproyecto(array, proyecto) {
 function rearmardatosreunione(array) {
   let integrantes = [];
   for (let a = 0; a < array.length; a++) {
+    let tem=null
+    if(array[a].foto !==null && array[a].foto !=="null"){
+      tem=`${env.host}/proyecto/contenido/usuario${array[a].usuid}/${array[a].foto}`
+    }
     integrantes.push({
       id: array[a].usuid,
+      foto:tem,
       nombre: array[a].usunombre,
       rol: array[a].rol,
     });
