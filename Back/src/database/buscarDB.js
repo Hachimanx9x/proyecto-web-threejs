@@ -2337,14 +2337,10 @@ function rearmarcontactos(array) {
     }
   }
   for (var i = 0; i < arraydef.length; i++) {
-    var palabratemp;
     var temparray = [];
     for (var j = 0; j < array.length; j++) {
       if (arraydef[i].iduser == array[j].id) {
-        if (palabratemp != array[j].palabra) {
-          temparray.push(array[j].palabra);
-          palabratemp = array[j].palabra;
-        }
+        temparray.push(array[j].palabra);
       }
     }
     arraydef[i].palabras = quitarduplicados(temparray);
