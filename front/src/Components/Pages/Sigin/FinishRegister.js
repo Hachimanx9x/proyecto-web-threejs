@@ -34,6 +34,7 @@ export default function FinishRegister(props) {
   const [confirmation, setConfirmation] = useState(false);
   const [modal, setModal] = useState(false);
   const token = localStorage.getItem("login");
+
   const [languageslist, setLanguageslist] = useState([]);
   const [toolist, setToolist] = useState([]);
   const [errorList, setErrorList] = useState({
@@ -46,6 +47,12 @@ export default function FinishRegister(props) {
     validWords: true,
     validSkills: true,
   });
+
+  const obj = JSON.parse(token);
+  const data = obj.data;
+  if (data.herramientas.length !== 0) {
+    props.history.push("/Dashboard/Projects");
+  }
   const countries = [
     { key: "Alemania", cat: "Alemania" },
     { key: "Brasil", cat: "Brasil" },
@@ -101,12 +108,9 @@ export default function FinishRegister(props) {
   ];
 
   useEffect(() => {
-    const obj = JSON.parse(token);
+    const token = localStorage.getItem("login");
+
     let isMounted = true;
-    const data = obj.data;
-    if (data.herramientas.length !== 0) {
-      props.history.push("/Dashboard/Projects");
-    }
     function fetchData() {
       try {
         Axios.all([

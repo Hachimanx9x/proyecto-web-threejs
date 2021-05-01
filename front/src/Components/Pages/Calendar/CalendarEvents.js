@@ -28,7 +28,7 @@ export default class CalendarEvents extends Component {
     this.state = {
       events: [],
       selectedDate: null,
-      colors: [,],
+      colors: [],
       error: false,
       fetched: false,
     };

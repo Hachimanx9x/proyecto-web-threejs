@@ -161,26 +161,6 @@ class ProjectView extends Component {
     window.removeEventListener("resize", this.handleResize);
   };
   render() {
-    const data = {
-      labels: ["Completado", "Faltante"],
-      datasets: [
-        {
-          data: [60, 40],
-          backgroundColor: ["#4fa77b", "#ddd8d8"],
-          hoverBackgroundColor: ["#3c8862", "rgb(238, 229, 229)"],
-        },
-      ],
-    };
-    const data2 = {
-      labels: ["Completado", "Faltante"],
-      datasets: [
-        {
-          data: [60, 40],
-          backgroundColor: ["#D0A114", "#ddd8d8"],
-          hoverBackgroundColor: ["#957411", "rgb(238, 229, 229)"],
-        },
-      ],
-    };
     if (this.state.fetched) {
       return (
         <div className="row mb-3 mb-sm-0 pb-5 pb-sm-0 w-100">

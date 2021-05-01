@@ -43,13 +43,7 @@ class CreateEvents extends Component {
       errorHour: "",
       confirmation: false,
       projectList: [],
-      colors: [],
-      events: [
-        "Reunión avances",
-        "Presentación final",
-        "Entrevistas",
-        "Creación de entorno",
-      ],
+      events: [],
       todayEvents: [],
     };
   }
@@ -159,7 +153,6 @@ class CreateEvents extends Component {
   componentDidMount = () => {
     let temcolors = [];
     window.addEventListener("resize", this.handleResize);
-    const test = new Date("04-28-2021");
     const token = localStorage.getItem("login");
     const obj = JSON.parse(token);
     let temp = obj.token;
@@ -195,7 +188,6 @@ class CreateEvents extends Component {
             start: i.hora,
             project: i.pronombre,
             id: i.proyecto,
-            start: i.start,
             title: i.titulo,
           });
         }

@@ -12,18 +12,19 @@ export default function CardItem({ item, category, icon, alpha }) {
   ]);
   useEffect(() => {
     function createTabs() {
+      const tools = item.herramientas;
       const tab = [];
-      for (let i = 0; i < item.herramientas.length; i++) {
+      for (let i = 0; i < tools.length; i++) {
         i === 0
           ? tab.push({
               tab: true,
-              name: item.herramientas[i].nombre,
-              description: item.herramientas[i].descripcion,
+              name: tools[i].nombre,
+              description: tools[i].descripcion,
             })
           : tab.push({
               tab: false,
-              name: item.herramientas[i].nombre,
-              description: item.herramientas[i].descripcion,
+              name: tools[i].nombre,
+              description: tools[i].descripcion,
             });
       }
       setTabs([...tab]);
