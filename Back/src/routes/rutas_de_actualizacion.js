@@ -174,10 +174,11 @@ rutas.put("/entrega/actividad", proToken, (req, res) => {
 
 rutas.put("/entrega/entregable", proToken, (req, res) => {
   const { entregable } = req.body;
+  console.log(chalk.yellow);
   if (req.files !== undefined || req.files !== null) {
     if (req.files.archivo !== undefined || req.files.archivo !== null) {
       const { archivo } = req.files;
-      if (typeof entregable === "string") {
+      if (entregable !== undefined) {
         archivo.mv(__dirname + "/tmp/" + archivo.name, (err) => {
           if (!err) {
             var metaData = {
@@ -211,6 +212,8 @@ rutas.put("/entrega/entregable", proToken, (req, res) => {
             res.json(err);
           }
         });
+      } else {
+        res.json({ msj: "no mandaste una id de entrega" });
       }
     }
   }
