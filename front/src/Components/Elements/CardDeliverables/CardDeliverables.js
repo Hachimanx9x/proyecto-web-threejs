@@ -32,7 +32,7 @@ export default function CardDeliverables({ alfa, deliverable }) {
     if (file !== null) {
       try {
         const datform = new FormData();
-        datform.append("actividad", deliverable.id);
+        datform.append("entregable", deliverable.id);
         datform.append("archivo", file);
 
         const token = localStorage.getItem("login");
