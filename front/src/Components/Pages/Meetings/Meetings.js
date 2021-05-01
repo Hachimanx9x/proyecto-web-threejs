@@ -14,6 +14,7 @@ export default function Meetings(props) {
   const [members, setMembers] = useState([]);
   const [title, setTitle] = useState("");
   const [names, setNames] = useState([]);
+  const [project, setProject] = useState();
   useEffect(() => {
     let isMounted = true;
 
@@ -51,6 +52,7 @@ export default function Meetings(props) {
               setTitle(data.reunion.titulo);
               setMembers(members);
               setNames(names);
+              setProject(data.reunion.proyecto);
             }
           }
         );
@@ -109,7 +111,7 @@ export default function Meetings(props) {
               <div className="d-flex justify-content-center">
                 <a
                   className="btn bg-primary rounded-pill text-white text-capitalize m-auto z-depth-0 pl-4 pt-2 pb-2 pr-4"
-                  href={`/Room/${props.match.params.id}`}
+                  href={`/Room/${project + "?" + props.match.params.id}`}
                 >
                   Ingresar
                 </a>
