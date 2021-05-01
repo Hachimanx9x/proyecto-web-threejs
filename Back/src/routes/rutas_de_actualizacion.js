@@ -174,7 +174,7 @@ rutas.put("/entrega/actividad", proToken, (req, res) => {
 
 rutas.put("/entrega/entregable", proToken, (req, res) => {
   const { entregable } = req.body;
-  console.log(chalk.yellow);
+  console.log(chalk.yellow("/entrega/entregable"));
   if (req.files !== undefined || req.files !== null) {
     if (req.files.archivo !== undefined || req.files.archivo !== null) {
       const { archivo } = req.files;
