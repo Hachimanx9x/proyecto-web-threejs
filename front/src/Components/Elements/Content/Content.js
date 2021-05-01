@@ -81,7 +81,7 @@ const Content = ({ sidebarIsOpen, toggleSidebar }) => {
           path="/Dashboard/Projects/Documentation2"
           component={Doc2}
         />
-        <Route exact path="/Dashboard/Meetings" component={Meetings} />
+        <Route exact path="/Dashboard/Meetings/:id" component={Meetings} />
         <Route
           exact
           path="/Dashboard/FinishRegister"

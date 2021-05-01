@@ -46,9 +46,9 @@ export default class CalendarEvents extends Component {
     try {
       axios
         .get(`http://localhost:3030/calendario`, options)
-        .then((respuesta) => {
-          for (let i = 0; i < respuesta.data.length; i++) {
-            const element = respuesta.data[i];
+        .then((response) => {
+          for (let i = 0; i < response.data.length; i++) {
+            const element = response.data[i];
             if (element.start !== "NaN:NaN" && element.end !== "NaN:NaN") {
               const color =
                 "#" + Math.floor(Math.random() * 16777215).toString(16);
@@ -57,6 +57,7 @@ export default class CalendarEvents extends Component {
               const start = new Date(date + " " + element.start);
               const end = new Date(date + " " + element.end);
               events.push({
+                id: element.reunion,
                 title: element.titulo,
                 start: start,
                 end: end,
@@ -100,8 +101,8 @@ export default class CalendarEvents extends Component {
                 center: "title",
                 right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek",
               }}
-              eventClick={() => {
-                this.props.history.push("/Dashboard/Meetings");
+              eventClick={(e) => {
+                this.props.history.push(`/Dashboard/Meetings/${e.event.id}`);
               }}
               plugins={[dayGridPlugin, timeGridPlugin, listPlugin]}
               initialView="dayGridMonth"
