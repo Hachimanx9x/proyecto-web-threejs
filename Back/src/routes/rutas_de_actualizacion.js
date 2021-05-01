@@ -218,7 +218,34 @@ rutas.put("/entrega/entregable", proToken, (req, res) => {
     }
   }
 });
-
+rutas.put(`/actualizar/alfa`, proToken, async (req, res) => {
+  console.log(chalk.yellow(`/actualizar/alfa`));
+  const { alfas } = req.body;
+  let con = 0;
+  for (let a = 0; a < alfas.length; a++) {
+    await buscarDB.obteneralfa(alfas[con]).then(async (alfai) => {
+      // console.log(alfai);
+      if (alfai.API.length <= 0) {
+        res.json({ msj: `alfa ${alfas[con]} no existe` });
+        return;
+      }
+      let estado = siguientealfa({
+        alfa: alfai.API[0].alfanombre,
+        estado: alfai.API[0].alfaestado,
+      });
+      await actualizarDB
+        .updatealpha({ alfa: alfas[con], estado: estado })
+        .then((re) => {
+          if (con === alfas.length - 1) {
+            res.json({
+              msj: `alfa ${alfai.API[0].alfanombre} actualizada a ${estado}`,
+            });
+          }
+          con++;
+        });
+    });
+  }
+});
 rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
   console.log(chalk.yellow(`/actualizar/usuario`));
   // console.log(req.body);
@@ -1830,6 +1857,38 @@ function randomNumber() {
     );
   }
   return randomNumber;
+}
+
+function siguientealfa({ alfa, estado }) {
+  if (alfa === "Experiencia multimedia" || alfa === "Diseño responsable") {
+    if (estado === "iniciado") {
+      return "Identificado";
+    }
+    if (estado === "Identificado") {
+      return "Comprendido";
+    }
+    if (estado === "Comprendido") {
+      return "Acordado";
+    }
+    if (estado === "Acordado") {
+      return "Concebido";
+    }
+  }
+
+  if (alfa === "Oportunidad" || alfa === "Valor del sistema multimedia") {
+    if (estado === "iniciado") {
+      return "Alcanzable";
+    }
+    if (estado === "Alcanzable") {
+      return "Diferenciado";
+    }
+    if (estado === "Diferenciado") {
+      return "Visionado";
+    }
+    if (estado === "Visionado") {
+      return "Visionado";
+    }
+  }
 }
 
 //-------------

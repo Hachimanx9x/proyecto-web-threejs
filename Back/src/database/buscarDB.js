@@ -288,6 +288,27 @@ funcionesDB.obtenerProyecto = async (body) => {
     }
   });
 };
+funcionesDB.datosreunion = async (proid, usu) => {
+  return new Promise(async (res, rej) => {
+    await funcionesDB
+      .buscarProyecto(proid, usu)
+      .then(({ proyectos }) => {
+        let og = [];
+        let pro = proyectos;
+        for (let a = 0; a < pro.practicas.length; a++) {
+          og.push({
+            nombre: pro.practicas[a].nombre,
+            descripcion: pro.practicas[a].descripcion,
+            alfas: organizarinfoalfasentorno(pro.practicas[a].alfas),
+          });
+        }
+        res(og);
+      })
+      .catch((errpro) => {
+        console.log(errpro);
+      });
+  });
+};
 
 funcionesDB.buscarProyecto = async (idp, iduse) => {
   console.log("funcionesDB.buscarProyecto");
@@ -592,7 +613,7 @@ funcionesDB.obteneractientreproyectos = (user, array) => {
   });
 };
 funcionesDB.obtenerreunionconintegrantes = async (reunion) => {
-  return new Promise((res, req) => {
+  return new Promise((res, rej) => {
     promesa.then(async (result) => {
       const { mariaDB, sqlite, vDB } = result;
       if (vDB) {
@@ -611,6 +632,8 @@ funcionesDB.obtenerreunionconintegrantes = async (reunion) => {
           if (!err) {
             res({ reunion: rearmardatosreunione(rows) });
           } else {
+            console.log(chalk.red("funcionesDB.obtenerreunionconintegrantes"));
+            console.log(err);
             rej(err);
           }
         });
@@ -756,6 +779,32 @@ funcionesDB.obtenertodasherramientas = async () => {
           if (!err) {
             res({ API: ponerurlherramientas(rows) });
           } else {
+            rej(err);
+          }
+        });
+      }
+    });
+  });
+};
+//---------------------------------------------------------
+funcionesDB.obteneralfa = async (id) => {
+  return new Promise((res, rej) => {
+    promesa.then(async ({ mariaDB, sqlite, vDB }) => {
+      if (vDB) {
+        await mariaDB.query(Query.obtenerunalfa(id), async (err, rows) => {
+          if (!err) {
+            res({ API: rows });
+          } else {
+            rej(err);
+          }
+        });
+      } else {
+        sqlite.all(Query.obtenerunalfa(id), async (err, rows) => {
+          if (!err) {
+            res({ API: rows });
+          } else {
+            console.log(chalk.red("buscarDB.js => funcionesDB.obteneralfa"));
+            console.log(err);
             rej(err);
           }
         });
@@ -2874,6 +2923,7 @@ function ordeninfoproyect(rows) {
       nombre: rows[a].practicanombre,
       descripcion: rows[a].pradescrip,
       alfa: {
+        id: rows[a].alfaid,
         nombre: tealfname,
         estado: rows[a].alfaestado,
       },
@@ -2911,17 +2961,24 @@ function ordeninfoproyect(rows) {
 
   let set3 = new Set(practicas.map(JSON.stringify));
   practicas = Array.from(set3).map(JSON.parse);
-
+  let metifodo = true;
   for (let c = 0; c < practicas.length; c++) {
     for (let b = 0; b < objdef.practicas.length; b++) {
       if (practicas[c].nombre === objdef.practicas[b].nombre) {
         practicas[c].alfas.push(objdef.practicas[b].alfa);
       }
+
       if (practicas[c].nombre === "Sistema Multimedia mínimo viable") {
-        practicas[c].alfas.push({
-          nombre: "Oportunidad",
-          estado: objdef.practicas[b].alfa.estado,
-        });
+        if (objdef.practicas[b].alfa.nombre === "Valor del SM") {
+          if (metifodo) {
+            metifodo = false;
+
+            practicas[c].alfas.push({
+              nombre: "Oportunidad",
+              estado: objdef.practicas[b].alfa.estado,
+            });
+          }
+        }
       }
     }
     let set4 = new Set(practicas[c].alfas.map(JSON.stringify));
@@ -2985,13 +3042,13 @@ function calendariosoloproyecto(array, proyecto) {
 function rearmardatosreunione(array) {
   let integrantes = [];
   for (let a = 0; a < array.length; a++) {
-    let tem=null
-    if(array[a].foto !==null && array[a].foto !=="null"){
-      tem=`${env.host}/proyecto/contenido/usuario${array[a].usuid}/${array[a].foto}`
+    let tem = null;
+    if (array[a].foto !== null && array[a].foto !== "null") {
+      tem = `${env.host}/proyecto/contenido/usuario${array[a].usuid}/${array[a].foto}`;
     }
     integrantes.push({
       id: array[a].usuid,
-      foto:tem,
+      foto: tem,
       nombre: array[a].usunombre,
       rol: array[a].rol,
     });
@@ -3022,6 +3079,116 @@ function rearmardatosreunione(array) {
     integrantes: integrantes,
     proyecto: array[0].proid,
   };
+}
+
+function organizarinfoalfasentorno(array) {
+  // console.log(array);
+  let gg = [];
+  let tarjeta = [];
+  for (let a = 0; a < array.length; a++) {
+    if (
+      array[a].nombre === "Experiencia multimedia" ||
+      array[a].nombre === "Diseño responsable"
+    ) {
+      tarjeta = [];
+      for (let b = 0; b < modelo.Practicas.length; b++) {
+        if (
+          modelo.Practicas[b].nombre ===
+          "Concepción de la experiencia multimedia"
+        ) {
+          for (let c = 0; c < modelo.Practicas[b].Tarjetas.length; c++) {
+            if (array[a].estado === "iniciado") {
+              if (
+                modelo.Practicas[b].Tarjetas[c].nombre === "Historia concebida"
+              ) {
+                tarjeta.push(modelo.Practicas[b].Tarjetas[c]);
+              }
+            }
+            if (array[a].estado === "Identificado") {
+              if (
+                modelo.Practicas[b].Tarjetas[c].nombre === "Emociones Definidas"
+              ) {
+                tarjeta.push(modelo.Practicas[b].Tarjetas[c]);
+              }
+            }
+            if (array[a].estado === "Comprendido") {
+              if (
+                modelo.Practicas[b].Tarjetas[c].nombre ===
+                  "Contenido multimedia concebido" ||
+                modelo.Practicas[b].Tarjetas[c].nombre ===
+                  "Diseño reponsable concebido"
+              ) {
+                tarjeta.push(modelo.Practicas[b].Tarjetas[c]);
+              }
+            }
+            if (array[a].estado === "Acordado") {
+              if (
+                modelo.Practicas[b].Tarjetas[c].nombre ===
+                "Experiencia multimedia diseñada"
+              ) {
+                tarjeta.push(modelo.Practicas[b].Tarjetas[c]);
+              }
+            }
+            if (array[a].estado === "Concebido") {
+            }
+          }
+        }
+      }
+      let idtem1 = null;
+      if (array[a].id !== undefined) {
+        idtem1 = array[a].id;
+      }
+      gg.push({
+        id: idtem1,
+        nombre: array[a].nombre,
+        estado: array[a].estado,
+        tarjeta: tarjeta,
+      });
+    }
+    if (
+      array[a].nombre === "Oportunidad" ||
+      array[a].nombre === "Valor del SM"
+    ) {
+      tarjeta = [];
+      for (let b = 0; b < modelo.Practicas.length; b++) {
+        if (modelo.Practicas[b].nombre === "Sistema Multimedia mínimo viable") {
+          for (let c = 0; c < modelo.Practicas[b].Tarjetas.length; c++) {
+            if (array[a].estado === "iniciado") {
+              if (modelo.Practicas[b].Tarjetas[c].nombre === "Alcanzable") {
+                tarjeta.push(modelo.Practicas[b].Tarjetas[c]);
+              }
+            }
+            if (array[a].estado === "Alcanzable") {
+              if (modelo.Practicas[b].Tarjetas[c].nombre === "Diferenciado") {
+                tarjeta.push(modelo.Practicas[b].Tarjetas[c]);
+              }
+            }
+            if (array[a].estado === "Diferenciado") {
+              if (modelo.Practicas[b].Tarjetas[c].nombre === "Definido") {
+                tarjeta.push(modelo.Practicas[b].Tarjetas[c]);
+              }
+            }
+            if (array[a].estado === "Definido") {
+              if (modelo.Practicas[b].Tarjetas[c].nombre === "Visionado") {
+                tarjeta.push(modelo.Practicas[b].Tarjetas[c]);
+              }
+            }
+          }
+        }
+      }
+      let idtem2 = null;
+      if (array[a].id !== undefined) {
+        idtem2 = array[a].id;
+      }
+      gg.push({
+        id: idtem2,
+        nombre: array[a].nombre,
+        estado: array[a].estado,
+        tarjeta: tarjeta,
+      });
+    }
+  }
+  return gg;
 }
 
 function quitarduplicados(array) {

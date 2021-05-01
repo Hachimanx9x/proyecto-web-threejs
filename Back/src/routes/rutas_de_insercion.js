@@ -179,24 +179,56 @@ rutas.post("/agregar/contacto", proToken, async (req, res) => {
       } else {
         if (data.rows.length > 0) {
           await insertDB
-            .insertContacts(req.body)
+            .insertContacts({
+              usuario: req.body.usuario,
+              preferencia: req.body.preferencia,
+            })
             .then(async (result) => {
               await buscarDB
                 .obtenertodasContactos()
                 .then((result2) => {
                   const { API } = result2;
                   let ultimo = API[API.length - 1].id;
-                  const id = data.rows[0].id;
                   insertDB
-                    .insertlistContacts({ usuario: id, contacto: ultimo })
-                    .then((result) => {
-                      res.json(result);
+                    .insertlistContacts({
+                      usuario: data.rows[0].id,
+                      contacto: ultimo,
+                    })
+                    .then(async (result) => {
+                      //------
+                      await insertDB
+                        .insertContacts({
+                          usuario: data.rows[0].id,
+                          preferencia: req.body.preferencia,
+                        })
+                        .then(async (result) => {
+                          await buscarDB
+                            .obtenertodasContactos()
+                            .then((result3) => {
+                              const { API } = result3;
+                              let ultimo2 = API[API.length - 1].id;
+                              insertDB
+                                .insertlistContacts({
+                                  usuario: req.body.usuario,
+                                  contacto: ultimo2,
+                                })
+                                .then((result) => {
+                                  res.json(result);
+                                })
+                                .catch((err3) => res.json(err3));
+                            })
+                            .catch((err2) => res.json(err2));
+                        })
+                        .catch((err) => res.json(err));
+                      //---------------
                     })
                     .catch((err3) => res.json(err3));
                 })
                 .catch((err2) => res.json(err2));
             })
             .catch((err) => res.json(err));
+        } else {
+          res.json({ msj: "error no hay token" });
         }
       }
     });

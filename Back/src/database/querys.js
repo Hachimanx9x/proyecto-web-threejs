@@ -182,6 +182,7 @@ query.buscarProyecto = function (id) {
 	actividades.actividadestado,
 	practicas.practicanombre,
   practicas.practicadescripcion AS "pradescrip",
+  alfas.id AS "alfaid",
 	alfas.alfanombre,
 	alfas.alfaestado,
 	entregables.id AS "entreid",
@@ -615,6 +616,9 @@ query.obtenerunrol = function (id) {
 };
 query.obtenerunproyecto = function (id) {
   return `SELECT * FROM proyectos where id = ${id} ; `;
+};
+query.obtenerunalfa = function (id) {
+  return `SELECT * FROM alfas where id = ${id} ; `;
 };
 /**
  `7MMF'                                                 db                        
@@ -1117,6 +1121,10 @@ query.actualizaractividad = function (actividad, fecha, tecnica) {
   return `update actividades
   set  actividadfechaentrega= "${fecha}", tecnica=${tecnica}
   where  id= ${actividad};  `;
+};
+
+query.actualizarlfa = function (estado, id) {
+  return `update alfas set alfaestado="${estado}" where id = ${id}; `;
 };
 /**
  `7MM"""Yp,                                               

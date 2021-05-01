@@ -491,6 +491,39 @@ funcionesDB.updateuserpassword = (obj) => {
   });
 };
 //----------------------------------------------------------------
+funcionesDB.updatealpha = ({ alfa, estado }) => {
+  return new Promise(async (res, rej) => {
+    await promesa.then(async ({ mariaDB, sqlite, vDB }) => {
+      if (vDB) {
+        await mariaDB.query(Query.actualizarlfa(estado, alfa), (err) => {
+          if (!err) {
+            res({ msj: "success" });
+          } else {
+            console.log(
+              chalk.red("actualizarDB.js => funcionesDB.updatealpha")
+            );
+            console.log(err);
+            rej({ msj: "error" });
+          }
+        });
+      } else {
+        await sqlite.all(Query.actualizarlfa(estado, alfa), (err) => {
+          if (!err) {
+            res({ msj: "success" });
+          } else {
+            console.log(
+              chalk.red("actualizarDB.js => funcionesDB.updatealpha")
+            );
+            console.log(err);
+            rej({ msj: "error" });
+          }
+        });
+      }
+    });
+  });
+};
+
+//----------------------------------------------------------------
 funcionesDB.updateuserprofilephoto = (obj) => {
   return new Promise((res, rej) => {
     const { foto, id } = obj;

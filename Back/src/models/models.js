@@ -5,7 +5,7 @@ function actual() {
 }
 
 module.exports = {
-  nombre: "Metodologia para la preproduccion de un sistema multiemdia",
+  nombre: "Metodologia para la preproduccion de un sistema multimedia",
   descripcion: "ayuda a cencebir ssitema multimedia",
   consejo:
     "No sacar la información de wikipedia, hace uso de fuentes confiables",
@@ -29,6 +29,59 @@ module.exports = {
         {
           nombre: "Concebido",
           descripcion: `El equipo de trabajo y los interesados, coinciden en que la concepción de la solución propuesta para el diseño responsable es la adecuada para atender los factores que influyen en la experiencia multimedia. `,
+        },
+      ],
+      Tarjetas: [
+        {
+          nombre: "Historia concebida",
+          descripcion: [
+            "Historia para la experiencia multimedia concebida.",
+            "Universo narrativo y su espacio y tiempo concebido en la cual se desarrolla la historia.",
+            "Personajes involucrados en la historia definidos",
+            "Conjunto de histos definidos a lo largo de la historia de la experiencia multimedia",
+            "Historia, universo narrativo, personajes e histos validados con los interesados por le medio de un Storyboard",
+          ],
+        },
+        {
+          nombre: "Emociones Definidas",
+          descripcion: [
+            "Emociones a producir en la experiencia multimedia definidas y clasificadas.",
+            "Emociones asociadas con la historia e hitos de la experiencia multimedia",
+            "Resultados esperados por las emociones producidas en los usuarios, definidos y clasificados",
+            "Emociones y resultados esperados validados con los interesados",
+          ],
+        },
+        {
+          nombre: "Contenido multimedia concebido",
+          descripcion: [
+            "Medios digitales idóneos concebidos para la experiencia multimedia.",
+            "Percepciones sensoriales idóneas concebidas para la experiencias multimedia",
+            "Modalidades de interacción idóneos concebidas para la experiencia multimedia",
+            "Asociación realizada entre emociones a producir y contenido multimedia concebido.",
+            "Contenido multimedia alineado con la historia y validado con los interesados.",
+          ],
+        },
+        {
+          nombre: "Diseño reponsable concebido",
+          descripcion: [
+            "Documentación producida de patrones relacioandos con experiencias multimedia existentes.",
+            "Se han diseñado soluciones para gestionar adecuadamente las tensiones de valor entre interesados del sistema multimedia.",
+            "Se han concebido soluciones que mitigan posibles usos indeseados y efectos indirectos de la experienci multimedia.",
+            "Leyes, políticas y normatividades que influyen consideradas en el diseño de la experiencia multimedia.",
+            "Factores de diseño responsable validados con los interesados.",
+            "Especificaciones del diseño responsable producida.",
+          ],
+        },
+        {
+          nombre: "Experiencia multimedia diseñada",
+          descripcion: [
+            "Journey Map de la experiencia multimedia producido y validado con los interesados.",
+            "Prototipos definidos para validar la experiencia multimedia concebida.",
+            "Prototipos producidos basados en modelos digitales, interactivos, de código, de objetos físicos reales.",
+            "Adecuación y organización de prototipos realizada para la evaluación integral de la experiencia multimedia.",
+            "Prototipos de la experinecia multimedia validados por los interesados.",
+            "Propuesta de diseño de la experiencia multimedia intereactiva producida.",
+          ],
         },
       ],
       alfas: [
@@ -459,20 +512,56 @@ module.exports = {
       descripcion: `Define el minimo producto viable para la entrega ante el cliente`,
       Estados: [
         {
-          nombre: "Identificado",
-          descripcion: `Se han identificado una serie de factores críticos para el diseño responsable del Sistema Multimedia, que afectan a sus interesados (usuarios, clientes, interesados indirectos): tensiones de valor entre interesados, posibles usos mal intencionados del Sistema Multimedia, patrones que afectan el Sistema Multimedia, leyes y normatividades que influyen en la solución, aspectos culturales, sociales y cognitivos que influyen en la comunidad objeto de análisis.`,
+          nombre: "Alcanzable",
+          descripcion: `Se cuenta con un análisis de viabilidad, que evidencia la capacidad de contar con los recursos, gestionar y mitigar los riesgos, adquirir y/o desarrollar las tecnologías hardware – software, necesarios para desarrollar el Sistema Multimedia.`,
         },
         {
-          nombre: "Comprendido",
-          descripcion: `El equipo de trabajo y los interesados (usuarios, clientes y otros interesados) tienen un entendimiento común del significado y alcance de los factores clave que son críticos para el diseño responsable del Sistema Multimedia, y la manera en cómo influyen en la experiencia multimedia. `,
+          nombre: "Diferenciado",
+          descripcion: `Se ha realizado un análisis con otros productos similares, lo cual permite reconocer con claridad, cómo el Sistema multimedia ofrece una proposición de valor diferenciable con las demás soluciones existentes en el mercado.`,
         },
         {
-          nombre: "Acordado",
-          descripcion: `El equipo de trabajo y los interesados, identifican de manera conjunta, la necesidad de concebir ideas de diseño que mitiguen los factores adversos y potencien los factores favorables que creen valor en torno al diseño responsable.`,
+          nombre: "Visionado",
+          descripcion: `Se ha definido una visión que define el Sistema Multimedia mínimo viable, que es aceptada y entendida por los interesados y el equipo de trabajo.`,
         },
         {
-          nombre: "Concebido",
-          descripcion: `El equipo de trabajo y los interesados, coinciden en que la concepción de la solución propuesta para el diseño responsable es la adecuada para atender los factores que influyen en la experiencia multimedia. `,
+          nombre: "Definido",
+          descripcion: `Se precisa una visión del Sistema Multimedia mínimo viable y su modelo Canvas, necesarios para conseguir la proposición de valor.`,
+        },
+      ],
+      Tarjetas: [
+        {
+          nombre: "Alcanzable",
+          descripcion: [
+            "Se ha identificado la oportunidad que ofrece el Sistema Multimedia.",
+            "Se han identificado y documentado soluciones similares existentes en el mercado.",
+            "Los interesados están de acuerdo con la oportunidad identificada, ofrecida por el Sistema multimedia",
+          ],
+        },
+        {
+          nombre: "Diferenciado",
+          descripcion: [
+            "La oportunidad ofrecida por el Sistema Multimedia es diferenciable frente a los soluciones existentes",
+            "Las delicias del Sistema multimedia estan definidas.",
+            "El Sitema Multimedia ofrece una proposición de valor novedosa.",
+            "Los interesados están de acuerdo con la proposición de valor del Sistema Multimedia",
+          ],
+        },
+        {
+          nombre: "Definido",
+          descripcion: [
+            "Se ha definido un modelo Canvas para el Sistema Multimedia Mínimo Viable",
+            "El modelo Canvas Está alineados con el enunciado de la visión del Sistema Multimedia Minimo viable.",
+            "El modelo Canvas del Sistema Multimedia Mínimo Viable es alcanzable",
+            "Los interesados están de acuerdo con el modelo Canvas del Sistema Multimedia Mínimo viable",
+          ],
+        },
+        {
+          nombre: "Visionado",
+          descripcion: [
+            "Existe un enunicado explicito de la visión para el sistema Multimedia Mínimo Viable",
+            "El enunciado de la visión del Sistema Multimedia esta alineado con su proposición de valor.",
+            "Los interesados están de acuerdo con la visión del Sitema Multimedia Mínimo Viable.",
+          ],
         },
       ],
       alfas: [

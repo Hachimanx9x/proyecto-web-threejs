@@ -300,6 +300,17 @@ rutas.get("/proyectos/:id", proToken, (req, res) => {
   });
 });
 
+rutas.get("/proyecto/reunion/:id", proToken, (req, res) => {
+  jwt.verify(req.token, LLAVE, (err, data) => {
+    if (err) {
+      res.sendStatus(403);
+    } else {
+      buscarDB.datosreunion(req.params.id, data.rows[0].id).then((entopro) => {
+        res.json(entopro);
+      });
+    }
+  });
+});
 rutas.get("/proyecto/contenido/:buque/:name", (req, res) => {
   const { buque, name } = req.params;
   //console.log(req.params)

@@ -603,6 +603,93 @@ esta ruta trae las reuniones de un proyecto en concreto
 ```
 
 ```sh
+/proyecto/reunion/198
+```
+
+```json
+//http://localhost:3030/proyecto/reunion/198
+//GET token
+[
+  {
+    "nombre": "Concepción de la experiencia multimedia",
+    "descripcion": "Con el uso de esta práctica se plantea el poder diseñar de una manera concreta todos los elementos que hacen parte de la experiencia multimedia propias del sistema así como relación todos sus elementos ",
+    "alfas": [
+      {
+        "id": 487,
+        "nombre": "Experiencia multimedia",
+        "estado": "iniciado",
+        "tarjeta": [
+          {
+            "nombre": "Historia concebida",
+            "descripcion": [
+              "Historia para la experiencia multimedia concebida.",
+              "Universo narrativo y su espacio y tiempo concebido en la cual se desarrolla la historia.",
+              "Personajes involucrados en la historia definidos",
+              "Conjunto de histos definidos a lo largo de la historia de la experiencia multimedia",
+              "Historia, universo narrativo, personajes e histos validados con los interesados por le medio de un Storyboard"
+            ]
+          }
+        ]
+      },
+      {
+        "id": 488,
+        "nombre": "Diseño responsable",
+        "estado": "iniciado",
+        "tarjeta": [
+          {
+            "nombre": "Historia concebida",
+            "descripcion": [
+              "Historia para la experiencia multimedia concebida.",
+              "Universo narrativo y su espacio y tiempo concebido en la cual se desarrolla la historia.",
+              "Personajes involucrados en la historia definidos",
+              "Conjunto de histos definidos a lo largo de la historia de la experiencia multimedia",
+              "Historia, universo narrativo, personajes e histos validados con los interesados por le medio de un Storyboard"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "nombre": "Sistema Multimedia mínimo viable",
+    "descripcion": "Define el minimo producto viable para la entrega ante el cliente",
+    "alfas": [
+      {
+        "id": 486,
+        "nombre": "Valor del SM",
+        "estado": "iniciado",
+        "tarjeta": [
+          {
+            "nombre": "Alcanzable",
+            "descripcion": [
+              "Se ha identificado la oportunidad que ofrece el Sistema Multimedia.",
+              "Se han identificado y documentado soluciones similares existentes en el mercado.",
+              "Los interesados están de acuerdo con la oportunidad identificada, ofrecida por el Sistema multimedia"
+            ]
+          }
+        ]
+      },
+      {
+        "id": null,
+        "nombre": "Oportunidad",
+        "estado": "iniciado",
+        "tarjeta": [
+          {
+            "nombre": "Alcanzable",
+            "descripcion": [
+              "Se ha identificado la oportunidad que ofrece el Sistema Multimedia.",
+              "Se han identificado y documentado soluciones similares existentes en el mercado.",
+              "Los interesados están de acuerdo con la oportunidad identificada, ofrecida por el Sistema multimedia"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
+```
+
+```sh
 /reunion/:id
 ```
 
