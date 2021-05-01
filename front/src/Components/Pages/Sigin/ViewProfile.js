@@ -20,7 +20,6 @@ export default function ViewProfile(props) {
   const [country, setCountry] = useState("");
   const [name, setName] = useState("");
   const [lastname, setLastname] = useState("");
-  const [cv, setCv] = useState("");
   const [cvpicture, setCvpicture] = useState(null);
   const [years, setYears] = useState({});
   const [linkedin, setLinkedin] = useState("");
@@ -108,6 +107,7 @@ export default function ViewProfile(props) {
   ];
 
   useEffect(() => {
+    const token = localStorage.getItem("login");
     const fetchData = async () => {
       const obj = JSON.parse(token);
       const tokensito = obj.token;
@@ -527,15 +527,7 @@ export default function ViewProfile(props) {
           </div>
           <div className="col-xs-12 col-sm-3 o-col">
             <p>Hoja de vida</p>
-            <MDBInput
-              type="text"
-              label="URL/Link"
-              onChange={(e) => {
-                setCv(e.target.value);
-              }}
-              outline
-              maxLength="130"
-            />
+            <MDBInput type="text" label="URL/Link" outline maxLength="130" />
             <div
               className="row bg-primary p-0 m-0 mt-4"
               style={{ height: "2.3rem" }}

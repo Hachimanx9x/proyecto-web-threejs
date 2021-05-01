@@ -17,7 +17,6 @@ export default function FinishRegister(props) {
   const [country, setCountry] = useState(null);
   const [name, setName] = useState("");
   const [lastname, setLastname] = useState("");
-  const [cv, setCv] = useState("");
   const [cvpicture, setCvpicture] = useState(null);
   const [years, setYears] = useState(null);
   const [linkedin, setLinkedin] = useState("");
@@ -446,16 +445,7 @@ export default function FinishRegister(props) {
         </div>
         <div className="col-xs-12 col-sm-3 o-col">
           <p>Hoja de vida</p>
-          <MDBInput
-            type="text"
-            value={cv}
-            label="URL/Link"
-            onChange={(e) => {
-              setCv(e.target.value);
-            }}
-            outline
-            maxLength="130"
-          />
+          <MDBInput type="text" label="URL/Link" outline maxLength="130" />
           <div
             className="row bg-primary p-0 m-0 mt-4"
             style={{ height: "2.3rem" }}
