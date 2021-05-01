@@ -22,6 +22,7 @@ export default function Meetings(props) {
       const token = localStorage.getItem("login");
       const obj = JSON.parse(token);
       let temp = obj.token;
+      const userdata = obj.data;
       const options = {
         headers: {
           "Content-Type": "application/json",
@@ -37,12 +38,14 @@ export default function Meetings(props) {
               const members = [];
               const names = [];
               for (const i of data.reunion.integrantes) {
-                names.push(i.nombre.split(" ")[0]);
-                members.push({
-                  id: i.id,
-                  name: i.nombre.split(" ")[0],
-                  pic: i.foto,
-                });
+                if (i.id !== userdata.id) {
+                  names.push(i.nombre.split(" ")[0]);
+                  members.push({
+                    id: i.id,
+                    name: i.nombre.split(" ")[0],
+                    pic: i.foto,
+                  });
+                }
               }
               setFetched(true);
               setTitle(data.reunion.titulo);
