@@ -38,6 +38,7 @@ export default function CardDeliverables({ alfa, deliverable }) {
         const token = localStorage.getItem("login");
         const obj = JSON.parse(token);
         const tokensito = obj.token;
+        setConfirmation(true);
         const options = {
           headers: { authorization: `llave ${tokensito}` },
         };
@@ -47,6 +48,7 @@ export default function CardDeliverables({ alfa, deliverable }) {
           datform,
           options
         ).then((response) => {
+          setModal(false);
           console.log(response);
         });
       } catch (error) {
@@ -99,7 +101,9 @@ export default function CardDeliverables({ alfa, deliverable }) {
                   fontSize: "0.8rem",
                   height: "2.5rem",
                 }}
-                onClick={updateDeliverable}
+                onClick={() => {
+                  updateDeliverable();
+                }}
               >
                 Guardar
               </button>
