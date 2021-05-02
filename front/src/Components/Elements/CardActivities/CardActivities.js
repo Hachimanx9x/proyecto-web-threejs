@@ -296,6 +296,7 @@ export default function CardActivities({ alfa, activity, tecniques }) {
           onClick={getFile}
           className={
             (alfa === "SMMV" ? "o-border-smmv o-text-smmv" : "cem o-text-cem") +
+            (activity.contenido === null ? " d-none " : "") +
             " ml-3 rounded-pill o-btn-activity"
           }
         >
