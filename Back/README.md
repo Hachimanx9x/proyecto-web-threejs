@@ -603,7 +603,7 @@ esta ruta trae las reuniones de un proyecto en concreto
 ```
 
 ```sh
-/proyecto/reunion/198
+/proyecto/reunion/:id
 ```
 
 ```json

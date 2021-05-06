@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 //libreria 3d
 import * as THREE from "three/build/three.module";
+import axios from "axios";
 import MicrophoneStream from "microphone-stream";
 //libreria para los controles
 //import {OrbitControls} from "three/examples/jsm/controls/OrbitControls" ;
@@ -130,11 +131,31 @@ class Test3d extends Component {
     };
   }
   async componentDidMount() {
-    //   console.log(this.state)
+    const token = localStorage.getItem("login");
+    const obj = JSON.parse(token);
+    const tokensito = obj.token;
+    const options = {
+      headers: { authorization: `llave ${tokensito}` },
+    };
+    // console.log(this.props.match.params);
+    const reunionId = this.props.match.params.id.split("000");
+
+    console.log(this.props.match.params);
+    this.setState({ room: `sala${reunionId[1]}` });
+    try {
+      axios
+        .get(`http://localhost:3030/proyecto/reunion/${reunionId[0]}`, options)
+        .then((response) => {
+          console.log(response.data);
+        });
+    } catch (error) {
+      console.error(error);
+    }
     this.socket = io("http://localhost:3030/", {
       reconnectionDelayMax: 10000,
     });
-    this.socket.emit("entra room", this.state.room);
+    console.log(reunionId);
+    this.socket.emit("entra room", `sala${reunionId[1]}`);
     this.socket.on("entrar", (data) => {
       //se reescribe el usaurio actual
       if (this.state.user === "default") {
