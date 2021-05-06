@@ -36,7 +36,7 @@ const contentCard = (props) => {
         <button
           className="btn z-depth-0  btn-success "
           onClick={() => {
-            props.voto();
+            props.voto(true);
           }}
         >
           si
@@ -44,7 +44,7 @@ const contentCard = (props) => {
         <button
           className="btn z-depth-0  btn-danger"
           onClick={() => {
-            props.voto();
+            props.voto(false);
           }}
         >
           no

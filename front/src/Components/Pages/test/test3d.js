@@ -69,6 +69,7 @@ class Test3d extends Component {
     this.hablar = this.hablar.bind(this);
     this.state = {
       practicas: [],
+      tarjepracticas: [],
       state: "mute",
       escuchar: false,
       escena: false,
@@ -135,9 +136,7 @@ class Test3d extends Component {
     const token = localStorage.getItem("login");
     const obj = JSON.parse(token);
     const tokensito = obj.token;
-    const options = {
-      headers: { authorization: `llave ${tokensito}` },
-    };
+
     // console.log(this.props.match.params);
     const reunionId = this.props.match.params.id.split("000");
 
@@ -145,11 +144,20 @@ class Test3d extends Component {
     this.setState({ room: `sala${reunionId[1]}` });
     try {
       axios
-        .get(`http://localhost:3030/proyecto/reunion/${reunionId[0]}`, options)
+        .get(`http://localhost:3030/proyecto/reunion/${reunionId[0]}`, {
+          headers: { authorization: `llave ${tokensito}` },
+        })
         .then((response) => {
-          let tempra = [];
+          let tem = [];
+          this.setState({ practicas: [...response.data] });
 
-          console.log(response.data);
+          for (let a = 0; a < this.state.practicas; a++) {
+            tem.push({
+              name: this.state.practicas[a].nombre,
+              description: this.state.practicas[a].descripcion,
+            });
+          }
+          this.setState({ tarjepracticas: tem });
         });
     } catch (error) {
       console.error(error);
@@ -158,7 +166,20 @@ class Test3d extends Component {
       reconnectionDelayMax: 10000,
     });
     console.log(reunionId);
+    this.socket.on("voteon", function (data) {
+      console.log(data);
+      console.log(this.variablerara);
+    });
     this.socket.emit("entra room", `sala${reunionId[1]}`);
+    this.socket.on("onvote", (data) => {
+      console.log(`Entro ${data}`);
+      if (data === "On") {
+        this.setState({ votaciones: true });
+      }
+      if (data === "Off") {
+        this.setState({ votaciones: false });
+      }
+    });
     this.socket.on("entrar", (data) => {
       //se reescribe el usaurio actual
       if (this.state.user === "default") {
@@ -168,7 +189,7 @@ class Test3d extends Component {
         data.room.splice(data.room.indexOf(data.iserid), 1);
         console.log(`id:${data.iserid}  rom: ${data.room}`);
         data.room.forEach((element) => {
-          com.push({ id: element, buffer: [] });
+          com.push({ id: element, buffer: [], vote: null });
 
           let tempobj = new THREE.Object3D().add(
             new THREE.Mesh(
@@ -192,7 +213,8 @@ class Test3d extends Component {
           this.numnpcs++;
         });
         this.idsnpcs = data.room;
-        this.variablerara = com;
+
+        this.setState({ variablerara: com });
         console.log(this.variablerara);
         this.setState({
           user: data.iserid,
@@ -208,7 +230,7 @@ class Test3d extends Component {
         console.log(`id:${this.state.user}  rom: ${data.room}`);
 
         data.room.forEach((element) => {
-          com.push({ id: element, buffer: [] });
+          com.push({ id: element, buffer: [], vote: null });
           let si = false;
           if (this.variablerara.length > 0) {
             if (this.idsnpcs.indexOf(element) < 0) {
@@ -246,7 +268,8 @@ class Test3d extends Component {
         });
 
         this.idsnpcs = data.room;
-        this.variablerara = com;
+
+        this.setState({ variablerara: com });
         // console.log(this.variablerara);
         this.setState({ compas: data.room, escena: true });
         this.escena = true;
@@ -1050,8 +1073,13 @@ class Test3d extends Component {
       console.log("salir");
       window.location.href = "/Dashboard/Desktop";
     } else if (intersect5.length > 0 && !this.state.votaciones) {
-      this.setState({ votaciones: true });
-      console.log("votacion");
+      console.log("votaron");
+      if (this.state.votaciones === true) {
+        this.socket.emit("votaron", "Off");
+      }
+      if (this.state.votaciones === false) {
+        this.socket.emit("votaron", "On");
+      }
     } else if (intersect6.length > 0) {
       this.setState({
         escuchar: !this.state.escuchar,
@@ -1176,8 +1204,9 @@ class Test3d extends Component {
     }
   }
 
-  funcionvotacion = () => {
-    this.setState({ votaciones: false });
+  funcionvotacion = (date) => {
+    this.socket.emit("voteon", date);
+    // this.socket.emit("votaron", "Off");
   };
   render() {
     let custo = {

@@ -59,12 +59,20 @@ io.on("connection", function (socket) {
   socket.on("chat message", function (msg) {
     //  console.log(msg);
     msg.from = socket.id.slice(8);
-    msg.rooms = socket.rooms;
+    msg.rooms = socket.room;
 
-    io.in(socket.rooms).emit("chat message", msg);
+    io.in(socket.room).emit("chat message", msg);
   });
-  socket.on("votaron", function () {
-    io.in(socket.rooms).emit("onvote", "Ok");
+  socket.on("votaron", function (state) {
+    //  console.log(`sala : ${socket.room}`);
+    io.in(socket.room).emit("onvote", state);
+  });
+  socket.on("praction", function (data) {
+    console.log(` id ${socket.id} dd ${data}`);
+  });
+  socket.on("voteon", function (data) {
+    io.in(socket.room).emit("voteon", { id: socket.id, vote: data });
+    //  console.log(` id ${socket.id} dd ${data}`);
   });
 
   socket.on("disconnect", function () {
