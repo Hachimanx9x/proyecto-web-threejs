@@ -68,6 +68,7 @@ class Test3d extends Component {
 
     this.hablar = this.hablar.bind(this);
     this.state = {
+      practicas: [],
       state: "mute",
       escuchar: false,
       escena: false,
@@ -146,6 +147,8 @@ class Test3d extends Component {
       axios
         .get(`http://localhost:3030/proyecto/reunion/${reunionId[0]}`, options)
         .then((response) => {
+          let tempra = [];
+
           console.log(response.data);
         });
     } catch (error) {
