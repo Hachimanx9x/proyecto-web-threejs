@@ -1,10 +1,76 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
-const contentCard = (props) => {
+
+function ContentCard({ tarjetas, practi, func }) {
+  let state = {
+    jsxpra: null,
+    practica: false,
+    namepra: null,
+    changepra: (pra) => {
+      state.namepra = pra;
+      console.log(state.namepra);
+      state.practica = true;
+    },
+  };
   return (
     <div>
-      <header
+      hola sin
+      <div>
+        {tarjetas.map((ele, i) => (
+          <div key={i}>
+            <div>{ele.nombre}</div>
+            <div>{ele.descripcion}</div>
+            {ele.alfas.map((el) => (
+              <div key={el.id}>
+                {el.nombre} = {el.estado}
+              </div>
+            ))}
+            <button
+              onClick={() => {
+                func(ele.nombre);
+                practi(ele.nombre);
+              }}
+            >
+              {ele.nombre}
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default class CardsVote extends React.Component {
+  constructor(props) {
+    super(props);
+    console.log(props);
+    this.state = {
+      func: props.func,
+      tarjetas: props.tarjetas,
+      ifpratica: false,
+      practica: "",
+    };
+    this.changepra = this.changepra.bind(this);
+  }
+  changepra = (pra) => {
+    console.log("otro");
+    this.setState({ ifpratica: true, practica: pra });
+  };
+  render() {
+    return (
+      <div>
+        <ContentCard
+          tarjetas={this.state.tarjetas}
+          practi={this.changepra}
+          func={this.state.func}
+        />
+      </div>
+    );
+  }
+}
+/**
+ *  <header
         className=" m-0 p-0 text-center bg-success pt-3"
         style={{
           height: "4rem",
@@ -50,7 +116,4 @@ const contentCard = (props) => {
           no
         </button>
       </div>
-    </div>
-  );
-};
-export default contentCard;
+ */

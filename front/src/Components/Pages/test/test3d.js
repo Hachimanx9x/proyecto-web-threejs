@@ -14,6 +14,7 @@ import { Chart } from "react-chartjs-2";
 import io from "socket.io-client";
 import Button3d from "./script/buttons";
 import Rodal from "rodal";
+import Cartarje from "./script/cardvotefi";
 import "rodal/lib/rodal.css";
 import ContentCard from "./script/cardvote";
 import CargarObj from "./script/CargarObjGltf";
@@ -51,6 +52,7 @@ class Test3d extends Component {
     this.setupCanvasDrawing = this.setupCanvasDrawing.bind(this);
     this.makeLabelCanvas = this.makeLabelCanvas.bind(this);
     this.funcionvotacion = this.funcionvotacion.bind(this);
+    this.funcionvotacionpractica = this.funcionvotacionpractica.bind(this);
     this.variablerara = [];
     this.npcs = [];
     this.idsnpcs = [];
@@ -72,6 +74,8 @@ class Test3d extends Component {
       tarjepracticas: [],
       state: "mute",
       escuchar: false,
+      namepra: "",
+      showpra: false,
       escena: false,
       room: `sala1`,
       user: "default",
@@ -150,7 +154,7 @@ class Test3d extends Component {
         .then((response) => {
           let tem = [];
           this.setState({ practicas: [...response.data] });
-
+          console.log(this.state.practicas);
           for (let a = 0; a < this.state.practicas; a++) {
             tem.push({
               name: this.state.practicas[a].nombre,
@@ -166,9 +170,14 @@ class Test3d extends Component {
       reconnectionDelayMax: 10000,
     });
     console.log(reunionId);
-    this.socket.on("voteon", function (data) {
+    this.socket.on("voteon", (data) => {
       console.log(data);
-      console.log(this.variablerara);
+
+      for (let a = 0; a < this.variablerara.length; a++) {
+        if (this.variablerara[a].id === data.id) {
+          this.variablerara[a].vote = data.vote;
+        }
+      }
     });
     this.socket.emit("entra room", `sala${reunionId[1]}`);
     this.socket.on("onvote", (data) => {
@@ -179,6 +188,9 @@ class Test3d extends Component {
       if (data === "Off") {
         this.setState({ votaciones: false });
       }
+    });
+    this.socket.on("praction", (pra) => {
+      this.setState({ votaciones: false, namepra: pra, showpra: true });
     });
     this.socket.on("entrar", (data) => {
       //se reescribe el usaurio actual
@@ -213,8 +225,8 @@ class Test3d extends Component {
           this.numnpcs++;
         });
         this.idsnpcs = data.room;
-
-        this.setState({ variablerara: com });
+        this.variablerara = com;
+        // this.setState({ variablerara: com });
         console.log(this.variablerara);
         this.setState({
           user: data.iserid,
@@ -268,8 +280,8 @@ class Test3d extends Component {
         });
 
         this.idsnpcs = data.room;
-
-        this.setState({ variablerara: com });
+        this.variablerara = com;
+        //   this.setState({ variablerara: com });
         // console.log(this.variablerara);
         this.setState({ compas: data.room, escena: true });
         this.escena = true;
@@ -1019,7 +1031,11 @@ class Test3d extends Component {
       this.renderer.render(this.scene, this.camera);
     }
   }
-
+  /** ___           _                                                _          
+     |_ _|  _ __   | |_    ___   _ __    ___   ___    __ _   _ __   | |_    ___ 
+      | |  | '_ \  | __|  / _ \ | '__|  / _ \ / __|  / _` | | '_ \  | __|  / _ \
+      | |  | | | | | |_  |  __/ | |    |  __/ \__ \ | (_| | | | | | | |_  |  __/
+     |___| |_| |_|  \__|  \___| |_|     \___| |___/  \__,_| |_| |_|  \__|  \___| */
   mouseEventsdown = (event) => {
     /*    this.setState({
           x: event.clientX,
@@ -1203,10 +1219,12 @@ class Test3d extends Component {
       datos.buffer = [];
     }
   }
-
+  funcionvotacionpractica = (pra) => {
+    console.log(`emitiste para que todos votaran la practica ${pra}`);
+    this.socket.emit("praction", pra);
+  };
   funcionvotacion = (date) => {
     this.socket.emit("voteon", date);
-    // this.socket.emit("votaron", "Off");
   };
   render() {
     let custo = {
@@ -1214,27 +1232,63 @@ class Test3d extends Component {
       borderTopLeftRadius: "0.5rem",
       borderTopRightRadius: "0.5rem",
     };
-    return (
-      <div className="test3d">
-        <Rodal
-          width={300}
-          height={420}
-          animation={"fade"}
-          visible={this.state.votaciones}
-          onClose={() => this.setState({ votaciones: false })}
-          customStyles={custo}
-        >
-          <ContentCard obj={this.state.practica} voto={this.funcionvotacion} />
-        </Rodal>
-        <div
-          style={{ width: "100vw", height: "50.1vw" }}
-          id="boardCanvas"
-          ref={(mount) => {
-            this.mount = mount;
-          }}
-        />
-      </div>
-    );
+    let content;
+    if (this.state.practicas.length <= 0) {
+      content = <div>Cargando...</div>;
+    }
+    if (this.state.practicas.length > 0) {
+      content = (
+        <div className="test3d">
+          <Rodal
+            width={60}
+            height={35}
+            animation={"fade"}
+            measure="rem"
+            visible={this.state.votaciones}
+            onClose={() => {
+              this.socket.emit("votaron", "Off");
+            }}
+            customStyles={custo}
+            closeOnEsc={false}
+            closeMaskOnClick={false}
+            showMask={true}
+          >
+            <ContentCard
+              tarjetas={this.state.practicas}
+              func={this.funcionvotacionpractica}
+            />
+          </Rodal>
+          <Rodal
+            width={60}
+            height={35}
+            animation={"fade"}
+            measure="rem"
+            visible={this.state.showpra}
+            onClose={() => {
+              this.socket.emit("votaron", "Off");
+            }}
+            customStyles={custo}
+            closeOnEsc={false}
+            closeMaskOnClick={false}
+            showMask={true}
+          >
+            <Cartarje
+              nmapra={this.state.namepra}
+              tarjetas={this.state.practicas}
+              func={this.funcionvotacion}
+            />
+          </Rodal>
+          <div
+            style={{ width: "100vw", height: "50.1vw" }}
+            id="boardCanvas"
+            ref={(mount) => {
+              this.mount = mount;
+            }}
+          />
+        </div>
+      );
+    }
+    return <div>{content}</div>;
   }
 }
 

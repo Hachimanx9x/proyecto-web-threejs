@@ -65,6 +65,10 @@ peticiones.getFilesinglestring = async (bucket, namefile, res) => {
 };
 
 peticiones.getFilesingle = async (bucket, namefile, res) => {
+  sinfunfileretry(bucket, namefile, res);
+};
+
+async function sinfunfileretry(bucket, namefile, res) {
   await minio.fGetObject(
     bucket,
     namefile,
@@ -74,8 +78,24 @@ peticiones.getFilesingle = async (bucket, namefile, res) => {
         console.log(
           chalk.bgRed("___") + chalk.red(` getFilesinglebucket o archivo`)
         );
-        // console.log(e);
-        return res.json(e);
+        console.log(chalk.bgRed("==>") + chalk.red(`Limpiando espacio`));
+
+        let files = fs.readdirSync(path.join(__dirname, `../routes/tmp`));
+        console.log(files);
+        for (let a = 0; a < files.length; a++) {
+          try {
+            fs.unlinkSync(path.join(__dirname, `../routes/tmp/${files[a]}`)); //se borra el archivo temporal
+            console.log(chalk.bgRed("==>") + chalk.red(`${files[a]} borrado`));
+          } catch (err) {
+            console.log(
+              chalk.bgRed("==>") +
+                chalk.red(`Error en el borrado del archivo ${files[a]}`)
+            );
+            console.log(err);
+            //  console.error('Something wrong happened removing the file', err)//No hay tal archivo o cualquier otro tipo de error
+          }
+        }
+        sinfunfileretry(bucket, namefile, res);
       }
       //console.log('done')
       const r = fs.createReadStream(
@@ -85,7 +105,7 @@ peticiones.getFilesingle = async (bucket, namefile, res) => {
       sinfile(r, ps, res, namefile);
     }
   );
-};
+}
 
 function sinfile(r, ps, res, namefile) {
   stream.pipeline(

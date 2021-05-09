@@ -68,7 +68,8 @@ io.on("connection", function (socket) {
     io.in(socket.room).emit("onvote", state);
   });
   socket.on("praction", function (data) {
-    console.log(` id ${socket.id} dd ${data}`);
+    console.log(`la practica ${data} esta en discucion `);
+    io.in(socket.room).emit("praction", data);
   });
   socket.on("voteon", function (data) {
     io.in(socket.room).emit("voteon", { id: socket.id, vote: data });
