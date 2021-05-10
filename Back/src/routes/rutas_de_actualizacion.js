@@ -1845,6 +1845,11 @@ function proToken(req, res, next) {
     req.token = portadorToken;
     next();
   } else {
+    console.log("entrada rechasada");
+    console.log("header");
+    console.log(req.headers);
+    console.log("body");
+    console.log(req.body);
     res.sendStatus(403);
   }
 }

@@ -15,6 +15,7 @@ import io from "socket.io-client";
 import Button3d from "./script/buttons";
 import Rodal from "rodal";
 import Cartarje from "./script/cardvotefi";
+import Navfinavote from "./script/navresult";
 import "rodal/lib/rodal.css";
 import ContentCard from "./script/cardvote";
 import CargarObj from "./script/CargarObjGltf";
@@ -53,6 +54,7 @@ class Test3d extends Component {
     this.makeLabelCanvas = this.makeLabelCanvas.bind(this);
     this.funcionvotacion = this.funcionvotacion.bind(this);
     this.funcionvotacionpractica = this.funcionvotacionpractica.bind(this);
+    this.actualizaralfas = this.actualizaralfas.bind(this);
     this.variablerara = [];
     this.npcs = [];
     this.idsnpcs = [];
@@ -70,11 +72,16 @@ class Test3d extends Component {
 
     this.hablar = this.hablar.bind(this);
     this.state = {
+      nombre: "",
+      imgen: "",
       practicas: [],
       tarjepracticas: [],
+      aflasactu: [],
       state: "mute",
       escuchar: false,
       namepra: "",
+      myvote: null,
+      final: false,
       showpra: false,
       escena: false,
       room: `sala1`,
@@ -83,6 +90,11 @@ class Test3d extends Component {
       player: null,
       reunion: 1,
       votaciones: false,
+      nadatpra: {
+        alfa: "default",
+        estado: "default",
+        descripcion: "default",
+      },
       practica: {
         nombre: "practica 1 ",
         estadoActual: "iniciado",
@@ -144,9 +156,19 @@ class Test3d extends Component {
     // console.log(this.props.match.params);
     const reunionId = this.props.match.params.id.split("000");
 
-    console.log(this.props.match.params);
+    console.log(this.props);
     this.setState({ room: `sala${reunionId[1]}` });
     try {
+      axios
+        .get(`http://localhost:3030/perfil`, {
+          headers: { authorization: `llave ${tokensito}` },
+        })
+        .then((response) => {
+          this.setState({
+            nombre: response.data.nombre,
+            imgen: response.data.foto,
+          });
+        });
       axios
         .get(`http://localhost:3030/proyecto/reunion/${reunionId[0]}`, {
           headers: { authorization: `llave ${tokensito}` },
@@ -172,14 +194,25 @@ class Test3d extends Component {
     console.log(reunionId);
     this.socket.on("voteon", (data) => {
       console.log(data);
+      if (this.state.user === data.id) {
+        this.setState({ myvote: data.vote, showpra: false, final: true });
 
-      for (let a = 0; a < this.variablerara.length; a++) {
-        if (this.variablerara[a].id === data.id) {
-          this.variablerara[a].vote = data.vote;
+        console.log(`my voto es ${data.vote}`);
+      }
+      if (this.state.user !== data.id) {
+        for (let a = 0; a < this.variablerara.length; a++) {
+          if (this.variablerara[a].id === data.id) {
+            this.variablerara[a].vote = data.vote;
+          }
         }
+        console.log(this.variablerara);
       }
     });
-    this.socket.emit("entra room", `sala${reunionId[1]}`);
+    this.socket.emit("entra room", {
+      room: `sala${reunionId[1]},`,
+      nombre: this.state.nombre,
+      img: this.state.imgen,
+    });
     this.socket.on("onvote", (data) => {
       console.log(`Entro ${data}`);
       if (data === "On") {
@@ -190,26 +223,43 @@ class Test3d extends Component {
       }
     });
     this.socket.on("praction", (pra) => {
-      this.setState({ votaciones: false, namepra: pra, showpra: true });
+      this.setState({
+        votaciones: false,
+        namepra: pra,
+        showpra: true,
+        final: false,
+      });
     });
     this.socket.on("entrar", (data) => {
-      //se reescribe el usaurio actual
+      console.log("default cambiado");
       if (this.state.user === "default") {
         let com = [];
 
         console.log(data);
-        data.room.splice(data.room.indexOf(data.iserid), 1);
-        console.log(`id:${data.iserid}  rom: ${data.room}`);
-        data.room.forEach((element) => {
-          com.push({ id: element, buffer: [], vote: null });
 
+        for (let a = 0; a < data.room.length; a++) {
+          if (data.room[a].id == data.iserid) {
+            data.room.splice(a, 1);
+          }
+        }
+
+        data.room.forEach((element) => {
+          console.log(element);
+
+          com.push({
+            id: element.id,
+            buffer: [],
+            vote: null,
+            nombre: "",
+            img: "",
+          });
           let tempobj = new THREE.Object3D().add(
             new THREE.Mesh(
               new THREE.BoxGeometry(0.2, 0.2, 0.2),
               new THREE.MeshBasicMaterial({ color: 0x00ff00 })
             )
           );
-          tempobj.name = element;
+          tempobj.name = element.id;
 
           if (this.numnpcs >= 7) {
             this.numnpcs = 0;
@@ -222,6 +272,7 @@ class Test3d extends Component {
           this.scene.add(tempobj);
 
           this.npcs.push(tempobj);
+
           this.numnpcs++;
         });
         this.idsnpcs = data.room;
@@ -237,31 +288,41 @@ class Test3d extends Component {
       } else {
         //en caso de reescribi el usaurio los siguientes seran los demas compañeros
         let com = [];
-
-        data.room.splice(data.room.indexOf(this.state.user), 1);
+        console.log("nuevo usuario");
+        for (let a = 0; a < data.room.length; a++) {
+          if (data.room[a].id == data.iserid) {
+            data.room.splice(a, 1);
+          }
+        }
         console.log(`id:${this.state.user}  rom: ${data.room}`);
 
         data.room.forEach((element) => {
-          com.push({ id: element, buffer: [], vote: null });
+          com.push({
+            id: element.id,
+            buffer: [],
+            vote: null,
+            nombre: "",
+            img: "",
+          });
           let si = false;
           if (this.variablerara.length > 0) {
-            if (this.idsnpcs.indexOf(element) < 0) {
+            if (this.idsnpcs.indexOf(element.id) < 0) {
               si = !si;
-              console.log(` diferente ${element}`);
+              console.log(` diferente ${element.id}`);
             }
           } else {
             si = !si;
           }
 
           if (si) {
-            console.log(`objeto ${element}`);
+            console.log(`objeto ${element.id}`);
             let tempobj = new THREE.Object3D().add(
               new THREE.Mesh(
                 new THREE.BoxGeometry(0.2, 0.2, 0.2),
                 new THREE.MeshBasicMaterial({ color: 0x00ff00 })
               )
             );
-            tempobj.name = element;
+            tempobj.name = element.id;
 
             if (this.numnpcs >= 7) {
               this.numnpcs = 0;
@@ -294,8 +355,10 @@ class Test3d extends Component {
       }
     });
     this.socket.on("chao", (data) => {
+      console.log("Chao");
       for (let a = 0; a < this.variablerara.length; a++) {
         if (this.variablerara[a].id === data) {
+          console.log(this.variablerara[a].id);
           this.variablerara.splice(a, 1);
         }
       }
@@ -305,7 +368,7 @@ class Test3d extends Component {
           this.npcs.splice(a, 1);
         }
       }
-      console.log("Chao");
+
       console.log(this.variablerara);
     });
     let micStream = new MicrophoneStream({
@@ -1221,10 +1284,52 @@ class Test3d extends Component {
   }
   funcionvotacionpractica = (pra) => {
     console.log(`emitiste para que todos votaran la practica ${pra}`);
+    //this.state.practicas
+    //
     this.socket.emit("praction", pra);
+    this.state.practicas.map((ele) => {
+      if (ele.nombre === pra) {
+        console.log(ele);
+        this.setState({
+          nadatpra: {
+            alfa: pra,
+            estado: ele.alfas[0].estado,
+            descripcion: ele.descripcion,
+          },
+        });
+        let temal = [];
+        ele.alfas.forEach((alpha) => {
+          temal.push(alpha.id);
+        });
+        this.setState({ aflasactu: temal });
+      }
+    });
   };
   funcionvotacion = (date) => {
     this.socket.emit("voteon", date);
+  };
+
+  actualizaralfas = () => {
+    try {
+      const token = localStorage.getItem("login");
+      const obj = JSON.parse(token);
+      const tokensito = obj.token;
+      axios
+        .put(
+          `http://localhost:3030/actualizar/alfa`,
+          { alfas: this.state.aflasactu },
+          {
+            headers: { authorization: `llave ${tokensito}` },
+          }
+        )
+        .then((response) => {
+          console.log(response.data);
+          alert(response.data);
+          this.setState({ final: false });
+        });
+    } catch (error) {
+      console.error(error);
+    }
   };
   render() {
     let custo = {
@@ -1233,7 +1338,7 @@ class Test3d extends Component {
       borderTopRightRadius: "0.5rem",
     };
     let content;
-    if (this.state.practicas.length <= 0) {
+    if (this.state.practicas.length <= 0 && this.state.nombre !== "") {
       content = <div>Cargando...</div>;
     }
     if (this.state.practicas.length > 0) {
@@ -1276,6 +1381,38 @@ class Test3d extends Component {
               nmapra={this.state.namepra}
               tarjetas={this.state.practicas}
               func={this.funcionvotacion}
+            />
+          </Rodal>
+          <Rodal
+            width={60}
+            height={35}
+            animation={"fade"}
+            measure="rem"
+            visible={this.state.final}
+            onClose={() => {
+              this.socket.emit("votaron", "Off");
+            }}
+            customStyles={custo}
+            closeOnEsc={false}
+            closeMaskOnClick={false}
+            showMask={true}
+          >
+            <Navfinavote
+              alfa={this.state.nadatpra.alfa}
+              estado={this.state.nadatpra.estado}
+              descripcion={this.state.nadatpra.descripcion}
+              compas={this.variablerara}
+              mi={{
+                nombre: this.state.nombre,
+                img: this.state.imgen,
+                vote: this.state.vote,
+              }}
+              funcdiscu={() => {
+                this.socket.emit("votaron", "Off");
+              }}
+              nmapra={this.state.namepra}
+              funcvote={this.funcionvotacionpractica}
+              funcactualizar={this.actualizaralfas}
             />
           </Rodal>
           <div
