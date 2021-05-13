@@ -78,7 +78,7 @@ export default function ActivitiesCEM(props) {
           <p>{nameProject}</p>
         </div>
         <div className="row">
-          <div className="col-xs-12 bg-white rounded z-depth-1 p-0 p-sm-4 mb-2 mr-0 ml-0 mr-sm-4 ml-sm-4 o-activities-col">
+          <div className="col-xs-12 bg-white rounded z-depth-1 p-0 p-sm-4 mb-2 mr-0 ml-0 mr-sm-4 ml-sm-4 o-activities-col o-scroll-y">
             <p className="m-2">Actividades</p>
             {activities.map((activity, i) => (
               <CardActivities
@@ -89,7 +89,7 @@ export default function ActivitiesCEM(props) {
               />
             ))}
           </div>
-          <div className="col o-deliverables-col bg-white rounded z-depth-1 p-0 p-sm-1">
+          <div className="col o-deliverables-col o-scroll-y bg-white rounded z-depth-1 p-0 p-sm-1">
             <div>
               <p className="m-2">Entregables</p>
               <div className="d-flex flex-wrap justify-content-center">

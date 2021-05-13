@@ -1,11 +1,9 @@
 .o-activities-col {
   height: calc(100vh - 260px);
-  overflow-y: auto;
 }
 .o-deliverables-col {
   flex-direction: column;
   height: calc(100vh - 260px);
-  overflow-y: auto;
   text-align: start;
   justify-content: center;
   min-width: 17rem;

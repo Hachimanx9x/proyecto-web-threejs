@@ -890,7 +890,7 @@ export default function ViewProfile(props) {
           </div>
           <div className="col-xs-12 o-col col-sm-8">
             <p>Herramientas Seleccionadas</p>
-            <div className="rounded p-2 pt-3 d-flex o-skill-list-cnt ">
+            <div className="rounded p-2 pt-3 d-flex o-skill-list-cnt o-scroll-x">
               {skills.map((skill) => (
                 <div key={skill.id} className="o-card-select-skill rounded">
                   <span
