@@ -1,18 +1,34 @@
 import React from "react";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
 export default function Tarjetas({ nmapra, tarjetas, func }) {
-  console.log(func);
+  let style = { background: "#D0A114", color: "#ffff" };
+
+  console.log(nmapra);
+  if (nmapra == "Sistema Multimedia mínimo viable") {
+    style = { background: "#009F41", color: "#ffff" };
+  }
   return (
-    <div>
-      <div>{nmapra}</div>
-      <div>
+    <div className="d-flex  m-0 p-0 h-100" style={{ boxSizing: "border-box" }}>
+      <div
+        className="text-center pt-4 d-flex flex-column justify-content-around align-content-center"
+        style={{
+          ...style,
+
+          height: "100%",
+          boxSizing: "border-box",
+        }}
+      >
+        <h3>{nmapra}</h3>
         {tarjetas.map((practicas, ipra) => {
           let alfas = [];
           if (practicas.nombre === nmapra) {
             practicas.alfas.map((alfa, ialfa) => {
               alfas.push(
                 <div key={ialfa}>
-                  <h4>{alfa.nombre}</h4>
-                  {alfa.estado}
+                  <h3>{alfa.nombre}</h3>
+                  Estado : {alfa.estado}
                 </div>
               );
             });
@@ -20,41 +36,101 @@ export default function Tarjetas({ nmapra, tarjetas, func }) {
           return alfas;
         })}
       </div>
-      <div>
-        {tarjetas.map((practicas, ipra) => {
-          let tarjetas = [];
-          if (practicas.nombre === nmapra) {
-            practicas.alfas.map((alfa, ialfa) => {
-              alfa.tarjeta.map((tar, idta) => {
-                tarjetas.push(
-                  <div key={idta}>
-                    <h4>{tar.nombre}</h4>
-                    {tar.descripcion.map((des, ids) => (
-                      <p key={ids}>{des}</p>
+      <div className=" d-flex flex-column justify-content-end h-100 ">
+        <div className="d-flex justify-content-around ">
+          {tarjetas.map((practicas, ipra) => {
+            let tarjetasid = [];
+            if (practicas.nombre === nmapra) {
+              practicas.alfas[0].tarjeta.map((tar, idta) => {
+                tarjetasid.push(
+                  <div
+                    className="card p-2 m-auto"
+                    style={{
+                      width: "40%",
+                    }}
+                    key={"d" + idta}
+                  >
+                    <h4
+                      className="rounded-pill"
+                      style={
+                        nmapra === "Sistema Multimedia mínimo viable"
+                          ? {
+                              background: "#009F41",
+                              color: "#ffff",
+                              textAlign: "center",
+                            }
+                          : {
+                              background: "#D0A114",
+                              color: "#ffff",
+                              textAlign: "center",
+                            }
+                      }
+                    >
+                      {tar.nombre}
+                    </h4>
+                    {tar.descripcion.slice(0, 4).map((des, ids) => (
+                      <p key={ids}>
+                        {" "}
+                        <FontAwesomeIcon
+                          style={
+                            nmapra === "Sistema Multimedia mínimo viable"
+                              ? {
+                                  border: "3px solid #009F41",
+                                  color: "#009F41",
+                                  width: "16px",
+                                  height: "16px",
+                                }
+                              : {
+                                  border: "3px solid #D0A114",
+                                  color: "#D0A114",
+                                  width: "16px",
+                                  height: "16px",
+                                }
+                          }
+                          icon={faCheck}
+                          className=" rounded-circle"
+                        />
+                        {des}
+                      </p>
                     ))}
                   </div>
                 );
               });
-            });
-          }
-          return tarjetas;
-        })}
-      </div>
-      <div>
-        <button
-          onClick={() => {
-            func(true);
-          }}
-        >
-          si
-        </button>
-        <button
-          onClick={() => {
-            func(false);
-          }}
-        >
-          No
-        </button>
+            }
+
+            return tarjetasid;
+          })}
+        </div>
+        <div className="d-flex justify-content-end mt-3 pb-2">
+          <button
+            style={{
+              backgroundColor: "#009F41",
+              width: "48px",
+              height: "50px",
+              border: "none",
+            }}
+            className="mr-2 btn font-weight-bold text-white rounded"
+            onClick={() => {
+              func(true);
+            }}
+          >
+            si
+          </button>
+          <button
+            style={{
+              backgroundColor: "#AB000F",
+              width: "48px",
+              height: "50px",
+              border: "none",
+            }}
+            className="mr-2 btn font-weight-bold text-white rounded"
+            onClick={() => {
+              func(false);
+            }}
+          >
+            No
+          </button>
+        </div>
       </div>
     </div>
   );

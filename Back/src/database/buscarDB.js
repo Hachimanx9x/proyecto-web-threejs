@@ -320,7 +320,10 @@ funcionesDB.buscarProyecto = async (idp, iduse) => {
         await mariaDB.query(Query.buscarProyecto(idp), (err, rows) => {
           if (!err) {
             funcionesDB.buscareventoscalendario(iduse).then((cale) => {
-              res({ proyectos: ordeninfoproyect(rows), calendario: cale });
+              res({
+                proyectos: ordeninfoproyect(rows),
+                calendario: calendariosoloproyecto(cale, idp),
+              });
             });
           } else {
             rej({ err });
@@ -2109,62 +2112,57 @@ function rearmarProyectosescri(array) {
   }*/
   for (var i = 0; i < proyectos.length; i++) {
     for (var j = 0; j < proyectos[i].practicas.length; j++) {
+      let temp = 0,
+        por = 0;
       for (var k = 0; k < array.length; k++) {
-        if (proyectos[i].practicas[j].practica == array[k].practicanombre) {
-          let temp = 0,
-            temp1 = 0,
-            por;
-          if (array[k].practicanombre == "Sistema Multimedia mínimo viable") {
-            if (array[k].alfanombre == "Valor del sistema multimedia") {
-              if (array[k].alfaestado == "iniciado") {
-                temp = 0;
+        if (proyectos[i].id === array[k].id) {
+          if (proyectos[i].practicas[j].practica == array[k].practicanombre) {
+            if (array[k].practicanombre == "Sistema Multimedia mínimo viable") {
+              if (array[k].alfanombre == "Valor del sistema multimedia") {
+                if (array[k].alfaestado == "iniciado") {
+                  temp = 1;
+                }
+                if (array[k].alfaestado == "Alcanzable") {
+                  temp = 25;
+                }
+                if (array[k].alfaestado == "Diferenciado") {
+                  temp = 50;
+                }
+                if (array[k].alfaestado == "Visionado") {
+                  temp = 75;
+                }
+                if (array[k].alfaestado == "Definido") {
+                  temp = 100;
+                }
               }
-              if (array[k].alfaestado == "Alcanzable") {
-                temp = 25;
-              }
-              if (array[k].alfaestado == "Diferenciado") {
-                temp = 50;
-              }
-              if (array[k].alfaestado == "Visionado") {
-                temp = 75;
-              }
-              if (array[k].alfaestado == "Definido") {
-                temp = 100;
+            }
+            if (
+              array[k].practicanombre ==
+              "Concepción de la experiencia multimedia"
+            ) {
+              if (array[k].alfanombre == "Diseño responsable") {
+                if (array[k].alfaestado == "iniciado") {
+                  temp = 1;
+                }
+                if (array[k].alfaestado == "Identificado") {
+                  temp = 25;
+                }
+                if (array[k].alfaestado == "Comprendido") {
+                  temp = 50;
+                }
+                if (array[k].alfaestado == "Acordado") {
+                  temp = 75;
+                }
+                if (array[k].alfaestado == "Concebido") {
+                  temp = 100;
+                }
               }
             }
           }
-          if (
-            array[k].practicanombre == "Concepción de la experiencia multimedia"
-          ) {
-            if (array[k].alfanombre == "Diseño responsable") {
-              if (array[k].alfaestado == "iniciado") {
-                temp1 = 0;
-              }
-              if (array[k].alfaestado == "Identificado") {
-                temp1 = 25;
-              }
-              if (array[k].alfaestado == "Comprendido") {
-                temp1 = 50;
-              }
-              if (array[k].alfaestado == "Acordado") {
-                temp1 = 75;
-              }
-              if (array[k].alfaestado == "Concebido") {
-                temp1 = 100;
-              }
-            }
-          }
-          if (temp == 0) {
-            por = temp1;
-          } else if (temp1 == 0) {
-            por = temp;
-          } else {
-            por = parseInt(temp / temp1, 10);
-          }
-
-          proyectos[i].practicas[j].porcentaje = por;
         }
       }
+
+      proyectos[i].practicas[j].porcentaje = temp;
     }
   }
 
@@ -2959,7 +2957,9 @@ function ordeninfoproyect(rows) {
   practicas = Array.from(set3).map(JSON.parse);
   let metifodo = true;
   for (let c = 0; c < practicas.length; c++) {
+    let tempportasa = 0;
     for (let b = 0; b < objdef.practicas.length; b++) {
+      //  console.log(objdef.practicas[b].alfa);
       if (practicas[c].nombre === objdef.practicas[b].nombre) {
         practicas[c].alfas.push(objdef.practicas[b].alfa);
       }
@@ -2976,11 +2976,50 @@ function ordeninfoproyect(rows) {
           }
         }
       }
+      if (practicas[c].nombre === "Sistema Multimedia mínimo viable") {
+        if (objdef.practicas[b].alfa.nombre == "Valor del SM") {
+          if (objdef.practicas[b].alfa.estado == "iniciado") {
+            tempportasa = 1;
+          }
+          if (objdef.practicas[b].alfa.estado == "Alcanzable") {
+            tempportasa = 25;
+          }
+          if (objdef.practicas[b].alfa.estado == "Diferenciado") {
+            tempportasa = 50;
+          }
+          if (objdef.practicas[b].alfa.estado == "Visionado") {
+            tempportasa = 75;
+          }
+          if (objdef.practicas[b].alfa.estado == "Definido") {
+            tempportasa = 100;
+          }
+        }
+      }
+      if (practicas[c].nombre === "Concepción de la experiencia multimedia") {
+        if (objdef.practicas[b].alfa.nombre == "Diseño responsable") {
+          if (objdef.practicas[b].alfa.estado == "iniciado") {
+            tempportasa = 1;
+          }
+          if (objdef.practicas[b].alfa.estado == "Identificado") {
+            tempportasa = 25;
+          }
+          if (objdef.practicas[b].alfa.estado == "Comprendido") {
+            tempportasa = 50;
+          }
+          if (objdef.practicas[b].alfa.estado == "Acordado") {
+            tempportasa = 75;
+          }
+          if (objdef.practicas[b].alfa.estado == "Concebido") {
+            tempportasa = 100;
+          }
+        }
+      }
+      let set4 = new Set(practicas[c].alfas.map(JSON.stringify));
+      practicas[c].alfas = Array.from(set4).map(JSON.parse);
     }
-    let set4 = new Set(practicas[c].alfas.map(JSON.stringify));
-    practicas[c].alfas = Array.from(set4).map(JSON.parse);
+    practicas[c].tasa = tempportasa;
   }
-
+  /*
   for (let c = 0; c < practicas.length; c++) {
     let tasatem = 0;
     let acti = 0;
@@ -3003,7 +3042,7 @@ function ordeninfoproyect(rows) {
     }
     practicas[c].tasa = (tasatem / acti) * 100;
   }
-
+*/
   objdef.practicas = practicas;
 
   return objdef;

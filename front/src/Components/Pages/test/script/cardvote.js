@@ -2,7 +2,7 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
-function ContentCard({ tarjetas, practi, func }) {
+export default function ContentCard({ tarjetas, func }) {
   let state = {
     jsxpra: null,
     practica: false,
@@ -14,61 +14,46 @@ function ContentCard({ tarjetas, practi, func }) {
     },
   };
   return (
-    <div>
-      hola sin
-      <div>
-        {tarjetas.map((ele, i) => (
-          <div key={i}>
-            <div>{ele.nombre}</div>
-            <div>{ele.descripcion}</div>
+    <div className="d-flex justify-content-around align-items-center h-100">
+      {tarjetas.map((ele, i) => (
+        <div
+          key={i}
+          className="card text-white text-center pt-5 pb-2"
+          style={
+            ele.nombre === "Concepción de la experiencia multimedia"
+              ? { backgroundColor: "#D0A114", width: "350px", height: "400px" }
+              : { backgroundColor: "#009F41", width: "350px", height: "400px" }
+          }
+        >
+          <h4 className="font-weight-bold">{ele.nombre}</h4>
+          <div style={{ height: "75%" }}>
+            <p className="">{ele.descripcion}</p>
             {ele.alfas.map((el) => (
               <div key={el.id}>
                 {el.nombre} = {el.estado}
               </div>
             ))}
-            <button
-              onClick={() => {
-                func(ele.nombre);
-                practi(ele.nombre);
-              }}
-            >
-              {ele.nombre}
-            </button>
           </div>
-        ))}
-      </div>
+
+          <button
+            className="w-75 bg-white rounded btn m-auto text-capitalize font-weight-bold"
+            style={
+              ele.nombre === "Concepción de la experiencia multimedia"
+                ? { color: "#D0A114" }
+                : { color: "#009F41" }
+            }
+            onClick={() => {
+              func(ele.nombre);
+            }}
+          >
+            Elegir
+          </button>
+        </div>
+      ))}
     </div>
   );
 }
 
-export default class CardsVote extends React.Component {
-  constructor(props) {
-    super(props);
-    console.log(props);
-    this.state = {
-      func: props.func,
-      tarjetas: props.tarjetas,
-      ifpratica: false,
-      practica: "",
-    };
-    this.changepra = this.changepra.bind(this);
-  }
-  changepra = (pra) => {
-    console.log("otro");
-    this.setState({ ifpratica: true, practica: pra });
-  };
-  render() {
-    return (
-      <div>
-        <ContentCard
-          tarjetas={this.state.tarjetas}
-          practi={this.changepra}
-          func={this.state.func}
-        />
-      </div>
-    );
-  }
-}
 /**
  *  <header
         className=" m-0 p-0 text-center bg-success pt-3"

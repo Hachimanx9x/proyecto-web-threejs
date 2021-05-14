@@ -111,7 +111,7 @@ export default function Meetings(props) {
               <div className="d-flex justify-content-center">
                 <a
                   className="btn bg-primary rounded-pill text-white text-capitalize m-auto z-depth-0 pl-4 pt-2 pb-2 pr-4"
-                  href={`/Room/${project + "000" + props.match.params.id}`}
+                  href={`/Room/${project + "ABC" + props.match.params.id}`}
                 >
                   Ingresar
                 </a>

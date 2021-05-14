@@ -11,19 +11,25 @@ const Nav = ({
   funcvote,
   funcactualizar,
 }) => {
+  //console.log(compas);
   let amarillo = "#D0A114";
-  let style;
-  let temp;
+  let style = { background: "#D0A114", color: "#ffff" };
+  let temp = { border: "1px solid #D0A114", color: "#D0A114" };
 
   if (alfa == "Sistema Multimedia mínimo viable") {
     style = { background: "#009F41", color: "#ffff" };
     temp = { border: "1px solid #009F41", color: "#009F41" };
   }
   return (
-    <div className="d-flex  m-0 p-0">
+    <div className="d-flex  m-0 p-0  h-100">
       <div
         className="text-center pt-4"
-        style={{ ...style, width: "300px", height: "600px" }}
+        style={{
+          ...style,
+          width: "300px",
+          height: "100%",
+          boxSizing: "border-box",
+        }}
       >
         <h1 className="mt-5 ">{alfa}</h1>
         <h3>Estado : {estado}</h3>
@@ -33,7 +39,7 @@ const Nav = ({
         <div className="d-flex flex-wrap justify-content-between p-2">
           <Card key={`0i`} nombre={mi.nombre} img={mi.img} voto={mi.vote} />
           {compas.map((ele, i) => (
-            <Card key={i} nombre={ele.name} img={ele.img} voto={ele.vote} />
+            <Card key={i} nombre={ele.nombre} img={ele.img} voto={ele.vote} />
           ))}
         </div>
         <div className="d-flex justify-content-between">

@@ -19,10 +19,10 @@ let posiciones = [
 //al iniciar una conexion en hilo de envio de datos
 io.on("connection", function (socket) {
   console.log(`usuario ${socket.id}`);
-  socket.on("entra room", ({ room, nombre, img }) => {
-    console.log(`Una nuevo usuario entro a la sala ${room}`);
-    socket.name = nombre;
-    socket.img = img;
+  socket.on("entra room", ({ room, data }) => {
+    console.log(`Una nuevo usuario entro a la sala ${data.nombre}`);
+    socket.name = data.nombre;
+    socket.img = data.img;
     //se le asigna el objeto de la sala (datos del usuario)
     socket.room = room;
     //se define el hilo de conexion con esa sala
@@ -82,7 +82,7 @@ io.on("connection", function (socket) {
 
   socket.on("disconnect", function () {
     io.in(socket.room).emit("chao", socket.id);
-    console.log(`el usuario ${socket.id} en la sala ${socket.room}`);
+    console.log(`el usuario ${socket.name} en la sala ${socket.room}`);
   });
 });
 
@@ -94,7 +94,7 @@ function getuserroom(room) {
   let list = [];
   for (const clientId of rooms) {
     const clientSocket = io.sockets.sockets.get(clientId);
-
+    //console.log(clientSocket);
     list.push({
       id: clientSocket.id,
       nombre: clientSocket.name,
