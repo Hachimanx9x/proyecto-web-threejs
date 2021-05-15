@@ -86,7 +86,7 @@ class ProjectView extends Component {
           isLeader = true;
         }
         for (const j of project.practicas) {
-          if (j.practica === "Sistema Multimedia mínimo viable") {
+          if (j.nombre === "Sistema Multimedia mínimo viable") {
             practices.push({
               name: j.nombre,
               description: j.descripcion,
