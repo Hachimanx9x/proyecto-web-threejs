@@ -1352,7 +1352,8 @@ class Test3d extends Component {
         )
         .then((response) => {
           console.log(response.data);
-          alert(response.data);
+          alert("Alfa actualizada");
+          this.socket.emit("votaron", "Off");
           this.setState({ final: false });
         });
     } catch (error) {
