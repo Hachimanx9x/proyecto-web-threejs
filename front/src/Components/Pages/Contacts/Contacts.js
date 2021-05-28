@@ -229,7 +229,7 @@ class Contacts extends Component {
     if (contacts.length === 0) {
       setTimeout(() => {
         this.setState({
-          show: [...contacts],
+          show: [],
         });
       }, 1000);
     }
@@ -248,7 +248,7 @@ class Contacts extends Component {
     if (talents.length === 0) {
       setTimeout(() => {
         this.setState({
-          show: [...contacts],
+          show: [],
         });
       }, 1000);
     }

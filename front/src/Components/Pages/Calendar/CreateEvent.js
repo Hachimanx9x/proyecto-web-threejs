@@ -21,10 +21,6 @@ require("moment/locale/es.js");
 class CreateEvents extends Component {
   constructor(props) {
     super(props);
-    this.handleValidation = this.handleValidation.bind(this);
-    this.handleResize = this.handleResize.bind(this);
-    this.handleInput = this.handleInput.bind(this);
-    this.createEvent = this.createEvent.bind(this);
 
     this.state = {
       selectedDate: new Date(localStorage.getItem("date")),
@@ -395,11 +391,15 @@ class CreateEvents extends Component {
                         }
                         type="time"
                         name="selected_date"
+                        id="event-start"
                         onChange={(e) => {
                           this.handleInput("eventStart", e);
                         }}
                       />
-                      <span className="o-open-clock-button">
+                      <label
+                        htmlFor="event-start"
+                        className="o-open-clock-button"
+                      >
                         <button>
                           <FontAwesomeIcon
                             icon={faClock}
@@ -415,7 +415,7 @@ class CreateEvents extends Component {
                             }
                           />
                         </button>
-                      </span>
+                      </label>
                     </div>
                   </div>
                   <span
@@ -443,11 +443,15 @@ class CreateEvents extends Component {
                         }
                         type="time"
                         name="selected_date"
+                        id="event-end"
                         onChange={(e) => {
                           this.handleInput("eventEnd", e);
                         }}
                       />
-                      <span className="o-open-clock-button">
+                      <label
+                        htmlFor="event-end"
+                        className="o-open-clock-button"
+                      >
                         <button>
                           <FontAwesomeIcon
                             icon={faClock}
@@ -463,7 +467,7 @@ class CreateEvents extends Component {
                             }
                           />
                         </button>
-                      </span>
+                      </label>
                     </div>
                   </div>
                   <span

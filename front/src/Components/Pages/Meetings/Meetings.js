@@ -44,7 +44,7 @@ export default function Meetings(props) {
                   members.push({
                     id: i.id,
                     name: i.nombre.split(" ")[0],
-                    pic: i.foto,
+                    pic: i.foto === null || i.foto === "null" ? User : i.foto,
                   });
                 }
               }
