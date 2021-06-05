@@ -171,7 +171,7 @@ class Test3d extends Component {
         .then((response) => {
           let tem = [];
           this.setState({ practicas: [...response.data] });
-          console.log(this.state.practicas);
+          console.log(this.state.practicas[0]);
           for (let a = 0; a < this.state.practicas; a++) {
             tem.push({
               name: this.state.practicas[a].nombre,

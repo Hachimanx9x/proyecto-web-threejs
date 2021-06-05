@@ -306,6 +306,7 @@ rutas.get("/proyecto/reunion/:id", proToken, (req, res) => {
       res.sendStatus(403);
     } else {
       buscarDB.datosreunion(req.params.id, data.rows[0].id).then((entopro) => {
+        // console.log(entopro[0]);
         res.json(entopro);
       });
     }
@@ -361,7 +362,9 @@ rutas.get("/proyecto/actividades/:id/:pra", proToken, (req, res) => {
       if (data != {} || data !== {} || data !== null || data !== undefined) {
         buscarDB
           .buscaractividadesproyecto(data.rows[0], id, pra)
-          .then((respu) => res.json(respu))
+          .then((respu) => {
+            res.json(respu);
+          })
           .catch((err) => res.json(err));
       }
     }

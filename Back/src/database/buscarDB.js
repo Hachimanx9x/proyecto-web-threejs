@@ -2758,7 +2758,6 @@ function entregablepro(array) {
   });
 }
 function filpracticaproyecto(array, pra) {
-  let obj = {};
   if (pra === "cem") {
     temppracti = "Concepción de la experiencia multimedia";
   } else if (pra === "smmv") {
@@ -2772,7 +2771,8 @@ function filpracticaproyecto(array, pra) {
         let temp = 0;
         if (array[a].nombre === "Sistema Multimedia mínimo viable") {
           for (let b = 0; b < array[a].alfas.length; b++) {
-            if (array[a].alfas[b].nombre === "Valor del sistema multimedia") {
+            console.log(chalk.green(array[a].alfas[b].nombre));
+            if (array[a].alfas[b].nombre === "Valor del SM") {
               if (array[a].alfas[b].estado == "iniciado") {
                 temp += 0;
               }
@@ -3120,11 +3120,13 @@ function organizarinfoalfasentorno(array) {
   // console.log(array);
   let gg = [];
   let tarjeta = [];
+  let num = [];
   for (let a = 0; a < array.length; a++) {
     if (
       array[a].nombre === "Experiencia multimedia" ||
       array[a].nombre === "Diseño responsable"
     ) {
+      num = [];
       tarjeta = [];
       for (let b = 0; b < modelo.Practicas.length; b++) {
         if (
@@ -3137,6 +3139,7 @@ function organizarinfoalfasentorno(array) {
                 modelo.Practicas[b].Tarjetas[c].nombre === "Historia concebida"
               ) {
                 tarjeta.push(modelo.Practicas[b].Tarjetas[c]);
+                num = [1];
               }
             }
             if (array[a].estado === "Identificado") {
@@ -3144,6 +3147,7 @@ function organizarinfoalfasentorno(array) {
                 modelo.Practicas[b].Tarjetas[c].nombre === "Emociones Definidas"
               ) {
                 tarjeta.push(modelo.Practicas[b].Tarjetas[c]);
+                num = [2];
               }
             }
             if (array[a].estado === "Comprendido") {
@@ -3154,6 +3158,7 @@ function organizarinfoalfasentorno(array) {
                   "Diseño reponsable concebido"
               ) {
                 tarjeta.push(modelo.Practicas[b].Tarjetas[c]);
+                [3, 4];
               }
             }
             if (array[a].estado === "Acordado") {
@@ -3162,6 +3167,7 @@ function organizarinfoalfasentorno(array) {
                 "Experiencia multimedia diseñada"
               ) {
                 tarjeta.push(modelo.Practicas[b].Tarjetas[c]);
+                [5];
               }
             }
             if (array[a].estado === "Concebido") {
@@ -3178,12 +3184,14 @@ function organizarinfoalfasentorno(array) {
         nombre: array[a].nombre,
         estado: array[a].estado,
         tarjeta: tarjeta,
+        num: num,
       });
     }
     if (
       array[a].nombre === "Oportunidad" ||
       array[a].nombre === "Valor del SM"
     ) {
+      num = [];
       tarjeta = [];
       for (let b = 0; b < modelo.Practicas.length; b++) {
         if (modelo.Practicas[b].nombre === "Sistema Multimedia mínimo viable") {
@@ -3191,21 +3199,25 @@ function organizarinfoalfasentorno(array) {
             if (array[a].estado === "iniciado") {
               if (modelo.Practicas[b].Tarjetas[c].nombre === "Alcanzable") {
                 tarjeta.push(modelo.Practicas[b].Tarjetas[c]);
+                num = [1];
               }
             }
             if (array[a].estado === "Alcanzable") {
               if (modelo.Practicas[b].Tarjetas[c].nombre === "Diferenciado") {
                 tarjeta.push(modelo.Practicas[b].Tarjetas[c]);
+                num = [2];
               }
             }
             if (array[a].estado === "Diferenciado") {
               if (modelo.Practicas[b].Tarjetas[c].nombre === "Definido") {
                 tarjeta.push(modelo.Practicas[b].Tarjetas[c]);
+                num = [3];
               }
             }
             if (array[a].estado === "Definido") {
               if (modelo.Practicas[b].Tarjetas[c].nombre === "Visionado") {
                 tarjeta.push(modelo.Practicas[b].Tarjetas[c]);
+                num = [4];
               }
             }
           }
@@ -3220,6 +3232,7 @@ function organizarinfoalfasentorno(array) {
         nombre: array[a].nombre,
         estado: array[a].estado,
         tarjeta: tarjeta,
+        num: num,
       });
     }
   }

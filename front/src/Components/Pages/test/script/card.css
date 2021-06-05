@@ -1,0 +1,5 @@
+.o-card-E {
+  width: 40%;
+  box-shadow: 0 3px 3px 10px rgba(0, 0, 0, 0.2),
+    inset 0 3px 3px 10px rgba(0, 0, 0, 0.2);
+}
