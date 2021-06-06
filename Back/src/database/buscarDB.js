@@ -189,6 +189,8 @@ funcionesDB.obtenerEscritorioProyectos = async (body) => {
         } else {
           sqlite.all(Query.obtenerEscritorioProyectos(id), (err, rows) => {
             if (!err) {
+              //aqui toca saber si es lider o no
+
               res(rearmarProyectosescri(rows));
             } else {
               rej({ err });
@@ -1966,24 +1968,9 @@ function verientrgables(id, proname, array, arraydef) {
   }
 }
 function rearmarProyectosescri(array) {
-  var arraydef = [];
-  var idproyecto = null;
-  var proyectonombre = null;
-  var practicas = [];
-  var practicanombre = null;
-  var alfas = [];
-  var alfanombre = null,
-    alfaestado = null;
+  let idproyecto = null;
 
   let proyectos = [];
-  /*
-  for (var i = 0; i < array.length; i++) {
-    if (idproyecto != array[i].id) {
-      idproyecto = array[i].id;
-      proyectonombre = array[i].proyectonombre;
-      arraydef.push({ idproyecto, proyectonombre, practicas });
-    }
-  }*/
 
   for (var i = 0; i < array.length; i++) {
     if (idproyecto != array[i].id) {
@@ -1999,10 +1986,15 @@ function rearmarProyectosescri(array) {
       ) {
         image = `${env.host}/proyecto/contenido/proyecto${array[i].id}/${array[i].proyectobanner}`;
       }
+      /**lider:
+          array[i].roltitulo === "Arquitecto Experiencia Multimedia"
+            ? true
+            : false, */
       proyectos.push({
         id: array[i].id,
         title: array[i].proyectonombre,
         descripcion: array[i].proyectodescripcion,
+
         practicas: [],
         icon,
         image,
@@ -2011,22 +2003,7 @@ function rearmarProyectosescri(array) {
     }
   }
   proyectos = quitarduplicados(proyectos);
-  //  console.log(arraydef)
-  /*for (var i = 0; i < arraydef.length; i++) {
-    let practicasinter = [];
-    for (var j = 0; j < array.length; j++) {
-      if (arraydef[i].idproyecto == array[j].id) {
-        if (practicanombre != array[j].practicanombre) {
-          practicanombre = array[j].practicanombre;
-          practicasinter.push({ practicanombre, alfas });
-        }
-      }
-    }
-    let set = new Set(practicasinter.map(JSON.stringify));
-    practicasinter = Array.from(set).map(JSON.parse);
-    arraydef[i].practicas = practicasinter;
-  }*/
-  //console.log(arraydef[0].practicas)
+
   for (var i = 0; i < proyectos.length; i++) {
     for (var j = 0; j < array.length; j++) {
       if (proyectos[i].id == array[j].id) {
@@ -2038,78 +2015,7 @@ function rearmarProyectosescri(array) {
       proyectos[i].practicas = quitarduplicados(proyectos[i].practicas);
     }
   }
-  /*
-  for (var i = 0; i < arraydef.length; i++) {
-    for (var j = 0; j < arraydef[i].practicas.length; j++) {
-      var alfastemp = [];
-      for (var k = 0; k < array.length; k++) {
-        if (
-          arraydef[i].practicas[j].practicanombre == array[k].practicanombre
-        ) {
-          if (alfanombre != array[k].alfanombre) {
-            // console.log("cambio");
-            //  console.log(arraydef[i].practicas[j].practicanombre);
-            let temp = 0;
 
-            if (array[k].practicanombre == "Sistema Multimedia mínimo viable") {
-              if (
-                array[k].alfanombre == "Oportunidad" ||
-                array[k].alfanombre == "Valor del sistema multimedia"
-              ) {
-                if (array[k].alfaestado == "iniciado") {
-                  temp = 0;
-                }
-                if (array[k].alfaestado == "Alcanzable") {
-                  temp = 25;
-                }
-                if (array[k].alfaestado == "Diferenciado") {
-                  temp = 50;
-                }
-                if (array[k].alfaestado == "Visionado") {
-                  temp = 75;
-                }
-                if (array[k].alfaestado == "Definido") {
-                  temp = 100;
-                }
-              }
-            }
-            if (
-              array[k].practicanombre ==
-              "Concepción de la experiencia multimedia"
-            ) {
-              if (
-                array[k].alfanombre == "Experiencia multimedia" ||
-                array[k].alfanombre == "Diseño responsable"
-              ) {
-                if (array[k].alfaestado == "iniciado") {
-                  temp = 0;
-                }
-                if (array[k].alfaestado == "Identificado") {
-                  temp = 25;
-                }
-                if (array[k].alfaestado == "Comprendido") {
-                  temp = 50;
-                }
-                if (array[k].alfaestado == "Acordado") {
-                  temp = 75;
-                }
-                if (array[k].alfaestado == "Concebido") {
-                  temp = 100;
-                }
-              }
-            }
-            alfanombre = array[k].alfanombre;
-            alfaestado = array[k].alfaestado;
-            alfastemp.push({ alfanombre, alfaestado, porcentaje: temp });
-            // arraydef[i].practicas[j].alfas.push({ alfanombre, alfaestado })
-          }
-        }
-      }
-      let set = new Set(alfastemp.map(JSON.stringify));
-      alfastemp = Array.from(set).map(JSON.parse);
-      arraydef[i].practicas[j].alfas = alfastemp;
-    }
-  }*/
   for (var i = 0; i < proyectos.length; i++) {
     for (var j = 0; j < proyectos[i].practicas.length; j++) {
       let temp = 0,

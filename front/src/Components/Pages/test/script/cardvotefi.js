@@ -4,6 +4,8 @@ import React from "react";
 //import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import alphay from "../../../../Logos/alpha.svg";
 import alphag from "../../../../Logos/alpha_s.svg";
+import icon from "../../../../Logos/icondes.svg";
+import icong from "../../../../Logos/icondesg.svg";
 import "./card.css";
 export default function Tarjetas({ nmapra, tarjetas, func }) {
   console.log(tarjetas);
@@ -114,6 +116,9 @@ const TarjetaCard = ({ nmapra, nombre, descripcion, nualpha, nuposition }) => (
           {`${nualpha[nuposition]}`}/
           {nmapra === "Sistema Multimedia mínimo viable" ? "4" : "5"}
         </div>
+        <div className="w-100 d-flex juntify-content-start">
+          <div className="o-card-e__iconA"></div>
+        </div>
       </div>
     </div>
     <style jsx="false">{`
@@ -122,6 +127,17 @@ const TarjetaCard = ({ nmapra, nombre, descripcion, nualpha, nuposition }) => (
       }
       p {
         font-size: 14px;
+      }
+      .o-card-e__iconA {
+        height: 30px;
+        width: 50px;
+        margin-left: 10px;
+        background-image: url(${nmapra === "Sistema Multimedia mínimo viable"
+          ? icong
+          : icon});
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: auto auto;
       }
       .o-card-e__icon {
         height: 100px;
@@ -231,7 +247,7 @@ const TarjetaCard = ({ nmapra, nombre, descripcion, nualpha, nuposition }) => (
       }
 
       .o-card-e__counter {
-        margin: 20px auto;
+        margin: 0px auto;
         width: 85%;
         border: 3px solid
           ${nmapra === "Sistema Multimedia mínimo viable"

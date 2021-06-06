@@ -28,6 +28,7 @@ query.obtenerEscritorioActividades = function (id) {
   return ` SELECT  
     usuarios.nombre,
     proyectos.id,
+    roles.roltitulo,
     actividades.id AS "actividadid",
     actividades.actividadtitulo,
     actividades.actividaddescripcion,
@@ -37,6 +38,7 @@ query.obtenerEscritorioActividades = function (id) {
     
     FROM listaintegrantes
     JOIN integrantes ON listaintegrantes.integrante=  integrantes.id  
+    JOIN roles ON integrantes.rol = roles.id
     JOIN usuarios ON integrantes.usuario = usuarios.id
     JOIN listaactividades ON integrantes.id = listaactividades.integrante
     JOIN actividades ON listaactividades.actividad = actividades.id

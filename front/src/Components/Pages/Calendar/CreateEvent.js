@@ -257,7 +257,7 @@ class CreateEvents extends Component {
         <div className="o-blue-container p-2 mb-4 mb-sm-0 pb-5 pb-sm-3">
           <Rodal
             width={300}
-            height={160}
+            height={220}
             animation={"fade"}
             visible={this.state.confirmationModal}
             onClose={() => this.handleInput("confirmationModal", false)}
@@ -265,6 +265,10 @@ class CreateEvents extends Component {
             {!this.state.confirmation ? (
               <div>
                 <h5 className="mt-5 mb-2">¿Crear evento?</h5>
+                <p>
+                  Este evento sera enviado a todos los integrantes del proyecto
+                  seleccionado
+                </p>
                 <div className="d-flex justify-content-between p-2">
                   <button
                     className="z-depth-0 border-primary btn border-primary text-primary font-weight-bold"
