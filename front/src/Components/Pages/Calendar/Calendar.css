@@ -188,7 +188,8 @@
 
 .o-clock::-webkit-calendar-picker-indicator {
   opacity: 0;
-  width: 1rem;
+  cursor: pointer;
+  width: 1.5rem;
   height: 1.3rem;
   position: absolute;
   margin-left: 1rem;
@@ -202,6 +203,23 @@
   margin-left: 4px;
   color: #fff;
 }
+
+.o-open-clock-button button:focus {
+  outline: none;
+}
+
+@supports (scrollbar-color: auto) {
+  .o-open-clock-button button {
+    display: none;
+  }
+  .o-open-clock-button {
+    display: none;
+  }
+  .o-clock::-webkit-calendar-picker-indicator {
+    opacity: 1;
+  }
+}
+
 @media only screen and (max-width: 1380px) {
   .o-date-picker-container {
     width: 100%;
