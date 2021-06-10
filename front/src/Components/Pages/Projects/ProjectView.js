@@ -160,6 +160,25 @@ class ProjectView extends Component {
   componentWillUnmount = () => {
     window.removeEventListener("resize", this.handleResize);
   };
+
+  deleteProject = async () => {
+    const proyectId = this.props.match.params.id;
+    const token = localStorage.getItem("login");
+    const obj = JSON.parse(token);
+    let temp = obj.token;
+    try {
+      await Axios.delete(`http://localhost:3030/eliminar/proyecto`, {
+        headers: { authorization: `llave ${temp}` },
+        data: { proyecto: proyectId },
+      }).then((response) => {
+        console.log(response);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    this.setState({ modal: false });
+    this.props.history.push("/Dashboard/Projects");
+  };
   render() {
     if (this.state.fetched) {
       return (
@@ -203,10 +222,7 @@ class ProjectView extends Component {
                   ? "disabled"
                   : "") + " btn btn-danger btn-block border-0 text-white mt-2"
               }
-              onClick={() => {
-                this.setState({ modal: false });
-                this.props.history.push("/Dashboard/Projects");
-              }}
+              onClick={() => this.deleteProject}
             >
               <small>
                 Lo entiendo y me hago cargo responsable de las consecuencias.
