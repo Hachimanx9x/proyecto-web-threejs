@@ -118,7 +118,7 @@ const CardContacts = ({ contact, changefavorite, deleteContact }) => {
               <div className="d-flex">
                 <img
                   src={contact.urlimage}
-                  className="rounded-circle o-talent-icon z-depth-1"
+                  className="rounded-circle o-talent-picture z-depth-1"
                   alt="user "
                 />
               </div>
