@@ -12,12 +12,6 @@ export default function DocCEM(props) {
 
   return (
     <div className="h-100 w-100">
-      <button className="o-btn-return" onClick={() => props.history.goBack()}>
-        <span>
-          <img src={arrow} alt="Arrow button" />
-        </span>
-        Regresar
-      </button>
       <div className="row">
         <section id="CardDocSection">
           <p>
