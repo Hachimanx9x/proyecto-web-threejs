@@ -72,6 +72,7 @@ export default function CardActivities({ alfa, activity, tecniques }) {
     setConfirmation(true);
     setTimeout(() => {
       setModal(false);
+      window.location.reload();
     }, 1200);
   };
   return (

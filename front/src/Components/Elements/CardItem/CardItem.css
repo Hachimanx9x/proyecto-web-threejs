@@ -28,8 +28,10 @@
   overflow: hidden;
 }
 .o-card-description {
+  height: 8rem;
   padding: 0.5rem;
   margin: 0;
+  overflow: hidden;
 }
 
 .o-card-description-text {
