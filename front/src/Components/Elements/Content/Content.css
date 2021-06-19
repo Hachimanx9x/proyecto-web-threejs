@@ -11,11 +11,14 @@ a:focus {
   ----------------------------------------------------- */
 .content {
   overflow: auto;
-  padding: 0px 20px 0px 20px;
+  padding: 0;
   margin-left: 0;
   height: 100vh;
 }
 
+.o-inner-content {
+  padding: 0px 20px 0px 20px;
+}
 .o-topbar-arrow {
   transform: rotate(180deg);
   transition: all 0.8s ease;
