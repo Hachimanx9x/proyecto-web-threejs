@@ -150,7 +150,11 @@ export default function FinishRegister(props) {
                           ? -half + 1
                           : -half
                       );
-              setName(firstHalf.join(" "));
+              setName(
+                obj.data.nombre.split(" ").length === 1
+                  ? ""
+                  : firstHalf.join(" ")
+              );
               setLastname(secondHalf.join(" "));
               setToolist([...tools]);
               setLanguageslist([...languages]);
