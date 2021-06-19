@@ -315,7 +315,7 @@ class ProjectView extends Component {
                   return (
                     <div
                       key={i}
-                      className="o-smmv-practice d-flex flex-wrap justify-content-center w-100 mb-3"
+                      className="o-smmv-practice d-flex flex-wrap justify-content-center w-100 mb-3 pb-3"
                     >
                       <div className="col-12 col-sm-6">
                         <div className="bg-white w-100 p-1 m-2 text-center">
@@ -448,7 +448,7 @@ class ProjectView extends Component {
                   return (
                     <div
                       key={i}
-                      className="o-cem-practice d-flex justify-content-center flex-wrap w-100 mb-3"
+                      className="o-cem-practice d-flex justify-content-center flex-wrap w-100 mb-3 pb-3"
                     >
                       <div className="col-12 col-sm-6">
                         <div className="bg-white w-100 p-1 m-2 text-center">
