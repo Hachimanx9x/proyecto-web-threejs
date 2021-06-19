@@ -199,7 +199,7 @@ export default function FinishRegister(props) {
   };
 
   async function handleValidation() {
-    const letters = /^[a-z][a-z\s]*$/;
+    const letters = /^[ñA-Za-z _]*[ñA-Za-z][ñA-Za-z _]*$/;
     const errors = errorList;
     //First name validation.
     if (name.trim() === "") {
@@ -207,7 +207,7 @@ export default function FinishRegister(props) {
       errors.nameMessage = "Por favor ingresa tu nombre";
     } else if (!name.toLocaleLowerCase().match(letters)) {
       errors.validName = false;
-      errors.nameMessage = "El apellido solo debe contener letras.";
+      errors.nameMessage = "El nomber solo debe contener letras.";
     } else {
       errors.validName = true;
     }
@@ -215,7 +215,7 @@ export default function FinishRegister(props) {
     //Last name validations.
     if (lastname.trim() === "") {
       errors.validLastName = false;
-      errors.lastnameMessage = "Por favor ingresa tu nombre";
+      errors.lastnameMessage = "Por favor ingresa tu apellido";
     } else if (!lastname.toLocaleLowerCase().match(letters)) {
       errors.validLastName = false;
       errors.lastnameMessage = "El apellido solo debe contener letras.";
