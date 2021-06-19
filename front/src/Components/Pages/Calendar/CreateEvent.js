@@ -43,6 +43,50 @@ class CreateEvents extends Component {
       todayEvents: [],
     };
   }
+
+  /*
+   *Function used to validate each requiered Fields.
+   */
+  handleValidation = () => {
+    const title = this.state.eventTitle;
+    const startEvent =
+      this.state.eventStart !== null ? this.state.eventStart.split(":") : null;
+    const endEvent =
+      this.state.eventEnd !== null ? this.state.eventEnd.split(":") : null;
+    if (title.trim() === "") {
+      this.setState({ titleIsValid: false });
+    } else {
+      this.setState({ titleIsValid: true });
+    }
+    if (this.state.project === "") {
+      this.setState({ projectIsValid: false });
+    } else {
+      this.setState({ projectIsValid: true });
+    }
+    if (startEvent === null || endEvent === null) {
+      this.setState({ errorHour: "Campos requeridos", hourIsValid: false });
+    } else if (parseInt(startEvent[0]) > parseInt(endEvent[0])) {
+      this.setState({
+        errorHour: "Rangos de hora inválidos",
+        hourIsValid: false,
+      });
+    } else if (parseInt(startEvent[0]) === parseInt(endEvent[0])) {
+      if (parseInt(startEvent[1]) >= parseInt(endEvent[1])) {
+        this.setState({
+          errorHour: "Rangos de hora inválidos",
+          hourIsValid: false,
+        });
+      } else {
+        this.setState({
+          hourIsValid: true,
+        });
+      }
+    } else {
+      this.setState({
+        hourIsValid: true,
+      });
+    }
+  };
   /*
    *Function to create the event. Looks if every required field is correctly filled and send the http request to the server.
    */
@@ -93,50 +137,6 @@ class CreateEvents extends Component {
       }
     } else {
       this.setState({ confirmationModal: false });
-    }
-  };
-
-  /*
-   *Function used to validate each requiered Fields.
-   */
-  handleValidation = () => {
-    const title = this.state.eventTitle;
-    const startEvent =
-      this.state.eventStart !== null ? this.state.eventStart.split(":") : null;
-    const endEvent =
-      this.state.eventEnd !== null ? this.state.eventEnd.split(":") : null;
-    if (title.trim() === "") {
-      this.setState({ titleIsValid: false });
-    } else {
-      this.setState({ titleIsValid: true });
-    }
-    if (this.state.project === "") {
-      this.setState({ projectIsValid: false });
-    } else {
-      this.setState({ projectIsValid: true });
-    }
-    if (startEvent === null || endEvent === null) {
-      this.setState({ errorHour: "Campos requeridos", hourIsValid: false });
-    } else if (parseInt(startEvent[0]) > parseInt(endEvent[0])) {
-      this.setState({
-        errorHour: "Rangos de hora inválidos",
-        hourIsValid: false,
-      });
-    } else if (parseInt(startEvent[0]) === parseInt(endEvent[0])) {
-      if (parseInt(startEvent[1]) >= parseInt(endEvent[1])) {
-        this.setState({
-          errorHour: "Rangos de hora inválidos",
-          hourIsValid: false,
-        });
-      } else {
-        this.setState({
-          hourIsValid: true,
-        });
-      }
-    } else {
-      this.setState({
-        hourIsValid: true,
-      });
     }
   };
   handleResize = (e) => {
