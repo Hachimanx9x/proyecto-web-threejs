@@ -32,7 +32,7 @@ class SigIn extends Component {
   handleValidation = () => {
     const { name, email, password, confirmpassword } = this.state;
     const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    const letters = /^[a-z][a-z\s]*$/;
+    const letters = /^[ñA-Za-z _]*[ñA-Za-z][ñA-Za-z _]*$/;
 
     //Validaciones del nombre.
     if (name.trim() === "") {
