@@ -511,6 +511,7 @@ SMMV
                     <a
                       href="DocumentationCEM"
                       className="o-btn-partices rounded btn-warning text-white z-depth-0"
+                      target="_blank"
                     >
                       Más información
                     </a>
@@ -529,6 +530,7 @@ SMMV
                     <a
                       href="DocumentationSMMV"
                       className="o-btn-partices rounded bg-success text-white z-depth-0"
+                      target="_blank"
                     >
                       Más información
                     </a>
