@@ -14,6 +14,7 @@ import SuccessAnimation from "../../Elements/SuccessAnimation/SuccessAnimation";
 export default function FinishRegister(props) {
   const [picture, setPicture] = useState(null);
   const [description, setDescription] = useState(null);
+  const [showIntroModal, setShowIntroModal] = useState(true);
   const [country, setCountry] = useState(null);
   const [name, setName] = useState("");
   const [lastname, setLastname] = useState("");
@@ -201,14 +202,16 @@ export default function FinishRegister(props) {
   async function handleValidation() {
     const letters = /^[ñA-Za-z _]*[ñA-Za-z][ñA-Za-z _]*$/;
     const userName = name.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    const userLastname = name.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const userLastname = lastname
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
 
     const errors = errorList;
     //First name validation.
     if (userName.trim() === "") {
       errors.validName = false;
       errors.nameMessage = "Por favor ingresa tu nombre";
-    } else if (!userName.toLocaleLowerCase().match(letters)) {
+    } else if (!userName.match(letters)) {
       errors.validName = false;
       errors.nameMessage = "El nomber solo debe contener letras.";
     } else {
@@ -219,7 +222,7 @@ export default function FinishRegister(props) {
     if (userLastname.trim() === "") {
       errors.validLastName = false;
       errors.lastnameMessage = "Por favor ingresa tu apellido";
-    } else if (!userLastname.toLocaleLowerCase().match(letters)) {
+    } else if (!userLastname.match(letters)) {
       errors.validLastName = false;
       errors.lastnameMessage = "El apellido solo debe contener letras.";
     } else {
@@ -327,14 +330,28 @@ export default function FinishRegister(props) {
   return (
     <div className="o-register-container">
       <p className="text-danger">* Campos obligatorios</p>
-      <Rodal width={300} height={160} animation={"fade"} visible={true}>
-        <h2 className="text-primary m-auto text-center">
-          <FontAwesomeIcon icon={faUserEdit} />
-        </h2>
-        <p>
-          Debes completar tu perfil antes de acceder a las demás funcionalidades
-          del sistema.
-        </p>
+      <Rodal
+        width={380}
+        height={360}
+        animation={"fade"}
+        visible={showIntroModal}
+        onClose={() => setShowIntroModal(false)}
+      >
+        <div className="text-center p-3">
+          <h1 className="text-primary m-auto text-center">
+            <FontAwesomeIcon icon={faUserEdit} style={{ fontSize: "12rem" }} />
+          </h1>
+          <p className="mt-4">
+            Completa tu perfil para acceder a las demás funcionalidades del
+            sistema.
+          </p>
+          <button
+            className="btn btn-block btn-primary bg-primary"
+            onClick={() => setShowIntroModal(false)}
+          >
+            Entendido
+          </button>
+        </div>
       </Rodal>
       <Rodal
         width={300}

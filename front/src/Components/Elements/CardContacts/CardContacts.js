@@ -147,7 +147,7 @@ const CardContacts = ({ contact, changefavorite, deleteContact }) => {
               </div>
             </div>
             <div className="col-12 col-sm-3">
-              <Link to={`/Dashboard/Contacts/${contact.id}`}>
+              <Link to={`/Dashboard/Contacts/${contact.id}`} target="_blank">
                 <button
                   type="button"
                   className="btn btn-primary z-depth-0 border-0 text-white font-weight-bold o-search-talents-btn"

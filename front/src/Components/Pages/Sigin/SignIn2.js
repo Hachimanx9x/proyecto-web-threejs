@@ -33,16 +33,16 @@ class SigIn extends Component {
     const { name, email, password, confirmpassword } = this.state;
     const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     const letters = /^[ñA-Za-z _]*[ñA-Za-z][ñA-Za-z _]*$/;
-    name.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const userName = name.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
     //Validaciones del nombre.
-    if (name.trim() === "") {
+    if (userName.trim() === "") {
       this.setState({
         validName: false,
         nameMessage:
           "El nombre es requerido. Por favor ingresa tu nombre completo",
       });
-    } else if (!name.toLocaleLowerCase().match(letters)) {
+    } else if (!userName.match(letters)) {
       this.setState({
         validName: false,
         nameMessage: "El nombre solo debe contener letras.",

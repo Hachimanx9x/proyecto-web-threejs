@@ -110,7 +110,9 @@ const SideBar = ({ isOpen, toggle }) => {
             </li>
           </div>
 
-          <div className="mt-auto border-0 h-auto">
+          <div
+            className={`${width < 590 ? "d-none" : ""} mt-auto border-0 h-auto`}
+          >
             <button
               className="btn btn-block bg-transparent border-0 z-depth-0"
               onClick={toggle}

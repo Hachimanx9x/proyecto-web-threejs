@@ -253,18 +253,20 @@ export default function ViewProfile(props) {
   };
 
   async function handleValidation() {
-    const letters = /^[a-z][a-z\s]*$/;
+    const letters = /^[ñA-Za-z _]*[ñA-Za-z][ñA-Za-z _]*$/;
     const errors = errorList;
     const userName = name.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    const userLastname = name.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const userLastname = lastname
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
 
     //First name validation.
     if (userName.trim() === "") {
       errors.validName = false;
       errors.nameMessage = "Por favor ingresa tu nombre";
-    } else if (!userName.toLocaleLowerCase().match(letters)) {
+    } else if (!userName.match(letters)) {
       errors.validName = false;
-      errors.nameMessage = "El apellido solo debe contener letras.";
+      errors.nameMessage = "El nombre solo debe contener letras.";
     } else {
       errors.validName = true;
     }
@@ -272,12 +274,12 @@ export default function ViewProfile(props) {
     //Last name validations.
     if (userLastname.trim() === "") {
       errors.validLastName = false;
-      errors.lastnameMessage = "Por favor ingresa tu nombre";
-    } else if (!userLastname.toLocaleLowerCase().match(letters)) {
+      errors.lastnameMessage = "Por favor ingresa tu apellido";
+    } else if (!userLastname.match(letters)) {
       errors.validLastName = false;
       errors.lastnameMessage = "El apellido solo debe contener letras.";
     } else {
-      errors.lastnameMessage = true;
+      errors.validLastName = true;
     }
 
     //Skills validation
@@ -387,6 +389,8 @@ export default function ViewProfile(props) {
   if (fetched) {
     return (
       <div className="o-register-container">
+        <p className="text-danger">* Campos obligatorios</p>
+
         <Rodal
           width={300}
           height={160}

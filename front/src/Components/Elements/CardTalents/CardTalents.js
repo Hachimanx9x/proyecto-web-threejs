@@ -168,7 +168,7 @@ const CardTalents = ({ talent, addTalent }) => {
               />
             </div>
             <div className="col-12 col-sm-3">
-              <Link to={`/Dashboard/Contacts/${talent.id}`}>
+              <Link to={`/Dashboard/Contacts/${talent.id}`} target="_blank">
                 <button
                   type="button"
                   className="btn z-depth-0 border-primary text-primary font-weight-bold  o-search-talents-btn"

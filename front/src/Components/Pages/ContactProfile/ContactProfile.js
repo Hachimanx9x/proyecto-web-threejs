@@ -68,12 +68,6 @@ export default function ContactProfile(props) {
   if (fetched) {
     return (
       <div>
-        <button className="o-btn-return" onClick={() => props.history.goBack()}>
-          <span>
-            <img src={arrow} alt="Arrow button" />
-          </span>
-          Regresar
-        </button>
         <div className="o-blue-container o-blue-container-2">
           <div className="o-talent-intro">
             <div className="col-12 col-sm-3 ">
