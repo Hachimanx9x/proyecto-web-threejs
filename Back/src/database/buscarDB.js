@@ -506,6 +506,7 @@ funcionesDB.buscaractividadesproyecto = async (user, id, pra) => {
                         funcionesDB
                           .buscarProyecto(id, user.id)
                           .then((proyecto) => {
+                            //  console.log(resultactivi);
                             res({
                               actividades: filtroactividades(resultactivi, pra),
                               entregables: practicasfiltoentregables(
@@ -2582,8 +2583,10 @@ function filtroactividades(array, pra) {
   let temppracti = "no llego nada";
   arradef = [];
   if (pra === "cem") {
+    console.log(chalk.bgRed("CEM"));
     temppracti = modelo.Practicas[0];
   } else if (pra === "smmv") {
+    console.log(chalk.bgRed("SMMV"));
     temppracti = modelo.Practicas[1];
   }
   if (temppracti !== "no llego nada") {
@@ -2672,7 +2675,7 @@ function filpracticaproyecto(array, pra) {
   if (pra === undefined) {
     return array;
   } else {
-    for (let a = 0; array.length; a++) {
+    for (let a = 0; a < array.length; a++) {
       if (array[a].nombre === temppracti) {
         let temp = 0;
         if (array[a].nombre === "Sistema Multimedia mínimo viable") {
@@ -2732,6 +2735,7 @@ function filpracticaproyecto(array, pra) {
 }
 
 function practicasfiltoentregables(array, pra) {
+  // console.log(array);
   let arradef = [];
   if (pra === "cem") {
     temppracti = modelo.Practicas[0];

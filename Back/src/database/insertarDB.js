@@ -225,11 +225,9 @@ funcionesDB.creaproyecto2 = (obj) => {
                                                                         members[
                                                                           f
                                                                         ].user,
-                                                                      rol:
-                                                                        result10
-                                                                          .API[
-                                                                          g
-                                                                        ].id,
+                                                                      rol: result10
+                                                                        .API[g]
+                                                                        .id,
                                                                     }
                                                                   )
                                                                     .then(
@@ -418,7 +416,8 @@ funcionesDB.creaproyecto2 = (obj) => {
                                                                                                         funcionesDB
                                                                                                           .insertlistContent(
                                                                                                             {
-                                                                                                              entregable: null,
+                                                                                                              entregable:
+                                                                                                                null,
                                                                                                               contenido:
                                                                                                                 result15.id,
                                                                                                               actividad:
@@ -593,6 +592,7 @@ funcionesDB.creaproyecto2 = (obj) => {
 funcionesDB.creaproyecto3 = (obj) => {
   return new Promise((res, rej) => {
     const { proyect, members, practice } = obj;
+
     inserproyectocompleto(proyect)
       .then((proyecto) => {
         console.log(chalk.blue(`agregado proyecto ${proyecto.pro.id}`));
@@ -1182,15 +1182,8 @@ funcionesDB.insertHistory = (obj) => {
 //-----------------------------------------------------------------------
 funcionesDB.insertProject = (obj) => {
   return new Promise((res, rej) => {
-    const {
-      nombre,
-      descripcion,
-      estado,
-      icon,
-      banner,
-      metodologia,
-      historia,
-    } = obj;
+    const { nombre, descripcion, estado, icon, banner, metodologia, historia } =
+      obj;
     promesa.then((result) => {
       const { mariaDB, sqlite, vDB } = result;
       if (vDB) {
@@ -2379,11 +2372,18 @@ function insertlispracmeto(array, metodologia) {
 function insertarraypracticas(array) {
   return new Promise((res, rej) => {
     let cont = 0;
+    let mo;
     for (let a = 0; a < array.length; a++) {
+      if (array[a].nombre === "Concepción de la experiencia multimedia") {
+        mo = modelo.Practicas[0];
+      }
+      if (array[a].nombre === "Sistema Multimedia mínimo viable") {
+        mo = modelo.Practicas[1];
+      }
       funcionesDB
         .insertPractice({
-          nombre: modelo.Practicas[a].nombre,
-          descripcion: modelo.Practicas[a].descripcion,
+          nombre: mo.nombre,
+          descripcion: mo.descripcion,
         })
         .then((result) => {
           if (cont === array.length - 1) res(true);
@@ -2480,6 +2480,7 @@ function enlistalfaspracti(practicas) {
 }
 
 function asignaciondeactividaporrol(array, practicas, API) {
+  console.log("asignaciondeactividaporrol");
   let arraydef = [];
   let num = 0;
   let actiyemp = [];
@@ -2487,7 +2488,9 @@ function asignaciondeactividaporrol(array, practicas, API) {
   for (let a1 = 0; a1 < practicas.length; a1++) {
     for (let b1 = 0; b1 < modelo.Practicas.length; b1++) {
       if (practicas[a1] === modelo.Practicas[b1].nombre) {
+        //   console.log(`${practicas[a1]} + ${modelo.Practicas[b1].nombre} `);
         for (let f1 = 0; f1 < modelo.Practicas[b1].Actividades.length; f1++) {
+          //  console.log(modelo.Practicas[b1].Actividades[f1]);
           actiyemp.push({
             titulo: modelo.Practicas[b1].Actividades[f1].titulo,
             estado: modelo.Practicas[b1].Actividades[f1].estado,
@@ -2504,6 +2507,7 @@ function asignaciondeactividaporrol(array, practicas, API) {
       }
     }
   }
+
   let lider;
   for (let a = 0; a < practicas.length; a++) {
     for (let b = 0; b < modelo.Practicas.length; b++) {
@@ -2624,6 +2628,8 @@ function listaintegranteconroles(array) {
 }
 
 function creactividades(array) {
+  console.log("creactividades");
+  //console.log(array);
   return new Promise((res, rej) => {
     let cont = 0;
     for (let a = 0; a < array.length; a++) {
@@ -2869,6 +2875,7 @@ function insertpracticasconalfascompleto2(practicas, proyecto) {
   //{pro:proyecto, meto: metodologia}
   return new Promise((res, rej) => {
     let practicasus = pranticasainsertar(practicas);
+
     insertarraypracticas(practicasus)
       .then((result) => {
         console.log(chalk.green("practicas ingresadas"));
@@ -2904,9 +2911,8 @@ function insertpracticasconalfascompleto2(practicas, proyecto) {
                         inserlistalfa(practicaalfa)
                           .then((result2) => {
                             console.log(chalk.green("alfas lista ingresadas"));
-                            let entregaslis = reordenaralfaconentregable(
-                              practicaalfa
-                            );
+                            let entregaslis =
+                              reordenaralfaconentregable(practicaalfa);
                             buscarDB
                               .obtenertodasHerramientasMetodologia()
                               .then((herramientas) => {
@@ -2926,10 +2932,11 @@ function insertpracticasconalfascompleto2(practicas, proyecto) {
                                           entregables.API,
                                           entregafilto.length
                                         );
-                                        let alfalistpre = reorganizamientoentrealfa(
-                                          entregalist,
-                                          entregafilto
-                                        );
+                                        let alfalistpre =
+                                          reorganizamientoentrealfa(
+                                            entregalist,
+                                            entregafilto
+                                          );
                                         insertlistentregablepro(alfalistpre)
                                           .then((result6) => {
                                             console.log(
@@ -2947,14 +2954,16 @@ function insertpracticasconalfascompleto2(practicas, proyecto) {
                                                 buscarDB
                                                   .obtenertodasContenidos()
                                                   .then((contendos) => {
-                                                    let lisconteni = reoryasignarvalores(
-                                                      contendos.API,
-                                                      alfalistpre.length
-                                                    );
-                                                    let preconteentre = ordenarconteentregable(
-                                                      lisconteni,
-                                                      alfalistpre
-                                                    );
+                                                    let lisconteni =
+                                                      reoryasignarvalores(
+                                                        contendos.API,
+                                                        alfalistpre.length
+                                                      );
+                                                    let preconteentre =
+                                                      ordenarconteentregable(
+                                                        lisconteni,
+                                                        alfalistpre
+                                                      );
                                                     asignaentrecontenidopro(
                                                       preconteentre
                                                     )
@@ -3072,10 +3081,11 @@ function insertintegrantesconrolesyactividades(
                                             actividades.API,
                                             actividadesrea.length
                                           );
-                                          let asiginteacti = reasignacionactividadintegrante(
-                                            actiadignar,
-                                            dataActividades.user
-                                          );
+                                          let asiginteacti =
+                                            reasignacionactividadintegrante(
+                                              actiadignar,
+                                              dataActividades.user
+                                            );
                                           asignaractividadconintegrante(
                                             asiginteacti
                                           )

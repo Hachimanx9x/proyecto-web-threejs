@@ -315,6 +315,8 @@ rutas.post("/agregar/herramientas", proToken, (req, res) => {
 });
 
 rutas.post("/create/proyecto", proToken, (req, res) => {
+  // console.log(chalk.bgRed(req.body));
+  console.log(req.body);
   jwt.verify(req.token, LLAVE, (err, data) => {
     if (err) {
       res.sendStatus(403);
@@ -423,12 +425,7 @@ rutas.post("/create/proyecto", proToken, (req, res) => {
                             console.log(err);
                           }
                         });
-                      } else if (
-                        banner == null &&
-                        banner == undefined &&
-                        icon != null &&
-                        icon != undefined
-                      ) {
+                      } else if (banner == null && icon != null) {
                         icon.mv(__dirname + "/tmp/" + icon.name, (err) => {
                           if (!err) {
                             var metaData = {
@@ -1038,16 +1035,8 @@ rutas.post("/auto/herramienta", async (req, res) => {
   }
 });
 rutas.post("/crear/reunion", proToken, (req, res) => {
-  let {
-    proyec,
-    fecha,
-    hora,
-    inicio,
-    fin,
-    duracion,
-    descripcion,
-    titulo,
-  } = req.body;
+  let { proyec, fecha, hora, inicio, fin, duracion, descripcion, titulo } =
+    req.body;
 
   if (
     proyec != undefined &&
@@ -1242,15 +1231,8 @@ rutas.post("/insert/history", (req, res) => {
 });
 //--------------------------------------------------------------
 rutas.post("/insert/proyect", (req, res) => {
-  const {
-    nombre,
-    descripcion,
-    estado,
-    icon,
-    banner,
-    metodologia,
-    historia,
-  } = req.body;
+  const { nombre, descripcion, estado, icon, banner, metodologia, historia } =
+    req.body;
   if (
     typeof nombre === "string" &&
     typeof descripcion === "string" &&
@@ -1535,13 +1517,8 @@ rutas.post("/insert/listMeeting", (req, res) => {
 });
 //--------------------------------------------------------------
 rutas.post("/insert/delivery", (req, res) => {
-  const {
-    titulo,
-    descripcion,
-    nombrearchivoguardado,
-    actividad,
-    entragable,
-  } = req.body;
+  const { titulo, descripcion, nombrearchivoguardado, actividad, entragable } =
+    req.body;
   if (
     typeof titulo === "string" &&
     typeof descripcion === "string" &&
