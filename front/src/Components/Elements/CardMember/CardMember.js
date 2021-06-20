@@ -144,13 +144,13 @@ const CardMember = ({ member, remove, add, change, rols, readOnly }) => {
                 >
                   <FontAwesomeIcon icon={faTrash} className="text-danger" />
                 </button>
-                <Link to={`/Dashboard/Contacts/${member.user}`}>
+                <a href={`/Dashboard/Contacts/${member.user}`} target="_blank">
                   <FontAwesomeIcon
                     icon={faInfoCircle}
                     style={{ border: "1px solid #007E33" }}
                     className="bg-success text-white border-success rounded-circle"
                   />
-                </Link>
+                </a>
               </div>
               <div className="o-rol-select">
                 <select onChange={(e) => change(member, e.target.value)}>

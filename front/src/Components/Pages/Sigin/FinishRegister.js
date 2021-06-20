@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import User from "../../../Logos/user-icon.png";
 import { MDBInput } from "mdbreact";
 import { Multiselect } from "multiselect-react-dropdown";
-import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import { faTimesCircle, faUserEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Rodal from "rodal";
 
@@ -200,12 +200,15 @@ export default function FinishRegister(props) {
 
   async function handleValidation() {
     const letters = /^[ñA-Za-z _]*[ñA-Za-z][ñA-Za-z _]*$/;
+    const userName = name.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const userLastname = name.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
     const errors = errorList;
     //First name validation.
-    if (name.trim() === "") {
+    if (userName.trim() === "") {
       errors.validName = false;
       errors.nameMessage = "Por favor ingresa tu nombre";
-    } else if (!name.toLocaleLowerCase().match(letters)) {
+    } else if (!userName.toLocaleLowerCase().match(letters)) {
       errors.validName = false;
       errors.nameMessage = "El nomber solo debe contener letras.";
     } else {
@@ -213,10 +216,10 @@ export default function FinishRegister(props) {
     }
 
     //Last name validations.
-    if (lastname.trim() === "") {
+    if (userLastname.trim() === "") {
       errors.validLastName = false;
       errors.lastnameMessage = "Por favor ingresa tu apellido";
-    } else if (!lastname.toLocaleLowerCase().match(letters)) {
+    } else if (!userLastname.toLocaleLowerCase().match(letters)) {
       errors.validLastName = false;
       errors.lastnameMessage = "El apellido solo debe contener letras.";
     } else {
@@ -323,6 +326,16 @@ export default function FinishRegister(props) {
 
   return (
     <div className="o-register-container">
+      <p className="text-danger">* Campos obligatorios</p>
+      <Rodal width={300} height={160} animation={"fade"} visible={true}>
+        <h2 className="text-primary m-auto text-center">
+          <FontAwesomeIcon icon={faUserEdit} />
+        </h2>
+        <p>
+          Debes completar tu perfil antes de acceder a las demás funcionalidades
+          del sistema.
+        </p>
+      </Rodal>
       <Rodal
         width={300}
         height={160}
@@ -458,7 +471,7 @@ export default function FinishRegister(props) {
               <div className="inputWrapper m-0 bg-primary">
                 <label htmlFor="user-picture-cv"></label>
 
-                <p className="text-white o-icon-input-text">Subir foto</p>
+                <p className="text-white o-icon-input-text">Subir archivo</p>
                 <input
                   className="fileInput rounded-pill"
                   type="file"
@@ -532,6 +545,7 @@ export default function FinishRegister(props) {
 
           <p className="mt-0 mb-0 pb-0 ">
             Idiomas <strong className="text-danger">*</strong>
+            <small>(Max. 2)</small>
           </p>
           <Multiselect
             options={languageslist}
@@ -580,6 +594,7 @@ export default function FinishRegister(props) {
           </p>
           <p className="mt-0 mb-0 p-0 ">
             Palabras clave <strong className="text-danger">*</strong>
+            <small>(Max. 3)</small>
           </p>
           <Multiselect
             showArrow
@@ -744,6 +759,7 @@ export default function FinishRegister(props) {
         <div className="col-xs-12 col-sm-4  o-skills-select">
           <p>
             Habilidades <strong className="text-danger">*</strong>
+            <small>(Max. 7)</small>
           </p>
           <div className="p-0 pl-3 pr-3 rounded o-list-skill-cont">
             <Multiselect

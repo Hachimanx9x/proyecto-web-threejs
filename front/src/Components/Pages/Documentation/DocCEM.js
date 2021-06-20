@@ -15,8 +15,8 @@ export default function DocCEM(props) {
       <div className="row">
         <section id="CardDocSection">
           <p>
-            Justificación de uso de la práctica de sistema multimedia mínimo
-            viable
+            Justificación de uso de la práctica de concepcion de experiencia
+            multimedia
           </p>
           <div className="w-100 d-flex flex-wrap">
             {items.alfas.map((alpha, i) => (

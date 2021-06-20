@@ -33,6 +33,7 @@ class SigIn extends Component {
     const { name, email, password, confirmpassword } = this.state;
     const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     const letters = /^[ñA-Za-z _]*[ñA-Za-z][ñA-Za-z _]*$/;
+    name.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
     //Validaciones del nombre.
     if (name.trim() === "") {

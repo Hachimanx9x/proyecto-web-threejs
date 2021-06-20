@@ -255,11 +255,14 @@ export default function ViewProfile(props) {
   async function handleValidation() {
     const letters = /^[a-z][a-z\s]*$/;
     const errors = errorList;
+    const userName = name.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const userLastname = name.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
     //First name validation.
-    if (name.trim() === "") {
+    if (userName.trim() === "") {
       errors.validName = false;
       errors.nameMessage = "Por favor ingresa tu nombre";
-    } else if (!name.toLocaleLowerCase().match(letters)) {
+    } else if (!userName.toLocaleLowerCase().match(letters)) {
       errors.validName = false;
       errors.nameMessage = "El apellido solo debe contener letras.";
     } else {
@@ -267,10 +270,10 @@ export default function ViewProfile(props) {
     }
 
     //Last name validations.
-    if (lastname.trim() === "") {
+    if (userLastname.trim() === "") {
       errors.validLastName = false;
       errors.lastnameMessage = "Por favor ingresa tu nombre";
-    } else if (!lastname.toLocaleLowerCase().match(letters)) {
+    } else if (!userLastname.toLocaleLowerCase().match(letters)) {
       errors.validLastName = false;
       errors.lastnameMessage = "El apellido solo debe contener letras.";
     } else {
@@ -534,8 +537,7 @@ export default function ViewProfile(props) {
             >
               <div className="col-xs-6 col-sm-6 p-0 m-0 o-up-btn bg-primary ">
                 <div className="inputWrapper m-0 bg-primary">
-                  <p className="text-white o-icon-input-text">Subir foto</p>
-                  <p className="text-white o-icon-input-text">Subir foto</p>
+                  <p className="text-white o-icon-input-text">Subir archivo</p>
                   <input
                     className="fileInput rounded-pill"
                     type="file"
@@ -609,6 +611,7 @@ export default function ViewProfile(props) {
 
             <p className="mt-0 mb-0 pb-0">
               Idiomas <strong className="text-danger">*</strong>
+              <small>(Max. 2)</small>
             </p>
             <Multiselect
               options={languageslist}
@@ -658,6 +661,7 @@ export default function ViewProfile(props) {
             </p>
             <p className=" mb-0 p-0">
               Palabras clave <strong className="text-danger">*</strong>
+              <small>(Max. 3)</small>
             </p>
             <Multiselect
               showArrow
@@ -831,6 +835,7 @@ export default function ViewProfile(props) {
           <div className="col-xs-12 col-sm-4  o-skills-select">
             <p>
               Habilidades <strong className="text-danger">*</strong>
+              <small>(Max. 7)</small>
             </p>
             <div className="p-0 pl-3 pr-3 rounded o-list-skill-cont">
               <Multiselect
