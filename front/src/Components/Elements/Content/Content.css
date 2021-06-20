@@ -20,8 +20,13 @@ a:focus {
   padding: 0px 20px 0px 20px;
 }
 .o-topbar-arrow {
+  color: #fff;
   transform: rotate(180deg);
-  transition: all 0.8s ease;
+  transition: color 0.2s, transform 0.4s ease;
+}
+
+.o-topbar-arrow:hover {
+  color: #3bccf6;
 }
 
 .o-topbar-arrow-close {

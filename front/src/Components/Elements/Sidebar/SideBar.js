@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faProjectDiagram,
   faDoorOpen,
   faCalendarAlt,
   faUserFriends,
+  faAngleDoubleRight,
 } from "@fortawesome/free-solid-svg-icons";
 import classNames from "classnames";
 import "./Sidebar.css";
 import { Link, NavLink } from "react-router-dom";
 import Logo from "../../../Logos/softmedia_logo.svg";
 import LogoSmall from "../../../Logos/Logo.svg";
+import useWindowSize from "../Hooks/useWindowSize";
 
 const deleteUser = () => {
   localStorage.setItem("login", "");
@@ -18,7 +20,7 @@ const deleteUser = () => {
   console.log(localStorage.getItem("login"));
 };
 const SideBar = ({ isOpen, toggle }) => {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const { width } = useWindowSize();
   const token = localStorage.getItem("login");
   let activeLink = true;
   if (token !== "" && token !== undefined && token !== null) {
@@ -28,16 +30,6 @@ const SideBar = ({ isOpen, toggle }) => {
       activeLink = false;
     }
   }
-  useEffect(() => {
-    function resize() {
-      setWindowWidth(window.innerWidth);
-    }
-    window.addEventListener("resize", resize);
-    resize();
-    return () => {
-      window.removeEventListener("resize", resize);
-    };
-  }, []);
   return (
     <div id="sidebar" className={classNames("sidebar", { "is-open": isOpen })}>
       <div className="sidebar-header">
@@ -51,17 +43,16 @@ const SideBar = ({ isOpen, toggle }) => {
         >
           {" "}
           <img
-            src={windowWidth < 590 ? Logo : isOpen ? Logo : LogoSmall}
+            src={width < 590 ? Logo : isOpen ? Logo : LogoSmall}
             alt="Softmedia"
             className={
-              "text-center " +
-              (windowWidth > 590 && !isOpen ? "o-small-logo" : "")
+              "text-center " + (width > 590 && !isOpen ? "o-small-logo" : "")
             }
           />
         </NavLink>
       </div>
       <div className="side-menu">
-        <div className="list-unstyled pb-3">
+        <div className="list-unstyled pb-3 d-flex flex-column justify-content-end h-100 ">
           <NavLink
             activeClassName="active"
             className={!activeLink ? "disabled" : ""}
@@ -118,6 +109,23 @@ const SideBar = ({ isOpen, toggle }) => {
               </a>
             </li>
           </div>
+
+          <div className="mt-auto border-0 h-auto">
+            <button
+              className="btn btn-block bg-transparent border-0 z-depth-0"
+              onClick={toggle}
+            >
+              <h2>
+                <FontAwesomeIcon
+                  className={
+                    "o-topbar-arrow w-100 " +
+                    (isOpen ? "" : "o-topbar-arrow-close")
+                  }
+                  icon={faAngleDoubleRight}
+                />
+              </h2>
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -125,3 +133,6 @@ const SideBar = ({ isOpen, toggle }) => {
 };
 
 export default SideBar;
+/**    ? "o-topbar-arrow " +
+                (sidebarIsOpen ? "" : "o-topbar-arrow-close")
+              : "" */

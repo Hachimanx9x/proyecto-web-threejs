@@ -4,6 +4,7 @@ import { faBars, faAlignJustify } from "@fortawesome/free-solid-svg-icons";
 import useWindowSize from "../Hooks/useWindowSize";
 
 import User from "../../../Logos/user-icon.png";
+
 const Topbar = ({ toggleSidebar, sidebarIsOpen }, props) => {
   const [topbarIsOpen, setTopbarOpen] = useState(true);
   const toggleTopbar = () => setTopbarOpen(!topbarIsOpen);

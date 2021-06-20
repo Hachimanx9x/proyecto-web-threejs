@@ -15,6 +15,8 @@ a:focus {
   background: #202a5b;
   color: #fff;
   transition: all 0.5s;
+  display: flex;
+  flex-direction: column;
 }
 
 .sidebar.is-open {
@@ -22,6 +24,12 @@ a:focus {
   max-width: 250px;
   transition: 0.5s;
 }
+
+.side-menu {
+  overflow-y: hidden;
+  flex-basis: 100%;
+}
+
 .side-menu p {
   display: none;
   transition: all 0.5s;
@@ -68,10 +76,6 @@ li a.dropdown-toggle::after {
   cursor: pointer;
   display: none;
 }
-.side-menu {
-  overflow-y: hidden;
-}
-
 .o-link-btn:hover {
   color: #3bccf6;
 }
