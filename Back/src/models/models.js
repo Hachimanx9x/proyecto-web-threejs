@@ -1,7 +1,11 @@
 function actual() {
   let fecha = new Date();
-  fecha.setDate(fecha.getDate() + 32);
-  return `${fecha.getFullYear()}-${fecha.getDate()}-${fecha.getDay()}`;
+
+  fecha.setDate(fecha.getDate() + 20);
+  fecha.setMonth(fecha.getMonth() + 1);
+
+  //console.log(`${fecha.getFullYear()}-${fecha.getMonth()}-${fecha.getDate()}`);
+  return `${fecha.getFullYear()}-${fecha.getDate()}-${fecha.getMonth()}`;
 }
 
 module.exports = {
