@@ -47,6 +47,7 @@ export default class CalendarEvents extends Component {
       axios
         .get(`http://localhost:3030/calendario`, options)
         .then((response) => {
+          console.log(response);
           for (let i = 0; i < response.data.length; i++) {
             const element = response.data[i];
             if (element.start !== "NaN:NaN" && element.end !== "NaN:NaN") {
@@ -62,11 +63,11 @@ export default class CalendarEvents extends Component {
                 start: start,
                 end: end,
                 color: color,
-                allDay: true,
               });
               colors.push(color);
             }
           }
+          console.log(events);
           this.setState({ colors: colors, events: events, fetched: true });
         });
     } catch (error) {

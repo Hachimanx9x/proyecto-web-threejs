@@ -7,6 +7,8 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
 import Navbar from "../../Elements/Navbar/Navbar";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faInfo } from "@fortawesome/free-solid-svg-icons";
 
 class SigIn extends Component {
   constructor() {
@@ -206,7 +208,7 @@ class SigIn extends Component {
             <p className="mt-2 text-white font-weight-bold ">
               Bienvenido, por favor registrate
             </p>
-            <div className={this.state.validName ? "" : "o-sigin-error"}>
+            <div className={`${this.state.validName ? "" : "o-sigin-error"} `}>
               <MDBInput
                 onChange={(event) => {
                   this.setState({ name: event.target.value });
@@ -254,7 +256,11 @@ class SigIn extends Component {
                 {this.state.emailMessage}
               </small>
             </div>
-            <div className={this.state.validpassword ? "" : "o-sigin-error"}>
+            <div
+              className={`${
+                this.state.validpassword ? "" : "o-sigin-error"
+              } position-relative`}
+            >
               <MDBInput
                 onChange={(event) => {
                   this.setState({ password: event.target.value });
@@ -266,8 +272,11 @@ class SigIn extends Component {
                 }
                 type="password"
                 icon="lock"
+                id="test_field"
                 maxLength="15"
-              />
+              >
+                <span data-tooltip="Mínimo 6 caracteres"></span>
+              </MDBInput>
             </div>
             <div className="row position-absolute m-0 justify-content-end w-100">
               <small

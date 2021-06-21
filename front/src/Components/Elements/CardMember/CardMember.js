@@ -157,8 +157,8 @@ const CardMember = ({ member, remove, add, change, rols, readOnly }) => {
                   <option hidden>Rol del proyecto</option>
                   {rols.length > 0 ? (
                     rols.map((rol, i) => (
-                      <option key={i} value={rol.rol}>
-                        {rol.rol}
+                      <option key={i} value={rol}>
+                        {rol}
                       </option>
                     ))
                   ) : (

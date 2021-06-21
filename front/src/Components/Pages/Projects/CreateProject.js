@@ -200,29 +200,29 @@ class CreateProject extends Component {
       if (this.state.projectPractices.cem && this.state.projectPractices.smmv) {
         this.setState({
           rols: [
-            { rol: "Arquitecto de información" },
-            { rol: "Arquitecto de pruebas" },
-            { rol: "Arquitecto de producción de contenidos" },
-            { rol: "Diseñador Audiovisual" },
-            { rol: "Diseñador de Concepto y Storyboard" },
-            { rol: "Arquitecto de Hardware/Software" },
+            "Arquitecto de producción de contenidos",
+            "Arquitecto de información",
+            "Arquitecto de pruebas",
+            "Arquitecto de Hardware/Software",
+            "Diseñador Audiovisual",
+            "Diseñador de Concepto y Storyboard",
           ],
         });
       } else if (this.state.projectPractices.cem) {
         this.setState({
           rols: [
-            { rol: "Arquitecto de información" },
-            { rol: "Arquitecto de pruebas" },
-            { rol: "Arquitecto de producción de contenidos" },
+            "Arquitecto de producción de contenidos",
+            "Arquitecto de información",
+            "Arquitecto de pruebas",
           ],
         });
       } else if (this.state.projectPractices.smmv) {
         this.setState({
           rols: [
-            { rol: "Arquitecto de información" },
-            { rol: "Diseñador Audiovisual" },
-            { rol: "Diseñador de Concepto y Storyboard" },
-            { rol: "Arquitecto de Hardware/Software" },
+            "Arquitecto de Hardware/Software",
+            "Arquitecto de información",
+            "Diseñador Audiovisual",
+            "Diseñador de Concepto y Storyboard",
           ],
         });
       } else {

@@ -51,6 +51,52 @@
   width: 9rem;
   border: none;
 }
+
+[data-tooltip] {
+  cursor: default;
+}
+[data-tooltip]::before,
+[data-tooltip]::after {
+  position: absolute;
+  box-sizing: border-box;
+  background-color: #4285f4;
+
+  visibility: hidden;
+  opacity: 0;
+  transform: translateX(10px);
+  transition: opacity 0.3s, transform 0.2s;
+}
+[data-tooltip]::before {
+  content: "";
+  width: 15px;
+  height: 15px;
+  top: 0;
+  right: 2px;
+
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+[data-tooltip]::after {
+  width: auto;
+  top: -2rem;
+  right: 0;
+  text-align: center;
+  border-radius: 5px;
+
+  content: attr(data-tooltip);
+  color: #fff;
+  padding: 8px;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+input[type="password"]:focus ~ [data-tooltip]::after,
+input[type="password"]:focus ~ [data-tooltip]::before {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
 @media only screen and (max-width: 720px) {
   .o-sigin-container {
     background: #202a5b;
