@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./ContactProfile.css";
 import { MDBInput } from "mdbreact";
 import User from "../../../Logos/user-icon.png";
-import arrow from "../../../Logos/arrow.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
 import Axios from "axios";

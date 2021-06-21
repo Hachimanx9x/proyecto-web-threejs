@@ -5,7 +5,6 @@ import Rodal from "rodal";
 import Fade from "../../Fade/Fade";
 import { faTrash, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
 
 import "rodal/lib/rodal.css";
 import "./CardMember.css";

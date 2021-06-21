@@ -263,10 +263,10 @@ SMMV
       projectmembers.push(JSON.stringify(i));
     }
     const practices = [];
-    if (projectPractices.smmv) {
+    if (projectPractices.cem) {
       practices.push("Concepción de la experiencia multimedia");
     }
-    if (projectPractices.cem) {
+    if (projectPractices.smmv) {
       practices.push("Sistema Multimedia mínimo viable");
     }
 

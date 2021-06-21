@@ -534,7 +534,13 @@ export default function ViewProfile(props) {
           </div>
           <div className="col-xs-12 col-sm-3 o-col">
             <p>Hoja de vida</p>
-            <MDBInput type="text" label="URL/Link" outline maxLength="130" />
+            <MDBInput
+              value={cvLink}
+              type="text"
+              label="URL/Link"
+              outline
+              maxLength="130"
+            />
             <div
               className="row bg-primary p-0 m-0 mt-4"
               style={{ height: "2.3rem" }}

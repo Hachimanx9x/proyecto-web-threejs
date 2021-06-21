@@ -3,7 +3,6 @@ import Alpha from "../../../Logos/alpha_icon.svg";
 import Deliverable from "../../../Logos/deliverable_icon.svg";
 import Activity from "../../../Logos/activity_icon.svg";
 import CardItem from "../../Elements/CardItem/CardItem";
-import arrow from "../../../Logos/arrow.svg";
 import "./Documentation.css";
 import CardRole from "../../Elements/CardRole/CardRole";
 import { SMMV } from "./SMMV";
