@@ -365,6 +365,7 @@ funcionesDB.buscartalentogeneral = async (idUser) => {
         sqlite.all(Query.buscartalentos(), (err, rows) => {
           if (!err) {
             const data = rearmas(idUser, rows);
+
             res({ data });
           } else {
             rej(err);
@@ -2078,8 +2079,10 @@ function rearmarProyectosescri(array) {
 }
 function rearmas(idUser, rows) {
   //   console.log(idUser);
-  //console.log(rows);
-
+  // console.log(rows);
+  var tempid;
+  var defarray = [];
+  let defarray2 = [];
   var array = [];
 
   for (var i = 0; i < rows.length; i++) {
@@ -2090,14 +2093,33 @@ function rearmas(idUser, rows) {
     }
   }
 
-  var tempid;
-  var defarray = [];
+  for (var i = 0; i < rows.length; i++) {
+    if (rows[i].id !== idUser) {
+      let temfoto = null;
+      if (rows[i].fotoperfil !== "null") {
+        temfoto = `${env.host}/proyecto/contenido/usuario${array[i].id}/${array[i].fotoperfil}`;
+      }
+      defarray2.push({
+        id: rows[i].id,
+        nombre: rows[i].nombre,
+        fotoperfil: temfoto,
+        descripcion: rows[i].descripcion,
+        palabraa: [],
+        herrramientas: [],
+      });
+    }
+  }
+  defarray2 = quitarduplicados(defarray2);
 
   for (var i = 0; i < array.length; i++) {
+    let temfoto = null;
+    if (rows[i].fotoperfil !== "null") {
+      temfoto = `${env.host}/proyecto/contenido/usuario${array[i].id}/${array[i].fotoperfil}`;
+    }
     defarray.push({
       userid: array[i].id,
       nombre: array[i].nombre,
-      foto: `${env.host}/proyecto/contenido/usuario${array[i].id}/${array[i].fotoperfil}`,
+      foto: temfoto,
       descripcion: array[i].descripcion,
       herramientas: [],
       palabras: [],
@@ -2128,19 +2150,17 @@ function rearmas(idUser, rows) {
     herramientemp = [];
   }
   var palabratemp;
-  var palaarray = [];
+
   for (var i = 0; i < defarray.length; i++) {
+    let palaarray = [];
     for (var j = 0; j < array.length; j++) {
       if (defarray[i].userid === array[j].id) {
-        if (palabratemp != array[j].palabra) {
-          palaarray.push(array[j].palabra);
-          palabratemp = array[j].palabra;
-        }
+        palaarray.push(array[j].palabra);
+        palabratemp = array[j].palabra;
       }
     }
 
-    defarray[i].palabras = Array.from(new Set(palaarray));
-    palaarray = [];
+    defarray[i].palabras = quitarduplicados(palaarray);
   }
   // console.log(defarray);
   return defarray;

@@ -3023,9 +3023,11 @@ function insertintegrantesconrolesyactividades(
   integrantes,
   practicas
 ) {
+  console.log("insertintegrantesconrolesyactividades");
   return new Promise((res, rej) => {
     buscarDB.obtenertodasRoles().then((roles) => {
       let date = reorganizarroles(integrantes, roles.API);
+      // console.log(date);
       inserintegrantes2(date)
         .then((result) => {
           console.log(chalk.green("entegrantes ingresadas"));

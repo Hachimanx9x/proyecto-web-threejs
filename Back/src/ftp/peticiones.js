@@ -65,7 +65,7 @@ peticiones.getFilesinglestring = async (bucket, namefile, res) => {
 };
 
 peticiones.getFilesingle = async (bucket, namefile, res) => {
-  sinfunfileretry(bucket, namefile, res);
+  await sinfunfileretry(bucket, namefile, res);
 };
 
 async function sinfunfileretry(bucket, namefile, res) {
@@ -122,7 +122,10 @@ function sinfile(r, ps, res, namefile) {
   ps.pipe(res); //se renderiza el archivo
   console.log(chalk.bgBlue("___") + chalk.blue(`Archivo enviado `));
   try {
-    fs.unlinkSync(path.join(__dirname, `../routes/tmp/${namefile}`)); //se borra el archivo temporal
+    if (namefile !== undefined) {
+      fs.unlinkSync(path.join(__dirname, `../routes/tmp/${namefile}`));
+    }
+    //se borra el archivo temporal
     // console.log('borrado')
   } catch (err) {
     console.log(err);
