@@ -221,7 +221,7 @@ export default function CardDeliverables({ alfa, deliverable }) {
         />
       </div>
       <div className="bg-white rounded d-flex justify-content-between m-1 p-2">
-        <small>Revisiones:</small>
+        <small>Entregas:</small>
         <small className={alfa === "SMMV" ? "o-text-smmv" : "o-text-cem"}>
           {deliverable.revisiones}
         </small>

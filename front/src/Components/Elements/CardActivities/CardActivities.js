@@ -245,7 +245,7 @@ export default function CardActivities({ alfa, activity, tecniques }) {
           </form>
         </div>
         <div className=" col-xs-4 col-sm-4">
-          <p>Revisiones hechas:</p>
+          <p>Entregas hechas:</p>
           <input
             type="text"
             className="bg-transparent rounded-pill text-white pl-2"
