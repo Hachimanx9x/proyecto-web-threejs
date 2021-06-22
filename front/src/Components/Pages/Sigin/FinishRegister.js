@@ -226,7 +226,7 @@ export default function FinishRegister(props) {
       errors.validLastName = false;
       errors.lastnameMessage = "El apellido solo debe contener letras.";
     } else {
-      errors.lastnameMessage = true;
+      errors.validLastName = true;
     }
 
     //Skills validation
