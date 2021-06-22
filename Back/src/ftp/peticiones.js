@@ -5,6 +5,7 @@ const stream = require("stream");
 const chalk = require("chalk");
 const db = require("../database/buscarDB");
 const peticiones = {};
+const filtro = /(?:\.([^.]+))?$/;
 peticiones.stringfile = async (bucket, namefile) => {
   return new Promise(async (res, rej) => {
     minio.fGetObject(
@@ -65,16 +66,59 @@ peticiones.getFilesinglestring = async (bucket, namefile, res) => {
 };
 
 peticiones.getFilesingle = async (bucket, namefile, res) => {
-  await sinfunfileretry(bucket, namefile, res);
-};
+  console.log("getFilesingle");
+  await minio.fGetObject(
+    bucket,
+    namefile,
+    path.join(__dirname, `../routes/tmp/${namefile}`),
+    (e) => {
+      if (!e) {
+        sinfile(
+          fs.createReadStream(
+            path.join(__dirname, `../routes/tmp/${namefile}`)
+          ),
+          new stream.PassThrough(),
+          res,
+          namefile
+        );
+      } else {
+        try {
+          console.log(e);
+          let files = fs.readdirSync(path.join(__dirname, `../routes/tmp`));
+          console.log(files);
+          for (let a = 0; a < files.length; a++) {
+            if (filtro.exec(`${files[a]}`)[1] !== "minio") {
+              console.log(`${files[a]}`);
+              sinfile(
+                fs.createReadStream(
+                  path.join(__dirname, `../routes/tmp/${namefile}`)
+                ),
+                new stream.PassThrough(),
+                res,
+                namefile
+              );
+            } else {
+              fs.unlinkSync(path.join(__dirname, `../routes/tmp/${files[a]}`));
+            }
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    }
+  );
 
+  //sinfunfileretry(bucket, namefile, res);
+};
+/*
 async function sinfunfileretry(bucket, namefile, res) {
   await minio.fGetObject(
     bucket,
     namefile,
     path.join(__dirname, `../routes/tmp/${namefile}`),
-    function (e) {
+    function async(e) {
       if (e) {
+        console.log(e);
         console.log(
           chalk.bgRed("___") + chalk.red(` getFilesinglebucket o archivo`)
         );
@@ -84,8 +128,12 @@ async function sinfunfileretry(bucket, namefile, res) {
         console.log(files);
         for (let a = 0; a < files.length; a++) {
           try {
-            fs.unlinkSync(path.join(__dirname, `../routes/tmp/${files[a]}`)); //se borra el archivo temporal
-            console.log(chalk.bgRed("==>") + chalk.red(`${files[a]} borrado`));
+            if (filtro.exec(`${files[a]}`)[1] === "minio") {
+              fs.unlinkSync(path.join(__dirname, `../routes/tmp/${files[a]}`)); //se borra el archivo temporal
+              console.log(
+                chalk.bgRed("==>") + chalk.red(`${files[a]} borrado`)
+              );
+            }
           } catch (err) {
             console.log(
               chalk.bgRed("==>") +
@@ -95,36 +143,48 @@ async function sinfunfileretry(bucket, namefile, res) {
             //  console.error('Something wrong happened removing the file', err)//No hay tal archivo o cualquier otro tipo de error
           }
         }
-        sinfunfileretry(bucket, namefile, res);
+
+        let files2 = fs.readdirSync(path.join(__dirname, `../routes/tmp`));
+        if (files2.length < 0) {
+          console.log("salio del error ");
+          sinfunfileretry(bucket, namefile, res);
+          return;
+        }
+      } else {
+        sinfile(
+          fs.createReadStream(
+            path.join(__dirname, `../routes/tmp/${namefile}`)
+          ),
+          new stream.PassThrough(),
+          res,
+          namefile
+        );
       }
-      //console.log('done')
-      const r = fs.createReadStream(
-        path.join(__dirname, `../routes/tmp/${namefile}`)
-      ); //llamamos el archivo para el envio
-      const ps = new stream.PassThrough();
-      sinfile(r, ps, res, namefile);
     }
   );
 }
-
+*/
 function sinfile(r, ps, res, namefile) {
-  stream.pipeline(
-    r,
-    ps, //<---- esto hace un truco con el manejo de errores de transmisión
-    (err) => {
-      if (err) {
-        console.log("bocket es muy lento");
-        sinfile(r, ps, res);
-        return;
-      }
-    }
-  );
-  ps.pipe(res); //se renderiza el archivo
-  console.log(chalk.bgBlue("___") + chalk.blue(`Archivo enviado `));
   try {
-    if (namefile !== undefined) {
-      fs.unlinkSync(path.join(__dirname, `../routes/tmp/${namefile}`));
-    }
+    stream.pipeline(
+      r,
+      ps, //<---- esto hace un truco con el manejo de errores de transmisión
+      (err) => {
+        if (err) {
+          console.log("bocket es muy lento");
+          console.log(err);
+          sinfile(r, ps, res);
+          return;
+        }
+      }
+    );
+    ps.pipe(res).on("finish", () => {
+      if (namefile !== undefined) {
+        fs.unlinkSync(path.join(__dirname, `../routes/tmp/${namefile}`));
+      }
+    }); //se renderiza el archivo
+    console.log(chalk.bgBlue("___") + chalk.blue(`Archivo enviado `));
+
     //se borra el archivo temporal
     // console.log('borrado')
   } catch (err) {
