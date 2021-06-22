@@ -271,7 +271,7 @@ class CreateEvents extends Component {
                 </p>
                 <div className="d-flex justify-content-between p-2">
                   <button
-                    className="z-depth-0 border-primary btn border-primary text-primary font-weight-bold"
+                    className="z-depth-0 border-primary btn border-primary text-primary font-weight-bold text-capitalize"
                     type="button"
                     style={{
                       width: "7.2rem",
@@ -283,7 +283,7 @@ class CreateEvents extends Component {
                     Cancelar
                   </button>
                   <button
-                    className="z-depth-0 border-0 btn btn-primary font-weight-bold"
+                    className="z-depth-0 border-0 btn btn-primary font-weight-bold text-capitalize"
                     type="button"
                     style={{
                       width: "7.2rem",

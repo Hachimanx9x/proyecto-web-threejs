@@ -86,12 +86,12 @@ const CardContacts = ({ contact, changefavorite, deleteContact }) => {
           <button
             type="button"
             onClick={() => setModal(!modal)}
-            className="btn z-depth-0 border-primary text-primary font-weight-bold"
+            className="btn z-depth-0 border-primary text-primary text-capitalize font-weight-bold"
           >
             Cancelar
           </button>
           <button
-            className="btn btn-primary border-0 text-white font-weight-bold"
+            className="btn btn-primary border-0 text-white font-weight-bold text-capitalize"
             onClick={deleteContacts}
           >
             Eliminar

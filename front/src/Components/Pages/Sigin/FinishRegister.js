@@ -778,7 +778,7 @@ export default function FinishRegister(props) {
             Habilidades <strong className="text-danger">*</strong>
             <small>(Max. 7)</small>
           </p>
-          <div className="p-0 pl-3 pr-3 rounded o-list-skill-cont">
+          <div className="p-0 pr-3 rounded o-list-skill-cont">
             <Multiselect
               options={toolist}
               displayValue="key"

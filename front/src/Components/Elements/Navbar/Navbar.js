@@ -44,7 +44,7 @@ export default function Navbar() {
       className="navbar  sticky-top shadow-none navbar-expand-sm o-navbar"
       style={
         size.width > 590
-          ? { padding: "1rem 10rem 1rem 10rem" }
+          ? { padding: "1.5rem 10rem 1rem 10rem" }
           : { padding: "0 0 0 1rem" }
       }
     >

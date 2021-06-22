@@ -351,10 +351,11 @@ SMMV
                 </h2>
               ) : (
                 <div>
-                  <h4 className="mt-3">Confirmación de creación de proyecto</h4>
+                    <h4 className="mt-3">¿Estás seguro de la creación del proyecto?</h4>
+                    <small>Al crear el proyecto serás asignado como el líder del proyecto.</small>
                   <div className="d-flex justify-content-between p-2">
                     <button
-                      className="z-depth-0 border-primary btn border-primary text-primary font-weight-bold"
+                      className="z-depth-0 border-primary text-capitalize btn border-primary text-primary font-weight-bold"
                       type="submit"
                       onClick={() =>
                         this.setState({ confirmationModal: false })
@@ -363,7 +364,7 @@ SMMV
                       Cancelar
                     </button>
                     <button
-                      className="z-depth-0 border-0 btn btn-primary font-weight-bold"
+                      className="z-depth-0 text-capitalize border-0 btn btn-primary font-weight-bold"
                       type="button"
                       onClick={() => this.createProject()}
                     >
