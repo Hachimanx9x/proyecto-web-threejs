@@ -131,7 +131,7 @@ class Contacts extends Component {
           }
         }
       }
-      this.setState({ show: [...show] });
+      this.setState({ show: [...show], favorites: false });
     }
   };
 
