@@ -266,7 +266,7 @@ class CreateEvents extends Component {
               <div>
                 <h5 className="mt-5 mb-2">¿Crear evento?</h5>
                 <p>
-                  Este evento sera enviado a todos los integrantes del proyecto
+                  Este evento será enviado a todos los integrantes del proyecto
                   seleccionado
                 </p>
                 <div className="d-flex justify-content-between p-2">
