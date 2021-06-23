@@ -37,6 +37,7 @@ export default function FinishRegister(props) {
 
   const [languageslist, setLanguageslist] = useState([]);
   const [toolist, setToolist] = useState([]);
+
   const [errorList, setErrorList] = useState({
     validName: true,
     nameMessage: ".",
@@ -205,7 +206,6 @@ export default function FinishRegister(props) {
     const userLastname = lastname
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "");
-
     const errors = errorList;
     //First name validation.
     if (userName.trim() === "") {
@@ -365,7 +365,7 @@ export default function FinishRegister(props) {
             <h5 className="mt-5 mb-2">¿Guardar cambios?</h5>
             <div className="d-flex justify-content-between p-2">
               <button
-                className="z-depth-0 border-primary btn border-primary text-primary font-weight-bold"
+                className="z-depth-0 border-primary btn border-primary text-primary text-capitalize font-weight-bold"
                 type="button"
                 style={{
                   width: "7.2rem",
@@ -377,7 +377,7 @@ export default function FinishRegister(props) {
                 Cancelar
               </button>
               <button
-                className="z-depth-0 border-0 btn btn-primary font-weight-bold"
+                className="z-depth-0 border-0 btn btn-primary text-capitalize font-weight-bold"
                 type="button"
                 style={{
                   width: "7.2rem",

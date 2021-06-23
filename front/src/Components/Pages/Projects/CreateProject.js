@@ -336,7 +336,7 @@ SMMV
           </Rodal>
           <Rodal
             width={300}
-            height={160}
+            height={210}
             animation={"fade"}
             visible={this.state.confirmationModal}
             onClose={() => this.setState({ confirmationModal: false })}
