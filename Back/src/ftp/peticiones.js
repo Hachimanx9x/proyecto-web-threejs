@@ -85,7 +85,7 @@ peticiones.getFilesingle = async (bucket, namefile, res) => {
         try {
           console.log(e);
           let files = fs.readdirSync(path.join(__dirname, `../routes/tmp`));
-          console.log(files);
+
           for (let a = 0; a < files.length; a++) {
             if (filtro.exec(`${files[a]}`)[1] !== "minio") {
               console.log(`${files[a]}`);
@@ -98,7 +98,22 @@ peticiones.getFilesingle = async (bucket, namefile, res) => {
                 namefile
               );
             } else {
-              fs.unlinkSync(path.join(__dirname, `../routes/tmp/${files[a]}`));
+              let tf = fs.readdirSync(path.join(__dirname, `../routes/tmp`));
+              let booleanveri = false;
+              for (let x in tf) {
+                if (namefile === tf[x]) {
+                  booleanveri = true;
+                }
+              }
+              if (booleanveri) {
+                fs.unlink(
+                  path.join(__dirname, `../routes/tmp/${files[a]}`),
+                  (err) => {
+                    if (err) throw err;
+                    //  console.log("File deleted: " + files[a]);
+                  }
+                );
+              }
             }
           }
         } catch (err) {
@@ -179,8 +194,24 @@ function sinfile(r, ps, res, namefile) {
       }
     );
     ps.pipe(res).on("finish", () => {
+      let tf = fs.readdirSync(path.join(__dirname, `../routes/tmp`));
+      let booleanveri = false;
       if (namefile !== undefined) {
-        fs.unlinkSync(path.join(__dirname, `../routes/tmp/${namefile}`));
+        for (let x in tf) {
+          if (namefile === tf[x]) {
+            booleanveri = true;
+          }
+        }
+
+        if (booleanveri) {
+          fs.unlink(
+            path.join(__dirname, `../routes/tmp/${namefile}`),
+            (err) => {
+              if (err) throw err;
+              // console.log("File deleted: " + namefile);
+            }
+          );
+        }
       }
     }); //se renderiza el archivo
     console.log(chalk.bgBlue("___") + chalk.blue(`Archivo enviado `));
