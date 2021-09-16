@@ -155,7 +155,7 @@ const TarjetaCard = ({ nmapra, nombre, descripcion, nualpha, nuposition }) => (
         mask-position: center;
 
         -webkit-mask-repeat: no-repeat;
-
+        -webkit-mask-image: url("${alphay}");
         mask-image: url("${alphay}");
       }
       .o-card-e {

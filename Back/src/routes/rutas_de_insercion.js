@@ -315,8 +315,8 @@ rutas.post("/agregar/herramientas", proToken, (req, res) => {
 });
 
 rutas.post("/create/proyecto", proToken, (req, res) => {
-  // console.log(chalk.bgRed(req.body));
-  console.log(req.body);
+   console.log(chalk.bgRed("/create/proyecto"));
+  //console.log(req.body);
   jwt.verify(req.token, LLAVE, (err, data) => {
     if (err) {
       res.sendStatus(403);

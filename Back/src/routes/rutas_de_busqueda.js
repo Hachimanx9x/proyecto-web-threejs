@@ -139,6 +139,7 @@ rutas.get("/escritorio", proToken, (req, res) => {
   jwt.verify(req.token, LLAVE, (err, data) => {
     if (err) {
       res.sendStatus(403);
+      console.log(err);
     }
     console.log(chalk.yellow(`/escritorio`));
     if (data.rows[0] != null && data.rows.length > 0) {
@@ -170,9 +171,9 @@ rutas.get("/escritorio", proToken, (req, res) => {
                           },
                         });
                       })
-                      .catch((dererro) => res.json(dererro));
+                      .catch((dererro) => console.log("dererro"));
                   })
-                  .catch((err2) => res.json(err2));
+                  .catch((err2) => console.log("err2"));
               } else {
                 buscarDB
                   .obtenerEscritorioProyectos(data)
@@ -206,15 +207,15 @@ rutas.get("/escritorio", proToken, (req, res) => {
                             },
                           });
                         })
-                        .catch((dererro) => res.json(dererro));
+                        .catch((dererro) => console.log("dererro"));
                     }
                   })
-                  .catch((err2) => res.json(err2));
+                  .catch((err2) => console.log("err2"));
               }
             })
-            .catch((talenerr) => res.json(talenerr));
+            .catch((talenerr) => console.log("talenerr"));
         })
-        .catch((usererr) => res.json(usererr));
+        .catch((usererr) => console.log("usererr"));
     }
   });
 });
@@ -285,8 +286,10 @@ rutas.get("/proyectos", proToken, (req, res) => {
 });
 
 rutas.get("/proyectos/:id", proToken, (req, res) => {
+  // console.log(req.token);
   jwt.verify(req.token, LLAVE, (err, data) => {
     if (err) {
+      console.log(err);
       res.sendStatus(403);
     } else {
       if (data != {} || data !== {} || data !== null || data !== undefined) {
@@ -351,6 +354,7 @@ rutas.get("/proyecto/actividades/:id", proToken, (req, res) => {
   });
 });*/
 rutas.get("/proyecto/actividades/:id/:pra", proToken, (req, res) => {
+  console.log("/proyecto/actividades/:id/:pra");
   const { id, pra } = req.params;
   //const {user} = req.body;
   // const {id,name } = req.body;

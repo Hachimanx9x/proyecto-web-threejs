@@ -17,6 +17,7 @@ export default function CardDeliverables({ alfa, deliverable }) {
   const [file, setFile] = useState(null);
 
   const getFile = () => {
+    console.log(deliverable.contenido)
     Axios.get(deliverable.contenido, { responseType: "blob" }).then(
       (response) => {
         const url = window.URL.createObjectURL(new Blob([response.data]));

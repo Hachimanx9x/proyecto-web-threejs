@@ -77,7 +77,7 @@ export default function ContactProfile(props) {
               />
             </div>
             <div className="col-12 col-sm-6  d-flex justify-content-center align-items-center">
-              <p className="text-uppercase">{name} </p>
+              <h2 className="text-uppercase">{name} </h2>
             </div>
           </div>
           <div className="d-flex w-100 flex-wrap">
@@ -109,14 +109,14 @@ export default function ContactProfile(props) {
           </div>
 
           <p>Herramientas utilizadas</p>
-          <div className="o-talent-tool-list o-scoll-y">
+          <div className="o-talent-tool-list o-scroll-y">
             {tools.map((tool, i) => (
               <div className="o-profile-tool" key={i}>
                 <img className="o-talent-tool" src={tool.img} alt="User tool" />
 
                 <div className="o-tool-description">
                   <p className="m-0">{tool.name}</p>
-                  <small className="text-secondary">{tool.description}</small>
+                  <p className="text-secondary">{tool.description}</p>
                 </div>
               </div>
             ))}

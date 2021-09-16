@@ -105,7 +105,7 @@ export default function Meetings(props) {
               <div className="d-flex justify-content-center">
                 <p>
                   {names.slice(0, names.length - 1).join(", ")} y{" "}
-                  {names[names.length - 1]} se uniran a la llamada.
+                  {names[names.length - 1]} se unirán a la llamada.
                 </p>
               </div>
               <div className="d-flex justify-content-center">

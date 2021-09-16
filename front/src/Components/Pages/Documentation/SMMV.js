@@ -9,24 +9,20 @@ export const SMMV = {
         "Define la oportunidad dentro del mercado, asi como sus posibles amenazas y oportunidades",
       herramientas: [
         {
-          nombre: "Identificado",
-          descripcion:
-            "Se han identificado una serie de factores críticos para el diseño responsable del Sistema Multimedia, que afectan a sus interesados (usuarios, clientes, interesados indirectos): tensiones de valor entre interesados, posibles usos mal intencionados del Sistema Multimedia, patrones que afectan el Sistema Multimedia, leyes y normatividades que influyen en la solución, aspectos culturales, sociales y cognitivos que influyen en la comunidad objeto de análisis.",
+          nombre: "Alcanzable",
+          descripcion: `Se cuenta con un análisis de viabilidad, que evidencia la capacidad de contar con los recursos, gestionar y mitigar los riesgos, adquirir y/o desarrollar las tecnologías hardware – software, necesarios para desarrollar el Sistema Multimedia.`,
         },
         {
-          nombre: "Comprendido",
-          descripcion:
-            "El equipo de trabajo y los interesados (usuarios, clientes y otros interesados) tienen un entendimiento común del significado y alcance de los factores clave que son críticos para el diseño responsable del Sistema Multimedia, y la manera en cómo influyen en la experiencia multimedia. ",
+          nombre: "Diferenciado",
+          descripcion: `Se ha realizado un análisis con otros productos similares, lo cual permite reconocer con claridad, cómo el Sistema multimedia ofrece una proposición de valor diferenciable con las demás soluciones existentes en el mercado.`,
         },
         {
-          nombre: "Acordado",
-          descripcion:
-            "El equipo de trabajo y los interesados, identifican de manera conjunta, la necesidad de concebir ideas de diseño que mitiguen los factores adversos y potencien los factores favorables que creen valor en torno al diseño responsable.",
+          nombre: "Visionado",
+          descripcion: `Se ha definido una visión que define el Sistema Multimedia mínimo viable, que es aceptada y entendida por los interesados y el equipo de trabajo.`,
         },
         {
-          nombre: "Concebido",
-          descripcion:
-            "El equipo de trabajo y los interesados, coinciden en que la concepción de la solución propuesta para el diseño responsable es la adecuada para atender los factores que influyen en la experiencia multimedia. ",
+          nombre: "Definido",
+          descripcion: `Se precisa una visión del Sistema Multimedia mínimo viable y su modelo Canvas, necesarios para conseguir la proposición de valor.`,
         },
       ],
     },
@@ -36,24 +32,20 @@ export const SMMV = {
         "Es una sub-alfa que se inscribe en el alfa de Oportunidad, concebida para llevar a cabo la concreción de la propuesta de valor del Sistema Multimedia mínimo viable. Su función es la definición del Sistema Multimedia mínimo viable, en función de su visión y una proposición de valor del producto.",
       herramientas: [
         {
-          nombre: "Identificado",
-          descripcion:
-            "Se han identificado una serie de factores críticos para el diseño responsable del Sistema Multimedia, que afectan a sus interesados (usuarios, clientes, interesados indirectos): tensiones de valor entre interesados, posibles usos mal intencionados del Sistema Multimedia, patrones que afectan el Sistema Multimedia, leyes y normatividades que influyen en la solución, aspectos culturales, sociales y cognitivos que influyen en la comunidad objeto de análisis.",
+          nombre: "Alcanzable",
+          descripcion: `Se cuenta con un análisis de viabilidad, que evidencia la capacidad de contar con los recursos, gestionar y mitigar los riesgos, adquirir y/o desarrollar las tecnologías hardware – software, necesarios para desarrollar el Sistema Multimedia.`,
         },
         {
-          nombre: "Comprendido",
-          descripcion:
-            "El equipo de trabajo y los interesados (usuarios, clientes y otros interesados) tienen un entendimiento común del significado y alcance de los factores clave que son críticos para el diseño responsable del Sistema Multimedia, y la manera en cómo influyen en la experiencia multimedia. ",
+          nombre: "Diferenciado",
+          descripcion: `Se ha realizado un análisis con otros productos similares, lo cual permite reconocer con claridad, cómo el Sistema multimedia ofrece una proposición de valor diferenciable con las demás soluciones existentes en el mercado.`,
         },
         {
-          nombre: "Acordado",
-          descripcion:
-            "El equipo de trabajo y los interesados, identifican de manera conjunta, la necesidad de concebir ideas de diseño que mitiguen los factores adversos y potencien los factores favorables que creen valor en torno al diseño responsable.",
+          nombre: "Visionado",
+          descripcion: `Se ha definido una visión que define el Sistema Multimedia mínimo viable, que es aceptada y entendida por los interesados y el equipo de trabajo.`,
         },
         {
-          nombre: "Concebido",
-          descripcion:
-            "El equipo de trabajo y los interesados, coinciden en que la concepción de la solución propuesta para el diseño responsable es la adecuada para atender los factores que influyen en la experiencia multimedia. ",
+          nombre: "Definido",
+          descripcion: `Se precisa una visión del Sistema Multimedia mínimo viable y su modelo Canvas, necesarios para conseguir la proposición de valor.`,
         },
       ],
     },

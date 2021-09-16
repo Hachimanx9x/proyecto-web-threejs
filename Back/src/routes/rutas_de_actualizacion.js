@@ -221,6 +221,7 @@ rutas.put("/entrega/entregable", proToken, (req, res) => {
 rutas.put(`/actualizar/alfa`, proToken, async (req, res) => {
   console.log(chalk.yellow(`/actualizar/alfa`));
   const { alfas } = req.body;
+
   let con = 0;
   for (let a = 0; a < alfas.length; a++) {
     await buscarDB.obteneralfa(alfas[con]).then(async (alfai) => {
@@ -308,7 +309,9 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
                 console.log(
                   chalk.red(`Solo entro la foto ${req.files.foto.name}`)
                 );
+
                 if (datos.fotoperfil !== "null" && datos.fotoperfil !== null) {
+                  console.log("..");
                   ftpminio
                     .removeObject(bucket, datos.fotoperfil)
                     .then((result) => {
@@ -387,7 +390,8 @@ rutas.put(`/actualizar/usuario`, proToken, (req, res) => {
                           }
                         }
                       );
-                    });
+                    })
+                    .catch((err) => console.log(err));
                 } else {
                   req.files.foto.mv(
                     __dirname + "/tmp/" + req.files.foto.name,

@@ -1,3 +1,5 @@
+
+
 .o-description-profile-contact {
   height: 6rem;
   padding: 0.3rem;
@@ -8,7 +10,7 @@
   white-space: -pre-wrap; /* Opera <7 */
   white-space: -o-pre-wrap; /* Opera 7 */
   word-wrap: break-word; /* IE */
-  font-size: 10px;
+
   color: gray;
 }
 .o-keywords-profile-contact {
@@ -21,7 +23,7 @@
   white-space: -pre-wrap; /* Opera <7 */
   white-space: -o-pre-wrap; /* Opera 7 */
   word-wrap: break-word; /* IE */
-  font-size: 10px;
+  font-size: 14px;
   color: gray;
 }
 .o-talent-intro {
@@ -66,7 +68,7 @@
   padding-bottom: 0px;
   padding-right: 5px;
   margin-left: 0.5rem;
-  font-size: 0.8rem;
+  font-size:1rem;
   color: black;
   position: absolute;
 }
@@ -95,7 +97,8 @@
 }
 
 .o-profile-talent-picture {
-  height: 6rem;
+  height: 10rem;
+  width: 10rem;
   margin-right: 3rem;
 }
 

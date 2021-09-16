@@ -7,35 +7,50 @@ const db = require("../database/buscarDB");
 const peticiones = {};
 const filtro = /(?:\.([^.]+))?$/;
 peticiones.stringfile = async (bucket, namefile) => {
+  console.log("stringfile")
   return new Promise(async (res, rej) => {
-    minio.fGetObject(
-      bucket,
-      namefile,
-      path.join(__dirname, `../routes/tmp/${namefile}`),
-      function (e) {
-        if (e) {
-          console.log(
-            chalk.bgRed("___") + chalk.red(`bucket : ${bucket} o archivo`)
-          );
-
-          rej(e);
-        } else {
-          let file = fs.readFileSync(
-            path.join(__dirname, `../routes/tmp/${namefile}`)
-          );
-          // console.log(file.toString("base64"));
-          try {
-            fs.unlinkSync(path.join(__dirname, `../routes/tmp/${namefile}`)); //se borra el archivo temporal
-            // console.log('borrado')
-          } catch (err) {
-            console.log(err);
-          }
-          res(file.toString("base64"));
-        }
-      }
-    );
+    riesgoDas(bucket,namefile,rej ,res)
   });
 };
+
+
+
+function riesgoDas(bucket,namefile,rej ,res){
+  minio.fGetObject(
+    bucket,
+    namefile,
+    path.join(__dirname, `../routes/tmp/${namefile}`),
+    function (e) {
+      if (e) {
+        console.log(
+          chalk.bgRed("___") + chalk.red(`bucket : ${bucket} o archivo`)
+        );
+
+       //// rej(e);
+        riesgoDas(bucket,namefile,rej ,res)
+      } else {
+       
+        solvedString(namefile,res)
+        
+      }
+    }
+  );
+}
+function solvedString(namefile,res){
+  try {
+    let file = fs.readFileSync(
+      path.join(__dirname, `../routes/tmp/${namefile}`)
+    );
+  //  console.log("fie")
+   // console.log(file)
+    // console.log(file.toString("base64"));
+    fs.unlinkSync(path.join(__dirname, `../routes/tmp/${namefile}`)); //se borra el archivo temporal
+    // console.log('borrado')
+    res(file.toString("base64"));
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 peticiones.getFilesinglestring = async (bucket, namefile, res) => {
   await minio.fGetObject(
@@ -67,6 +82,7 @@ peticiones.getFilesinglestring = async (bucket, namefile, res) => {
 
 peticiones.getFilesingle = async (bucket, namefile, res) => {
   console.log("getFilesingle");
+  console.log(`${bucket} : ${namefile}`)
   await minio.fGetObject(
     bucket,
     namefile,

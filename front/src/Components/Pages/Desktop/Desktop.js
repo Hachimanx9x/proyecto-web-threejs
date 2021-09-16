@@ -32,9 +32,10 @@ export default function Desktop() {
         axios
           .all([axios.get(`http://localhost:3030/escritorio`, options)])
           .then((response) => {
+            console.log(response[0].data)
             const temp = response[0].data.proyectos;
             const projects = [];
-
+           // console.log(temp)
             for (const i of temp) {
               const practices = [];
               for (const j of i.practicas) {

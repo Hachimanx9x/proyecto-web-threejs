@@ -598,6 +598,11 @@ funcionesDB.obteneractientreproyectos = (user, array) => {
       tem = true;
     let pro = 0;
     for (let i = 0; i < array.length; i++) {
+      try {
+        
+      } catch (error) {
+        
+      }
       await funcionesDB
         .buscaractividadesproyecto(user, array[contfe].id, undefined)
         .then((contenido) => {
@@ -614,7 +619,7 @@ funcionesDB.obteneractientreproyectos = (user, array) => {
             res(array);
           }
           contfe++;
-        })
+        }).catch((err) => console.log(err))
         .catch((err) => rej(err));
     }
   });
@@ -1952,8 +1957,8 @@ function verientrgables(id, proname, array, arraydef) {
   for (let j2 = 0; j2 < array.length; j2++) {
     if (array[j2].namefile !== null && array[j2].namefile !== "null") {
       console.log(
-        chalk.red(`Entregable ${array[j1].titulo} con el contenido: `) +
-          chalk.blue(`${array[j1].namefile}`)
+        chalk.red(`Entregable ${array[j2].titulo} con el contenido: `) +
+          chalk.blue(`${array[j2].namefile}`)
       );
       arraydef.push({
         userName: "general",
@@ -1962,7 +1967,7 @@ function verientrgables(id, proname, array, arraydef) {
         date: array[j2].fechaentrega,
         fileName: array[j2].namefile,
         fileUrl: `${env.host}/proyecto/contenido/proyecto${id}/${array[j2].namefile}`,
-        source: array[j1].contenido,
+        source: array[j2].contenido,
       });
     }
 
@@ -2088,22 +2093,24 @@ function rearmas(idUser, rows) {
   for (var i = 0; i < rows.length; i++) {
     // console.log(rows[i].id);
     if (rows[i].id !== idUser) {
-      //   console.log(`${rows[i].id} || ${idUser}`)
+        // console.log(`${rows[i].id} || ${idUser}`)
       array.push(rows[i]);
     }
   }
 
-  for (var i = 0; i < rows.length; i++) {
-    if (rows[i].id !== idUser) {
+
+  for (var i = 0; i < array.length; i++) {
+    if (array[i].id !== idUser) {
       let temfoto = null;
-      if (rows[i].fotoperfil !== "null") {
+      if (array[i].fotoperfil !== "null") {
+   
         temfoto = `${env.host}/proyecto/contenido/usuario${array[i].id}/${array[i].fotoperfil}`;
       }
       defarray2.push({
-        id: rows[i].id,
-        nombre: rows[i].nombre,
+        id: array[i].id,
+        nombre: array[i].nombre,
         fotoperfil: temfoto,
-        descripcion: rows[i].descripcion,
+        descripcion: array[i].descripcion,
         palabraa: [],
         herrramientas: [],
       });
@@ -2552,8 +2559,9 @@ function actividadespro(user, array, id, pra) {
         mes = `0${mes}`;
       }
       let strfecha = `${mes}/${day}/${temfecha[0]}`;
-
+ 
       if (temp) {
+       // console.log(array[a].id)
         arraydef.push({
           actividadid: array[a].actid,
           titulo: array[a].actividadtitulo,
@@ -2647,6 +2655,7 @@ function entregablepro(array) {
         peticiones
           .stringfile(`proyecto${array[a].proid}`, `${temp}`)
           .then((file) => {
+        //    console.log(array[a])
             arraydef.push({
               id: array[a].entrid,
               nombre: array[a].entregatitulo,
@@ -2656,14 +2665,17 @@ function entregablepro(array) {
               fechaentrega: strfecha,
               revisiones: array[a].entreganumeroRevisiones,
               namefile: temp,
-              contenido: `${env.host}/proyecto/contenido/proyecto${array[a].id}/${temp}`,
+              contenido: `${env.host}/proyecto/contenido/proyecto${array[a].proid}/${temp}`,
               source: file,
             });
             if (count >= array.length - 1) {
               res(arraydef);
             }
-            count++;
-          });
+            
+          }).catch(err=>{
+            rej(err)
+            console.log(err)
+          }).finally(()=>{count++;})
       } else {
         arraydef.push({
           id: array[a].entrid,
