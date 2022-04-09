@@ -20,7 +20,7 @@
     "drei": "^1.5.7",
     "mdbreact": "^4.27.0",
     "microphone-stream": "^5.1.0",
-    "moment": "^2.29.1",
+    "moment": "^2.29.2",
     "multiselect-react-dropdown": "^1.6.3",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
